@@ -2,7 +2,7 @@
 id: gold-rush-demand
 typ: risiko
 status: getragen
-thema: ai_demand_drivers
+thema: knowledge/ai_demand_drivers
 stand: 2026-10-02
 herkunft: Gespräch Projekt SK Hynix, 2026-10-02
 verweist_auf: [open-search-space]

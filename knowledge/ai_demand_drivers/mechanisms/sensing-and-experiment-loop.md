@@ -2,7 +2,7 @@
 id: sensing-and-experiment-loop
 typ: mechanismus
 status: getragen
-thema: ai_demand_drivers
+thema: knowledge/ai_demand_drivers
 stand: 2026-10-02
 herkunft: Gespräch Projekt SK Hynix, 2026-10-02
 verweist_auf: [open-search-space, simulation-needs-compute, cadence-and-yield-trough]

@@ -2,7 +2,7 @@
 id: induced-innovation
 typ: mechanismus
 status: getragen
-thema: ai_demand_drivers
+thema: knowledge/ai_demand_drivers
 stand: 2026-10-02
 herkunft: Gespräch Projekt SK Hynix, 2026-10-02
 verweist_auf: [bandwidth-bottleneck, hbm-gb-per-mw, refresh-instead-of-new-build]
