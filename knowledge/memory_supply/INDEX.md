@@ -12,3 +12,4 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Capex-Disziplin nach den Verlusten 2023](mechanisms/capex-discipline-after-2023.md) | mechanismus | vorschlag |
 | [Fab-Vorlaufzeiten: zwei Beispiele mit 4 bis 5 Jahren](findings/fab-lead-time-examples.md) | befund | vorschlag |
 | [Kapazitätshochlauf in China (CXMT, YMTC)](risks/cxmt-ramp.md) | risiko | vorschlag |
+| [HBM-Marktanteil und Nvidias HBM4-Allokation](open_checks/hbm-market-share-and-nvidia-allocation.md) | pruefpunkt | offen |
