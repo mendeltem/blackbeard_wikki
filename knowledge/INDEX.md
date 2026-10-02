@@ -2,6 +2,7 @@
 
 | Thema | Inhalt |
 |---|---|
+| [agent_coordination](agent_coordination/INDEX.md) | Mehrere Sitzungen in denselben Repos: fremde Arbeitsbaeume, doppelt belegte Dateinamen |
 | [agent_tooling](agent_tooling/INDEX.md) | Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen |
 | [ai_application_layer](ai_application_layer/INDEX.md) | Ob der Kapitaleinsatz der Angebotsseite aus der Anwendungsschicht zurückfließt: Deckungsquote, Menge mal Preis, verdeckte Nachfrage |
 | [ai_buyers](ai_buyers/INDEX.md) | Wer die Rechenleistung kauft: Modellanbieter, ihre Umsaetze und ihre Rechenzusagen |

@@ -2,6 +2,8 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-02 | Projekt AI_Lage | `knowledge/agent_coordination/` | Thema angelegt: 2 Regeln (fremder Arbeitsbaum, doppelt belegter Dateiname) aus dem Bau des Verbunds.
+- 2026-10-02 | Projekt AI_Lage | `knowledge/agent_tooling/` | 3 Regeln ergaenzt: unbekannt im Vergleich, Erstmessung ist keine Veraenderung, Gerechnetes gegen Gemeintes.
 - 2026-10-02 | Projekt AI_news | `knowledge/ai_demand_drivers/` | 1 Befund (Rubin-Auslieferung ab August 2026, rund 20 % des DC-Umsatzes im Q3 GJ2027) und 1 offener Prüfpunkt (Rubin-Anteil an der Blackwell-Basis: 1 bis 3 % nach Stück, 4 bis 9 % nach FLOPS zum 30.09.). Befund Tier 1a zweiter Hand, Primärquelle gesperrt, deshalb vorschlag. Widerspruch zu hbm-gb-per-mw-three-generations bei Rubins dichtem FP4-Wert (35 gegen 50 PF) vermerkt.
 - 2026-10-02 | Projekt SEGMENTATION_PROJECT | `tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/` | Tool angelegt: Methodik der FreeSurfer-Segmentierung mit HistoAtlas (NextBrain) und SynthSeg in fünf Stufen, plus Code für GM/WM/CSF aus aseg-Labels mit zwei wählbaren Konventionen. 18 Tests bestanden, synthetische Daten. FreeSurfer-Stufen nur im Projekt gelaufen, hier nicht nachgestellt.
 - 2026-10-02 | Projekt Artificial Intelligence (KI-Compute-Stack) | `knowledge/compute_bottlenecks/` | Thema angelegt: 5 Mechanismen, 2 Befunde, 1 Regel zu Packaging, Rackstrom, Optik, Turbinen, Transformatoren, LiDAR. Status vorschlag, Quelle Projekt-Reports, Primärquellen nicht nachgeprüft.
