@@ -23,3 +23,5 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [GB HBM je MW über drei Generationen](open_checks/hbm-gb-per-mw.md) | pruefpunkt | offen |
 | [Capex gegen operativen Cashflow je Hyperscaler, 2026](open_checks/capex-vs-operating-cash-flow-2026.md) | pruefpunkt | offen |
 | [GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang](findings/hbm-gb-per-mw-three-generations.md) | befund | vorschlag |
+| [Hyperscaler-ASICs verbauen HBM](findings/custom-asics-use-hbm.md) | befund | vorschlag |
+| [Architekturen ohne HBM](risks/hbm-bypass-architectures.md) | risiko | vorschlag |
