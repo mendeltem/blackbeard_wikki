@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-02 | Projekt NVIDIA-Roadmap | `tools/memory/wafer-ramp/` | Tool angelegt: Hochlauf einer Fab zwischen zwei gemeldeten Eckpunkten, Wafer und Erloes je Monat, 7 Tests bestanden.
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `knowledge/memory_earnings/` | 2 Befunde (SK Hynix Q2 2026 Einmaleffekt und Steuerquote, ADR-Emission Juli 2026), 1 Mechanismus (Rueckkaufhebel bei niedrigem KGV).
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `knowledge/memory_supply/` | Thema angelegt: 2 Mechanismen (HBM frisst Waferflaeche, Opportunitaetskosten je Wafer), 1 offener Pruefpunkt (Waferkapazitaet je Werk).
 - 2026-10-02 | Projekt wetter, Victus | `knowledge/risk_communication/` | Thema angelegt: 1 Befund zur Darstellung von Wahrscheinlichkeiten. Quelle BAMS 2009, DOI nicht nachgeprueft.
