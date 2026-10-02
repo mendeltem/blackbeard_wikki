@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.md` | Offener Prüfpunkt angelegt: Capex gegen operativen Cashflow je Hyperscaler 2026 aus den 10-Q nachrechnen (Bruchindikator der Finanzierungsgrenze). Bisher nur Datenanbieter und Presse, keine Tier-1a-Ablesung, Status offen. Kopf von ai_demand_drivers um Querverweis auf ai_application_layer ergänzt.
 - 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/ai_application_layer/` | Thema angelegt: Gegenbuchung zu ai_demand_drivers — ob der Kapitaleinsatz der Angebotsseite aus der Anwendungsschicht zurückfließt. 1 Befund (Deckungsquote 2024: 1,6 %), 4 Mechanismen, 2 Regeln, 1 offener Prüfpunkt. Datenbasis Verbundseite ki-anwendungsschicht, 75 von 81 Sätzen noch nicht Tier-1a geprüft, Status vorschlag.
 - 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/ai_labor_market/` | Thema angelegt: Nutzungsprotokolle, Erhebungen und Lohndaten zu KI am Arbeitsplatz, 4 Befunde. Drei Instrumente strikt getrennt gehalten. Alle Quellen Working Paper/Preprint, Status vorschlag.
 - 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/china_industrial_strategy/` | Thema angelegt: Chinas Marktstellung und ihre Wirkung auf die KI-Schichten — 4 Mechanismen, 1 Befund (KI+-Breitenziel 70 % bis 2027). Quellen Presse und Denkfabriken, deshalb Mechanismen statt Befunde, Status vorschlag.
