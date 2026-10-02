@@ -7,4 +7,5 @@
 | [manufacturing_costs](manufacturing_costs/INDEX.md) | Entwicklung der Fertigungskosten: was billiger wird, was nicht, und was KI daran ändert |
 | [memory_earnings](memory_earnings/INDEX.md) | Gemeldete Zahlen der Speicherhersteller: Gewinn, FCF, Ausschüttung, Bewertung |
 | [memory_supply](memory_supply/INDEX.md) | Angebotsseite: Waferflaeche, Werke, Flaechenaufteilung HBM gegen DDR |
+| [model_capability_cost](model_capability_cost/INDEX.md) | Was ein KI-Fähigkeitsniveau kostet und wie schnell dieser Preis fällt |
 | [risk_communication](risk_communication/INDEX.md) | Wahrscheinlichkeiten und Unsicherheit so darstellen, dass sie nicht falsch verstanden werden |
