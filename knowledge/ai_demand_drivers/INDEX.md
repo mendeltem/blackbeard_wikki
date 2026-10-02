@@ -1,6 +1,6 @@
 # ai_demand_drivers
 
-Warum die Nachfrage nach DRAM und HBM durch KI hoch bleibt: Setzungen, Mechanismen, Risiken, offene Prüfpunkte.
+Warum die Nachfrage nach DRAM und HBM durch KI hoch bleibt: Setzungen, Mechanismen, Risiken, offene Prüfpunkte, Befunde.
 
 Stand 2026-10-02. Ein Eintrag je Datei.
 
@@ -21,3 +21,4 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Goldgräberstimmung (FOMO-Nachfrage)](risks/gold-rush-demand.md) | risiko | getragen |
 | [Nachfrage ist nicht Earnings](rules/demand-is-not-earnings.md) | regel | getragen |
 | [GB HBM je MW über drei Generationen](open_checks/hbm-gb-per-mw.md) | pruefpunkt | offen |
+| [GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang](findings/hbm-gb-per-mw-three-generations.md) | befund | vorschlag |

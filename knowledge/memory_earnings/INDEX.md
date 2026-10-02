@@ -11,6 +11,7 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [SK Hynix Ausschüttungspolitik 2025 bis 2027](findings/sk-hynix-shareholder-return-policy.md) | befund | getragen |
 | [SK Hynix Q2 2026: Einmaleffekt und Steuerquote](findings/sk-hynix-q2-2026-oneoff-and-tax.md) | befund | getragen |
 | [SK Hynix ADR-Emission Juli 2026](findings/sk-hynix-adr-issuance-2026.md) | befund | getragen |
+| [Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet](findings/operating-margin-three-makers.md) | befund | vorschlag |
 | [Ein Peer-Beat überträgt sich schwach](mechanisms/peer-beat-transfers-weakly.md) | mechanismus | vorschlag |
 | [Rückkaufhebel bei niedrigem KGV](mechanisms/buyback-leverage-at-low-pe.md) | mechanismus | getragen |
 | [Niedriges KGV am Gewinngipfel](risks/low-pe-at-earnings-peak.md) | risiko | getragen |
