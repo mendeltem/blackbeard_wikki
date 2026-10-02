@@ -5,7 +5,7 @@ status: getragen
 thema: knowledge/model_capability_cost
 stand: 2026-10-02
 herkunft: Projekt ai_modellkurve, Datenstand 2026-09-05
-verweist_auf: [two-paths-to-cheaper-capability, model-cost-falls-faster-than-hardware, benchmarks-from-one-hand, fixed-levels-stopped-falling-2026]
+verweist_auf: [two-paths-to-cheaper-capability, model-cost-falls-faster-than-hardware, benchmarks-from-one-hand, fixed-levels-stopped-falling-2026, token-billing-scales-with-tasks]
 ---
 
 # Iso-Fähigkeitskosten halbieren sich alle 1,6 bis 7,3 Monate
@@ -48,3 +48,4 @@ Datenstand 2026-09-05, also vier Wochen vor dem Stand dieses Eintrags. Modelle n
 - [benchmarks-from-one-hand](../rules/benchmarks-from-one-hand.md)
 - [fixed-levels-stopped-falling-2026](fixed-levels-stopped-falling-2026.md)
 - [billed-inference-volume](../open_checks/billed-inference-volume.md)
+- [token-billing-scales-with-tasks](../../ai_buyers/mechanisms/token-billing-scales-with-tasks.md) — die Gegenrichtung: mehr Modellaufrufe je Aufgabe gegen fallenden Preis je Token

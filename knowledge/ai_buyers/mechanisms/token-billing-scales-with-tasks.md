@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/ai_buyers
 stand: 2026-10-02
 herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09
-verweist_auf: [open-search-space, bandwidth-bottleneck, demand-is-not-earnings]
+verweist_auf: [open-search-space, bandwidth-bottleneck, demand-is-not-earnings, iso-capability-cost-halving, billed-inference-volume]
 ---
 
 # Abrechnung je Token bindet Umsatz an Aufgaben
@@ -27,6 +27,8 @@ Kein Schluss auf Gewinn, weder beim Modellanbieter noch beim Speicherhersteller;
 
 Effizienzfortschritte wirken gegen den Mechanismus: kuerzere Kontexte, Quantisierung, Cache-Kompression, kleinere Modelle fuer einfache Schritte.
 
+Der Preis je Token faellt gemessen schnell: fuer ein festes Faehigkeitsniveau halbiert er sich alle 1,6 bis 7,3 Monate ([iso-capability-cost-halving](../../model_capability_cost/findings/iso-capability-cost-halving.md)). Umsatz je Aufgabe entsteht also nur, wenn die Zahl der Aufrufe schneller steigt als der Preis faellt. Beide Groessen sind hier nicht gemessen, deshalb traegt dieser Eintrag keine Umsatzaussage, sondern nur die Richtung der Mengenseite. Was tatsaechlich abgerechnet wird, ist offen ([billed-inference-volume](../../model_capability_cost/open_checks/billed-inference-volume.md)).
+
 ## Bruchindikator
 - Anbieter stellen auf Pauschalpreise je Nutzer um; dann entkoppelt sich ihr Umsatz vom Verbrauch.
 - Messbar sinkende Zahl der Modellaufrufe je erledigter Aufgabe bei gleichem Ergebnis.
@@ -38,3 +40,6 @@ Preismodelle der Anbieter, oeffentlich. Aufrufe je Aufgabe: eigene Beobachtung, 
 - [open-search-space](../../ai_demand_drivers/axioms/open-search-space.md)
 - [bandwidth-bottleneck](../../ai_demand_drivers/axioms/bandwidth-bottleneck.md)
 - [anthropic-revenue-runrate](../findings/anthropic-revenue-runrate.md)
+- [iso-capability-cost-halving](../../model_capability_cost/findings/iso-capability-cost-halving.md)
+- [model-cost-falls-faster-than-hardware](../../model_capability_cost/mechanisms/model-cost-falls-faster-than-hardware.md)
+- [billed-inference-volume](../../model_capability_cost/open_checks/billed-inference-volume.md)
