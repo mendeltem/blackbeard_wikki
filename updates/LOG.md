@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-02 | Projekt ai_modellkurve | `tools/general/wayback_snapshot/` | Tool angelegt: archivierte Preis- und Datenblattseiten zu einem Stichtag holen, als Text, mit zitierfaehigem Zeitstempel. Lieferte die historischen Preise des Projekts. 10 Tests bestanden, davon 1 netzabhaengig.
 - 2026-10-02 | Projekt ai_modellkurve | `knowledge/model_capability_cost/` | Thema angelegt: 3 Befunde (Iso-Faehigkeitskosten, Stillstand 2026 auf alten Niveaus, Rueckstand offener Gewichte ohne Trend), 2 Mechanismen, 1 Regel, 1 offener Pruefpunkt. Datengrundlage Stand 2026-09-05, 90 Modelle, jede Zahl mit Quelle.
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `tools/memory/wafer-ramp/` | Tool angelegt: Hochlauf einer Fab zwischen zwei gemeldeten Eckpunkten, Wafer und Erloes je Monat, 7 Tests bestanden.
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `knowledge/memory_earnings/` | 2 Befunde (SK Hynix Q2 2026 Einmaleffekt und Steuerquote, ADR-Emission Juli 2026), 1 Mechanismus (Rueckkaufhebel bei niedrigem KGV).
