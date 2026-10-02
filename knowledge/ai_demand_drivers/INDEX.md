@@ -25,3 +25,5 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang](findings/hbm-gb-per-mw-three-generations.md) | befund | vorschlag |
 | [Hyperscaler-ASICs verbauen HBM](findings/custom-asics-use-hbm.md) | befund | vorschlag |
 | [Architekturen ohne HBM](risks/hbm-bypass-architectures.md) | risiko | vorschlag |
+| [Rubin: Auslieferung ab August 2026, rund 20 % des DC-Umsatzes im Q3 GJ2027](findings/rubin-shipments-start-q3-fy27.md) | befund | vorschlag |
+| [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](open_checks/rubin-share-of-blackwell-base.md) | pruefpunkt | offen |
