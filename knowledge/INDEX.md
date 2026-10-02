@@ -6,3 +6,4 @@
 | [local_llm_operation](local_llm_operation/INDEX.md) | Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern |
 | [manufacturing_costs](manufacturing_costs/INDEX.md) | Entwicklung der Fertigungskosten: was billiger wird, was nicht, und was KI daran ändert |
 | [memory_earnings](memory_earnings/INDEX.md) | Gemeldete Zahlen der Speicherhersteller: Gewinn, FCF, Ausschüttung, Bewertung |
+| [risk_communication](risk_communication/INDEX.md) | Wahrscheinlichkeiten und Unsicherheit so darstellen, dass sie nicht falsch verstanden werden |
