@@ -2,6 +2,9 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/ai_application_layer/` | Thema angelegt: Gegenbuchung zu ai_demand_drivers — ob der Kapitaleinsatz der Angebotsseite aus der Anwendungsschicht zurückfließt. 1 Befund (Deckungsquote 2024: 1,6 %), 4 Mechanismen, 2 Regeln, 1 offener Prüfpunkt. Datenbasis Verbundseite ki-anwendungsschicht, 75 von 81 Sätzen noch nicht Tier-1a geprüft, Status vorschlag.
+- 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/ai_labor_market/` | Thema angelegt: Nutzungsprotokolle, Erhebungen und Lohndaten zu KI am Arbeitsplatz, 4 Befunde. Drei Instrumente strikt getrennt gehalten. Alle Quellen Working Paper/Preprint, Status vorschlag.
+- 2026-10-02 | Projekt AI-Lage-Verbund | `knowledge/china_industrial_strategy/` | Thema angelegt: Chinas Marktstellung und ihre Wirkung auf die KI-Schichten — 4 Mechanismen, 1 Befund (KI+-Breitenziel 70 % bis 2027). Quellen Presse und Denkfabriken, deshalb Mechanismen statt Befunde, Status vorschlag.
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `knowledge/ai_buyers/`, `knowledge/model_capability_cost/` | Querverweis zwischen Abrechnung je Token und Iso-Faehigkeitskosten gesetzt: steigende Aufrufzahl je Aufgabe gegen fallenden Preis je Token. Nur Verweise ergaenzt, keine Aussage geaendert.
 - 2026-10-02 | Projekt NVIDIA-Roadmap | `knowledge/ai_buyers/` | Thema angelegt: 2 Befunde zu Anthropic (Rechenzusagen, Umsatz-Laufrate), 1 Mechanismus (Abrechnung je Token), 1 Risiko (zirkulaere Finanzierung), 1 offener Pruefpunkt (S-1). Quellenlage ueberwiegend Presse, deshalb Status vorschlag.
 - 2026-10-02 | Projekt ai_modellkurve | `tools/general/wayback_snapshot/` | Tool angelegt: archivierte Preis- und Datenblattseiten zu einem Stichtag holen, als Text, mit zitierfaehigem Zeitstempel. Lieferte die historischen Preise des Projekts. 10 Tests bestanden, davon 1 netzabhaengig.
