@@ -5,7 +5,7 @@ status: getragen
 thema: knowledge/memory_earnings
 stand: 2026-10-02
 herkunft: Gespräch Projekt SK Hynix, 2026-10-02
-verweist_auf: []
+verweist_auf: [sk-hynix-free-cash-flow-2024-h1-2026]
 ---
 
 # SK Hynix Ausschüttungspolitik 2025 bis 2027
@@ -32,4 +32,4 @@ Q3-Beschluss bleibt unter 50 % des kumulierten FCF oder verschiebt die Ausschüt
 SK Hynix Pressemitteilung und Regulatory Filing vom 19.08.2026, Tier 1a (PR Newswire, Reuters-Bericht). SK Hynix Q2-2026-Pressemitteilung vom 29.07.2026, Tier 1a.
 
 ## Verknüpft
-- keine
+- [sk-hynix-free-cash-flow-2024-h1-2026](sk-hynix-free-cash-flow-2024-h1-2026.md) — der FCF, an dem die Untergrenze hängt, jetzt mit Tier-1a-Zahlen
