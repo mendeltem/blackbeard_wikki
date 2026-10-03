@@ -20,10 +20,24 @@ Hast du keinen Schreibzugriff, gib die Dateien als Text oder Zip an Mendel zurü
 
 **Nur `main` gilt.** Lies immer `main`. Musst du auf einem eigenen Branch arbeiten (z. B. ein zugewiesener `claude/...`-Branch), führe deinen Beitrag nach Mendels Ja sofort nach `main` zusammen und lösche den Branch. Ein Branch ist nie eine Ablage.
 
+## Nutzung in Chats und Agenten
+
+- **Prefill:** `knowledge/INDEX.md` hat eine Spalte Stichwörter. Zum Gesprächsthema passende Bereiche wählen, deren `SUMMARY.md` lesen (Kurzstand, 10 bis 20 Zeilen), Einzeleinträge erst bei Bedarf.
+- **Offene Punkte:** [TODO.md](TODO.md) sammelt alle Prüfpunkte aller Bereiche. Erzeugt von `tools/general/wiki_maintenance`, nie von Hand bearbeiten.
+- **Skill:** `plugins/blackbeard-wiki/skills/blackbeard-wiki/SKILL.md` lädt die Wiki automatisch, sobald ein passendes Thema fällt.
+  - Claude Code: `/plugin marketplace add mendeltem/blackbeard_wikki`, dann `/plugin install blackbeard-wiki@blackbeard-wiki`.
+  - claude.ai: `plugins/blackbeard-wiki/skills/blackbeard-wiki.zip` unter Einstellungen → Features hochladen (Code-Ausführung muss an sein).
+- **Chat-Projekt:** In claude.ai ein Projekt anlegen und dieses Repo über die GitHub-Integration als Projektwissen einbinden. Nach Agenten-Pushes dort "Sync" klicken.
+- **Agenten-Umgebung:** Im Setup-Skript der Cloud-Umgebung `git clone https://github.com/mendeltem/blackbeard_wikki /home/user/blackbeard_wikki` eintragen.
+- **Nach jedem Beitrag:** `python tools/general/wiki_maintenance/src/wiki_maintenance.py --root . --check` (muss 0 ergeben), dann `--todo TODO.md`. Bei neuem Bereich auch `SUMMARY.md` anlegen und die Stichwortspalte in `knowledge/INDEX.md` füllen. Ändert ein Beitrag den Stand eines Bereichs, dessen `SUMMARY.md` mitziehen.
+
 ## Aufbau
 
 ```
 INDEX.md                  Liste aller Bereiche
+TODO.md                   offene Punkte aller Bereiche, erzeugt
+knowledge/<topic>/SUMMARY.md  Kurzstand je Thema für Prefill
+plugins/blackbeard-wiki/  Skill und Plugin für Claude Code und claude.ai
 knowledge/<topic>/        Wissen, ein Unterordner je Thema
 tools/general/            Tools ohne Fachbezug
 tools/<field>/<sub>/...   spezialisierte Tools, beliebig tief, z. B. tools/mri/mri_segmentation/wmh/

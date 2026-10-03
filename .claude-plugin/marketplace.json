@@ -1,0 +1,14 @@
+{
+  "name": "blackbeard-wiki",
+  "description": "Mendels Blackboard-Wiki als Skill: Wissensstand, Regeln und offene Punkte für Chats und Agenten",
+  "owner": {
+    "name": "mendeltem"
+  },
+  "plugins": [
+    {
+      "name": "blackbeard-wiki",
+      "source": "./plugins/blackbeard-wiki",
+      "description": "Lädt themenbezogen den Stand aus der Wiki, bevor geantwortet oder recherchiert wird"
+    }
+  ]
+}

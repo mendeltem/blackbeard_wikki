@@ -1,0 +1,8 @@
+{
+  "name": "blackbeard-wiki",
+  "description": "Lädt themenbezogen den Stand aus Mendels Blackboard-Wiki, bevor geantwortet oder recherchiert wird",
+  "version": "0.1.0",
+  "author": {
+    "name": "mendeltem"
+  }
+}
