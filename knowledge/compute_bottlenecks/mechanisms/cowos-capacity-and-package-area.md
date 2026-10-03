@@ -26,5 +26,6 @@ TSMC meldet freie CoWoS-Kapazität oder senkt die Ausbauplanung.
 TSMC-Calls, Tier 1a, nur qualitativ (eng, wird ausgebaut). Waferzahlen: Trade Press, unzulässig als Befund.
 
 ## Verknüpft
+- [allocation-beats-datasheet](allocation-beats-datasheet.md)
 - [bottleneck-migration](bottleneck-migration.md)
 - [cadence-and-yield-trough](../../ai_demand_drivers/mechanisms/cadence-and-yield-trough.md)

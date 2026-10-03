@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-03. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-12 offene Einträge.
+13 offene Einträge.
 
 ## ai_application_layer
 
@@ -24,6 +24,14 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-03. Nicht vo
 - [Capex gegen operativen Cashflow je Hyperscaler, 2026](knowledge/ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [GB HBM je MW über drei Generationen](knowledge/ai_demand_drivers/open_checks/hbm-gb-per-mw.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](knowledge/ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.md) (pruefpunkt, offen, Stand 2026-10-02)
+
+## compute_bottlenecks
+
+- [Zuteilung schlägt Datenblatt](knowledge/compute_bottlenecks/mechanisms/allocation-beats-datasheet.md) (mechanismus, vorschlag, Stand 2026-10-03)
+  - [ ] CoWoS-Anteile Nvidia, AMD, Broadcom 2026 und 2027 aus TSMC-Calls oder Herstellerangaben statt Analysten.
+  - [ ] AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).
+  - [ ] Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.
+  - [ ] Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.
 
 ## local_llm_operation
 

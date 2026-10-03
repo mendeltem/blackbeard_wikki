@@ -8,6 +8,7 @@ Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis 
 |---|---|---|
 | [Der bindende Engpass wandert](mechanisms/bottleneck-migration.md) | mechanismus | vorschlag |
 | [CoWoS: Kapazität gegen Fläche je Package](mechanisms/cowos-capacity-and-package-area.md) | mechanismus | vorschlag |
+| [Zuteilung schlägt Datenblatt](mechanisms/allocation-beats-datasheet.md) | mechanismus | vorschlag |
 | [Rackstrom erzwingt 800 V Gleichspannung](mechanisms/rack-current-forces-800vdc.md) | mechanismus | vorschlag |
 | [Optik im Package: erst zwischen Racks, dann im Rack](mechanisms/cpo-scale-out-before-scale-up.md) | mechanismus | vorschlag |
 | [Transformatoren: Lieferzeit über zwei Jahre](mechanisms/transformer-lead-times.md) | mechanismus | vorschlag |
