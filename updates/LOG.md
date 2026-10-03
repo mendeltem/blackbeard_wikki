@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-03 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/` | Victus auf Ubuntu 26.04 nachgemessen: 3 Befunde (Ubuntu gegen Windows 10 bei gleichen Flags, Needle-Treffer bis 125k, Hermes Agent mit lokalem Qwen3.6), 1 Risiko (Ollama kuerzt stumm). INDEX, SUMMARY und Stichwoerter ergaenzt.
 - 2026-10-03 | Projekt AI_news | `knowledge/compute_bottlenecks/mechanisms/allocation-beats-datasheet.md` | These Mendel eingetragen: Zuteilung (CoWoS, HBM4) schlägt Datenblatt, Stromknappheit verstärkt Nvidias Vorteil gegen AMD und Broadcom. Mechanismus vorschlag, 4 Prüfpunkte. SUMMARY, INDEX, Stichwörter und Querverweis bei cowos-capacity ergänzt.
 - 2026-10-03 | Projekt AI_news | `knowledge/*/SUMMARY.md`, `knowledge/INDEX.md`, `TODO.md`, `tools/general/wiki_maintenance/`, `plugins/blackbeard-wiki/`, `.claude-plugin/`, `README.md` | Wiki für Prefill eingerichtet: Kurzstand je Bereich (14), Stichwortspalte im Index, erzeugte TODO-Sammlung (12 offene Einträge), Werkzeug wiki_maintenance (TODO, tote Links, Indexprüfung; 5 Tests bestanden), Skill blackbeard-wiki als Claude-Code-Plugin und claude.ai-Zip. README: Abschnitt Nutzung.
 - 2026-10-03 | Projekt AI_news | `knowledge/memory_supply/mechanisms/gpu-memory-absorbs-fab-additions.md` | Die drei Axiome aus ai_demand_drivers (offener Suchraum, Investitionszwang/Wettrüsten, Bandbreiten-Engpass) als gesetzte Stütze der Bedingung "Stückzahl hält" verknüpft, mit Finanzierungsgrenze als Gegenkraft.
