@@ -5,7 +5,7 @@ status: getragen
 thema: knowledge/memory_earnings
 stand: 2026-10-02
 herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-16
-verweist_auf: [sk-hynix-shareholder-return-policy, low-pe-at-earnings-peak]
+verweist_auf: [sk-hynix-shareholder-return-policy, low-pe-at-earnings-peak, sk-hynix-kioxia-stake]
 ---
 
 # SK Hynix Q2 2026: Nettogewinn durch Einmaleffekt, Steuerquote abgeleitet
@@ -37,3 +37,4 @@ SK Hynix Pressemitteilung zum Q2 2026 vom 29.07.2026, Tier 1a. Zahlen zu nicht-o
 ## Verknuepft
 - [sk-hynix-shareholder-return-policy](sk-hynix-shareholder-return-policy.md)
 - [low-pe-at-earnings-peak](../risks/low-pe-at-earnings-peak.md)
+- [sk-hynix-kioxia-stake](sk-hynix-kioxia-stake.md) — woher der Einmalertrag stammt

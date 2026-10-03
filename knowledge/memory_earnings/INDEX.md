@@ -13,6 +13,8 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [SK Hynix ADR-Emission Juli 2026](findings/sk-hynix-adr-issuance-2026.md) | befund | getragen |
 | [Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet](findings/operating-margin-three-makers.md) | befund | vorschlag |
 | [SK Hynix freier Cashflow 2024 bis H1 2026](findings/sk-hynix-free-cash-flow-2024-h1-2026.md) | befund | vorschlag |
+| [SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone](findings/sk-hynix-nand-solidigm-turnaround.md) | befund | vorschlag |
+| [SK Hynix und Kioxia: Herkunft des Q2-Einmalertrags](findings/sk-hynix-kioxia-stake.md) | befund | vorschlag |
 | [Ein Peer-Beat überträgt sich schwach](mechanisms/peer-beat-transfers-weakly.md) | mechanismus | vorschlag |
 | [Rückkaufhebel bei niedrigem KGV](mechanisms/buyback-leverage-at-low-pe.md) | mechanismus | getragen |
 | [Niedriges KGV am Gewinngipfel](risks/low-pe-at-earnings-peak.md) | risiko | getragen |
