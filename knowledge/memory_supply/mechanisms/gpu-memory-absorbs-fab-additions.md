@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/memory_supply
 stand: 2026-10-03
 herkunft: These Mendel, durchgerechnet im Projekt AI_news, 2026-10-03
-verweist_auf: [hbm-eats-wafer-area, ddr5-hbm-per-wafer-opportunity-cost, rubin-hbm4-wafer-demand-2028-2030, capex-discipline-after-2023, cxmt-ramp, financing-limit, hbm-gb-per-mw-three-generations, no-standard-cycle-without-absorption-check]
+verweist_auf: [open-search-space, unverifiable-rival-position, bandwidth-bottleneck, hbm-eats-wafer-area, ddr5-hbm-per-wafer-opportunity-cost, rubin-hbm4-wafer-demand-2028-2030, capex-discipline-after-2023, cxmt-ramp, financing-limit, hbm-gb-per-mw-three-generations, no-standard-cycle-without-absorption-check]
 ---
 
 # Mehr Speicher je GPU frisst den Fab-Zubau
@@ -33,6 +33,13 @@ Beleg für die Richtung: Rubin Ultra wird laut TrendForce (August 2026) wegen HB
 - Warum der Standardzyklus als Default-Argument nicht reicht, siehe Regel [no-standard-cycle-without-absorption-check](../rules/no-standard-cycle-without-absorption-check.md).
 - Wo die Knappheit ankommt, entscheiden die Hersteller über die Waferaufteilung: entweder wird HBM rationiert (weniger GB je Package, weniger Ultra), oder konventionelles DRAM wird verdrängt (DDR/LPDDR-Preise steigen). Siehe [ddr5-hbm-per-wafer-opportunity-cost](ddr5-hbm-per-wafer-opportunity-cost.md).
 
+Warum die Stückzahl halten soll (gesetzt, nicht belegt): Die Bedingung des Mechanismus, dass GB je Package × Stückzahl weiter steigt, stützt sich auf die drei Axiome in [ai_demand_drivers](../../ai_demand_drivers/INDEX.md):
+1. [Offener Suchraum](../../ai_demand_drivers/axioms/open-search-space.md): Zusätzliche Rechenleistung findet Ertrag, die Nachfrage ist in keiner Anwendungsklasse gesättigt.
+2. [Unprüfbare Gegnerposition (Investitionszwang, Wettrüsten)](../../ai_demand_drivers/axioms/unverifiable-rival-position.md): Kein Spieler kann die Position des Gegners prüfen, Investieren ist dominant. Auf Staatenebene sehr stabil, auf Firmenebene weniger.
+3. [Bandbreiten-Engpass](../../ai_demand_drivers/axioms/bandwidth-bottleneck.md): Der Speicher ist der Engpass, deshalb fließt jede Entlastung zuerst in mehr und schnelleren Speicher je Beschleuniger.
+
+Diese drei sind Setzungen von Mendel. Was hier daran hängt, ist als gesetzt zu lesen. Gegenkraft ist die [Finanzierungsgrenze](../../ai_demand_drivers/mechanisms/financing-limit.md): Wollen ist nicht Können, der Bruch kann auf Firmenebene erzwungen kommen.
+
 ## Trägt nicht
 - Unbedingt. Der Mechanismus braucht, dass GB je Package × Stückzahl weiter steigt. Fällt die Stückzahl, weil die Käufer an die [Finanzierungsgrenze](../../ai_demand_drivers/mechanisms/financing-limit.md) stoßen, wirkt der Zubau entlastend (Gegenargument, geschätzt rund 30 %).
 - Für konventionelles DRAM allein: CXMT baut DDR/LPDDR aus, liefert aber kein HBM an Nvidia ([cxmt-ramp](../risks/cxmt-ramp.md)). HBM kann knapp bleiben, während DDR sich entspannt (rund 25 %).
@@ -51,6 +58,9 @@ Wahrscheinlichkeiten (Einschätzung des rechnenden Agenten, 2026-10-03, nicht Me
 Speicher je Package: Herstellerspezifikationen, Tier 1b. Kürzung Rubin Ultra und Vera-LPDDR: TrendForce und Presse, Warnsignal. Kapazitäten und HBM-Wafer-Anteil: Branchendienste. GB je Wafer, Stückzahlen, Nvidia-Anteil: Annahmen.
 
 ## Verknüpft
+- [open-search-space](../../ai_demand_drivers/axioms/open-search-space.md) (Axiom 1)
+- [unverifiable-rival-position](../../ai_demand_drivers/axioms/unverifiable-rival-position.md) (Axiom 2, Wettrüsten)
+- [bandwidth-bottleneck](../../ai_demand_drivers/axioms/bandwidth-bottleneck.md) (Axiom 3)
 - [rubin-hbm4-wafer-demand-2028-2030](../open_checks/rubin-hbm4-wafer-demand-2028-2030.md)
 - [no-standard-cycle-without-absorption-check](../rules/no-standard-cycle-without-absorption-check.md)
 - [hbm-eats-wafer-area](hbm-eats-wafer-area.md)
