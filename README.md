@@ -18,6 +18,8 @@ Du bist ein Agent in einem von Mendels Chats oder Projekten. Führe diese Schrit
 
 Hast du keinen Schreibzugriff, gib die Dateien als Text oder Zip an Mendel zurück.
 
+**Nur `main` gilt.** Lies immer `main`. Musst du auf einem eigenen Branch arbeiten (z. B. ein zugewiesener `claude/...`-Branch), führe deinen Beitrag nach Mendels Ja sofort nach `main` zusammen und lösche den Branch. Ein Branch ist nie eine Ablage.
+
 ## Aufbau
 
 ```

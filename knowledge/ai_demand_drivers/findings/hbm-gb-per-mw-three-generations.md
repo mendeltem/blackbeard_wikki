@@ -77,6 +77,8 @@ nicht veröffentlicht. Für NVL576 Kyber passen die Angaben nicht zusammen
 (365 TB bei 576 × 1.024 GB = 589.824 GB), die Zahl ist deshalb nicht reines HBM
 und bleibt ungerechnet.
 
+Eine frühere Rack-Rechnung (Eintrag hbm-gb-per-mw-first-pass, Projekt KI-Compute-Stack, hier aufgegangen) setzte VR200 NVL72 nach Sekundärreports auf 190 bis 230 kW und kam auf 90 bis 109 TB HBM je MW gegen 97 bis 115 bei Blackwell NVL72 (120 bis 142 kW): auf Rack-Ebene flach statt fallend. Gleichstand bei rund dem 1,5-Fachen der Blackwell-Rackleistung (180 bis 213 kW). Die Rackleistung ist nicht von NVIDIA veröffentlicht, deshalb kein Ersatz für die Rechnung je Beschleuniger.
+
 ## Bruchindikator
 
 Der Befund hängt an **einer** approximativen Zahl: Rubins TDP, von NVIDIA als

@@ -21,6 +21,8 @@ Rechenweg:
 
 Groessenordnungen, auf denen dieser Eintrag beruht (Annahmen, siehe Ablesung): HBM-Anteil an der DRAM-Waferzufuhr 18 Prozent (2025), 22 Prozent (2026), rund 30 Prozent (2027), bei einem Bit-Anteil von etwa 8, 9 und 13 Prozent.
 
+Zerlegung des Tauschverhältnisses (Report SK Hynix and the Memory Supercycle, Mai 2026, Sekundärquelle; übernommen aus dem aufgelösten Eintrag hbm-wafer-penalty): HBM-Die 35 bis 45 Prozent größer als DDR5 bei gleicher Kapazität, Ausbeute 20 bis 30 Prozent niedriger (inklusive TSV), Durchlauf 1,5 bis 2 Monate länger. Für HBM4E wird ein Verhältnis über 4 erwartet.
+
 ## Traegt
 Die Richtung: Steigt der HBM-Wafer-Anteil schneller als die Gesamtkapazitaet, sinkt die absolute Bitmenge fuer konventionelles DRAM. Bei plus 5 Prozent Kapazitaet im Jahr und dem genannten Anteilspfad schrumpft die DDR-Flaeche bis 2027 um knapp 6 Prozent.
 
