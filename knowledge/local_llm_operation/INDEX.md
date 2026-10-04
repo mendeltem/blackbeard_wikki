@@ -25,6 +25,9 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | risiko | [opencode-run-hangs-on-open-stdin](risks/opencode-run-hangs-on-open-stdin.md) | `opencode run` haengt ohne `</dev/null`, keine Anfrage erreicht das Modell |
 | regel | [foreign-gpu-process-before-measuring](rules/foreign-gpu-process-before-measuring.md) | Vergessener `llama-server` auf der GPU: Prefill 30 statt 397 t/s |
 | pruefpunkt | [mmap-vs-load-mode-none](open_checks/mmap-vs-load-mode-none.md) | Lademodus bei Expert-Offloading, ungemessen |
+| pruefpunkt | [dense-27b-vs-moe-on-8gb](open_checks/dense-27b-vs-moe-on-8gb.md) | Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s |
+| pruefpunkt | [reasoning-effort-for-routine-agent-tasks](open_checks/reasoning-effort-for-routine-agent-tasks.md) | Wie viel Thinking Routineaufgaben im Agenten brauchen, ungemessen |
+| pruefpunkt | [minimal-harness-prompt-size](open_checks/minimal-harness-prompt-size.md) | Pi unter 1000 Token Prompt gegen OpenCode 10 879 und Hermes ~13 000 |
 
 ## Werkzeuge dazu
 
