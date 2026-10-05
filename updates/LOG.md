@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md` | Abschnitt Suchquellen ergänzt (Behördenverzeichnisse, Anwendungskonferenzen, Branchenmessen, Unternehmensberichte, Frühindikatoren) für den Samstags-Lauf.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/` | Flughafen-Prüfpunkt um Rechercheergebnis ergänzt (Kernzahlen mit Herkunft, Kartenentwurf). Neuer Prüfpunkt use-case-overview-gaps: 11 Kandidaten für fehlende Use Cases aus sparsamer Stichwortsuche, Webrecherche für Samstag vorgemerkt.
 - 2026-10-05 | Projekt AI_news | `knowledge/memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.md` | Toten Link korrigiert (../memory_supply → ../../memory_supply), gefunden von wiki_maintenance --check. Inhalt unverändert.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/airport-biometric-checkin-use-case.md` | Prüfpunkt angelegt: biometrischer Flughafen-Check-in fehlt in ai_use_cases_overview (Volltextsuche, kein Treffer). 5 Prüfschritte bis zur Karte. Übersichtsseite als Use-Case-Katalog in SUMMARY von ai_application_layer verlinkt, Stichwörter ergänzt.
