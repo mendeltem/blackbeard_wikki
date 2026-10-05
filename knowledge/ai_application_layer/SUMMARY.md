@@ -10,6 +10,6 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 
 **Offen:** Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten). Flughafen-Check-in als Use Case erfassen.
 
-**Use-Case-Katalog:** [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/), 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Lücken: Flughafen-Check-in (Kartenentwurf liegt vor) und 11 weitere Kandidaten zur Prüfung am Samstag (Prüfpunkt use-case-overview-gaps).
+**Use-Case-Katalog:** [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/), 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Flughafen-Check-in seit 2026-10-05 als Karte drin (98 Karten). Weitere Lücken: 11 Kandidaten zur Prüfung am Samstag (Prüfpunkt use-case-overview-gaps).
 
 **Lesen bei:** Investieren, KI-Blase, ROI von KI, wer bezahlt den Ausbau.

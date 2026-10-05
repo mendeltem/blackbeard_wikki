@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/` | Flughafen-Karte in ai_use_cases_overview eingetragen, Prüfpunkt airport-biometric-checkin-use-case geschlossen (getragen). Hinweis in use-case-overview-gaps: Rail predictive maintenance existiert inzwischen.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md` | Abschnitt Suchquellen ergänzt (Behördenverzeichnisse, Anwendungskonferenzen, Branchenmessen, Unternehmensberichte, Frühindikatoren) für den Samstags-Lauf.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/` | Flughafen-Prüfpunkt um Rechercheergebnis ergänzt (Kernzahlen mit Herkunft, Kartenentwurf). Neuer Prüfpunkt use-case-overview-gaps: 11 Kandidaten für fehlende Use Cases aus sparsamer Stichwortsuche, Webrecherche für Samstag vorgemerkt.
 - 2026-10-05 | Projekt AI_news | `knowledge/memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.md` | Toten Link korrigiert (../memory_supply → ../../memory_supply), gefunden von wiki_maintenance --check. Inhalt unverändert.

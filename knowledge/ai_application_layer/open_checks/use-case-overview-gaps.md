@@ -17,6 +17,8 @@ Ohne jeden Treffer: Kreditscoring/Underwriting, Hörgeräte mit KI, Smartphone-F
 
 Nur in der Lückenliste oder einem Nebensatz, ohne eigene Karte: Flugsicherung, Kennzeichenerkennung und Maut, Barrierefreiheit (Be My Eyes u. a.), Content-Moderation.
 
+Stand 2026-10-05 abends: Flughafen-Karte eingetragen; die Seite hat inzwischen eine Karte "Rail predictive maintenance" (Gleisinspektion vermutlich abgedeckt, prüfen).
+
 Treffer möglicherweise zufällig, Karte prüfen: Hafenautomation ("port" kann "support" sein), Gleisinspektion ("track" kann "tracking" sein).
 
 ## Zu prüfen

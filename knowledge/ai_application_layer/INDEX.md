@@ -14,5 +14,5 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Destillation ersetzt Rechenzeit, sie verbraucht sie nicht](mechanisms/distillation-substitutes-compute.md) | mechanismus | vorschlag |
 | [Deckungsquote 2024: 1,6 Prozent](findings/coverage-ratio-2024.md) | befund | vorschlag |
 | [Mengenbilanz der Beschleuniger](open_checks/accelerator-mass-balance.md) | pruefpunkt | offen |
-| [Flughafen: biometrischer Check-in als Use Case erfassen](open_checks/airport-biometric-checkin-use-case.md) | pruefpunkt | offen |
+| [Flughafen: biometrischer Check-in als Use Case erfassen](open_checks/airport-biometric-checkin-use-case.md) | pruefpunkt | getragen (erledigt) |
 | [Lücken in ai_use_cases_overview: Kandidatenliste](open_checks/use-case-overview-gaps.md) | pruefpunkt | offen |
