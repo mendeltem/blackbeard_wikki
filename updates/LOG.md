@@ -2,6 +2,10 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-06 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/SUMMARY.md`, `knowledge/INDEX.md`, `TODO.md`, `updates/LOG.md` | Nachtrag zu den drei Beiträgen vom 4. bis 6.10.: Logzeilen fehlten, SUMMARY und Stichwörter nachgezogen, TODO neu erzeugt.
+- 2026-10-06 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/` | Befund Laya als Weiche vor dem Agenten (24/30, 0,1 s als Dienst), Befund schlanker Hermes (5 648 statt ~13 000 Token Prompt), Risiko hermes-agent-self-evolution fällt stumm von GEPA auf MIPROv2 zurück. (Commit f64671c, Logzeile nachgetragen.)
+- 2026-10-04 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/open_checks/` | Drei Prüfpunkte aus Video zu Qwen3.8-27B-Fine-Tunes: dichtes 27B gegen MoE auf 8 GB, Thinking-Menge bei Routineaufgaben, minimaler Harness gegen OpenCode. (Commit b95832a, Logzeile nachgetragen.)
+- 2026-10-04 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/` | Befund Hermes delegiert an OpenCode lokal, Risiko `opencode run` hängt bei offenem stdin, Regel fremden GPU-Prozess vor dem Messen prüfen. (Commit 49b2073, Logzeile nachgetragen.)
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/` | Flughafen-Karte in ai_use_cases_overview eingetragen, Prüfpunkt airport-biometric-checkin-use-case geschlossen (getragen). Hinweis in use-case-overview-gaps: Rail predictive maintenance existiert inzwischen.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md` | Abschnitt Suchquellen ergänzt (Behördenverzeichnisse, Anwendungskonferenzen, Branchenmessen, Unternehmensberichte, Frühindikatoren) für den Samstags-Lauf.
 - 2026-10-05 | Projekt AI_news | `knowledge/ai_application_layer/open_checks/` | Flughafen-Prüfpunkt um Rechercheergebnis ergänzt (Kernzahlen mit Herkunft, Kartenentwurf). Neuer Prüfpunkt use-case-overview-gaps: 11 Kandidaten für fehlende Use Cases aus sparsamer Stichwortsuche, Webrecherche für Samstag vorgemerkt.

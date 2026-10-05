@@ -1,9 +1,9 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-06. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-14 offene Einträge.
+17 offene Einträge.
 
 ## ai_application_layer
 
@@ -40,7 +40,10 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht vo
 
 ## local_llm_operation
 
+- [Weniger Denken bei einem dichten 27B: schneller als das MoE auf 8 GB?](knowledge/local_llm_operation/open_checks/dense-27b-vs-moe-on-8gb.md) (pruefpunkt, offen, Stand 2026-10-04)
+- [Kleiner Harness statt kleineres Modell?](knowledge/local_llm_operation/open_checks/minimal-harness-prompt-size.md) (pruefpunkt, offen, Stand 2026-10-04)
 - [Lademodus bei Expert-Offloading: mmap oder none?](knowledge/local_llm_operation/open_checks/mmap-vs-load-mode-none.md) (pruefpunkt, offen, Stand 2026-08-29)
+- [Wie viel Thinking brauchen Routineaufgaben im Agenten?](knowledge/local_llm_operation/open_checks/reasoning-effort-for-routine-agent-tasks.md) (pruefpunkt, offen, Stand 2026-10-04)
 
 ## manufacturing_costs
 
