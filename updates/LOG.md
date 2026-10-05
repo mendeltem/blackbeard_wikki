@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-06 | Claude-Code-Sitzung Victus | `tools/llm/finetuning/unsloth_finetune/`, `tools/llm/`, `tools/INDEX.md` | Neuer Bereich tools/llm. Skill unsloth-finetune: LoRA-Finetuning mit Unsloth auf kleiner GPU bis zum Ollama-Modell, mit vram_plan.py (9 Tests bestanden). Training selbst nicht ausgeführt, VRAM-Zahlen Herstellerangabe.
 - 2026-10-06 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/SUMMARY.md`, `knowledge/INDEX.md`, `TODO.md`, `updates/LOG.md` | Nachtrag zu den drei Beiträgen vom 4. bis 6.10.: Logzeilen fehlten, SUMMARY und Stichwörter nachgezogen, TODO neu erzeugt.
 - 2026-10-06 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/` | Befund Laya als Weiche vor dem Agenten (24/30, 0,1 s als Dienst), Befund schlanker Hermes (5 648 statt ~13 000 Token Prompt), Risiko hermes-agent-self-evolution fällt stumm von GEPA auf MIPROv2 zurück. (Commit f64671c, Logzeile nachgetragen.)
 - 2026-10-04 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/open_checks/` | Drei Prüfpunkte aus Video zu Qwen3.8-27B-Fine-Tunes: dichtes 27B gegen MoE auf 8 GB, Thinking-Menge bei Routineaufgaben, minimaler Harness gegen OpenCode. (Commit b95832a, Logzeile nachgetragen.)
