@@ -1,9 +1,9 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-06. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-14 offene Einträge.
+20 offene Einträge.
 
 ## ai_application_layer
 
@@ -28,6 +28,12 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht vo
 
 - [Capex gegen operativen Cashflow je Hyperscaler, 2026](knowledge/ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [GB HBM je MW über drei Generationen](knowledge/ai_demand_drivers/open_checks/hbm-gb-per-mw.md) (pruefpunkt, offen, Stand 2026-10-02)
+- [Nvidia: Forderungslaufzeit, Vorauszahlungen und Beteiligungsgewinne im 10-Q](knowledge/ai_demand_drivers/open_checks/nvidia-receivables-and-prepaid.md) (pruefpunkt, offen, Stand 2026-10-06)
+  - [ ] DSO aus Forderungen und Umsatz je Quartal nachrechnen, vier Quartale zurück.
+  - [ ] Prepaid- und Other-Assets-Positionen und Abnahmeverpflichtungen (purchase obligations) im Anhang, mit Fälligkeiten.
+  - [ ] Kundenkonzentration im 10-Q: Anteil der größten Kunden an Umsatz und Forderungen.
+  - [ ] Beteiligungsgewinne vom operativen Ergebnis trennen, wie bei SK Hynix und Kioxia.
+  - [ ] Prüfen, ob Nvidias Vorauszahlungen und die Anzahlungen der Speicherhersteller in derselben Größenordnung liegen.
 - [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](knowledge/ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.md) (pruefpunkt, offen, Stand 2026-10-02)
 
 ## compute_bottlenecks
@@ -40,7 +46,10 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht vo
 
 ## local_llm_operation
 
+- [Weniger Denken bei einem dichten 27B: schneller als das MoE auf 8 GB?](knowledge/local_llm_operation/open_checks/dense-27b-vs-moe-on-8gb.md) (pruefpunkt, offen, Stand 2026-10-04)
+- [Kleiner Harness statt kleineres Modell?](knowledge/local_llm_operation/open_checks/minimal-harness-prompt-size.md) (pruefpunkt, offen, Stand 2026-10-04)
 - [Lademodus bei Expert-Offloading: mmap oder none?](knowledge/local_llm_operation/open_checks/mmap-vs-load-mode-none.md) (pruefpunkt, offen, Stand 2026-08-29)
+- [Wie viel Thinking brauchen Routineaufgaben im Agenten?](knowledge/local_llm_operation/open_checks/reasoning-effort-for-routine-agent-tasks.md) (pruefpunkt, offen, Stand 2026-10-04)
 
 ## manufacturing_costs
 
@@ -49,6 +58,16 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht vo
 ## memory_earnings
 
 - [Micron FQ4: HBM gegen konventionelles DRAM](knowledge/memory_earnings/open_checks/micron-fq4-hbm-split.md) (pruefpunkt, offen, Stand 2026-10-02)
+- [SK Hynix: Anzahlungen und Vertragsverbindlichkeiten aus der Bilanz erheben](knowledge/memory_earnings/open_checks/sk-hynix-contract-liabilities.md) (pruefpunkt, offen, Stand 2026-10-06)
+  - [ ] Vertragsverbindlichkeiten und erhaltene Anzahlungen (kurz- und langfristig) aus Halbjahres- und Q3-Bericht (DART) und aus 424B4 oder 20-F, je Stichtag.
+  - [ ] Zufluss aus Kundenanzahlungen in der Kapitalflussrechnung.
+  - [ ] Angaben zu Preisformeln, Deckeln, Böden oder Take-or-pay im Anhang oder im Prospekt.
+  - [ ] Verhältnis Anzahlungen zu Umsatz gegen Micron stellen.
+- [Solidigm: Börsengang und was er für Aktionäre der Mutter bedeutet](knowledge/memory_earnings/open_checks/solidigm-listing-structure.md) (pruefpunkt, offen, Stand 2026-10-06)
+  - [ ] Ad-hoc-Mitteilung vom 05.08.2026 im Wortlaut (DART).
+  - [ ] Struktur: Spin-off oder Carve-out, Anteil der Mutter danach.
+  - [ ] Solidigm-Zahlen im Q3-Bericht gegen H1 2026 (Umsatz 12,25, Nettogewinn 5,84 Bio. KRW).
+  - [ ] Buchwert von Solidigm in der Bilanz der Mutter als Schwelle für Buchgewinn oder -verlust.
 
 ## memory_supply
 

@@ -1,6 +1,6 @@
 # memory_supply: Kurzstand
 
-Stand 2026-10-03. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-06. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
@@ -13,5 +13,7 @@ Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 **Risiko:** CXMT entlastet konventionelles DRAM, nicht HBM.
 
 **Offen:** Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030.
+
+**Ergänzt 2026-10-06 (Projekt SK Hynix, Filing F-1):** Befunde (getragen): 10 Wafer-Fabs (6 DRAM, 4 NAND), HBM ist keine Fab-Kategorie; vom Ausbau sind 55,9 von rund 1.100 Bio. KRW freigegeben (5,1 %), genau eine Wafer-Fab im Bau; China-Werke unter Jahreslizenz, kein Ausbauverbot im Filing. Mechanismen (vorschlag): Verdopplung der Wafer bis 2031 = 14,87 % p.a., in Bits 7 bis 13 %; Angebotsantwort langsam und klumpig. Axiome (getragen): Kein Zyklusdatum, Angebotslücke, Yield-Tal. Regeln (getragen): Yield gestapelter Produkte zerlegen, Backend und Basisdie getrennt führen und den bindenden Engpass nennen. Technik nach HBM4: [memory_technology_roadmap](../memory_technology_roadmap/SUMMARY.md).
 
 **Lesen bei:** Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.

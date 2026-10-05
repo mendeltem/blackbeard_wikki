@@ -2,7 +2,7 @@
 
 Was aus gemeldeten Quartalszahlen der Speicherhersteller (SK Hynix, Micron, Samsung) für Gewinn, freien Cashflow, Ausschüttung und Bewertung folgt. Die Angebotsseite steht in [memory_supply](../memory_supply/INDEX.md), die Nachfrageseite in [ai_demand_drivers](../ai_demand_drivers/INDEX.md), dort gilt auch die Regel [Nachfrage ist nicht Earnings](../ai_demand_drivers/rules/demand-is-not-earnings.md).
 
-Stand 2026-10-02. Ein Eintrag je Datei.
+Stand 2026-10-06. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -19,3 +19,16 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Rückkaufhebel bei niedrigem KGV](mechanisms/buyback-leverage-at-low-pe.md) | mechanismus | getragen |
 | [Niedriges KGV am Gewinngipfel](risks/low-pe-at-earnings-peak.md) | risiko | getragen |
 | [Micron FQ4: HBM gegen konventionelles DRAM](open_checks/micron-fq4-hbm-split.md) | pruefpunkt | offen |
+| [SK Hynix: Capex, Abschreibung und Capex-Regel 2023 bis Q1 2026](findings/sk-hynix-capex-depreciation-2023-q1-2026.md) | befund | getragen |
+| [Capex ist kürzbar, Abschreibung nicht: woher der Verlust im Abschwung kommt](mechanisms/depreciation-outlasts-capex-cut.md) | mechanismus | getragen |
+| [Das Ausbauprogramm ist auf den Spitzenumsatz dimensioniert](risks/expansion-sized-for-peak-revenue.md) | risiko | vorschlag |
+| [SK Hynix: Kundenkonzentration und Vertriebsregionen laut Filing](findings/sk-hynix-customer-concentration-f1.md) | befund | getragen |
+| [Ein niedriges KGV ist eine Aussage über die Wiederholbarkeit des Nenners](rules/low-pe-is-about-the-denominator.md) | regel | getragen |
+| [Umsatz hält nur, wenn der Preis je Bit langsamer fällt, als die Bits wachsen](mechanisms/price-per-bit-decline-threshold.md) | mechanismus | vorschlag |
+| [eSSD als Signal: stark heißt knapp stromaufwärts, schwach heißt nichts](rules/essd-signal-is-asymmetric.md) | regel | vorschlag |
+| [SK Hynix: Anzahlungen und Vertragsverbindlichkeiten aus der Bilanz erheben](open_checks/sk-hynix-contract-liabilities.md) | pruefpunkt | offen |
+| [Vertragsstabilität](axioms/contract-stability.md) | axiom | getragen |
+| [Die Rechenkette endet beim freien Cashflow, nicht beim operativen Ergebnis](rules/earnings-chain-ends-at-free-cash-flow.md) | regel | getragen |
+| [Der Rückkauf ist ein schwächeres Unterbewertungssignal, als er aussieht](risks/buyback-signal-weakened-by-holding-threshold.md) | risiko | vorschlag |
+| [Solidigm: Börsengang und was er für Aktionäre der Mutter bedeutet](open_checks/solidigm-listing-structure.md) | pruefpunkt | offen |
+| [Speicher wird in Dollar verkauft: das Währungsrisiko ist nicht der Won](rules/usd-contracts-set-currency-exposure.md) | regel | vorschlag |
