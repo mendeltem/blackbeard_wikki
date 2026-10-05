@@ -32,7 +32,7 @@ NAND ist nach HBM/DRAM die zweite, kleinere Säule von SK Hynix und hat sich
 
 Lesart: Die Drehung bei Solidigm macht NAND zu einem zweiten KI-Hebel neben HBM
 und dämpft die Abhängigkeit vom HBM-Anteil aus
-[hbm-market-share-and-nvidia-allocation](../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md).
+[hbm-market-share-and-nvidia-allocation](../../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md).
 Sie erklärt auch einen Teil der Margenausweitung aus
 [operating-margin-three-makers](operating-margin-three-makers.md): NAND-Preise
 sind 2026 stark gestiegen.
@@ -71,4 +71,4 @@ zweite Säule schwächer als hier gelesen.
 ## Verknüpft
 - [operating-margin-three-makers](operating-margin-three-makers.md)
 - [sk-hynix-free-cash-flow-2024-h1-2026](sk-hynix-free-cash-flow-2024-h1-2026.md)
-- [hbm-market-share-and-nvidia-allocation](../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md)
+- [hbm-market-share-and-nvidia-allocation](../../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md)

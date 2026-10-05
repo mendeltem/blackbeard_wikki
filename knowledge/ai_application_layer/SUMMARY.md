@@ -8,6 +8,8 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 
 **Regeln (vorschlag):** Wertschöpfung ≠ Abschöpfung ≠ Rückfluss. Fehlende Messung ist keine gemessene Abwesenheit.
 
-**Offen:** Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten).
+**Offen:** Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten). Flughafen-Check-in als Use Case erfassen.
+
+**Use-Case-Katalog:** [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/), 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Lücke: Flughafen-Check-in fehlt (Prüfpunkt).
 
 **Lesen bei:** Investieren, KI-Blase, ROI von KI, wer bezahlt den Ausbau.
