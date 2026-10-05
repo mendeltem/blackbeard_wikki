@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-14 offene Einträge.
+15 offene Einträge.
 
 ## ai_application_layer
 
@@ -14,6 +14,11 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-05. Nicht vo
   - [ ] Reifegrad, Belegqualität und Wachstum nach den Achsen der Übersichtsseite einstufen.
   - [ ] Einordnung in einen Cluster der Seite: Security & fraud oder Mobility & transport.
   - [ ] Karte für ai_use_cases_overview entwerfen und Mendel zur Freigabe vorlegen (Schreibzugriff auf das Repo nötig).
+- [Lücken in ai_use_cases_overview: Kandidatenliste](knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md) (pruefpunkt, offen, Stand 2026-10-05)
+  - [ ] Samstag (viel Token-Budget): je Kandidat Webrecherche nach dem Muster des Flughafen-Falls, also Produktion ja/nein, Kennzahl mit Herkunft, Behörde gegen Firmenangabe, Einstufung Reife/Beleg/Wachstum.
+  - [ ] Weitere Kandidaten systematisch sammeln: Lückenliste der Seite (Branchen ohne Karte) Branche für Branche gegen bekannte Produktivfälle halten.
+  - [ ] Die zwei möglicherweise zufälligen Treffer gegen die Kartentexte lesen.
+  - [ ] Je bestätigter Lücke Kartenentwurf an Mendel, gesammelt eintragen (Schreibzugriff auf ai_use_cases_overview nötig).
 
 ## ai_buyers
 

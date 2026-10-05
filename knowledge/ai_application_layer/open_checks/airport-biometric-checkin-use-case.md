@@ -20,6 +20,16 @@ Die Übersichtsseite [ai_use_cases_overview](https://mendeltem.github.io/ai_use_
 4. Einordnung in einen Cluster der Seite: Security & fraud oder Mobility & transport.
 5. Karte für ai_use_cases_overview entwerfen und Mendel zur Freigabe vorlegen (Schreibzugriff auf das Repo nötig).
 
+## Stand der Recherche 2026-10-05
+Schritte 1 bis 4 erledigt, Kartenentwurf liegt vor (Cluster 9 Security & fraud, Reife prod, Beleg 3, Wachstum strong). Kernzahlen, je mit Herkunft:
+- Singapur ICA: passlose automatische Spuren, ~93 Mio Abfertigungen bis 30.06.2025, im Schnitt 25 s auf 10 s, Ziel 95 % automatisiert (Behörde; Zielerreichung nicht gefunden).
+- CBP: Gesichtsabgleich an allen US-Flughäfen bei internationaler Ankunft, >98 % Trefferquote (Behörde, über Presse).
+- EU Entry/Exit System: seit 10.04.2026 voll in Betrieb, über 145 Mio Ein- und Ausreisen erfasst (EU-Kommission, Seite Juli 2026, über Suchauszug); Schlangen an einzelnen Übergängen nach dem Start (House of Commons Library).
+- TSA/Delta Touchless ID: Gepäckabgabe bis 75 %, Sicherheitskontrolle bis 60 % schneller als PreCheck (Firmenangabe Delta), ~11 Drehkreuze, TSA-Ausbau auf 65 Flughäfen 2026.
+- Hamad Doha mit Qatar Airways und SITA: über 700 biometrische Kontaktpunkte (SITA, Juli 2026).
+- SITA IT Insights 2025: biometrische Grenzkontrolle an 54 % der Flughäfen (Branchenumfrage; zählt Flughäfen, nicht Passagiere).
+Offen: Anteil der Passagiere, die tatsächlich biometrisch abgefertigt werden; mongolische Übersetzung; Schreibzugriff auf ai_use_cases_overview.
+
 ## Trägt nicht
 Noch keine Aussage über Verbreitung oder Wirkung. Dass der Fall auf der Seite fehlt, sagt nichts über seine Größe.
 
