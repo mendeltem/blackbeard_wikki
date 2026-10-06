@@ -11,3 +11,5 @@ Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.
 **Regel:** Angekündigt ist nicht gebaut (Stufe nennen).
 
 **Lesen bei:** Rechenzentrumsausbau, Strom, Packaging, Investieren in Infrastruktur.
+
+**Auf den Seiten:** Karten [CoWoS](https://mendeltem.github.io/ai_use_cases_overview/#uc=cowos-advanced-packaging), [CPO](https://mendeltem.github.io/ai_use_cases_overview/#uc=co-packaged-optics-cpo), [800 V DC](https://mendeltem.github.io/ai_use_cases_overview/#uc=800-vdc-rack-power), [Rechenzentrumsstrom](https://mendeltem.github.io/ai_use_cases_overview/#uc=data-center-power-the-grid); Globus [KI-Campus](https://mendeltem.github.io/Supply_Atlas3D/?uc=data-center-power-the-grid); Firmenzahlen [TSMC](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/TSM), [GE Vernova](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/GEV), [Vertiv](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/VRT).

@@ -15,3 +15,5 @@ Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 **Offen:** Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030.
 
 **Lesen bei:** Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.
+
+**Auf den Seiten:** Globus [SK hynix](https://mendeltem.github.io/Supply_Atlas3D/?company=SKHYNIX), [Samsung](https://mendeltem.github.io/Supply_Atlas3D/?company=SAMSUNG), [Micron](https://mendeltem.github.io/Supply_Atlas3D/?company=MU) (Werke, Speicherschicht); Karte [HBM-Speicher](https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle); Firmenzahlen [SK hynix](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX), [Micron](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU), [Samsung](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG).

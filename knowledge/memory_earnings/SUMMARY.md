@@ -11,3 +11,5 @@ Gemeldete Zahlen von SK Hynix, Micron, Samsung: Gewinn, FCF, Ausschüttung, Bewe
 **Offen:** Micron HBM gegen konventionelles DRAM.
 
 **Lesen bei:** Investieren in Speicheraktien, SK Hynix, Micron, Samsung, Bewertung.
+
+**Auf den Seiten:** Firmenzahlen [SK hynix](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX), [Micron](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU), [Samsung](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG), [Kioxia](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/KIOXIA), [SanDisk](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SNDK); Karten [HBM](https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle), [NAND/SSD](https://mendeltem.github.io/ai_use_cases_overview/#uc=nand-flash-enterprise-ssd).

@@ -9,3 +9,5 @@ Fertigungskosten und was KI daran ändert. Quelle ein Video und ein Gespräch, a
 **Offen:** Ab wann Physical AI den Teiletransport bei Kleinserien übernimmt.
 
 **Lesen bei:** Fertigung, Robotik, Physical AI, Reshoring.
+
+**Auf den Seiten:** Karten [Industrieroboter](https://mendeltem.github.io/ai_use_cases_overview/#uc=industrial-robots), [humanoide Roboter](https://mendeltem.github.io/ai_use_cases_overview/#uc=humanoid-robots), [visuelle Prüfung](https://mendeltem.github.io/ai_use_cases_overview/#uc=visual-inspection-predictive-maintenance).

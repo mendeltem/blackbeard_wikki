@@ -14,6 +14,8 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 
 **KI an Standorten (vorschlag, 2026-10-06):** Von 128 lv-5-Standorten im Supply Atlas ist KI an 42 am Standort belegt, an 39 nur beim Betreiber, an 27 nicht belegt, 13 sind selbst KI-Infrastruktur, 3 offen. Konzernbelege nie auf Werke übertragen (operator-evidence-is-not-site-evidence). Offen: Stufe 4 (221), drei Kraftwerke, Betreiber Tuoketuo.
 
-**Use-Case-Katalog aktuell:** 132 Karten in 17 Clustern (neu u. a. Instandhaltung, lokale Workstation, KI in Containerterminals), jede Karte mit Bild; mit Supply Atlas und AI_Companys verlinkt.
+**Use-Case-Katalog aktuell:** 143 Karten in 18 Clustern (neu u. a. Instandhaltung, lokale Workstation, KI in Containerterminals, Kommunikation), jede Karte mit Bild; mit Supply Atlas, AI_Companys und dieser Wiki verlinkt. 43 Karten zeigen ihre Einsatzorte auf dem Globus (229 Orte mit Quelle, Stand 2026-10-06). Offen: 20 Kartentexte sind durch neuere Quellen überholt oder widersprochen (Prüfpunkt use-case-card-corrections-2026-10, u. a. EHang nicht kommerziell, Yara Birkeland mit Besatzung).
 
 **Lesen bei:** Investieren, KI-Blase, ROI von KI, wer bezahlt den Ausbau.
+
+**Auf den Seiten:** [Use-Case-Übersicht](https://mendeltem.github.io/ai_use_cases_overview/) (Reife, Beleg, Wachstum je Karte); [Supply Atlas](https://mendeltem.github.io/Supply_Atlas3D/) mit Schalter „KI im Einsatz hervorheben“ und Use-Case-Auswahl im Menü, z. B. [autonome Minenflotten](https://mendeltem.github.io/Supply_Atlas3D/?uc=autonomous-mine-fleets), [KI-Containerterminals](https://mendeltem.github.io/Supply_Atlas3D/?uc=ai-container-terminals).

@@ -3,12 +3,13 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-06. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-19 offene Einträge.
+20 offene Einträge.
 
 ## ai_application_layer
 
 - [Mengenbilanz der Beschleuniger](knowledge/ai_application_layer/open_checks/accelerator-mass-balance.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [KI-Prüfung im Supply Atlas fortsetzen](knowledge/ai_application_layer/open_checks/supply-atlas-ai-use-level4.md) (pruefpunkt, offen, Stand 2026-10-06)
+- [Kartentexte in ai_use_cases_overview: veraltete oder widersprochene Angaben](knowledge/ai_application_layer/open_checks/use-case-card-corrections-2026-10.md) (pruefpunkt, offen, Stand 2026-10-06)
 - [Lücken in ai_use_cases_overview: Kandidatenliste](knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md) (pruefpunkt, offen, Stand 2026-10-05)
   - [ ] Samstag (viel Token-Budget): je Kandidat Webrecherche nach dem Muster des Flughafen-Falls, also Produktion ja/nein, Kennzahl mit Herkunft, Behörde gegen Firmenangabe, Einstufung Reife/Beleg/Wachstum.
   - [ ] Weitere Kandidaten systematisch sammeln: zuerst die Behördenverzeichnisse aus "Suchquellen", dann Lückenliste der Seite (Branchen ohne Karte) Branche für Branche gegen bekannte Produktivfälle halten.

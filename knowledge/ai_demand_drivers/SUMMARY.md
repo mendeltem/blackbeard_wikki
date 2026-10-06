@@ -15,3 +15,5 @@ Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels I
 **Offen:** Capex gegen operativen Cashflow je Hyperscaler, Rubin-Anteil am Bestand (35 vs 50 PF).
 
 **Lesen bei:** Investieren, Nvidia, HBM, Speichernachfrage, Capex, Wettrüsten.
+
+**Auf den Seiten:** Karte [KI-Beschleuniger](https://mendeltem.github.io/ai_use_cases_overview/#uc=ai-accelerators-custom-silicon); Firmenzahlen [Nvidia](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/NVDA); Globus [Nvidia: Fertigung, HBM, Montage, Rechenzentren](https://mendeltem.github.io/Supply_Atlas3D/?company=NVDA).

@@ -11,3 +11,5 @@ Wer die Rechenleistung kauft. Quellenlage schwächer: Modellanbieter sind privat
 **Offen:** Anthropic S-1 gegenprüfen, sobald öffentlich.
 
 **Lesen bei:** Investieren, Hyperscaler, Modellanbieter, Nachfrage nach Compute.
+
+**Auf den Seiten:** Firmenzahlen [Microsoft](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MSFT), [Alphabet](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/GOOGL), [Amazon](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/AMZN), [Meta](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/META), [Oracle](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/ORCL), [CoreWeave](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/CRWV); Globus [Microsoft-Standorte](https://mendeltem.github.io/Supply_Atlas3D/?company=MSFT).
