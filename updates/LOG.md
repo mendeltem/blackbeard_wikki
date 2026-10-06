@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-06 | Claude-Code-Sitzung, Kartenkorrekturen | `knowledge/ai_application_layer/{open_checks/use-case-card-corrections-2026-10,INDEX,SUMMARY}` | Prüfpunkt abgearbeitet: 20 Kartenangaben in ai_use_cases_overview (EN/DE/MN, Quellen, Anbieter) korrigiert, Commit 51cdd67; APS-Punkt teilweise verworfen (65 steht im Planungsdokument, Karte nennt AP-Zahlen Mai 2026). Status getragen.
 - 2026-10-06 | Claude-Code-Sitzung, Seitenverbund Ausbau | `knowledge/agent_coordination/rules/one-mapping-file-for-linked-pages.md`, `knowledge/ai_application_layer/{open_checks,INDEX,SUMMARY}`, `SUMMARY.md` von acht Bereichen | Wiki als vierte Seite im Verbund: deployments.json bekommt Abschnitt `wiki`, Karten, Firmenseiten und Atlas verlinken hierher; acht SUMMARY.md tragen die Zeile „Auf den Seiten“ mit Deep Links zurück. Regel um Rollen, Atlas-Menü und Prüfwerkzeug verbund_pruefen.py ergänzt. Prüfpunkt use-case-card-corrections-2026-10: 20 Kartenangaben, die neuere Quellen überholen.
 
 - 2026-10-06 | Claude-Code-Sitzung Victus | `knowledge/local_llm_operation/` | Befund everyday-tasks-qwen36-vs-qwen35-9b: 20 maschinell gepruefte Alltagsaufgaben, Qwen3.6 mit/ohne Denken gegen Qwen3.5-9B. Risiko ollama-silently-truncates-context um zweiten Fall ergaenzt (Standardkontext 4096 schneidet Denkteil ab).

@@ -19,4 +19,4 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Mengenbilanz der Beschleuniger](open_checks/accelerator-mass-balance.md) | pruefpunkt | offen |
 | [Flughafen: biometrischer Check-in als Use Case erfassen](open_checks/airport-biometric-checkin-use-case.md) | pruefpunkt | getragen (erledigt) |
 | [Lücken in ai_use_cases_overview: Kandidatenliste](open_checks/use-case-overview-gaps.md) | pruefpunkt | offen |
-| [Kartentexte in ai_use_cases_overview: veraltete oder widersprochene Angaben](open_checks/use-case-card-corrections-2026-10.md) | pruefpunkt | offen |
+| [Kartentexte in ai_use_cases_overview: veraltete oder widersprochene Angaben](open_checks/use-case-card-corrections-2026-10.md) | pruefpunkt | getragen |
