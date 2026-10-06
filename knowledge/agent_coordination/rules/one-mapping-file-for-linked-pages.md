@@ -49,5 +49,7 @@ Ein Link landet auf einer Karte, die nicht aufklappt, oder ein Use Case zeigt im
 Eigene Umsetzung, Commits 2026-10-06: ai_use_cases_overview 8910802, c2541be, 2700f45, 06d7a4b; Supply_Atlas3D bf3d831, 9973dfc, 7dbd125, 6600510; AI_Companys c6c3134. `seite.py`-Schritt im Probelauf zweimal angewandt, zweiter Lauf ohne Änderung; ein voller `seite.py`-Lauf ging nicht, weil der Datenordner `AI_companys_berichte` auf dem bauenden Rechner fehlte.
 Zweiter Ausbau am selben Tag: 43 von 143 Karten mit Orten (229 Orte, vorher 6 Karten / 47 Orte), 48 Karten mit Firmenlinks (vorher 29), 23 Karten und 20 Ticker mit Wiki-Links, Atlas-Menü für Use Cases und Firmen, Rollen im Standort-Dossier, Prüfwerkzeug. Alle Seiten in headless Chromium ohne JS-Fehler geladen, Links durchgeklickt. Neue Orte von fünf Recherche-Agenten mit geöffneter Quelle; 16 schwache Orte verworfen (Quelle vor 2019, nur Ankündigung, Ort geraten, Partner statt Einsatz).
 
+2026-10-07: 45 Karten / 242 Orte. Dabei aufgefallen: Ein Use Case ohne `name` (en/de) in deployments.json wird vom Atlas still nicht angezeigt; `verbund_pruefen.py` prüft das jetzt.
+
 ## Verknüpft
 [one-filename-two-contracts](one-filename-two-contracts.md), [parallel-sessions-same-working-tree](parallel-sessions-same-working-tree.md)

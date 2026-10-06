@@ -14,7 +14,7 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 
 **KI an Standorten (vorschlag, 2026-10-06):** Von 128 lv-5-Standorten im Supply Atlas ist KI an 42 am Standort belegt, an 39 nur beim Betreiber, an 27 nicht belegt, 13 sind selbst KI-Infrastruktur, 3 offen. Konzernbelege nie auf Werke übertragen (operator-evidence-is-not-site-evidence). Offen: Stufe 4 (221), drei Kraftwerke, Betreiber Tuoketuo.
 
-**Use-Case-Katalog aktuell:** 143 Karten in 18 Clustern (neu u. a. Instandhaltung, lokale Workstation, KI in Containerterminals, Kommunikation), jede Karte mit Bild; mit Supply Atlas, AI_Companys und dieser Wiki verlinkt. 43 Karten zeigen ihre Einsatzorte auf dem Globus (229 Orte mit Quelle, Stand 2026-10-06). 20 Kartentexte, die neuere Quellen überholt oder widerlegt hatten, sind korrigiert (Prüfpunkt use-case-card-corrections-2026-10, u. a. EHang ohne Ticketflüge, Yara Birkeland mit Besatzung, Unitree-IPO ~6,1 Mrd. Yuan statt 14,7 Mrd. $).
+**Use-Case-Katalog aktuell:** 143 Karten in 18 Clustern (neu u. a. Instandhaltung, lokale Workstation, KI in Containerterminals, Kommunikation), jede Karte mit Bild; mit Supply Atlas, AI_Companys und dieser Wiki verlinkt. 45 Karten zeigen ihre Einsatzorte auf dem Globus (242 Orte mit Quelle, Stand 2026-10-07). 20 Kartentexte, die neuere Quellen überholt oder widerlegt hatten, sind korrigiert (Prüfpunkt use-case-card-corrections-2026-10, u. a. EHang ohne Ticketflüge, Yara Birkeland mit Besatzung, Unitree-IPO ~6,1 Mrd. Yuan statt 14,7 Mrd. $).
 
 **Lesen bei:** Investieren, KI-Blase, ROI von KI, wer bezahlt den Ausbau.
 

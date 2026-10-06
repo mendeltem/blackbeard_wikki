@@ -41,7 +41,7 @@ Neuere Zahlen (Karte nachziehen):
 Alle 20 Punkte sind in den Karten nachgezogen; jede Änderung hat eine Quelle in der Quellenzeile der Karte. Gegengeprüft beim Einarbeiten: Unitree 6,1 Mrd. Yuan (RTHK), Aurora 10 Strecken mit Beobachter (Transport Topics), Aurecon-Wortlaut zu Hornsdale ("nearly AUD 40 million in Regulation FCAS costs in both 2016 and 2017", Kosten der 35-MW-Beschränkung).
 
 ## Trägt nicht
-Die Agenten haben die Karten nur gegen die Quellen gelesen, die sie für die Orte suchten. Eine fehlende Zeile heißt nicht, dass die übrige Karte stimmt. Das Websuch-Budget der Sitzung (200) war am Ende erschöpft; autonomous-rail-yards und milking-robots blieben ohne Orte, die Wabtec-Zahl "50 Standorte" ungeprüft.
+Die Agenten haben die Karten nur gegen die Quellen gelesen, die sie für die Orte suchten. Eine fehlende Zeile heißt nicht, dass die übrige Karte stimmt. Das Websuch-Budget der Sitzung (200) war am Ende erschöpft; autonomous-rail-yards und milking-robots blieben zunächst ohne Orte. Nachgeholt am 2026-10-07 (ai_use_cases_overview d14203f): 7 Melkbetriebe, 6 Rangierorte. Die Wabtec-Zahl "50 Standorte, ~1 Mio. Waggons/Jahr" ließ sich nicht belegen (Wabtecs Datenblatt nennt keine Standortzahl, einziger benannter Einsatz: Yard Planner in Norris Yard, Norfolk Southern, 2023); die Karte wurde neu geschrieben. Lely-Zahlen der Melkroboter-Karte bestätigt: 50.000. Astronaut am 15.5.2024, Umsatz 2025 1.014 Mio. € (+18 %).
 
 ## Bruchindikator
 Erledigt, wenn alle Kästchen abgehakt oder als falsch verworfen sind. Erfüllt am 2026-10-06. Neu öffnen, wenn eine Karte wieder eine der alten Angaben zeigt.
