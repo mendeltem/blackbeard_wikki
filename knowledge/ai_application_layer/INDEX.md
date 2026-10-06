@@ -13,6 +13,9 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Konvergenz, wo Wissen öffentlich ist; Divergenz, wo es in Betriebsdaten steckt](mechanisms/convergence-where-public-divergence-where-proprietary.md) | mechanismus | vorschlag |
 | [Destillation ersetzt Rechenzeit, sie verbraucht sie nicht](mechanisms/distillation-substitutes-compute.md) | mechanismus | vorschlag |
 | [Deckungsquote 2024: 1,6 Prozent](findings/coverage-ratio-2024.md) | befund | vorschlag |
+| [KI-Einsatz an den 128 wichtigsten Standorten des Supply Atlas](findings/supply-atlas-ai-use-level5.md) | befund | vorschlag |
+| [Konzernbeleg ist kein Standortbeleg](rules/operator-evidence-is-not-site-evidence.md) | regel | vorschlag |
+| [KI-Prüfung im Supply Atlas fortsetzen](open_checks/supply-atlas-ai-use-level4.md) | pruefpunkt | offen |
 | [Mengenbilanz der Beschleuniger](open_checks/accelerator-mass-balance.md) | pruefpunkt | offen |
 | [Flughafen: biometrischer Check-in als Use Case erfassen](open_checks/airport-biometric-checkin-use-case.md) | pruefpunkt | getragen (erledigt) |
 | [Lücken in ai_use_cases_overview: Kandidatenliste](open_checks/use-case-overview-gaps.md) | pruefpunkt | offen |

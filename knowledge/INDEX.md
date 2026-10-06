@@ -4,9 +4,9 @@ Prefill: zuerst die Spalte Stichwörter mit dem Gesprächsthema abgleichen, dann
 
 | Thema | Inhalt | Stichwörter | Kurzstand |
 |---|---|---|---|
-| [agent_coordination](agent_coordination/INDEX.md) | Mehrere Sitzungen in denselben Repos: fremde Arbeitsbaeume, doppelt belegte Dateinamen | Agenten, parallele Sitzungen, Repos, Branches, Datenaustausch | [SUMMARY](agent_coordination/SUMMARY.md) |
+| [agent_coordination](agent_coordination/INDEX.md) | Mehrere Sitzungen in denselben Repos: fremde Arbeitsbaeume, doppelt belegte Dateinamen | Agenten, parallele Sitzungen, Repos, Branches, Datenaustausch, Seitenverbund, deployments.json, Verlinkung | [SUMMARY](agent_coordination/SUMMARY.md) |
 | [agent_tooling](agent_tooling/INDEX.md) | Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen | Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests | [SUMMARY](agent_tooling/SUMMARY.md) |
-| [ai_application_layer](ai_application_layer/INDEX.md) | Ob der Kapitaleinsatz der Angebotsseite aus der Anwendungsschicht zurückfließt: Deckungsquote, Menge mal Preis, verdeckte Nachfrage | Investieren, ROI, KI-Blase, Deckungsquote, Tokenpreise, Destillation, Use Cases, Anwendungen, Flughafen | [SUMMARY](ai_application_layer/SUMMARY.md) |
+| [ai_application_layer](ai_application_layer/INDEX.md) | Ob der Kapitaleinsatz der Angebotsseite aus der Anwendungsschicht zurückfließt: Deckungsquote, Menge mal Preis, verdeckte Nachfrage | Investieren, ROI, KI-Blase, Deckungsquote, Tokenpreise, Destillation, Use Cases, Anwendungen, Flughafen, Supply Atlas, Standorte, KI-Einsatz | [SUMMARY](ai_application_layer/SUMMARY.md) |
 | [ai_buyers](ai_buyers/INDEX.md) | Wer die Rechenleistung kauft: Modellanbieter, ihre Umsaetze und ihre Rechenzusagen | Investieren, Anthropic, OpenAI, Hyperscaler, Rechenzusagen, Umsatz | [SUMMARY](ai_buyers/SUMMARY.md) |
 | [ai_demand_drivers](ai_demand_drivers/INDEX.md) | Gründe für anhaltende KI-getriebene Speichernachfrage (DRAM, HBM, NAND) | Investieren, Nvidia, HBM, Rubin, Blackwell, Capex, Wettrüsten, Nachfrage | [SUMMARY](ai_demand_drivers/SUMMARY.md) |
 | [ai_labor_market](ai_labor_market/INDEX.md) | Nutzungsprotokolle, Erhebungen und Lohndaten zu KI am Arbeitsplatz | Arbeitsmarkt, Jobs, Löhne, Produktivität, Nutzung | [SUMMARY](ai_labor_market/SUMMARY.md) |

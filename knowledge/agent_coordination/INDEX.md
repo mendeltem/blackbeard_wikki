@@ -17,6 +17,7 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 |---|---|---|
 | [Nicht in einen fremden Arbeitsbaum schreiben](rules/parallel-sessions-same-working-tree.md) | regel | getragen |
 | [Ein Dateiname, ein Zweck](rules/one-filename-two-contracts.md) | regel | getragen |
+| [Verknüpfte Seiten: eine Zuordnungsdatei, feste Adressen, Rückweg im Generator](rules/one-mapping-file-for-linked-pages.md) | regel | getragen |
 
 ## Herkunft
 
