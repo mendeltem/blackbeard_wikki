@@ -31,6 +31,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | pruefpunkt | [dense-27b-vs-moe-on-8gb](open_checks/dense-27b-vs-moe-on-8gb.md) | Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s |
 | pruefpunkt | [reasoning-effort-for-routine-agent-tasks](open_checks/reasoning-effort-for-routine-agent-tasks.md) | Wie viel Thinking Routineaufgaben im Agenten brauchen, ungemessen |
 | pruefpunkt | [minimal-harness-prompt-size](open_checks/minimal-harness-prompt-size.md) | Pi unter 1000 Token Prompt gegen OpenCode 10 879 und Hermes ~13 000 |
+| pruefpunkt | [local-stack-landscape-2026-10](open_checks/local-stack-landscape-2026-10.md) | Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen |
 
 ## Werkzeuge dazu
 

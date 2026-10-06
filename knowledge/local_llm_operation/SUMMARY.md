@@ -8,6 +8,6 @@ Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertr
 
 **Vorschlag:** Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). `opencode run` haengt ohne `</dev/null`. Laya als Weiche vor dem Agenten: 24/30, 0,1 s als Dienst, als Tool im Agenten kein Gewinn. Schlanker Hermes (`-t terminal,file --ignore-rules`) halbiert den Prompt. Nous-Repo hermes-agent-self-evolution faellt stumm von GEPA auf MIPROv2 zurueck.
 
-**Offen:** mmap gegen `--load-mode none`. Dichtes Qwen3.8-27B gegen das MoE auf 8 GB (geschaetzt 5-8 gegen 30-35 t/s). Wie viel Thinking Routineaufgaben brauchen. Minimaler Harness (Pi, unter 1000 Token) gegen OpenCode.
+**Offen:** mmap gegen `--load-mode none`. Dichtes Qwen3.8-27B gegen das MoE auf 8 GB (geschaetzt 5-8 gegen 30-35 t/s). Wie viel Thinking Routineaufgaben brauchen. Minimaler Harness (Pi, unter 1000 Token) gegen OpenCode. Webrecherche Oktober 2026 (fast nur Herstellerzahlen): sechs Messungen zu `--n-cpu-moe`-Sweep, MTP, KV-Cache, Prefix-Cache, Laya gegen Arch-Router/kNN, Shell-Waechter.
 
-**Lesen bei:** llama.cpp, Ollama, Hermes Agent, OpenCode, lokale LLMs, VRAM, Quantisierung, langer Kontext, Linux gegen Windows, Router, Laya, Jev, Agenten-Harness.
+**Lesen bei:** llama.cpp, Ollama, Hermes Agent, OpenCode, lokale LLMs, VRAM, Quantisierung, langer Kontext, Linux gegen Windows, Router, Laya, Jev, Agenten-Harness, MTP, Speculative Decoding, Guard, Modellwahl 8/24 GB.
