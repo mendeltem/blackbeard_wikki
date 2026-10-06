@@ -41,6 +41,9 @@ hat. Bei 32770 trotz laengerem Prompt ist die Kuerzung sicher.
 Eigene Messung, Ollama mit `qwen3.6:35b`, `/api/generate`, `num_ctx 65536`,
 Temperatur 0, Thinking aus. 4 Laeufe ueber dem Limit, alle gekuerzt, alle falsch.
 
+Zweiter Fall, 2026-10-06: Ein frisch geholtes `qwen3.5:9b` läuft in Ollama mit dem Standardkontext von 4 096 Token. Mit Denken brachen sieben von 20 Antworten bei rund 4 000 Token mitten im Denkteil ab und kamen leer zurück, ohne Fehlermeldung. Abhilfe wie bei Qwen3.6: eigene Variante mit `PARAMETER num_ctx 32768`. Siehe [everyday-tasks-qwen36-vs-qwen35-9b](../findings/everyday-tasks-qwen36-vs-qwen35-9b.md).
+
 ## Verknuepft
 - [needle-recall-holds-to-125k](../findings/needle-recall-holds-to-125k.md)
 - [prefix-cache-single-slot](../mechanisms/prefix-cache-single-slot.md)
+- [everyday-tasks-qwen36-vs-qwen35-9b](../findings/everyday-tasks-qwen36-vs-qwen35-9b.md)
