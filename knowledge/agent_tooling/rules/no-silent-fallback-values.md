@@ -63,5 +63,8 @@ neben einer Feststellung steht, dass etwas fehlt.
 Eigene Codepruefung, 32 bestaetigte Befunde ueber sechs Dimensionen, davon
 sieben mit dieser gemeinsamen Ursache. Keine fremde Quelle.
 
+Unabhängig bestätigt im Projekt rea (morluto/rea, docs/provider-evaluation.md, 2026-10-05): ein Analyse-Provider bleibt für die Lebensdauer eines Ziels gebunden, "never fail over silently between Hopper and Ghidra". Siehe [agent-tools-by-task-shape](agent-tools-by-task-shape.md).
+
 ## Verknuepft
 - [empty-is-not-missing](empty-is-not-missing.md)
+- [agent-tools-by-task-shape](agent-tools-by-task-shape.md)

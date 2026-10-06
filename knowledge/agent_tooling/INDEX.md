@@ -8,7 +8,7 @@ Der rote Faden aller Einträge: **ein Pruefwerkzeug, dessen eigener Fehler wie
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.** Es wird
 geglaubt, weil es wie eine Messung aussieht.
 
-Stand 2026-10-02. Ein Eintrag je Datei.
+Stand 2026-10-06. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -17,6 +17,10 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Unbekannt ist kein Wert in einem Vergleich](rules/unknown-is-not-a-value-in-comparisons.md) | regel | getragen |
 | [Erstmessung ist keine Veränderung](rules/first-measurement-is-not-a-change.md) | regel | getragen |
 | [Gerechnetes und Gemeintes müssen auseinanderzuhalten sein](rules/computed-and-judged-must-stay-separable.md) | regel | getragen |
+| [Agenten-Werkzeuge nach Aufgabenform schneiden](rules/agent-tools-by-task-shape.md) | regel | vorschlag |
+| [Werkzeugwahl zeigt nur eine Spur am echten Host](rules/tool-choice-needs-host-trace.md) | regel | vorschlag |
+| [Skill routet zuerst und schließt mit seiner Checkliste](rules/skill-routes-first-and-closes-its-checklist.md) | regel | vorschlag |
+| [Tests belegen Aussagen, nicht Verkabelung](rules/tests-prove-claims-not-plumbing.md) | regel | vorschlag |
 
 ## Herkunft
 
@@ -29,3 +33,7 @@ uebertragbar ist.
 Die drei neueren Eintraege stammen aus der Lageseite
 [AI_Lage](https://github.com/mendeltem/AI_Lage), die zehn Schwesterseiten liest
 und daraus Thesen und Widersprueche rechnet.
+
+Die vier Regeln vom 2026-10-06 sind aus dem Projekt [rea](https://github.com/morluto/rea)
+(Reverse Engineering mit Agenten, MIT) übernommen: Werkzeugdesign, Skill-Aufbau,
+Testprüfung. Bei uns nicht gemessen, daher vorschlag.

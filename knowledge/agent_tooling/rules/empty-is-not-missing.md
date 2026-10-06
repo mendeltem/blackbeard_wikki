@@ -55,5 +55,8 @@ Eigene Messung. Erste Fassung mit `exists()`: Testfall gruen, echter Fall
 durchgelassen. Zweite Fassung mit "vorhanden und nicht leer": derselbe Fall
 abgelehnt, zusaetzlicher Pruefstand mit ausdruecklich leerem Verzeichnis.
 
+Unabhängig bestätigt im Projekt rea (morluto/rea, docs/tool-design.md, 2026-10-05): "Missing evidence is unknown, not empty or false." Siehe [agent-tools-by-task-shape](agent-tools-by-task-shape.md).
+
 ## Verknuepft
 - [no-silent-fallback-values](no-silent-fallback-values.md)
+- [agent-tools-by-task-shape](agent-tools-by-task-shape.md)
