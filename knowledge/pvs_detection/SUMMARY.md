@@ -20,3 +20,5 @@
 - Pipeline am Code (07.10.): Schwellen fast offen, Auswahl in der Nachverarbeitung (Kontrast 0,19 SD, 3-2000 Voxel, Rand 90 %),
   alles in Voxeln -> je Scanner ein anderes Verfahren; Kontrastfilter ist der Hauptverlust kleiner PVS. DRIPS (Bernal, Apache,
   Docker, Domain Randomisation) als vortrainiertes Verfahren G aufgenommen. STRIVE-2: Groesse trennt PVS/Lakune nicht, FLAIR-Rand und Form schon.
+- ERSTE ZAHLEN (07.10. 23:00): VALDO Inter-Rater F1 0,29; DRIPS (synthetisch trainiert, Docker) auf T2 0,31 (SABRE 0,37), Recall 0,48,
+  Precision 0,25, Schwellenkurve flach, Klasse 1-2 Recall 0,33 -> naechster Hebel Fehlalarme nach Ort (Clara wp7). Frangi auf HCP 0,16.
