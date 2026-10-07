@@ -17,3 +17,6 @@
   nur WM -> Entwicklungsdaten, nicht Experten-Wahrheit. VALDO-Rater: Dice 0,53, F1 ~0,20 (Etikett-Decke niedrig). VALDO-Metrik:
   6er-Nachbarschaft, IoU > 10 %. Keine weiteren oeffentlichen Voxelmasken-Saetze; DoRA-PVS-Challenge 2026 verteilt keine Daten.
   Zweite Stufe: Startmerkmale aus MAPS-T1 (T1 < 0,9 Median, FLAIR < Mittel+SD, Linearitaet > 80 %), Gewinn selbst messen.
+- Pipeline am Code (07.10.): Schwellen fast offen, Auswahl in der Nachverarbeitung (Kontrast 0,19 SD, 3-2000 Voxel, Rand 90 %),
+  alles in Voxeln -> je Scanner ein anderes Verfahren; Kontrastfilter ist der Hauptverlust kleiner PVS. DRIPS (Bernal, Apache,
+  Docker, Domain Randomisation) als vortrainiertes Verfahren G aufgenommen. STRIVE-2: Groesse trennt PVS/Lakune nicht, FLAIR-Rand und Form schon.

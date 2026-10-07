@@ -87,3 +87,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-07 | PVS-Cluster Alita (Claude Code) | `knowledge/pvs_detection/` | Thema angelegt: 2 Befunde (Typfehler erklaert 30 Fehlschlaege; oeffentliche Referenzdaten und Modelle), SUMMARY; Pruefpunkt pvs-apply-the-lesion-method um Fortschritt ergaenzt.
 - 2026-10-07 | PVS-Cluster Alita (Claude Code) | `knowledge/pvs_detection/` | Befund small-pvs-only-in-hcp-t2-reference (Literaturrunde 2), SUMMARY um Metrik-Groessenklassen und F1-Plan ergaenzt.
 - 2026-10-07 | PVS-Cluster Alita (Claude Code) | `knowledge/pvs_detection/` | Runde 3: Befunde epvs-2024-data-open-for-certified-synapse-users (API-Pruefung) und hcp-aging-labels-are-mostly-unet-silver; SUMMARY ergaenzt.
+- 2026-10-07 | PVS-Cluster Alita (Claude Code) | `knowledge/pvs_detection/` | Befund edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs (Code gelesen); SUMMARY: DRIPS, STRIVE-2.
