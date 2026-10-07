@@ -29,6 +29,10 @@ Fruehstopp auf dem inneren F1 feuert auf Startwert-Rauschen, darum feste 60 Epoc
 kreuzgewaehlt gleichauf; Arbeitspunkte nie von anderen Laeufen uebernehmen. Die zweite Stufe
 faengt es ab (0,604).
 
+**Getragen (Geometrie):** Leave-one-cohort-out ueber vier T2*-Kohorten: die Schichtgeometrie der
+Trainingsdaten muss die Zielgeometrie abdecken -- ohne die 0,8-mm-Kohorte 0,295 statt 0,641, ohne die
+4-mm-Kohorte kein Verlust (5 mm deckt sie ab); mehr Faelle anderer Geometrie ersetzen das nicht.
+
 **Regel (Ausschnitte):** Patches von 38 x 31 x 47 mm und Schiebefenster statt ganzer Bilder: Speicher
 (1,6 GiB statt Dutzende GB), Beispielzahl (800 je Epoche statt 57) und Kontext (Dosisreihe 24/38/48 mm:
 mehr bringt nichts); Anatomie kommt nachtraeglich als Regel.
