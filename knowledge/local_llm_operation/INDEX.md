@@ -28,6 +28,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | befund | [lean-hermes-toolsets](findings/lean-hermes-toolsets.md) | `-t terminal,file --ignore-rules`: 5 648 statt ~13 000 Token Prompt |
 | befund | [everyday-tasks-qwen36-vs-qwen35-9b](findings/everyday-tasks-qwen36-vs-qwen35-9b.md) | 20 Alltagsaufgaben: Qwen3.6 20/20 mit Denken, 17/20 ohne; Qwen3.5-9B 13/20 in 31 s, mit Denken 18/20 und dreimal langsamer |
 | risiko | [self-evolution-gepa-silently-falls-back](risks/self-evolution-gepa-silently-falls-back.md) | Nous-Repo: `dspy.GEPA` scheitert, stummer Rueckfall auf MIPROv2 |
+| risiko | [secure-boot-kernel-update-unloads-nvidia-dkms](risks/secure-boot-kernel-update-unloads-nvidia-dkms.md) | Kernel-Update bei Secure Boot: lokal signiertes DKMS-Modul laedt nicht, GPU weg, kein Log sagt es; Abhilfe signiertes `linux-modules-nvidia`-Paket |
 | pruefpunkt | [mmap-vs-load-mode-none](open_checks/mmap-vs-load-mode-none.md) | Lademodus bei Expert-Offloading, ungemessen |
 | pruefpunkt | [dense-27b-vs-moe-on-8gb](open_checks/dense-27b-vs-moe-on-8gb.md) | Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s |
 | pruefpunkt | [reasoning-effort-for-routine-agent-tasks](open_checks/reasoning-effort-for-routine-agent-tasks.md) | Wie viel Thinking Routineaufgaben im Agenten brauchen, ungemessen |

@@ -21,6 +21,7 @@ Stand 2026-10-06. Ein Eintrag je Datei.
 | [Werkzeugwahl zeigt nur eine Spur am echten Host](rules/tool-choice-needs-host-trace.md) | regel | vorschlag |
 | [Skill routet zuerst und schließt mit seiner Checkliste](rules/skill-routes-first-and-closes-its-checklist.md) | regel | vorschlag |
 | [Tests belegen Aussagen, nicht Verkabelung](rules/tests-prove-claims-not-plumbing.md) | regel | vorschlag |
+| [Eine Neustartschleife ist ein Alarm, keine Reparatur](rules/restart-loop-is-an-alarm-not-a-repair.md) | regel | vorschlag |
 
 ## Herkunft
 

@@ -9,3 +9,5 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 **Vorschlag (aus dem Projekt rea übernommen):** Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.
 
 **Lesen bei:** Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.
+
+**Vorschlag, neu 2026-10-07 (Alita):** Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".
