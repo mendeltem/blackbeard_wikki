@@ -20,6 +20,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | befund | [sensitivity-levers-do-not-raise-lesion-f1](findings/sensitivity-levers-do-not-raise-lesion-f1.md) | blob loss, Zentrumskarten, Neugewichtung, Synthese: Sensitivitaet rauf, F1 runter |
 | befund | [valdo-cohort-3-mask-is-a-head-mask](findings/valdo-cohort-3-mask-is-a-head-mask.md) | Gelieferte Masken nicht eng: Kohorte 3 zu 40 % Nicht-Hirn; Abhilfe SynthSeg-Maske |
 | befund | [valdo-t1-carries-nan-in-33-of-72-cases](findings/valdo-t1-carries-nan-in-33-of-72-cases.md) | 33/72 T1 mit NaN (Randschale); SynthSeg liefert lautlos leer bei rc 0; nan_to_num ist geprueft sicher |
+| befund | [training-loss-does-not-rank-networks-or-schedules](findings/training-loss-does-not-rank-networks-or-schedules.md) | Verlustkurven von 16 Turnierlaeufen: gleicher Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert; Fruehstopp feuert auf Rauschen |
 | regel | [two-seeds-per-decision-below-0.08](rules/two-seeds-per-decision-below-0.08.md) | Startwert-Rauschen eines U-Net-Trainings ~0,08 F1; kleinere Effekte brauchen zweiten Startwert |
 
 ## Herkunft

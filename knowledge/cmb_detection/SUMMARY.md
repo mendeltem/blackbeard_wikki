@@ -20,6 +20,10 @@ Zentrumskarten-Kopf, Neugewichtung verpasster Laesionen, kuenstliche Laesionen, 
 Training -- kauft Sensitivitaet mit Fehlalarmen; das F1 steigt nie. Der Engpass ist die
 Trennung Blutung / Gefaessquerschnitt mit einer einzigen Magnitudensequenz.
 
+**Getragen (Verlaeufe):** Der Trainingsverlust ordnet weder Netze noch Trainingslaengen: gleicher
+Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert;
+Fruehstopp auf dem inneren F1 feuert auf Startwert-Rauschen, darum feste 60 Epochen.
+
 **Regel:** Ein einzelnes U-Net-Training streut ~0,08 F1 zwischen Startwerten. Effekte
 darunter gelten nur mit zweitem Startwert oder Intervall ohne Null; vier "bestaetigte"
 Bausteine (FRST-Kanal, Gitter, Maske, Bias-Korrektur) lagen bei Nachpruefung im Rauschen.
