@@ -29,6 +29,15 @@ Drei Auswege, alle mit sudo:
    bestaetigen). Danach laedt jedes DKMS-Modul, auch kuenftige.
 3. Im GRUB den alten Kernel booten, fuer den das signierte Paket noch da ist.
 
+**Nachtrag 07.10. 10:45 (Ursache eingegrenzt):** Nach einem weiteren Kernel-Update lagen fuer den
+laufenden Kernel ZWEI Module: `updates/dkms/nvidia.ko.zst` (DKMS, lokaler MOK-Schluessel, nicht
+eingetragen) und `kernel/nvidia-580/nvidia.ko` aus `linux-modules-nvidia-580-<kernel>` (vom
+Distributor signiert, laedt unter Secure Boot). `modprobe` nimmt `updates/` zuerst, daher
+"Operation not permitted", obwohl ein lauffaehiges Modul daneben liegt. Pruefen: `modinfo` beider
+Pfade (Zeile `signer`), `modprobe -n -v nvidia` zeigt, welches gewaehlt wird. Abhilfe ohne Neustart:
+`dkms remove nvidia/<version> -k <kernel> && depmod -a && modprobe nvidia`; dauerhaft den
+MOK-Schluessel eintragen, sonst kommt das DKMS-Modul beim naechsten Kernel-Update wieder davor.
+
 ## Traegt
 Jede Workstation mit Secure Boot, NVIDIA-DKMS und automatischen Kernel-Updates
 (Ubuntu `unattended-upgrades`). Pruefbefehl vor dem Neustart:
