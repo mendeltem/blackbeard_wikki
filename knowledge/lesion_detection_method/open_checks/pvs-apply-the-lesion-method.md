@@ -73,3 +73,11 @@ Potter et al., Cerebrovasc Dis 2015, doi:10.1159/000375153 (DOI nicht nachgeprue
 - [geometry-follows-the-acquisition](../mechanisms/geometry-follows-the-acquisition.md)
 - [operating-points-do-not-transfer](../rules/operating-points-do-not-transfer.md)
 - [count-cases-behind-pooled-numbers](../rules/count-cases-behind-pooled-numbers.md)
+
+## Fortschritt 2026-10-07 abends
+Schritt 2 im Kern erledigt: die Fehlschlaege sind erklaert (siehe
+[numeric-ids-became-char-codes-in-filenames](../../pvs_detection/findings/numeric-ids-became-char-codes-in-filenames.md)),
+Zwischenausgaben gezaehlt (Masken binaer, 280-920 Komponenten je Fall nach Postprocessing). Schritt 1:
+oeffentliche Referenzen gefunden und im Download (VALDO Task 1, HCP-Aging PVS), EPVS-2024 auf Antrag; BELOVE-Rating
+noch offen. Schritt 3: Metrik `pvs-arena/pvs_metrik.py` (Instanz, Bootstrap, Zaehlkorrelation). Ergaenzung zu
+Schritt 3 aus Nutzerwunsch: Sensitivitaet nach Groessenklassen, weil auch kleine PVS gewollt sind.

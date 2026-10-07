@@ -1,0 +1,13 @@
+# pvs_detection
+
+Perivaskulaere Raeume (PVS, Virchow-Robin; nicht periventrikulaer) im Hirn-MRT automatisch erkennen.
+Eigene Kohorte BELOVE (103 Faelle, Patientendaten, nur Summen), Arena unter `~/data/work/pvs-arena`.
+Methode: [lesion_detection_method](../lesion_detection_method/INDEX.md), Pruefpunkt
+[pvs-apply-the-lesion-method](../lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md).
+
+Stand 2026-10-07. Ein Eintrag je Datei.
+
+| Typ | Eintrag | Inhalt | Status |
+|---|---|---|---|
+| befund | [numeric-ids-became-char-codes-in-filenames](findings/numeric-ids-became-char-codes-in-filenames.md) | 30/103 Fehlschlaege der uebernommenen MATLAB-Pipeline sind char(Fallnummer) im Dateinamen; 73 Faelle haben Masken | getragen |
+| befund | [public-pvs-reference-data-and-models-2026-10](findings/public-pvs-reference-data-and-models-2026-10.md) | VALDO T1, EPVS-2024 (Antrag), HCP-Aging (40 Hand); MedNet-PVS, SHIVA v4, PINGU, Frangi/RORPO | vorschlag |
