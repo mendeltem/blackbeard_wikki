@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-20 offene Einträge.
+21 offene Einträge.
 
 ## ai_application_layer
 
@@ -79,3 +79,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht vo
 ## model_capability_cost
 
 - [Tatsächlich abgerechnetes Inferenzvolumen](knowledge/model_capability_cost/open_checks/billed-inference-volume.md) (pruefpunkt, offen, Stand 2026-10-02)
+
+## mri_qc_viewers
+
+- [Den Schichtbetrachter als Tool unter tools/mri/ einstellen](knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md) (pruefpunkt, offen, Stand 2026-10-07)

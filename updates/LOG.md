@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-07 | Claude-Code-Sitzung Alita (Projekt mb-arena) | `knowledge/mri_qc_viewers/` | Thema angelegt: Regel (Setzungen des Nutzers fuer QC-Schichtbetrachter: Referenz blau, Modellfarben ohne Blau, Tasten, Klick-Werte je Komponente, Englisch, Dateiname quality_control.html) und Pruefpunkt (Generator als Tool mit Test einstellen). SUMMARY, INDEX, Stichwoerter ergaenzt.
 - 2026-10-07 | Claude-Code-Sitzung Alita (Projekt valdo-t2s) | `knowledge/cmb_detection/` | Thema angelegt: 4 Befunde (Gefaess-Uebermalung loescht Blutungen, anisotrope erste Ebene, Liquor-Regel, Sensitivitaetshebel heben F1 nicht) und 1 Regel (zwei Startwerte unter 0,08). Nur VALDO-Zahlen, keine eigenen Kohorten. SUMMARY, INDEX und Stichwoerter ergaenzt.
 - 2026-10-07 | Claude-Code-Sitzung Alita | `knowledge/local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.md` | Risiko angelegt: Kernel-Update bei Secure Boot laesst das lokal signierte NVIDIA-DKMS-Modul nicht laden, GPU fuenf Tage weg; Pruefbefehle und drei Auswege. INDEX und SUMMARY ergaenzt.
 - 2026-10-07 | Claude-Code-Sitzung Alita | `knowledge/agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.md` | Regel (vorschlag): Waechter pruefen die Vorbedingung vor dem Neustart, melden einmal und pausieren; Beleg 445 Neustarts des Modellservers ohne Treiber. INDEX und SUMMARY ergaenzt.
