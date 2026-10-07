@@ -8,10 +8,11 @@ Der rote Faden aller Einträge: **ein Pruefwerkzeug, dessen eigener Fehler wie
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.** Es wird
 geglaubt, weil es wie eine Messung aussieht.
 
-Stand 2026-10-06. Ein Eintrag je Datei.
+Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| regel | [pip-freeze-is-not-an-install-file](rules/pip-freeze-is-not-an-install-file.md) | pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo | getragen |
 | regel | [traceability-map-for-a-results-repo](rules/traceability-map-for-a-results-repo.md) | Ergebnis-Repo braucht eine Karte Zahl -> Daten -> Befehl -> Datei -> Abschnitt; vier Tabellen, Literatur-Flags, Luecken | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |
 | [Leer ist nicht fehlend](rules/empty-is-not-missing.md) | regel | getragen |

@@ -2,6 +2,8 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-07 | Claude-Code-Sitzung Alita (Projekt valdo-t2s) | `knowledge/cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.md` | Befund: ein Kandidaten-Klassifikator auf dem Pool aller Kohorten mit einer Schwelle ersetzt die Liquor-Regel (SWI +0,061) und braucht keine Gewebekarte; INDEX und SUMMARY ergaenzt.
+- 2026-10-07 | Claude-Code-Sitzung Alita (Repo cmb-valdo-chain) | `knowledge/agent_tooling/rules/pip-freeze-is-not-an-install-file.md` | Regel: pip freeze ist keine Installationsdatei; minimale gepinnte Liste, Test aus frischem Clone bis zum Selbsttest, Log ins Repo. INDEX und SUMMARY ergaenzt.
 - 2026-10-07 | Claude-Code-Sitzung Alita | `knowledge/local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.md` | Nachtrag: Ursache eingegrenzt, DKMS-Modul in updates/ verdeckt das distributor-signierte Modul aus linux-modules-nvidia; Pruefbefehle und Abhilfe ohne Neustart.
 - 2026-10-07 | Claude-Code-Sitzung Alita (Repo cmb-valdo-chain) | `knowledge/agent_tooling/rules/traceability-map-for-a-results-repo.md` | Regel (vorschlag): Ergebnis-Repo braucht eine Karte Zahl -> Daten -> Befehl -> Datei -> Abschnitt (vier Tabellen, Literatur-Flags, Luecken). Pruefpunkt mri_qc_viewers: --cohort und Mehrfach-Betrachter im Live-Server abgehakt. INDEX ergaenzt.
 - 2026-10-07 | Claude-Code-Sitzung Alita (Projekt mb-arena) | `knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md` | Live-Modus des Betrachters notiert (lokaler Server auf 127.0.0.1, Neubau bei Generator-Aenderung, Seite laedt sich selbst); zweiter Breitenfehler (implizite auto-Spalte waechst mit nowrap-Zeile) als Pruefpunkt.

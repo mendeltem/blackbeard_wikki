@@ -11,7 +11,9 @@ groesste Einzelgewinn. Ein 3D-U-Net, dessen erste Ebene nur in der Schicht falte
 schlaegt alle isotropen Netze (+0,159 gegen Attention-U-Net; MedNeXt, nnU-Net-ResEnc,
 R2U-Net, Swin UNETR alle schlechter). Eine parameterfreie Regel "Komponente mehrheitlich
 im Liquor -> weg" (SynthSeg-Gewebekarte) entfernt die Haelfte der Fehlalarme ohne eine
-Blutung zu verlieren (0,585 -> 0,646). Kette insgesamt: 0,245 -> 0,647.
+Blutung zu verlieren (0,585 -> 0,646). Kette insgesamt: 0,245 -> 0,647. Zweite Stufe als EIN Modell: ein 3D-CNN auf dem
+Kandidaten-Pool aller Kohorten (eine Schwelle 0,30, out-of-fold je Fall) ist auf VALDO und
+T2* gleich der Liquor-Regel und auf SWI +0,061 besser; es braucht keine Gewebekarte.
 
 **Getragen (Negativbefund):** Alles, was das Netz empfindlicher macht -- blob loss,
 Zentrumskarten-Kopf, Neugewichtung verpasster Laesionen, kuenstliche Laesionen, laengeres

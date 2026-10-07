@@ -11,3 +11,5 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 **Lesen bei:** Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.
 
 **Vorschlag, neu 2026-10-07 (Alita):** Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".
+
+**Regel (2026-10-07):** Ein `pip freeze` ist ein Protokoll, keine Installationsdatei (Build-Kennungen wie +cu124 und %2B brechen pip sofort). Auszuliefern ist die minimale, gepinnte Liste der echten Importe; getestet ist sie erst aus einem frischen Clone in neuer Umgebung bis zum Selbsttest, Log ins Repo.
