@@ -52,7 +52,9 @@ und die Breite von `#main` messen. Ein Selektor ohne Praefix (`#split{display:no
 `body.nolist #split{...}`) hatte den Spaltentrenner immer versteckt; `#main` rutschte in die 6-px-Spalte,
 war nur so breit wie sein Text (485 px bei 1918 px Fenster) und der Bildstapel wurde nach der Hoehe
 skaliert und vom Flex-Layout gestaucht (zwei Schichten im Fenster). Schutz: `minmax(0,1fr)`,
-`min-width:0`, Stapel `flex:0 0 auto`, EIN Massstab fuer Einpassen und Versatz.
+`min-width:0`, Stapel `flex:0 0 auto`, EIN Massstab fuer Einpassen und Versatz. Zweiter Fall gleicher Art: ein Grid ohne
+`grid-template-columns` bekommt eine implizite `auto`-Spalte, die mit einer `nowrap`-Zeile ueber den Rand
+waechst (1484 px in 1082 px); auch dort `minmax(0,1fr)` setzen. Bei zwei Fenstergroessen messen (1400 und 1918 px).
 
 ## Ablesung
 Nutzeraussagen 29.09. (Gefaesse ueber viele Schichten als Fehlalarm erkannt), 07.10. ("diese Seite

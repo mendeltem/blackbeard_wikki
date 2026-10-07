@@ -21,6 +21,9 @@ und den Setzungen aus [qc-slice-viewer-conventions](../rules/qc-slice-viewer-con
 - [ ] Test: zwei synthetische Volumen mit je drei Kugeln, Referenz und eine "Vorhersage" mit einem
       Fehlalarm; pruefen, dass data.json TP/FP/FN richtig zaehlt und die Seite baut.
 - [ ] Ordner `tools/mri/mri_segmentation/qc_slice_viewer/` anlegen, CHANGELOG, PAPERS (keine).
+- [x] Live-Modus (07.10.): `live_server.py` serviert den Ordner auf 127.0.0.1, beobachtet die mtime des
+      Generators, baut per `--refresh-html` aus `build_args.json` neu; die Seite pollt Last-Modified per HEAD
+      (1,5 s) und laedt sich selbst, Fall und Schicht bleiben (Hash, sessionStorage). Gehoert mit ins Tool.
 
 ## Traegt
 Wiederverwendung fuer WMH- und PVS-QC ohne Neubau.
