@@ -13,7 +13,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | Eintrag | Typ | Status |
 |---|---|---|
 | regel | [pip-freeze-is-not-an-install-file](rules/pip-freeze-is-not-an-install-file.md) | pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo | getragen |
-| regel | [traceability-map-for-a-results-repo](rules/traceability-map-for-a-results-repo.md) | Ergebnis-Repo braucht eine Karte Zahl -> Daten -> Befehl -> Datei -> Abschnitt; vier Tabellen, Literatur-Flags, Luecken | vorschlag |
+| [Ergebnis-Repo braucht eine Nachvollziehbarkeitskarte](rules/traceability-map-for-a-results-repo.md) | regel | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |
 | [Leer ist nicht fehlend](rules/empty-is-not-missing.md) | regel | getragen |
 | [Unbekannt ist kein Wert in einem Vergleich](rules/unknown-is-not-a-value-in-comparisons.md) | regel | getragen |
@@ -24,8 +24,21 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | [Skill routet zuerst und schließt mit seiner Checkliste](rules/skill-routes-first-and-closes-its-checklist.md) | regel | vorschlag |
 | [Tests belegen Aussagen, nicht Verkabelung](rules/tests-prove-claims-not-plumbing.md) | regel | vorschlag |
 | [Eine Neustartschleife ist ein Alarm, keine Reparatur](rules/restart-loop-is-an-alarm-not-a-repair.md) | regel | vorschlag |
+| [Jede Sperre und zustandsabhaengige Anweisung braucht ein Verfallsereignis](rules/conditions-need-an-expiry-event.md) | regel | vorschlag |
+| [Die ersten N einer sortierten Liste sind ein Block](rules/first-n-of-a-sorted-list-is-a-block.md) | regel | vorschlag |
+| [Vor dem Probelauf eines fremden Skripts nach Schreibzielen greppen](rules/grep-for-write-targets-before-a-dry-run.md) | regel | vorschlag |
+| [Vor der ersten Aenderung an einer fremden Datei sichern](rules/back-up-before-first-edit-of-a-foreign-file.md) | regel | vorschlag |
+| [Nachlauf als trap EXIT, dann im Log nachsehen](rules/exit-hook-via-trap-then-verify-in-log.md) | regel | vorschlag |
+| [Eine billige Vorpruefung ordnet, sie entscheidet nicht](rules/cheap-precheck-ranks-but-does-not-decide.md) | regel | vorschlag |
+| [Vor der Deutung einer gepoolten Zahl die tragenden Faelle zaehlen](rules/count-cases-behind-a-pooled-number.md) | regel | vorschlag |
+| [Bausteine gegen ihren Code benennen](rules/name-a-component-against-its-code.md) | regel | vorschlag |
+| [Erst die Definition suchen, dann die Differenz deuten](rules/find-the-definition-before-interpreting-a-difference.md) | regel | vorschlag |
 
 ## Herkunft
+
+Die neun Regeln vom 2026-10-07 stammen aus der Aufsicht ueber einen lokalen Agenten in
+der WMH- und CMB-Linie (Alita, 2026-09-14 bis 2026-09-23): jede aus einem eigenen,
+am Code oder Log belegten Vorfall. Status vorschlag, weil nur je ein Vorfall dahintersteht.
 
 Beide Einträge stammen aus dem Bau und der Pruefung von Werkzeugen im Projekt
 [local_models](https://github.com/mendeltem/local_models) -- `tools/detect.py`

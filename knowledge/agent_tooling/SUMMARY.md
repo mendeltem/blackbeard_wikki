@@ -1,6 +1,6 @@
 # agent_tooling: Kurzstand
 
-Stand 2026-10-06. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-07. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkzeug, dessen eigener Fehler wie ein Befund aussieht, ist das gefährlichste.
 
@@ -13,3 +13,5 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 **Vorschlag, neu 2026-10-07 (Alita):** Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".
 
 **Regel (2026-10-07):** Ein `pip freeze` ist ein Protokoll, keine Installationsdatei (Build-Kennungen wie +cu124 und %2B brechen pip sofort). Auszuliefern ist die minimale, gepinnte Liste der echten Importe; getestet ist sie erst aus einem frischen Clone in neuer Umgebung bis zum Selbsttest, Log ins Repo.
+
+**Vorschlag, neu 2026-10-07 (Aufsicht ueber einen lokalen Agenten, neun Regeln aus neun Vorfaellen):** Jede Sperre und jede zustandsabhaengige Anweisung bekommt beim Setzen ein Verfallsereignis; Sperren an Vollstaendigkeit haengen, nicht an "zu Ende" (eine `.rc`-Sperre oeffnete fuer einen abgebrochenen Lauf, eine CPU-Anweisung ueberlebte ihren Grund um 12 Stunden, Faktor 49). Die ersten N einer sortierten Liste sind ein Block (dreimal daneben, Vollzaehlung kostete 15 s). Vor dem Probelauf eines fremden Skripts nach Schreibzielen greppen -- ein "Trockenlauf" erfuellte ein Abnahmekriterium des Beaufsichtigten. Vor der ersten Aenderung einer fremden Datei `.vor-<stempel>` anlegen. Nachlauf als `trap EXIT`, einmal ausloesen, Logzeile suchen (ein angehaengter Block hinter vier `exit` war tot). Billige Vorpruefungen ordnen, entscheiden nicht (CPU-Rangliste vom GPU-Lauf widerlegt). Vor der Deutung einer gepoolten Zahl die tragenden Faelle zaehlen (3 Faelle = 28 % aller Laesionen). Namen am Code messen ("3D-ResNet" ohne Residuen). Erst die Definition zweier Zahlen suchen, dann die Differenz deuten (zwei Zuordnungsregeln, kein Widerspruch).
