@@ -21,6 +21,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | risiko | [dynamic-quants-break-metadata-math](risks/dynamic-quants-break-metadata-math.md) | Groessenrechnung aus Metadaten liegt um Faktor zwei daneben |
 | risiko | [ollama-silently-truncates-context](risks/ollama-silently-truncates-context.md) | Prompt ueber `num_ctx`: Ollama behaelt stumm 32k vom Ende, Modell nennt den Koeder |
 | regel | [separate-prefill-from-decode](rules/separate-prefill-from-decode.md) | Durchsatz nie ueber die Wanduhr: 0,4 gegen 27,4 t/s |
+| befund | [opencode-against-llama-server-one-slot](findings/opencode-against-llama-server-one-slot.md) | OpenCode 1.18 gegen llama-server per opencode.json (openai-compatible, kein Schluessel); bei einem Slot wartet es hinter dem Agenten und sieht haengend aus |
 | befund | [hermes-delegates-to-opencode-locally](findings/hermes-delegates-to-opencode-locally.md) | Hermes gibt Aufgaben an OpenCode ab, lokal, 160 s; kein zweiter Slot fuer qwen35moe |
 | risiko | [opencode-run-hangs-on-open-stdin](risks/opencode-run-hangs-on-open-stdin.md) | `opencode run` haengt ohne `</dev/null`, keine Anfrage erreicht das Modell |
 | regel | [foreign-gpu-process-before-measuring](rules/foreign-gpu-process-before-measuring.md) | Vergessener `llama-server` auf der GPU: Prefill 30 statt 397 t/s |
