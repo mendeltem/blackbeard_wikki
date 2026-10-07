@@ -29,6 +29,10 @@ Fruehstopp auf dem inneren F1 feuert auf Startwert-Rauschen, darum feste 60 Epoc
 kreuzgewaehlt gleichauf; Arbeitspunkte nie von anderen Laeufen uebernehmen. Die zweite Stufe
 faengt es ab (0,604).
 
+**Regel (Ausschnitte):** Patches von 38 x 31 x 47 mm und Schiebefenster statt ganzer Bilder: Speicher
+(1,6 GiB statt Dutzende GB), Beispielzahl (800 je Epoche statt 57) und Kontext (Dosisreihe 24/38/48 mm:
+mehr bringt nichts); Anatomie kommt nachtraeglich als Regel.
+
 **Regel:** Ein einzelnes U-Net-Training streut ~0,08 F1 zwischen Startwerten. Effekte
 darunter gelten nur mit zweitem Startwert oder Intervall ohne Null; vier "bestaetigte"
 Bausteine (FRST-Kanal, Gitter, Maske, Bias-Korrektur) lagen bei Nachpruefung im Rauschen.
