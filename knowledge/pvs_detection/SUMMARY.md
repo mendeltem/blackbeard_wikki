@@ -8,3 +8,7 @@
 - Keine Handreferenz. Oeffentlich: VALDO Task 1 (Zenodo), HCP-Aging PVS (OpenNeuro, 40 Hand), EPVS-2024 (Antrag).
 - Modelle: MedNet-PVS (Apache, Gewichte CC BY), SHIVA v4 (NC), PINGU; Filter Frangi/RORPO. Metrik `pvs_metrik.py`.
 - Nutzerwunsch: auch kleine PVS; Grenze ist die Voxelgroesse, Sensitivitaet nach Groessenklassen berichten.
+- Literatur Runde 2 (07.10.): kleine PVS stehen nur in der HCP-T2-Referenz; Edinburgh verwirft < 3 mm; kein belegter
+  Werkzeugvergleich mit gemeinsamer Metrik (Waymont 2024: 67 Ansaetze). MedNet-PVS-Gewichte: figshare defekt, Drive komplett.
+- Metrik pvs_metrik.py misst jetzt Recall und Fehlalarmanteil je Groessenklasse (1-2, 3-5, 6-20, >20 Voxel).
+- Nutzerziel 07.10. abends: Instanz-F1 maximieren; Plan A-F in pvs-arena/ARBEIT.md (Grundlinien, vortrainiert, Ortsregel, nnU-Net, zweite Stufe).
