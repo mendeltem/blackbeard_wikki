@@ -9,7 +9,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
-| regel | [qc-slice-viewer-conventions](rules/qc-slice-viewer-conventions.md) | Zwei Bilder je Schicht, Referenz blau, Tasten, Klick auf Komponente zeigt Werte, Englisch, Dateiname quality_control.html |
+| regel | [qc-slice-viewer-conventions](rules/qc-slice-viewer-conventions.md) | Zwei Bilder je Schicht, Referenz blau, Pfeile links/rechts = Proband, flache Leisten, F1 je Fall, Klick auf Komponente zeigt Werte, Englisch, Dateiname quality_control.html; Pruefpunkt headless rendern |
 | pruefpunkt | [slice-viewer-as-shared-tool](open_checks/slice-viewer-as-shared-tool.md) | Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt) |
 
 ## Herkunft

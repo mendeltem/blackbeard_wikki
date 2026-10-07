@@ -16,8 +16,8 @@ QC-Seite aus Manifest, Wahrscheinlichkeitskarten und optionaler Gewebekarte. Fue
 ein Tool-Ordner nach `templates/tool/` mit README, INSTALL, einem Test auf synthetischen Volumen
 und den Setzungen aus [qc-slice-viewer-conventions](../rules/qc-slice-viewer-conventions.md).
 
-- [ ] Umbau Tasten (Proband hoch/runter, Schicht links/rechts) und Klick-Werte je Komponente
-      (Geometrie und Zuordnung in data.json, Hervorhebung) im Generator.
+- [x] Umbau Tasten (Proband links/rechts, Schicht hoch/runter), flache Leisten, F1 je Fall (07.10.).
+- [ ] Klick-Werte je Komponente (Geometrie und Zuordnung in data.json, Hervorhebung) im Generator.
 - [ ] Test: zwei synthetische Volumen mit je drei Kugeln, Referenz und eine "Vorhersage" mit einem
       Fehlalarm; pruefen, dass data.json TP/FP/FN richtig zaehlt und die Seite baut.
 - [ ] Ordner `tools/mri/mri_segmentation/qc_slice_viewer/` anlegen, CHANGELOG, PAPERS (keine).
