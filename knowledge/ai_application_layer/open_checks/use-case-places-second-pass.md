@@ -19,17 +19,17 @@ Offen, ohne Orte (30 Karten):
 - [ ] Bewusst ohne Orte, weil reine Software-Protokolle: agent-to-agent-protocol-a2a, model-context-protocol-mcp, agent-payments-ap2-acp
 - [ ] Dünn (1–2 Orte): facade-window-cleaning-robots, robot-vacuums, local-image-generation, local-image-editing-design, local-3d-scanning-with-gaussian-splatting, generative-3d-models, be-my-ai, defense-isr-drones, space-robotics
 
-Neue Hinweise zu Kartentexten (nicht eingearbeitet):
-- [ ] **Präzisionsspritzen:** Deere meldet über 10 Mio. Acres See & Spray Select in Australien, 74 % weniger Herbizid (Aug. 2026). https://www.heavyquipmag.com/2026/08/19/john-deere-see-and-spray-select-10-million-acres-australia/
-- [ ] **Aquakultur:** "langsame Verbreitung" überholt: fast 3.000 Stingray-Laser in rund 25 % der norwegischen Fischfarmen (Dez. 2025); Mowi von 80 auf 250 Geräte. https://scanmagazine.co.uk/beyond-the-net-stingrays-high-tech-approach-to-revolutionising-fish-farming-december-2025/ . XpertSea heißt jetzt KAMPI.
-- [ ] **Exoskelette:** German Bionics aktuelles System heißt EXIA, nicht Apogee. https://germanbionic.com/news/human-centric-robotics-takes-off-supporting-the-people-who-keep-airports-moving
-- [ ] **KI-Wirkstoffsuche:** Rentosertib Phase III: erster Patient im September 2026 dosiert (Karte: "Juli 2026"). 1a: https://insilico.com/news/isn1009261-insilico-medicine-doses-first-patient-genesis-ipf-3
-- [ ] **VR-Schmerztherapie:** Unabhängige NIH-finanzierte Studie (Cedars-Sinai, n=385, npj Digital Medicine Feb. 2026): VR nicht besser als Schein-VR im Primärendpunkt; Karte nennt die Evidenz "ungewöhnlich sauber". https://doi.org/10.1038/s41746-026-02437-4
-- [ ] **Dentalroboter:** Klinische Literatur 2025–2026 wird von chinesischen autonomen Implantatrobotern dominiert; Karte nennt nur Yomi. https://doi.org/10.1111/jopr.70076
-- [ ] **Katastrophen-Frühwarnung:** FireSat ist im Orbit (Start 7.7.2026, erste Feuerbilder 16.9.2026). https://earthfirealliance.org/news-article/earth-fire-alliance-and-muon-space-release-first-light-and-first-active-fire-images-from-operational-firesat-constellation/
-- [ ] **Weltraumrobotik:** MEV-1 seit Mai 2025 am dritten Kunden; Mission Robotic Vehicle mit drei Pods am 21.7.2026 gestartet. https://www.northropgrumman.com/space/space-logistics-services
-- [ ] **Maschinelle Übersetzung:** DeepL streicht im Mai 2026 rund 25 % der Stellen; Karte nennt "stetiges starkes Wachstum". https://finance.yahoo.com/sectors/technology/articles/deepl-cut-25-workforce-ai-182445900.html
-- [ ] **Gaussian Splatting:** "HKU" ist die Kunsthochschule Utrecht, nicht die Universität Hongkong.
+Neue Hinweise zu Kartentexten (eingearbeitet 2026-10-07, ai_use_cases_overview 672994a; Quellen beim Einarbeiten selbst geöffnet):
+- [x] **Präzisionsspritzen:** Deere meldet über 10 Mio. Acres See & Spray Select in Australien, 74 % weniger Herbizid (Aug. 2026). https://www.heavyquipmag.com/2026/08/19/john-deere-see-and-spray-select-10-million-acres-australia/
+- [x] **Aquakultur:** "langsame Verbreitung" überholt: fast 3.000 Stingray-Laser in rund 25 % der norwegischen Fischfarmen (Dez. 2025); Mowi von 80 auf 250 Geräte. https://scanmagazine.co.uk/beyond-the-net-stingrays-high-tech-approach-to-revolutionising-fish-farming-december-2025/ . XpertSea heißt jetzt KAMPI.
+- [x] **Exoskelette:** German Bionics aktuelles System heißt EXIA, nicht Apogee. https://germanbionic.com/news/human-centric-robotics-takes-off-supporting-the-people-who-keep-airports-moving
+- [x] **KI-Wirkstoffsuche:** Rentosertib Phase III: erster Patient im September 2026 dosiert (Karte: "Juli 2026"); Karte nennt jetzt Start Juli, erster Patient 10.9.2026. 1a: https://insilico.com/news/isn1009261-insilico-medicine-doses-first-patient-genesis-ipf-3
+- [x] **VR-Schmerztherapie:** Unabhängige NIH-finanzierte Studie (Cedars-Sinai, n=385, npj Digital Medicine Feb. 2026): VR nicht besser als Schein-VR im Primärendpunkt; Karte nennt die Evidenz "ungewöhnlich sauber". https://doi.org/10.1038/s41746-026-02437-4
+- [x] **Dentalroboter:** Klinische Literatur 2025–2026 wird von chinesischen autonomen Implantatrobotern dominiert; Karte nennt nur Yomi. https://doi.org/10.1111/jopr.70076
+- [x] **Katastrophen-Frühwarnung:** FireSat ist im Orbit (Start 7.7.2026, erste Feuerbilder 16.9.2026). https://earthfirealliance.org/news-article/earth-fire-alliance-and-muon-space-release-first-light-and-first-active-fire-images-from-operational-firesat-constellation/
+- [x] **Weltraumrobotik:** MEV-1 seit Mai 2025 am dritten Kunden; Mission Robotic Vehicle mit drei Pods am 21.7.2026 gestartet. https://www.northropgrumman.com/space/space-logistics-services
+- [x] **Maschinelle Übersetzung:** DeepL streicht im Mai 2026 rund 25 % der Stellen; Karte nennt "stetiges starkes Wachstum". https://finance.yahoo.com/sectors/technology/articles/deepl-cut-25-workforce-ai-182445900.html
+- [x] **Gaussian Splatting:** "HKU" ist die Kunsthochschule Utrecht, nicht die Universität Hongkong.
 
 ## Trägt
 Die 247 Orte sind mit Quelle eingetragen; verbund_pruefen.py meldet "in Ordnung", Board und Atlas zeigen sie in EN/DE/MN (Browsertest 2026-10-07).
