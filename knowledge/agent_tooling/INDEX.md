@@ -12,6 +12,7 @@ Stand 2026-10-06. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| regel | [traceability-map-for-a-results-repo](rules/traceability-map-for-a-results-repo.md) | Ergebnis-Repo braucht eine Karte Zahl -> Daten -> Befehl -> Datei -> Abschnitt; vier Tabellen, Literatur-Flags, Luecken | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |
 | [Leer ist nicht fehlend](rules/empty-is-not-missing.md) | regel | getragen |
 | [Unbekannt ist kein Wert in einem Vergleich](rules/unknown-is-not-a-value-in-comparisons.md) | regel | getragen |

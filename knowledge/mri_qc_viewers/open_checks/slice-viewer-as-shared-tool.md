@@ -24,6 +24,8 @@ und den Setzungen aus [qc-slice-viewer-conventions](../rules/qc-slice-viewer-con
 - [x] Live-Modus (07.10.): `live_server.py` serviert den Ordner auf 127.0.0.1, beobachtet die mtime des
       Generators, baut per `--refresh-html` aus `build_args.json` neu; die Seite pollt Last-Modified per HEAD
       (1,5 s) und laedt sich selbst, Fall und Schicht bleiben (Hash, sessionStorage). Gehoert mit ins Tool.
+- [x] Generator-Option `--cohort NAME` (Anzeigename der Kohorte ohne Aenderung der Manifeste) und
+      Live-Server fuer einen Elternordner mit mehreren Betrachtern (07.10.).
 
 ## Traegt
 Wiederverwendung fuer WMH- und PVS-QC ohne Neubau.
