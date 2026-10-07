@@ -24,6 +24,11 @@ Trennung Blutung / Gefaessquerschnitt mit einer einzigen Magnitudensequenz.
 Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert;
 Fruehstopp auf dem inneren F1 feuert auf Startwert-Rauschen, darum feste 60 Epochen.
 
+**Getragen (Auslieferung):** Ein auf allen Faellen trainiertes Netz ohne inneren Checkpoint ist
+"heisser": auf fremdem Scanner gibt die feste Schwelle 0,3 nur 0,415 statt 0,622 (Faltenensemble),
+kreuzgewaehlt gleichauf; Arbeitspunkte nie von anderen Laeufen uebernehmen. Die zweite Stufe
+faengt es ab (0,604).
+
 **Regel:** Ein einzelnes U-Net-Training streut ~0,08 F1 zwischen Startwerten. Effekte
 darunter gelten nur mit zweitem Startwert oder Intervall ohne Null; vier "bestaetigte"
 Bausteine (FRST-Kanal, Gitter, Maske, Bias-Korrektur) lagen bei Nachpruefung im Rauschen.

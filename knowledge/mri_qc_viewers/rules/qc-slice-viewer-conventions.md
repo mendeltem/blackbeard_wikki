@@ -62,3 +62,10 @@ ist ziemlich gut", Tasten, Klick-Werte, Blau, Dateiname). Setzung, kein Messwert
 
 ## Verknuepft
 - [slice-viewer-as-shared-tool](../open_checks/slice-viewer-as-shared-tool.md)
+
+**Nachtrag 2026-10-07 (Nutzerwunsch): Urteilsmodus fuer EIN Modell.** Wenn nur das eigene
+Modell gezeigt wird, tragen die Umrisse rechts nicht mehr die Modellfarbe, sondern das Urteil:
+gruen = erkannt (vorhergesagte Komponente beruehrt eine Referenz), gelb = Fehlalarm, rot =
+verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our model, by verdict";
+links bleibt die Referenz blau. Generator: `build_slice_viewer.py --verdict` (genau ein `--run`).
+Modellname kurz (`our-3D-U-Net`), keine Leerzeichen (Dateinamen der Ebenen).
