@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-07 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund: Qwen3.8-Flash-Next GSQ-RCO (177B MoE) auf der 24-GB-Karte, acht Messlaeufe ueber vier Varianten und zwei Expertenverteilungen; SUMMARY ergaenzt.
 - 2026-10-07 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund: OpenCode gegen llama-server per Konfigdatei, Ein-Slot-Wartefalle. SUMMARY ergaenzt.
 - 2026-10-07 | Projekt valdo-t2s / PVS-Cluster (Alita, Claude Code) | `knowledge/lesion_detection_method/` | Bereich angelegt auf Wunsch von Mendel: 4 Mechanismen und 5 Regeln als projektfreie Fassung der CMB- und WMH-Lektionen, 1 offener Pruefpunkt mit sieben Schritten fuer PVS. Belege bleiben in cmb_detection und wmh_segmentation; cmb_detection/SUMMARY.md verweist darauf.
 - 2026-10-07 | Claude-Code-Sitzung Alita (Projekt valdo-t2s) | `knowledge/cmb_detection/findings/` | Zwei Datenbefunde zu VALDO Task 2: gelieferte Masken nicht eng (Kohorte 3 zu 40 % Nicht-Hirn), 33/72 T1 mit NaN und lautlosem SynthSeg-Ausfall bei rc 0. INDEX und SUMMARY ergaenzt.

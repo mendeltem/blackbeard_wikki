@@ -21,6 +21,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | risiko | [dynamic-quants-break-metadata-math](risks/dynamic-quants-break-metadata-math.md) | Groessenrechnung aus Metadaten liegt um Faktor zwei daneben |
 | risiko | [ollama-silently-truncates-context](risks/ollama-silently-truncates-context.md) | Prompt ueber `num_ctx`: Ollama behaelt stumm 32k vom Ende, Modell nennt den Koeder |
 | regel | [separate-prefill-from-decode](rules/separate-prefill-from-decode.md) | Durchsatz nie ueber die Wanduhr: 0,4 gegen 27,4 t/s |
+| befund | [flash-next-177b-moe-on-24gb-card](findings/flash-next-177b-moe-on-24gb-card.md) | 177B-MoE auf 24 GB: Experten im RAM, Tabelle auf der Platte; 8 Laeufe, 127-349 tok/s Prompt, 11-23 tok/s Erzeugung; RAM ist der Engpass, Q2_0 auf CUDA nicht schneller |
 | befund | [opencode-against-llama-server-one-slot](findings/opencode-against-llama-server-one-slot.md) | OpenCode 1.18 gegen llama-server per opencode.json (openai-compatible, kein Schluessel); bei einem Slot wartet es hinter dem Agenten und sieht haengend aus |
 | befund | [hermes-delegates-to-opencode-locally](findings/hermes-delegates-to-opencode-locally.md) | Hermes gibt Aufgaben an OpenCode ab, lokal, 160 s; kein zweiter Slot fuer qwen35moe |
 | risiko | [opencode-run-hangs-on-open-stdin](risks/opencode-run-hangs-on-open-stdin.md) | `opencode run` haengt ohne `</dev/null`, keine Anfrage erreicht das Modell |
