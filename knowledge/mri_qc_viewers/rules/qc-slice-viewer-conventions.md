@@ -69,3 +69,5 @@ gruen = erkannt (vorhergesagte Komponente beruehrt eine Referenz), gelb = Fehlal
 verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our model, by verdict";
 links bleibt die Referenz blau. Generator: `build_slice_viewer.py --verdict` (genau ein `--run`).
 Modellname kurz (`our-3D-U-Net`), keine Leerzeichen (Dateinamen der Ebenen).
+Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, `slices/` und Startseite) zeigt seit
+2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.
