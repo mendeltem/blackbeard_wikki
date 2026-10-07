@@ -18,6 +18,8 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | befund | [csf-rule-removes-false-alarms-without-loss](findings/csf-rule-removes-false-alarms-without-loss.md) | 98 von 176 Fehlalarmen liegen im Liquor; SynthSeg-Regel 0,585 -> 0,646, keine Blutung verloren |
 | befund | [one-shared-candidate-classifier-for-all-cohorts](findings/one-shared-candidate-classifier-for-all-cohorts.md) | Ein Klassifikator auf dem Kandidaten-Pool aller Kohorten, eine Schwelle 0,30: = Liquor-Regel auf VALDO/T2*, SWI +0,061; braucht keine Gewebekarte |
 | befund | [sensitivity-levers-do-not-raise-lesion-f1](findings/sensitivity-levers-do-not-raise-lesion-f1.md) | blob loss, Zentrumskarten, Neugewichtung, Synthese: Sensitivitaet rauf, F1 runter |
+| befund | [valdo-cohort-3-mask-is-a-head-mask](findings/valdo-cohort-3-mask-is-a-head-mask.md) | Gelieferte Masken nicht eng: Kohorte 3 zu 40 % Nicht-Hirn; Abhilfe SynthSeg-Maske |
+| befund | [valdo-t1-carries-nan-in-33-of-72-cases](findings/valdo-t1-carries-nan-in-33-of-72-cases.md) | 33/72 T1 mit NaN (Randschale); SynthSeg liefert lautlos leer bei rc 0; nan_to_num ist geprueft sicher |
 | regel | [two-seeds-per-decision-below-0.08](rules/two-seeds-per-decision-below-0.08.md) | Startwert-Rauschen eines U-Net-Trainings ~0,08 F1; kleinere Effekte brauchen zweiten Startwert |
 
 ## Herkunft

@@ -24,5 +24,11 @@ Trennung Blutung / Gefaessquerschnitt mit einer einzigen Magnitudensequenz.
 darunter gelten nur mit zweitem Startwert oder Intervall ohne Null; vier "bestaetigte"
 Bausteine (FRST-Kanal, Gitter, Maske, Bias-Korrektur) lagen bei Nachpruefung im Rauschen.
 
+**Datenbefunde VALDO (getragen):** Die gelieferten Masken sind nicht eng -- Kohorte 3 ist eine
+Kopfmaske mit 40 % Nicht-Hirn; Abhilfe SynthSeg- oder HD-BET-Maske, und Masken immer zweifach
+pruefen (schneidet ab? wie viel Nicht-Hirn bleibt?). 33 von 72 T1-Bildern tragen NaN in einer
+Randschale; SynthSeg liefert dafuer lautlos ein leeres Bild bei Rueckgabewert 0. Eine Zeile
+`nan_to_num` im Ladeschritt behebt es, geprueft sicher.
+
 **Lesen bei:** Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen,
 Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.
