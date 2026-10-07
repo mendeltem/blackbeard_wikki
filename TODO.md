@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-21 offene Einträge.
+22 offene Einträge.
 
 ## ai_application_layer
 
@@ -39,6 +39,10 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht vo
   - [ ] AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).
   - [ ] Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.
   - [ ] Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.
+
+## lesion_detection_method
+
+- [PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird](knowledge/lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md) (pruefpunkt, offen, Stand 2026-10-07)
 
 ## local_llm_operation
 

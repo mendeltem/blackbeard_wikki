@@ -45,3 +45,6 @@ Randschale; SynthSeg liefert dafuer lautlos ein leeres Bild bei Rueckgabewert 0.
 
 **Lesen bei:** Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen,
 Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.
+
+**Uebertragbar:** die projektfreie Fassung dieser Lektionen steht in
+[lesion_detection_method](../lesion_detection_method/SUMMARY.md).
