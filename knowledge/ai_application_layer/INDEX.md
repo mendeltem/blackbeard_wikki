@@ -20,3 +20,4 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Flughafen: biometrischer Check-in als Use Case erfassen](open_checks/airport-biometric-checkin-use-case.md) | pruefpunkt | getragen (erledigt) |
 | [Lücken in ai_use_cases_overview: Kandidatenliste](open_checks/use-case-overview-gaps.md) | pruefpunkt | offen |
 | [Kartentexte in ai_use_cases_overview: veraltete oder widersprochene Angaben](open_checks/use-case-card-corrections-2026-10.md) | pruefpunkt | getragen |
+| [Einsatzorte: zweiter Durchgang und neue Kartenhinweise](open_checks/use-case-places-second-pass.md) | pruefpunkt | offen |

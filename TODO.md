@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-19 offene Einträge.
+20 offene Einträge.
 
 ## ai_application_layer
 
@@ -14,6 +14,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-07. Nicht vo
   - [ ] Weitere Kandidaten systematisch sammeln: zuerst die Behördenverzeichnisse aus "Suchquellen", dann Lückenliste der Seite (Branchen ohne Karte) Branche für Branche gegen bekannte Produktivfälle halten.
   - [ ] Die zwei möglicherweise zufälligen Treffer gegen die Kartentexte lesen.
   - [ ] Je bestätigter Lücke Kartenentwurf an Mendel, gesammelt eintragen (Schreibzugriff auf ai_use_cases_overview nötig).
+- [Einsatzorte: zweiter Durchgang und neue Kartenhinweise](knowledge/ai_application_layer/open_checks/use-case-places-second-pass.md) (pruefpunkt, offen, Stand 2026-10-07)
 
 ## ai_buyers
 
