@@ -30,3 +30,5 @@
   (0,12); DRIPS findet sie am besten (0,45). Naechster Schritt: Kandidaten-Pool DRIPS ∪ MedNet-T1 + Trenner.
 - DURCHBRUCH 08.10. 05:25: zweite Stufe (Pool DRIPS ∪ MedNet-T1 + kleiner GBM-Trenner, LOO) auf VALDO F1 0,57 [0,54; 0,61] gegen 0,44;
   Precision 0,70, Klasse 1-2 0,30. Die CMB-Lektion (Trenner statt Schwelle) gilt auch fuer PVS. Offen: Rauschboden, Merkmale, EPVS/BELOVE.
+- 08.10. 07:20: Ablation der zweiten Stufe: Mehr-Sequenz-Intensitaeten (Komponente vs Huelle) tragen den Gewinn (-0,06 ohne), Form -0,02,
+  Lage und Posteriors 0; Pool aus drei Detektoren 0,58. PINGU auf VALDO 0,45 = MedNet-T1 (publizierte Dice ordneten falsch).

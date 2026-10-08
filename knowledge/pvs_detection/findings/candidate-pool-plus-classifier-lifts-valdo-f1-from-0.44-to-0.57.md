@@ -20,8 +20,14 @@ Trainingsfaellen (0,35-0,45, stabil). Ergebnis gegen Rater 1 (SABRE Ganzhirn, RS
 0,70, Recall 0,51, Klasse 1-2 Voxel 0,30; je Fall 0,46-0,65. Zum Vergleich: MedNet-T1 allein 0,440 [0,366; 0,508] (Precision
 0,45), Vereinigung 0,409 (Recall 0,72 = Decke), Schnitt 0,352, Inter-Rater 0,327. Erwartung vor dem Lauf war 0,46-0,52.
 
+**Nachtrag 08.10. 07:20 (Ablationen und dritter Detektor, LOO, n = 12):** ohne Lage-Merkmale 0,571, ohne Netz-Posteriors
+0,569, ohne Posteriors und Zugehoerigkeit 0,560, ohne Form 0,553, ohne T1-Intensitaeten 0,563, **ohne alle Intensitaeten 0,509**.
+Der Gewinn kommt aus den Intensitaeten von Komponente und 1-Voxel-Huelle in T1/T2/FLAIR (die Netze sehen je eine Sequenz, der
+Trenner drei), etwas aus der Form, nichts aus Lage oder Netz-Wahrscheinlichkeiten: ein Trenner, kein Ensemble. Startwerte 1/2
+identisch (deterministischer GBM). Pool aus drei Detektoren (+ PINGU, F1 allein 0,449 = MedNet-T1): 0,582 [0,543; 0,619].
+
 ## Traegt
-Die PVS-Arena und den Plan: Fortschritt kommt aus dem Trenner auf dem Pool, nicht aus Detektor-Rezepten oder Schwellen (vierte
+Die PVS-Arena und den Plan: Fortschritt kommt aus dem Trenner auf dem Pool, und zwar aus Mehr-Sequenz-Intensitaeten um den Kandidaten;, nicht aus Detektor-Rezepten oder Schwellen (vierte
 Bestaetigung nach CMB-VALDO, CMB-SWI und den flachen PVS-Schwellenkurven). Vorgehen fuer BELOVE ohne eigene Labels: Pool aus
 DRIPS-T1 und MedNet-T1, Trenner auf VALDO trainiert, dann Rating.
 
