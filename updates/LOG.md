@@ -103,3 +103,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Nachtrag HCP n=200 (Trenner 0,58 -> 0,67) im Befund candidate-pool-plus-classifier; INDEX/SUMMARY.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund pvs-chain-as-built-2026-10 (die Kette Schritt fuer Schritt, Zahlen VALDO/HCP/eigene Kohorte, QC-Betrachter); INDEX/SUMMARY.
 - 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag Grenztest flash/flash-xxs (Prompt-Rate flach bis 31,5k, Ueberlauf 400, Praefix-Cache, 16k zu klein) im Befund flash-next-177b-moe-on-24gb-card.
+- 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund decider-4b-matches-knn-on-60-routing-cases (decider 50/60, kNN 49/60, Konfidenz ab 0,8 21/21); INDEX/SUMMARY.
