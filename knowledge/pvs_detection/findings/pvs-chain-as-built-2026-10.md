@@ -80,6 +80,15 @@ VALDO Task 1 (12 Faelle, Rater 1) als oeffentliche QC-Seite mit dem Wiki-Tool qc
 https://mendeltem.github.io/valdo-pvs-qc/ (Urteilsmodus und Vergleich der Teile; Zaehler der Seite =
 Messskript 903 / 335 / 878; CC BY-NC 4.0). Die eigene Kohorte bleibt lokal.
 
+## Nachtrag 2026-10-08: Turnier auf EPVS 2024 vorbereitet
+Naechster Schritt nach CMB-Vorbild: eigenes Segmentierungsnetz statt fremder Detektoren, dann dieselbe zweite Stufe.
+Plan mit Erwartungen vorher (pvs-arena/TURNIER_EPVS.md): Runde 0 fertige Modelle zero-shot, Runde 1 alle 15 Netze des
+CMB-Turniers mit einem Rezept (T2 + invertiertes T1, 1 mm iso, 5 Falten nach Kohorte), Runde 1b komplette Rezepte mit
+FLAIR (nnU-Net ResEnc-M, MedNeXt wie der Challenge-Sieger), Stufe 2 auf dem Pool der zwei besten. Das CMB-Turnier laeuft
+ueber sein --manifest unveraendert, der zweite Kanal belegt den FRST-Platz. Sieger EPVS 2024 laut Ergebnispapier
+(arXiv 2512.18197): MedNeXt T1+T2+FLAIR, Dice+TopK-CE, Schwelle 0,3; Val R 0,58 / P 0,74. Daten: Terms of Use erlauben
+nur den Challenge-Zweck; Veroeffentlichung braucht die Zustimmung der Daten-PIs.
+
 ## Verknuepft
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)
 - [mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs](mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.md)
