@@ -34,3 +34,5 @@
   Lage und Posteriors 0; Pool aus drei Detektoren 0,58. PINGU auf VALDO 0,45 = MedNet-T1 (publizierte Dice ordneten falsch).
 - 08.10. 13:00: Trenner auf HCP (200 Faelle, ein Detektor, nur T2): F1 0,58 -> 0,67 [0,66; 0,68], Precision 0,80 -- der Gewinn der
   zweiten Stufe haelt auf grosser Stichprobe und mit einer Sequenz. Clara wp7: Fehlalarme sitzen im WM, Ortsregel traegt nicht.
+
+**Befund, neu 2026-10-08 (Alita):** Die PVS-Kette steht als Dokument: zwei Detektoren auf T1 (DRIPS >= 0,10 empfindlich, MedNet >= 0,50 praezise), Pool der 26er-Komponenten, 29 Merkmale (Form, Posterior, z-Intensitaeten innen/Huelle, SynthSeg-Gruppen), HistGradientBoosting-Trenner auf VALDO Rater 1 mit Schwelle 0,4. VALDO LOO 0,57 gegen 0,44; HCP-Aging 200 Faelle nur T2, nur DRIPS: 0,668 [0,657; 0,680] gegen 0,584. Eigene Kohorte ohne Referenz: Uebereinstimmung mit der Pipeline-Maske 0,35 (Praezision 0,83, Recall 0,23), 95 % der 1-2-Voxel-Kandidaten verworfen; QC-Schichtbetrachter lokal fuer die Expertensicht, Rating der 25 Faelle entscheidet.
