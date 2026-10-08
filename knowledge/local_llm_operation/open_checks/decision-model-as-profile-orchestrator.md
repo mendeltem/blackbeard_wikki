@@ -72,6 +72,26 @@ Routing), 2601.07206 (LLMRouterBench), 2510.00202 (RouterArena), 2506.16655
 (Arch-Router). Keine der Zahlen auf Alita gemessen. Eigene Zahl: Profilwechsel
 flash ueber start.sh 20 s Ladezeit, 6,1 GB VRAM bei 32k Kontext.
 
+## Nachtrag 2026-10-08: Jev auf der eigenen Maschine
+Jev gibt es nur als gehosteten Dienst (api.typesafe.ai, `POST /v1/systemone`,
+SDK `pip install typesafe-sdk`, auch ueber OpenRouter: 0,042 $/M Eingabetoken,
+32k Kontext). Keine Gewichte, kein On-Prem; Zero-Data-Retention nur fuer
+Enterprise-Kunden auf Anfrage. Fuer eine Workstation mit Patientendaten heisst
+das: Jev darf nur Entscheidungen ueber Text sehen, der keine Daten enthaelt
+(Routing von Nutzeranfragen, nicht Shell-Befehle mit Pfaden, nicht Berichte).
+Lokal laufen stattdessen die Nachbauten mit demselben Draht-Format: Mapika
+`decider` (Qwen3.5-Feinjustierung, Apache 2.0, 2B = 4 GB VRAM, 4B = 8,4 GB,
+35B-A3B = 20-65 GB; serviert `/v1/systemone`, TypeSafes SDK laeuft gegen eine
+andere Basis-URL), JevBench v1.3: Jev 74,4 / Kalibrierung 83, decider-4b v2
+64,1 (bestes offenes), decider-35b-a3b 67,6 / 72, decider-2b 61,7 / 47
+(schlecht kalibriert). GGUF-Varianten (Q4_K_M, 2,7 GB) existieren fuer
+llama.cpp. Laya bleibt der kleinste Weg (322-421 Mio., CPU, 60 ms).
+
+Folge fuer Alita: decider-4b als GGUF passt neben das Profil `flash` (6 GB)
+oder als CPU-Dienst neben das 27B; ein zweiter llama-server auf 8003 mit
+`--n-gpu-layers 0` kostet nur RAM. Messung wie oben: 60 Faelle, drei Ziele,
+gegen Embedding+kNN und Laya.
+
 ## Verknuepft
 - [laya-router-before-agent](../findings/laya-router-before-agent.md)
 - [flash-next-177b-moe-on-24gb-card](../findings/flash-next-177b-moe-on-24gb-card.md)
