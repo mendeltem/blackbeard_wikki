@@ -87,4 +87,4 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-08. Nicht vo
 
 ## mri_qc_viewers
 
-- [Den Schichtbetrachter als Tool unter tools/mri/ einstellen](knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md) (pruefpunkt, offen, Stand 2026-10-07)
+- [Den Schichtbetrachter als Tool unter tools/mri/ einstellen](knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md) (pruefpunkt, offen, Stand 2026-10-08)

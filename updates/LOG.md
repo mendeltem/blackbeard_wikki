@@ -104,3 +104,5 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund pvs-chain-as-built-2026-10 (die Kette Schritt fuer Schritt, Zahlen VALDO/HCP/eigene Kohorte, QC-Betrachter); INDEX/SUMMARY.
 - 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag Grenztest flash/flash-xxs (Prompt-Rate flach bis 31,5k, Ueberlauf 400, Praefix-Cache, 16k zu klein) im Befund flash-next-177b-moe-on-24gb-card.
 - 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund decider-4b-matches-knn-on-60-routing-cases (decider 50/60, kNN 49/60, Konfidenz ab 0,8 21/21); INDEX/SUMMARY.
+- 2026-10-08 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel qc-build-order-for-a-new-lesion-type (zehn Setzungen aus CMB/PVS-QC, Liquor-Ebenen, Rating-Seite); INDEX/SUMMARY.
+- 2026-10-08 | Alita (Claude Code) | `tools/mri/mri_segmentation/qc_slice_viewer/` | Neues Tool: manifestgesteuerter QC-Schichtbetrachter (aus CMB-Generator und PVS-Lader), Test und Gegenprobe; Pruefpunkt slice-viewer-as-shared-tool zwei Haken.
