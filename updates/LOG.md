@@ -92,3 +92,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-07 | PVS-Arena Alita (Claude Code) | `knowledge/agent_tooling/` | Regel never-edit-a-running-bash-script (DRIPS-Rauchtest brach durch Edit waehrend des Laufs).
 - 2026-10-07 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund valdo-interrater-ceiling-and-drips-first-numbers (erste Zahlen gegen Handreferenz); SUMMARY.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third (200 Faelle, OOF-Schwelle); SUMMARY.
+- 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/agent_tooling/` | Regel gpu-job-needs-cuda-check-in-its-own-env (drei GPU-Fehlversuche).

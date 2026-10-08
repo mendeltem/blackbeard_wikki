@@ -55,3 +55,4 @@ Die vier Regeln vom 2026-10-06 sind aus dem Projekt [rea](https://github.com/mor
 (Reverse Engineering mit Agenten, MIT) übernommen: Werkzeugdesign, Skill-Aufbau,
 Testprüfung. Bei uns nicht gemessen, daher vorschlag.
 | regel | [never-edit-a-running-bash-script](rules/never-edit-a-running-bash-script.md) | bash liest Skripte waehrend der Ausfuehrung weiter; ein Edit mitten im Lauf erzeugt Syntaxfehler und verwaiste Ergebnisse; Aenderungen in neue Datei | getragen |
+| regel | [gpu-job-needs-cuda-check-in-its-own-env](rules/gpu-job-needs-cuda-check-in-its-own-env.md) | Vor dem Einreihen: cuda.is_available, voller Inferenz-Import, Mini-Lauf mit GPU in GENAU der Umgebung; pkill-Muster nicht woertlich im Kommando | getragen |

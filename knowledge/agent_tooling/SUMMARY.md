@@ -18,3 +18,4 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 
 **Regel (2026-10-07):** "Installierbar" heisst frische Umgebung nur mit den README-Befehlen plus Gewichte vom Release, ein CI-Job auf fremdem Runner und jede CLI-Option einmal getestet; externe Programme (FSL) brauchen ihre Umgebungsvariablen vom Paket selbst, sonst haengen sie stumm.
 - 07.10.: Laufende Bash-Skripte nie editieren (bash liest weiter am Byte-Offset); Aenderungen in neue Datei oder auf Prozessende warten.
+- 08.10.: GPU-Auftrag erst nach cuda-Check, vollem Import und Mini-Lauf in derselben Umgebung einreihen (CPU-Build-torch kostete 80 min Sperre).
