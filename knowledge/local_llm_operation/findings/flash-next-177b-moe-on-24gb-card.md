@@ -79,5 +79,20 @@ RSS 31 GB plus 35 GB Seitencache. Eine System-Nachricht mitten im Verlauf
 geht mit dem entschaerften Template durch. Umschalten wartet auf einen freien
 Slot, sonst stirbt der laufende Agentenaufruf.
 
+## Nachtrag 2026-10-08: Grenztest der Profile (Kontext bis zum Rand, Ueberlauf, Gespraech)
+Ein Prompt je Stufe, Antwort 200 Token, ein Slot. **flash** (IQ2_XS, alle Experten
+im RAM, Kontext 32k): Prompt 248-255 tok/s von 8k bis 31,5k Token, Erzeugung 17-19
+tok/s unveraendert, VRAM 6,1 GB, RSS 30-31,5 GB; die 31.517-Token-Stufe dauerte 141 s.
+Nur der 2k-Prompt faellt ab (106 tok/s, Ladeeffekt der n-Gramm-Tabelle).
+**flash-xxs** (IQ3_XXS, 16 Schichten GPU, Kontext 16k): 290-331 tok/s Prompt, 22-24 tok/s
+Erzeugung, VRAM 22,1 GB, RSS bis 25,6 GB. Ein Prompt ueber dem Fenster wird mit HTTP 400
+abgewiesen, der Server lebt weiter (beide Profile). Fuenf Zuege zu je 3.900 Token:
+der Praefix-Cache greift trotz der Warnung "cache_reuse is not supported by this
+context" (cache_n waechst 3.885 -> 15.425), neue Token 200-240 bzw. 294-340 tok/s;
+beim 16k-Profil scheitert Zug 5 (19.316 Token) am Fenster, der Agent muss dort frueher
+verdichten (modellwahl setzt Hermes' context_length auf das Profil).
+Lehre: die Prompt-Rate ist ueber den ganzen Kontext flach, die Wartezeit waechst
+linear mit der Laenge; 16k reicht fuer Agentenarbeit nicht, 32k knapp.
+
 ## Verknuepft
 - [opencode-against-llama-server-one-slot](opencode-against-llama-server-one-slot.md)

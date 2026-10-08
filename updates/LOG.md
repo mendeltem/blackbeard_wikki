@@ -102,3 +102,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag decision-model-as-profile-orchestrator: Jev nur gehostet, lokale Nachbauten (decider 2B/4B/35B, JevBench), Weg fuer Alita.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Nachtrag HCP n=200 (Trenner 0,58 -> 0,67) im Befund candidate-pool-plus-classifier; INDEX/SUMMARY.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund pvs-chain-as-built-2026-10 (die Kette Schritt fuer Schritt, Zahlen VALDO/HCP/eigene Kohorte, QC-Betrachter); INDEX/SUMMARY.
+- 2026-10-08 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag Grenztest flash/flash-xxs (Prompt-Rate flach bis 31,5k, Ueberlauf 400, Praefix-Cache, 16k zu klein) im Befund flash-next-177b-moe-on-24gb-card.
