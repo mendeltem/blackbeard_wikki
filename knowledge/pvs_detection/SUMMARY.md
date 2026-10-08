@@ -26,3 +26,5 @@
   Frangi 0,28. VALDO (12): DRIPS-T2 0,35, T1 0,33, beide ueber Inter-Rater 0,29. Hebel: Ortsregel/zweite Stufe, nicht Schwelle.
 - KORREKTUR 08.10. 04:20: VALDO-SABRE-Masken sind Ganzhirn, Regions = Zaehl-Slabs. Korrigiert: Inter-Rater 0,33; MedNet-T2 0,39,
   DRIPS-T2 0,35 (Klasse 1-2 Recall 0,45), DRIPS-T1 0,35. DRIPS gewinnt SABRE, MedNet-T2 gewinnt RSS; MedNet-T2 vs Rater 2 nur 0,07.
+- 08.10. 05:00: MedNet-T1w (klinische T1) fuehrt VALDO mit F1 0,44 (Precision 0,45), findet aber die 1-2-Voxel-PVS am schlechtesten
+  (0,12); DRIPS findet sie am besten (0,45). Naechster Schritt: Kandidaten-Pool DRIPS ∪ MedNet-T1 + Trenner.
