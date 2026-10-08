@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-08. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-22 offene Einträge.
+23 offene Einträge.
 
 ## ai_application_layer
 
@@ -46,6 +46,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-08. Nicht vo
 
 ## local_llm_operation
 
+- [Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen](knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md) (pruefpunkt, offen, Stand 2026-10-08)
 - [Weniger Denken bei einem dichten 27B: schneller als das MoE auf 8 GB?](knowledge/local_llm_operation/open_checks/dense-27b-vs-moe-on-8gb.md) (pruefpunkt, offen, Stand 2026-10-04)
 - [Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt](knowledge/local_llm_operation/open_checks/local-stack-landscape-2026-10.md) (pruefpunkt, offen, Stand 2026-10-06)
   - [ ] `--n-cpu-moe` 15–40 mit `llama-bench`, pp512/tg128, `-ub 512` gegen `-ub 4096`.

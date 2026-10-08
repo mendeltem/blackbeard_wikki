@@ -36,6 +36,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | pruefpunkt | [reasoning-effort-for-routine-agent-tasks](open_checks/reasoning-effort-for-routine-agent-tasks.md) | Wie viel Thinking Routineaufgaben im Agenten brauchen, ungemessen |
 | pruefpunkt | [minimal-harness-prompt-size](open_checks/minimal-harness-prompt-size.md) | Pi unter 1000 Token Prompt gegen OpenCode 10 879 und Hermes ~13 000 |
 | pruefpunkt | [local-stack-landscape-2026-10](open_checks/local-stack-landscape-2026-10.md) | Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen |
+| pruefpunkt | [decision-model-as-profile-orchestrator](open_checks/decision-model-as-profile-orchestrator.md) | Laya/Jev/Arch-Router als Weiche: nur zwischen residenten Zielen (klein/gross/Cloud), nie je Anfrage zwischen exklusiven Profilen; Laya zero-shot 0,36, erst gegen kNN messen |
 
 ## Werkzeuge dazu
 

@@ -3,7 +3,7 @@ id: flash-next-177b-moe-on-24gb-card
 typ: befund
 status: getragen
 thema: knowledge/local_llm_operation
-stand: 2026-10-07
+stand: 2026-10-08
 herkunft: Alita (RTX A5000 24 GB, 62 GB RAM, 24 Kerne, NVMe), acht Messlaeufe 2026-10-07 19:49 bis 21:15, llama.cpp 448147d
 verweist_auf: [opencode-against-llama-server-one-slot]
 ---
@@ -66,6 +66,18 @@ RAM-Rechnung in Punkt 3 zu pessimistisch).
 Eigene Messung, Skripte `system/werkzeuge/flashnext-test.sh` und `flashnext-quality.py`
 (Alita), Ergebnisse `ergebnisse/flashnext-<Variante>-cmoe<N>.json`. Tier 1a.
 Modellkarte: https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (Herstellerangabe, Tier 1b).
+
+## Nachtrag 2026-10-08: als Profil im Dienst
+Die Varianten sind als Registry-Profile eingebunden (`flash` = IQ2_XS alle
+Experten im RAM, `flash-xxs`/`flash-s` = 16 Schichten auf der Karte). Ein
+Profil traegt eigenes Binary, Lademodus mmap, Zusatzargumente, VRAM-Bedarf
+fuer die Warteschleife und cgroup-Grenzen (ein mmap-Modell zaehlt seinen
+Seitencache mit; die 20G/26G des dichten 27B wuerden es drosseln und toeten).
+Probelauf `flash` ueber das Startskript selbst, Kontext 32k: 20 s Laden,
+6,1 GB VRAM, 6/6 Pruefffragen, 5677-Token-Prompt 206 tok/s, Erzeugung 18 tok/s,
+RSS 31 GB plus 35 GB Seitencache. Eine System-Nachricht mitten im Verlauf
+geht mit dem entschaerften Template durch. Umschalten wartet auf einen freien
+Slot, sonst stirbt der laufende Agentenaufruf.
 
 ## Verknuepft
 - [opencode-against-llama-server-one-slot](opencode-against-llama-server-one-slot.md)
