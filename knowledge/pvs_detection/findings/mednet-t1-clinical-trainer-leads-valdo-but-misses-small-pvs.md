@@ -19,6 +19,11 @@ Rater untereinander 0,34. Kohortenprofil: DRIPS gewinnt SABRE (Ganzhirn, 1 mm: 0
 (0,5-mm-Gitter, Teilschichten: 0,52 vs 0,32). Gegen Rater 2: MedNet-T1 0,26, DRIPS-T2 0,24, MedNet-T2 0,07 (der HCP-T2-Trainer kennt
 keine Basalganglien-PVS). Alle Schwellenkurven sind flach (0,1-0,5); Precision steigt, F1 nicht.
 
+**Nachtrag 08.10. 16:25 (Gewebe am Schwerpunkt, SABRE 6 Faelle, Ganzhirn):** Rater 1 markiert 1103 WM- und 291 BG-Komponenten,
+Rater 2 498 WM und 510 BG (BG-lastig). MedNet-T2w (HCP-Trainer, nur WM-Labels) sagt 1917 WM und **2** BG voraus -- das erklaert
+sein 0,07 gegen Rater 2 vollstaendig; MedNet-T1w 1342/181, DRIPS-T2 2646/423. Ein auf WM-only-Labels trainiertes Netz ist fuer
+Basalganglien-PVS (klinisch die wichtigere Region) unbrauchbar; Trainingslabels muessen die Zielregionen enthalten.
+
 ## Traegt
 Wahl der Bausteine: fuer klinisches T1 (BELOVE) ist MedNet-T1 die praezise Basis; fuer das Ziel "auch kleine PVS" ist DRIPS der
 Kandidatengeber (empfindlich, Klasse 1-2 ueber Rater-Niveau). Daraus folgt der naechste Schritt: Kandidaten-Pool beider plus
