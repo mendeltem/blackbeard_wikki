@@ -22,3 +22,5 @@
   Docker, Domain Randomisation) als vortrainiertes Verfahren G aufgenommen. STRIVE-2: Groesse trennt PVS/Lakune nicht, FLAIR-Rand und Form schon.
 - ERSTE ZAHLEN (07.10. 23:00): VALDO Inter-Rater F1 0,29; DRIPS (synthetisch trainiert, Docker) auf T2 0,31 (SABRE 0,37), Recall 0,48,
   Precision 0,25, Schwellenkurve flach, Klasse 1-2 Recall 0,33 -> naechster Hebel Fehlalarme nach Ort (Clara wp7). Frangi auf HCP 0,16.
+- 08.10. 02:00: DRIPS auf 200 HCP: F1 0,55 (0,58 WM-beschnitten), OOF-Schwelle 0,15-0,2 stabil, Klasse 1-2 Recall 0,33 bei 0,1;
+  Frangi 0,28. VALDO (12): DRIPS-T2 0,35, T1 0,33, beide ueber Inter-Rater 0,29. Hebel: Ortsregel/zweite Stufe, nicht Schwelle.
