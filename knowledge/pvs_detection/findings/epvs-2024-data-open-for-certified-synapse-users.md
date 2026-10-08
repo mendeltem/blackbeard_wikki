@@ -1,7 +1,7 @@
 ---
 id: epvs-2024-data-open-for-certified-synapse-users
 typ: befund
-status: getragen
+status: widerlegt
 thema: knowledge/pvs_detection
 stand: 2026-10-07
 herkunft: Synapse-REST-API direkt abgefragt (repo-prod.prod.sagebase.org), PVS-Cluster Alita, 2026-10-07
@@ -32,6 +32,15 @@ Download mit zertifiziertem Konto wird mit einem Access Requirement abgewiesen.
 ## Ablesung
 GET /repo/v1/entity/syn54100278/accessRequirement (0 Ergebnisse), POST /entity/children, POST
 /entity/syn61767476/bundle2 (restrictionLevel OPEN), GET /entity/syn61767476/file -> 403 anonym. 2026-10-07 20:25.
+
+## Nachtrag 2026-10-08: Bruchindikator eingetreten, es braucht doch einen Antrag
+Mit zertifiziertem Konto (Quiz 15/15) und Token: canDownload false fuer alle Dateien, obwohl
+restrictionLevel OPEN und keine Access Requirements. Der Download haengt an der ACL: nur das Team
+"EPVS Challenge Participants" (3502876) hat DOWNLOAD. Beitritt nur mit Zustimmung; Weg laut
+Teambeschreibung: Terms of Use unterschreiben und an epvs.challenge@gmail.com mit Betreff
+"[EPVS Challenge Registration Request]" schicken, dann Mitgliedschaft beantragen. Lehre: neben
+accessRequirement und restrictionInformation auch die ACL und `permissions.canDownload` im bundle2
+pruefen, bevor man "offen" schreibt.
 
 ## Verknuepft
 - [public-pvs-reference-data-and-models-2026-10](public-pvs-reference-data-and-models-2026-10.md)
