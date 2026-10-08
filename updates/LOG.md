@@ -107,3 +107,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel qc-build-order-for-a-new-lesion-type (zehn Setzungen aus CMB/PVS-QC, Liquor-Ebenen, Rating-Seite); INDEX/SUMMARY.
 - 2026-10-08 | Alita (Claude Code) | `tools/mri/mri_segmentation/qc_slice_viewer/` | Neues Tool: manifestgesteuerter QC-Schichtbetrachter (aus CMB-Generator und PVS-Lader), Test und Gegenprobe; Pruefpunkt slice-viewer-as-shared-tool zwei Haken.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Nachtrag Gewebe-Zaehlung (Rater 2 BG-lastig, MedNet-T2 ohne BG) im Befund mednet-t1-clinical-trainer; SUMMARY.
+- 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Nachtrag: oeffentliche VALDO-Task-1-QC-Seite (valdo-pvs-qc) mit dem Tool qc_slice_viewer.

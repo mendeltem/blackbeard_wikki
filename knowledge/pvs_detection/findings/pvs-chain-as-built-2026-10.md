@@ -75,6 +75,11 @@ Eigene Messungen in pvs-arena/ARBEIT.md (F1, F2, F3, F6.1, F6.2), pvs_metrik.py
 Betrachter und Bewertungsseite verlassen das Haus nicht. Code als Repository
 `pvs-arena-chain` (privat, ohne Daten).
 
+## Nachtrag 2026-10-08: oeffentliche QC-Seite
+VALDO Task 1 (12 Faelle, Rater 1) als oeffentliche QC-Seite mit dem Wiki-Tool qc_slice_viewer:
+https://mendeltem.github.io/valdo-pvs-qc/ (Urteilsmodus und Vergleich der Teile; Zaehler der Seite =
+Messskript 903 / 335 / 878; CC BY-NC 4.0). Die eigene Kohorte bleibt lokal.
+
 ## Verknuepft
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)
 - [mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs](mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.md)
