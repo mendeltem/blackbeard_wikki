@@ -26,3 +26,4 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 cmb_detection (valdo-t2s, 2026-09-10 bis 2026-10-07) und wmh_segmentation (wmhseg,
 2026-09-12 bis 2026-09-18), zusammengefasst am 2026-10-07 auf Wunsch von Mendel als
 Meta-Wissen fuer kommende Linien; PVS-Datenlage aus der Bestandsaufnahme des Clusters.
+| regel | [check-what-a-region-file-means-before-the-first-number](rules/check-what-a-region-file-means-before-the-first-number.md) | VALDO-Regions-Maske war Zaehl-Slab, nicht Annotationsgrenze: 75 % der Referenz weggeschnitten; Anteil ausserhalb VOR der ersten Zahl messen | getragen |

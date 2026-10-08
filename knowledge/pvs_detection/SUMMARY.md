@@ -24,3 +24,5 @@
   Precision 0,25, Schwellenkurve flach, Klasse 1-2 Recall 0,33 -> naechster Hebel Fehlalarme nach Ort (Clara wp7). Frangi auf HCP 0,16.
 - 08.10. 02:00: DRIPS auf 200 HCP: F1 0,55 (0,58 WM-beschnitten), OOF-Schwelle 0,15-0,2 stabil, Klasse 1-2 Recall 0,33 bei 0,1;
   Frangi 0,28. VALDO (12): DRIPS-T2 0,35, T1 0,33, beide ueber Inter-Rater 0,29. Hebel: Ortsregel/zweite Stufe, nicht Schwelle.
+- KORREKTUR 08.10. 04:20: VALDO-SABRE-Masken sind Ganzhirn, Regions = Zaehl-Slabs. Korrigiert: Inter-Rater 0,33; MedNet-T2 0,39,
+  DRIPS-T2 0,35 (Klasse 1-2 Recall 0,45), DRIPS-T1 0,35. DRIPS gewinnt SABRE, MedNet-T2 gewinnt RSS; MedNet-T2 vs Rater 2 nur 0,07.

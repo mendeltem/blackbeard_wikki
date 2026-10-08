@@ -31,3 +31,4 @@ selbst Liquorsignal, Ortsregeln also nur ueber Lage.
 
 **Lesen bei:** neue Laesionslinie, uebernommene Pipeline, Parameterdateien ohne Herkunft,
 PVS, Lakunen, Kandidaten-Klassifikator, Fehlalarme, Referenzmasken, Startwert-Rauschen.
+- 08.10.: Regel: Anteil der Referenz AUSSERHALB jeder Zusatzmaske vor der ersten Zahl messen (VALDO-Slab-Maske kostete 75 % der SABRE-Referenz).

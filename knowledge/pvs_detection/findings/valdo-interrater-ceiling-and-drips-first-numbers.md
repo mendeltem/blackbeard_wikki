@@ -3,7 +3,7 @@ id: valdo-interrater-ceiling-and-drips-first-numbers
 typ: befund
 status: vorschlag
 thema: knowledge/pvs_detection
-stand: 2026-10-07
+stand: 2026-10-08
 herkunft: PVS-Arena Alita, Clara wp4 (Inter-Rater-Kette) und Versuch C2 (DRIPS auf VALDO Task 1), 2026-10-07 22:00-23:00
 verweist_auf: [hcp-aging-labels-are-mostly-unet-silver, reference-first-then-metric-then-model, sensitivity-needs-a-discriminator, false-alarms-cluster-by-anatomy]
 ---
@@ -11,6 +11,13 @@ verweist_auf: [hcp-aging-labels-are-mostly-unet-silver, reference-first-then-met
 # VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision
 
 ## Aussage
+**Korrektur 2026-10-08 04:20:** Die VALDO-Regions-Datei ist bei SABRE nur die Zaehl-Slab-Maske, die PVSSeg-Masken sind
+Ganzhirn; die Zahlen vom 07.10. beschnitten drei Viertel der SABRE-Referenz. Korrigiert (SABRE Ganzhirn, RSS mit Region, n = 12):
+Inter-Rater F1 0,327 [0,253; 0,397] (Klasse 1-2: 0,34); MedNet-PVS-T2w (auf HCP trainiert) 0,388 [0,302; 0,468], DRIPS-T2 0,354
+[0,260; 0,448], DRIPS-T1 0,351; DRIPS-T2 trifft 45 % der 1-2-Voxel-Referenz, MedNet-T2 19 %. DRIPS gewinnt SABRE (0,38 vs 0,30),
+MedNet-T2 gewinnt RSS (0,47 vs 0,32). MedNet-T2 gegen Rater 2 nur 0,07 (verschiedene PVS-Populationen, offen). Der urspruengliche
+Text unten bleibt als Beleg des Fehlers stehen.
+
 Auf VALDO Task 1 (12 von 40 Trainingsfaellen haben Masken; 6 SABRE-Faelle mit zwei Ratern) betraegt die Uebereinstimmung
 Rater 2 gegen Rater 1 mit der Arena-Metrik (26er-Komponenten, Beruehrung = Treffer, Region beschnitten) F1 0,294
 [0,230; 0,363], Dice 0,24; in der Klasse 1-2 Voxel nur 0,17. Rater 2 markiert 2- bis 7-mal weniger PVS als Rater 1.

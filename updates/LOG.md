@@ -93,3 +93,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-07 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund valdo-interrater-ceiling-and-drips-first-numbers (erste Zahlen gegen Handreferenz); SUMMARY.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third (200 Faelle, OOF-Schwelle); SUMMARY.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/agent_tooling/` | Regel gpu-job-needs-cuda-check-in-its-own-env (drei GPU-Fehlversuche).
+- 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/lesion_detection_method/`, `knowledge/pvs_detection/` | Regel check-what-a-region-file-means-before-the-first-number; Befund valdo-interrater korrigiert (SABRE Ganzhirn); SUMMARYs.
