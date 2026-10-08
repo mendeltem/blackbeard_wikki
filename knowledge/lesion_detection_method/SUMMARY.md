@@ -33,4 +33,4 @@ selbst Liquorsignal, Ortsregeln also nur ueber Lage.
 PVS, Lakunen, Kandidaten-Klassifikator, Fehlalarme, Referenzmasken, Startwert-Rauschen.
 - 08.10.: Regel: Anteil der Referenz AUSSERHALB jeder Zusatzmaske vor der ersten Zahl messen (VALDO-Slab-Maske kostete 75 % der SABRE-Referenz).
 
-**Regel, neu 2026-10-08:** Eine anatomische Nachbearbeitungsregel wird erst im Betrachter sichtbar gemacht (Karte, entfernte Fehlalarme, entfernte Treffer als getrennte Ebenen mit Zaehlern), dann geglaubt. Die Liquor-Regel entfernt auf VALDO 27 Fehlalarme und 1 von 139 Blutungen, auf der eigenen SWI-Kohorte 88 Fehlalarme und 62 von 426 Blutungen: die Summenzahl haette das verdeckt.
+**Regel, neu 2026-10-08:** Eine anatomische Nachbearbeitungsregel wird erst im Betrachter sichtbar gemacht (Karte, entfernte Fehlalarme, entfernte Treffer als getrennte Ebenen mit Zaehlern), dann geglaubt. Die Liquor-Regel entfernt auf VALDO 27 Fehlalarme und 1 von 90 Treffern, auf der eigenen SWI-Kohorte 88 Fehlalarme und 62 von 426 Blutungen: die Summenzahl haette das verdeckt.

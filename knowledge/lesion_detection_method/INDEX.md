@@ -19,7 +19,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | regel | [noise-floor-before-effects](rules/noise-floor-before-effects.md) | Drei Startwerte zuerst (~0,08 F1); Verlust ordnet nichts; Vorpruefungen ordnen, entscheiden nicht; Regel vor dem Lauf | getragen |
 | regel | [count-cases-behind-pooled-numbers](rules/count-cases-behind-pooled-numbers.md) | 3 Faelle = 28 % der Blutungen; Verteilung je Fall mitberichten, gepaart ueber Faelle, keine "ersten N" | getragen |
 | regel | [operating-points-do-not-transfer](rules/operating-points-do-not-transfer.md) | Schwelle gehoert zu Modell und Scanner (0,415 statt 0,622 bei uebernommener Schwelle); zweite Stufe faengt es ab | getragen |
-| regel | [show-what-a-rule-removes-before-trusting-it](rules/show-what-a-rule-removes-before-trusting-it.md) | Anatomische Regel erst im Betrachter zeigen (Karte, entfernte Fehlalarme, entfernte Treffer getrennt); Liquor-Regel loescht auf SWI 62/426 Blutungen, auf VALDO 1/139 | getragen |
+| regel | [show-what-a-rule-removes-before-trusting-it](rules/show-what-a-rule-removes-before-trusting-it.md) | Anatomische Regel erst im Betrachter zeigen (Karte, entfernte Fehlalarme, entfernte Treffer getrennt); Liquor-Regel loescht auf SWI 62/426 Blutungen, auf VALDO 1/90 | getragen |
 | regel | [pipeline-failures-and-names-before-tuning](rules/pipeline-failures-and-names-before-tuning.md) | Stille Leerausgaben bei rc 0, technische Fehlschlaege zuerst, Namen am Code messen | getragen |
 | pruefpunkt | [pvs-apply-the-lesion-method](open_checks/pvs-apply-the-lesion-method.md) | PVS-Kohorte (103 Faelle, T1 1 mm, FLAIR 5 mm, RORPO-Pipeline, 11 Schwellensaetze, 31 Fehlschlaege, keine Referenz): sieben Schritte in Reihenfolge | offen |
 

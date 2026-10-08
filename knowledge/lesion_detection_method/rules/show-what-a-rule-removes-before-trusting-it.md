@@ -25,7 +25,7 @@ angewendet, nur gezeigt):
 
 | Kohorte | Faelle | Regel entfernt Fehlalarme | Regel entfernt echte Blutungen | von Treffern gesamt |
 |---|---|---|---|---|
-| VALDO T2* (oeffentlich) | 57 | 27 | 1 | 139 |
+| VALDO T2* (oeffentlich) | 57 | 27 | 1 | 90 |
 | eigene SWI-Kohorte | 61 | 88 | 62 (in 18 Faellen) | 426 |
 | eigene T2*-Kohorte | 75 | 56 | 15 (in 8 Faellen) | 545 |
 

@@ -43,7 +43,7 @@ doi:10.1016/j.media.2023.102789. Tier 1a.
 ## Nachtrag 2026-10-08: der Bruchindikator ist auf den eigenen Kohorten eingetreten
 Im Schichtbetrachter (`--csf-overlay`, Regel auf der rohen Vorhersage des
 Siegernetzes nur gezeigt, nicht angewendet) entfernt die Regel: VALDO 27
-Fehlalarme und 1 von 139 Blutungen (Ensemble, 57 CV-Faelle); eigene SWI-Kohorte
+Fehlalarme und 1 von 90 Treffern (Ensemble, 57 CV-Faelle); eigene SWI-Kohorte
 88 Fehlalarme und **62 von 426 Blutungen** in 18 Faellen; eigene T2*-Kohorte 56
 Fehlalarme und 15 von 545 Blutungen in 8 Faellen. Die Aussage "ohne Verlust" gilt
 damit nur fuer VALDO. Fuer die eigenen Kohorten bleibt der gemeinsame
