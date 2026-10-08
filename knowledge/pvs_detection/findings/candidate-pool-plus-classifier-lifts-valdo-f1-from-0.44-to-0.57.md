@@ -26,6 +26,11 @@ Der Gewinn kommt aus den Intensitaeten von Komponente und 1-Voxel-Huelle in T1/T
 Trenner drei), etwas aus der Form, nichts aus Lage oder Netz-Wahrscheinlichkeiten: ein Trenner, kein Ensemble. Startwerte 1/2
 identisch (deterministischer GBM). Pool aus drei Detektoren (+ PINGU, F1 allein 0,449 = MedNet-T1): 0,582 [0,543; 0,619].
 
+**Nachtrag 08.10. 13:00 (HCP-Aging, n = 200, 5-fach nach Fall):** derselbe Trenner in seiner schwaechsten Form -- ein Detektor
+(DRIPS-T2-Komponenten), nur T2-Intensitaeten, Form, Lage -- hebt den F1 gegen die HCP-WM-Labels von 0,584 [0,571; 0,597] auf
+0,668 [0,657; 0,680], Precision 0,56 -> 0,80, Recall 0,66 -> 0,60, Klasse 1-2 0,34 -> 0,27. Erwartung vor dem Lauf 0,60-0,65.
+Vorbehalt: 80 % der HCP-Labels sind U-Net-Silber (Stil-Lernen moeglich); VALDO mit Handreferenz zeigt dieselbe Richtung.
+
 ## Traegt
 Die PVS-Arena und den Plan: Fortschritt kommt aus dem Trenner auf dem Pool, und zwar aus Mehr-Sequenz-Intensitaeten um den Kandidaten;, nicht aus Detektor-Rezepten oder Schwellen (vierte
 Bestaetigung nach CMB-VALDO, CMB-SWI und den flachen PVS-Schwellenkurven). Vorgehen fuer BELOVE ohne eigene Labels: Pool aus

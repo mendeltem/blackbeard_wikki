@@ -32,3 +32,5 @@
   Precision 0,70, Klasse 1-2 0,30. Die CMB-Lektion (Trenner statt Schwelle) gilt auch fuer PVS. Offen: Rauschboden, Merkmale, EPVS/BELOVE.
 - 08.10. 07:20: Ablation der zweiten Stufe: Mehr-Sequenz-Intensitaeten (Komponente vs Huelle) tragen den Gewinn (-0,06 ohne), Form -0,02,
   Lage und Posteriors 0; Pool aus drei Detektoren 0,58. PINGU auf VALDO 0,45 = MedNet-T1 (publizierte Dice ordneten falsch).
+- 08.10. 13:00: Trenner auf HCP (200 Faelle, ein Detektor, nur T2): F1 0,58 -> 0,67 [0,66; 0,68], Precision 0,80 -- der Gewinn der
+  zweiten Stufe haelt auf grosser Stichprobe und mit einer Sequenz. Clara wp7: Fehlalarme sitzen im WM, Ortsregel traegt nicht.
