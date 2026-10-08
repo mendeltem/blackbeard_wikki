@@ -95,3 +95,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/agent_tooling/` | Regel gpu-job-needs-cuda-check-in-its-own-env (drei GPU-Fehlversuche).
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/lesion_detection_method/`, `knowledge/pvs_detection/` | Regel check-what-a-region-file-means-before-the-first-number; Befund valdo-interrater korrigiert (SABRE Ganzhirn); SUMMARYs.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs; SUMMARY.
+- 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57; SUMMARY.

@@ -28,3 +28,5 @@
   DRIPS-T2 0,35 (Klasse 1-2 Recall 0,45), DRIPS-T1 0,35. DRIPS gewinnt SABRE, MedNet-T2 gewinnt RSS; MedNet-T2 vs Rater 2 nur 0,07.
 - 08.10. 05:00: MedNet-T1w (klinische T1) fuehrt VALDO mit F1 0,44 (Precision 0,45), findet aber die 1-2-Voxel-PVS am schlechtesten
   (0,12); DRIPS findet sie am besten (0,45). Naechster Schritt: Kandidaten-Pool DRIPS ∪ MedNet-T1 + Trenner.
+- DURCHBRUCH 08.10. 05:25: zweite Stufe (Pool DRIPS ∪ MedNet-T1 + kleiner GBM-Trenner, LOO) auf VALDO F1 0,57 [0,54; 0,61] gegen 0,44;
+  Precision 0,70, Klasse 1-2 0,30. Die CMB-Lektion (Trenner statt Schwelle) gilt auch fuer PVS. Offen: Rauschboden, Merkmale, EPVS/BELOVE.
