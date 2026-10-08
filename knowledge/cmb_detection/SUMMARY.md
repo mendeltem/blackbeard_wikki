@@ -52,3 +52,5 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.
 
 **Uebertragbar:** die projektfreie Fassung dieser Lektionen steht in
 [lesion_detection_method](../lesion_detection_method/SUMMARY.md).
+
+**Nachtrag 2026-10-08 zur Liquor-Regel:** im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.

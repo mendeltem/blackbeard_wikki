@@ -15,7 +15,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 |---|---|---|
 | befund | [vessel-inpainting-removes-microbleeds-on-thick-slices](findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md) | Gefaess-Uebermalung des Originals loescht 109 von 236 Blutungen; ohne sie +0,136 F1 |
 | befund | [anisotropic-first-level-beats-isotropic-3d-nets](findings/anisotropic-first-level-beats-isotropic-3d-nets.md) | Erste Ebene nur in der Schicht falten: +0,159 gegen Attention-U-Net, zwei Turniere |
-| befund | [csf-rule-removes-false-alarms-without-loss](findings/csf-rule-removes-false-alarms-without-loss.md) | 98 von 176 Fehlalarmen liegen im Liquor; SynthSeg-Regel 0,585 -> 0,646, keine Blutung verloren |
+| befund | [csf-rule-removes-false-alarms-without-loss](findings/csf-rule-removes-false-alarms-without-loss.md) |  98 von 176 Fehlalarmen liegen im Liquor; SynthSeg-Regel 0,585 -> 0,646 ohne Verlust auf VALDO; Nachtrag 08.10.: auf SWI 62/426 und T2* 15/545 Blutungen geloescht |
 | befund | [one-shared-candidate-classifier-for-all-cohorts](findings/one-shared-candidate-classifier-for-all-cohorts.md) | Ein Klassifikator auf dem Kandidaten-Pool aller Kohorten, eine Schwelle 0,30: = Liquor-Regel auf VALDO/T2*, SWI +0,061; braucht keine Gewebekarte |
 | befund | [sensitivity-levers-do-not-raise-lesion-f1](findings/sensitivity-levers-do-not-raise-lesion-f1.md) | blob loss, Zentrumskarten, Neugewichtung, Synthese: Sensitivitaet rauf, F1 runter |
 | befund | [valdo-cohort-3-mask-is-a-head-mask](findings/valdo-cohort-3-mask-is-a-head-mask.md) | Gelieferte Masken nicht eng: Kohorte 3 zu 40 % Nicht-Hirn; Abhilfe SynthSeg-Maske |
