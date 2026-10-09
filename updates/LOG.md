@@ -115,3 +115,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | plane --aus/--weglassen; PVS-Recherchekette (4 Auftraege) eingereiht.
 - 2026-10-09 | Alita (Claude Code) | `knowledge/agent_tooling/` | Regel data-move-by-rename-symlink-and-protocol (Datenumzug DATEN/PROJEKT vorbereitet).
 - 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund lokaler Rechercheschwarm (plane --schwarm, schwarm, ziele-planen), Ablaufbild englisch.
+- 2026-10-09 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 2 Bereiche.
