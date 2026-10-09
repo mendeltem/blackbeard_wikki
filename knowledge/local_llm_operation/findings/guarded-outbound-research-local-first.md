@@ -52,7 +52,10 @@ zerlegen (Ziel, Schritte, Ausgabedatei, Abnahme-Stichworte); das Werkzeug setzt 
 Recherche nur ueber den Waechter, Quellenpflicht) und verkettet ueber BRAUCHT. Erste Probe "PVS-Segmentierung
 recherchieren": 66 s, fuenf brauchbare Auftraege (Netze, Verluste, zweite Stufe, Empfehlung), einer schwach
 (CPU-Zeit eines untrainierten Netzes). Lehre: Vorschau vor dem Einreihen lesen, weil ein schwacher Auftrag in
-der Kette die folgenden blockiert.
+der Kette die folgenden blockiert. Streichen ohne neues Planen: `plane --aus <planordner> --weglassen 4 --einreihen`;
+danach pruefen, ob spaetere Auftraege noch auf die gestrichene Ausgabe verweisen (hier: Auftrag 5 wollte die
+CPU-Messung lesen, von Hand in plan.json korrigiert). Die PVS-Kette mit vier Auftraegen ist am 2026-10-09 10:40
+eingereiht, Clara arbeitet sie seriell ab.
 
 ## Verknuepft
 - [decision-model-as-profile-orchestrator](../open_checks/decision-model-as-profile-orchestrator.md)
