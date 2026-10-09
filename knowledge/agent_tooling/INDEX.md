@@ -14,6 +14,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 |---|---|---|
 | regel | [release-test-means-fresh-machine-with-release-assets](rules/release-test-means-fresh-machine-with-release-assets.md) | Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR | getragen |
 | regel | [pip-freeze-is-not-an-install-file](rules/pip-freeze-is-not-an-install-file.md) | pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo | getragen |
+| [Datenumzug: umbenennen, Symlink zurueck, Protokoll](rules/data-move-by-rename-symlink-and-protocol.md) | regel | vorschlag |
 | [Ergebnis-Repo braucht eine Nachvollziehbarkeitskarte](rules/traceability-map-for-a-results-repo.md) | regel | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |
 | [Leer ist nicht fehlend](rules/empty-is-not-missing.md) | regel | getragen |
