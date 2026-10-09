@@ -43,3 +43,9 @@ Literatur-APIs -> Antwort aus Abstracts -> Abschnitt mit Quellen -> Selbstabnahm
 ## Offene Schritte (siehe Bild)
 Nachfass-Schleife je Arbeiter, automatischer Zitatpruefer (DOI-Register, Aussage gegen Abstract), Bericht an den Nutzer
 per Telegram, Auswertung ueber viele Laeufe.
+
+## Nachtrag 2026-10-09 abends: Uebergabe als Standard
+Nutzerregel: Aufgaben gehen an den lokalen Agenten, wenn er arbeiten kann; sonst erledigt sie die Cloud-Sitzung.
+Werkzeug `weiterreichen --pruefen` (Modell antwortet, keine GPU-Sperre, dauerlauf aktiv), dann `weiterreichen "<Ziel>"`
+(planen + einreihen), `--schwarm` (Recherche), `--direkt` (kurzes Gespraech) oder `--datei` (fertiger Auftrag mit Abnahme).
+Stand des Tages: 11 Auftraege in Folge ohne Eingriff, alle in Runde 2 abgenommen, keiner in Runde 1.

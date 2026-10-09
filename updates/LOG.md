@@ -117,3 +117,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund lokaler Rechercheschwarm (plane --schwarm, schwarm, ziele-planen), Ablaufbild englisch.
 - 2026-10-09 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 2 Bereiche.
 - 2026-10-09 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | Pruefpunkt wmh-apply-the-lesion-method (M1-M8), M1-M3 eingereiht.
+- 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag: weiterreichen als Standard, 11 Auftraege ohne Eingriff.
