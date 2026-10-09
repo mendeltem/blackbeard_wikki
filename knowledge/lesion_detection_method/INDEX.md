@@ -22,6 +22,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | regel | [show-what-a-rule-removes-before-trusting-it](rules/show-what-a-rule-removes-before-trusting-it.md) | Anatomische Regel erst im Betrachter zeigen (Karte, entfernte Fehlalarme, entfernte Treffer getrennt); Liquor-Regel loescht auf SWI 62/426 Blutungen, auf VALDO 1/90 | getragen |
 | regel | [pipeline-failures-and-names-before-tuning](rules/pipeline-failures-and-names-before-tuning.md) | Stille Leerausgaben bei rc 0, technische Fehlschlaege zuerst, Namen am Code messen | getragen |
 | pruefpunkt | [pvs-apply-the-lesion-method](open_checks/pvs-apply-the-lesion-method.md) | PVS-Kohorte (103 Faelle, T1 1 mm, FLAIR 5 mm, RORPO-Pipeline, 11 Schwellensaetze, 31 Fehlschlaege, keine Referenz): sieben Schritte in Reihenfolge | offen |
+| pruefpunkt | [wmh-apply-the-lesion-method](open_checks/wmh-apply-the-lesion-method.md) | WMH-Challenge (60 Faelle, 3 mm Schichten): Methode aus CMB/PVS noch einmal, M1-M8, Entscheidungsregel vorab | offen |
 
 ## Herkunft
 cmb_detection (valdo-t2s, 2026-09-10 bis 2026-10-07) und wmh_segmentation (wmhseg,

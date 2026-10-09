@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-09. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-23 offene Einträge.
+24 offene Einträge.
 
 ## ai_application_layer
 
@@ -43,6 +43,8 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-09. Nicht vo
 ## lesion_detection_method
 
 - [PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird](knowledge/lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md) (pruefpunkt, offen, Stand 2026-10-07)
+- [WMH: die Methode aus CMB und PVS noch einmal anwenden](knowledge/lesion_detection_method/open_checks/wmh-apply-the-lesion-method.md) (pruefpunkt, offen, Stand 2026-10-09)
+  - [ ] M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
 
 ## local_llm_operation
 
