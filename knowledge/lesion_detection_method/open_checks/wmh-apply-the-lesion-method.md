@@ -29,5 +29,13 @@ Fall des anisotropen Netzes.
 Gewinn = gepaartes 95-%-Bootstrap-Intervall (Dice oder Laesions-F1) ueber 0 UND groesser als die Startwert-Streuung aus M3.
 Kein Verlust-/Augmentierungs-Suchen vor M5/M6.
 
+## Stand 2026-10-09 abends
+- M1 fertig (60/60, Referenz vollstaendig in der Hirnmaske). M2 fertig: Messcode gibt die alte Testzahl 0,7719 Dice,
+  Laesions-F1 0,7517, Recall 0,7921, AVD 29,48 % bitgenau wieder (AVD der alten Kette ist relativ in %).
+- Reihenfolge geaendert: erst Patch-Vorlauf mit dem anisotropen Netz (16x64x64, 16x96x96, 16x160x160, 32x96x96), Wahl nach
+  vorab festgelegter Regel, dann Arena mit 16 Netzen, 60 Epochen, nnU-Net v2 als Referenz; zuletzt Sieger mit gegen ohne Patches
+  (ganzes Volumen) samt gemessenem Speicherbedarf. Grund: die Patchgroesse gilt fuer alle Netze, bei CMB kostete ein zu kleiner
+  Patch -0,216 F1; "passt nicht auf die Karte" gilt erst mit gemessener Zahl (CMB-Patches brauchten nur 0,6-2,7 GiB).
+
 ## Zu pruefen
 - M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
