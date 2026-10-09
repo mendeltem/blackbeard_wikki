@@ -111,3 +111,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Befund epvs-2024-data-open... widerlegt: Download nur fuer Team EPVS Challenge Participants (ACL), Antrag per E-Mail mit unterschriebenen Terms of Use.
 - 2026-10-08 | PVS-Arena Alita (Claude Code) | `knowledge/pvs_detection/` | Nachtrag: EPVS-Turnier vorbereitet (Runden, Erwartungen, Sieger-Rezept, Nutzungsbedingungen).
 - 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund guarded-outbound-research-local-first (Aussenweg repariert, lokal zuerst, Waechter nur fuer eigene Daten); INDEX/SUMMARY.
+- 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag lokaler Auftragsplaner (plane) im Befund guarded-outbound-research-local-first.

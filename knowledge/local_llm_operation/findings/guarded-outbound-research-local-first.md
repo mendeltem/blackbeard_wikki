@@ -46,6 +46,14 @@ eigenem Kohortennamen durch.
 Eigene Tests 2026-10-09: 5 Pruefungen (2 oeffentlich frei, 3 gesperrt: eigene Kohorte, Pfad, Person), eine lokale
 und eine Cloud-Frage end-to-end. Code: system/guard/{ask_outside,daemon,lokal_recherche}.py, frag-draussen.
 
+## Nachtrag 2026-10-09: Auftragsplaner lokal
+`system/werkzeuge/plane "Ziel"` laesst das lokale 27B (mit Denken) ein Ziel in 3-6 aufeinander aufbauende Auftraege
+zerlegen (Ziel, Schritte, Ausgabedatei, Abnahme-Stichworte); das Werkzeug setzt den Hausrahmen dazu (keine GPU,
+Recherche nur ueber den Waechter, Quellenpflicht) und verkettet ueber BRAUCHT. Erste Probe "PVS-Segmentierung
+recherchieren": 66 s, fuenf brauchbare Auftraege (Netze, Verluste, zweite Stufe, Empfehlung), einer schwach
+(CPU-Zeit eines untrainierten Netzes). Lehre: Vorschau vor dem Einreihen lesen, weil ein schwacher Auftrag in
+der Kette die folgenden blockiert.
+
 ## Verknuepft
 - [decision-model-as-profile-orchestrator](../open_checks/decision-model-as-profile-orchestrator.md)
 - [lean-hermes-toolsets](lean-hermes-toolsets.md)
