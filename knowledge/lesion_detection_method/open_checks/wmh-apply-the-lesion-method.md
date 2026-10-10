@@ -45,5 +45,15 @@ Kein Verlust-/Augmentierungs-Suchen vor M5/M6.
 - Regel fuer uebernommene Pipelines: Nachbearbeitung der Herkunftslinie (hier Groessenfilter fuer CMB) vor der ersten Zahl
   pruefen; Verdacht, wenn Laesions-F1 gleich bleibt, der Dice aber einbricht und die Streuung riesig ist.
 
+## Stand 2026-10-10 morgens: Laesions-F1 und QC
+- Offizielles Mass (Label-2-Regel, Hirnmaske), Schwelle 0,5, 60 Faelle out-of-fold: 3D Dice 0,798 / Laesions-F1 0,747 /
+  Laesions-Recall 0,742; 2D 0,783 / 0,739 / 0,690. Gepaart: Dice +0,015 [+0,009; +0,023], F1 +0,009 [-0,006; +0,024].
+  Der 3D-Gewinn liegt im Voxel-Dice und im Recall, beim Laesions-F1 ist er nicht gesichert.
+- Zwei Messfallen im eigenen Auswerteskript: eine Wahrscheinlichkeitskarte als uint8 (0..255) wurde wie eine Maske gelesen
+  (effektive Schwelle 1/255: Dice 0,72 statt 0,80), und ein Pfad nahm die Label-2-Datei als Hirnmaske (alles 0).
+  Regel: den Datentyp der Vorhersage vor dem Schwellen pruefen; ein Mass, das bei der Grundlinie stimmt, kann beim neuen
+  Dateiformat falsch sein -- jede neue Vorhersageart einmal gegen eine Direktrechnung halten.
+- QC-Seite mit dem gemeinsamen Werkzeug qc_slice_viewer gebaut (60 Faelle, beide Modelle), nur lokal.
+
 ## Zu pruefen
 - M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
