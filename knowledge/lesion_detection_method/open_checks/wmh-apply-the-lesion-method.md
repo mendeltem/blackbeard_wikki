@@ -37,5 +37,13 @@ Kein Verlust-/Augmentierungs-Suchen vor M5/M6.
   (ganzes Volumen) samt gemessenem Speicherbedarf. Grund: die Patchgroesse gilt fuer alle Netze, bei CMB kostete ein zu kleiner
   Patch -0,216 F1; "passt nicht auf die Karte" gilt erst mit gemessener Zahl (CMB-Patches brauchten nur 0,6-2,7 GiB).
 
+## Stand 2026-10-10 frueh
+- Vorlauf gerechnet. Falle: die binaeren Masken des CMB-Turniers loeschen Komponenten ueber 2100 Voxel (Klumpenwaechter
+  fuer Mikroblutungen) -- fuer WMH falsch, Dice scheinbar 0,46. Auf den Wahrscheinlichkeitskarten (Schwelle 0,5):
+  anisotropes 3D-U-Net 0,798 gegen 2D 0,783 Dice, gepaart +0,015 [+0,009; +0,023], 43 von 60 Faellen besser, alle drei
+  Scanner positiv. Patchgroessen 16x64x64 bis 32x96x96 gleichauf (Unterschiede +-0,002). Rauschboden ueber Startwerte offen.
+- Regel fuer uebernommene Pipelines: Nachbearbeitung der Herkunftslinie (hier Groessenfilter fuer CMB) vor der ersten Zahl
+  pruefen; Verdacht, wenn Laesions-F1 gleich bleibt, der Dice aber einbricht und die Streuung riesig ist.
+
 ## Zu pruefen
 - M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
