@@ -64,5 +64,19 @@ Kein Verlust-/Augmentierungs-Suchen vor M5/M6.
 - Regel: Ein Patch-Netz lernt Strukturen in Voxeln, nicht in mm. Vor der Anwendung auf fremde Daten die Pixelgroesse auf die des Trainings bringen;
   was danach fehlt, ist Domaene (Schichtdicke, Kontrast, Zeichenstil) und braucht eigene Trainingsdaten.
 
+## Stand 2026-10-10 abends: was gegen die Domaenenluecke hilft (BELOVE-56, extern, nur Challenge-Training)
+| Hebel | Dice @0,5 | Laesions-F1 @0,5 |
+|---|---|---|
+| keiner | 0,422 | 0,416 |
+| Pixel in der Schicht auf ~1 mm | 0,482 | 0,389 |
+| + Histogramm-Angleichung an die Challenge-Kanalverteilung | 0,569 | 0,449 |
+| a12 (Zentrumskopf) + Pixel + Histogramm | 0,571 | 0,458 |
+| Lehrer-Schueler auf duenn/dick-Paaren + Pixel + Histogramm | 0,585 | 0,442 |
+| Dickschicht-Augmentierung im Training (+ Pixel + Histogramm) | 0,565 | 0,458 |
+| U-Net-Uebersetzer dick -> 3 mm (gepaart, nur FLAIR) | -0,020 Dice gegen ohne | verworfen |
+| Ziel: 2D-Modell mit BELOVE im Training | 0,665 | 0,543 |
+- Herdlast und Herdgroesse sind in beiden Kohorten gleich (Median 15,9 gegen 16,3 ml); die Luecke liegt an Bild (Schicht, Pixel, Kontrast) und Referenzstil.
+- Regel: zuerst die billigen, deterministischen Angleichungen (Pixelgroesse, Histogramm), gemessen gepaart; gelernte Bilduebersetzung erst, wenn sie das schlaegt -- hier verschlechterte sie. Den Rest schliesst nur Training auf Daten der Zieldomaene.
+
 ## Zu pruefen
 - M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
