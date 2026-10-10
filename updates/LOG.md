@@ -119,3 +119,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-09 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | Pruefpunkt wmh-apply-the-lesion-method (M1-M8), M1-M3 eingereiht.
 - 2026-10-09 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Nachtrag: weiterreichen als Standard, 11 Auftraege ohne Eingriff.
 - 2026-10-09 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | WMH-Pruefpunkt: M2 bitgenau, Patch-Vorlauf vor der Arena, mit/ohne Patches.
+- 2026-10-10 | Alita (morgenrecherche, lokal; Push von Hand nach Datenschutz-Fehlalarm) | `knowledge/daily_research/` | Tagesseite, 8 Bereiche.
