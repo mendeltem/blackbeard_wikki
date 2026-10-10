@@ -55,5 +55,14 @@ Kein Verlust-/Augmentierungs-Suchen vor M5/M6.
   Dateiformat falsch sein -- jede neue Vorhersageart einmal gegen eine Direktrechnung halten.
 - QC-Seite mit dem gemeinsamen Werkzeug qc_slice_viewer gebaut (60 Faelle, beide Modelle), nur lokal.
 
+## Stand 2026-10-10 vormittags: extern auf eigener Kohorte (BELOVE, 56 Faelle mit Handmaske)
+- Das nur auf den 60 Challenge-Faellen trainierte 3D-Netz faellt auf BELOVE auf Dice 0,42 (Sensitivitaet 0,33, Praezision 0,78);
+  ein 2D-Modell mit BELOVE im Training erreicht auf denselben Faellen 0,665.
+- Der Einbruch folgt der Geometrie: 5 mm / 0,86 mm Pixel 0,57; 5 mm / 0,69 mm 0,44; 6 mm / 0,96 mm 0,32; 6 mm / 0,43 mm 0,20 (das 2D-Modell
+  mit Eigendaten bleibt ueber alle Geometrien bei 0,64-0,68). Pixel in der Schicht vor der Vorhersage auf ~1 mm umrechnen hebt die 0,43-mm-Faelle
+  von 0,21 auf 0,37 Dice (Praezision 0,97), die Sensitivitaet bleibt niedrig.
+- Regel: Ein Patch-Netz lernt Strukturen in Voxeln, nicht in mm. Vor der Anwendung auf fremde Daten die Pixelgroesse auf die des Trainings bringen;
+  was danach fehlt, ist Domaene (Schichtdicke, Kontrast, Zeichenstil) und braucht eigene Trainingsdaten.
+
 ## Zu pruefen
 - M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.
