@@ -36,6 +36,10 @@ pvs-arena/ergebnisse/hcp-aging/stufe2-cnn-drips-t2/{cnn,gbm,mix}/zusammenfassung
 Fehlalarme je Groessenklasse in ARBEIT.md 11.10. 11:55. Speicherlehre: Komponentenkarten nicht im RAM halten (19,8 GB bei 147 Faellen),
 --cache je Fall (.npz, komprimiert, ~15 MB/Fall).
 
+## Nachtrag 2026-10-11 18:05: Nebenbedingung bestanden -- kein Verschmelzungsartefakt
+Nach dem VALDO-Befund (touch-based-instance-metrics-need-a-volume-side-condition) nachgerechnet: Vol_pred/Vol_ref 0,79 (GBM) / 0,77 (Mischung),
+Mehrfachtreffer-Anteil 5,7 % / 5,5 %, max. 8 Referenzen je Vorhersage, Dice 0,588 -> 0,602. Der Gewinn des CNN ist echt.
+
 ## Verknuepft
 - [patch-cnn-second-stage-adds-nothing-on-valdo](patch-cnn-second-stage-adds-nothing-on-valdo.md)
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)
