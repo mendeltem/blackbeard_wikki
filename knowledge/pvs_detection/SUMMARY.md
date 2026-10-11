@@ -12,7 +12,7 @@
   Werkzeugvergleich mit gemeinsamer Metrik (Waymont 2024: 67 Ansaetze). MedNet-PVS-Gewichte: figshare defekt, Drive komplett.
 - Metrik pvs_metrik.py misst jetzt Recall und Fehlalarmanteil je Groessenklasse (1-2, 3-5, 6-20, >20 Voxel).
 - Nutzerziel 07.10. abends: Instanz-F1 maximieren; Plan A-F in pvs-arena/ARBEIT.md (Grundlinien, vortrainiert, Ortsregel, nnU-Net, zweite Stufe).
-- Runde 3 (07.10. abends): EPVS-2024-Daten sind OPEN fuer zertifizierte Synapse-Nutzer (kein Antrag; Skript
+- Runde 3 (07.10. abends): EPVS-2024-Daten: API sagt OPEN, Download aber nur fuer das Team "EPVS Challenge Participants" (Antrag per Mail, Stand 11.10. offen; Skript
   pvs-arena/skripte/epvs2024_synapse_laden.sh). HCP-Aging: 160/200 Masken sind U-Net-Silber, 40 Handfaelle nicht gekennzeichnet,
   nur WM -> Entwicklungsdaten, nicht Experten-Wahrheit. VALDO-Rater: Dice 0,53, F1 ~0,20 (Etikett-Decke niedrig). VALDO-Metrik:
   6er-Nachbarschaft, IoU > 10 %. Keine weiteren oeffentlichen Voxelmasken-Saetze; DoRA-PVS-Challenge 2026 verteilt keine Daten.

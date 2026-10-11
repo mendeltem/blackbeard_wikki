@@ -3,7 +3,7 @@ id: epvs-2024-data-open-for-certified-synapse-users
 typ: befund
 status: widerlegt
 thema: knowledge/pvs_detection
-stand: 2026-10-07
+stand: 2026-10-11
 herkunft: Synapse-REST-API direkt abgefragt (repo-prod.prod.sagebase.org), PVS-Cluster Alita, 2026-10-07
 verweist_auf: [public-pvs-reference-data-and-models-2026-10]
 ---
@@ -41,6 +41,11 @@ Teambeschreibung: Terms of Use unterschreiben und an epvs.challenge@gmail.com mi
 "[EPVS Challenge Registration Request]" schicken, dann Mitgliedschaft beantragen. Lehre: neben
 accessRequirement und restrictionInformation auch die ACL und `permissions.canDownload` im bundle2
 pruefen, bevor man "offen" schreibt.
+
+## Nachtrag 2026-10-11: weiterhin gesperrt
+Erneute Pruefung mit zertifiziertem Konto: canDownload fuer Val.zip (syn61767476) weiterhin false, Team-Mitgliedschaft
+noch nicht erteilt. Eigener Download-Versuch (lade_jetzt.sh) sauber abgebrochen; Waechter warte_und_lade.sh und
+Clara-Auftrag wp10 warten auf die Freigabe. Die Huerde ist extern (Challenge-Organisatoren), nicht technisch.
 
 ## Verknuepft
 - [public-pvs-reference-data-and-models-2026-10](public-pvs-reference-data-and-models-2026-10.md)
