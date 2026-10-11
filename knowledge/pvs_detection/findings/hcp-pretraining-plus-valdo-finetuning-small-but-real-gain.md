@@ -30,6 +30,11 @@ G5b (Pool, 7 Kanaele) liegt gepaart unter G4.
 ## Ablesung
 pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-drips-t2only-loo-feintuning, modelle/cnn_hcp_t2; ARBEIT.md 11.10. 14:25.
 
+## Nachtrag 2026-10-11 15:25: im Dreier-Pool (G5b) hilft das Vortraining dem CNN allein, nicht der Mischung
+Kanalweise Uebernahme in das 7-Kanal-Netz, DRIPS 0,02: CNN allein 0,548 -> 0,607 (gepaart +0,059 [+0,012; +0,115]), aber die feste
+0,5-Mischung mit dem GBM faellt von 0,650 auf 0,632 (-0,018 [-0,040; +0,001], 4/12). Das Vortraining ist damit belegt, das feste Mittel
+als Kombinationsregel ist der schwache Punkt (Kalibrierung) -> Stapelung auf den Schwellenfaellen pruefen (Arena F7.14).
+
 ## Verknuepft
 - [cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer](cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.md)
 - [patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision](patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.md)
