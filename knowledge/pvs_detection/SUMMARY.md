@@ -39,3 +39,4 @@
 - 08.10. 16:25: Rater 2 ist BG-lastig (510 BG / 498 WM), MedNet-T2 (HCP-WM-Labels) findet 2 BG-Komponenten -> Trainingslabels muessen
   die Zielregionen enthalten. DRIPS ueberpraediziert 3-8x bei niedriger PVS-Last. Rating-Seite (Clara wp8) fertig; Nutzer-Rating ist der Engpass.
 - Runde 11.10. frueh: DoRA-Baseline ist ein einfaches U-Net (nicht DRIPS), Dateien gesperrt; DoRA testet zu 4/5 auf T2w 0,5-1 mm -> BELOVE (T1+FLAIR) liegt ausserhalb des Feldes. EPVS-2024-Methoden-PDFs: 7 Teams, gesperrt (Team-Mitgliedschaft). Versuch G (Patch-CNN als zweite Stufe, VALDO) laeuft.
+- 11.10. 04:15: Die sechs EPVS-2024-Einreichungen sind oeffentliche Docker-Images (Sieger BIG_AEHRC/CSIRO, MedNeXt 2D/3D) -> Versuch H auf VALDO ohne Datenfreigabe. Offizielle Metrik = unsere Regel; Sieger im Test F1 ~0,40 (CSO), Recall ueberall der Engpass.
