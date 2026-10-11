@@ -46,3 +46,4 @@
 - 11.10. 14:40: NEUER VALDO-STAND 0,650 (G4): DRIPS-Schwelle 0,02 statt 0,10 im Dreier-Pool, zweite Stufe GBM+CNN; Recall kleiner PVS 0,31 -> 0,53. Lehre: erst die Kandidatendecke messen, dann den Trenner. G5: Vortraining HCP + Feintuning +0,02 (klein, echt). Laufend: G5b, Siegermodell BIG_AEHRC lokal auf GPU (Kette = Container).
 - 11.10. 15:25: G5b: Vortraining im Pool hebt das CNN allein (0,607), die 0,5-Mischung nicht (0,632 < 0,650) -> Kombinationsregel ist der naechste Hebel (Stapelung); VALDO-Stand bleibt 0,650.
 - 11.10. 16:05: G4b: Schwellen 0,01/0,3/0,3 -> VALDO-Stand 0,658 (GBM allein, Praezision und Recall steigen beide, Klasse-1-2-Recall 0,66); Tausch noch nicht am Ende, G4d (0,005/0,2) laeuft.
+- 11.10. 16:35: Versuch H: EPVS-2024-Sieger BIG_AEHRC auf VALDO nur 0,28 (OOF), unter jedem Einzelverfahren; nur als vierter Kandidatengeber noch offen (G6). EPVS-Daten: Registrierungsmail vom Nutzer raus, Team-Antrag offen, Waechter als systemd-Dienst.
