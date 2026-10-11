@@ -1309,6 +1309,17 @@
 "src": "knowledge/lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.md"
 },
 {
+"t": "Eine Instanz-Metrik mit Beruehrungsregel belohnt Verschmelzung -- Ranglisten brauchen Dice, Volumenverhaeltnis und Mehrfachtreffer als Nebenbedingung",
+"p": "lesion_detection_method/rules/touch-based-instance-metrics-need-a-volume-side-condition.html",
+"a": "lesion_detection_method",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-11",
+"x": "Beruehrungsmetrik belohnt Verschmelzung (ein Blob = 86 Treffer); Ranglisten mit Dice, Vol-Verhaeltnis < 2, Mehrfachtreffer < 20 %",
+"id": "touch-based-instance-metrics-need-a-volume-side-condition",
+"src": "knowledge/lesion_detection_method/rules/touch-based-instance-metrics-need-a-volume-side-condition.md"
+},
+{
 "t": "Zaehlen braucht Thinking, und kostet das Zwanzigfache",
 "p": "local_llm_operation/findings/counting-needs-thinking.html",
 "a": "local_llm_operation",
