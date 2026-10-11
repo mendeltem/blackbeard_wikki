@@ -1,0 +1,80 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Die EPVS-Challenge-Daten 2024 brauchen keinen Antrag, nur ein zertifiziertes Synapse-Konto</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Die EPVS-Challenge-Daten 2024 brauchen keinen Antrag, nur ein zertifiziertes Synapse-Konto</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge bad">widerlegt</span></span><span>Stand</span><span>2026-10-11</span><span>Herkunft</span><span>Synapse-REST-API direkt abgefragt (repo-prod.prod.sagebase.org), PVS-Cluster Alita, 2026-10-07</span><span>Zuletzt geändert</span><span>2026-10-11 pvs: EPVS-2024 Zugang 11.10. weiter gesperrt (Team-Mitgliedschaft), Index/Summary korrigiert</span><span>Verweist auf</span><span><a href="public-pvs-reference-data-and-models-2026-10.html">Oeffentliche PVS-Referenzdaten und vortrainierte Modelle, Stand Oktober 2026</a> <span class="muted small">(pvs_detection)</span></span><span>Verwiesen von</span><span><a href="dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.html">Die DoRA-PVS-Baseline ist ein einfaches U-Net (nicht DRIPS), und das Feld misst PVS fast nur auf T2w</a> <span class="muted small">(pvs_detection)</span><br><a href="epvs-2024-submissions-are-public-docker-images-metric-equals-ours.html">Die sechs EPVS-2024-Einreichungen liegen als oeffentliche Docker-Images vor, und die offizielle Metrik ist unsere Regel</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/epvs-2024-data-open-for-certified-synapse-users.md">knowledge/pvs_detection/findings/epvs-2024-data-open-for-certified-synapse-users.md</a></span></div><h2>Aussage</h2>
+<p>Das Synapse-Projekt syn54100278 (EPVS Segmentation Challenge, MICCAI 2024) traegt laut API keine Access
+Requirements, restrictionLevel OPEN, canPublicRead true. Der Ordner Train (syn60055636) listet 100 Fall-Ordner
+(ED_<em> Edinburgh, SG</em> Singapur ...), dazu Val.zip (syn61767476), eine Beispielmaske und die Terms of Use v3
+(syn59814292). Anonym ist nur Lesen moeglich (Download 403, isCertificationRequired true): noetig sind ein
+kostenloses Konto, das Certified-User-Quiz und ein Personal Access Token; dann <code>synapse get -r syn60055636</code>.
+Die Vorrecherche ("nur auf Anfrage") war falsch; sie stammte aus der Challenge-Webseite, nicht aus der API.</p>
+<h2>Traegt</h2>
+<p>Beschaffung der einzigen oeffentlichen PVS-Referenz mit Handmasken in CSO und Basalganglien, drei Standorte,
+T1+T2+FLAIR. Allgemein: Zugangsbedingungen eines Synapse-Datensatzes an der API (accessRequirement,
+restrictionInformation) ablesen, nicht an der Projektseite.</p>
+<h2>Traegt nicht</h2>
+<p>Ob Val.zip Labels enthaelt und was die Terms of Use erlauben, ist bis zum Download offen.</p>
+<h2>Bruchindikator</h2>
+<p>Download mit zertifiziertem Konto wird mit einem Access Requirement abgewiesen.</p>
+<h2>Ablesung</h2>
+<p>GET /repo/v1/entity/syn54100278/accessRequirement (0 Ergebnisse), POST /entity/children, POST
+/entity/syn61767476/bundle2 (restrictionLevel OPEN), GET /entity/syn61767476/file -&gt; 403 anonym. 2026-10-07 20:25.</p>
+<h2>Nachtrag 2026-10-08: Bruchindikator eingetreten, es braucht doch einen Antrag</h2>
+<p>Mit zertifiziertem Konto (Quiz 15/15) und Token: canDownload false fuer alle Dateien, obwohl
+restrictionLevel OPEN und keine Access Requirements. Der Download haengt an der ACL: nur das Team
+"EPVS Challenge Participants" (3502876) hat DOWNLOAD. Beitritt nur mit Zustimmung; Weg laut
+Teambeschreibung: Terms of Use unterschreiben und an epvs.challenge@gmail.com mit Betreff
+"[EPVS Challenge Registration Request]" schicken, dann Mitgliedschaft beantragen. Lehre: neben
+accessRequirement und restrictionInformation auch die ACL und <code>permissions.canDownload</code> im bundle2
+pruefen, bevor man "offen" schreibt.</p>
+<h2>Nachtrag 2026-10-11: weiterhin gesperrt</h2>
+<p>Erneute Pruefung mit zertifiziertem Konto: canDownload fuer Val.zip (syn61767476) weiterhin false, Team-Mitgliedschaft
+noch nicht erteilt. Eigener Download-Versuch (lade_jetzt.sh) sauber abgebrochen; Waechter warte_und_lade.sh und
+Clara-Auftrag wp10 warten auf die Freigabe. Die Huerde ist extern (Challenge-Organisatoren), nicht technisch.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="public-pvs-reference-data-and-models-2026-10.html">public-pvs-reference-data-and-models-2026-10</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

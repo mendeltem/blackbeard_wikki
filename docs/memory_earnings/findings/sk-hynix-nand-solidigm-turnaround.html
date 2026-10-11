@@ -1,0 +1,106 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">memory_earnings</a> › <a href="../index.html#findings">Befund</a></div><h1>SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Gespräch Projekt AI-Lage-Verbund, 2026-10-02; SEC-Prospekt 424B4 und SK Hynix Halbjahresbericht</span><span>Zuletzt geändert</span><span>2026-10-05 ai_application_layer: Prüfpunkt Flughafen-Check-in als Use Case; toter Link in memory_earnings korrigiert</span><span>Verweist auf</span><span><a href="operating-margin-three-makers.html">Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet</a> <span class="muted small">(memory_earnings)</span><br><a href="sk-hynix-free-cash-flow-2024-h1-2026.html">SK Hynix freier Cashflow 2024 bis H1 2026</a> <span class="muted small">(memory_earnings)</span><br><a href="../../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html">HBM-Marktanteil und Nvidias HBM4-Allokation</a> <span class="muted small">(memory_supply)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.md">knowledge/memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.md</a></span></div><h2>Aussage</h2>
+<p>NAND ist nach HBM/DRAM die zweite, kleinere Säule von SK Hynix und hat sich
+2026 von der Verlust- in die Gewinnzone gedreht.</p>
+<ul>
+<li><strong>Gewicht am Umsatz:</strong> NAND-Flash war 22,0 Prozent des Konzernumsatzes in Q1
+  2026 und 21,3 Prozent 2025. Der Rest ist überwiegend DRAM einschließlich HBM.
+  (Tier 1a, Prospekt)</li>
+<li><strong>Solidigm</strong> ist die US-NAND-Tochter aus dem Intel-NAND-Kauf. Gezahlt wurden
+  6,6 Mrd. USD im Dezember 2021 und 2,2 Mrd. USD im März 2025, zusammen rund
+  8,8 Mrd. USD. (Tier 1a, Prospekt)</li>
+<li><strong>Drehung in den Gewinn:</strong> Solidigm verlor 3,3 Bio. KRW (2022) und 4 Bio. KRW
+  (2023), kehrte 2024 in die Gewinnzone zurück und erzielte H1 2026 bei 12,25
+  Bio. KRW Umsatz einen Nettogewinn von 5,84 Bio. KRW — das 44-Fache der 132
+  Mrd. KRW aus H1 2025. Nettomarge H1 2026 rund 47,7 Prozent. (Halbjahresbericht,
+  Tier 1a, über Branchenpresse gelesen)</li>
+<li><strong>Markt:</strong> SK Hynix ist nach Umsatz die Nummer zwei im NAND (rund 18,5 Prozent,
+  Q1 2026, IDC). Treiber ist Enterprise-SSD für KI-Rechenzentren; die SK-Gruppe
+  ist auch dort Nummer zwei (Q2 2026 über 8,6 Mrd. USD eSSD-Umsatz, TrendForce).
+  (Analysten, kein Befund)</li>
+</ul>
+<p>Lesart: Die Drehung bei Solidigm macht NAND zu einem zweiten KI-Hebel neben HBM
+und dämpft die Abhängigkeit vom HBM-Anteil aus
+<a href="../../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a>.
+Sie erklärt auch einen Teil der Margenausweitung aus
+<a href="operating-margin-three-makers.html">operating-margin-three-makers</a>: NAND-Preise
+sind 2026 stark gestiegen.</p>
+<h2>Trägt</h2>
+<p>Das Gewicht von NAND (rund ein Fünftel des Umsatzes) und die Solidigm-Drehung
+sind Tier 1a. Damit ist belegt, dass SK Hynix' Ergebnis 2026 nicht allein HBM
+ist. Die Höhe der Solidigm-Nettomarge (47,7 Prozent H1) ist außergewöhnlich und
+der Grund, sie nachzuprüfen, nicht sie zu verwerfen.</p>
+<h2>Trägt nicht</h2>
+<p>Keine NAND-Marktanteile als Befund — die 18,5 Prozent und die eSSD-Rangfolge
+sind IDC und TrendForce, also Warnsignal. Kein getrennter NAND-Umsatz in KRW:
+der Prospekt nennt nur den Prozentanteil, nicht die absolute Zahl. Die
+Solidigm-H1-Zahlen sind über Branchenpresse aus dem Halbjahresbericht gelesen,
+mit Übertragungsrisiko. Der genannte Solidigm-US-IPO (Bewertung bis 150 Mrd.
+USD, frühestens 2027) ist Gerücht, kein Befund.</p>
+<p>Keine Aussage, wie viel der Konzernmarge aus NAND gegen DRAM/HBM stammt; der
+Prospekt teilt die Marge nicht nach Technologie.</p>
+<h2>Bruchindikator</h2>
+<p>Solidigm fällt in zwei Folgequartalen zurück in die Verlustzone, oder der
+NAND-Anteil am Konzernumsatz fällt deutlich unter 20 Prozent. Dann ist die
+zweite Säule schwächer als hier gelesen.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>NAND-Anteil 22,0 / 21,3 Prozent und Intel-NAND-Kaufpreise: SEC-Prospekt Form
+  424B4, September 2026, Tier 1a.
+  https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm</li>
+<li>Solidigm H1-2026-Zahlen und Vorjahresverluste: SK Hynix Halbjahresbericht,
+  Tier 1a, über Branchenpresse (BigGo) gelesen.</li>
+<li>NAND-Marktanteil (IDC), eSSD-Rangfolge und -Umsatz (TrendForce), IPO-Gerücht:
+  Branchendienste und Presse, Warnsignal.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="operating-margin-three-makers.html">operating-margin-three-makers</a></li>
+<li><a href="sk-hynix-free-cash-flow-2024-h1-2026.html">sk-hynix-free-cash-flow-2024-h1-2026</a></li>
+<li><a href="../../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,0 +1,268 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">memory_earnings</a> › <a href="../index.html#findings">Befund</a></div><h1>Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Projekt AI-Lage-Verbund (Seite firmen), 2026-10-02</span><span>Zuletzt geändert</span><span>2026-10-02 memory_earnings: operative Marge der drei Hersteller, sechs Quartale</span><span>Verweist auf</span><span><a href="../risks/low-pe-at-earnings-peak.html">Niedriges KGV am Gewinngipfel</a> <span class="muted small">(memory_earnings)</span><br><a href="../mechanisms/peer-beat-transfers-weakly.html">Ein Peer-Beat überträgt sich schwach</a> <span class="muted small">(memory_earnings)</span><br><a href="micron-fq4-2026-growth-deceleration.html">Micron FQ4 2026: Wachstum verlangsamt, Marge auf Plateau</a> <span class="muted small">(memory_earnings)</span><br><a href="../../ai_demand_drivers/rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="sk-hynix-q2-2026-oneoff-and-tax.html">SK Hynix Q2 2026: Nettogewinn durch Einmaleffekt, Steuerquote abgeleitet</a> <span class="muted small">(memory_earnings)</span><br><a href="../mechanisms/buyback-leverage-at-low-pe.html">Rueckkaufhebel bei niedrigem KGV</a> <span class="muted small">(memory_earnings)</span></span><span>Verwiesen von</span><span><a href="sk-hynix-nand-solidigm-turnaround.html">SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone</a> <span class="muted small">(memory_earnings)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/operating-margin-three-makers.md">knowledge/memory_earnings/findings/operating-margin-three-makers.md</a></span></div><h2>Aussage</h2>
+<p>Operative Marge je Quartal, aus Umsatz und Betriebsergebnis der Hersteller
+selbst gerechnet. Micron nach Geschäftsjahr, SK Hynix und Samsung nach
+Kalenderquartal — die Reihen sind deshalb um rund einen Monat versetzt.</p>
+<table>
+<thead>
+<tr>
+<th>Quartalsende</th>
+<th>SK Hynix</th>
+<th>Micron</th>
+<th>Samsung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1 2025</td>
+<td>42,2 %</td>
+<td>22,0 %</td>
+<td>8,5 %</td>
+</tr>
+<tr>
+<td>Q2 2025</td>
+<td>41,4 %</td>
+<td>23,3 %</td>
+<td>6,3 %</td>
+</tr>
+<tr>
+<td>Q3 2025</td>
+<td>46,6 %</td>
+<td>32,3 %</td>
+<td>14,1 %</td>
+</tr>
+<tr>
+<td>Q4 2025</td>
+<td>58,4 %</td>
+<td>45,0 %</td>
+<td>21,4 %</td>
+</tr>
+<tr>
+<td>Q1 2026</td>
+<td>71,5 %</td>
+<td>67,6 %</td>
+<td>42,8 %</td>
+</tr>
+<tr>
+<td>Q2 2026</td>
+<td><strong>76,3 %</strong></td>
+<td><strong>80,4 %</strong></td>
+<td><strong>52,2 %</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Ausweitung über sechs Quartale: SK Hynix <strong>+34,1 Punkte</strong>, Micron
+<strong>+58,4 Punkte</strong>, Samsung <strong>+43,7 Punkte</strong>. Alle drei steigen in denselben
+vier Quartalen monoton; die einzige Gegenbewegung ist SK Hynix Q1 → Q2 2025
+(−0,8 Punkte).</p>
+<p>Daneben das Trailing-KGV zum Kursstand 17./18.09.2026:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>KGV (ttm) gemeldet</th>
+<th>KGV bereinigt</th>
+<th>operative Marge letztes Quartal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SK Hynix</td>
+<td>8,05</td>
+<td><strong>13,1 bis 13,3</strong></td>
+<td>76,3 %</td>
+</tr>
+<tr>
+<td>Samsung</td>
+<td>10,00</td>
+<td>nicht geprüft</td>
+<td>52,2 %</td>
+</tr>
+<tr>
+<td>Micron</td>
+<td>22,12</td>
+<td>nicht geprüft</td>
+<td>80,4 %</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Die 8,05 für SK Hynix sind irreführend und stehen hier nur als Gegenprobe.</strong>
+Der Zwölfmonatsgewinn von 162,1 Bio. KRW enthält den Einmalertrag aus Verkauf
+und Neubewertung von Beteiligungen, den
+<a href="sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>
+mit 62,2 Bio. KRW ausweist. Zwei Wege führen auf dasselbe bereinigte Bild,
+bei Kurs 1.838.000 KRW und 709.854.891 Aktien:</p>
+<table>
+<thead>
+<tr>
+<th>Rechenweg</th>
+<th>Zwölfmonatsgewinn</th>
+<th>EPS</th>
+<th>KGV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gemeldet</td>
+<td>162,1 Bio. KRW</td>
+<td>228.375 KRW</td>
+<td>8,05</td>
+</tr>
+<tr>
+<td>gemeldet minus 62,2 Bio. Einmalertrag</td>
+<td>99,9 Bio. KRW</td>
+<td>140.751 KRW</td>
+<td>13,06</td>
+</tr>
+<tr>
+<td>wiederkehrend: operativ 128,7 Bio. × 0,765</td>
+<td>98,5 Bio. KRW</td>
+<td>138.705 KRW</td>
+<td>13,25</td>
+</tr>
+</tbody>
+</table>
+<p>Die beiden Bereinigungen weichen um 1,5 % voneinander ab, obwohl der eine Weg
+vom Nettogewinn abzieht und der andere vom Betriebsergebnis hochrechnet. Das
+bereinigte KGV liegt bei rund <strong>13</strong>, nicht bei 8.</p>
+<p>Bleibt: SK Hynix wird mit dem Dreizehnfachen des wiederkehrenden Gewinns
+bezahlt, auf einer operativen Marge, die in fünf Quartalen von 41 auf 76
+Prozent gelaufen ist.</p>
+<h2>Trägt</h2>
+<p>Die quantitative Grundlage für <a href="../risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>.
+Der Risikoeintrag führt den mechanischen Effekt des Trailing-Fensters vor,
+hatte aber keine Margenreihe. Diese Reihe liefert sie: das KGV steht nicht auf
+einer stabilen, sondern auf einer in fünf Quartalen verdoppelten Marge. Der
+dort genannte Bruchindikator — "die Gewinne halten das Niveau über mehrere
+Quartale bei stabiler Marge" — ist damit ab jetzt ablesbar, weil die
+Vergleichsbasis vorliegt.</p>
+<p>Zusätzlich eine unabhängige Gegenprobe zu
+<a href="sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>:
+Die dort angegebene Umrechnung operativ × 0,765 und der direkte Abzug des
+Einmalertrags von 62,2 Bio. KRW führen auf Zwölfmonatsgewinne, die um 1,5 %
+auseinanderliegen. Das stützt beide Zahlen. Wer ein KGV für SK Hynix nennt,
+muss bereinigen: der gemeldete Wert ist um 62 % zu niedrig.</p>
+<p>Zweitens die Trennung von <strong>Niveau</strong> und <strong>Überraschung</strong> in
+<a href="../mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a>:
+Das Margenniveau der drei Hersteller bewegt sich gleichgerichtet, weil es am
+Preisumfeld hängt. Die Abweichung vom Konsens überträgt sich trotzdem schwach.
+Das ist <strong>kein Widerspruch</strong> zu jenem Mechanismus, sondern präzisiert ihn:
+seine Aussage gilt für die Überraschung, nicht für das Niveau. Wer dort "Richtung
+beim Wettbewerber hoch wahrscheinlich" liest, findet hier die Belegreihe dafür.</p>
+<p>Drittens eine Lesart zur Herkunft des Gewinns: Samsung, mit dem kleinsten
+HBM-Anteil der drei, weitet die Marge in derselben Zeit und in derselben
+Richtung aus. Das ist mit der Lesart aus
+<a href="micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a>
+vereinbar, dass der Treiber konventionelles DRAM war, nicht HBM — stützt sie
+aber nicht, siehe unten.</p>
+<h2>Trägt nicht</h2>
+<p><strong>Samsungs Zahl ist konzernweit.</strong> Samsung Electronics weist hier Umsatz und
+Betriebsergebnis des Gesamtkonzerns aus, einschließlich Mobilgeräte, Displays
+und Foundry. Die Marge des Speichergeschäfts ist daraus nicht ablesbar. Der
+Vergleich mit SK Hynix und Micron, die weit überwiegend Speicher sind, ist
+deshalb schief. Jede Aussage über Samsungs HBM-Anteil ist damit ausgeschlossen —
+auch die dritte Lesart oben, die nur als Lesart stehen bleibt.</p>
+<p>Keine Aussage über den freien Cashflow und damit keine über die Ausschüttung,
+siehe <a href="sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a>.
+Operative Marge ist nicht FCF.</p>
+<p>Kein Zeitpunkt für den Gipfel. Die Reihe zeigt die Ausweitung, nicht ihr Ende.
+Es gilt <a href="../../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a>:
+die Margen hängen am Bit-Angebot gegen Bit-Nachfrage, nicht an der
+Nachfrage allein.</p>
+<p>Kein Konsensvergleich. Konsenszahlen sind unzulässige Quelle.</p>
+<p><strong>Micron und Samsung sind nicht auf Einmaleffekte geprüft.</strong> Für SK Hynix ist
+der Einmalertrag belegt und oben bereinigt; für die beiden anderen steht in der
+Wiki kein entsprechender Eintrag, und ich habe ihre Abschlüsse nicht darauf
+durchgesehen. Ihre KGV-Spalte ist deshalb der gemeldete Wert und kann aus
+demselben Grund zu niedrig sein. Das ist ein offener Schritt, kein Befund.</p>
+<p>Die Micron-Reihe endet mit dem Quartal zum 28.05.2026 und ist damit <strong>ein
+Quartal älter</strong> als der Stand der Wiki. Microns FQ4 (Quartal endete 03.09.2026)
+steht in <a href="micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a>
+mit 54,23 Mrd. USD Umsatz und einer Brutto-Marge non-GAAP von 87,0 % nach
+84,9 % — Bruttomarge, nicht operative Marge, also nicht in diese Spalte
+fortschreibbar.</p>
+<h2>Bruchindikator</h2>
+<p>Fällt die operative Marge eines der drei Hersteller zwei Quartale in Folge,
+während die beiden anderen steigen, bricht die Gleichrichtung — dann ist das
+Margenniveau firmenspezifisch und nicht mehr Preisumfeld. Nächste Ablesung:
+SK Hynix Q3 2026, Termin laut Kalendern 27.10.2026.</p>
+<p>Fällt dagegen das Margenniveau aller drei zugleich, ist der Gipfel
+nachträglich datiert und <a href="../risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>
+war die richtige Lesart.</p>
+<h2>Ablesung</h2>
+<p>Tier 1a, aber zweiter Hand — das begründet den Status <code>vorschlag</code>:</p>
+<ul>
+<li><strong>Micron:</strong> SEC XBRL, maschinell aus den Einreichungen gelesen. Belastbar.</li>
+<li><strong>SK Hynix:</strong> Quartalspräsentationen des Unternehmens, in die Datenbasis des Projekts übertragen. Von mir nicht Zeile für Zeile gegen die Originalpräsentation nachgelesen.</li>
+<li><strong>Samsung:</strong> Ergebnispräsentationen, ebenso übertragen und ebenso nicht nachgelesen.</li>
+<li><strong>Kurse</strong> für das KGV: Marktdaten, Kursstand 17.09.2026 (Micron) bzw. 18.09.2026 (SK Hynix, Samsung).</li>
+</ul>
+<p>Quelle der Zusammenstellung: Seite firmen des AI-Lage-Verbunds,
+https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html, Seitenstand
+2026-09-17.</p>
+<p>Gegenprobe, die für die Übertragung spricht: Das hier gerechnete Micron-
+Trailing-EPS von 44,19 USD und das in
+<a href="../risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a> genannte von
+44,31 USD sind unabhängig voneinander entstanden und weichen um 0,3 % ab.
+Ebenso stimmen SK Hynix Q2 2026 (79,3 Bio. KRW Umsatz, 60,5 Bio. KRW
+Betriebsergebnis) mit den Zahlen in
+<a href="../mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a>
+überein.</p>
+<p>Die Höhe der Zahlen ist außergewöhnlich — SK Hynix wächst gegenüber Vorjahr um
+257 %, Micron um 346 %, Samsung um 130 %. Das ist der Grund, sie
+nachzuprüfen, bevor etwas darauf gebaut wird, nicht der Grund, sie zu verwerfen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+<li><a href="../mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
+<li><a href="micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+<li><a href="sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a></li>
+<li><a href="../mechanisms/buyback-leverage-at-low-pe.html">buyback-leverage-at-low-pe</a></li>
+<li><a href="../../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

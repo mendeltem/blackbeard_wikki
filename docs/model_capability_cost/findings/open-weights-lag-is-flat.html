@@ -1,0 +1,162 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Der Rückstand offener Gewichte schrumpft nicht, er schwankt um vier Monate</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">model_capability_cost</a> › <a href="../index.html#findings">Befund</a></div><h1>Der Rückstand offener Gewichte schrumpft nicht, er schwankt um vier Monate</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Projekt ai_modellkurve, Datenstand 2026-09-05</span><span>Zuletzt geändert</span><span>2026-10-02 model_capability_cost: Kosten je Faehigkeitsniveau als neues Thema</span><span>Verweist auf</span><span><a href="iso-capability-cost-halving.html">Iso-Fähigkeitskosten halbieren sich alle 1,6 bis 7,3 Monate</a> <span class="muted small">(model_capability_cost)</span><br><a href="../rules/benchmarks-from-one-hand.html">Benchmarkreihen nur aus einer Hand</a> <span class="muted small">(model_capability_cost)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/model_capability_cost/findings/open-weights-lag-is-flat.md">knowledge/model_capability_cost/findings/open-weights-lag-is-flat.md</a></span></div><h2>Aussage</h2>
+<p>Abstand in Monaten zwischen dem Tag, an dem ein geschlossenes Modell ein GPQA-Diamond-Niveau zuerst erreichte, und dem Tag, an dem das erste Modell mit offenen Gewichten dieses Niveau überbot:</p>
+<table>
+<thead>
+<tr>
+<th>Datum</th>
+<th>Rückstand</th>
+<th>offenes Modell</th>
+<th>holt auf zu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023-07-18</td>
+<td>4,1</td>
+<td>Llama 2 70B (26,3 %)</td>
+<td>GPT-4</td>
+</tr>
+<tr>
+<td>2024-04-18</td>
+<td>5,4</td>
+<td>Llama 3 70B (40,6 %)</td>
+<td>GPT-4 Turbo</td>
+</tr>
+<tr>
+<td>2024-07-23</td>
+<td>1,1</td>
+<td>Llama 3.1 405B (50,9 %)</td>
+<td>Claude 3.5 Sonnet</td>
+</tr>
+<tr>
+<td>2024-12-26</td>
+<td>3,1</td>
+<td>DeepSeek-V3 (56,5 %)</td>
+<td>Gemini 1.5 Pro</td>
+</tr>
+<tr>
+<td>2025-01-20</td>
+<td>1,1</td>
+<td>DeepSeek-R1 (71,7 %)</td>
+<td>o1</td>
+</tr>
+<tr>
+<td>2025-08-05</td>
+<td>7,6</td>
+<td>gpt-oss-120b (75,8 %)</td>
+<td>o1</td>
+</tr>
+<tr>
+<td>2025-11-06</td>
+<td>4,7</td>
+<td>Kimi K2 Thinking (84,2 %)</td>
+<td>Gemini 2.5 Pro</td>
+</tr>
+<tr>
+<td>2026-01-27</td>
+<td>2,5</td>
+<td>Kimi K2.5 (87,6 %)</td>
+<td>GPT-5.1</td>
+</tr>
+<tr>
+<td>2026-02-11</td>
+<td>2,8</td>
+<td>GLM-5 (87,8 %)</td>
+<td>Gemini 3 Pro</td>
+</tr>
+<tr>
+<td>2026-04-07</td>
+<td>4,6</td>
+<td>GLM-5.1 (89,9 %)</td>
+<td>Gemini 3 Pro</td>
+</tr>
+<tr>
+<td>2026-04-20</td>
+<td>5,0</td>
+<td>Kimi K2.6 (90,8 %)</td>
+<td>Gemini 3 Pro</td>
+</tr>
+<tr>
+<td>2026-04-24</td>
+<td>5,2</td>
+<td>DeepSeek-V4-Pro (90,9 %)</td>
+<td>Gemini 3 Pro</td>
+</tr>
+<tr>
+<td>2026-06-16</td>
+<td>6,9</td>
+<td>GLM-5.2 (91,9 %)</td>
+<td>Gemini 3 Pro</td>
+</tr>
+<tr>
+<td>2026-07-16</td>
+<td>4,8</td>
+<td>Kimi K3 (93,1 %)</td>
+<td>Gemini 3.1 Pro</td>
+</tr>
+</tbody>
+</table>
+<p>Mittel China 4,1 Monate (n = 10), Mittel übrige Herkunft 4,5 Monate (n = 4). Über dreieinhalb Jahre kein Trend nach unten.</p>
+<h2>Trägt</h2>
+<p>Die Aussage, dass das Spitzenniveau rund ein halbes Jahr lang exklusiv bleibt — aber eben auch, dass es nicht kürzer wird. Wer mit einem schrumpfenden Abstand argumentiert, hat dafür in diesen Daten keine Stütze.
+Zusätzlich: die billigsten Punkte fast aller Kostentreppen sind Modelle mit offenen Gewichten chinesischer Häuser (DeepSeek, Z.ai, Moonshot). Der Preisdruck kommt von dort.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Aussage über Marktanteile oder Nutzung. Gemessen ist allein, wann welches Niveau zuerst erreicht wurde.
+Der Unterschied zwischen China (4,1) und dem Rest (4,5) ist bei n = 10 gegen n = 4 nicht belastbar; die oft erzählte Trennung US gegen CN zeigt sich in diesen Zahlen nicht.
+Die Reihe stützt sich auf einen einzigen Benchmark. GPQA Diamond sättigt oberhalb 90 %, die letzten Zeilen messen deshalb immer kleinere Unterschiede.</p>
+<h2>Bruchindikator</h2>
+<p>Drei aufeinanderfolgende Einträge unter zwei Monaten: dann schrumpft der Abstand wirklich, und die Preissetzung der geschlossenen Anbieter verliert ihre Grundlage.</p>
+<h2>Ablesung</h2>
+<p>Epoch AI Benchmarking Hub, eigene Messläufe GPQA Diamond, Tier 1b, https://epoch.ai/data/benchmarks.csv, abgerufen 2026-09-05.
+Lizenzlage der Gewichte je Modell aus Epoch AI Notable AI Models, Tier 1b, abgerufen 2026-09-05. "Offen" umfasst hier auch Lizenzen mit Auflagen (Llama).</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="iso-capability-cost-halving.html">iso-capability-cost-halving</a></li>
+<li><a href="../rules/benchmarks-from-one-hand.html">benchmarks-from-one-hand</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

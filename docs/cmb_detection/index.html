@@ -1,0 +1,516 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>cmb_detection</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT</p>
+<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 12"></i></div><div class="counts"><span class="ok">12 getragen</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
+Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
+gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
+Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
+(Sundaresan et al. 2023, doi:10.3389/fninf.2023.1204186). Keine Zahlen eigener
+Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
+https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
+<p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Mikroblutungen auf T2*/SWI automatisch zaehlen. Oeffentliche Messlatte VALDO 2021 Task 2
+(72 Faelle, drei Kohorten, 0,8 bis 4 mm Schichten), Mass Laesions-F1 gepaart mit Bootstrap.</p>
+<p><strong>Getragen (Befunde, alle auf VALDO):</strong> Die Gefaess-Uebermalung des Referenzverfahrens
+MicrobleedNet loescht auf dicken Schichten die Blutungen selbst; ohne sie +0,136 F1, der
+groesste Einzelgewinn. Ein 3D-U-Net, dessen erste Ebene nur in der Schicht faltet und poolt,
+schlaegt alle isotropen Netze (+0,159 gegen Attention-U-Net; MedNeXt, nnU-Net-ResEnc,
+R2U-Net, Swin UNETR alle schlechter). Eine parameterfreie Regel "Komponente mehrheitlich
+im Liquor -&gt; weg" (SynthSeg-Gewebekarte) entfernt die Haelfte der Fehlalarme ohne eine
+Blutung zu verlieren (0,585 -&gt; 0,646). Kette insgesamt: 0,245 -&gt; 0,647. Zweite Stufe als EIN Modell: ein 3D-CNN auf dem
+Kandidaten-Pool aller Kohorten (eine Schwelle 0,30, out-of-fold je Fall) ist auf VALDO und
+T2* gleich der Liquor-Regel und auf SWI +0,061 besser; es braucht keine Gewebekarte.</p>
+<p><strong>Getragen (Negativbefund):</strong> Alles, was das Netz empfindlicher macht -- blob loss,
+Zentrumskarten-Kopf, Neugewichtung verpasster Laesionen, kuenstliche Laesionen, laengeres
+Training -- kauft Sensitivitaet mit Fehlalarmen; das F1 steigt nie. Der Engpass ist die
+Trennung Blutung / Gefaessquerschnitt mit einer einzigen Magnitudensequenz.</p>
+<p><strong>Getragen (Verlaeufe):</strong> Der Trainingsverlust ordnet weder Netze noch Trainingslaengen: gleicher
+Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert;
+Fruehstopp auf dem inneren F1 feuert auf Startwert-Rauschen, darum feste 60 Epochen.</p>
+<p><strong>Getragen (Auslieferung):</strong> Ein auf allen Faellen trainiertes Netz ohne inneren Checkpoint ist
+"heisser": auf fremdem Scanner gibt die feste Schwelle 0,3 nur 0,415 statt 0,622 (Faltenensemble),
+kreuzgewaehlt gleichauf; Arbeitspunkte nie von anderen Laeufen uebernehmen. Die zweite Stufe
+faengt es ab (0,604).</p>
+<p><strong>Getragen (Geometrie):</strong> Leave-one-cohort-out ueber vier T2*-Kohorten: die Schichtgeometrie der
+Trainingsdaten muss die Zielgeometrie abdecken -- ohne die 0,8-mm-Kohorte 0,295 statt 0,641, ohne die
+4-mm-Kohorte kein Verlust (5 mm deckt sie ab); mehr Faelle anderer Geometrie ersetzen das nicht.</p>
+<p><strong>Regel (Ausschnitte):</strong> Patches von 38 x 31 x 47 mm und Schiebefenster statt ganzer Bilder: Speicher
+(1,6 GiB statt Dutzende GB), Beispielzahl (800 je Epoche statt 57) und Kontext (Dosisreihe 24/38/48 mm:
+mehr bringt nichts); Anatomie kommt nachtraeglich als Regel.</p>
+<p><strong>Regel:</strong> Ein einzelnes U-Net-Training streut ~0,08 F1 zwischen Startwerten. Effekte
+darunter gelten nur mit zweitem Startwert oder Intervall ohne Null; vier "bestaetigte"
+Bausteine (FRST-Kanal, Gitter, Maske, Bias-Korrektur) lagen bei Nachpruefung im Rauschen.</p>
+<p><strong>Datenbefunde VALDO (getragen):</strong> Die gelieferten Masken sind nicht eng -- Kohorte 3 ist eine
+Kopfmaske mit 40 % Nicht-Hirn; Abhilfe SynthSeg- oder HD-BET-Maske, und Masken immer zweifach
+pruefen (schneidet ab? wie viel Nicht-Hirn bleibt?). 33 von 72 T1-Bildern tragen NaN in einer
+Randschale; SynthSeg liefert dafuer lautlos ein leeres Bild bei Rueckgabewert 0. Eine Zeile
+<code>nan_to_num</code> im Ladeschritt behebt es, geprueft sicher.</p>
+<p><strong>Lesen bei:</strong> Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen,
+Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p>
+<p><strong>Uebertragbar:</strong> die projektfreie Fassung dieser Lektionen steht in
+<a href="../lesion_detection_method/index.html#kurzstand">lesion_detection_method</a>.</p>
+<p><strong>Nachtrag 2026-10-08 zur Liquor-Regel:</strong> im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="patches-not-whole-images-for-small-lesions"><summary><span class="type">Regel</span><span class="t"><a href="rules/patches-not-whole-images-for-small-lesions.html">Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), Dosisreihe Patchgroesse (ARBEIT.md 5t) und Messungen 2026-10-07 · <a href="rules/patches-not-whole-images-for-small-lesions.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/patches-not-whole-images-for-small-lesions.md">Markdown</a></p><h2>Aussage</h2>
+<p>Beide Netze der CMB-Kette sehen nur Ausschnitte. U-Net: Patches 38 x 62 x 94 Voxel auf dem
+0,5 x 0,5 x 1-mm-Gitter (38 x 31 x 47 mm), 800 je Epoche, 60 % um eine Laesion an zufaelliger
+Stelle; Vorhersage mit Schiebefenster derselben Groesse, halber Versatz, Ueberlappung gemittelt
+(~370 Fenster je Fall), nichts geht verloren. Klassifikator: 20-mm-Block je Kandidat, 16 mm davon
+ins Netz. Vier Gruende, alle gemessen oder gerechnet:</p>
+<ol>
+<li><strong>Speicher:</strong> ein Volumen hat ~13 Mio. Voxel; die erste U-Net-Ebene allein braucht dafuer
+   0,8 GB je Zwischenergebnis (32 Kanaele, bfloat16), der Rueckwaertsschritt mehrere je Ebene --
+   Dutzende GB. Ein Patch: 221 000 Voxel; ein ganzes Training 1,6 GiB VRAM, Inferenz auf der CPU.</li>
+<li><strong>Beispiele:</strong> 800 Ausschnitte je Epoche zeigen jede Blutung in vielen Lagen; ganze Bilder
+   waeren 57 Beispiele mit 99,99 % Hintergrund.</li>
+<li><strong>Kontext:</strong> eine Blutung ist 2-10 mm, "Gefaess oder Blutung" entscheidet sich in wenigen mm.
+   Dosisreihe: 24 mm -0,216 [-0,277; -0,156], Rezept 0, 48 mm -0,016 [-0,074; +0,034]; 64 mm
+   scheiterte am Arbeitsspeicher des Puffers (33 GB), nicht an der Idee. Das ganze Bild ist nur
+   der Endpunkt dieser Reihe -- bewusst nicht gemessen (Nutzerentscheidung 2026-10-07).</li>
+<li><strong>Was Patches nicht wissen</strong> (Lage im Hirn), kommt danach: Liquor-Regel aus der Gewebekarte;
+   als Eingangskanal war die Karte schlechter (-0,058).</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jede Detektion kleiner, seltener Objekte in 3D-Volumen mit begrenztem VRAM; Patches sind dort
+zugleich die Datenvermehrung.</p>
+<h2>Traegt nicht</h2>
+<p>Aufgaben, bei denen die Entscheidung globalen Kontext braucht (Hemisphaerenvergleich, grosse
+Organe): dort ist das Ganze oder ein grober Massstab noetig.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Punkt der Dosisreihe deutlich ueber dem Rezept (z. B. 64 mm oder Ganzbild bei gleichem
+Budget und zwei Startwerten besser als +0,08).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messungen VALDO 2021 Task 2, gepaarter Bootstrap; VRAM-Messung 2026-10-07. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
+<li><a href="findings/csf-rule-removes-false-alarms-without-loss.html">csf-rule-removes-false-alarms-without-loss</a></li>
+</ul></div></details><details class="entry" id="two-seeds-per-decision-below-0.08"><summary><span class="type">Regel</span><span class="t"><a href="rules/two-seeds-per-decision-below-0.08.html">Effekte unter dem Startwert-Rauschen gelten nur mit zweitem Startwert</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Startwert-Rauschen eines U-Net-Trainings ~0,08 F1; kleinere Effekte brauchen zweiten Startwert</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), Startwertreihe 2026-09-21 und Nachpruefung der Seitenlegende 2026-10-07 · <a href="rules/two-seeds-per-decision-below-0.08.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/two-seeds-per-decision-below-0.08.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein einzelnes U-Net-Training auf VALDO streut zwischen Startwerten um etwa 0,08 F1
+(drei Startwerte desselben Rezepts: 0,646 / 0,590 / 0,578; sechs beinahe gleiche Laeufe
+im Mittel 0,61). Ein Unterschied unter dieser Groesse ist deshalb erst dann ein Ergebnis,
+wenn (a) das gepaarte 95-%-Bootstrap-Intervall ueber Faelle die Null ausschliesst oder
+(b) ein zweiter Startwert dieselbe Richtung zeigt. Alles andere ist eine Richtungsangabe.</p>
+<p>Konsequenz fuer Berichte: Bausteine nicht als "bestaetigt" bezeichnen, wenn ihr
+Ablationsintervall die Null einschliesst. Bei der Nachpruefung der oeffentlichen
+Pipeline-Seite am 2026-10-07 betraf das vier Bausteine, die als "kept, confirmed by an
+ablation" standen: FRST-Kanal -0,053 [-0,116; +0,004], Gitter z = 2 mm -0,036
+[-0,105; +0,032], enge Hirnmaske -0,048 [-0,099; +0,009], Bias-Korrektur -0,022
+[-0,097; +0,052]. Sie bleiben in der Kette, weil ihr Entfernen nicht besser war --
+aber sie sind nicht belegt, und die Seite sagt das jetzt.</p>
+<p>Praktische Form: Entscheidungsregel und Erwartung VOR dem Lauf aufschreiben; jede
+Entscheidung ueber einen Baustein mit zwei Startwerten; die zweite Stufe (kleiner
+Klassifikator) streut nur 0,003 bis 0,009 und braucht das nicht.</p>
+<h2>Traegt</h2>
+<p>Jeden Vergleich zweier Trainingsvarianten auf wenigen Dutzend Faellen, bei dem das
+Zielmass instanzbasiert ist (F1 je Laesion, Zaehlung) -- dort wiegt eine Blutung in
+einer kleinen Falte 0,02 F1.</p>
+<h2>Traegt nicht</h2>
+<p>Grosse Testmengen, bei denen das Rauschen eines Trainings gegen das Intervall klein wird;
+dort reicht das Intervall.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Startwertreihe desselben Rezepts, die auf VALDO unter 0,03 streut -- dann ist die
+Zahl 0,08 zu pessimistisch und die Regel kann gelockert werden.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, VALDO 2021 Task 2, drei Startwerte und sechs Nachbarlaeufe. Tier 1a.
+Hintergrund zur Metrikwahl: Maier-Hein et al., Metrics reloaded, Nat Methods 2024,
+doi:10.1038/s41592-023-02151-z.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">sensitivity-levers-do-not-raise-lesion-f1</a></li>
+<li><a href="../agent_tooling/rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(10)</span></h2><details class="entry" id="csf-rule-removes-false-alarms-without-loss"><summary><span class="type">Befund</span><span class="t"><a href="findings/csf-rule-removes-false-alarms-without-loss.html">Eine Liquor-Regel aus der Gewebekarte entfernt die Haelfte der Fehlalarme, ohne eine Blutung zu verlieren</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">98 von 176 Fehlalarmen liegen im Liquor; SynthSeg-Regel 0,585 -&gt; 0,646 ohne Verlust auf VALDO; Nachtrag 08.10.: auf SWI 62/426 und T2* 15/545 Blutungen geloescht</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), ARBEIT.md 4.3, gemessen 2026-09-20 · <a href="findings/csf-rule-removes-false-alarms-without-loss.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/csf-rule-removes-false-alarms-without-loss.md">Markdown</a></p><h2>Aussage</h2>
+<p>Von 176 Fehlalarmen des Detektors auf VALDO lagen 98 im freien Liquor (Ventrikel,
+aeussere Liquorraeume) -- dort, wo eine Mikroblutung als parenchymale Laesion nicht
+liegen kann. Regel: jede vorhergesagte Komponente, deren Mehrheitslabel in einer
+SynthSeg-Segmentierung desselben Falls Ventrikel oder Liquor ist, wird verworfen.
+Kein Parameter, nichts zu tunen. Ergebnis am festen Arbeitspunkt (Schwelle 0,3,
+mindestens 2 mm3): <strong>0,585 -&gt; 0,646, 0 von 139 Blutungen verloren.</strong></p>
+<p>Zwei Nebenbefunde: (a) gibt man dem Netz die Gewebekarte als Eingangskanaele, lernt es
+die Regel selbst (keine Vorhersage mehr im Liquor), macht aber anderswo mehr Fehlalarme
+(-0,058); die Regel nach dem Netz ist besser als die Karte vor dem Netz. (b) Auf SWI mit
+duennen Schichten ist die harte Regel zu grob -- dort loescht sie echte Blutungen; ein
+kleiner Kandidaten-Klassifikator mit der Gewebeklasse als Merkmal ersetzt sie
+(SWI +0,044 [+0,012; +0,085] gegen die Regel, auf T2*/VALDO gleichauf).</p>
+<h2>Traegt</h2>
+<p>Nachbearbeitung jedes CMB-Detektors, fuer den eine Gewebekarte zu haben ist.
+SynthSeg laeuft kontrastunabhaengig auch direkt auf T2* (mit <code>--robust</code>).</p>
+<h2>Traegt nicht</h2>
+<p>Blutungen an der Ventrikelwand oder im Plexus, wenn die Gewebekarte dort ungenau ist;
+auf VALDO trat das nicht auf (0 Verluste), auf anderen Daten ist es zu pruefen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Datensatz, auf dem die Regel echte Blutungen loescht (Sensitivitaet faellt).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung VALDO 2021 Task 2. SynthSeg: Billot et al., Med Image Anal 2023,
+doi:10.1016/j.media.2023.102789. Tier 1a.</p>
+<h2>Nachtrag 2026-10-08: der Bruchindikator ist auf den eigenen Kohorten eingetreten</h2>
+<p>Im Schichtbetrachter (<code>--csf-overlay</code>, Regel auf der rohen Vorhersage des
+Siegernetzes nur gezeigt, nicht angewendet) entfernt die Regel: VALDO 27
+Fehlalarme und 1 von 90 Treffern (Ensemble, 57 CV-Faelle); eigene SWI-Kohorte
+88 Fehlalarme und <strong>62 von 426 Blutungen</strong> in 18 Faellen; eigene T2*-Kohorte 56
+Fehlalarme und 15 von 545 Blutungen in 8 Faellen. Die Aussage "ohne Verlust" gilt
+damit nur fuer VALDO. Fuer die eigenen Kohorten bleibt der gemeinsame
+Kandidaten-Klassifikator die Nachbearbeitung; ob SynthSeg auf SWI (duenne
+Schichten, Resampling auf 1 mm und zurueck) die Ventrikelwand und den Kortex zu
+grob zeichnet oder die Regel fuer diese Anatomie falsch ist, ist am Bild zu
+pruefen (Ebenen <code>csf_drop_tp</code>, <code>csf_free</code>, <code>csf_vent</code>).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">sensitivity-levers-do-not-raise-lesion-f1</a></li>
+<li><a href="../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">show-what-a-rule-removes-before-trusting-it</a></li>
+<li><a href="findings/one-shared-candidate-classifier-for-all-cohorts.html">one-shared-candidate-classifier-for-all-cohorts</a></li>
+</ul></div></details><details class="entry" id="anisotropic-first-level-beats-isotropic-3d-nets"><summary><span class="type">Befund</span><span class="t"><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">Ein 3D-U-Net mit anisotroper erster Ebene schlaegt alle isotropen Netze</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Erste Ebene nur in der Schicht falten: +0,159 gegen Attention-U-Net, zwei Turniere</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), Turnier 1 (2026-09-18) und Turnier 2 (2026-10-02) · <a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/anisotropic-first-level-beats-isotropic-3d-nets.md">Markdown</a></p><h2>Aussage</h2>
+<p>Alle Faelle werden auf ein gemeinsames Gitter 0,5 x 0,5 x 1,0 mm gebracht. Dort faltet
+(1 x 3 x 3) und poolt (1 x 2 x 2) die erste Ebene nur in der Schicht; ab der zweiten
+Ebene ist das Gitter 1 mm isotrop und das Netz ein gewoehnliches 3D-U-Net (32 Basiskanaele,
+InstanceNorm, 22,5 M Parameter). Begruendung: in z sind die meisten Abtastwerte
+interpoliert; sie in der ersten Schicht zu mitteln, bringt keine Information und halbiert
+die nutzbare Aufloesung in der Schicht (dieselbe Regel wie in nnU-Net fuer anisotrope Daten).</p>
+<p>Turnier 1 (neun einstufige Netze, ein Rezept): 0,245 -&gt; 0,404 gegen das 3D-Attention-
+U-Net, <strong>+0,159 [+0,091; +0,234]</strong>, in allen drei Kohorten vorn. Turnier 2 (60 Epochen,
+2026-10-02), gepaart gegen dieses Netz: MedNeXt -0,098 [-0,175; -0,018], nnU-Net-
+Residual-Encoder -0,063 [-0,143; -0,002], R2U-Net 2.5D -0,141 [-0,213; -0,067],
+Attention-Gates auf dem Gewinner -0,056 [-0,120; +0,004]. Kein Trainingsrezept-Hebel
+(Lernrate, Stapel, Budget, Verlust, Epochen) hob das Netz weiter.</p>
+<h2>Traegt</h2>
+<p>Kleine Laesionen auf anisotropen klinischen Aufnahmen (dicke Schichten), wenn alle
+Faelle auf ein gemeinsames Gitter kommen.</p>
+<h2>Traegt nicht</h2>
+<p>Isotrope Daten; dort ist die erste Ebene gewoehnlich. Und: der Gewinn ist gegen die
+Netzfamilie gemessen, nicht gegen ein voll konfiguriertes nnU-Net-v2-Framework
+(diese Messlatte ist trainiert, aber noch nicht ausgewertet).</p>
+<h2>Bruchindikator</h2>
+<p>nnU-Net v2 mit eigener Konfiguration erreicht auf denselben Falten dasselbe F1 oder mehr.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messungen VALDO 2021 Task 2, 57 Faelle, Laesions-F1 gepaart. Tier 1a.
+Begruendung des anisotropen Poolens: Isensee et al., Nat Methods 2021, doi:10.1038/s41592-020-01008-z.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/vessel-inpainting-removes-microbleeds-on-thick-slices.html">vessel-inpainting-removes-microbleeds-on-thick-slices</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="full-data-last-state-models-run-hotter"><summary><span class="type">Befund</span><span class="t"><a href="findings/full-data-last-state-models-run-hotter.html">Ein auf allen Faellen trainiertes Netz ohne inneren Checkpoint gibt hoehere Wahrscheinlichkeiten aus -- der feste Arbeitspunkt der Faltenmodelle passt dann nicht mehr</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Vollmodell ohne inneren Checkpoint: Wahrscheinlichkeiten verschoben, feste Schwelle 0,3 auf fremdem Scanner 0,415 statt 0,622; kreuzgewaehlt gleichauf; zweite Stufe faengt es ab (0,604)</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), scripts/final_models.sh und final_cross_scores.sh, Kreuztests 2026-10-07 · <a href="findings/full-data-last-state-models-run-hotter.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md">Markdown</a></p><h2>Aussage</h2>
+<p>Fuer ein Produkt wurden die U-Nets auf ALLEN Faellen je Kohorte trainiert (keine Falten,
+60 Epochen Cosinus, letzter Stand, zwei Startwerte gemittelt). In der eigenen Domaene sind sie
+so gut wie die Faltenmodelle (in-sample T2<em> 0,654 gegen out-of-fold 0,663: keine
+Ueberanpassung). Auf einem fremden Scanner aber bricht der feste Arbeitspunkt ein:
+VALDO-Vollmodell auf einer klinischen T2</em>-Kohorte bei Schwelle 0,3 <strong>F1 0,415</strong>
+(P 0,28, S 0,77, 21 Fehlalarme je Fall) gegen 0,622 fuer das Fuenffalten-Ensemble in
+derselben Bewertung. Das F1-Gitter des Vollmodells hat sein Maximum bei Schwelle 0,6-0,7
+(0,637 mit Liquor-Regel), kreuzgewaehlt 0,629 = Faltenensemble. Es ist eine
+<strong>Kalibrierungsverschiebung</strong>, kein Qualitaetsverlust: die Netze sind "heisser".
+Wahrscheinliche Ursache: der innere Checkpoint der Faltenmodelle waehlt den Stand mit dem
+besten Laesions-F1 (eher frueh, praeziser); der letzte Stand nach vollem Abfall der Lernrate
+hat die Trainingslaesionen haerter gelernt (in-sample S 0,83, FP 3,4 je Fall gegen 1,5 OOF).</p>
+<p>Die zweite Stufe (Kandidaten ab 0,15, gemeinsamer 3D-CNN-Klassifikator) faengt es weitgehend
+ab: 3889 Kandidaten, F1 0,604 bei Klassifikator-Schwelle 0,30 (0,681 bei 0,5, aber auf
+denselben Daten gewaehlt).</p>
+<h2>Traegt</h2>
+<p>Jede Auslieferung eines Netzes, dessen Arbeitspunkt auf anderen Trainingslaeufen bestimmt
+wurde: Schwelle NICHT uebernehmen, sondern auf dem neuen Lauf nachmessen -- oder die
+Faltenmodelle selbst ausliefern (jedes Bild steckt in vier von fuenf Mitgliedern) oder das
+Vollmodell mit einer kleinen inneren Menge fuer den Checkpoint trainieren.</p>
+<h2>Traegt nicht</h2>
+<p>Innerhalb der Trainingsdomaene bei kreuzgewaehlter Schwelle: dort gleichauf.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Vollmodell, dessen F1-Gitter sein Maximum bei derselben Schwelle hat wie die
+Faltenmodelle, oder eine Messung, in der der letzte Stand in der Fremddomaene gleich gut ist.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Laesions-F1 gepoolt, 75 T2*-Faelle / 828 CMB einer klinischen Kohorte
+(nur Summen); VALDO 72 Faelle in-sample. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/one-shared-candidate-classifier-for-all-cohorts.html">one-shared-candidate-classifier-for-all-cohorts</a></li>
+<li><a href="findings/training-loss-does-not-rank-networks-or-schedules.html">training-loss-does-not-rank-networks-or-schedules</a></li>
+</ul></div></details><details class="entry" id="one-shared-candidate-classifier-for-all-cohorts"><summary><span class="type">Befund</span><span class="t"><a href="findings/one-shared-candidate-classifier-for-all-cohorts.html">Ein einziger Kandidaten-Klassifikator ueber alle Kohorten ersetzt die Liquor-Regel und braucht keine Gewebekarte</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ein Klassifikator auf dem Kandidaten-Pool aller Kohorten, eine Schwelle 0,30: = Liquor-Regel auf VALDO/T2*, SWI +0,061; braucht keine Gewebekarte</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), cmb/stage2/final_classifier.py, gemessen 2026-10-07 · <a href="findings/one-shared-candidate-classifier-for-all-cohorts.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.md">Markdown</a></p><h2>Aussage</h2>
+<p>Zweite Stufe eines CMB-Detektors: jede Komponente ueber einer niedrigen Schwelle (p &gt; 0,15,</p>
+<blockquote>
+<p>= 1 mm3) wird zum Kandidaten; ein kleines 3D-CNN (drei Doppelfaltungsbloecke 16/32/64,
+0,22 M Parameter) sieht Bild, FRST-Karte und Wahrscheinlichkeit der ersten Stufe in einem
+16-mm-Wuerfel und sagt ja/nein. Je Kohorte trainiert lernt es nichts (zu wenige Kandidaten);
+auf dem <strong>Pool aller Kohorten</strong> (oeffentlich VALDO 278 + zwei klinische Kohorten, 2230
+Kandidaten, 1164 positiv) wird daraus EIN auslieferbares Modell mit EINER Schwelle (0,30,
+per 5-fach-Kreuzvalidierung je Fall ueber den Pool gewaehlt, out-of-fold):</p>
+</blockquote>
+<ul>
+<li>gepoolt F1 0,675 (P 0,72, S 0,63);</li>
+<li>VALDO 0,624 = Liquor-Regel 0,631 (-0,008 [-0,048; +0,043]), gegen Schwelle allein +0,060 [+0,009; +0,129];</li>
+<li>T2*-Kohorte 0,676 = Regel (+0,001);</li>
+<li>SWI-Kohorte 0,684, <strong>+0,061 [+0,014; +0,104] gegen die Regel</strong> (die dort echte Blutungen loescht).</li>
+</ul>
+<p>Der Klassifikator bekommt KEINE Gewebeklasse als Eingang und lernt die Liquor-Regel
+trotzdem; damit faellt FreeSurfer/SynthSeg als Abhaengigkeit eines Produkts weg.</p>
+<h2>Traegt</h2>
+<p>Jeder Zwei-Stufen-Detektor fuer kleine, seltene Laesionen, bei dem die Kandidatenmenge je
+Datensatz zu klein ist: Kandidaten ueber Datensaetze poolen, eine Schwelle, ein Modell.
+Ein auf VALDO-Kandidaten allein trainierter Klassifikator uebertraegt ohne Anpassung
+(SWI 0,671 gegen 0,672 gepoolt) -- die zweite Stufe ist kohortenunabhaengiger als die erste.</p>
+<h2>Traegt nicht</h2>
+<p>Die erste Stufe: U-Nets uebertragen NICHT zwischen Sequenzen (VALDO-T2*-Netz auf SWI 0,305
+gegen 0,626 eigenes Training); je Sequenz ein eigenes Netz bleibt noetig.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Kohorte, auf der der gemeinsame Klassifikator messbar unter die Liquor-Regel faellt
+(Intervall unter Null), oder ein Datensatz ohne Liquor-Fehlalarme, auf dem er nichts zu
+lernen hat.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, out-of-fold ueber den Pool, gepaarter Bootstrap ueber Faelle (5000 Zuege).
+Klassifikator-Muster nach Setio et al. 2016 (doi:10.1109/TMI.2016.2536809). Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/csf-rule-removes-false-alarms-without-loss.html">csf-rule-removes-false-alarms-without-loss</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="sensitivity-levers-do-not-raise-lesion-f1"><summary><span class="type">Befund</span><span class="t"><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">Hebel, die das Netz empfindlicher machen, heben das Laesions-F1 nicht</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">blob loss, Zentrumskarten, Neugewichtung, Synthese: Sensitivitaet rauf, F1 runter</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), ARBEIT.md 5j bis 5ae und Turnier 2, 2026-09-20 bis 2026-10-02 · <a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/sensitivity-levers-do-not-raise-lesion-f1.md">Markdown</a></p><h2>Aussage</h2>
+<p>Rund vierzig Eingriffe am Trainingsrezept wurden einzeln gegen dieselbe Basis gemessen
+(VALDO, 57 Faelle, gepaart). Jeder Hebel, der die Sensitivitaet fuer kleine Blutungen
+hob, bezahlte mit Fehlalarmen, und das F1 fiel oder blieb:
+- <strong>blob loss</strong> (Kofler et al. 2023, Dice je zusammenhaengender Laesion statt je
+  Ausschnitt): Sensitivitaet kleiner Laesionen 0,52 -&gt; 0,64, F1 -0,044, zweiter
+  Startwert -0,063.
+- <strong>Zentrumskarten-Kopf + Neugewichtung verpasster Laesionen</strong> (nach CenSynCMB 2026):
+  kleine Laesionen 0,52 -&gt; 0,66, F1 -0,054 [-0,110; -0,006]; Neugewichtung allein -0,030.
+- <strong>Kuenstliche Blutungen</strong> in zwei Fassungen: -0,130 und kein Gewinn.
+- Online-Hard-Negative-Mining +-0,000; 90 / 120 Epochen -0,016 / -0,022; focal Tversky
+  -0,355; z-Normierung mit Augmentierung -0,060; kubisches statt lineares Resampling -0,024.
+Was blieb, sind die drei Bausteine der Kette: Uebermalung weg, anisotropes Netz,
+Liquor-Regel. Der Engpass ist die Unterscheidung Blutung / Gefaessquerschnitt /
+Verkalkung mit einer einzigen Magnitudensequenz; Formfilter (Laufstrecke entlang z,
+Frangi, Kugeligkeit) scheitern auf dem anisotropen Gitter, weil Blooming eine Blutung
+zum kurzen Zylinder macht.</p>
+<h2>Traegt</h2>
+<p>Planung weiterer CMB-Arbeiten auf einer Sequenz: nicht noch ein Verlust, sondern
+zusaetzliche Information (Phase/QSM, zweite Sequenz) oder bessere Kandidaten-Pruefung.
+Und als Lesehilfe fuer Literatur: ein Sensitivitaetsgewinn ohne Precision ist noch kein
+Fortschritt.</p>
+<h2>Traegt nicht</h2>
+<p>Mehrsequenz-Verfahren: CenSynCMB erreicht mit drei Sequenzen auf VALDO per-Proband
+0,743, wo dieses Netz auf einer Sequenz bei 0,57 bis 0,63 liegt. Dort koennen dieselben
+Hebel wirken.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Trainingshebel auf einer Sequenz, der F1 gepaart mit Intervall ohne Null hebt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messungen. Quellen der Hebel: Kofler et al., IPMI 2023, LNCS 13939:755-767,
+doi:10.1007/978-3-031-34048-2_58; He et al., CenSynCMB, arXiv:2607.05325 (2026, Preprint).
+Tier 1a fuer die Messungen.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/csf-rule-removes-false-alarms-without-loss.html">csf-rule-removes-false-alarms-without-loss</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="training-geometry-must-cover-target-geometry"><summary><span class="type">Befund</span><span class="t"><a href="findings/training-geometry-must-cover-target-geometry.html">Die Schichtgeometrie der Trainingsdaten muss die Zielgeometrie abdecken -- mehr Faelle anderer Geometrie ersetzen das nicht</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Leave-one-cohort-out T2*: 4-mm-Kohorte ersetzbar (gleich), 0,8-mm-Kohorte nicht (0,295 gegen 0,641), 5 mm ohne sich selbst 0,336; Fallzahl anderer Geometrie ersetzt die Zielgeometrie nicht</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), scripts/loco_t2.sh, Leave-one-cohort-out ueber vier T2*-Kohorten, 2026-10-07 abends · <a href="findings/training-geometry-must-cover-target-geometry.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/training-geometry-must-cover-target-geometry.md">Markdown</a></p><h2>Aussage</h2>
+<p>Leave-one-cohort-out ueber vier T2*-Kohorten (VALDO 1: 4 mm, 11 Faelle; VALDO 2: 0,8 mm, 34;
+VALDO 3: 3-4 mm, 27; klinische Kohorte: 5 mm, 75), Training auf drei, Test auf der vierten,
+Laesions-F1 auf denselben Faellen gegen die Faltenmodelle, die die Kohorte im Training hatten:</p>
+<ul>
+<li><strong>4 mm weggelassen:</strong> 0,577 gegen 0,576 -- kein Verlust; die 5-mm-Kohorte deckt die Geometrie ab.</li>
+<li><strong>0,8 mm weggelassen:</strong> 0,295 gegen 0,641 roh, 0,503 gegen 0,707 mit Liquor-Regel -- halbe
+  Sensitivitaet, viermal so viele Fehlalarme, obwohl 113 statt 46 Faelle im Training waren.</li>
+<li><strong>3-4 mm weggelassen:</strong> 0,409 gegen 0,476 (22 Faelle, im Rauschen).</li>
+<li><strong>5 mm weggelassen</strong> (nur VALDO im Training): 0,336 roh gegen 0,663 eigenes Training; kreuzgewaehlt
+  0,583, mit zweiter Stufe 0,571.</li>
+</ul>
+<p>Ein Netz, das nur dicke Schichten kennt, versagt auf duennen; eines, das nur duenne und mittlere
+kennt, ueberdetektiert auf dicken (32 Fehlalarme je Fall). Die Fallzahl aus anderen Geometrien
+hilft nicht, weil das Rezept ein festes Budget je Epoche hat und die Unterscheidung Blutung /
+Gefaess an der Schichtdicke haengt.</p>
+<h2>Traegt</h2>
+<p>Planung von Trainingsdaten fuer Laesionsdetektion: je Zielgeometrie (Schichtdicke, Aufloesung)
+muessen Faelle im Training sein; "mehr Daten" aus anderen Scannern sind kein Ersatz. Vor dem
+Einsatz auf neuen Daten: Schichtdicke pruefen und das Modell nehmen, dessen Training sie enthaelt.</p>
+<h2>Traegt nicht</h2>
+<p>Aussagen ueber Sequenzen (T2* gegen SWI) -- dort ist der Verlust noch groesser und schon bekannt;
+und ueber Startwert-Rauschen: ein Seed, zweiter Seed und Ensemble folgen (Freitags-Warteschlange).</p>
+<h2>Bruchindikator</h2>
+<p>Ein zweiter Seed oder ein Ensemble, bei dem die 0,8-mm-Kohorte ohne sich selbst auf das Niveau der
+Faltenmodelle kommt (Differenz unter 0,08).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung 2026-10-07, VALDO 2021 Task 2 (oeffentlich) und eine klinische Kohorte (nur Summen),
+gepoolte Laesions-F1 auf identischen Faellen. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/full-data-last-state-models-run-hotter.html">full-data-last-state-models-run-hotter</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="training-loss-does-not-rank-networks-or-schedules"><summary><span class="type">Befund</span><span class="t"><a href="findings/training-loss-does-not-rank-networks-or-schedules.html">Der Trainingsverlust ordnet weder Netze noch Trainingslaengen -- nur das Laesions-F1 ausserhalb der Falte tut das</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Verlustkurven von 16 Turnierlaeufen: gleicher Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert; Fruehstopp feuert auf Rauschen</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), code/arena_loss_plot.py, Verlaeufe der Turnierlaeufe, 2026-10-07 · <a href="findings/training-loss-does-not-rank-networks-or-schedules.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/training-loss-does-not-rank-networks-or-schedules.md">Markdown</a></p><h2>Aussage</h2>
+<p>Verlaeufe von 16 Turnierlaeufen (BCE + Dice mit tiefer Ueberwachung, je 5 Falten gemittelt),
+gezeichnet auf der oeffentlichen Seite (Abschnitt 3, drei aufklappbare Bloecke):</p>
+<ul>
+<li><strong>Netze:</strong> das flache dilatierte U-Net erreicht denselben Trainingsverlust wie der Sieger
+  (0,154) bei Test-F1 0,176 statt 0,404; das Residual-SE-U-Net 0,155 bei 0,105. Ein
+  Voxelverlust ist mit vielen kleinen Fehlalarmen billig zu senken. MedNeXt und R2U-Net
+  starten niedriger und enden hoeher (0,16 / 0,20 gegen 0,13) -- der Startwert des Verlusts
+  sagt nichts. 16 Basiskanaele erreichen den Verlust der Basis (0,125), nicht ihr F1.</li>
+<li><strong>Trainingslaenge:</strong> 60 / 90 / 120 feste Epochen: Verlust 0,128 / 0,117 / 0,109 faellt
+  weiter, das beste innere F1 steigt (0,609 / 0,644 / 0,658), weil es ein Maximum ueber mehr
+  Pruefpunkte ist; der Out-of-fold-Wert folgt nicht (-0,016 / -0,029, auf der klinischen
+  T2*-Kohorte -0,022 gesichert).</li>
+<li><strong>Fruehstopp auf dem inneren F1</strong> (alle 5 Epochen, Geduld 3) feuert auf Startwert-Rauschen
+  (~0,08): beim zweiten Startwert hielt eine Falte Epoche 5 und stoppte bei 20, Lauf 0,321
+  statt 0,404. Feste 60 Epochen mit Cosinus-Abfall: 0,470.</li>
+</ul>
+<h2>Traegt</h2>
+<p>Jede Modellwahl fuer kleine, seltene Laesionen: Verlustkurven zeigen, DASS gelernt wird
+(Rauchtest), nicht WIE GUT; entscheiden darf nur die Laesionsmetrik ausserhalb der Falte.
+Ein fester Zeitplan statt Fruehstopp, wenn das Stoppkriterium so verrauscht ist wie der
+Effekt, den es messen soll.</p>
+<h2>Traegt nicht</h2>
+<p>Verluste verschiedener Verlustfunktionen oder Budgets je Epoche sind nicht auf einer Achse
+vergleichbar (focal Tversky, 400/1600 Patches wurden darum nicht gezeichnet).</p>
+<h2>Bruchindikator</h2>
+<p>Ein Datensatz, auf dem die Rangfolge nach Trainingsverlust mit der nach Out-of-fold-F1
+uebereinstimmt, oder ein Fruehstopp-Kriterium mit Rauschen deutlich unter dem Effekt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung VALDO 2021 Task 2, 5-fach-CV; Kurven: Mittel ueber die Falten je Epoche,
+<code>ergebnisse/turnier/&lt;Lauf&gt;/fold*/verlauf.json</code>. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="valdo-cohort-3-mask-is-a-head-mask"><summary><span class="type">Befund</span><span class="t"><a href="findings/valdo-cohort-3-mask-is-a-head-mask.html">Die gelieferten VALDO-Masken sind nicht eng: Kohorte 3 ist eine Kopfmaske</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Gelieferte Masken nicht eng: Kohorte 3 zu 40 % Nicht-Hirn; Abhilfe SynthSeg-Maske</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), gemessen 2026-09-19 · <a href="findings/valdo-cohort-3-mask-is-a-head-mask.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/valdo-cohort-3-mask-is-a-head-mask.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die <code>*_desc-masked_T2S</code>-Bilder von VALDO 2021 Task 2 sind ausserhalb einer Maske genullt, aber die
+Maske ist je Kohorte etwas anderes. Volumen und Anteil ausserhalb des SynthSeg-Hirns:</p>
+<table>
+<thead>
+<tr>
+<th>Kohorte</th>
+<th>Maskenvolumen</th>
+<th>Anteil Nicht-Hirn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1 419 ml</td>
+<td>4 %</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1 770 ml</td>
+<td>16 %</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2 533 ml</td>
+<td>40 %</td>
+</tr>
+</tbody>
+</table>
+<p>Kohorte 3 enthaelt Schaedelknochen, Kopfhaut und an der Basis den ganzen Kopfquerschnitt.
+Keine Referenz-CMB liegt ausserhalb irgendeiner Maske. Die Aussage "Bilder bereits hirnmaskiert,
+Skull-Stripping entfaellt" hatte nur "Nullen ausserhalb" geprueft, nicht "eng"; die Zahlenpruefung
+("0 von 236 CMB abgeschnitten") beantwortete die falsche Frage. Aufgefallen erst am Bild.</p>
+<p>Abhilfe: Hirnmaske aus SynthSeg (&gt; 0, aus dem T1 im T2*-Raum, 2 Voxel geweitet) fuer alle 72 Faelle;
+alternativ HD-BET. Eine Maske immer zweifach pruefen: schneidet sie etwas ab UND wie viel Nicht-Hirn
+laesst sie drin (Volumen in ml gegen 1 200-1 500 ml). Bilder ansehen, nicht nur Summen.</p>
+<h2>Traegt</h2>
+<p>Jede Kette auf VALDO Task 2, und jede Annahme "ist schon maskiert" bei fremden Datensaetzen.</p>
+<h2>Traegt nicht</h2>
+<p>Ob die weite Maske das F1 kostet, ist nicht getrennt gemessen (Maskenvariante lag in der
+Startwert-Streuung, siehe <a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a>).</p>
+<h2>Bruchindikator</h2>
+<p>Eine neue VALDO-Fassung mit engen Masken.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung an den gelieferten Dateien (Sudre et al. 2024, doi:10.1016/j.media.2023.103029). Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/valdo-t1-carries-nan-in-33-of-72-cases.html">valdo-t1-carries-nan-in-33-of-72-cases</a></li>
+<li><a href="findings/csf-rule-removes-false-alarms-without-loss.html">csf-rule-removes-false-alarms-without-loss</a></li>
+<li><a href="../wmh_segmentation/findings/brain-mask-is-part-of-the-model.html">brain-mask-is-part-of-the-model</a></li>
+</ul></div></details><details class="entry" id="valdo-t1-carries-nan-in-33-of-72-cases"><summary><span class="type">Befund</span><span class="t"><a href="findings/valdo-t1-carries-nan-in-33-of-72-cases.html">33 von 72 VALDO-T1-Bildern tragen NaN, und der Segmentierer scheitert daran lautlos</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">33/72 T1 mit NaN (Randschale); SynthSeg liefert lautlos leer bei rc 0; nan_to_num ist geprueft sicher</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), gemessen 2026-09-14 · <a href="findings/valdo-t1-carries-nan-in-33-of-72-cases.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/valdo-t1-carries-nan-in-33-of-72-cases.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>&lt;sub&gt;_space-T2S_desc-masked_T1.nii.gz</code> von VALDO 2021 Task 2 enthaelt bei <strong>33 von 72</strong> Faellen NaN:
+sub-101 bis 106 rund 23 % der Voxel, sub-301 bis 327 (alle 27) 34-38 %. <code>_T2S</code> und <code>_CMB</code> sind bei
+allen Faellen sauber; in Kohorte 3 traegt zusaetzlich <code>_T2</code> NaN. Es sind die GELIEFERTEN Dateien.</p>
+<p>Teuer ist der lautlose Ausfall: NaN vergiftet die Perzentilnormierung von <code>mri_synthseg</code>, das Netz
+gibt ueberall Hintergrund aus, <strong>Rueckgabewert 0, Ausgabedatei vorhanden</strong>. Erst die nachgelagerte
+Rasterumrechnung faellt auf ("nur 1 Label"), und der Fall wird verworfen; die Rasterumrechnung stand
+zwei Stunden zu Unrecht unter Verdacht. Kein Gegenbeispiel in beide Richtungen: jeder NaN-Fall
+scheitert, jeder saubere liefert 33 Labels in 20-22 s.</p>
+<p>Die Reparatur ist eine Zeile im Ladeschritt und geprueft sicher: <code>np.nan_to_num(..., nan=0.0)</code>.
+Die NaN bilden eine Randschale vom Umrastern ausserhalb des Quellbilds (eine zusammenhaengende
+Komponente am Volumenrand, nach dreifacher Erosion der Hirnmaske kein NaN im Inneren); Nullsetzen
+erfindet keine Anatomie. An echten Daten bestaetigt: sub-304 von 1 Label / 0 Voxel auf 33 Labels /
+1,65 M Voxel. Gelieferte Dateien nicht aendern.</p>
+<p>Zwei Fallen beim Nachbauen: der Segmentierer leitet den AUSGABEnamen aus dem EINGABEnamen ab --
+eine bereinigte Kopie erzeugt eine zweite Ausgabe neben der alten leeren, und ein Muster ohne
+<code>sorted</code> erwischt die alte. Und er ueberspringt vorhandene Ausgaben nur bei GLEICHEM Namen.</p>
+<h2>Traegt</h2>
+<p>Jede Kette, die VALDO-T1 nutzt (SynthSeg, Registrierung, Mehrkanal-Eingabe). Allgemein: bei jedem
+neuen Bilddatensatz einmal <code>np.isnan(...).sum()</code> je Modalitaet zaehlen, bevor eine Kette laeuft.</p>
+<h2>Traegt nicht</h2>
+<p>Ketten, die nur T2* und CMB-Referenz lesen; dort sind die Daten sauber.</p>
+<h2>Bruchindikator</h2>
+<p>Eine korrigierte VALDO-Fassung ohne NaN.</p>
+<h2>Ablesung</h2>
+<p>Eigene Zaehlung ueber alle 72 Faelle (Sudre et al. 2024, doi:10.1016/j.media.2023.103029). Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/valdo-cohort-3-mask-is-a-head-mask.html">valdo-cohort-3-mask-is-a-head-mask</a></li>
+<li><a href="../agent_tooling/rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+</ul></div></details><details class="entry" id="vessel-inpainting-removes-microbleeds-on-thick-slices"><summary><span class="type">Befund</span><span class="t"><a href="findings/vessel-inpainting-removes-microbleeds-on-thick-slices.html">Die Gefaess-Uebermalung des Originals loescht auf dicken Schichten die Blutungen selbst</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Gefaess-Uebermalung des Originals loescht 109 von 236 Blutungen; ohne sie +0,136 F1</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), ARBEIT.md 4.1, gemessen 2026-09-19/20 · <a href="findings/vessel-inpainting-removes-microbleeds-on-thick-slices.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md">Markdown</a></p><h2>Aussage</h2>
+<p>MicrobleedNet (Sundaresan et al. 2023) uebermalt vor dem Netz alles, was ein
+Frangi-Gefaessfilter je Schicht findet, und rettet nur, was rund und kompakt aussieht.
+Auf VALDO (0,8 bis 4 mm Schichten) trifft diese Uebermalung <strong>109 von 236</strong>
+annotierten Blutungen, uebermalt 27 vollstaendig und macht 17 unsichtbar; sie malt
+12 bis 17 Prozent des Hirns neu. Training ohne die Uebermalung:
+F1 0,470 -&gt; 0,588, gepaart <strong>+0,136 [+0,065; +0,226]</strong> -- der groesste Einzelgewinn
+der ganzen Kette. Eine reparierte, labelfreie Uebermalung (Skalen in mm, eine Schwelle
+je Volumen, nur lange duenne Strukturen) brachte in drei Dosen nichts (0,588 / 0,584 / 0,570).</p>
+<h2>Traegt</h2>
+<p>Jede Wiederverwendung von MicrobleedNet oder aehnlicher "Gefaesse zuerst entfernen"-
+Vorverarbeitung auf Daten mit Schichten &gt;= 2 mm. Die Autoren nennen das Risiko selbst;
+ihr Verfahren entstand auf duennschichtigem SWI.</p>
+<h2>Traegt nicht</h2>
+<p>Duennschichtiges, isotropes SWI. Dort wurde der Schaden hier nicht gemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Datensatz mit dicken Schichten, auf dem die Uebermalung gepaart gewinnt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, VALDO 2021 Task 2 (Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
+57 Faelle, 5-fach-CV, Bootstrap 10 000 Zuege. Referenz: Sundaresan et al., Front.
+Neuroinform. 2023, doi:10.3389/fninf.2023.1204186, Code-Stand 958f1cb. Tier 1a (eigene Messung).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
+<li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

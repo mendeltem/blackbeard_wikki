@@ -1,0 +1,201 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Ein 177B-MoE (Qwen3.8-Flash-Next GSQ-RCO) laeuft auf einer 24-GB-Karte: Experten im RAM, n-Gramm-Tabelle auf der Platte</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Ein 177B-MoE (Qwen3.8-Flash-Next GSQ-RCO) laeuft auf einer 24-GB-Karte: Experten im RAM, n-Gramm-Tabelle auf der Platte</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>Alita (RTX A5000 24 GB, 62 GB RAM, 24 Kerne, NVMe), acht Messlaeufe 2026-10-07 19:49 bis 21:15, llama.cpp 448147d</span><span>Zuletzt geändert</span><span>2026-10-08 flash-next: context limit tests of the profiles (flat prompt rate to 31.5k, overflow 400, prefix cache, 16k too small)</span><span>Verweist auf</span><span><a href="opencode-against-llama-server-one-slot.html">OpenCode laeuft gegen llama-server ueber eine Konfigdatei; mit einem Slot wartet es hinter dem Agenten</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="../open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/flash-next-177b-moe-on-24gb-card.md">knowledge/local_llm_operation/findings/flash-next-177b-moe-on-24gb-card.md</a></span></div><h2>Aussage</h2>
+<p>ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (512 Experten je Schicht, 10 aktiv, 48 Schichten,
+Architektur qwen4exp, zwei Shards: Gewichte 37,6 bis 54,8 GB plus 28,8 GB n-Gramm-Tabelle,
+die bei allen vier Varianten dieselbe Datei ist) laeuft mit einem aktuellen llama.cpp
+(Build vom 2026-10-07; der Build vom 24.08. kennt die Architektur nicht) auf einer 24-GB-Karte
+mit 62 GB RAM, wenn man <code>--n-cpu-moe N --load-mode mmap --lazy-mode on</code> setzt: die Experten der
+ersten N Schichten bleiben im RAM, die Tabelle wird je Token von der NVMe nachgeschlagen.
+Alle acht Laeufe beantworteten sechs Pruefragen (Rechnen, Zaehlen, Regex, Uhrzeit, Sortieren,
+JSON) 6/6 richtig; Unterschiede in der Qualitaet sind damit nicht aufgeloest, dafuer gelten die
+Benchmarks der Modellkarte (Task-Mittel Q2_0 89,1 / IQ2_XS 89,2 / IQ3_XXS 92,6 / IQ3_S 93,3).
+Kontext 16k, ein Slot, 20 Threads, Prompt von 5 677 Token.</p>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Experten</th>
+<th>VRAM</th>
+<th>RSS / Seitencache</th>
+<th>Laden</th>
+<th>Prompt tok/s</th>
+<th>Erzeugung tok/s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IQ2_XS</td>
+<td>alle 48 Schichten CPU</td>
+<td>5,6 GB</td>
+<td>31 / 30 GB</td>
+<td>20 s</td>
+<td>228</td>
+<td>15,1</td>
+</tr>
+<tr>
+<td>Q2_0</td>
+<td>alle CPU</td>
+<td>5,5 GB</td>
+<td>31 / 31 GB</td>
+<td>21 s</td>
+<td>251</td>
+<td>10,7</td>
+</tr>
+<tr>
+<td>IQ3_XXS</td>
+<td>alle CPU</td>
+<td>6,4 GB</td>
+<td>30 / 31 GB</td>
+<td>15 s</td>
+<td>127</td>
+<td>12,5</td>
+</tr>
+<tr>
+<td>IQ3_S</td>
+<td>alle CPU</td>
+<td>6,7 GB</td>
+<td>30 / 32 GB</td>
+<td>30 s</td>
+<td>135</td>
+<td>11,7</td>
+</tr>
+<tr>
+<td>IQ2_XS</td>
+<td>16 Schichten GPU</td>
+<td>17,2 GB</td>
+<td>25 / 29 GB</td>
+<td>21 s</td>
+<td>349</td>
+<td>20,5</td>
+</tr>
+<tr>
+<td>Q2_0</td>
+<td>16 Schichten GPU</td>
+<td>16,3 GB</td>
+<td>23 / 31 GB</td>
+<td>15 s</td>
+<td>345</td>
+<td>13,9</td>
+</tr>
+<tr>
+<td>IQ3_XXS</td>
+<td>16 Schichten GPU</td>
+<td>22,1 GB</td>
+<td>29 / 30 GB</td>
+<td>25 s</td>
+<td>349</td>
+<td>20,1</td>
+</tr>
+<tr>
+<td>IQ3_S</td>
+<td>16 Schichten GPU</td>
+<td>23,6 GB</td>
+<td>30 / 32 GB</td>
+<td>30 s</td>
+<td>251</td>
+<td>23,3</td>
+</tr>
+</tbody>
+</table>
+<p>Drei Befunde darin:
+1. <strong>Kurze Prompts taeuschen.</strong> Bei 50 bis 70 Token lagen die Prompt-Raten bei 3 bis 38 tok/s,
+   beim 5 677-Token-Prompt bei 127 bis 349 tok/s. Die Tabelle muss je Token nachgeschlagen
+   werden; das dominiert bei kleinen Stapeln. Tempo nur mit langem Prompt messen.
+2. <strong>Q2_0 ist auf der Karte NICHT schneller.</strong> Die Modellkarte verspricht 3,4-fachen
+   Prompt-Durchsatz gegen IQ2_XS; das gilt fuer den CPU-Pfad (251 gegen 228) und nicht fuer die
+   CUDA-Kerne (13,9 gegen 20,5 tok/s Erzeugung). Mit Experten auf der Karte ist IQ2_XS die
+   schnellere 2-Bit-Variante.
+3. <strong>RAM ist der Engpass, nicht VRAM.</strong> RSS plus Seitencache liegen bei allen Laeufen bei
+   rund 60 GB, also am Rand der 62 GB. Neben einem Training (18 GB RAM) bleibt nur die
+   39-GB-Variante IQ2_XS rechnerisch resident; IQ3_XXS (47 GB) und IQ3_S (55 GB) wuerden
+   seitenweise von der Platte nachladen. Zwei Flash-Next parallel passen nicht.</p>
+<p>Zum Vergleich der 27B-Dense-Server derselben Maschine: ~30 tok/s Erzeugung, 80k Kontext, 21 GB VRAM.</p>
+<h2>Traegt</h2>
+<p>Karten mit 16 bis 24 GB und 64 GB RAM; MoE-GGUFs mit per_layer_token_embd; die Flaggen
+sind llama.cpp-Standard ab Oktober 2026.</p>
+<h2>Traegt nicht</h2>
+<p>Rechner mit 32 GB RAM (kein Experten-Shard passt); Erzeugungslast, bei der 15 bis 23 tok/s
+zu langsam sind; Kontexte ueber 16k sind ungemessen (bei Experten auf der CPU bleiben
+18 GB VRAM fuer den KV-Cache, bei 16 Schichten auf der Karte fast nichts).</p>
+<h2>Bruchindikator</h2>
+<p>Ein llama.cpp-Build, der Q2_0-CUDA-Kerne beschleunigt (dann Punkt 2 neu messen), oder
+ein Lauf, bei dem RSS plus Seitencache deutlich unter 60 GB bleibt (dann ist die
+RAM-Rechnung in Punkt 3 zu pessimistisch).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Skripte <code>system/werkzeuge/flashnext-test.sh</code> und <code>flashnext-quality.py</code>
+(Alita), Ergebnisse <code>ergebnisse/flashnext-&lt;Variante&gt;-cmoe&lt;N&gt;.json</code>. Tier 1a.
+Modellkarte: https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (Herstellerangabe, Tier 1b).</p>
+<h2>Nachtrag 2026-10-08: als Profil im Dienst</h2>
+<p>Die Varianten sind als Registry-Profile eingebunden (<code>flash</code> = IQ2_XS alle
+Experten im RAM, <code>flash-xxs</code>/<code>flash-s</code> = 16 Schichten auf der Karte). Ein
+Profil traegt eigenes Binary, Lademodus mmap, Zusatzargumente, VRAM-Bedarf
+fuer die Warteschleife und cgroup-Grenzen (ein mmap-Modell zaehlt seinen
+Seitencache mit; die 20G/26G des dichten 27B wuerden es drosseln und toeten).
+Probelauf <code>flash</code> ueber das Startskript selbst, Kontext 32k: 20 s Laden,
+6,1 GB VRAM, 6/6 Pruefffragen, 5677-Token-Prompt 206 tok/s, Erzeugung 18 tok/s,
+RSS 31 GB plus 35 GB Seitencache. Eine System-Nachricht mitten im Verlauf
+geht mit dem entschaerften Template durch. Umschalten wartet auf einen freien
+Slot, sonst stirbt der laufende Agentenaufruf.</p>
+<h2>Nachtrag 2026-10-08: Grenztest der Profile (Kontext bis zum Rand, Ueberlauf, Gespraech)</h2>
+<p>Ein Prompt je Stufe, Antwort 200 Token, ein Slot. <strong>flash</strong> (IQ2_XS, alle Experten
+im RAM, Kontext 32k): Prompt 248-255 tok/s von 8k bis 31,5k Token, Erzeugung 17-19
+tok/s unveraendert, VRAM 6,1 GB, RSS 30-31,5 GB; die 31.517-Token-Stufe dauerte 141 s.
+Nur der 2k-Prompt faellt ab (106 tok/s, Ladeeffekt der n-Gramm-Tabelle).
+<strong>flash-xxs</strong> (IQ3_XXS, 16 Schichten GPU, Kontext 16k): 290-331 tok/s Prompt, 22-24 tok/s
+Erzeugung, VRAM 22,1 GB, RSS bis 25,6 GB. Ein Prompt ueber dem Fenster wird mit HTTP 400
+abgewiesen, der Server lebt weiter (beide Profile). Fuenf Zuege zu je 3.900 Token:
+der Praefix-Cache greift trotz der Warnung "cache_reuse is not supported by this
+context" (cache_n waechst 3.885 -&gt; 15.425), neue Token 200-240 bzw. 294-340 tok/s;
+beim 16k-Profil scheitert Zug 5 (19.316 Token) am Fenster, der Agent muss dort frueher
+verdichten (modellwahl setzt Hermes' context_length auf das Profil).
+Lehre: die Prompt-Rate ist ueber den ganzen Kontext flach, die Wartezeit waechst
+linear mit der Laenge; 16k reicht fuer Agentenarbeit nicht, 32k knapp.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="opencode-against-llama-server-one-slot.html">opencode-against-llama-server-one-slot</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,0 +1,552 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>ai_demand_drivers</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › ai_demand_drivers</div><h1>ai_demand_drivers</h1><p>Gründe für anhaltende KI-getriebene Speichernachfrage (DRAM, HBM, NAND)</p><p class="muted small">Investieren, Nvidia, HBM, Rubin, Blackwell, Capex, Wettrüsten, Nachfrage</p>
+<div class="stripe"><i class="ok" style="width:61.9%" title="getragen: 13"></i><i class="warn" style="width:23.8%" title="vorschlag: 5"></i><i class="info" style="width:14.3%" title="offen: 3"></i></div><div class="counts"><span class="ok">13 getragen</span> <span class="warn">5 vorschlag</span> <span class="info">3 offen</span></div><div class="small"><p>Warum die Nachfrage nach DRAM und HBM durch KI hoch bleibt: Setzungen, Mechanismen, Risiken, offene Prüfpunkte, Befunde. Die Gegenbuchung, ob diese Nachfrage bezahlt wird, steht in <a href="../ai_application_layer/index.html">ai_application_layer</a>.</p>
+<p>Stand 2026-10-02. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.</p>
+<p><strong>Axiome (getragen, nicht angreifen):</strong> 1. Offener Suchraum, Nachfrage nirgends gesättigt. 2. Unprüfbare Gegnerposition, Investieren ist dominant (Wettrüsten; Staaten stabil, Firmen weniger). 3. Bandbreiten-Engpass, Nachfrage auf neueste HBM-Generation.</p>
+<p><strong>Mechanismen (getragen):</strong> Refresh statt Neubau, Kadenz und Yield-Tal, Simulation braucht Compute, Mess- und Experimentierkreislauf, induzierte Innovation, Vorlaufzeiten RZ gegen Fab, Automatisierung wirkt beidseitig, Geheimhaltung stützt das Motiv. Gegenkraft (vorschlag): Finanzierungsgrenze.</p>
+<p><strong>Befunde (vorschlag):</strong> GB HBM je MW seit 2020 nicht gestiegen, mit Rubin −17 %. ASICs verbauen HBM. Rubin seit August 2026 in Auslieferung, ~20 % des DC-Umsatzes Q3 GJ27, Ende Sep. 2026 erst 1–3 % der Blackwell-Stückzahl.</p>
+<p><strong>Regel (getragen):</strong> Nachfrage ist nicht Earnings.</p>
+<p><strong>Offen:</strong> Capex gegen operativen Cashflow je Hyperscaler, Rubin-Anteil am Bestand (35 vs 50 PF).</p>
+<p><strong>Lesen bei:</strong> Investieren, Nvidia, HBM, Speichernachfrage, Capex, Wettrüsten.</p>
+<p><strong>Auf den Seiten:</strong> Karte <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=ai-accelerators-custom-silicon">KI-Beschleuniger</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/NVDA">Nvidia</a>; Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=NVDA">Nvidia: Fertigung, HBM, Montage, Rechenzentren</a>.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="axioms">Axiom <span class="muted small">(3)</span></h2><details class="entry" id="bandwidth-bottleneck"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/bandwidth-bottleneck.html">Bandbreiten-Engpass (Von-Neumann-Bottleneck)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/bandwidth-bottleneck.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/bandwidth-bottleneck.md">Markdown</a></p><h2>Aussage</h2>
+<p>Speicherbandbreite begrenzt den Durchsatz der Beschleuniger. Unter Strom- und Flächenknappheit kaufen Käufer das Teil mit dem höchsten Durchsatz, die Nachfrage konzentriert sich auf die neueste HBM-Generation.</p>
+<h2>Trägt</h2>
+<p>Nachfrage nach Bandbreitenspeicher (HBM), hergeleitet über das Roofline-Modell.</p>
+<h2>Trägt nicht</h2>
+<p>DRAM allgemein. Wandert Inferenz auf kapazitätsdominierten Speicher, bleibt die Bitnachfrage hoch, der Waferverbrauch je Bit sinkt aber.</p>
+<h2>Bruchindikator</h2>
+<p>Inferenzlast wandert messbar auf SOCAMM, LPDDR oder DDR5-RDIMM.</p>
+<h2>Ablesung</h2>
+<p>Produktkommentare SK Hynix und Micron, Tier 1a. Speicherkonfiguration in Herstellerspezifikationen, Tier 1b.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
+<li><a href="mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+<li><a href="mechanisms/simulation-needs-compute.html">simulation-needs-compute</a></li>
+</ul></div></details><details class="entry" id="open-search-space"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/open-search-space.html">Offener Suchraum</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/open-search-space.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/open-search-space.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der technologische Suchraum ist weitgehend unerschlossen. Zusätzliche Rechenleistung in Suche und Simulation bringt Ergebnisse, deren Ertrag die Kosten der Recheneinheit deckt. Das gilt in beiden Fällen: wenn die Werkzeuge schneller besser werden als die Suche schwieriger, und wenn jede Entdeckung mehr Compute braucht. Die Nachfrage ist deshalb in keiner Anwendungsklasse gesättigt, über alle Industrien. Nicht belegbar, wird getragen.</p>
+<h2>Trägt</h2>
+<p>Die Vorbedingung "Markt nicht gesättigt" für das Jevons-Werkzeug.</p>
+<h2>Trägt nicht</h2>
+<p>Tempo, Höhe, Zahlungsbereitschaft. Nicht die Breite der Käufer: Bestellungen laufen über wenige Hyperscaler. Geltungsbereich ist Erkenntnis, nicht gebauter Bestand.</p>
+<h2>Bruchindikator</h2>
+<p>Kern: Ertrag je Recheneinheit fällt unter ihre Kosten. Ersatz primär: Jevons-Falsifikator (Token-Wachstum fällt unter die Effizienzrate). Ersatz sekundär: Nachfrage außerhalb der Hyperscaler wächst zwei Quartale in Folge langsamer als die der Hyperscaler.</p>
+<h2>Ablesung</h2>
+<p>Kern blind. Ersatz primär Tier 1a, unregelmäßig. Ersatz sekundär: Kundenkommentar NVIDIA, Tier 1a, uneinheitlich abgegrenzt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
+<li><a href="mechanisms/simulation-needs-compute.html">simulation-needs-compute</a></li>
+<li><a href="risks/gold-rush-demand.html">gold-rush-demand</a></li>
+</ul></div></details><details class="entry" id="unverifiable-rival-position"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/unverifiable-rival-position.html">Unprüfbare Gegnerposition (Investitionszwang)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/unverifiable-rival-position.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/unverifiable-rival-position.md">Markdown</a></p><h2>Aussage</h2>
+<p>Kein Spieler im KI-Rennen kann die Position des Gegners prüfen und muss deshalb den ungünstigen Fall annehmen. Investieren ist dominant, auch ohne Nachweis, dass Vorsprung kumuliert. Zwei Ebenen: Staaten (USA, China) ohne Verifikation und ohne durchsetzbare Abrede, sehr stabil. Firmen (Hyperscaler) mit quartalsweise beobachtbarem Capex und Mehrmarktkontakt, weniger stabil. Die Analogie Mittelalter gegen Dampfzeitalter ist Hypothese, nicht Begründung.</p>
+<h2>Trägt</h2>
+<p>Vorzeichen: dass investiert wird und unter welcher Bedingung das kippt. Geltungsbereich Trainingscompute.</p>
+<h2>Trägt nicht</h2>
+<p>Beträge, Dauer, Rentabilität. Inferenz (dort gilt die Stückrechnung). Ein Gefangenendilemma liegt nur vor, wenn beidseitiges Pausieren für beide besser wäre; welcher Fall vorliegt, ist nicht ablesbar.</p>
+<h2>Bruchindikator</h2>
+<p>Primär: erster Hyperscaler senkt Capex-Guidance und verliert über zwei Quartale weder Marktanteil noch Bewertung. Nachlaufend: aggregiertes Hyperscaler-Capex wächst zwei Quartale in Folge unter 10% J/J.</p>
+<h2>Ablesung</h2>
+<p>Filings und Calls der Hyperscaler, Tier 1a. Bei staatlichen Käufern blind.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="mechanisms/secrecy-supports-motive-not-volume.html">secrecy-supports-motive-not-volume</a></li>
+</ul></div></details><h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="demand-is-not-earnings"><summary><span class="type">Regel</span><span class="t"><a href="rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="rules/demand-is-not-earnings.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/rules/demand-is-not-earnings.md">Markdown</a></p><h2>Aussage</h2>
+<p>Alle Einträge dieser Wiki betreffen zunächst die Nachfrage. Die DRAM-Bitnachfrage ist historisch fast jedes Jahr gewachsen, die Preise sind trotzdem periodisch eingebrochen. Für die Earnings entscheidet Bit-Angebotswachstum gegen Bit-Nachfragewachstum.</p>
+<h2>Trägt</h2>
+<p>Die Pflicht, jede Nachfragethese gegen die Angebotsseite zu rechnen.</p>
+<h2>Trägt nicht</h2>
+<p>Ein Datum. "Lange" wird nicht datiert, sondern als Zustand mit Bruchindikator geführt (Setzung Kein Zyklusdatum).</p>
+<h2>Bruchindikator</h2>
+<p>keiner, Enthaltsamkeitsregel</p>
+<h2>Ablesung</h2>
+<p>entfällt</p>
+<h2>Verknüpft</h2>
+<ul>
+<li>keine</li>
+</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(9)</span></h2><details class="entry" id="automation-cuts-both-ways"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/automation-cuts-both-ways.html">Automatisierung wirkt beidseitig</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/automation-cuts-both-ways.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/automation-cuts-both-ways.md">Markdown</a></p><h2>Aussage</h2>
+<p>Robotik, Automatisierung und KI-gestützte Materialsuche heben die Compute-Nachfrage. Dieselben Fortschritte beschleunigen den Bau von Speicherfabs und die Yield-Lernkurven bei Samsung, Micron und CXMT.</p>
+<h2>Trägt</h2>
+<p>Richtung der Nachfrage.</p>
+<h2>Trägt nicht</h2>
+<p>Ein Argument nur für die Nachfrageseite. Die Angebotsträgheit, von der die Angebotslücke lebt, kann sich verkürzen.</p>
+<h2>Bruchindikator</h2>
+<p>keiner</p>
+<h2>Ablesung</h2>
+<p>Welche Seite schneller profitiert, ist unbekannt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
+<li><a href="mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+</ul></div></details><details class="entry" id="cadence-and-yield-trough"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/cadence-and-yield-trough.html">Kadenz und Yield-Tal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/cadence-and-yield-trough.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/cadence-and-yield-trough.md">Markdown</a></p><h2>Aussage</h2>
+<p>Schnellerer Chipentwurf (rekursive Verbesserung, interne Modelle) verkürzt den Generationsabstand der Beschleuniger. Die Nachfrage springt öfter auf eine neue HBM-Generation, die Lieferkette sitzt öfter im Yield-Tal mit weniger kumulierter Ausbringung je Generation. Das verlängert die Angebotslücke von der Angebotsseite.</p>
+<h2>Trägt</h2>
+<p>Verlängerung der Angebotslücke ohne steigende Nachfrage.</p>
+<h2>Trägt nicht</h2>
+<p>Sprünge in Sekunden. Die Schleife ist so schnell wie ihr langsamster physischer Schritt (Fertigung, Qualifikation von HBM, CoWoS und Rack, Netzanschluss). Wo kein Fertigungsschritt in der Schleife liegt (Software, Mathematik, Entwurf bis Tapeout), ist ein abrupter Sprung nicht ausgeschlossen.</p>
+<h2>Bruchindikator</h2>
+<p>Generationsabstand deutlich unter einem Jahr: der Entwurf setzt den Takt. Bei etwa einem Jahr bindet die Physik.</p>
+<h2>Ablesung</h2>
+<p>Herstellerangaben, Tier 1b.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
+</ul></div></details><details class="entry" id="financing-limit"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/financing-limit.html">Finanzierungsgrenze</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/financing-limit.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/financing-limit.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wollen ist nicht Können. Staaten können weiterfinanzieren, Firmen brauchen Cashflow oder Kapitalmarkt. Der Bruch des Investitionszwangs kann erzwungen statt gewählt kommen.</p>
+<h2>Trägt</h2>
+<p>Einen voll beobachtbaren Frühindikator für die Firmenebene.</p>
+<h2>Trägt nicht</h2>
+<p>Die Staatenebene.</p>
+<h2>Bruchindikator</h2>
+<p>Capex eines großen Hyperscalers liegt zwei Quartale in Folge über seinem operativen Cashflow (Schwelle 100% ist Annahme).</p>
+<h2>Ablesung</h2>
+<p>Kapitalflussrechnung, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/unverifiable-rival-position.html">unverifiable-rival-position</a></li>
+</ul></div></details><details class="entry" id="induced-innovation"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/induced-innovation.html">Induzierte Innovation unter Knappheit</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/induced-innovation.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/induced-innovation.md">Markdown</a></p><h2>Aussage</h2>
+<p>Strom- und Ressourcenknappheit lenkt Forschung darauf, den jeweils knappen Faktor einzusparen (Hicks 1932; Acemoglu 2002, DOI 10.1111/1467-937X.00226, peer-reviewed, DOI nicht nachgeprüft). Ist Strom knapp, hilft das dem besten Chip und dem effizientesten HBM. Ist Speicher knapp, entsteht Einsparforschung gegen HBM (Quantisierung, KV-Cache-Kompression, andere Architekturen).</p>
+<h2>Trägt</h2>
+<p>Stromknappheit verstärkt die Konzentration auf die neueste Generation und begünstigt den Technologieführer.</p>
+<h2>Trägt nicht</h2>
+<p>Einen dauerhaften ASP-Spielraum. Der Einspardruck trifft auch den Speicher selbst und macht LPDDR und SOCAMM attraktiver.</p>
+<h2>Bruchindikator</h2>
+<p>HBM-Inhalt je Beschleuniger beziehungsweise GB je MW fällt über die Generationen: die Einsparung läuft schon.</p>
+<h2>Ablesung</h2>
+<p>Herstellerspezifikationen, Tier 1b.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a></li>
+<li><a href="mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+</ul></div></details><details class="entry" id="lead-times-datacenter-vs-fab"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/lead-times-datacenter-vs-fab.html">Vorlaufzeiten: Rechenzentrum gegen Speicherfab</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/lead-times-datacenter-vs-fab.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Hülle des Rechenzentrums wird schneller gebaut (Standardentwürfe, Modulbau), der Netzanschluss eher nicht (Transformatoren, Turbinen, Genehmigungen). Für die Angebotslücke zählt die Bauzeit des Rechenzentrums bis zur ersten Last gegen die der Speicherfab (grob zwei bis drei Jahre).</p>
+<h2>Trägt</h2>
+<p>Sinkt die RZ-Bauzeit unter die Fab-Bauzeit, wächst die Nachfrage schneller, als das Angebot folgen kann.</p>
+<h2>Trägt nicht</h2>
+<p>Dass die Gesamtbauzeit sinkt, ist offen. Bindet der Strom, verlagert sich die Nachfrage in den Refresh.</p>
+<h2>Bruchindikator</h2>
+<p>Leistung in Bau gegen Leistung in Betrieb; Lieferzeiten der Stromtechnik.</p>
+<h2>Ablesung</h2>
+<p>Betreiberangaben und Berichte der Stromtechnikhersteller, Tier 1a. Hülle und Netzanschluss getrennt ausweisen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+</ul></div></details><details class="entry" id="refresh-instead-of-new-build"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/refresh-instead-of-new-build.html">Refresh statt Neubau</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/refresh-instead-of-new-build.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/refresh-instead-of-new-build.md">Markdown</a></p><h2>Aussage</h2>
+<p>Alte GPUs werden im Bestand ausgetauscht, dafür braucht es keinen neuen Netzanschluss.</p>
+<pre><code>HBM-Nachfrage aus Refresh = installierte MW / Refresh-Takt × GB je MW der neuen Generation
+</code></pre>
+<p>Stromknappheit bremst den Neubau und verkürzt den Refresh-Takt. Sie verlagert die Nachfrage, statt sie zu löschen.</p>
+<h2>Trägt</h2>
+<p>HBM-Nachfrage auch bei null Neubau, wenn GB je MW über die Generationen steigt.</p>
+<h2>Trägt nicht</h2>
+<p>Drop-in bei älteren luftgekühlten Hallen. Bedingung ist die Leistungsreserve je Baujahrgang (Setzung Frontlastiger Capex).</p>
+<h2>Bruchindikator</h2>
+<p>GB je MW fällt über die Generationen, oder die Rackleistung der Folgegeneration übersteigt die ausgelegte Reserve.</p>
+<h2>Ablesung</h2>
+<p>Herstellerspezifikationen, Tier 1b. Auslegungsangaben der Betreiber, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a></li>
+<li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
+<li><a href="mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+</ul></div></details><details class="entry" id="secrecy-supports-motive-not-volume"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/secrecy-supports-motive-not-volume.html">Geheimhaltung stützt das Motiv, nicht die Menge</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/secrecy-supports-motive-not-volume.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/secrecy-supports-motive-not-volume.md">Markdown</a></p><h2>Aussage</h2>
+<p>Strategisch wichtige Modelle bleiben wahrscheinlich geheim (Beispiel: NVIDIAs interne Entwurfsmodelle; Methode publiziert, Werkzeug nicht). Das macht die Gegnerposition unprüfbar und stützt den Investitionszwang. Die Hardware dafür läuft aber durch die Bücher von SK Hynix, TSMC und NVIDIA.</p>
+<h2>Trägt</h2>
+<p>Das Motiv hinter dem Rennen. Die Wirkung interner Modelle ist an Taktung und Qualität der Roadmap sichtbar.</p>
+<h2>Trägt nicht</h2>
+<p>Zusätzliche, unsichtbare DRAM-Nachfrage. Vergleiche öffentlicher Modelle sind eine verzerrte Stichprobe und belegen weder kleinen noch großen Abstand.</p>
+<h2>Bruchindikator</h2>
+<p>keiner</p>
+<h2>Ablesung</h2>
+<p>Nicht direkt ablesbar.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/unverifiable-rival-position.html">unverifiable-rival-position</a></li>
+<li><a href="mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+</ul></div></details><details class="entry" id="sensing-and-experiment-loop"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/sensing-and-experiment-loop.html">Mess- und Experimentierkreislauf (Sensoren und Aktoren)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/sensing-and-experiment-loop.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/sensing-and-experiment-loop.md">Markdown</a></p><h2>Aussage</h2>
+<p>Hardware wird billiger und lässt sich kleiner wie größer bauen. Billigere Hardware → mehr Sensoren und Aktoren → mehr Messdaten und Experimente → bessere Simulation und Forschung → bessere Hardware. Der Kreislauf ist der Mechanismus, über den Offener Suchraum wirkt.</p>
+<h2>Trägt</h2>
+<p>Sensoren liefern die Bodenwahrheit für Simulation. Aktoren (automatisierte Labore, Roboter) verkürzen den Experimentierschritt. Speicherseitig zuerst LPDDR und NAND am Rand und eSSD für die Daten, also die Segmente DRAM konventionell und NAND mit Solidigm.</p>
+<h2>Trägt nicht</h2>
+<p>Fertigung im großen Maßstab und Zulassungen werden nicht schneller. Den HBM-Aufpreis stützt der Kreislauf nur mittelbar, über Training und Simulation auf den Daten.</p>
+<h2>Bruchindikator</h2>
+<p>keiner</p>
+<h2>Ablesung</h2>
+<p>Stückzahlen und Preise der Sensoren: Herstellerberichte, Tier 1a. Speicher je Roboter oder Edge-Gerät: Spezifikationen, Tier 1b. Anteil der Daten, der ins Training fließt: blind.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
+<li><a href="mechanisms/simulation-needs-compute.html">simulation-needs-compute</a></li>
+<li><a href="mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+</ul></div></details><details class="entry" id="simulation-needs-compute"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/simulation-needs-compute.html">Simulation braucht Compute</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/simulation-needs-compute.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/simulation-needs-compute.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wandert Fortschritt in die Simulation, steigt der Rechenbedarf. Viele Simulationslasten (Strömung, Molekulardynamik, digitale Zwillinge) sind bandbreitenbegrenzt.</p>
+<h2>Trägt</h2>
+<p>Eine zweite HBM-Stütze, unabhängig vom Trainingswettlauf.</p>
+<h2>Trägt nicht</h2>
+<p>Wissen ist nicht Bestand: ein simulierter Chip rechnet nichts. Gelernte Ersatzmodelle brauchen Messdaten als Bodenwahrheit. Die Simulationsgeschwindigkeit hängt an der installierten Rechenleistung und damit an der Fertigung.</p>
+<h2>Bruchindikator</h2>
+<p>Anteil von Simulations- und Wissenschaftslasten an der Beschleunigernachfrage.</p>
+<h2>Ablesung</h2>
+<p>Blind, wird nicht ausgewiesen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(3)</span></h2><details class="entry" id="custom-asics-use-hbm"><summary><span class="type">Befund</span><span class="t"><a href="findings/custom-asics-use-hbm.html">Hyperscaler-ASICs verbauen HBM</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report AI Accelerators Beyond NVIDIA (Mai 2026), eingetragen 2026-10-02 · <a href="findings/custom-asics-use-hbm.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/custom-asics-use-hbm.md">Markdown</a></p><h2>Aussage</h2>
+<p>HBM je Chip laut Report: Google TPU v7 Ironwood 192 GB HBM3E, AWS Trainium3 144 GB HBM3E, AMD MI355X 288 GB HBM3E, Meta MTIA 300 rund 216 GB, MTIA 400 und 450 je 288 GB, MTIA 500 384 bis 512 GB. Meta MTIA 100 und 200 liefen auf LPDDR5 (Ranking und Empfehlung), ab MTIA 300 wechselt Meta auf HBM.</p>
+<h2>Trägt</h2>
+<p>Marktanteilsverluste von NVIDIA an Eigenentwicklungen der Hyperscaler senken die HBM-Nachfrage nicht. Der Wechsel von Meta ist ein Fall, der das Axiom bandwidth-bottleneck stützt.</p>
+<h2>Trägt nicht</h2>
+<p>Stückzahlen. Der Speicher je Chip sagt nichts darüber, wie viele Chips gebaut werden. Ein Fall (Meta) ist keine Regel.</p>
+<h2>Bruchindikator</h2>
+<p>Eine neue Hyperscaler-Generation für generative Inferenz kommt ohne HBM aus.</p>
+<h2>Ablesung</h2>
+<p>Herstellerangaben (Blogs, Datenblätter), Tier 1b. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="risks/hbm-bypass-architectures.html">hbm-bypass-architectures</a></li>
+</ul></div></details><details class="entry" id="hbm-gb-per-mw-three-generations"><summary><span class="type">Befund</span><span class="t"><a href="findings/hbm-gb-per-mw-three-generations.html">GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI-Lage-Verbund (Seite roadmap), 2026-10-02 · <a href="findings/hbm-gb-per-mw-three-generations.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.md">Markdown</a></p><h2>Aussage</h2>
+<p>Rechnung zum offenen Prüfpunkt <a href="open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a>.
+HBM-Kapazität je Beschleuniger geteilt durch dessen TDP, SXM-/OAM-Variante,
+dichte Werte. GDDR6-Generationen bleiben draußen, sie tragen kein HBM.</p>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Jahr</th>
+<th>HBM GB</th>
+<th>TDP W</th>
+<th>GB je W</th>
+<th>GB je MW</th>
+<th>ggü. Vorgänger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ampere A100</td>
+<td>2020</td>
+<td>80</td>
+<td>400</td>
+<td>0,2000</td>
+<td>200.000</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hopper H100</td>
+<td>2022</td>
+<td>80</td>
+<td>700</td>
+<td>0,1143</td>
+<td>114.286</td>
+<td>−42,9 %</td>
+</tr>
+<tr>
+<td>Hopper H200</td>
+<td>2023</td>
+<td>141</td>
+<td>700</td>
+<td>0,2014</td>
+<td>201.429</td>
+<td>+76,2 %</td>
+</tr>
+<tr>
+<td>Blackwell B200</td>
+<td>2024</td>
+<td>192</td>
+<td>1.000</td>
+<td>0,1920</td>
+<td>192.000</td>
+<td>−4,7 %</td>
+</tr>
+<tr>
+<td>Blackwell Ultra B300</td>
+<td>2025</td>
+<td>288</td>
+<td>1.400</td>
+<td>0,2057</td>
+<td>205.714</td>
+<td>+7,1 %</td>
+</tr>
+<tr>
+<td>Rubin R200</td>
+<td>2026</td>
+<td>288</td>
+<td>~1.800</td>
+<td>0,1600</td>
+<td>160.000</td>
+<td>−22,2 %</td>
+</tr>
+</tbody>
+</table>
+<p>Die drei letzten <strong>ausgelieferten</strong> Generationen, nach denen der Prüfpunkt fragt:
+B200 192.000 → B300 205.714 → R200 160.000 GB je MW. Netto B200 → R200
+<strong>−16,7 %</strong>. Über sechs Jahre, A100 2020 gegen R200 2026: <strong>−20,0 %</strong>.</p>
+<p>Die Gegenbewegung steckt in der Rechenleistung, nicht im Speicher. Im selben
+Schritt B200 → R200 steigt die dichte Rechenleistung je Watt von 10,0 auf
+27,8 PFLOPS je kW, <strong>+178 %</strong>, während GB je PFLOPS von 19,2 auf 5,8 fällt,
+<strong>−70 %</strong>. Der Beschleuniger wurde rechendichter, nicht speicherdichter.</p>
+<p>Angekündigt, nicht ausgeliefert: Rubin Ultra VR300 mit 1 TB HBM4e bei ~2.300 W
+wären 0,4452 GB je W, 445.217 GB je MW, <strong>+178 %</strong> gegenüber Rubin. Das würde
+die Richtung umkehren. Die Angabe stammt aus Roadmap-Folien der GTC und ist
+bis zum Marktstart nicht verbindlich.</p>
+<h2>Trägt</h2>
+<p>Die Antwort auf die erste Hälfte des Prüfpunkts: <strong>Refresh allein trägt die
+Bitnachfrage nicht.</strong> Wer einen alten Beschleuniger im gleichen Leistungsbudget
+gegen einen neuen tauscht, kauft dabei nicht mehr HBM-Bits, seit sechs Jahren
+nicht. Zusätzliche Bitnachfrage muss deshalb aus zusätzlichen Megawatt kommen,
+nicht aus dichterem Ersatz. Damit hängt die HBM-Bitnachfrage am Netzanschluss,
+und <a href="mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a>
+wird für HBM zum tragenden, nicht zum nebenläufigen Mechanismus.</p>
+<p>Zusammen mit der Angebotsseite ergibt das eine Klemme von beiden Enden:
+<a href="../memory_supply/mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a>
+rechnet, dass jedes HBM-Bit drei- bis viermal die Waferfläche eines DDR-Bits
+kostet. Wenn gleichzeitig jedes zusätzliche HBM-Bit ein zusätzliches Megawatt
+braucht, ist die HBM-Menge nach oben durch den Netzanschluss und nach unten
+durch die aufgegebene DDR-Bitmenge begrenzt. Beide Grenzen sind unabhängig
+voneinander, und keine der beiden wird durch Refresh gelockert.</p>
+<h2>Trägt nicht</h2>
+<p>Die zweite Hälfte des Prüfpunkts. Der Bruchindikator dort liest ein fallendes
+GB je MW als "Einsparung läuft". Diese Rechnung belegt das <strong>nicht</strong>. Sie zeigt
+eine Verschiebung des Entwurfspunkts — Rechenleistung wuchs schneller als
+Speicher —, und das ist etwas anderes als Forschung, die HBM gezielt ersetzt.
+Beide Lesarten sind mit diesen Zahlen vereinbar; die Rechnung unterscheidet
+sie nicht.</p>
+<p>Ebenfalls nicht getragen: eine Aussage über Bandbreite. Gerechnet ist
+Kapazität. Die Bandbreite je Beschleuniger stieg von 8 auf 22 TB/s, je PFLOPS
+fiel sie von 0,80 auf 0,44 TB/s — eigene Rechnung, hier nicht geprüft.</p>
+<p>Keine Aussage zur Rackebene. GB200 NVL72 kommt auf 112.500 GB je MW, GB300
+NVL72 auf 166.667, aber der Nenner ist ein anderer: Rackleistung enthält CPUs,
+Switches und Kühlung. VR200 NVL72 ist nicht rechenbar, die Rackleistung ist
+nicht veröffentlicht. Für NVL576 Kyber passen die Angaben nicht zusammen
+(365 TB bei 576 × 1.024 GB = 589.824 GB), die Zahl ist deshalb nicht reines HBM
+und bleibt ungerechnet.</p>
+<p>Eine frühere Rack-Rechnung (Eintrag hbm-gb-per-mw-first-pass, Projekt KI-Compute-Stack, hier aufgegangen) setzte VR200 NVL72 nach Sekundärreports auf 190 bis 230 kW und kam auf 90 bis 109 TB HBM je MW gegen 97 bis 115 bei Blackwell NVL72 (120 bis 142 kW): auf Rack-Ebene flach statt fallend. Gleichstand bei rund dem 1,5-Fachen der Blackwell-Rackleistung (180 bis 213 kW). Die Rackleistung ist nicht von NVIDIA veröffentlicht, deshalb kein Ersatz für die Rechnung je Beschleuniger.</p>
+<h2>Bruchindikator</h2>
+<p>Der Befund hängt an <strong>einer</strong> approximativen Zahl: Rubins TDP, von NVIDIA als
+"~1.800 W" angegeben.</p>
+<ul>
+<li>Liegt Rubins reale TDP bei <strong>1.400 W</strong>, ist GB je W gleich dem von B300 — die Reihe steigt dann weiter.</li>
+<li>Liegt sie bei <strong>1.500 W oder darunter</strong>, ist GB je W mindestens gleich dem von B200 — der Rückgang verschwindet.</li>
+<li>Erst oberhalb von 1.500 W fällt die Reihe tatsächlich.</li>
+</ul>
+<p>Der Befund bricht also, sobald eine belastbare Rubin-TDP unter 1.500 W
+vorliegt. Zweiter Bruch: liefert Rubin Ultra tatsächlich 1 TB HBM4e bei
+~2.300 W aus, kehrt sich die Richtung um und Refresh trägt wieder.</p>
+<h2>Ablesung</h2>
+<p>Tier 1b. Vergleichstabelle der Seite roadmap
+(https://mendeltem.github.io/nvidia-roadmap/#vergleich, Datenstand August 2026),
+die NVIDIA-Datenblätter, Architektur-Whitepapers und GTC-Präsentationen
+auswertet. Methodik der Seite: dichte Werte ohne Sparsity-Verdopplung,
+SXM-/OAM-Variante.</p>
+<p>Einschränkung, die den Status <code>vorschlag</code> begründet: Die Einzelspezifikationen
+sind nicht von mir gegen NVIDIAs Originaldokumente nachgelesen, sondern aus
+dieser Tabelle übernommen. Die Werte für Rubin und Rubin Ultra sind dort
+ausdrücklich als Näherung gekennzeichnet (~1.800 W, ~2.300 W). Die Rechnung
+selbst ist Arithmetik und reproduzierbar.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a> — der Prüfpunkt, den diese Rechnung beantwortet</li>
+<li><a href="mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+<li><a href="../memory_supply/mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a> — die Angebotsseite derselben Frage</li>
+</ul></div></details><details class="entry" id="rubin-shipments-start-q3-fy27"><summary><span class="type">Befund</span><span class="t"><a href="findings/rubin-shipments-start-q3-fy27.html">Rubin: Auslieferung ab August 2026, rund 20 Prozent des DC-Umsatzes im Q3 GJ2027</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_news (Gespräch Rubin gegen Blackwell), 2026-09-30 · <a href="findings/rubin-shipments-start-q3-fy27.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/rubin-shipments-start-q3-fy27.md">Markdown</a></p><h2>Aussage</h2>
+<p>Nvidia hat im Earnings Call zum Q2 GJ2027 (26.08.2026) gesagt, dass die Produktionsauslieferung von Vera Rubin im August 2026 begonnen hat. CFO Kress: "We see Vera Rubin accounting for about 20% of data center revenue in Q3." Q3 GJ2027 läuft vom 27.07. bis etwa 25.10.2026. Der Gesamtumsatz ist für Q3 mit rund 108 Mrd. Dollar angekündigt. Daraus folgen rund 20 Mrd. Dollar Rubin-Umsatz im Quartal, wenn der DC-Anteil am Gesamtumsatz etwa wie im Q2 liegt (89,0 von 96,2 Mrd.).</p>
+<h2>Trägt</h2>
+<p>Stufe "in Auslieferung" im Sinn von <a href="../compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a>, mit Datum. Eine Größenordnung für den ersten Quartalsumsatz.</p>
+<h2>Trägt nicht</h2>
+<p>Stückzahlen. Nvidia nennt keine. Auch nicht, wie viel davon bis zu einem Stichtag innerhalb des Quartals ausgeliefert war. Die 20 Mrd. sind eine Prognose für das ganze Quartal, kein Ist.</p>
+<h2>Bruchindikator</h2>
+<p>10-Q zum Q3 GJ2027 (Ende November 2026) weist einen deutlich anderen Rubin-Anteil aus oder nennt eine Verschiebung.</p>
+<h2>Ablesung</h2>
+<p>Tier 1a, aber zweiter Hand: Zitat aus Suchauszügen und Sekundärartikeln (TIKR, Nasdaq, Pulse2). Das Transkript (s201.q4cdn.com) und die 8-K auf sec.gov waren aus der Arbeitsumgebung gesperrt und sind nicht selbst gelesen. Deshalb vorschlag.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="open_checks/rubin-share-of-blackwell-base.html">rubin-share-of-blackwell-base</a></li>
+<li><a href="mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="../compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(2)</span></h2><details class="entry" id="gold-rush-demand"><summary><span class="type">Risiko</span><span class="t"><a href="risks/gold-rush-demand.html">Goldgräberstimmung (FOMO-Nachfrage)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="risks/gold-rush-demand.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/risks/gold-rush-demand.md">Markdown</a></p><h2>Aussage</h2>
+<p>Unsicherheit und die Angst, etwas zu verpassen, treiben Bestellungen in allen Industrien.</p>
+<h2>Trägt</h2>
+<p>Hohe Nachfrage jetzt.</p>
+<h2>Trägt nicht</h2>
+<p>Die Dauer. FOMO-Nachfrage ist die am leichtesten umkehrbare (Peitscheneffekt, Phantomnachfrage). Gedämpft nur durch Vertragsstabilität.</p>
+<h2>Bruchindikator</h2>
+<p>Rückgang der bilanzierten Vertragsverbindlichkeiten und Anzahlungen über zwei Quartale bei wachsendem Umsatz.</p>
+<h2>Ablesung</h2>
+<p>Bilanz und Anhang (DART), Tier 1a. Position noch nicht erhoben, Indikator derzeit blind.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
+</ul></div></details><details class="entry" id="hbm-bypass-architectures"><summary><span class="type">Risiko</span><span class="t"><a href="risks/hbm-bypass-architectures.html">Architekturen ohne HBM</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report AI Accelerators Beyond NVIDIA (Mai 2026), eingetragen 2026-10-02 · <a href="risks/hbm-bypass-architectures.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/risks/hbm-bypass-architectures.md">Markdown</a></p><h2>Aussage</h2>
+<p>Einige Inferenz-Beschleuniger umgehen HBM: Groq (nur SRAM auf dem Chip, 230 MB), Cerebras WSE-3 (44 GB SRAM auf dem Wafer), d-Matrix Corsair (SRAM plus 256 GB LPDDR5X), Tenstorrent (GDDR6). Dazu kommt die Aufteilung der Inferenz: AWS lässt den Prefill auf Trainium (HBM) und den Decode auf Cerebras (SRAM) laufen.</p>
+<h2>Trägt</h2>
+<p>Gegenkraft zum Axiom bandwidth-bottleneck. Der Decode ist der bandbreitenlastige Schritt, genau er wandert in dieser Aufteilung von HBM weg.</p>
+<h2>Trägt nicht</h2>
+<p>Größe. Der Report setzt den Anteil dieser Architekturen an der Inferenz unter 2 %, ohne Quelle. Groq braucht laut Report rund 576 Chips für ein 70-Milliarden-Parameter-Modell.</p>
+<h2>Bruchindikator</h2>
+<p>keiner eigenen. Deckt sich mit dem Bruchindikator des Axioms bandwidth-bottleneck (Inferenzlast wandert auf andere Speicher).</p>
+<h2>Ablesung</h2>
+<p>Umsätze und Kapazitätsverträge der Anbieter, Tier 1a, soweit börsennotiert (Cerebras). Anteil an der Inferenzlast: blind. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="findings/custom-asics-use-hbm.html">custom-asics-use-hbm</a></li>
+<li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(3)</span></h2><details class="entry" id="capex-vs-operating-cash-flow-2026"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/capex-vs-operating-cash-flow-2026.html">Capex gegen operativen Cashflow je Hyperscaler, 2026</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt ki-anwendungsschicht, Gespräch 2026-09-05 bis 2026-10-02 · <a href="open_checks/capex-vs-operating-cash-flow-2026.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offener Erhebungsschritt: Für Microsoft, Alphabet, Amazon, Meta und Oracle je Quartal 2026 Capex, operativen Cashflow, freien Cashflow, Nettoneuverschuldung und Rückkäufe aus den Kapitalflussrechnungen (10-Q, Tier 1a) nachrechnen. Der Bruchindikator von <a href="mechanisms/financing-limit.html">Finanzierungsgrenze</a> lautet: Capex zwei Quartale in Folge über dem operativen Cashflow.</p>
+<p>Sekundärquellen melden, dass die Schwelle 2026 überschritten wird, und sind der Anlass für diesen Prüfpunkt:
+- Aggregierter Barcapex der Hyperscaler übersteigt den operativen Cashflow etwa ab dem dritten Quartal 2026 (Epoch AI); Capex-Erwartung 2026 über 690 Milliarden Dollar, praktisch der gesamte operative Cashflow der Gruppe (FactSet).
+- Meta: freier Cashflow 784 Millionen Dollar bei 31,9 Milliarden operativem Cashflow, 24,9 Milliarden neue Schulden, Rückkäufe eingestellt. Alphabet: Schulden von rund 16 auf rund 100 Milliarden, 80 Milliarden Eigenkapitalaufnahme im Juni. Oracle: Capex etwa doppelter operativer Cashflow. Microsoft: weiter positiver freier Cashflow.
+- Anleihenemissionen der Hyperscaler: 20 Milliarden (2024), 109 (2025), rund 152 in den ersten viereinhalb Monaten 2026, rund 300 erwartet. Schuldenanteil am Capex von 9 Prozent (GJ2024) auf 32 Prozent (Mitte 2026). Überzeichnung von fast 5-fach (Februar) auf unter 2-fach (Juli); Aufschläge kurzer Laufzeiten von 30 auf 40 Basispunkte.
+- Theoretischer Spielraum bis zur 3-Prozent-Indexschwelle: weitere 1,7 Billionen Dollar. Die Bilanz ist nicht der Engpass, die Aufnahmefähigkeit des Marktes ist es.
+- Ersatz für fehlende Staatsgarantien: Nvidia und OpenAI verhandeln eine Absicherung von bis zu 250 Milliarden Dollar (CNBC); OpenAIs Finanzchefin brachte im November 2025 Bundesgarantien ins Spiel und zog das zurück. Lieferantenfinanzierung wie bei den Netzausrüstern 2000.</p>
+<h2>Trägt</h2>
+<p>Bis 2024 war der Aufbau aus dem laufenden Geschäft finanziert. Kippt die Schwelle, ist er erstmals von Marktstimmung abhängig; Liquidität ist das Gegenteil von Geduld. Die Fragilität ist ungleich verteilt: Microsoft und Google tragen sich, Oracle, Neoclouds und Privatlabore nicht.</p>
+<h2>Trägt nicht</h2>
+<p>Noch keinen Befund: Alle Zahlen oben sind Datenanbieter und Presse, keine Tier-1a-Ablesung. Nicht die Staatenebene.</p>
+<h2>Bruchindikator</h2>
+<p>Nachgerechnet: Capex unter operativem Cashflow in zwei Folgequartalen, oder Aufschläge zurück unter 30 Basispunkte.</p>
+<h2>Ablesung</h2>
+<p>Kapitalflussrechnungen 10-Q, Tier 1a, noch nicht gelesen. Überzeichnung und Aufschläge: Emissionsdaten, Presse.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="axioms/unverifiable-rival-position.html">unverifiable-rival-position</a></li>
+<li><a href="../ai_application_layer/mechanisms/rent-dissipation-explains-coverage-gap.html">rent-dissipation-explains-coverage-gap</a></li>
+</ul></div></details><details class="entry" id="hbm-gb-per-mw"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/hbm-gb-per-mw.html">GB HBM je MW über drei Generationen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="open_checks/hbm-gb-per-mw.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/open_checks/hbm-gb-per-mw.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offener Rechenschritt: HBM-Inhalt je Beschleuniger geteilt durch Leistungsaufnahme, über die letzten drei Beschleunigergenerationen.</p>
+<h2>Trägt</h2>
+<p>Entscheidet, ob Refresh allein die Bitnachfrage trägt, und ob Einsparforschung gegen HBM schon läuft.</p>
+<h2>Trägt nicht</h2>
+<p>Noch nichts, nicht gerechnet.</p>
+<h2>Bruchindikator</h2>
+<p>Steigt GB je MW: Refresh trägt. Fällt es: Einsparung läuft.</p>
+<h2>Ablesung</h2>
+<p>Herstellerspezifikationen, Tier 1b.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
+</ul></div></details><details class="entry" id="rubin-share-of-blackwell-base"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/rubin-share-of-blackwell-base.html">Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_news (Gespräch Rubin gegen Blackwell), 2026-09-30 bis 2026-10-01 · <a href="open_checks/rubin-share-of-blackwell-base.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offene Rechnung: Wie groß ist die ausgelieferte Rubin-Menge im Verhältnis zur kumulierten Blackwell-Menge? Erster Durchgang mit Stichtag 30.09.2026, jede Zahl mit Herkunft:</p>
+<table>
+<thead>
+<tr>
+<th>Größe</th>
+<th>Wert</th>
+<th>Herkunft</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rubin-Umsatz bis Stichtag</td>
+<td>8 bis 13 Mrd. $</td>
+<td>Annahme: 20 Mrd. Quartalsprognose, Stichtag bei zwei Dritteln, Hochlauf hinten gewichtet</td>
+</tr>
+<tr>
+<td>Preis je Rubin-Package inkl. Rackanteil</td>
+<td>ca. 100.000 $</td>
+<td>Annahme</td>
+</tr>
+<tr>
+<td>Rubin-Packages bis Stichtag</td>
+<td>80.000 bis 130.000</td>
+<td>gerechnet</td>
+</tr>
+<tr>
+<td>Blackwell-Packages bis Ende 2025</td>
+<td>ca. 3,2 Mio.</td>
+<td>Presse/Analysten. Jensens "6 Mio." (GTC 2025) zählen Dies, zwei je Package</td>
+</tr>
+<tr>
+<td>Blackwell-Packages Jan bis Sep 2026</td>
+<td>2,5 bis 3,5 Mio.</td>
+<td>Annahme, gestützt auf DC-Umsatz 75 und 89 Mrd. in Q1 und Q2 GJ2027</td>
+</tr>
+<tr>
+<td>Blackwell kumuliert</td>
+<td>5,7 bis 6,7 Mio.</td>
+<td>gerechnet</td>
+</tr>
+</tbody>
+</table>
+<p>Nach Stück: 80k / 6,7M = 1,2 % bis 130k / 5,7M = 2,3 %. Zum Quartalsende (rund 200.000) etwa 3 %.
+Nach Umsatz: rund 10 Mrd. gegen rund 330 Mrd. Blackwell-DC-Umsatz seit Q4 GJ2025, etwa 3 %.</p>
+<p>Nach FLOPS, dicht, FP4: B200 ca. 10 PF, B300 ca. 15 PF (Tier 1b). Blackwell-Mittel bei 3,2 Mio. B200 und 3 Mio. B300: (3,2 × 10 + 3 × 15) / 6,2 = 12,4 PF. Basis 6,2 Mio. × 12,4 PF = 77 ZFLOPS. Rubin 35 PF (NVFP4 Training) oder 50 PF (NVFP4 Inferenz, mit adaptiver Kompression, Tier 1b).</p>
+<pre><code>100k × 35 PF / 77 ZF = 4,5 %
+100k × 50 PF / 77 ZF = 6,5 %
+Spanne 3,4 % bis 9,2 %; zum Quartalsende 9 % bis 13 %
+</code></pre>
+<p>FP8 gegengerechnet (Rubin ca. 16 PF, nur Blog-Schätzung; Blackwell-Mittel 4,75 PF): 5,4 %. Der FLOPS-Anteil liegt beim etwa Dreifachen des Stückanteils.</p>
+<p>Kippschwelle: Über 10 % FLOPS-Anteil zum 30.09. nur bei mehr als ca. 220.000 Rubin (35 PF) bzw. ca. 155.000 (50 PF).</p>
+<h2>Trägt</h2>
+<p>Größenordnung: Rubin ist Ende September 2026 im installierten Bestand eine Randgröße, nach Stück unter 3 %, nach FLOPS unter 10 %. Die größte Unsicherheit ist die Stückzahl, nicht die Leistung je Chip.</p>
+<h2>Trägt nicht</h2>
+<p>Einen Befund. Die Stückzahlen beider Generationen kommen aus Presse und Broker-Notes oder aus Annahmen, nach Wiki-Regel kein Befund. Spitzen-FLOPS sind keine nutzbare Leistung, Rubin hat zusätzlich rund dreimal die Speicherbandbreite von B200 (22 TB/s HBM4). Widerspruch zu <a href="findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a>: Dort ist Rubin mit 50 PF als "dicht" gerechnet (27,8 PF je kW × 1,8 kW). Hier gilt 35 PF als der mit B300 vergleichbare dichte Wert. Welcher stimmt, ist offen.</p>
+<h2>Bruchindikator</h2>
+<p>Nvidia nennt Stückzahlen oder Rack-Zahlen für Rubin. Oder das 10-Q zum Q3 GJ2027 weist einen Rubin-Umsatz aus, der die Spanne verlässt.</p>
+<h2>Ablesung</h2>
+<p>Rubin-Anteil am DC-Umsatz: Tier 1a zweiter Hand (<a href="findings/rubin-shipments-start-q3-fy27.html">rubin-shipments-start-q3-fy27</a>). FLOPS je Chip: Tier 1b. Stückzahlen und Preise: blind bzw. Presse. Nächster Schritt: 10-Q Q3 GJ2027 lesen, Rubin-Preis je Rack aus OEM-Angaben beschaffen, Blackwell-Packages je Quartal aus TSMC-CoWoS-Kapazität gegenrechnen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/rubin-shipments-start-q3-fy27.html">rubin-shipments-start-q3-fy27</a></li>
+<li><a href="findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a></li>
+<li><a href="../ai_application_layer/open_checks/accelerator-mass-balance.html">accelerator-mass-balance</a></li>
+<li><a href="../compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

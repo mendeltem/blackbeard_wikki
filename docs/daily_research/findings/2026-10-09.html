@@ -1,0 +1,99 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Morgenrecherche 2026-10-09</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">daily_research</a> › <a href="../index.html#findings">Befund</a></div><h1>Morgenrecherche 2026-10-09</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ">unbestaetigt</span></span><span>Stand</span><span>2026-10-09</span><span>Herkunft</span><span>Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell)</span><span>Zuletzt geändert</span><span>2026-10-09 daily_research: Morgenrecherche 2026-10-09 (2 Bereiche, lokal)</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-10-09.md">knowledge/daily_research/findings/2026-10-09.md</a></span></div><p>2 von 2 Bereichen recherchiert, 1 min. Aussagen stammen aus Abstracts und sind nicht von Hand geprueft.</p>
+<h2>Zuverlässigkeit und Validierung automatisierter QC- und Rating-Pipelines</h2>
+<p>Bereich: <a href="../../agent_tooling/index.html">agent_tooling</a></p>
+<ul>
+<li>Hybride Architekturen dominieren 2025/2026, indem sie LLMs durch harte Regelwerke und deklarative Verträge (wie im System PARCER) in deterministische Bahnen zwingen, um strenge Governance und formalierte Recovery-Routen bei Modellversagen zu erzwingen. http://arxiv.org/abs/2603.00856v1</li>
+<li>Das Model Context Protocol (MCP) etabliert sich als „de facto Standard“ für die LLM-Tool-Integration und ermöglicht die Orchestrierung komplexer Multi-Tool-Workflows, wobei Manifest-Schemata mit HMAC-Signaturen (DCP) und JSON-RPC-Schnittstellen (ECP) strenge Ausgabeformate und Audit-Kontexte sicherstellen. http://arxiv.org/abs/2602.18764v2</li>
+<li>Für die Validierung von LLM-Ausgaben in sicherheitskritischen oder medizinischen Kontexten werden deterministische Schichten eingesetzt, wie die regelbasierte Sicherheitsvalidierung in CoSafe oder der regelbasierte Extraktor im EDX-System, der eine Übereinstimmung von 96,7 % mit Klinikern garantierte. https://doi.org/10.1002/mus.70280</li>
+<li>Es existieren keine veröffentlichten Designs für manifest-gesteuerte QC-Interfaces, die die spezifische Trennung von Urteil, Vergleich und Speicherung bei Headless-Betrieb mit expliziten Präbedingungen für Bewertungszulassung kombinieren, was eine Lücke in der aktuellen Literatur darstellt. https://doi.org/10.1002/mus.70280</li>
+<li>Die Abstracts liefern keine konkreten Empfehlungen für Retry- oder Degradationsstrategien bei partiellem Zugriff auf externe Repositories in automatisierten Daten-Ingestionssystemen, da verwandte Konzepte wie byzantinische Resilienz oder AABAC auf andere Problemstellungen abzielen. http://arxiv.org/abs/2204.04591v2</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Da die Literatur keine etablierten Standards für die spezifische Schichtentrennung im Headless-Betrieb oder für Retry-Logiken bei Datenfehlern liefert, muss das Team diese Komponenten wahrscheinlich eigenständig entwickeln und intern validieren, um die geforderte Robustheit der Rating-Pipeline zu gewährleisten.</p>
+<p>Quellen (Auszug):
+- http://arxiv.org/abs/2509.02969v1
+- http://arxiv.org/abs/2504.19675v2
+- http://arxiv.org/abs/2507.07539v1
+- http://arxiv.org/abs/2509.19861v1
+- http://arxiv.org/abs/2504.14582v3
+- http://arxiv.org/abs/2512.10169v1
+- https://doi.org/10.3389/frai.2026.1922508
+- https://doi.org/10.3389/frai.2026.1911884
+- https://doi.org/10.3390/s26185797
+- https://doi.org/10.3389/frai.2026.1850832</p>
+<h2>Reduktion von Gefäß-Fehlalarmen in SWI/T2*-Mikroblutungs-Detektion</h2>
+<p>Bereich: <a href="../../cmb_detection/index.html">cmb_detection</a></p>
+<ul>
+<li>Die Reduktion von Gefäß-Fehlalarmen wird zunehmend durch integrierte Deep-Learning-Architekturen wie das RLK-UNet mit CBAM-Attention-Modulen adressiert, die elongierte Gefäßstrukturen bereits während der Inferenz unterdrücken, anstatt auf nachgelagerte geometrische Filter zu setzen. https://doi.org/10.3389/fnins.2026.1743039</li>
+<li>Eine Meta-Analyse stützt die Überlegenheit von SWI gegenüber T2*-GRE, da SWI Cerebral Microbleeds (CMBs) etwa 1,6-mal effektiver detektiert, was die Relevanz der Artefaktreduktion für die Fehlalarm-Minimierung unterstreicht. https://doi.org/10.3988/jcn.2025.0324</li>
+<li>Es fehlen im aktuellen Material quantitative Benchmarks, die Deep-Learning-Modelle direkt mit klassischen morphologischen Filtern (Sphärizität, Elongation) oder Frangi-Vesselness-Parametern für SWI-Daten vergleichen. https://doi.org/10.3389/fnins.2026.1743039</li>
+<li>Neue Ansätze wie die Nutzung von Diffusionsmodellen für die QSM-Rekonstruktion zielen auf Artefaktunterdrückung bei niedrigem SNR ab, sind jedoch nicht explizit als lokaler Gefäßfilter für Mikroblutungen validiert. https://doi.org/10.1002/mrm.70358</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Die Abkehr von manuellen geometrischen Schwellwerten hin zu end-to-end Modellen könnte unsere Pipeline vereinfachen, erfordert aber eine kritische Prüfung, ob die fehlenden quantitativen Vergleiche mit klassischen Filtern für unsere spezifischen Qualitätsanforderungen an sehr kleine Läsionen ausreichen.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.3389/fnins.2026.1743039
+- https://doi.org/10.3389/fnagi.2026.1729422
+- https://doi.org/10.3988/jcn.2025.0324
+- https://doi.org/10.2196/95041
+- https://doi.org/10.1212/nxg.0000000000200237
+- https://doi.org/10.1161/svin.125.002131
+- https://doi.org/10.1002/mrm.70358
+- http://arxiv.org/abs/1711.03345v1
+- http://arxiv.org/abs/2605.21251v1
+- http://arxiv.org/abs/1812.03186v1</p>
+<h2>Gestellte Suchfragen</h2>
+<ul>
+<li>What new validation or contract-testing patterns for LLM-assisted tool pipelines emerged in 2025 that guarantee deterministic fallback values when a model call fails or times out?</li>
+<li>Are there published designs for manifest-driven segmentation QC viewers that separate judgment, comparison, and storage layers while supporting headless (no-GPU) operation, and what preconditions do they enforce before accepting a rating?</li>
+<li>What is the current state of Model Context Protocol (MCP) or equivalent tool-orchestration standards for chaining a local 27B model with retrieval sources (arXiv, OpenAlex, Europe PMC) under strict output-format and citation constraints?</li>
+<li>How do recent (2025+) automated watchdog or cron-based data-ingestion systems handle partial access (read-only, no-download) to external repositories, and what retry or degradation strategies are recommended?</li>
+<li>What new (2025+) post-processing or second-stage strategies specifically reduce vessel false positives in SWI or T2* microbleed detection without requiring a dedicated vessel segmentation, and how do they compare to simple sphericity or elongation thresholds?</li>
+<li>Are there published results on Frangi vesselness or tubularity filters applied to SWI magnitude or phase data for discriminating microbleeds from small vessels, including recommended parameter ranges for anisotropic (e.g., 0.5 × 0.5 × 1.0 mm) acquisitions?</li>
+<li>What improvements over MicrobleedNet or similar CNN baselines have been reported since 2025 for very small (≤ 3 mm) lesion detection on SWI, particularly regarding lesion-level F1 and false-alarm rate, and which architectural or loss-function changes drove the gain?</li>
+<li>How do recent studies handle start-value or baseline-noise artifacts in SWI phase or magnitude images that mimic small hypointense lesions, and are there standardized denoising or thresholding steps that should precede candidate extraction?</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,0 +1,451 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>memory_supply</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › memory_supply</div><h1>memory_supply</h1><p>Angebotsseite: Waferflaeche, Werke, Flaechenaufteilung HBM gegen DDR</p><p class="muted small">Investieren, DRAM, HBM, Wafer, Fabs, Speicherzyklus, Knappheit, CXMT</p>
+<div class="stripe"><i class="warn" style="width:60.0%" title="vorschlag: 6"></i><i class="info" style="width:30.0%" title="offen: 3"></i><i class="ok" style="width:10.0%" title="getragen: 1"></i></div><div class="counts"><span class="warn">6 vorschlag</span> <span class="info">3 offen</span> <span class="ok">1 getragen</span></div><div class="small"><p>Angebotsseite des Speichers: Waferflaeche, Werke, Knoten und was die Flaechenaufteilung zwischen HBM und konventionellem DRAM fuer Bits und Preise bedeutet. Die Nachfrageseite steht in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, die Ergebnisrechnung in <a href="../memory_earnings/index.html">memory_earnings</a>.</p>
+<p>Vor jedem Argument mit dem Standardzyklus (Knappheit, Capex, Überangebot) gilt die Regel <a href="rules/no-standard-cycle-without-absorption-check.html">Kein Standardzyklus ohne Absorptionsprüfung</a>: erst zeigen, dass der Zubau nicht von mehr Speicher je GPU aufgefressen wird (<a href="mechanisms/gpu-memory-absorbs-fab-additions.html">Mechanismus</a>).</p>
+<p>Stand 2026-10-03. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.</p>
+<p><strong>Zuerst:</strong> Regel (getragen) Kein Standardzyklus ohne Absorptionsprüfung. Mechanismus (vorschlag, These Mendel): Mehr Speicher je GPU frisst den Fab-Zubau, DRAM-Wafer bis 2030 knapp. GB je Package wächst je Generation ×3–5, GB je Wafer nur ×1,4. Gestützt auf die drei Axiome aus ai_demand_drivers.</p>
+<p><strong>Mechanismen (vorschlag):</strong> HBM frisst Waferfläche (HBM3E ~3×, HBM4 ~4× je Bit). Opportunitätskosten je Wafer DDR5 gegen HBM. Capex-Disziplin nach 2023.</p>
+<p><strong>Zahlen (Annahmen/Branchendienste):</strong> HBM 22 % der DRAM-Wafer 2026; Rubin = Blackwell-Menge bis 2028 → ~30 % (nur 288 GB) bis 52 % (mit Ultra 1 TB); konv. DRAM −10 % Fläche gegen 2026. Fab-Vorlauf 4–5 Jahre.</p>
+<p><strong>Risiko:</strong> CXMT entlastet konventionelles DRAM, nicht HBM.</p>
+<p><strong>Offen:</strong> Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030.</p>
+<p><strong>Lesen bei:</strong> Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.</p>
+<p><strong>Auf den Seiten:</strong> Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=SAMSUNG">Samsung</a>, <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=MU">Micron</a> (Werke, Speicherschicht); Karte <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle">HBM-Speicher</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU">Micron</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG">Samsung</a>.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="no-standard-cycle-without-absorption-check"><summary><span class="type">Regel</span><span class="t"><a href="rules/no-standard-cycle-without-absorption-check.html">Kein Standardzyklus ohne Absorptionsprüfung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: Vorgabe Mendel, 2026-10-03 · <a href="rules/no-standard-cycle-without-absorption-check.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/rules/no-standard-cycle-without-absorption-check.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wer für DRAM oder HBM mit dem Standardzyklus argumentiert ("Knappheit führt zu Capex, Capex zu Überangebot, Überangebot zu Preisverfall"), muss vorher zeigen, dass der Zubau nicht von mehr Speicher je Beschleuniger aufgefressen wird. Pflichtrechnung:</p>
+<pre><code>Nachfrage-Wachstum = Wachstum (GB je Package) × Wachstum (Packages)
+Angebots-Wachstum  = Wachstum (GB je Wafer) × Wachstum (Waferkapazität)
+Überangebot nur, wenn Angebots-Wachstum &gt; Nachfrage-Wachstum, je Jahr belegt
+</code></pre>
+<p>Erst wenn diese Rechnung ein Überangebot ergibt, darf der Zyklus als Argument stehen. Sonst ist er eine Analogie, kein Befund. Ausgangspunkt der Rechnung: <a href="mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a> und <a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">rubin-hbm4-wafer-demand-2028-2030</a>.</p>
+<h2>Trägt</h2>
+<p>Neue Chats und Agenten beginnen nicht bei null mit dem Lehrbuchzyklus, sondern beim Stand dieser Rechnung. Historische Zyklen bleiben als Hypothese erlaubt, müssen aber gegen die Absorption getestet werden.</p>
+<h2>Trägt nicht</h2>
+<p>Dass ein Zyklus ausgeschlossen ist. Die Regel verlangt die Prüfung, nicht ein bestimmtes Ergebnis. Fällt die Stückzahl (Finanzierungsgrenze) oder baut CXMT konventionelles DRAM schneller aus als erwartet, kann die Rechnung ein Überangebot ergeben, dann gilt es.</p>
+<h2>Bruchindikator</h2>
+<p>keiner, Verfahrensregel</p>
+<h2>Ablesung</h2>
+<p>Vorgabe Mendel. Die Zahlen in den verknüpften Einträgen sind Annahmen und Branchendienste.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">rubin-hbm4-wafer-demand-2028-2030</a></li>
+<li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(4)</span></h2><details class="entry" id="gpu-memory-absorbs-fab-additions"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/gpu-memory-absorbs-fab-additions.html">Mehr Speicher je GPU frisst den Fab-Zubau</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: These Mendel, durchgerechnet im Projekt AI_news, 2026-10-03 · <a href="mechanisms/gpu-memory-absorbs-fab-additions.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/gpu-memory-absorbs-fab-additions.md">Markdown</a></p><h2>Aussage</h2>
+<p>These (Mendel, 2026-10-03): DRAM-Wafer bleiben bis 2030 knapp, weil zusätzliche Kapazität nicht als Überangebot ankommt, sondern sofort in mehr Speicher je GPU fließt. Der Standard-Schweinezyklus (Knappheit → Capex → Überangebot → Preisverfall) setzt voraus, dass die Nachfrage je Einheit fest ist. Bei KI-Beschleunigern ist sie das nicht: Das Design wird an das verfügbare HBM angepasst.</p>
+<p>Wirkungskette:</p>
+<pre><code>HBM-Wafer/Monat = Packages/Jahr × GB HBM je Package / GB je HBM-Wafer / 12 / Nvidia-Anteil an HBM
+Wafer für konv. DRAM = Kapazität − HBM-Wafer − LPDDR-Wafer der KI-CPUs
+Knappheit bleibt, solange (GB je Package × Packages) schneller wächst als (GB je Wafer × Kapazität)
+</code></pre>
+<p>Größenordnung (Rechnung in <a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">rubin-hbm4-wafer-demand-2028-2030</a>):
+- GB HBM je Package je Generation: 192 (B200) → 288 (B300, Rubin) → 683 bis 1.024 (Rubin Ultra) → Feynman offen. Faktor 3 bis 5.
+- GB je HBM-Wafer im selben Zeitraum: rund 320 (HBM4) → 400 bis 460 (HBM4E). Faktor rund 1,4.
+- Selbst bei +10 % DRAM-Kapazität je Jahr passen ohne Verdrängung von konventionellem DRAM nur rund 355 GB je Package (2029) bzw. 500 GB (2030). 1 TB je Package bei 6 bis 7 Mio. Packages im Jahr bräuchte 2029 rund 2 Mio. HBM-Wafer im Monat, etwa die gesamte DRAM-Kapazität von 2026.
+- HBM4 braucht für dieselben 288 GB rund 33 % mehr Wafer als HBM3E (Tauschverhältnis 4 statt 3). Rubin erhöht die Wafernachfrage also schon ohne mehr GB.
+- Zusätzlich: Vera-CPU mit 1,5 TB LPDDR5X (54 TB je NVL72-Rack, 750 GB je GPU) zieht rund 7 % der DRAM-Wafer aus dem konventionellen Pool.</p>
+<p>Beleg für die Richtung: Rubin Ultra wird laut TrendForce (August 2026) wegen HBM-Knappheit von 1 TB auf rund zwei Drittel gekürzt, auch die Vera-LPDDR-Ausstattung wird Berichten zufolge gekürzt. Die Nachfrage je Package liegt also schon heute über dem Angebot. Jede freie Kapazität hat einen wartenden Abnehmer.</p>
+<h2>Trägt</h2>
+<ul>
+<li>Warum ein Fab-Zubau 2027 bis 2030 (Yongin, P5, ID1, M15X) nicht automatisch zum Überangebot führt: Die Lücke zwischen gewünschtem und lieferbarem Speicher je Package ist größer als jeder geplante Zubau.</li>
+<li>Warum der Standardzyklus als Default-Argument nicht reicht, siehe Regel <a href="rules/no-standard-cycle-without-absorption-check.html">no-standard-cycle-without-absorption-check</a>.</li>
+<li>Wo die Knappheit ankommt, entscheiden die Hersteller über die Waferaufteilung: entweder wird HBM rationiert (weniger GB je Package, weniger Ultra), oder konventionelles DRAM wird verdrängt (DDR/LPDDR-Preise steigen). Siehe <a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a>.</li>
+</ul>
+<p>Warum die Stückzahl halten soll (gesetzt, nicht belegt): Die Bedingung des Mechanismus, dass GB je Package × Stückzahl weiter steigt, stützt sich auf die drei Axiome in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>:
+1. <a href="../ai_demand_drivers/axioms/open-search-space.html">Offener Suchraum</a>: Zusätzliche Rechenleistung findet Ertrag, die Nachfrage ist in keiner Anwendungsklasse gesättigt.
+2. <a href="../ai_demand_drivers/axioms/unverifiable-rival-position.html">Unprüfbare Gegnerposition (Investitionszwang, Wettrüsten)</a>: Kein Spieler kann die Position des Gegners prüfen, Investieren ist dominant. Auf Staatenebene sehr stabil, auf Firmenebene weniger.
+3. <a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">Bandbreiten-Engpass</a>: Der Speicher ist der Engpass, deshalb fließt jede Entlastung zuerst in mehr und schnelleren Speicher je Beschleuniger.</p>
+<p>Diese drei sind Setzungen von Mendel. Was hier daran hängt, ist als gesetzt zu lesen. Gegenkraft ist die <a href="../ai_demand_drivers/mechanisms/financing-limit.html">Finanzierungsgrenze</a>: Wollen ist nicht Können, der Bruch kann auf Firmenebene erzwungen kommen.</p>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Unbedingt. Der Mechanismus braucht, dass GB je Package × Stückzahl weiter steigt. Fällt die Stückzahl, weil die Käufer an die <a href="../ai_demand_drivers/mechanisms/financing-limit.html">Finanzierungsgrenze</a> stoßen, wirkt der Zubau entlastend (Gegenargument, geschätzt rund 30 %).</li>
+<li>Für konventionelles DRAM allein: CXMT baut DDR/LPDDR aus, liefert aber kein HBM an Nvidia (<a href="risks/cxmt-ramp.html">cxmt-ramp</a>). HBM kann knapp bleiben, während DDR sich entspannt (rund 25 %).</li>
+<li>Dass Nvidia Speicher maximiert. Bis B300 ist GB HBM je MW seit 2020 nicht gestiegen (<a href="../ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a>). Der Sprung kommt erst mit Rubin Ultra, und der ist noch nicht ausgeliefert.</li>
+<li>Die Prozentzahlen. Sie hängen an Annahmen (siehe Prüfpunkt). Robust ist nur das Verhältnis Faktor 3 bis 5 gegen Faktor 1,4.</li>
+</ul>
+<p>Wahrscheinlichkeiten (Einschätzung des rechnenden Agenten, 2026-10-03, nicht Mendels): Mechanismus wirkt, solange die Stückzahl hält, rund 70 %. HBM-Wafer knapp bis Ende 2030 rund 60 %. DRAM insgesamt durchgehend knapp bis 2030 rund 45 %.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Nvidias nächste Generation hält oder senkt GB je Package, obwohl mehr HBM verfügbar ist.</li>
+<li>DDR5-Vertragspreise fallen zwei Quartale in Folge.</li>
+<li>Hersteller melden einen sinkenden HBM-Anteil an den Waferstarts.</li>
+<li>Hyperscaler-Capex flacht ab oder fällt (<a href="../ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.html">capex-vs-operating-cash-flow-2026</a>).</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Speicher je Package: Herstellerspezifikationen, Tier 1b. Kürzung Rubin Ultra und Vera-LPDDR: TrendForce und Presse, Warnsignal. Kapazitäten und HBM-Wafer-Anteil: Branchendienste. GB je Wafer, Stückzahlen, Nvidia-Anteil: Annahmen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/axioms/open-search-space.html">open-search-space</a> (Axiom 1)</li>
+<li><a href="../ai_demand_drivers/axioms/unverifiable-rival-position.html">unverifiable-rival-position</a> (Axiom 2, Wettrüsten)</li>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a> (Axiom 3)</li>
+<li><a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">rubin-hbm4-wafer-demand-2028-2030</a></li>
+<li><a href="rules/no-standard-cycle-without-absorption-check.html">no-standard-cycle-without-absorption-check</a></li>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a></li>
+<li><a href="mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
+<li><a href="risks/cxmt-ramp.html">cxmt-ramp</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="../ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a></li>
+</ul></div></details><details class="entry" id="capex-discipline-after-2023"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/capex-discipline-after-2023.html">Capex-Disziplin nach den Verlusten 2023</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report SK Hynix and the Memory Supercycle (Mai 2026), eingetragen 2026-10-02 · <a href="mechanisms/capex-discipline-after-2023.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/capex-discipline-after-2023.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die drei großen Speicherhersteller hatten 2023 negative Bruttomargen. Seitdem binden sie neue Kapazität an sichtbare Nachfrage (Verträge, Anzahlungen) und kündigen keine Greenfield-Fabs über die bekannte Pipeline hinaus an. Dasselbe Muster zeigen die Gasturbinenhersteller nach dem Einbruch der frühen 2000er.</p>
+<h2>Trägt</h2>
+<p>Langsameres Angebotswachstum als in früheren Zyklen, solange die Disziplin hält.</p>
+<h2>Trägt nicht</h2>
+<p>Dass sie hält. Disziplin ist eine Verhaltensannahme über drei Firmen, kein physischer Zwang. Chinesische Hersteller sind nicht gebunden.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Tier-1-Hersteller kündigt eine zusätzliche Greenfield-Fab an, oder die Summe der Capex-Guidances wächst zwei Jahre in Folge schneller als der Umsatz.</p>
+<h2>Ablesung</h2>
+<p>Capex-Guidance in Calls und Filings, Tier 1a. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="findings/fab-lead-time-examples.html">fab-lead-time-examples</a></li>
+<li><a href="risks/cxmt-ramp.html">cxmt-ramp</a></li>
+<li><a href="../compute_bottlenecks/findings/gas-turbine-order-backlog.html">gas-turbine-order-backlog</a></li>
+</ul></div></details><details class="entry" id="ddr5-hbm-per-wafer-opportunity-cost"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">Opportunitaetskosten je Wafer: DDR5 gegen HBM</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-16 · <a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/ddr5-hbm-per-wafer-opportunity-cost.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ob ein Wafer als HBM oder als DDR5 mehr einbringt, entscheidet nicht der Preis je GB, sondern der Erloes je Wafer. Weil HBM je Bit mehr Flaeche braucht, gibt es einen Gleichstandspreis:</p>
+<pre><code>Erloes je Wafer = (Basis-GB je Wafer / Tauschverhaeltnis) x Preis je GB
+Gleichstand: Preis(DDR5) = Preis(HBM) / Tauschverhaeltnis
+</code></pre>
+<p>Bei Tauschverhaeltnis 3 bringt ein DDR5-Wafer also schon dann mehr als ein HBM-Wafer, wenn DDR5 je GB mehr als ein Drittel des HBM-Preises kostet. Darueber hat der Hersteller einen Anreiz, Flaeche zurueck zu DDR zu schieben, sofern er nicht vertraglich gebunden ist.</p>
+<p>Rechenbeispiel mit Spotpreisen vom 16.09.2026 (Warnsignal, kein Befund): DDR5 16-Gb-Chip 54,30 USD, also rund 27 USD je GB; HBM3E-Stapel mit 36 GB 299,90 USD, also rund 8 USD je GB. Der Gleichstand laege bei rund 2,8 USD je GB fuer DDR5. Der tatsaechliche DDR5-Preis lag weit darueber, der DDR5-Wafer war also rechnerisch der wertvollere.</p>
+<h2>Traegt</h2>
+<p>Erklaert, warum Hersteller trotz HBM-Vorrang weiter konventionelles DRAM fertigen, warum Langfristvertraege noetig sind, damit der HBM-Ausbau gegen die kurzfristige Marge ueberhaupt stattfindet, und warum die Marge eines HBM-Marktfuehrers zugleich am konventionellen Geschaeft haengt.</p>
+<h2>Traegt nicht</h2>
+<p>Keine Aussage ueber Gewinn. Der Erloes je Wafer ignoriert Kosten, Ausbeute, Packaging und Testaufwand, die bei HBM hoeher liegen. Keine Aussage ueber strategischen Wert: Kundenbindung, gemeinsam entwickelte Basis-Chips und der Zugang zur naechsten Generation stehen nicht in dieser Rechnung.</p>
+<p>Spotpreise sind kein Vertragspreisniveau. Vertragspreise fuer DDR5 liegen in der Regel darunter, HBM-Preise sind ueber Laufzeiten fixiert.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>HBM-Vertragspreise werden neu verhandelt und naehern sich dem Gleichstand.</li>
+<li>Ein Hersteller begruendet eine Verschiebung von Waferflaeche ausdruecklich mit der Marge je Wafer.</li>
+<li>Das Tauschverhaeltnis faellt durch bessere Ausbeute oder Hybrid Bonding, dann sinkt der Gleichstandspreis.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Spotpreise ueber Aggregatoren auf DRAMeXchange-Basis, Tier Trade Press, also Warnsignal. Tier 1a waeren ASP- und Mix-Angaben in Quartalsberichten und Calls.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+</ul></div></details><details class="entry" id="hbm-eats-wafer-area"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/hbm-eats-wafer-area.html">HBM frisst Waferflaeche</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt NVIDIA-Roadmap, Seite waferklemme.html, 2026-09 · <a href="mechanisms/hbm-eats-wafer-area.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/hbm-eats-wafer-area.md">Markdown</a></p><h2>Aussage</h2>
+<p>HBM wird nicht neben konventionellem DRAM gefertigt, sondern aus derselben Waferflaeche. Je Bit braucht HBM wegen TSVs, Testlogik, Stapelverlusten und schlechterer Ausbeute das Drei- bis Vierfache an Flaeche. Der Bit-Anteil von HBM faellt deshalb deutlich kleiner aus als sein Wafer-Anteil, und ein wachsender HBM-Anteil schrumpft die Bitmenge fuer DDR und LPDDR, selbst wenn die Gesamtkapazitaet in Wafern waechst.</p>
+<p>Rechenweg:</p>
+<pre><code>Bits je Wafer = Basis-Bits je Wafer / Tauschverhaeltnis
+Tauschverhaeltnis: DDR5 1x, GDDR7 rund 1,7x, HBM3E rund 3x, HBM4 rund 4x
+Flaeche fuer DDR = Gesamtkapazitaet x (1 - HBM-Wafer-Anteil)
+</code></pre>
+<p>Groessenordnungen, auf denen dieser Eintrag beruht (Annahmen, siehe Ablesung): HBM-Anteil an der DRAM-Waferzufuhr 18 Prozent (2025), 22 Prozent (2026), rund 30 Prozent (2027), bei einem Bit-Anteil von etwa 8, 9 und 13 Prozent.</p>
+<p>Zerlegung des Tauschverhältnisses (Report SK Hynix and the Memory Supercycle, Mai 2026, Sekundärquelle; übernommen aus dem aufgelösten Eintrag hbm-wafer-penalty): HBM-Die 35 bis 45 Prozent größer als DDR5 bei gleicher Kapazität, Ausbeute 20 bis 30 Prozent niedriger (inklusive TSV), Durchlauf 1,5 bis 2 Monate länger. Für HBM4E wird ein Verhältnis über 4 erwartet.</p>
+<h2>Traegt</h2>
+<p>Die Richtung: Steigt der HBM-Wafer-Anteil schneller als die Gesamtkapazitaet, sinkt die absolute Bitmenge fuer konventionelles DRAM. Bei plus 5 Prozent Kapazitaet im Jahr und dem genannten Anteilspfad schrumpft die DDR-Flaeche bis 2027 um knapp 6 Prozent.</p>
+<h2>Traegt nicht</h2>
+<p>Die konkreten Prozentwerte. Sie stammen aus Branchendiensten und sind kein Befund. Auch keine Aussage ueber Preise: Knappheit an Bits ist nicht Preisniveau, dafuer gilt <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a>.</p>
+<p>Das Tauschverhaeltnis ist eine Faustzahl. Es aendert sich mit Lagenzahl, Ausbeute und Knoten und muesste je Generation neu bestimmt werden.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Ein Hersteller weist Wafer- und Bit-Anteil von HBM getrennt aus und die Werte liegen deutlich neben den Annahmen.</li>
+<li>Hybrid Bonding oder 3D-DRAM senken die Flaeche je HBM-Bit messbar, dann faellt das Tauschverhaeltnis.</li>
+<li>Der HBM-Wafer-Anteil stagniert, weil Hersteller Flaeche zurueck zu DDR verschieben, siehe <a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a>.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Anteile und Tauschverhaeltnisse aus Branchendiensten (TrendForce, The Elec) und Presseberichten, also Warnsignal, kein Befund. Tier 1a waere eine Aufteilung der Waferstarts je Produktklasse in einem Quartalsbericht oder Call.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a></li>
+<li><a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="fab-lead-time-examples"><summary><span class="type">Befund</span><span class="t"><a href="findings/fab-lead-time-examples.html">Fab-Vorlaufzeiten: zwei Beispiele mit 4 bis 5 Jahren</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Reports SK Hynix and the Memory Supercycle und Physical AI vs Agents (Mai 2026), eingetragen 2026-10-02 · <a href="findings/fab-lead-time-examples.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/findings/fab-lead-time-examples.md">Markdown</a></p><h2>Aussage</h2>
+<p>Vom Spatenstich bis zur Massenproduktion nennt der Report: SK Hynix Yongin Februar 2022 bis Februar 2027 (5 Jahre), Micron New York 2026 bis 2030 (4 Jahre). Packaging: SK Hynix Indiana April 2026 bis zweites Halbjahr 2028 (rund 2,5 Jahre).</p>
+<p>Widerspruch zur Wiki: Der Eintrag lead-times-datacenter-vs-fab nennt für die Speicherfab grob zwei bis drei Jahre. Beide Angaben stehen nebeneinander, bis geklärt ist, welcher Abschnitt gemeint ist (Rohbau bis erster Wafer oder Spatenstich bis Volumen).</p>
+<h2>Trägt</h2>
+<p>Zwei Datenpunkte dafür, dass die Reaktion des Angebots auf heutige Nachfrage Jahre braucht.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Regel. Zwei Fälle sind keine Verteilung. Erweiterungen in bestehenden Hüllen (Umwidmung, Cleanroom-Ausbau) gehen schneller.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Greenfield-Speicherfab erreicht Volumen in unter drei Jahren ab Spatenstich.</p>
+<h2>Ablesung</h2>
+<p>Pressemitteilungen der Hersteller, Tier 1a. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+<li><a href="mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
+<li><a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="cxmt-ramp"><summary><span class="type">Risiko</span><span class="t"><a href="risks/cxmt-ramp.html">Kapazitätshochlauf in China (CXMT, YMTC)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report SK Hynix and the Memory Supercycle (Mai 2026), eingetragen 2026-10-02 · <a href="risks/cxmt-ramp.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/risks/cxmt-ramp.md">Markdown</a></p><h2>Aussage</h2>
+<p>CXMT hat die DRAM-Waferkapazität seit Anfang 2024 (100.000 Wafer je Monat) stark ausgebaut, eine neue Fab in Shanghai soll 2027 in Massenproduktion gehen. Yole sieht den Marktanteil von 11,1 % (2025) auf 13,9 % (2027) steigen. YMTC plant im dritten Werk in Wuhan auch DRAM.</p>
+<h2>Trägt</h2>
+<p>Druck auf konventionelles DRAM (DDR5, LPDDR) ab etwa 2027.</p>
+<h2>Trägt nicht</h2>
+<p>HBM: Der Report führt CXMT dort ein bis zwei Generationen zurück. Auch keine Aussage über Exportfähigkeit unter Sanktionen.</p>
+<h2>Bruchindikator</h2>
+<p>CXMT qualifiziert HBM bei einem großen Beschleunigerhersteller, oder der chinesische Anteil am DRAM-Bitangebot wächst schneller als von Yole angesetzt.</p>
+<h2>Ablesung</h2>
+<p>Yole und S&amp;P Global sind Marktforschung, Tier nicht definiert. Die Zielkapazität fehlt im verfügbaren Reporttext. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/automation-cuts-both-ways.html">automation-cuts-both-ways</a></li>
+<li><a href="../china_industrial_strategy/index.html">china_industrial_strategy</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(3)</span></h2><details class="entry" id="rubin-hbm4-wafer-demand-2028-2030"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030</a></span><span class="badge info">offen</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_news, Gespräch 2026-10-03 · <a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/rubin-hbm4-wafer-demand-2028-2030.md">Markdown</a></p><h2>Aussage</h2>
+<p>Erste Durchrechnung, jede Zahl mit Herkunft. Grundannahme (Vorgabe Mendel): Bis Ende 2028 gibt es so viele Rubin-Packages wie beim Blackwell-Höchststand, rund 10,5 Mio. (9,5 bis 11,4 Mio., aus <a href="../ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.html">rubin-share-of-blackwell-base</a>).</p>
+<p><strong>Eingaben</strong></p>
+<table>
+<thead>
+<tr>
+<th>Größe</th>
+<th>Wert</th>
+<th>Herkunft</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBM je Package</td>
+<td>B300 288 GB HBM3E, Rubin 288 GB HBM4, Rubin Ultra 1.024 GB (gekürzt ~683)</td>
+<td>Tier 1b, Kürzung TrendForce</td>
+</tr>
+<tr>
+<td>LPDDR5X je GPU</td>
+<td>750 GB (54 TB je NVL72-Rack / 72)</td>
+<td>Herstellerspezifikation, Kürzung berichtet</td>
+</tr>
+<tr>
+<td>DRAM-Kapazität 2026</td>
+<td>~2,05 Mio. Wafer/Monat (SKH 620k, Samsung ~675k, Micron ~450k, Rest ~300k)</td>
+<td>Branchendienste plus Annahme, siehe <a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></td>
+</tr>
+<tr>
+<td>HBM-Anteil Wafer 2026</td>
+<td>22 %</td>
+<td>Branchendienste, aus <a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></td>
+</tr>
+<tr>
+<td>Nvidia-Anteil an HBM-Bits</td>
+<td>65 %</td>
+<td>Annahme</td>
+</tr>
+<tr>
+<td>Blackwell-Lieferung 2026</td>
+<td>~4 Mio., fast alles B300</td>
+<td>Annahme</td>
+</tr>
+<tr>
+<td>Anteil Rubin-Lieferungen in 2028</td>
+<td>55 % der kumulierten Menge</td>
+<td>Annahme</td>
+</tr>
+</tbody>
+</table>
+<p><strong>GB HBM je Wafer, zwei Wege</strong>
+- Bottom-up: DDR5-Wafer 1b/1c ~2.500 GB, HBM4 Tauschverhältnis 4 → ~625 GB. Vermutlich zu optimistisch (Spitzenausbeute).
+- Kalibriert: 4 Mio. × 288 GB / 0,65 = 1,77 EB HBM3E 2026 auf 22 % × 2,05 Mio. = 451k Wafer/Monat → effektiv 327 GB HBM3E je Wafer. HBM4 × 3/4 = 246 GB, mit +30 % Ausbeute bis 2028 → <strong>320 GB</strong> (Basis). Die beiden Wege liegen Faktor 2,5 auseinander.</p>
+<p><strong>2028 (mittlerer Fall, kalibriert, 320 GB je Wafer)</strong></p>
+<pre><code>5,8 Mio. Packages × 288 GB = 1,66 EB HBM4
+1,66 EB / 320 GB / 12 = 434k Wafer/Monat Nvidia
+/ 0,65 = 668k Wafer/Monat alle HBM-Käufer = 30 % von 2,26 Mio. (Kapazität +5 %/Jahr)
++ LPDDR5X Vera: 159k Wafer/Monat = 7 %
+Wafer für konventionelles DRAM: 2026 1.599k → 2028 1.433k = −10 %
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Mix 2028</th>
+<th>HBM alle Käufer</th>
+<th>Anteil DRAM-Wafer</th>
+<th>konv. DRAM gegen 2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nur Rubin 288 GB</td>
+<td>668k</td>
+<td>30 %</td>
+<td>−10 %</td>
+</tr>
+<tr>
+<td>30 % Ultra gekürzt 683 GB</td>
+<td>943k</td>
+<td>42 %</td>
+<td>−28 %</td>
+</tr>
+<tr>
+<td>30 % Ultra 1 TB</td>
+<td>1.180k</td>
+<td>52 %</td>
+<td>−42 %</td>
+</tr>
+<tr>
+<td>nur Rubin, ohne Ausbeute-Gewinn</td>
+<td>868k</td>
+<td>38 %</td>
+<td>−23 %</td>
+</tr>
+</tbody>
+</table>
+<p>Kippschwelle 2028: Konventionelles DRAM behält die Fläche von 2026 nur bei rund +9 % Kapazität je Jahr (≈2,43 Mio. Wafer/Monat).</p>
+<p><strong>2029 und 2030</strong> (Nvidia 6,3 und 6,8 Mio. Packages, GB je HBM-Wafer 400 und 460 mit HBM4E, Kapazität +10 %/Jahr)</p>
+<table>
+<thead>
+<tr>
+<th>GB je Package</th>
+<th>2029 HBM-Anteil / konv. DRAM</th>
+<th>2030 HBM-Anteil / konv. DRAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gedeckelt 288</td>
+<td>23 % / +8 %</td>
+<td>20 % / +25 %</td>
+</tr>
+<tr>
+<td>683, dann 1.024</td>
+<td>55 % / −41 %</td>
+<td>71 % / −63 %</td>
+</tr>
+<tr>
+<td>1.024, Feynman 1.536 (Annahme)</td>
+<td>83 % / −84 %</td>
+<td>107 % (unmöglich)</td>
+</tr>
+</tbody>
+</table>
+<p>Verträglich ohne Verdrängung: rund 355 GB je Package (2029), 500 GB (2030).</p>
+<h2>Trägt</h2>
+<p>Die Größenordnung: Schon die Grundannahme (Rubin = Blackwell-Menge, 288 GB) bindet 2028 rund 30 % der DRAM-Wafer in HBM. Jeder Schritt zu mehr GB je Package übersteigt den geplanten Zubau.</p>
+<h2>Trägt nicht</h2>
+<p>Einen Befund. Stückzahlen, GB je Wafer, Nvidia-Anteil und Kapazitätswachstum sind Annahmen. Ausmusterung, Hopper, AMD- und ASIC-Designs sind nur pauschal über den Nvidia-Anteil enthalten. Feynman-Speicher ist unbekannt.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Hersteller nennt HBM-Waferstarts oder Bits je Wafer, oder Nvidia nennt Stückzahlen. Dann sind die Annahmen zu ersetzen.</p>
+<h2>Ablesung</h2>
+<p>Nächste Schritte: (1) GB je HBM4-Wafer aus Die-Größe und Stapelausbeute belegen, (2) Nvidia-Anteil an HBM aus Herstellerumsätzen, (3) Kapazitätszubau aus <a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a> statt pauschal +5/+10 %. Rechenskripte liegen nicht in der Wiki; die Formeln oben reichen zum Nachrechnen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></li>
+<li><a href="../ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.html">rubin-share-of-blackwell-base</a></li>
+</ul></div></details><details class="entry" id="dram-wafer-capacity-by-fab"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/dram-wafer-capacity-by-fab.html">DRAM-Waferkapazitaet je Werk</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt NVIDIA-Roadmap, Seite fabriken.html, 2026-09 · <a href="open_checks/dram-wafer-capacity-by-fab.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/dram-wafer-capacity-by-fab.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offener Erhebungsschritt: belegte 300-mm-Waferstarts je Monat, je Hersteller und Werk, getrennt nach DRAM und NAND, mit Termin und Status. Ohne diese Zahlen bleibt die Angebotsseite geschaetzt.</p>
+<p>Stand der Sammlung, jede Zeile mit Herkunft:
+- SK Hynix gesamt: rund 620k Wafer je Monat DRAM, Ziel 1.000k bis 2030. Ziel firmenseitig genannt, Heute-Wert aus Branchendiensten.
+- SK Hynix M15X, Cheongju: HBM4, Serie seit Februar 2026, 10k wachsend auf 55k bis 60k zum Jahresende 2026. Eckpunkte firmenseitig und ueber Branchendienste, der Monatsverlauf dazwischen ist gerechnet.
+- SK Hynix M14 und M16, Icheon: Umruestung auf 1c, plus rund 140k, 2027. Branchendienste.
+- SK Hynix Yongin Fab 1: plus 360k bis H1 2030, sechs Reinraeume. Firmenangabe und Branchendienste.
+- Samsung gesamt: rund 650k bis 700k Wafer je Monat DRAM, kein veroeffentlichtes Gesamtziel. Branchendienste.
+- Samsung P4 Pyeongtaek: neue Linie 100k, plus 120k geplant, 2026. P5 betriebsbereit 2028, Groesse nicht genannt. Branchendienste.
+- Micron: keine Gesamtzahl veroeffentlicht. Belegt ist nur HBM, 40k bis 50k auf 100k bis Ende 2026. ID1 Boise erste Wafer Mitte 2027.</p>
+<h2>Zu pruefen</h2>
+<ol>
+<li>Fuer jede Zeile eine Tier-1a-Quelle finden (Quartalsbericht, Call, Investorentag) oder die Zeile als unbelegt markieren.</li>
+<li>Umruestung von Zubau trennen. Ein Knotenwechsel bringt Bits, aber keine zusaetzlichen Wafer. Fuer die Flaechenrechnung zaehlt nur neuer Reinraum.</li>
+<li>Netto-Zuwachs an Waferflaeche je Jahr 2026 bis 2030 rechnen und gegen den HBM-Anteil aus <a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a> stellen.</li>
+<li>Rohstoffseite pruefen: Fuer blanke Siliziumwafer wird eine Angebotsluecke von 8 Prozent (2026) bis 24 Prozent (2028) berichtet. Quelle und Tier klaeren.</li>
+</ol>
+<h2>Bruchindikator</h2>
+<p>Ein Hersteller nennt Waferstarts selbst. Dann ersetzt ein Befund diese Sammlung.</p>
+<h2>Ablesung</h2>
+<p>Derzeit ueberwiegend Branchendienste (TrendForce, The Elec, DigiTimes) und Presseberichte, also Warnsignal, kein Befund. Zusammengetragen auf der Seite fabriken.html des Projekts NVIDIA-Roadmap.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+</ul></div></details><details class="entry" id="hbm-market-share-and-nvidia-allocation"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/hbm-market-share-and-nvidia-allocation.html">HBM-Marktanteil und Nvidias HBM4-Allokation</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt AI-Lage-Verbund, 2026-10-02 · <a href="open_checks/hbm-market-share-and-nvidia-allocation.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offener Erhebungsschritt: SK Hynix' HBM-Marktanteil und die Aufteilung von
+Nvidias HBM4-Volumen sind marktbestimmend, aber bisher nur über Analysten
+belegt, nicht Tier 1a. Zusammengetragener Stand, jede Zeile mit Herkunft und
+Tier:</p>
+<p><strong>Marktanteil am HBM-Umsatz</strong> (Analysten, kein Befund):
+- 2025 gesamt: SK Hynix rund 63 Prozent. (TrendForce)
+- Q2 2025: SK Hynix 62, Micron 21, Samsung 17 Prozent. (Counterpoint via Chosun Biz)
+- Q1 2026: SK Hynix rund 56 Prozent, fallend. Micron überholt Samsung auf Platz zwei. (TrendForce)
+- Ausblick 2026: Samsung zielt auf rund 38 Prozent zum Jahresende; SK Hynix' Anteil
+  schrumpft laut Prognose durch Qualifizierungsverzögerungen und Kapazitätsverschiebungen. (TrendForce)</p>
+<p><strong>Nvidia-HBM4-Qualifizierung</strong> (Firmenaussage über Presse):
+- 05.06.2026: Nvidia-CEO Jensen Huang nennt alle drei (SK Hynix, Samsung, Micron)
+  für HBM4 der Vera-Rubin-Plattform zertifiziert. Damit ist SK Hynix nicht mehr
+  alleiniger qualifizierter HBM4-Lieferant — der Kern des bisherigen Vorsprungs.
+- SK Hynix 12-Hi HBM4 in Serie, 16-Hi in Kundenqualifizierung; 48-GB-HBM4E-Muster
+  seit 18.06.2026, 16 Gbit/s je Pin, über 20 Prozent effizienter.</p>
+<p><strong>Vorläufige HBM4-Allokation bei Nvidia</strong> (Analysten/Lieferkette, kein Befund):
+- SK Hynix mittlere 50 bis rund zwei Drittel, Samsung mittlere 20, Micron rund 20 Prozent.</p>
+<p>Kernbefund in einem Satz: SK Hynix führt bei HBM klar, aber der Anteil sinkt von
+rund 63 (2025) auf Mitte 50 (Q1 2026), und mit der HBM4-Zertifizierung aller drei
+im Juni 2026 wird der Vorsprung bestreitbar.</p>
+<h2>Zu prüfen</h2>
+<ol>
+<li>Für jede Anteilszeile eine primärnahe Quelle statt Analystenschätzung finden,
+   oder sie als unbelegt markieren. HBM-Marktanteile sind strukturell schwer
+   Tier 1a zu belegen, weil kein Hersteller HBM-Umsatz getrennt ausweist.</li>
+<li>Die Nvidia-Allokationsanteile gegen gemeldete HBM-Umsätze der drei Hersteller
+   plausibilisieren, sobald diese vorliegen.</li>
+<li>Prüfen, ob Samsungs HBM4-Zertifizierung in reale Auslieferung mündet; eine
+   Zertifizierung ist kein Liefervertrag und kein Anteil.</li>
+<li>Anteil gegen die Flächenrechnung aus
+   <a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a> und die Kapazität
+   je Werk aus <a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a> stellen.</li>
+</ol>
+<h2>Trägt nicht</h2>
+<p>Keinen Befund. Alle Anteilszahlen sind TrendForce oder Counterpoint, also
+Warnsignal, kein Beleg. Keine Aussage über HBM-Preise oder -Margen je Hersteller.
+Die Jensen-Huang-Zertifizierungsaussage ist eine Firmenaussage auf einer
+Veranstaltung, über Presse gelesen — näher an primär, aber nicht nachgeprüft.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Hersteller weist HBM-Umsatz getrennt aus, oder Nvidia nennt die Allokation
+selbst. Dann ersetzt ein Befund diese Sammlung. Oder SK Hynix' Anteil fällt in
+zwei Folgequartalen unter 50 Prozent — dann ist der Vorsprung keine Führung mehr,
+sondern ein knapper Vorrang.</p>
+<h2>Ablesung</h2>
+<p>Überwiegend Branchendienste (TrendForce, Counterpoint via Chosun Biz) und
+Presseberichte (Astute Group, Yahoo Finance, KED Global), also Warnsignal, kein
+Befund. Nvidia-Zertifizierung: Aussage Jensen Huang vom 05.06.2026, über Presse.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></li>
+<li><a href="../memory_earnings/mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

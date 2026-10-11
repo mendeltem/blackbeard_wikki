@@ -1,0 +1,81 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Historische Satellitenbilder wirken auf Globus-Zoom statisch; sichtbarer Wandel braucht Hotspots und Split-Vergleich</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">web_globes</a> › <a href="../index.html#findings">Befund</a></div><h1>Historische Satellitenbilder wirken auf Globus-Zoom statisch; sichtbarer Wandel braucht Hotspots und Split-Vergleich</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-07</span><span>Herkunft</span><span>Chat Earth Digital Twin (claude.ai), 2026-10-02</span><span>Zuletzt geändert</span><span>2026-10-07 knowledge/web_globes: Bereich angelegt (Kachelquellen, Cesium-Fallen, Wandel-Darstellung)</span><span>Verweist auf</span><span><a href="free-satellite-tile-sources.html">Echte Satellitenbilder im Browser ohne API-Key: Esri World Imagery und NASA GIBS</a> <span class="muted small">(web_globes)</span></span><span>Verwiesen von</span><span><a href="free-satellite-tile-sources.html">Echte Satellitenbilder im Browser ohne API-Key: Esri World Imagery und NASA GIBS</a> <span class="muted small">(web_globes)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/web_globes/findings/global-imagery-change-is-local.md">knowledge/web_globes/findings/global-imagery-change-is-local.md</a></span></div><h2>Aussage</h2>
+<p>Ein Jahr-Schieberegler über NASA-GIBS-Tagesbilder (MODIS, ~250 m) zeigt auf
+globaler Zoomstufe fast keinen Unterschied zwischen z. B. 2003 und 2019:
+was sich global sichtbar ändert, sind Wolken und Schneelage, nicht die
+Landoberfläche. Der Nutzer liest das als "funktioniert nicht".</p>
+<p>Wandel wird sichtbar durch drei Mittel zusammen:
+1. <strong>Hotspots anfliegen</strong>, an denen die Änderung die Kachelauflösung
+   übersteigt: Aralsee (45.2 N, 59.4 O), Küste Dubai (25.05 N, 55.2 O),
+   Rondônia/Amazonas (-10.5 S, -63.5 W), Lake Mead (36.2 N, -114.6 W),
+   Drei-Schluchten-Stausee (30.8 N, 111.0 O), Las Vegas (36.12 N, -115.17 W).
+2. <strong>Split-Screen</strong>: historische Ebene mit <code>splitDirection</code> links, aktuelle
+   Esri-Ebene rechts, Trennlinie per Maus; der Unterschied springt ins Auge,
+   wo Nebeneinander-Umschalten unsichtbar bleibt.
+3. <strong>Monatswahl</strong> statt fester Jahresmitte: Januar gegen Juli macht
+   Saisonalität (Schnee, Vegetation) auch global sichtbar.</p>
+<h2>Trägt</h2>
+<p>Jede Zeitreisen-Funktion auf Globus- oder Kartenseiten (Earth Digital Twin,
+Atlas-Seiten mit Vorher/Nachher). Allgemeiner: ein Regler, dessen Effekt
+unterhalb der Darstellungsauflösung liegt, braucht kuratierte Beispiele,
+sonst gilt das Feature als kaputt.</p>
+<h2>Trägt nicht</h2>
+<p>Hochauflösende historische Stapel (z. B. Google Earth Engine, Landsat auf
+30 m serverseitig gerendert); dort ist Wandel auch ohne Hotspot-Kuratierung
+sichtbar. Statistische Änderungsdetektion; hier geht es nur um Wahrnehmung.</p>
+<h2>Bruchindikator</h2>
+<p>Eine frei nutzbare Kachelquelle mit hochauflösenden Jahresmosaiken; dann
+entfällt die Begründung über die 250-m-Grenze.</p>
+<h2>Ablesung</h2>
+<p>Eigene Beobachtung im Chat 2026-10-02 (Nutzerrückmeldung "doesn't change
+much", danach Umbau auf Hotspots plus Split). Hotspot-Koordinaten sind die
+im Projekt verbauten Werte, Änderungsgeschichte der Orte allgemeinkundig.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="free-satellite-tile-sources.html">free-satellite-tile-sources</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

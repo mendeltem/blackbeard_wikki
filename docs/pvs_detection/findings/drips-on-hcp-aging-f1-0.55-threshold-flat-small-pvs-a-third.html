@@ -1,0 +1,74 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>DRIPS auf HCP-Aging: F1 0,55-0,58 ohne Training, Arbeitspunkt 0,15-0,2 stabil, ein Drittel der 1-2-Voxel-PVS -- Frangi bei 0,28</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>DRIPS auf HCP-Aging: F1 0,55-0,58 ohne Training, Arbeitspunkt 0,15-0,2 stabil, ein Drittel der 1-2-Voxel-PVS -- Frangi bei 0,28</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>PVS-Arena Alita, Versuch C1 (DRIPS auf allen 200 HCP-Aging-Faellen, CPU) und Clara wp5 (Frangi), 2026-10-07/08</span><span>Zuletzt geändert</span><span>2026-10-08 pvs_detection: DRIPS on 200 HCP-Aging cases F1 0.55-0.58, OOF threshold stable, small PVS a third; Frangi 0.28</span><span>Verweist auf</span><span><a href="valdo-interrater-ceiling-and-drips-first-numbers.html">VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision</a> <span class="muted small">(pvs_detection)</span><br><a href="hcp-aging-labels-are-mostly-unet-silver.html">HCP-Aging-PVS: 160 von 200 Masken sind U-Net-Vorhersagen, die 40 Handfaelle sind nicht gekennzeichnet; VALDO-Rater stimmen nur zu F1 0,20 ueberein</a> <span class="muted small">(pvs_detection)</span><br><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">Empfindlichkeit lohnt nur, wenn etwas die zusaetzlichen Kandidaten trennen kann</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../lesion_detection_method/rules/operating-points-do-not-transfer.html">Arbeitspunkte gehoeren zum Modell und zum Scanner, nie zu einem anderen Lauf</a> <span class="muted small">(lesion_detection_method)</span></span><span>Verwiesen von</span><span><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">Auf klinischem 1-mm-T1 fuehrt das auf klinischen T1 trainierte Netz (F1 0,44), findet aber die kleinsten PVS am schlechtesten; das synthetisch trainierte Netz findet sie am besten</a> <span class="muted small">(pvs_detection)</span><br><a href="pvs-chain-as-built-2026-10.html">Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.md">knowledge/pvs_detection/findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.md</a></span></div><h2>Aussage</h2>
+<p>Auf allen 200 HCP-Aging-Faellen (T2 0,8 mm; Labels: 40 Hand, 160 U-Net-Silber, nur weisse Substanz) erreicht DRIPS
+(synthetisch trainiert, Standardschwelle 0,1, CPU 70 s/Fall) Instanz-F1 0,549 [0,536; 0,562]; auf die SynthSeg-WM-Maske
+beschnitten 0,584 (die Beschneidung entfernt nur Nicht-Annotiertes, also Label-Abdeckung, kein Modellgewinn). Recall 0,65,
+Precision 0,51-0,56, Zaehlkorrelation je Fall Spearman 0,67-0,69. Schwellenkurve: Maximum 0,559 bei 0,15-0,2, out-of-fold
+gewaehlte Falten-Schwellen 0,15/0,2/0,15/0,2/0,2 -&gt; OOF-F1 0,558: der Arbeitspunkt ist auf 200 Faellen stabil, auf VALDO mit
+12 Faellen springt er (0,1-0,3). Precision steigt mit der Schwelle bis 0,69, F1 nicht -- dieselbe flache Kurve wie auf VALDO.
+Groessenklassen (Recall): 1-2 Voxel 0,33 bei Schwelle 0,1, 0,24 bei OOF-Schwelle; 3-5: 0,57; 6-20: 0,81; &gt;20: 0,96.
+Frangi mit festem Perzentil (99,0) auf denselben Daten: F1 0,279, Klasse 1-2 0,12; bei 99,8: 0,19 und 0,01.</p>
+<h2>Traegt</h2>
+<p>Grundlinie und Arbeitspunkt fuer die PVS-Arena: DRIPS bei 0,1 plus Trenner (nicht hoehere Schwelle), weil die OOF-Schwelle
+Precision mit den kleinsten PVS bezahlt (0,33 -&gt; 0,24), die das Nutzerziel ausdruecklich will. Bestaetigt auf der dritten
+Laesionslinie: Schwellen sind Arbeitspunkte, Fortschritt braucht einen Trenner.</p>
+<h2>Traegt nicht</h2>
+<p>Experten-Wahrheit: 160 der 200 Masken stammen aus einem Frangi+U-Net; die Zahl misst Uebereinstimmung damit. Die ehrlichen
+Punkte sind VALDO (0,33-0,35, Inter-Rater 0,29) und spaeter EPVS-2024. Basalganglien sind in HCP nicht markiert.</p>
+<h2>Bruchindikator</h2>
+<p>Die 40 Handfaelle werden bekannt und DRIPS liegt dort deutlich unter 0,5; oder eine Ortsregel/zweite Stufe hebt den F1 nicht.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/hcp-aging/{drips-t010,drips-t010-wm,frangi-p990}/zusammenfassung.json, drips-t010_schwellenkurve.json
+(skripte/schwellenkurve_oof.py), ARBEIT.md 02:00. Daten OpenNeuro ds005595 (CC BY-ND, lokal).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="valdo-interrater-ceiling-and-drips-first-numbers.html">valdo-interrater-ceiling-and-drips-first-numbers</a></li>
+<li><a href="hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+<li><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../../lesion_detection_method/rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

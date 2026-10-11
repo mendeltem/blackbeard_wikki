@@ -1,0 +1,131 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>Projekt pvs-arena (Alita), ARBEIT.md Abschnitte F1, F6.2, F3, QC-Betrachter 2026-10-08</span><span>Zuletzt geändert</span><span>2026-10-08 pvs_detection: EPVS 2024 tournament prepared (rounds, expectations, winner recipe, terms of use)</span><span>Verweist auf</span><span><a href="candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich</a> <span class="muted small">(pvs_detection)</span><br><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">Auf klinischem 1-mm-T1 fuehrt das auf klinischen T1 trainierte Netz (F1 0,44), findet aber die kleinsten PVS am schlechtesten; das synthetisch trainierte Netz findet sie am besten</a> <span class="muted small">(pvs_detection)</span><br><a href="drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">DRIPS auf HCP-Aging: F1 0,55-0,58 ohne Training, Arbeitspunkt 0,15-0,2 stabil, ein Drittel der 1-2-Voxel-PVS -- Frangi bei 0,28</a> <span class="muted small">(pvs_detection)</span><br><a href="edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.html">Die Edinburgh-PVS-Pipeline entscheidet in der Nachverarbeitung, in Voxeln, und ihr Kontrastfilter frisst die kleinen PVS</a> <span class="muted small">(pvs_detection)</span><br><a href="../../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">Eine anatomische Regel wird erst sichtbar gemacht, dann geglaubt: zeigen, was sie entfernt, getrennt nach Treffer und Fehlalarm</a> <span class="muted small">(lesion_detection_method)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/pvs-chain-as-built-2026-10.md">knowledge/pvs_detection/findings/pvs-chain-as-built-2026-10.md</a></span></div><h2>Aussage</h2>
+<p>Die Kette ist die Uebertragung der Mikroblutungs-Methode auf perivaskulaere Raeume:
+Kandidaten breit sammeln, dann eine zweite Stufe entscheiden lassen. Schritt fuer Schritt:</p>
+<ol>
+<li><strong>Eingabe.</strong> T1w 1 mm isotrop (RAS), dazu FLAIR auf T1 registriert (eigene Kohorte:
+   FLAIR 0,86 x 0,86 x 5 mm; HCP-Aging nur T2; VALDO Task 1 T1 + T2 + FLAIR). Keine
+   Schaedelentfernung, keine Intensitaetsnormierung ausser der je Detektor.</li>
+<li><strong>Detektor A: DRIPS</strong> (3D U-Net, oeffentliche Gewichte) auf T1, Posterior &gt;= 0,10.
+   Der empfindliche Detektor: auf HCP-Aging allein F1 0,58, kleine PVS (1-2 Voxel) Recall 0,34.</li>
+<li><strong>Detektor B: MedNet-PVS</strong> (klinischer Trainer) auf T1, Posterior &gt;= 0,50. Der praezise
+   Detektor: auf der eigenen Kohorte Praezision 0,77 gegen die Pipeline-Maske, findet aber
+   nur ein Viertel der Komponenten und fast keine kleinen.</li>
+<li><strong>Kandidatenpool.</strong> 26-verbundene Komponenten der Vereinigung A ∪ B. Eigene Kohorte,
+   73 Faelle: 36.618 Kandidaten (A-nur 21.467, beide 12.696, B-nur 2.455).</li>
+<li><strong>29 Merkmale je Komponente.</strong> Groesse, Ausdehnung, PCA-Linearitaet und Elongation;
+   Mitgliedschaft in A / B / beiden; Posterior-Mittel und -Maximum beider Detektoren;
+   z-normierte Intensitaet T1 und FLAIR innen und in der 1-Voxel-Huelle samt Differenz;
+   SynthSeg-Gruppe am Schwerpunkt und Gruppenanteile in der Huelle (WM, Basalganglien,
+   Kortex, Liquor, Stamm). Ohne T2, weil die eigene Kohorte keines hat.</li>
+<li><strong>Trenner.</strong> HistGradientBoosting, trainiert auf VALDO Task 1 (12 Faelle, 4.083
+   Kandidaten, 1.156 positiv = beruehrt die Rater-1-Referenz), Schwelle 0,4. Auf VALDO
+   leave-one-case-out F1 0,57 gegen 0,44 des besten Einzeldetektors; auf HCP-Aging in der
+   schwaechsten Form (nur DRIPS, nur T2, 5-fach nach Fall, 200 Faelle) 0,668 [0,657; 0,680]
+   gegen 0,584.</li>
+<li><strong>Ausgabe.</strong> Behaltene Komponenten als Maske und Liste (p, Voxel, Herkunft). Eigene
+   Kohorte: 12.130 von 36.618 behalten (33 %); von den 12.841 Kandidaten mit 1-2 Voxeln
+   nur 597 (5 %).</li>
+<li><strong>Vergleich ohne Wahrheit.</strong> Gegen die MATLAB-Pipeline-Maske (RORPO, Satz 11,
+   Kontrast- und Groessenfilter) F1 0,348 [0,321; 0,375], Recall 0,23, Praezision 0,83.
+   Das ist Uebereinstimmung, keine Genauigkeit: die Pipeline wirft kleine Komponenten
+   selbst weg und fehlt bei 31 von 103 Faellen.</li>
+<li><strong>Qualitaetskontrolle.</strong> Schichtbetrachter wie bei den Mikroblutungen (zwei grosse
+   axiale Bilder, links Pipeline-Maske blau, rechts schaltbar: behalten gruen, verworfen
+   orange, DRIPS, MedNet; Zaehler je Schicht und Fall als Uebereinstimmung beschriftet).
+   Nur lokal (127.0.0.1), fuer die Expertensicht. Dazu die verblindete Bewertungsseite
+   fuer 25 Faelle (Kandidaten bestaetigen statt zeichnen) als erste Handreferenz.</li>
+</ol>
+<h2>Traegt</h2>
+<ul>
+<li>Die Reihenfolge "breit sammeln, dann trennen" traegt auf drei Datensaetzen (VALDO,
+  HCP-Aging, eigene Kohorte in der Uebereinstimmung) und mit einer wie mit drei Sequenzen.</li>
+<li>Der Trenner ersetzt Ortsregeln: die Fehlalarme sitzen im WM und sind klein, eine
+  Regel nach Ort hilft auf VALDO nicht (wp7), Intensitaets- und Formmerkmale schon.</li>
+<li>Form, Posterior und Lage reichen fuer die Untergrenze (HCP: nur T2). Jede weitere
+  Sequenz hebt (VALDO-Ablationen: ohne T1 -0,009, ohne alles ausser Form deutlich mehr).</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Genauigkeit auf der eigenen Kohorte: ohne Handreferenz sind alle Zahlen dort
+  Uebereinstimmung mit einer Pipeline, die selbst nicht Wahrheit ist.</li>
+<li>Kleine PVS (1-2 Voxel): der Trenner im Rater-1-Stil wirft 95 % davon weg; ob das
+  richtig ist, entscheidet nur das Rating.</li>
+<li>HCP-Labels sind zu 80 % U-Net-Silber: ein Teil des HCP-Gewinns kann Silber-Echo sein.</li>
+<li>Dicke FLAIR (5 mm) auf der eigenen Kohorte: die FLAIR-Merkmale sind dort groeber als
+  im Training (VALDO).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Das Rating der 25 Faelle zeigt, dass die vom Trenner verworfenen kleinen Kandidaten
+mehrheitlich echte PVS sind (dann ist die Schwelle 0,4 oder der Rater-1-Stil falsch fuer
+die eigene Kohorte), oder die Praezision der behaltenen faellt unter 0,7.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messungen in pvs-arena/ARBEIT.md (F1, F2, F3, F6.1, F6.2), pvs_metrik.py
+(Komponenten-F1, Bootstrap ueber Faelle). Eigene Kohorte nur als Summen, nie Einzelfaelle;
+Betrachter und Bewertungsseite verlassen das Haus nicht. Code als Repository
+<code>pvs-arena-chain</code> (privat, ohne Daten).</p>
+<h2>Nachtrag 2026-10-08: oeffentliche QC-Seite</h2>
+<p>VALDO Task 1 (12 Faelle, Rater 1) als oeffentliche QC-Seite mit dem Wiki-Tool qc_slice_viewer:
+https://mendeltem.github.io/valdo-pvs-qc/ (Urteilsmodus und Vergleich der Teile; Zaehler der Seite =
+Messskript 903 / 335 / 878; CC BY-NC 4.0). Die eigene Kohorte bleibt lokal.</p>
+<h2>Nachtrag 2026-10-08: Turnier auf EPVS 2024 vorbereitet</h2>
+<p>Naechster Schritt nach CMB-Vorbild: eigenes Segmentierungsnetz statt fremder Detektoren, dann dieselbe zweite Stufe.
+Plan mit Erwartungen vorher (pvs-arena/TURNIER_EPVS.md): Runde 0 fertige Modelle zero-shot, Runde 1 alle 15 Netze des
+CMB-Turniers mit einem Rezept (T2 + invertiertes T1, 1 mm iso, 5 Falten nach Kohorte), Runde 1b komplette Rezepte mit
+FLAIR (nnU-Net ResEnc-M, MedNeXt wie der Challenge-Sieger), Stufe 2 auf dem Pool der zwei besten. Das CMB-Turnier laeuft
+ueber sein --manifest unveraendert, der zweite Kanal belegt den FRST-Platz. Sieger EPVS 2024 laut Ergebnispapier
+(arXiv 2512.18197): MedNeXt T1+T2+FLAIR, Dice+TopK-CE, Schwelle 0,3; Val R 0,58 / P 0,74. Daten: Terms of Use erlauben
+nur den Challenge-Zweck; Veroeffentlichung braucht die Zustimmung der Daten-PIs.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+<li><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs</a></li>
+<li><a href="drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third</a></li>
+<li><a href="edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.html">edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs</a></li>
+<li><a href="../../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">show-what-a-rule-removes-before-trusting-it</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

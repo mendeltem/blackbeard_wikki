@@ -1,0 +1,471 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>wmh_segmentation</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › wmh_segmentation</div><h1>wmh_segmentation</h1><p>WMH auf FLAIR: Hirnmaske als Teil des Modells, zweite Bias-Korrektur, Label-2-Regel, Schnittbilanz, Scanner, Literatur-Hebel</p><p class="muted small">WMH, White Matter Hyperintensities, FLAIR, Hirnmaske, HD-BET, Bias-Korrektur, 2D-U-Net, Challenge-Metrik, Dice, Scanner, Perzentile, MRT</p>
+<div class="stripe"><i class="ok" style="width:90.0%" title="getragen: 9"></i><i class="" style="width:10.0%" title="vorlaeufig: 1"></i></div><div class="counts"><span class="ok">9 getragen</span> <span class="">1 vorlaeufig</span></div><div class="small"><p>Automatische Segmentierung von White Matter Hyperintensities (WMH) auf FLAIR mit 2D-U-Nets.
+Messlatte ist die oeffentliche WMH Segmentation Challenge 2017 (Kuijf et al. 2019,
+doi:10.1109/TMI.2019.2905770; 60 Trainings- und 110 Testfaelle, Testsatz seit 2022
+oeffentlich, doi:10.34894/AECRSD). Alle Zahlen hier stammen von diesen 110 Testfaellen,
+gemessen mit der offiziellen Label-2-Regel, gepaart ueber Faelle mit Bootstrap-Intervall.
+Eigene Kohorten kommen nur als Summen ohne Namen vor. Das Werkzeug dazu:
+<code>tools/mri/mri_segmentation/wmh/</code> und das Repo wmhseg (Seite mit NiiVue-Betrachter).</p>
+<p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>WMH auf FLAIR mit 2D-U-Nets, Messlatte WMH Segmentation Challenge 2017 (110 oeffentliche
+Testfaelle, offizielle Label-2-Regel, gepaart mit Bootstrap). Eigene Zahlen darauf sind
+Eigenmessungen, keine Platzierungen; Sieger 0,80, Beobachter 0,77/0,79, eigenes ausgeliefertes
+Modell 0,725.</p>
+<p><strong>Getragen (Befunde):</strong> Die Hirnmaske ist Teil des Modells: 3 % Maskenunterschied verschieben
+ueber die z-Normierung das ganze Eingangsbild und kosten 0,030 Dice -- so viel wie eine ganze
+Architekturaenderung, die sich als genau dieses Artefakt erwies. Eine zweite Bias-Korrektur
+(<code>fast -B</code>) auf schon korrigierten Challenge-Daten hilft trotzdem (Dice +0,011, Laesions-Recall
++0,037, Training stabiler): sie wirkt als Intensitaetsvereinheitlichung ueber Scanner. Der
+Challenge-Code LOESCHT Vorhersagen auf Label 2 statt sie als Fehlalarm zu zaehlen (~0,006 Dice).
+Ein 2D-Netz sieht Schnitte, nicht Faelle: Schichtdicke 0,49 bis 6 mm ist Faktor 12 im Gewicht je
+Fall; mehr gemischte Daten kosteten 0,047 Dice auf der Zieldomaene. Ungesehene Scanner sind nicht
+die Schwachstelle, alle Ausfaelle liegen auf bekannten Geraeten; nach Voxelvolumen stratifizieren,
+nicht nach Standort. Literatur-Hebel: Ensemble +1,98 %, Augmentierung +1,38 % (Bereich!), TTA
++0,8-1,4, Ortsmerkmale bis +5; Instanzverluste, T1 und 3D bei 3 mm bringen nichts. Ein als Paket
+geaendertes Netz brachte nichts und kostete Laesions-Recall.</p>
+<p><strong>Regel:</strong> Randverhalten (Ausfaelle, Untergruppen) gepaart messen, mit fester Perzentilmethode
+und Bootstrap-Intervall; ein 5. Perzentil aus 30 Faellen traegt keinen Befund.</p>
+<p><strong>Risiko:</strong> Ziel und Maske nicht mit dem Bild gedreht: null Zielvoxel im Training, und der
+geglaettete Dice meldet einen verdaechtig NIEDRIGEN Verlust. Zielvoxel-Summe und
+Vorhersagevolumen zuerst pruefen.</p>
+<p><strong>Lesen bei:</strong> WMH, FLAIR, Hirnmaske, HD-BET, Bias-Korrektur, 2D-U-Net, gemischte Kohorten,
+Challenge-Metrik, Scanner-Robustheit, Perzentile, Dice-Verlust.
+- 11.10.: Pool 311 (5 identische Falten): mit gleichen Trainingsdaten sind 3D- und 2D-U-Net beim Dice gleich (+0,004 [-0,011; +0,020]), beide deutlich vor BIANCA (+0,111); der Dice haengt vor allem an der WMH-Last, deshalb geschichtet berichten (vorlaeufig, 2D 1/5 Falten).</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="measure-tails-paired-not-by-percentile"><summary><span class="type">Regel</span><span class="t"><a href="rules/measure-tails-paired-not-by-percentile.html">Randverhalten gepaart messen, nicht ueber Perzentile aus kleinen Gruppen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">5. Perzentil bei n = 30 ist Rauschen, Vorzeichen haengt an der Interpolation; gepaart und mit Intervall messen</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="rules/measure-tails-paired-not-by-percentile.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/rules/measure-tails-paired-not-by-percentile.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein gemeldeter Befund "das 5. Perzentil faellt von 0,313 auf 0,286, waehrend der Mittelwert
+steigt" hielt nicht: bei n = 30 haengt das VORZEICHEN an der Interpolationswahl.</p>
+<table>
+<thead>
+<tr>
+<th>Konvention</th>
+<th>alt</th>
+<th>neu</th>
+<th>Differenz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>statistics.quantiles(n=20)[0]</code> (exclusive, Vorgabe)</td>
+<td>0,313</td>
+<td>0,286</td>
+<td>-0,028</td>
+</tr>
+<tr>
+<td><code>numpy.percentile(a, 5)</code> (linear)</td>
+<td>0,384</td>
+<td>0,398</td>
+<td>+0,014</td>
+</tr>
+<tr>
+<td>numpy <code>method='lower'</code></td>
+<td>0,370</td>
+<td>0,327</td>
+<td>-0,043</td>
+</tr>
+<tr>
+<td>numpy <code>method='higher'</code></td>
+<td>0,401</td>
+<td>0,485</td>
+<td>+0,084</td>
+</tr>
+</tbody>
+</table>
+<p>Bootstrap (20 000 Ziehungen, dieselben 30 Faelle): das 5. Perzentil hat SD 0,106 gegen 0,029
+fuer den Mittelwert; der gemeldete Abfall war ein Viertel einer Standardabweichung. Bei n = 30
+wird P5 vom 2. und 3. kleinsten Fall getragen; ein zweiseitiges verteilungsfreies 95-%-Intervall
+dafuer existiert nicht mit endlicher Untergrenze.</p>
+<p>Regel:
+1. Perzentilmethode immer dazuschreiben und fuer alle Vergleiche EINE festlegen
+   (Empfehlung <code>numpy.percentile</code>, linear).
+2. Randverhalten gepaart messen: fallweise Differenz, Zahl verschlechterter Faelle, Zahl der
+   Ausfaelle unter fester Schwelle (Dice &lt; 0,5 und &lt; 0,6), McNemar. Das hat bei n = 30
+   Trennschaerfe, das Perzentil nicht.
+3. Zu jedem Randmass ein Bootstrap-Intervall; ohne Intervall kein Befund.
+4. Global (n = 110) ist P5 brauchbar, je Untergruppe (n = 10-30) nicht.</p>
+<h2>Traegt</h2>
+<p>Jede Zuverlaessigkeitsaussage ueber Untergruppen (Scanner, Kohorte, Lastklasse).</p>
+<h2>Traegt nicht</h2>
+<p>Grosse Gruppen (n &gt; 100), dort sind Perzentile stabil genug.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Eigene Nachrechnung 2026-09-13. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/unseen-scanners-are-not-the-weak-spot.html">unseen-scanners-are-not-the-weak-spot</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(8)</span></h2><details class="entry" id="same-data-3d-equals-2d-load-drives-dice"><summary><span class="type">Befund</span><span class="t"><a href="findings/same-data-3d-equals-2d-load-drives-dice.html">Gleiche Daten: 3D- und 2D-U-Net gleich gut; der Dice haengt vor allem an der WMH-Last</a></span><span class="badge ">vorlaeufig</span><span class="muted small">2026-10-11</span><span class="i">Pool 311, gleiche Falten: 3D = 2D beim Dice (+0,004), beide &gt;&gt; BIANCA (+0,111); Dice haengt an der WMH-Last (&lt;5 ml 0,57, &gt;15 ml 0,82)</span></summary><div class="body"><p class="small muted">Herkunft: Alita, WMH-Pool 311 (170 Challenge + 141 eigene Faelle), 5 identische Falten, offizielle Label-2-Auswertung, Schwelle 0,5 · <a href="findings/same-data-3d-equals-2d-load-drives-dice.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/same-data-3d-equals-2d-load-drives-dice.md">Markdown</a></p><h2>Aussage</h2>
+<p>Auf einem gemischten Pool (5 Falten geschichtet nach Kohorte x Aufnahmegeometrie x WMH-Volumen)
+erreichen ein anisotropes 3D-U-Net (Patch 16x96x96, Zentrumskopf) und ein 2D-U-Net mit Attention
+denselben Dice, wenn beide auf denselben Faellen trainiert werden. Der frueher gemessene 3D-Vorsprung
+auf der Challenge (+0,06) war ein Effekt der Trainingsdaten. 3D behaelt einen Vorteil beim
+Laesions-F1 auf 1-mm-isotropen Daten. Beide schlagen BIANCA deutlich.</p>
+<h2>Zahlen (Zwischenstand 11.10., 2D erst 1 von 5 Falten auf identischen Faellen)</h2>
+<ul>
+<li>3D vs 2D, 63 gemeinsame Faelle: Dice +0,004 [-0,011; +0,020], Laesions-F1 +0,016 [-0,005; +0,038];
+  1-mm-Kohorte Laesions-F1 +0,077 [+0,034; +0,123].</li>
+<li>3D vs BIANCA, alle 311: Dice 0,711 vs 0,600, +0,111 [+0,100; +0,123]; Laesions-F1 +0,328.</li>
+<li>Dice nach WMH-Last (3D, 311): &lt; 5 ml 0,573 (n=116), 5-15 ml 0,745 (n=77), &gt; 15 ml 0,824 (n=118).
+  Bei gleicher Last liegen eigene Kohorten unter der Challenge, vor allem bei wenig WMH (0,39-0,47 vs 0,70).</li>
+</ul>
+<h2>Folgerung</h2>
+<p>Dice je Kohorte nur zusammen mit der WMH-Last berichten (geschichtet), sonst sehen Kohorten mit
+wenig WMH schlechter aus, als das Modell ist. Architekturvergleiche nur auf identischen Trainingsdaten.
+Offen: Aequivalenztest nach allen 5 Falten, 2x2 Architektur x Daten, Resampling-Test der 1-mm-Kohorten.</p></div></details><details class="entry" id="architecture-package-brought-no-gain"><summary><span class="type">Befund</span><span class="t"><a href="findings/architecture-package-brought-no-gain.html">Ein als Paket geaendertes Netz brachte keinen Gewinn und kostete Laesions-Recall</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Neues Netz als Paket: Dice unentschieden, Laesions-Recall -0,038; Bausteine einzeln aendern</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/architecture-package-brought-no-gain.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/architecture-package-brought-no-gain.md">Markdown</a></p><h2>Aussage</h2>
+<p>Eine neue Architektur (3,1 M Parameter, 5x5-Eingang, starke Augmentierung, robuste Normierung,
+TTA, 60 statt 40 Epochen) schien +0,032 Dice besser. Auf einheitlicher Maske, gepaart auf
+110 Challenge-Testfaellen, Bootstrap-KI95:</p>
+<table>
+<thead>
+<tr>
+<th>Vergleich</th>
+<th>Dice</th>
+<th>Laesions-Recall</th>
+<th>Laesions-F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alt -&gt; neu, Einzelmodell</td>
+<td>-0,001 unentschieden</td>
+<td><strong>-0,038 schlechter</strong></td>
+<td>-0,013 unentschieden</td>
+</tr>
+<tr>
+<td>alt -&gt; Ensemble (3 Startwerte)</td>
+<td>-0,002 unentschieden</td>
+<td><strong>-0,037 schlechter</strong></td>
+<td>-0,003 unentschieden</td>
+</tr>
+</tbody>
+</table>
+<p>Ausfaelle praktisch gleich. Das auszuliefernde Modell blieb das alte. Weil die Architektur als
+PAKET geaendert wurde, ist unklar, welcher Teil schadet; Verdacht: die starke Augmentierung
+glaettet (8,9 Herde weniger je Fall bei gleichem Gesamtvolumen).</p>
+<p>Die Fehlerkette davor: zwei Modelle verglichen, ohne die Maskenherkunft zu pruefen, und den
+Unterschied dreimal hintereinander falsch erklaert (Perzentil, Vorverarbeitungskette,
+Augmentierung), bevor die Maske gefunden war. Regel: vor jedem Modellvergleich pruefen, ob
+beide Messungen dieselben Eingaben UND dieselben Masken benutzen -- und Bausteine einzeln
+aendern, sonst ist ein Negativbefund nicht zuordenbar.</p>
+<h2>Traegt</h2>
+<p>Jede Architekturentscheidung mit erwartetem Gewinn unter 0,03 Dice.</p>
+<h2>Traegt nicht</h2>
+<p>Datensaetze mit anderer Laesionslast; der Recall-Verlust kann dort anders ausfallen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Baustein des Pakets, einzeln gemessen, hebt Dice oder Laesions-Recall gepaart mit Intervall ohne Null.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, 110 oeffentliche Challenge-Testfaelle, 2026-09-13. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/brain-mask-is-part-of-the-model.html">brain-mask-is-part-of-the-model</a></li>
+<li><a href="findings/literature-dice-levers-for-wmh.html">literature-dice-levers-for-wmh</a></li>
+</ul></div></details><details class="entry" id="brain-mask-is-part-of-the-model"><summary><span class="type">Befund</span><span class="t"><a href="findings/brain-mask-is-part-of-the-model.html">Die Hirnmaske ist Teil des Modells, nicht Vorverarbeitung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">3 % Maskenunterschied = 0,030 Dice ueber die z-Normierung in der Maske; so gross wie der ganze Architekturgewinn</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/brain-mask-is-part-of-the-model.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/brain-mask-is-part-of-the-model.md">Markdown</a></p><h2>Aussage</h2>
+<p>Zwei Messungen desselben WMH-Modells (gleiche Gewichte, Schwelle 0,4, gleiche Metrik,
+praktisch gleiche FLAIR-Bilder) ergaben Dice <strong>0,688 gegen 0,719</strong> auf den 110 Testfaellen der
+WMH Segmentation Challenge 2017. Einziger Unterschied: die HD-BET-Hirnmaske aus zwei Laeufen.
+Keine der 110 Masken war identisch (im Mittel 24 685 abweichende Voxel, die neueren rund 3 %
+groesser). Der Uebertragungsweg: die z-Normierung des Eingangsbilds rechnet Mittelwert und
+Streuung INNERHALB der Maske; eine andere Maske verschiebt das Eingangsbild im ganzen
+Volumen (hier -0,10 Sigma, Streuungsverhaeltnis 1,12), nicht nur am Rand. Folge: keine der
+110 Vorhersagen identisch, im Mittel 832 abweichende Voxel.</p>
+<p>Groessenordnung: 0,030 Dice durch die Maske gegen 0,032 Dice, die eine ganze
+Architekturaenderung zu bringen schien -- und die sich als dieses Maskenartefakt erwies.</p>
+<p>Regel daraus: bei jedem Modellvergleich die Maskenherkunft mitprotokollieren; zwei Zahlen ohne
+gleiche Maske sind nicht vergleichbar. Ein ausgeliefertes Werkzeug, das zur Laufzeit eine
+andere Maske ableitet als die Trainingskette (z. B. <code>flair &gt; 0</code> statt HD-BET), hat damit ein
+drittes Modell. Gegenmittel in Pruefung: maskenunabhaengige Normierung (Median/IQR,
+Perzentile ohne Maske), Kriterium ist die kleinste Spanne ueber Maskenvarianten.</p>
+<h2>Traegt</h2>
+<p>Jedes Netz, das Intensitaeten innerhalb einer Maske normiert (z-Score, Perzentile in der Maske). Gilt fuer WMH ebenso wie fuer andere Laesionsaufgaben.</p>
+<h2>Traegt nicht</h2>
+<p>Modelle mit maskenfreier Normierung oder mit Normierung, die im Training zufaellig variiert wurde; dort ist der Effekt kleiner, aber nicht gemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Messreihe mit zwei verschiedenen Masken desselben Verfahrens, deren gepaarte Dice-Differenz unter 0,005 liegt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, 110 oeffentliche Challenge-Testfaelle (Kuijf et al. 2019, doi:10.1109/TMI.2019.2905770; Testsatz seit 2022 oeffentlich, doi:10.34894/AECRSD). Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/architecture-package-brought-no-gain.html">architecture-package-brought-no-gain</a></li>
+<li><a href="rules/measure-tails-paired-not-by-percentile.html">measure-tails-paired-not-by-percentile</a></li>
+</ul></div></details><details class="entry" id="literature-dice-levers-for-wmh"><summary><span class="type">Befund</span><span class="t"><a href="findings/literature-dice-levers-for-wmh.html">Belegte Dice-Hebel fuer WMH auf FLAIR, und was nachweislich nichts bringt</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ensemble +1,98 %, Augmentierung +1,38 %, TTA +0,8-1,4; Instanzverluste und T1 bringen nichts; Testsatz-Zahlen sind Eigenmessungen</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/literature-dice-levers-for-wmh.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/literature-dice-levers-for-wmh.md">Markdown</a></p><h2>Aussage</h2>
+<p>Kernquelle ist die Ablation des Challenge-Siegers auf genau dieser Aufgabe
+(Li et al. 2018, arXiv:1802.05203, Tab. 7, Split 48/12, Wilcoxon FDR-korrigiert).</p>
+<p><strong>Wirkt:</strong> Ensemble +1,98 % DSC (p = 0,012; 5 Modelle besser als 3, danach Saettigung).
+Augmentierung +1,38 % (p = 0,003); entscheidend ist der Bereich -- ein reales
+Voxelgroessenverhaeltnis von 1,21 lag ausserhalb von 0,9-1,1, dort war die Leistung am
+schlechtesten. TTA +0,8 bis +1,4 Dice-Punkte (Wang et al. 2019, arXiv:1807.07356).
+Ortsmerkmale +1,6 bis +5,3 Punkte (Ghafoorian et al. 2017, Sci Rep, doi:10.1038/s41598-017-05300-5);
+typischer Fehler des ortsblinden Netzes: Septum pellucidum. Als blosser Eingabekanal nur +0,03,
+als eigener Pfad mit Attention +1,44 (BAGAU-Net, arXiv:2010.09586, kleine Testmenge).</p>
+<p><strong>Bringt nichts oder schadet:</strong> Instanzverluste (blob loss, CC-DiceCE): Dice 0,771 -&gt; 0,771,
+Laesions-F1 -0,011 (arXiv:2511.17146; bei Mikroblutungen dagegen +0,052). T1 dazunehmen:
++0,62 % nicht signifikant, AVD schlechter (Li 2018). 3D statt 2D bei ~3 mm Schichtdicke: 2D
+axial und triplanar signifikant besser (TrUE-Net, Sundaresan et al. 2021). Kleinkomponenten
+loeschen: der Challenge-Auswertungscode filtert kein Mindestvolumen und nutzt 26er-Nachbarschaft,
+Loeschen senkt Recall und F1 direkt.</p>
+<p><strong>Eigene Gegenprobe:</strong> ein Ensemble aus drei Startwerten brachte beim Dice nichts (-0,002,
+unentschieden); die +1,98 % bestaetigen sich bei uns nicht, vermutlich weil die Startwerte
+fast deckungsgleich laufen.</p>
+<p><strong>Einordnung:</strong> Challenge-Sieger 0,80; Beobachter 0,77/0,79; gepoolte Meta-Analyse 0,78
+[0,74; 0,82]. Der Testsatz ist seit 2022 oeffentlich -- jede eigene Zahl darauf ist eine
+Eigenmessung, keine Platzierung, und nie mit Zahlen vergleichen, die Autoren auf eigenen Kohorten
+berichten. Kleine Laesionen sind die eigentliche Schwaeche (Laesions-Recall &lt; 10 mm3 deutlich
+unter dem Gesamtwert, auch bei menschlichen Beobachtern); deshalb immer nach Groessenklassen berichten.</p>
+<h2>Traegt</h2>
+<p>Planung von Verbesserungsschritten an einem FLAIR-WMH-Netz: Reihenfolge Ensemble/TTA, Augmentierungsbereich, Ortsmerkmale.</p>
+<h2>Traegt nicht</h2>
+<p>Uebertragung der Prozentzahlen auf andere Daten; sie sind auf 12 Validierungsfaellen gemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Replikation mit anderem Vorzeichen bei einem der Hebel auf dem oeffentlichen Testsatz.</p>
+<h2>Ablesung</h2>
+<p>Peer-reviewed bzw. Preprint wie angegeben (arXiv-Nummern nicht alle nachgeprueft); eigene Gegenprobe Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/architecture-package-brought-no-gain.html">architecture-package-brought-no-gain</a></li>
+<li><a href="findings/second-bias-correction-helps-on-mixed-scanners.html">second-bias-correction-helps-on-mixed-scanners</a></li>
+</ul></div></details><details class="entry" id="official-label-2-rule-deletes-the-prediction"><summary><span class="type">Befund</span><span class="t"><a href="findings/official-label-2-rule-deletes-the-prediction.html">Die offizielle Challenge-Metrik loescht Vorhersagen auf Label 2, sie zaehlt sie nicht als Fehlalarm</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Challenge-Code loescht die Vorhersage auf Label 2; strengere Konvention ist ~0,006 Dice zu tief</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/official-label-2-rule-deletes-the-prediction.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/official-label-2-rule-deletes-the-prediction.md">Markdown</a></p><h2>Aussage</h2>
+<p>Am Quelltext der Challenge-Auswertung belegt (github.com/hjkuijf/wmhchallenge,
+<code>evaluation.py</code>, Zeilen 47-50): die Referenz wird auf Label 1 reduziert UND die Vorhersage
+wird auf allen Label-2-Voxeln (andere Pathologie) geloescht:</p>
+<pre><code class="language-python">maskedTestImage   = sitk.BinaryThreshold(testImage, 0.5, 1.5, 1, 0)   # Referenz: nur Label 1
+nonWMHImage       = sitk.BinaryThreshold(testImage, 1.5, 2.5, 0, 1)   # 0 genau auf Label 2
+maskedResultImage = sitk.Mask(resultImage, nonWMHImage)               # Vorhersage dort geloescht
+</code></pre>
+<p><code>testImage</code> ist die Referenz (irrefuehrend benannt), <code>resultImage</code> die Vorhersage. Also:
+<code>ref = (ref == 1)</code> und <code>pred = pred &amp; (ref != 2)</code>. Eine Konvention, die die Vorhersage stehen
+laesst und als Fehlalarm zaehlt, ist zu streng: an fuenf Modellen auf 110 Testfaellen
+<strong>+0,005 bis +0,007 Dice</strong> (z. B. 0,7195 -&gt; 0,7263), AVD etwa -3 Prozentpunkte,
+Laesions-F1 +0,001, Laesions-Recall exakt unveraendert (er haengt nur an Referenzkomponenten --
+das ist die Probe, dass richtig gerechnet wurde). 42 der 110 Faelle tragen Label 2; der Median
+der fallweisen Differenz ist 0, das Maximum +0,49 in einem Fall.</p>
+<p>Monatelang liefen im Projekt zwei Konventionen nebeneinander, und Zahlen aus beiden standen in
+einer Tabelle. Vor jedem Vergleich pruefen, mit welcher Funktion gemessen wurde.</p>
+<h2>Traegt</h2>
+<p>Jede Zahl, die mit der Challenge-Rangliste (sysu_media 0,80 usw.) verglichen werden soll.</p>
+<h2>Traegt nicht</h2>
+<p>Eigene Kohorten ohne Label 2; dort ist die Frage gegenstandslos.</p>
+<h2>Bruchindikator</h2>
+<p>Die Veranstalter aendern <code>evaluation.py</code>.</p>
+<h2>Ablesung</h2>
+<p>Quelltext der Challenge-Auswertung, gelesen 2026-09-13; eigene Nachrechnung an fuenf Modellen. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/literature-dice-levers-for-wmh.html">literature-dice-levers-for-wmh</a></li>
+</ul></div></details><details class="entry" id="second-bias-correction-helps-on-mixed-scanners"><summary><span class="type">Befund</span><span class="t"><a href="findings/second-bias-correction-helps-on-mixed-scanners.html">Eine zweite Bias-Korrektur hilft auf gemischten Scannern, obwohl sie nichts korrigieren sollte</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">`fast -B` auf schon korrigierten Daten: ohne ihn Dice -0,011 und Laesions-Recall -0,037, Startwert-Streuung dreifach</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/second-bias-correction-helps-on-mixed-scanners.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/second-bias-correction-helps-on-mixed-scanners.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Challenge-Daten sind bereits mit SPM12 bias-korrigiert (Li et al. 2018). Ein zweiter
+Durchgang mit FSL <code>fast -B</code> war deshalb a priori ueberfluessig und wurde gestrichen.
+Gemessen ist das Gegenteil: 3 gegen 3 Startwerte, 2D-U-Net, 40 Epochen, dieselben 12
+Validierungs- und 110 Testfaelle, offizielle Metrik.</p>
+<table>
+<thead>
+<tr>
+<th>Kette</th>
+<th>Dice je Startwert</th>
+<th>Mittel</th>
+<th>Streuung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mit <code>fast -B</code></td>
+<td>0,7689 / 0,7701 / 0,7719</td>
+<td>0,7703</td>
+<td>0,0030</td>
+</tr>
+<tr>
+<td>ohne <code>fast -B</code></td>
+<td>0,7636 / 0,7588 / 0,7551</td>
+<td>0,7591</td>
+<td>0,0085</td>
+</tr>
+</tbody>
+</table>
+<p>Gepaart ueber 110 Faelle: Dice <strong>-0,011</strong> [-0,016; -0,006], Laesions-Recall <strong>-0,037</strong>
+[-0,045; -0,028], Laesions-F1 unentschieden. Welch ueber Startwerte p = 0,034.
+Deutung: <code>fast -B</code> wirkt hier nicht als Bias-Korrektur, sondern als Intensitaets-
+Vereinheitlichung ueber Scanner hinweg; dazu passt, dass der Laesions-Recall (FINDEN schwacher
+Herde) viel staerker leidet als der Dice. Nebenbefund: ohne den Schritt streut das Training
+ueber Startwerte fast dreimal so stark -- der Schritt stabilisiert auch das Training.</p>
+<p>Die Schaetzung der Groesse ist dreimal gewandert (0,013 -&gt; 0,009 -&gt; 0,011), jedes Mal durch
+einen weiteren Lauf. Belastbar: Richtung sicher, Groesse etwa 0,01, keine dritte Nachkommastelle.</p>
+<h2>Traegt</h2>
+<p>Training auf FLAIR aus mehreren Scannern, wenn die Vorverarbeitungskette ohnehin ein FSL-<code>fast</code> enthaelt. Die Heuristik "nichts zweimal anwenden" bleibt gut, ersetzt aber die Messung nicht.</p>
+<h2>Traegt nicht</h2>
+<p>Einzelscanner-Daten; dort ist der Effekt nicht gemessen. Und: 3 gegen 3 Startwerte sind duenn, das Intervall ist ueber Faelle gerechnet, nicht ueber Laeufe.</p>
+<h2>Bruchindikator</h2>
+<p>Fuenf oder mehr Startwerte je Kette ohne Unterschied im Laesions-Recall.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung auf den 110 oeffentlichen Challenge-Testfaellen; Vorverarbeitung der Veranstalter: Li et al. 2018, arXiv:1802.05203. Tier 1a (eigene Messung), 1b (Paper).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/brain-mask-is-part-of-the-model.html">brain-mask-is-part-of-the-model</a></li>
+<li><a href="findings/literature-dice-levers-for-wmh.html">literature-dice-levers-for-wmh</a></li>
+</ul></div></details><details class="entry" id="slices-not-cases-weigh-in-2d-training"><summary><span class="type">Befund</span><span class="t"><a href="findings/slices-not-cases-weigh-in-2d-training.html">Ein 2D-Netz sieht Schnitte, nicht Faelle: Schichtdicke bestimmt das Gewicht je Fall</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Schichtdicke 0,49 bis 6 mm = Faktor 12 im Gewicht je Fall; 60 Challenge-Faelle nur 13,5 % der Schnitte; 0,772 gegen 0,725</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/slices-not-cases-weigh-in-2d-training.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/slices-not-cases-weigh-in-2d-training.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bei gemischten Kohorten zaehlt fuer ein 2D-Netz die Zahl der Schnitte mit Hirn je Fall, und
+die haengt an der Schichtdicke. Gemessen an 201 Faellen aus vier Quellen (echte Hirnmasken,
+Schnitte ohne Hirn uebersprungen): die 60 Challenge-Trainingsfaelle (3 mm) stellen 44 Schnitte
+je Fall und nur <strong>13,5 %</strong> aller 19 650 Schnitte; eine duenngeschichtete Kohorte (0,49 mm) mit
+20 Faellen stellt 293 je Fall und 29,8 %. Zwischen 0,49 und 6 mm liegt ein <strong>Faktor 12</strong> im
+Gewicht je Fall. Jeder Challenge-Schnitt stand gegen 6,4 fremde, obwohl der Testsatz zu 100 %
+aus der Challenge-Domaene stammt.</p>
+<p>Dazu passt: dasselbe Netz erreicht, auf den 60 Challenge-Faellen allein trainiert, Dice 0,772
+auf den 110 Testfaellen; auf allen 201 Faellen nur 0,725 (offizielle Regel). Mehr Daten
+kosteten 0,047. Die Schnittbilanz ist dafuer eine plausible und vor allem behebbare Erklaerung
+(Schnitte je Fall deckeln oder je Kohorte gewichten), anders als "Domaenenverschiebung".</p>
+<p>Verworfene Vermutung, nicht erneut aufrollen: ein Orientierungsfehler beim Schneiden. Bei
+allen 201 Faellen ist Achse 2 die S/I-Achse; die duennen Kohorten sind schlicht duenn
+aufgenommen.</p>
+<h2>Traegt</h2>
+<p>Jedes 2D- oder 2,5D-Netz auf gemischten Kohorten, auch ausserhalb von WMH. Vor dem Training <code>maske.any(axis=(0,1)).sum()</code> je Fall zaehlen.</p>
+<h2>Traegt nicht</h2>
+<p>3D-Netze mit Patches gleicher physikalischer Groesse.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Lauf mit gedeckelten Schnitten je Fall, der den Abstand 0,772 gegen 0,725 nicht verkleinert.</p>
+<h2>Ablesung</h2>
+<p>Eigene Zaehlung und Messung; Challenge-Zahlen oeffentlich, Zusammensetzung der uebrigen Kohorten hier bewusst nicht genannt. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/official-label-2-rule-deletes-the-prediction.html">official-label-2-rule-deletes-the-prediction</a></li>
+<li><a href="findings/unseen-scanners-are-not-the-weak-spot.html">unseen-scanners-are-not-the-weak-spot</a></li>
+</ul></div></details><details class="entry" id="unseen-scanners-are-not-the-weak-spot"><summary><span class="type">Befund</span><span class="t"><a href="findings/unseen-scanners-are-not-the-weak-spot.html">Ungesehene Scanner sind nicht die Schwachstelle; schwierige Faelle auf bekannten Geraeten sind es</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Testsatz hat fuenf Geraete, nicht drei Standorte; alle Ausfaelle auf bekannten Scannern</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="findings/unseen-scanners-are-not-the-weak-spot.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/unseen-scanners-are-not-the-weak-spot.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Challenge-Testsatz traegt drei Standortnamen, aber <strong>fuenf Geraete</strong>: "Amsterdam" zerfaellt
+nach FLAIR-Voxelvolumen (<code>nib.load(f).header.get_zooms()</code>) in drei Scanner (3,52 / 1,75 /
+4,72 mm3), von denen zwei weder im Challenge-Training noch in den eigenen Trainingsdaten
+vorkommen. Dice des ausgelieferten Modells je Geraet (n = 30 / 10 / 10 / 30 / 30):</p>
+<table>
+<thead>
+<tr>
+<th>Scanner</th>
+<th>Mittel</th>
+<th>schlechtester Fall</th>
+<th>Faelle &lt; 0,5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amsterdam 3,52 mm3 (GE 3T, bekannt)</td>
+<td>0,723</td>
+<td>0,452</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Amsterdam 1,75 mm3 (<strong>ungesehen</strong>)</td>
+<td>0,718</td>
+<td>0,513</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Amsterdam 4,72 mm3 (<strong>ungesehen</strong>)</td>
+<td>0,710</td>
+<td>0,532</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Singapore 3,00 mm3 (bekannt)</td>
+<td>0,759</td>
+<td>0,321</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Utrecht 2,76 mm3 (bekannt)</td>
+<td>0,707</td>
+<td>0,235</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Die 20 Faelle der beiden ungesehenen Geraete haben keinen einzigen Ausfall; alle fuenf
+Ausfaelle unter 0,5 liegen auf bekannten Scannern. Das dreht die Suchrichtung: nicht
+Scanner-Robustheit, sondern die Fehlerart der Ausfaelle untersuchen. Und: immer nach den
+fuenf Geraeten stratifizieren, nicht nach dem Standortfeld -- "Amsterdam" ist selbst ein
+Mittel ueber Voxelvolumina mit Faktor 2,7.</p>
+<h2>Traegt</h2>
+<p>Robustheitsfragen bei FLAIR-WMH-Netzen auf 3T-Daten vergleichbarer Protokolle.</p>
+<h2>Traegt nicht</h2>
+<p>Stark abweichende Protokolle (1,5 T, andere Sequenzen) -- nicht gemessen. n = 10 je ungesehenem Geraet ist klein.</p>
+<h2>Bruchindikator</h2>
+<p>Ein neuer Scanner mit Ausfallrate ueber der der bekannten Geraete.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, 110 oeffentliche Challenge-Testfaelle, 2026-09-13. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/measure-tails-paired-not-by-percentile.html">measure-tails-paired-not-by-percentile</a></li>
+<li><a href="findings/slices-not-cases-weigh-in-2d-training.html">slices-not-cases-weigh-in-2d-training</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="empty-target-looks-like-a-low-loss"><summary><span class="type">Risiko</span><span class="t"><a href="risks/empty-target-looks-like-a-low-loss.html">Ein nicht mitgedrehtes Ziel liefert einen VERDAECHTIG NIEDRIGEN Verlust, keinen Fehler</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ziel nicht mitgedreht: 0 Zielvoxel im Training, geglaetteter Dice meldet perfekten Verlust</span></summary><div class="body"><p class="small muted">Herkunft: Projekt wmhseg (Alita), WMH-Linie 2026-09-12 bis 2026-09-18 · <a href="risks/empty-target-looks-like-a-low-loss.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/risks/empty-target-looks-like-a-low-loss.md">Markdown</a></p><h2>Aussage</h2>
+<p>Drei Tage Rechenzeit gingen an eine Zeile: das Bild wurde fuer das 2D-Training mit
+<code>np.moveaxis</code> nach (z, x, y) gedreht, Ziel und Gueltigkeitsmaske aber nicht. <code>ziel[z]</code> griff
+damit sagittale Randebenen ab: <strong>0 von 8 219 WMH-Voxeln</strong> erreichten je das Training.</p>
+<p>Drei Dinge machten den Fehler unsichtbar:
+- <code>crop_pad</code> fuellt jede Form stumm auf 256x256 auf; keine Form- und keine Wertpruefung schlug an.
+- Der geglaettete Dice-Verlust (<code>+1.0</code> in Zaehler und Nenner) ist bei leerem Ziel und leerer
+  Vorhersage perfekt: Verlust 0,007 gegen 0,086 beim gesunden Lauf. <strong>Der niedrige Verlust war
+  das Symptom, nicht die Guete.</strong>
+- Ausserhalb der Gueltigkeitsmaske gab es keinen Gradienten; das Netz blieb bei p ~ 0,5, und bei
+  Schwelle 0,3 lag der Median der Vorhersage bei 74 % der Hirnmaske. Recall 0,74-0,84 und
+  Herd-F1 bis 0,89 sahen gut aus, weil EIN Klecks jede Referenzlaesion trifft: die Herdmetrik
+  belohnt den Totalausfall.</p>
+<p>Gegenmittel: Bild, Ziel und Masken in EINER Laderoutine gemeinsam drehen. Bei Dice nahe null
+mit hohem Recall und Herdzahl 1 zuerst zwei Zahlen messen, bevor irgendetwas anderes gelesen
+wird: (1) Summe der Zielvoxel ueber die Trainings-Patches gegen die Referenzsumme, (2)
+Vorhersagevolumen gegen Hirnmaske. Gewinnt die Schwellensuche immer den untersten Gitterpunkt,
+ist die Karte gesaettigt und das Netz untrainiert. Einen Verlust UNTER dem des gesunden
+Vergleichslaufs nie als Fortschritt lesen.</p>
+<h2>Traegt</h2>
+<p>Jedes Segmentierungstraining mit geglaettetem Dice und getrennten Lade- oder Augmentierungswegen fuer Bild und Ziel.</p>
+<h2>Traegt nicht</h2>
+<hr />
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Eigener Vorfall 2026-09-15, am Code belegt. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/brain-mask-is-part-of-the-model.html">brain-mask-is-part-of-the-model</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

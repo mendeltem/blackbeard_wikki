@@ -11,13 +11,14 @@ Annehmen.** Ein überschriebener Stand, ein fremder Commit, eine stumm falsch
 gelesene Datei — in allen drei Fällen hat niemand einen Fehler gemacht, der
 sichtbar geworden wäre.
 
-Stand 2026-10-02. Ein Eintrag je Datei.
+Stand 2026-10-11. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
 | [Nicht in einen fremden Arbeitsbaum schreiben](rules/parallel-sessions-same-working-tree.md) | regel | getragen |
 | [Ein Dateiname, ein Zweck](rules/one-filename-two-contracts.md) | regel | getragen |
 | [Verknüpfte Seiten: eine Zuordnungsdatei, feste Adressen, Rückweg im Generator](rules/one-mapping-file-for-linked-pages.md) | regel | getragen |
+| [Menschen lesen HTML, Agenten schreiben Markdown](rules/humans-read-html-agents-write-markdown.md) | regel | getragen |
 
 ## Herkunft
 

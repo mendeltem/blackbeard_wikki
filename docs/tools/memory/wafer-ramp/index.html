@@ -1,0 +1,88 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>wafer-ramp</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../index.html">blackbeard_wikki</a><a href="../../../index.html">Start</a><a href="../../../rules.html">Regeln</a><a href="../../../todo.html">Offen</a><a href="../../../log.html">Protokoll</a><a href="../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../index.html">Start</a> › <a href="../../index.html">Werkzeuge</a> › wafer-ramp</div><h1>wafer-ramp</h1><p class="small muted">tools/memory/wafer-ramp · <a href="changelog.html">CHANGELOG</a> · <a href="install.html">INSTALL</a> · <a href="papers.html">PAPERS</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/tools/memory/wafer-ramp">GitHub</a></p><p>Rechnet den Hochlauf einer Fab zwischen zwei genannten Eckpunkten (Startmenge, Zielmenge, Zahl der Monate) und uebersetzt die Waferstarts in Erloes je Monat.</p>
+<h2>Wann verwenden</h2>
+<ul>
+<li>Eine Firma nennt nur Anfangs- und Endmenge eines Werks, der Monatsverlauf fehlt. Beispiel: SK Hynix M15X, 10k Wafer im Februar 2026, 55k bis 60k zum Jahresende.</li>
+<li>Es soll gezeigt werden, in welchem Monat der Zuwachs am groessten ist und wann er als Umsatz ankommt.</li>
+</ul>
+<h2>Wann nicht verwenden</h2>
+<ul>
+<li>Als Prognose. Die Kurvenform ist eine Annahme, keine Meldung. Das Werkzeug gibt nur zwei Formen her: S-Kurve und linear.</li>
+<li>Fuer Bits. Gerechnet wird in Waferstarts; die Umrechnung auf GB benutzt ein pauschales Tauschverhaeltnis gegenueber DDR5 und keine Ausbeutekurve.</li>
+<li>Fuer Gewinn. Herauskommt Erloes, nicht Marge.</li>
+</ul>
+<h2>Beispielaufruf</h2>
+<pre><code>python src/wafer_ramp.py --start 10 --ziel 57.5 --monate 11 --form s --preis 15 --faktor 3
+</code></pre>
+<p>Ausgabe (gekuerzt), Mengen in Tausend Wafern je Monat, Erloes in Mrd. USD je Monat:</p>
+<pre><code>Monat   Wafer   Zuwachs   Erloes   Umsatz ab
+1       10.000  -         0.140    Monat 5
+6       28.610  8.932     0.401    Monat 10
+7       39.381  10.771    0.551    Monat 11
+11      57.500  1.167     0.805    Monat 15
+</code></pre>
+<h2>Eingabe</h2>
+<ul>
+<li><code>--start</code>, <code>--ziel</code>: Wafer je Monat in Tausend, Eckpunkte wie gemeldet.</li>
+<li><code>--monate</code>: Zahl der Monate einschliesslich Start- und Zielmonat.</li>
+<li><code>--form</code>: <code>s</code> (logistisch) oder <code>linear</code>.</li>
+<li><code>--preis</code>: USD je GB fuer das gefertigte Produkt.</li>
+<li><code>--faktor</code>: Tauschverhaeltnis gegenueber DDR5 (HBM3E rund 3, HBM4 rund 4).</li>
+<li><code>--basis-gb</code>: GB je Wafer in DDR5-Aequivalent, Standard 2800.</li>
+<li><code>--versatz</code>: Monate zwischen Waferstart und Umsatz, Standard 4.</li>
+</ul>
+<h2>Ausgabe</h2>
+<p>Je Monat: Wafer je Monat, Zuwachs gegenueber Vormonat, Erloes je Monat in Mrd. USD, Monat der Umsatzwirkung. Als Text oder mit <code>--json</code> als JSON.</p>
+<h2>Annahmen, die im Ergebnis stecken</h2>
+<ul>
+<li>GB je Wafer = <code>basis_gb / faktor</code>. Bei 2800 und Faktor 3 sind das 933 GB, rund 26 Stapel zu 36 GB.</li>
+<li>Die S-Kurve ist eine Logistik mit Steilheit k = 0,9 und Mitte bei 55 Prozent der Laufzeit, beides ueber Parameter aenderbar. Sie ist auf die Eckpunkte normiert, trifft Start und Ziel also exakt.</li>
+<li>Der Umsatzversatz von vier Monaten ist eine Faustzahl fuer Fertigung, Stapeln, Test und Auslieferung.</li>
+</ul>
+<h2>Test</h2>
+<p><code>python -m unittest discover -s tests -v</code>, ausgefuehrt am 2026-10-02 unter Python 3.13.14 (Windows 10), 7 Tests, bestanden.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../search.js"></script></body></html>

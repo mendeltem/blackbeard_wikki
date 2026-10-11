@@ -1,0 +1,66 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Gasturbinen: Auftragsbestand der drei Hersteller</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">compute_bottlenecks</a> › <a href="../index.html#findings">Befund</a></div><h1>Gasturbinen: Auftragsbestand der drei Hersteller</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Projekt Artificial Intelligence (KI-Compute-Stack), Report Heavy-Duty Gas Turbines as AI Compute Bottleneck (Juli 2026), eingetragen 2026-10-02</span><span>Zuletzt geändert</span><span>2026-10-02 compute_bottlenecks: Thema angelegt (CoWoS, 800 VDC, CPO, Turbinen, Transformatoren, LiDAR)</span><span>Verweist auf</span><span><a href="../mechanisms/bottleneck-migration.html">Der bindende Engpass wandert</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../../memory_supply/mechanisms/capex-discipline-after-2023.html">Capex-Disziplin nach den Verlusten 2023</a> <span class="muted small">(memory_supply)</span><br><a href="../rules/announced-is-not-built.html">Angekündigt ist nicht gebaut</a> <span class="muted small">(compute_bottlenecks)</span></span><span>Verwiesen von</span><span><a href="../mechanisms/bottleneck-migration.html">Der bindende Engpass wandert</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../rules/announced-is-not-built.html">Angekündigt ist nicht gebaut</a> <span class="muted small">(compute_bottlenecks)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/findings/gas-turbine-order-backlog.md">knowledge/compute_bottlenecks/findings/gas-turbine-order-backlog.md</a></span></div><h2>Aussage</h2>
+<p>Stand der Hersteller laut Report:
+- GE Vernova Q1 2026 (gemeldet 22.04.2026): Gasturbinen-Bestand plus Slot-Reservierungen 100 GW nach 83 GW Ende 2025. Gesamtbestand 163 Mrd. USD. Aufträge 18,3 Mrd. USD bei 9,3 Mrd. USD Umsatz, Book-to-Bill 1,97. Segment Power 10,0 zu 5,0 Mrd. USD, also 2,0.
+- Siemens Energy Q2 GJ 2026 (gemeldet 12.05.2026): Auftragsbestand 154 Mrd. EUR. Gas Services Book-to-Bill 2,55. 60 GW fest plus 27 GW reserviert.
+- MHI GJ 2025 (gemeldet 12.05.2026): Bestand an Großgasturbinen 74 Einheiten (33 GW) nach 48 (21 GW). GTCC-Auftragseingang 2.652,6 zu Umsatz 992,2 Mrd. Yen, Book-to-Bill 2,67.</p>
+<p>Weltweite Aufträge Ende 2025 rund 110 GW gegen eine Fertigung von 60 bis 70 GW je Jahr, Verhältnis 1,6 bis 1,8. Der Ausbau ist verhalten: GE Vernova von rund 55 auf 70 bis 80 Turbinen je Jahr.</p>
+<h2>Trägt</h2>
+<p>Strom aus neuen großen Gaskraftwerken ist für Bestellungen von heute frühestens gegen 2030 verfügbar. Der Neubau von Rechenzentren hängt bis dahin an Brückenlösungen.</p>
+<h2>Trägt nicht</h2>
+<p>Dass der Bestand echt ist. Ein Teil sind Reservierungen, Doppelbestellungen sind möglich. Der Report nennt den Einbruch um 2000 als Präzedenz.</p>
+<h2>Bruchindikator</h2>
+<p>Book-to-Bill eines Gas-Segments fällt unter 1,0, oder Slot-Reservierungen werden storniert.</p>
+<h2>Ablesung</h2>
+<p>Quartalsberichte der drei Hersteller, Tier 1a. Weltweite Aufträge und Fertigungskapazität: Marktforschung, Tier nicht definiert. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../../memory_supply/mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
+<li><a href="../rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

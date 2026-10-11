@@ -1,0 +1,232 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>compute_bottlenecks</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › compute_bottlenecks</div><h1>compute_bottlenecks</h1><p>Engpässe außerhalb des Speichers: Packaging, Rackstrom, Optik, Turbinen, Transformatoren, Sensorik</p><p class="muted small">Investieren, Rechenzentrum, Strom, CoWoS, Zuteilung, AMD, Broadcom, Turbinen, Transformatoren, 800 V</p>
+<div class="stripe"><i class="warn" style="width:100.0%" title="vorschlag: 9"></i></div><div class="counts"><span class="warn">9 vorschlag</span></div><div class="small"><p>Engpässe beim Ausbau von KI-Rechenleistung außerhalb des Speichers: Packaging, Strom im Rack, Optik, Turbinen, Transformatoren, dazu Sensorik als Frühindikator für Physical AI. Berührt <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a> über Vorlaufzeiten und Refresh.</p>
+<p>Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis Juli 2026 (Sekundärsynthesen), gegen Primärquellen nicht nachgeprüft, deshalb alles <code>vorschlag</code>.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.</p>
+<p><strong>Kernstand:</strong> Der bindende Engpass wandert: GPU-Zuteilung → CoWoS → Netzanschluss → Turbinen/Transformatoren. CoWoS 70–80k auf 120–130k Wafer/Monat Ende 2026, Rubin braucht ~33 % mehr Fläche je Package. 800 V DC ab Rubin Ultra Kyber (~600 kW). Transformatoren 128–144 Wochen Lieferzeit. Gasturbinen-Book-to-Bill um 2. CPO erst zwischen Racks.</p>
+<p><strong>Zuteilung schlägt Datenblatt (These Mendel):</strong> Strom knapp → alle wollen die neueste Generation → Absatz folgt der CoWoS- und HBM4-Zuteilung (Nvidia &gt;50 %, AMD ~11 %), nicht dem Datenblatt. AMD MI455X auf dem Papier gleichauf mit Rubin, Menge rund ein Siebtel. Für Speicher gleichgültig, alle verbauen HBM.</p>
+<p><strong>Regel:</strong> Angekündigt ist nicht gebaut (Stufe nennen).</p>
+<p><strong>Lesen bei:</strong> Rechenzentrumsausbau, Strom, Packaging, Investieren in Infrastruktur.</p>
+<p><strong>Auf den Seiten:</strong> Karten <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=cowos-advanced-packaging">CoWoS</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=co-packaged-optics-cpo">CPO</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=800-vdc-rack-power">800 V DC</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=data-center-power-the-grid">Rechenzentrumsstrom</a>; Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?uc=data-center-power-the-grid">KI-Campus</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/TSM">TSMC</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/GEV">GE Vernova</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/VRT">Vertiv</a>.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="announced-is-not-built"><summary><span class="type">Regel</span><span class="t"><a href="rules/announced-is-not-built.html">Angekündigt ist nicht gebaut</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report Behind-the-Meter and Bridge Power (Juli 2026), eingetragen 2026-10-02 · <a href="rules/announced-is-not-built.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/rules/announced-is-not-built.md">Markdown</a></p><h2>Aussage</h2>
+<p>Angekündigte Kapazität (GW, Wafer, Stückzahlen) zählt erst als Bestand, wenn sie in Betrieb ist. Zwischen Ankündigung und Betrieb getrennt ausweisen: angekündigt, Ausrüstung bestellt, im Bau, in Betrieb. Beispiel aus dem Report: Eigenstrom mit Gas für US-Rechenzentren, rund 101 GW angekündigt, über 57 GW mit bestellter Ausrüstung, rund 7 GW im Bau, rund 2 GW in Betrieb (Mitte 2026). In Betrieb sind 2 % des Angekündigten.</p>
+<h2>Trägt</h2>
+<p>Die Pflicht, bei jeder Kapazitätszahl die Stufe zu nennen.</p>
+<h2>Trägt nicht</h2>
+<p>Dass Ankündigungen wertlos sind. Bestellte Ausrüstung mit Anzahlung ist ein härteres Signal als eine Pressemitteilung.</p>
+<h2>Bruchindikator</h2>
+<p>keiner, Enthaltsamkeitsregel</p>
+<h2>Ablesung</h2>
+<p>Beispielzahlen: RBC (Broker) und Cleanview, unzulässig als Befund, nur zur Veranschaulichung.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+<li><a href="../ai_demand_drivers/risks/gold-rush-demand.html">gold-rush-demand</a></li>
+<li><a href="findings/gas-turbine-order-backlog.html">gas-turbine-order-backlog</a></li>
+</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(6)</span></h2><details class="entry" id="allocation-beats-datasheet"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/allocation-beats-datasheet.html">Zuteilung schlägt Datenblatt</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt AI_news, These Mendel, 2026-10-03 · <a href="mechanisms/allocation-beats-datasheet.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/allocation-beats-datasheet.md">Markdown</a></p><h2>Aussage</h2>
+<p>These (Mendel, 2026-10-03): Das größte Problem von AMD und Broadcom ist nicht die Technik, sondern die Zuteilung knapper Fertigungskapazität gegen Nvidia. Weil Strom knapp ist, wollen alle Käufer die leistungsstärkste Generation je Watt. Die ist durch Packaging und HBM begrenzt. Wer die Zuteilung hält, verkauft alles, was er bauen kann.</p>
+<pre><code>Strom knapp → Leistung je Watt entscheidet → Nachfrage auf die neueste Generation
+→ neueste Generation begrenzt durch CoWoS und HBM4
+→ Absatz folgt der Zuteilung, nicht dem Datenblatt
+</code></pre>
+<p>Stand der Zuteilung 2026 (Analysten, kein Befund): TSMC-CoWoS gesamt rund 1,0 Mio. Wafer Nachfrage im Jahr, Kapazität Ende 2026 120.000 bis 140.000 Wafer je Monat, ausgebucht. Nvidia über 50 Prozent (800.000 bis 850.000 Wafer im Jahr, über 70 Prozent bei CoWoS-L), AMD rund 11 Prozent. Broadcom baut Kundenchips (Google TPU, Meta u. a.) auf denselben Linien und mit HBM. HBM4 für Rubin: SK Hynix 60 bis 70 Prozent, Samsung 20 bis 30 Prozent. Samsung soll Hauptlieferant für AMD MI455X werden, Qualifizierung offen.</p>
+<p>Beispiel Datenblatt gegen Menge: AMD MI455X (H2 2026) liegt auf dem Papier bei FP4 40 PF, FP8 20 PF, 432 GB HBM4, 23,3 TB/s und damit gleichauf oder vor Rubin (35 PF FP4 dicht, 288 GB). Gemessen ist MI455X noch nicht. Mengen: AMD Data Center Q2 2026 6,7 Mrd. USD inklusive EPYC (10-Q), Ausblick Konzern Q3 rund 13 Mrd. USD; Nvidia Data Center Q2 GJ2027 89,0 Mrd. USD, Rubin allein im Q3 rund 20 Mrd. USD. Zusätzliches Risiko für AMD: MI455X auf TSMC N2, Rubin auf N3.</p>
+<h2>Trägt</h2>
+<ul>
+<li>Warum ein Wettbewerber mit besserem Datenblatt kurzfristig wenig Anteil gewinnt: Stromknappheit verstärkt den Vorteil dessen, der die Zuteilung hält, statt ihn auszugleichen. Das folgt aus den Axiomen <a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">Bandbreiten-Engpass</a> und <a href="../ai_demand_drivers/mechanisms/induced-innovation.html">induzierte Innovation</a>.</li>
+<li>Wer nicht die neueste Nvidia-Generation bekommt, kauft, was verfügbar ist. AMD und ältere Generationen füllen die Lücke der Zuteilung.</li>
+<li>Für Speicher ist die Verteilung zwischen Nvidia, AMD und Broadcom nahezu gleichgültig: alle verbauen HBM, AMD je GPU sogar mehr (432 gegen 288 GB). Ein Anteilsgewinn von AMD erhöht eher den HBM-Bedarf, siehe <a href="../memory_supply/mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a>.</li>
+<li>Stromknappheit verkürzt den Austauschtakt (<a href="../ai_demand_drivers/mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a>): alte Racks fliegen früher raus, weil jedes MW mit der neuesten Generation mehr leistet.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>"Fortschrittlichste" ist nicht automatisch Nvidia. Hyperscaler optimieren auf Token je MW für die eigene Last; TPU und Trainium sind je Chip schwächer, können je Token aber günstiger sein. Daher die Broadcom-Aufträge.</li>
+<li>"Immer das Neueste" gilt, solange Strom der bindende Engpass ist. Wird Kapital bindend (<a href="../ai_demand_drivers/mechanisms/financing-limit.html">financing-limit</a>), kippt die Optimierung von Leistung je Watt zu Leistung je Dollar.</li>
+<li>Die Zuteilung ist nicht fest. Neue CoWoS-Linien (18 bis 24 Monate Vorlauf) und eine Samsung-HBM4-Freigabe können AMD 2027 mehr Menge geben.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>AMD oder Broadcom melden für 2027 eine deutlich höhere CoWoS-Zuteilung, oder TSMC nennt eine Verschiebung der Anteile.</li>
+<li>AMD-Data-Center-GPU-Umsatz wächst über mehrere Quartale schneller als Nvidias, ohne dass Nvidia Lieferprobleme meldet.</li>
+<li>Käufer installieren in stromknappen Regionen bewusst ältere oder billigere Generationen in großem Umfang.</li>
+</ul>
+<h2>Zu prüfen</h2>
+<ol>
+<li>CoWoS-Anteile Nvidia, AMD, Broadcom 2026 und 2027 aus TSMC-Calls oder Herstellerangaben statt Analysten.</li>
+<li>AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).</li>
+<li>Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.</li>
+<li>Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.</li>
+</ol>
+<h2>Ablesung</h2>
+<p>Umsätze AMD und Nvidia: 10-Q und 8-K, Tier 1a, über Suchauszüge gelesen. CoWoS- und HBM-Anteile: Silicon Analysts, Cortex Advisory, KGI (Analysten), kein Befund. MI455X-Spezifikation: Herstellerangabe über Presse, Tier 1b. Konvention dicht/Sparsity bei AMDs 40 PF nicht sicher geklärt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/cowos-capacity-and-package-area.html">cowos-capacity-and-package-area</a></li>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/induced-innovation.html">induced-innovation</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="../memory_supply/mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="../ai_demand_drivers/findings/custom-asics-use-hbm.html">custom-asics-use-hbm</a></li>
+</ul></div></details><details class="entry" id="bottleneck-migration"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/bottleneck-migration.html">Der bindende Engpass wandert</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report Behind-the-Meter and Bridge Power (Juli 2026), eingetragen 2026-10-02 · <a href="mechanisms/bottleneck-migration.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/bottleneck-migration.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Ausbau von KI-Rechenleistung hängt am jeweils knappsten Glied. Laut Projekt-Reports wanderte es von der GPU-Zuteilung (2023 bis 2024) über Packaging (CoWoS) und Netzanschluss (2024 bis 2025) zur Lieferkette für Turbinen, Generatoren und Transformatoren (ab 2025). Wird ein Glied entlastet, bindet das nächste.</p>
+<h2>Trägt</h2>
+<p>Schließt an den Befund hbm-gb-per-mw-three-generations an: Wenn zusätzliche HBM-Bits zusätzliche Megawatt brauchen, entscheiden die Glieder der Stromkette über die verbaubare Menge. Die Reihenfolge der Prüfung: Für die Menge an Speicher, die in einem Jahr verbaut werden kann, zählt das engste Glied, nicht die Speicherkapazität allein.</p>
+<h2>Trägt nicht</h2>
+<p>Dass Speicher nie bindet. Auch keine Datierung der Übergänge, die Jahreszahlen sind Lesart des Reports.</p>
+<h2>Bruchindikator</h2>
+<p>Ausgelieferte Beschleuniger liegen über zwei Quartale unbenutzt auf Lager, weil Strom fehlt (Strom bindet), oder Rechenzentren stehen mit Strom und ohne Beschleuniger (Chips oder Speicher binden).</p>
+<h2>Ablesung</h2>
+<p>Betreiber- und Herstellerkommentar in Calls, Tier 1a, uneinheitlich. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+<li><a href="findings/gas-turbine-order-backlog.html">gas-turbine-order-backlog</a></li>
+<li><a href="mechanisms/cowos-capacity-and-package-area.html">cowos-capacity-and-package-area</a></li>
+<li><a href="rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></details><details class="entry" id="cowos-capacity-and-package-area"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/cowos-capacity-and-package-area.html">CoWoS: Kapazität gegen Fläche je Package</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report CoWoS Capacity Crunch 2026 (Mai 2026), eingetragen 2026-10-02 · <a href="mechanisms/cowos-capacity-and-package-area.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/cowos-capacity-and-package-area.md">Markdown</a></p><h2>Aussage</h2>
+<p>TSMC hat die CoWoS-Kapazität laut Report von 13.000 bis 16.000 Wafern je Monat (Ende 2023) auf 70.000 bis 80.000 (Ende 2025) ausgebaut, Ziel Ende 2026 sind 120.000 bis 130.000. Ein neues Werk braucht 18 bis 24 Monate bis zur Serie. Zugleich wächst die Fläche je Package: Für Rubin nennt der Report rund 33 % mehr Kapazität, nur um die Stückzahl zu halten. Mehr Wafer heißt deshalb nicht im gleichen Maß mehr Beschleuniger.</p>
+<h2>Trägt</h2>
+<p>Die Stückzahl an Beschleunigern, und damit die verbaubare HBM-Menge, wächst langsamer als die CoWoS-Waferzahl.</p>
+<h2>Trägt nicht</h2>
+<p>Die Zahlen selbst. Sie stammen aus Trade Press und Brokern (DigiTimes, 36Kr, UBS) und sind nach der Wiki-Regel kein Befund. Auch der Anteil von NVIDIA (rund 60 %) ist eine Schätzung.</p>
+<h2>Bruchindikator</h2>
+<p>TSMC meldet freie CoWoS-Kapazität oder senkt die Ausbauplanung.</p>
+<h2>Ablesung</h2>
+<p>TSMC-Calls, Tier 1a, nur qualitativ (eng, wird ausgebaut). Waferzahlen: Trade Press, unzulässig als Befund.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/allocation-beats-datasheet.html">allocation-beats-datasheet</a></li>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+</ul></div></details><details class="entry" id="cpo-scale-out-before-scale-up"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/cpo-scale-out-before-scale-up.html">Optik im Package: erst zwischen Racks, dann im Rack</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report Co-Packaged Optics through 2030 (Mai 2026), eingetragen 2026-10-02 · <a href="mechanisms/cpo-scale-out-before-scale-up.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/cpo-scale-out-before-scale-up.md">Markdown</a></p><h2>Aussage</h2>
+<p>Co-Packaged Optics ersetzt steckbare Module zuerst in den Switches zwischen den Racks (Scale-out, ab 2025 und 2026). Die Verbindung zwischen Beschleunigern im Rack (Scale-up, NVLink) bleibt länger Kupfer, weil dort Latenz und Ausfallrate ein bis zwei Größenordnungen härter gefordert sind. Der Report nennt für NVIDIA 9 W je Port bei CPO gegen rund 30 W steckbar und optisches Scale-up frühestens mit der Generation Feynman (2028), nicht produktbestätigt.</p>
+<h2>Trägt</h2>
+<p>Reihenfolge der Einführung und damit, wo Optik-Umsätze zuerst anfallen.</p>
+<h2>Trägt nicht</h2>
+<p>Optische Anbindung von HBM. Der Report sieht sie vor 2030 nur als Demonstrator. Auch kein Ende steckbarer Module.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Hersteller liefert optisches Scale-up in Serie vor 2028, oder CPO-Switches fallen im Feld mit höheren Ausfallraten auf als steckbare Module.</p>
+<h2>Ablesung</h2>
+<p>Produktankündigungen von NVIDIA, Broadcom, TSMC, Tier 1b. Zeitplan nach 2026 teils aus Trade Press. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+</ul></div></details><details class="entry" id="rack-current-forces-800vdc"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/rack-current-forces-800vdc.html">Rackstrom erzwingt 800 V Gleichspannung</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report 800-VDC Rack Power for NVIDIA Rubin and Kyber (Juli 2026), eingetragen 2026-10-02 · <a href="mechanisms/rack-current-forces-800vdc.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/rack-current-forces-800vdc.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bei gleicher Leistung fällt der Strom mit der Spannung:</p>
+<pre><code>1 MW / 54 V = 18.519 A
+1 MW / 800 V = 1.250 A   (Faktor 14,8)
+</code></pre>
+<p>Bei 54 V ist ein Rack im MW-Bereich wegen des Kupferquerschnitts nicht mehr sinnvoll zu bauen. Zeitlich laut Report: Rubin NVL144 (zweites Halbjahr 2026, 190 bis 230 kW) läuft noch auf 54 V, 800 V kommt mit Rubin Ultra Kyber (rund 600 kW, zweites Halbjahr 2027).</p>
+<h2>Trägt</h2>
+<p>Die Richtung (höhere Verteilspannung) folgt aus der Rechnung. Umsätze aus 800 V fallen nach dem Report 2027 und 2028 an, nicht 2026.</p>
+<h2>Trägt nicht</h2>
+<p>Welcher Standard gewinnt (NVIDIA 800 V einpolig gegen OCP ±400 V) und welcher Hersteller. Die Partnerliste von NVIDIA mit 14 Halbleiterfirmen ist kein Liefervertrag.</p>
+<h2>Bruchindikator</h2>
+<p>Kyber verschiebt sich, oder Racks über 500 kW gehen mit 54 V in Serie.</p>
+<h2>Ablesung</h2>
+<p>Rechnung aus Nennwerten. Termine: NVIDIA-Ankündigungen, Tier 1b. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+</ul></div></details><details class="entry" id="transformer-lead-times"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/transformer-lead-times.html">Transformatoren: Lieferzeit über zwei Jahre</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report HV/EHV Transformers and T and D Equipment (Juli 2026), eingetragen 2026-10-02 · <a href="mechanisms/transformer-lead-times.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/mechanisms/transformer-lead-times.md">Markdown</a></p><h2>Aussage</h2>
+<p>Große Leistungstransformatoren haben laut einer Umfrage von Wood Mackenzie (Q2 2025) im Schnitt 128 Wochen Lieferzeit (2,5 Jahre), Maschinentransformatoren 144 Wochen (2,8 Jahre). Vor der Pandemie waren es 7 bis 14 Monate. Neue Werke gehen überwiegend 2027 und 2028 in Betrieb. Anders als bei Speicher gibt es keinen Spotmarkt: Die Umsätze der Hersteller sind über mehrjährige Bestände gebunden.</p>
+<h2>Trägt</h2>
+<p>Die Aussage im Eintrag lead-times-datacenter-vs-fab, dass der Netzanschluss nicht schneller wird, mit einer Größenordnung.</p>
+<h2>Trägt nicht</h2>
+<p>Verteiltransformatoren (rund 30 Wochen, entspannt). Die Umfrage ist ein Stand von Q2 2025.</p>
+<h2>Bruchindikator</h2>
+<p>Lieferzeit großer Leistungstransformatoren fällt unter 18 Monate, oder Book-to-Bill mehrerer Hersteller fällt zwei Quartale unter 1,0.</p>
+<h2>Ablesung</h2>
+<p>Wood Mackenzie, Marktforschung, Tier nicht definiert. Auftragsbestände der Hersteller, Tier 1a. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(2)</span></h2><details class="entry" id="gas-turbine-order-backlog"><summary><span class="type">Befund</span><span class="t"><a href="findings/gas-turbine-order-backlog.html">Gasturbinen: Auftragsbestand der drei Hersteller</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report Heavy-Duty Gas Turbines as AI Compute Bottleneck (Juli 2026), eingetragen 2026-10-02 · <a href="findings/gas-turbine-order-backlog.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/findings/gas-turbine-order-backlog.md">Markdown</a></p><h2>Aussage</h2>
+<p>Stand der Hersteller laut Report:
+- GE Vernova Q1 2026 (gemeldet 22.04.2026): Gasturbinen-Bestand plus Slot-Reservierungen 100 GW nach 83 GW Ende 2025. Gesamtbestand 163 Mrd. USD. Aufträge 18,3 Mrd. USD bei 9,3 Mrd. USD Umsatz, Book-to-Bill 1,97. Segment Power 10,0 zu 5,0 Mrd. USD, also 2,0.
+- Siemens Energy Q2 GJ 2026 (gemeldet 12.05.2026): Auftragsbestand 154 Mrd. EUR. Gas Services Book-to-Bill 2,55. 60 GW fest plus 27 GW reserviert.
+- MHI GJ 2025 (gemeldet 12.05.2026): Bestand an Großgasturbinen 74 Einheiten (33 GW) nach 48 (21 GW). GTCC-Auftragseingang 2.652,6 zu Umsatz 992,2 Mrd. Yen, Book-to-Bill 2,67.</p>
+<p>Weltweite Aufträge Ende 2025 rund 110 GW gegen eine Fertigung von 60 bis 70 GW je Jahr, Verhältnis 1,6 bis 1,8. Der Ausbau ist verhalten: GE Vernova von rund 55 auf 70 bis 80 Turbinen je Jahr.</p>
+<h2>Trägt</h2>
+<p>Strom aus neuen großen Gaskraftwerken ist für Bestellungen von heute frühestens gegen 2030 verfügbar. Der Neubau von Rechenzentren hängt bis dahin an Brückenlösungen.</p>
+<h2>Trägt nicht</h2>
+<p>Dass der Bestand echt ist. Ein Teil sind Reservierungen, Doppelbestellungen sind möglich. Der Report nennt den Einbruch um 2000 als Präzedenz.</p>
+<h2>Bruchindikator</h2>
+<p>Book-to-Bill eines Gas-Segments fällt unter 1,0, oder Slot-Reservierungen werden storniert.</p>
+<h2>Ablesung</h2>
+<p>Quartalsberichte der drei Hersteller, Tier 1a. Weltweite Aufträge und Fertigungskapazität: Marktforschung, Tier nicht definiert. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="../memory_supply/mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
+<li><a href="rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></details><details class="entry" id="lidar-robotics-unit-crossover"><summary><span class="type">Befund</span><span class="t"><a href="findings/lidar-robotics-unit-crossover.html">LiDAR: Robotik überholt Auto nach Stückzahl bei RoboSense</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (KI-Compute-Stack), Report LiDAR Value Chain as Early Warning System (Juni 2026), eingetragen 2026-10-02 · <a href="findings/lidar-robotics-unit-crossover.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/findings/lidar-robotics-unit-crossover.md">Markdown</a></p><h2>Aussage</h2>
+<p>Q1 2026 laut Report:
+- RoboSense: 330.300 Einheiten, davon Robotik 185.500 (56,2 %) und Fahrassistenz 144.800. Robotik erstmals vor Auto. Bruttomarge 21,7 %.
+- Hesai: 471.723 Einheiten, davon Robotik 118.282 (25,1 %) und Fahrassistenz 353.441.</p>
+<p>Der Umsatzanteil der Robotik liegt darunter, weil die Sensoren billiger sind.</p>
+<h2>Trägt</h2>
+<p>Ein ablesbarer Frühindikator für den Eintrag sensing-and-experiment-loop: Stückzahlen von Sensoren in Robotern, quartalsweise gemeldet.</p>
+<h2>Trägt nicht</h2>
+<p>Humanoide. Die Stückzahlen kommen aus Rasenmähern, Liefer- und Reinigungsrobotern. Auch keine Aussage über Rechen- oder Speicherbedarf je Gerät.</p>
+<h2>Bruchindikator</h2>
+<p>Wachstum der Robotik-Stückzahlen fällt unter 50 % zum Vorjahr, oder der Anteil fällt bei RoboSense wieder unter 50 %.</p>
+<h2>Ablesung</h2>
+<p>Quartalsberichte RoboSense und Hesai, Tier 1a. Zahlen aus dem Projekt-Report übernommen, gegen die Primärquelle nicht nachgeprüft.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
+<li><a href="../manufacturing_costs/open_checks/physical-ai-material-handling.html">physical-ai-material-handling</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

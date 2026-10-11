@@ -1,0 +1,82 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>PVS-Arena Alita, Clara wp4 (Inter-Rater-Kette) und Versuch C2 (DRIPS auf VALDO Task 1), 2026-10-07 22:00-23:00</span><span>Zuletzt geändert</span><span>2026-10-08 lesion_detection_method: check what a region file means before the first number (VALDO slab mask); pvs_detection: VALDO numbers corrected</span><span>Verweist auf</span><span><a href="hcp-aging-labels-are-mostly-unet-silver.html">HCP-Aging-PVS: 160 von 200 Masken sind U-Net-Vorhersagen, die 40 Handfaelle sind nicht gekennzeichnet; VALDO-Rater stimmen nur zu F1 0,20 ueberein</a> <span class="muted small">(pvs_detection)</span><br><a href="../../lesion_detection_method/rules/reference-first-then-metric-then-model.html">Erst die Referenz, dann das Mass, dann das Modell</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">Empfindlichkeit lohnt nur, wenn etwas die zusaetzlichen Kandidaten trennen kann</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../lesion_detection_method/mechanisms/false-alarms-cluster-by-anatomy.html">Fehlalarme haben einen Ort: erst zaehlen, dann eine parameterfreie Regel nach dem Netz</a> <span class="muted small">(lesion_detection_method)</span></span><span>Verwiesen von</span><span><a href="drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">DRIPS auf HCP-Aging: F1 0,55-0,58 ohne Training, Arbeitspunkt 0,15-0,2 stabil, ein Drittel der 1-2-Voxel-PVS -- Frangi bei 0,28</a> <span class="muted small">(pvs_detection)</span><br><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">Auf klinischem 1-mm-T1 fuehrt das auf klinischen T1 trainierte Netz (F1 0,44), findet aber die kleinsten PVS am schlechtesten; das synthetisch trainierte Netz findet sie am besten</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/valdo-interrater-ceiling-and-drips-first-numbers.md">knowledge/pvs_detection/findings/valdo-interrater-ceiling-and-drips-first-numbers.md</a></span></div><h2>Aussage</h2>
+<p><strong>Korrektur 2026-10-08 04:20:</strong> Die VALDO-Regions-Datei ist bei SABRE nur die Zaehl-Slab-Maske, die PVSSeg-Masken sind
+Ganzhirn; die Zahlen vom 07.10. beschnitten drei Viertel der SABRE-Referenz. Korrigiert (SABRE Ganzhirn, RSS mit Region, n = 12):
+Inter-Rater F1 0,327 [0,253; 0,397] (Klasse 1-2: 0,34); MedNet-PVS-T2w (auf HCP trainiert) 0,388 [0,302; 0,468], DRIPS-T2 0,354
+[0,260; 0,448], DRIPS-T1 0,351; DRIPS-T2 trifft 45 % der 1-2-Voxel-Referenz, MedNet-T2 19 %. DRIPS gewinnt SABRE (0,38 vs 0,30),
+MedNet-T2 gewinnt RSS (0,47 vs 0,32). MedNet-T2 gegen Rater 2 nur 0,07 (verschiedene PVS-Populationen, offen). Der urspruengliche
+Text unten bleibt als Beleg des Fehlers stehen.</p>
+<p>Auf VALDO Task 1 (12 von 40 Trainingsfaellen haben Masken; 6 SABRE-Faelle mit zwei Ratern) betraegt die Uebereinstimmung
+Rater 2 gegen Rater 1 mit der Arena-Metrik (26er-Komponenten, Beruehrung = Treffer, Region beschnitten) F1 0,294
+[0,230; 0,363], Dice 0,24; in der Klasse 1-2 Voxel nur 0,17. Rater 2 markiert 2- bis 7-mal weniger PVS als Rater 1.
+DRIPS (Bitar/Bernal 2025, nur auf synthetischen Roehren trainiert, Docker, CPU 70 s/Fall) erreicht ohne jedes Training
+auf T2 gegen Rater 1 F1 0,309 (n = 8; nur SABRE 0,369, also UEBER der Inter-Rater-Grenze), auf T1 0,260; gegen Rater 2
+0,20. Recall 0,48-0,51, Precision 0,20-0,25; die Schwellenkurve 0,05-0,6 ist flach (F1 0,28-0,31), Precision steigt
+hoechstens auf 0,42 bei fallendem Recall. Klasse 1-2 Voxel: Recall 0,33 (T2) bei 88 % Fehlalarmanteil. Frangi mit fester
+Perzentilschwelle liegt auf HCP-Labels bei F1 0,16.</p>
+<h2>Traegt</h2>
+<p>Deutung jeder PVS-Zahl auf VALDO: Werte ueber ~0,3 gegen einen Rater sind Naehe zu dessen Stil, nicht "besser als Mensch";
+beide Rater berichten. Hebelwahl: nicht die Schwelle (flach), sondern Fehlalarme nach Ort zaehlen und eine Ortsregel oder
+zweite Stufe bauen (Wiki-Mechanismen bestaetigen sich auf der dritten Linie). Kleine PVS sind erreichbar (ein Drittel),
+aber nur mit einem Trenner bezahlbar.</p>
+<h2>Traegt nicht</h2>
+<p>n = 8 bzw. 6 Faelle: Intervalle breit, Richtungsangabe. Vier RSS-Faelle fehlten (Speicherabbruch) und laufen nach.
+Keine Aussage ueber HCP (laeuft) oder EPVS-2024 (noch nicht geladen).</p>
+<h2>Bruchindikator</h2>
+<p>Mit allen 12 Faellen oder auf EPVS-2024 faellt DRIPS-T2 deutlich unter 0,25, oder eine Ortsregel entfernt keine Fehlalarme
+ohne Treffer zu kosten.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/{rater2-gegen-rater1,drips-t2-t010,drips-t1-t010}/zusammenfassung.json, Schwellenkurve
+in ARBEIT.md 23:00; pvs_metrik.py mit Groessenklassen. Oeffentliche Daten (CC BY-NC 4.0).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+<li><a href="../../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+<li><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../../lesion_detection_method/mechanisms/false-alarms-cluster-by-anatomy.html">false-alarms-cluster-by-anatomy</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

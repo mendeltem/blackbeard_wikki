@@ -1,0 +1,81 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Erst die Referenz, dann das Mass, dann das Modell</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">lesion_detection_method</a> › <a href="../index.html#rules">Regel</a></div><h1>Erst die Referenz, dann das Mass, dann das Modell</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-07</span><span>Herkunft</span><span>Projekte valdo-t2s (CMB) und wmhseg (WMH), 2026-09 bis 2026-10; uebertragen 2026-10-07</span><span>Zuletzt geändert</span><span>2026-10-07 lesion_detection_method: new area, project-free lessons from CMB and WMH (4 mechanisms, 5 rules) and an open check applying them to PVS</span><span>Verweist auf</span><span><a href="../../cmb_detection/rules/two-seeds-per-decision-below-0.08.html">Effekte unter dem Startwert-Rauschen gelten nur mit zweitem Startwert</a> <span class="muted small">(cmb_detection)</span><br><a href="../../wmh_segmentation/findings/official-label-2-rule-deletes-the-prediction.html">Die offizielle Challenge-Metrik loescht Vorhersagen auf Label 2, sie zaehlt sie nicht als Fehlalarm</a> <span class="muted small">(wmh_segmentation)</span><br><a href="../../wmh_segmentation/rules/measure-tails-paired-not-by-percentile.html">Randverhalten gepaart messen, nicht ueber Perzentile aus kleinen Gruppen</a> <span class="muted small">(wmh_segmentation)</span></span><span>Verwiesen von</span><span><a href="../open_checks/pvs-apply-the-lesion-method.html">PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird</a> <span class="muted small">(lesion_detection_method)</span><br><a href="check-what-a-region-file-means-before-the-first-number.html">Eine &quot;Region&quot;-Datei kann Zaehlgebiet, Annotationsgebiet oder Auswertegebiet bedeuten: vor der ersten Zahl messen, wie viel Referenz ausserhalb liegt</a> <span class="muted small">(lesion_detection_method)</span><br><a href="show-what-a-rule-removes-before-trusting-it.html">Eine anatomische Regel wird erst sichtbar gemacht, dann geglaubt: zeigen, was sie entfernt, getrennt nach Treffer und Fehlalarm</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.html">Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="../../pvs_detection/findings/hcp-aging-labels-are-mostly-unet-silver.html">HCP-Aging-PVS: 160 von 200 Masken sind U-Net-Vorhersagen, die 40 Handfaelle sind nicht gekennzeichnet; VALDO-Rater stimmen nur zu F1 0,20 ueberein</a> <span class="muted small">(pvs_detection)</span><br><a href="../../pvs_detection/findings/public-pvs-reference-data-and-models-2026-10.html">Oeffentliche PVS-Referenzdaten und vortrainierte Modelle, Stand Oktober 2026</a> <span class="muted small">(pvs_detection)</span><br><a href="../../pvs_detection/findings/small-pvs-only-in-hcp-t2-reference.html">Kleine PVS stehen nur in der HCP-Aging-T2-Referenz; Edinburgh- und Challenge-Referenzen sind nach unten beschnitten</a> <span class="muted small">(pvs_detection)</span><br><a href="../../pvs_detection/findings/valdo-interrater-ceiling-and-drips-first-numbers.html">VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/lesion_detection_method/rules/reference-first-then-metric-then-model.md">knowledge/lesion_detection_method/rules/reference-first-then-metric-then-model.md</a></span></div><h2>Aussage</h2>
+<ol>
+<li><strong>Referenz.</strong> Ohne von Hand gezeichnete oder von Hand bestaetigte Referenz gibt es keine
+   ehrliche Zahl. Ausgaben einer Pipeline sind keine Wahrheit, auch nicht die "beste" von
+   elf Einstellungen. Vor dem ersten Modell klaeren: Wer hat was gezeichnet, nach welcher
+   Regel, mit welcher Uebereinstimmung zwischen Befundern? VALDO berichtet keine
+   Inter-Rater-Zahl; deshalb ist auf CMB offen, wie nah 0,65 F1 an der Etikett-Decke liegt
+   (Expertenurteil ueber 201 Kandidaten eingeplant, nicht gemessen).
+   Gibt es keine Referenz: eine kleine Stichprobe (20 bis 30 Faelle, zufaellig, nicht die
+   ersten N) von Hand bewerten lassen, bevor irgendetwas optimiert wird.</li>
+<li><strong>Mass.</strong> Zaehlbare Laesionen misst man je Instanz (Laesions-F1, Treffer bei Ueberlappung
+   oder Abstand), gepaart ueber Faelle mit 95-%-Bootstrap-Intervall; Dice allein belohnt
+   grosse Laesionen und uebersieht Zaehlfehler. Die Auswerteregel der Referenz (z. B.
+   Challenge-Code loescht die Vorhersage auf Label 2) wortgetreu uebernehmen; eine eigene,
+   strengere Konvention war 0,006 Dice zu tief. Perzentile der Verteilung bei n = 30 sind
+   Rauschen.</li>
+<li><strong>Modell.</strong> Erst wenn 1 und 2 stehen. Vorher aufschreiben: Entscheidungsregel,
+   Erwartung, Hauptmass.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jede neue Laesionslinie, besonders solche, die mit "fertigen Pipeline-Ausgaben" beginnt.</p>
+<h2>Traegt nicht</h2>
+<p>Reine Volumetrie grosser Strukturen, dort ist Dice das richtige Mass.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Linie, in der Pipeline-Ausgaben nachtraeglich als Referenz ausreichten (gemessene
+Uebereinstimmung mit Handzeichnung ueber dem Rauschboden der Modelle).</p>
+<h2>Ablesung</h2>
+<p>Eigene Erfahrung aus beiden Linien. Metrikwahl: Maier-Hein et al., Metrics reloaded,
+Nat Methods 2024, doi:10.1038/s41592-023-02151-z (Tier 1b).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../../cmb_detection/rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+<li><a href="../../wmh_segmentation/findings/official-label-2-rule-deletes-the-prediction.html">official-label-2-rule-deletes-the-prediction</a></li>
+<li><a href="../../wmh_segmentation/rules/measure-tails-paired-not-by-percentile.html">measure-tails-paired-not-by-percentile</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

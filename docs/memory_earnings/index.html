@@ -1,0 +1,680 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>memory_earnings</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › memory_earnings</div><h1>memory_earnings</h1><p>Gemeldete Zahlen der Speicherhersteller: Gewinn, FCF, Ausschüttung, Bewertung</p><p class="muted small">Investieren, SK Hynix, Micron, Samsung, Quartalszahlen, KGV, Rückkauf</p>
+<div class="stripe"><i class="ok" style="width:53.8%" title="getragen: 7"></i><i class="warn" style="width:38.5%" title="vorschlag: 5"></i><i class="info" style="width:7.7%" title="offen: 1"></i></div><div class="counts"><span class="ok">7 getragen</span> <span class="warn">5 vorschlag</span> <span class="info">1 offen</span></div><div class="small"><p>Was aus gemeldeten Quartalszahlen der Speicherhersteller (SK Hynix, Micron, Samsung) für Gewinn, freien Cashflow, Ausschüttung und Bewertung folgt. Die Angebotsseite steht in <a href="../memory_supply/index.html">memory_supply</a>, die Nachfrageseite in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, dort gilt auch die Regel <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a>.</p>
+<p>Stand 2026-10-02. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Gemeldete Zahlen von SK Hynix, Micron, Samsung: Gewinn, FCF, Ausschüttung, Bewertung.</p>
+<p><strong>Befunde (getragen, Tier 1a):</strong> Micron FQ4 2026 Umsatz 54,2 Mrd. $ (+31 % Q/Q), Bruttomarge 87 %, Wachstum verlangsamt. Micron-Kundenanzahlungen 0,57 → 12,9 Mrd. $. SK Hynix: Ausschüttung mindestens 50 % des FCF 2025–27, Rückkauf 40 Bio. KRW; Q2 2026 Nettogewinn durch Kioxia-Einmaleffekt; ADR-Emission 26,5 Mrd. $. FCF 2025+H1 2026 ~99,6 Bio. KRW (vorschlag).</p>
+<p><strong>Mechanismen:</strong> Rückkaufhebel wirkt mit 1/KGV. Peer-Beat überträgt sich schwach. <strong>Risiko:</strong> Niedriges KGV am Gewinngipfel.</p>
+<p><strong>Offen:</strong> Micron HBM gegen konventionelles DRAM.</p>
+<p><strong>Lesen bei:</strong> Investieren in Speicheraktien, SK Hynix, Micron, Samsung, Bewertung.</p>
+<p><strong>Auf den Seiten:</strong> Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU">Micron</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG">Samsung</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/KIOXIA">Kioxia</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SNDK">SanDisk</a>; Karten <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle">HBM</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=nand-flash-enterprise-ssd">NAND/SSD</a>.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="mechanisms">Mechanismus <span class="muted small">(2)</span></h2><details class="entry" id="buyback-leverage-at-low-pe"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/buyback-leverage-at-low-pe.html">Rueckkaufhebel bei niedrigem KGV</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09 · <a href="mechanisms/buyback-leverage-at-low-pe.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/mechanisms/buyback-leverage-at-low-pe.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Wirkung eines Rueckkaufs auf den Gewinn je Aktie haengt am Kehrwert des KGV, nicht an der absoluten Summe:</p>
+<pre><code>Anteil zurueckgekaufter Aktien r = Ausschuettungsquote x Gewinnrendite = Ausschuettungsquote / KGV
+EPS-Wachstum = (1 + Gewinnwachstum) / (1 - r) - 1
+</code></pre>
+<p>Dieselbe Ausschuettungsquote wirkt bei KGV 5 rund viermal so stark wie bei KGV 21. Beispiel: halber Gewinn in Rueckkaeufe, KGV 5,3 ergibt r = 9,4 Prozent und damit plus 10,4 Prozent EPS allein aus der Aktienzahl; KGV 21 ergibt r = 2,3 Prozent und plus 2,4 Prozent.</p>
+<p>Drei Bedingungen, damit die Rechnung gilt:
+1. Die Aktien werden eingezogen, nicht als eigene Aktien gehalten.
+2. Gezahlt wird aus freiem Cashflow, nicht aus dem Gewinn. Bei hohem Investitionsbedarf ist der ausschuettbare Betrag kleiner als der Gewinn.
+3. Keine gegenlaeufige Emission, siehe <a href="findings/sk-hynix-adr-issuance-2026.html">sk-hynix-adr-issuance-2026</a>.</p>
+<h2>Traegt</h2>
+<p>Die Rechnung ist eine Identitaet und gilt unabhaengig von der Firma. Sie erklaert, warum eine Ausschuettungspolitik, die am FCF-Anteil haengt, bei niedrigem KGV stark auf den EPS wirkt.</p>
+<h2>Traegt nicht</h2>
+<p>Keine Aussage ueber den Kurs. Steigt der Kurs, kauft dieselbe Summe weniger Aktien, der Effekt bremst sich selbst. Ein niedriges KGV ist zudem oft die Erwartung fallender Gewinne, siehe <a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>; faellt der Gewinn, war der Rueckkauf teuer bezogen auf den spaeteren Gewinn.</p>
+<h2>Bruchindikator</h2>
+<p>Aktienzahl im Abschluss sinkt langsamer als Rueckkauf minus Emission. Dann werden Aktien gehalten statt eingezogen, oder es gibt Mitarbeiterprogramme in relevanter Groesse.</p>
+<h2>Ablesung</h2>
+<p>Reine Arithmetik. Eingangsgroessen (Ausschuettungsquote, FCF, Aktienzahl) aus Abschluss und Policy, Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="findings/sk-hynix-adr-issuance-2026.html">sk-hynix-adr-issuance-2026</a></li>
+<li><a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+</ul></div></details><details class="entry" id="peer-beat-transfers-weakly"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/peer-beat-transfers-weakly.html">Ein Peer-Beat überträgt sich schwach</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="mechanisms/peer-beat-transfers-weakly.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/mechanisms/peer-beat-transfers-weakly.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Speicherhersteller, der seine Guidance oder den Konsens schlägt, sagt viel über die Richtung beim Wettbewerber (Wachstum ja oder nein), aber wenig über dessen Abweichung vom Konsens (Beat ja oder nein). Drei Gründe:
+1. Verschiedener Produktmix. HBM-Preise sind vertraglich fixiert, konventionelles DRAM reagiert schneller. Ein Beat aus konventionellem DRAM landet beim HBM-lastigeren Wettbewerber nur teilweise.
+2. Die Erwartungen ziehen nach dem Peer-Beat mit, die Latte für den Nächsten steigt.
+3. Eigene Ausführungsprobleme (Hochlauf einer neuen HBM-Generation) sind unabhängig vom Peer.</p>
+<p>Beleg für die Spreizung: Micron schlug in FQ3 2026 (März bis Mai) den Umsatzkonsens um rund 18 %, SK Hynix lag im Q2 2026 (April bis Juni) unter eigener Prognose und Konsens (Umsatz 79,3 Bio. KRW, OP 60,5 Bio. KRW), begründet mit niedrigeren Preisen als erwartet und HBM4-Hochlauf. Ein Fall, keine Statistik.</p>
+<h2>Trägt</h2>
+<p>Getrennte Aussagen: Wachstum beim Wettbewerber hoch wahrscheinlich (Urteil: über 90 % bei gleichem Preisumfeld), Beat gegen Konsens deutlich weniger (Urteil: 50 bis 60 %). Beides sind Urteile, keine Rechnungen.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Kalibrierung. Dafür bräuchte es die Reihe der Konsensabweichungen beider Firmen über viele Quartale.</p>
+<h2>Bruchindikator</h2>
+<p>Über mehrere Quartale gleichgerichtete Konsensabweichungen von Micron und SK Hynix.</p>
+<h2>Ablesung</h2>
+<p>Konsenszahlen nur aus Trade Press und Brokern, also unzulässige Quelle. Ist-Zahlen Tier 1a. Für Beat-Fragen damit eingeschränkt beobachtbar.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+<li><a href="open_checks/micron-fq4-hbm-split.html">micron-fq4-hbm-split</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(9)</span></h2><details class="entry" id="micron-customer-deposits-jump"><summary><span class="type">Befund</span><span class="t"><a href="findings/micron-customer-deposits-jump.html">Micron: Sprung der Kundenanzahlungen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="findings/micron-customer-deposits-jump.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/micron-customer-deposits-jump.md">Markdown</a></p><h2>Aussage</h2>
+<p>Microns langfristige Vertragsverbindlichkeiten (Noncurrent customer contract liabilities) stiegen von 0,57 Mrd. USD (28.05.2026) auf 12,90 Mrd. USD (03.09.2026). In der Kapitalflussrechnung FY2026 stehen 12,75 Mrd. USD Zufluss aus Kundenanzahlungen (Proceeds from customer contract liability deposits), Vorjahr null. Micron nennt dazu Strategic Customer Agreements.</p>
+<h2>Trägt</h2>
+<p>Tier-1a-Beleg über einen Dritten, dass mehrjährige Lieferverträge mit Anzahlung im Speichermarkt real sind (Setzung Vertragsstabilität im SK-Hynix-Projekt). Anzahlungen fließen vor Umsatzrealisierung zu und erhöhen den FCF, bevor sie in der GuV erscheinen.</p>
+<h2>Trägt nicht</h2>
+<p>Dass SK Hynix dasselbe Muster hat. Das ist in SK Hynix' eigener Bilanz (DART) abzulesen. Auch nicht die Preisformeln der Verträge.</p>
+<h2>Bruchindikator</h2>
+<p>Rückgang dieser Position über zwei Quartale bei wachsendem Umsatz.</p>
+<h2>Ablesung</h2>
+<p>Micron 8-K Exhibit 99.1 vom 30.09.2026, Bilanz und Kapitalflussrechnung, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+</ul></div></details><details class="entry" id="micron-fq4-2026-growth-deceleration"><summary><span class="type">Befund</span><span class="t"><a href="findings/micron-fq4-2026-growth-deceleration.html">Micron FQ4 2026: Wachstum verlangsamt, Marge auf Plateau</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="findings/micron-fq4-2026-growth-deceleration.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/micron-fq4-2026-growth-deceleration.md">Markdown</a></p><h2>Aussage</h2>
+<p>Micron FQ4 2026 (Quartal endete 03.09.2026, gemeldet 30.09.2026):
+- Umsatz 54,23 Mrd. USD, +30,8 % Q/Q. Guidance war 50,0 ± 1,0 Mrd., also +8,5 % über Mitte.
+- Non-GAAP-EPS 33,42 USD (Guidance 31,00 ± 1,00), GAAP-EPS 32,87.
+- Bruttomarge non-GAAP 87,0 % nach 84,9 %.
+- Geschäftsbereiche Q/Q: Cloud Memory +18 %, Core Data Center +56 %, Mobile und Client +14 %, Automotive und Embedded +47 %.
+- Guidance FQ1-27 (Sep. bis Nov.): Umsatz 61,5 ± 1,5 Mrd. USD (+13 % Q/Q, Spanne +11 bis +16 %), Bruttomarge rund 86 % (flach), non-GAAP-EPS 38,15 ± 1,00.</p>
+<p>Umsatzwachstum Q/Q als Reihe: FQ3 +74 %, FQ4 +31 %, FQ1-27-Guidance +13 %. Weiter wachsend, deutlich verlangsamt, Marge auf Plateau.</p>
+<p>Lesart, kein Befund: Wachstumstreiber war konventionelles Server-DRAM (Core Data Center), nicht HBM. Der Bereich mit dem meisten HBM (Cloud Memory) wuchs am langsamsten. Prüfung offen, siehe Verknüpfung.</p>
+<h2>Trägt</h2>
+<p>Rahmen für SK Hynix Q3 und Q4 2026, weil Microns FQ4 und FQ1-27 je rund zwei Monate mit SK Hynix' Q3 und Q4 überlappen. Grobe Interpolation: Q3 eher +20 bis 30 % Umsatz Q/Q, Q4 einstellig bis niedrig zweistellig.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Aussage zu HBM-Preisen. Die Technologie-Aufteilung (DRAM, NAND, HBM) fehlt in der Pressemitteilung. Keine direkte Übertragung auf SK Hynix wegen anderem HBM-Anteil.</p>
+<h2>Bruchindikator</h2>
+<p>FQ1-27 verfehlt die Guidance-Spanne nach unten, oder die Bruttomarge fällt unter 85 %.</p>
+<h2>Ablesung</h2>
+<p>Micron 8-K Exhibit 99.1 vom 30.09.2026, Tier 1a: https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm
+FQ3-Vergleich: Micron 10-Q FQ3 2026, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
+<li><a href="open_checks/micron-fq4-hbm-split.html">micron-fq4-hbm-split</a></li>
+<li><a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+</ul></div></details><details class="entry" id="operating-margin-three-makers"><summary><span class="type">Befund</span><span class="t"><a href="findings/operating-margin-three-makers.html">Operative Marge der drei Hersteller: sechs Quartale gleichgerichtet</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI-Lage-Verbund (Seite firmen), 2026-10-02 · <a href="findings/operating-margin-three-makers.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/operating-margin-three-makers.md">Markdown</a></p><h2>Aussage</h2>
+<p>Operative Marge je Quartal, aus Umsatz und Betriebsergebnis der Hersteller
+selbst gerechnet. Micron nach Geschäftsjahr, SK Hynix und Samsung nach
+Kalenderquartal — die Reihen sind deshalb um rund einen Monat versetzt.</p>
+<table>
+<thead>
+<tr>
+<th>Quartalsende</th>
+<th>SK Hynix</th>
+<th>Micron</th>
+<th>Samsung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1 2025</td>
+<td>42,2 %</td>
+<td>22,0 %</td>
+<td>8,5 %</td>
+</tr>
+<tr>
+<td>Q2 2025</td>
+<td>41,4 %</td>
+<td>23,3 %</td>
+<td>6,3 %</td>
+</tr>
+<tr>
+<td>Q3 2025</td>
+<td>46,6 %</td>
+<td>32,3 %</td>
+<td>14,1 %</td>
+</tr>
+<tr>
+<td>Q4 2025</td>
+<td>58,4 %</td>
+<td>45,0 %</td>
+<td>21,4 %</td>
+</tr>
+<tr>
+<td>Q1 2026</td>
+<td>71,5 %</td>
+<td>67,6 %</td>
+<td>42,8 %</td>
+</tr>
+<tr>
+<td>Q2 2026</td>
+<td><strong>76,3 %</strong></td>
+<td><strong>80,4 %</strong></td>
+<td><strong>52,2 %</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Ausweitung über sechs Quartale: SK Hynix <strong>+34,1 Punkte</strong>, Micron
+<strong>+58,4 Punkte</strong>, Samsung <strong>+43,7 Punkte</strong>. Alle drei steigen in denselben
+vier Quartalen monoton; die einzige Gegenbewegung ist SK Hynix Q1 → Q2 2025
+(−0,8 Punkte).</p>
+<p>Daneben das Trailing-KGV zum Kursstand 17./18.09.2026:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>KGV (ttm) gemeldet</th>
+<th>KGV bereinigt</th>
+<th>operative Marge letztes Quartal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SK Hynix</td>
+<td>8,05</td>
+<td><strong>13,1 bis 13,3</strong></td>
+<td>76,3 %</td>
+</tr>
+<tr>
+<td>Samsung</td>
+<td>10,00</td>
+<td>nicht geprüft</td>
+<td>52,2 %</td>
+</tr>
+<tr>
+<td>Micron</td>
+<td>22,12</td>
+<td>nicht geprüft</td>
+<td>80,4 %</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Die 8,05 für SK Hynix sind irreführend und stehen hier nur als Gegenprobe.</strong>
+Der Zwölfmonatsgewinn von 162,1 Bio. KRW enthält den Einmalertrag aus Verkauf
+und Neubewertung von Beteiligungen, den
+<a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>
+mit 62,2 Bio. KRW ausweist. Zwei Wege führen auf dasselbe bereinigte Bild,
+bei Kurs 1.838.000 KRW und 709.854.891 Aktien:</p>
+<table>
+<thead>
+<tr>
+<th>Rechenweg</th>
+<th>Zwölfmonatsgewinn</th>
+<th>EPS</th>
+<th>KGV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gemeldet</td>
+<td>162,1 Bio. KRW</td>
+<td>228.375 KRW</td>
+<td>8,05</td>
+</tr>
+<tr>
+<td>gemeldet minus 62,2 Bio. Einmalertrag</td>
+<td>99,9 Bio. KRW</td>
+<td>140.751 KRW</td>
+<td>13,06</td>
+</tr>
+<tr>
+<td>wiederkehrend: operativ 128,7 Bio. × 0,765</td>
+<td>98,5 Bio. KRW</td>
+<td>138.705 KRW</td>
+<td>13,25</td>
+</tr>
+</tbody>
+</table>
+<p>Die beiden Bereinigungen weichen um 1,5 % voneinander ab, obwohl der eine Weg
+vom Nettogewinn abzieht und der andere vom Betriebsergebnis hochrechnet. Das
+bereinigte KGV liegt bei rund <strong>13</strong>, nicht bei 8.</p>
+<p>Bleibt: SK Hynix wird mit dem Dreizehnfachen des wiederkehrenden Gewinns
+bezahlt, auf einer operativen Marge, die in fünf Quartalen von 41 auf 76
+Prozent gelaufen ist.</p>
+<h2>Trägt</h2>
+<p>Die quantitative Grundlage für <a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>.
+Der Risikoeintrag führt den mechanischen Effekt des Trailing-Fensters vor,
+hatte aber keine Margenreihe. Diese Reihe liefert sie: das KGV steht nicht auf
+einer stabilen, sondern auf einer in fünf Quartalen verdoppelten Marge. Der
+dort genannte Bruchindikator — "die Gewinne halten das Niveau über mehrere
+Quartale bei stabiler Marge" — ist damit ab jetzt ablesbar, weil die
+Vergleichsbasis vorliegt.</p>
+<p>Zusätzlich eine unabhängige Gegenprobe zu
+<a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>:
+Die dort angegebene Umrechnung operativ × 0,765 und der direkte Abzug des
+Einmalertrags von 62,2 Bio. KRW führen auf Zwölfmonatsgewinne, die um 1,5 %
+auseinanderliegen. Das stützt beide Zahlen. Wer ein KGV für SK Hynix nennt,
+muss bereinigen: der gemeldete Wert ist um 62 % zu niedrig.</p>
+<p>Zweitens die Trennung von <strong>Niveau</strong> und <strong>Überraschung</strong> in
+<a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a>:
+Das Margenniveau der drei Hersteller bewegt sich gleichgerichtet, weil es am
+Preisumfeld hängt. Die Abweichung vom Konsens überträgt sich trotzdem schwach.
+Das ist <strong>kein Widerspruch</strong> zu jenem Mechanismus, sondern präzisiert ihn:
+seine Aussage gilt für die Überraschung, nicht für das Niveau. Wer dort "Richtung
+beim Wettbewerber hoch wahrscheinlich" liest, findet hier die Belegreihe dafür.</p>
+<p>Drittens eine Lesart zur Herkunft des Gewinns: Samsung, mit dem kleinsten
+HBM-Anteil der drei, weitet die Marge in derselben Zeit und in derselben
+Richtung aus. Das ist mit der Lesart aus
+<a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a>
+vereinbar, dass der Treiber konventionelles DRAM war, nicht HBM — stützt sie
+aber nicht, siehe unten.</p>
+<h2>Trägt nicht</h2>
+<p><strong>Samsungs Zahl ist konzernweit.</strong> Samsung Electronics weist hier Umsatz und
+Betriebsergebnis des Gesamtkonzerns aus, einschließlich Mobilgeräte, Displays
+und Foundry. Die Marge des Speichergeschäfts ist daraus nicht ablesbar. Der
+Vergleich mit SK Hynix und Micron, die weit überwiegend Speicher sind, ist
+deshalb schief. Jede Aussage über Samsungs HBM-Anteil ist damit ausgeschlossen —
+auch die dritte Lesart oben, die nur als Lesart stehen bleibt.</p>
+<p>Keine Aussage über den freien Cashflow und damit keine über die Ausschüttung,
+siehe <a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a>.
+Operative Marge ist nicht FCF.</p>
+<p>Kein Zeitpunkt für den Gipfel. Die Reihe zeigt die Ausweitung, nicht ihr Ende.
+Es gilt <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a>:
+die Margen hängen am Bit-Angebot gegen Bit-Nachfrage, nicht an der
+Nachfrage allein.</p>
+<p>Kein Konsensvergleich. Konsenszahlen sind unzulässige Quelle.</p>
+<p><strong>Micron und Samsung sind nicht auf Einmaleffekte geprüft.</strong> Für SK Hynix ist
+der Einmalertrag belegt und oben bereinigt; für die beiden anderen steht in der
+Wiki kein entsprechender Eintrag, und ich habe ihre Abschlüsse nicht darauf
+durchgesehen. Ihre KGV-Spalte ist deshalb der gemeldete Wert und kann aus
+demselben Grund zu niedrig sein. Das ist ein offener Schritt, kein Befund.</p>
+<p>Die Micron-Reihe endet mit dem Quartal zum 28.05.2026 und ist damit <strong>ein
+Quartal älter</strong> als der Stand der Wiki. Microns FQ4 (Quartal endete 03.09.2026)
+steht in <a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a>
+mit 54,23 Mrd. USD Umsatz und einer Brutto-Marge non-GAAP von 87,0 % nach
+84,9 % — Bruttomarge, nicht operative Marge, also nicht in diese Spalte
+fortschreibbar.</p>
+<h2>Bruchindikator</h2>
+<p>Fällt die operative Marge eines der drei Hersteller zwei Quartale in Folge,
+während die beiden anderen steigen, bricht die Gleichrichtung — dann ist das
+Margenniveau firmenspezifisch und nicht mehr Preisumfeld. Nächste Ablesung:
+SK Hynix Q3 2026, Termin laut Kalendern 27.10.2026.</p>
+<p>Fällt dagegen das Margenniveau aller drei zugleich, ist der Gipfel
+nachträglich datiert und <a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>
+war die richtige Lesart.</p>
+<h2>Ablesung</h2>
+<p>Tier 1a, aber zweiter Hand — das begründet den Status <code>vorschlag</code>:</p>
+<ul>
+<li><strong>Micron:</strong> SEC XBRL, maschinell aus den Einreichungen gelesen. Belastbar.</li>
+<li><strong>SK Hynix:</strong> Quartalspräsentationen des Unternehmens, in die Datenbasis des Projekts übertragen. Von mir nicht Zeile für Zeile gegen die Originalpräsentation nachgelesen.</li>
+<li><strong>Samsung:</strong> Ergebnispräsentationen, ebenso übertragen und ebenso nicht nachgelesen.</li>
+<li><strong>Kurse</strong> für das KGV: Marktdaten, Kursstand 17.09.2026 (Micron) bzw. 18.09.2026 (SK Hynix, Samsung).</li>
+</ul>
+<p>Quelle der Zusammenstellung: Seite firmen des AI-Lage-Verbunds,
+https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html, Seitenstand
+2026-09-17.</p>
+<p>Gegenprobe, die für die Übertragung spricht: Das hier gerechnete Micron-
+Trailing-EPS von 44,19 USD und das in
+<a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a> genannte von
+44,31 USD sind unabhängig voneinander entstanden und weichen um 0,3 % ab.
+Ebenso stimmen SK Hynix Q2 2026 (79,3 Bio. KRW Umsatz, 60,5 Bio. KRW
+Betriebsergebnis) mit den Zahlen in
+<a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a>
+überein.</p>
+<p>Die Höhe der Zahlen ist außergewöhnlich — SK Hynix wächst gegenüber Vorjahr um
+257 %, Micron um 346 %, Samsung um 130 %. Das ist der Grund, sie
+nachzuprüfen, bevor etwas darauf gebaut wird, nicht der Grund, sie zu verwerfen.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+<li><a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
+<li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+<li><a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a></li>
+<li><a href="mechanisms/buyback-leverage-at-low-pe.html">buyback-leverage-at-low-pe</a></li>
+<li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+</ul></div></details><details class="entry" id="sk-hynix-adr-issuance-2026"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-adr-issuance-2026.html">SK Hynix ADR-Emission Juli 2026 verwaessert gegen den Rueckkauf</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09 · <a href="findings/sk-hynix-adr-issuance-2026.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-adr-issuance-2026.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>SK Hynix hat am 10.07.2026 ADRs an der Nasdaq gelistet: 177,9 Mio. ADRs zu 149 USD, zehn ADRs entsprechen einer Stammaktie. Erloes rund 26,5 Mrd. USD, nach Berichten die groesste US-Emission eines auslaendischen Unternehmens.</li>
+<li>Dahinter stehen rund 17,79 Mio. neu ausgegebene Stammaktien, die am 29.07.2026 zusaetzlich an der KOSPI gelistet wurden.</li>
+<li>Verwendung laut Firma: Ausbau der Fertigung in Suedkorea und Anlagen, darunter EUV-Scanner.</li>
+<li>Gegenlaeufig: der am 19.08.2026 beschlossene Rueckkauf mit Einzug von rund 24 Mio. Aktien, siehe <a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a>.</li>
+</ul>
+<p>Folge: Die Aktienzahl sinkt 2026 netto nur um rund ein Prozent, obwohl der Rueckkauf allein etwa 3,3 Prozent entspraeche. Der Ausgabepreis je Aktie lag mit rund 1.490 USD ueber dem Kursniveau, zu dem spaeter zurueckgekauft wurde.</p>
+<h2>Traegt</h2>
+<p>Jede EPS-Rechnung muss Emission und Rueckkauf zusammen nehmen. Wer nur den Rueckkauf rechnet, ueberschaetzt die Wirkung je Aktie fuer 2026.</p>
+<h2>Traegt nicht</h2>
+<p>Keine Aussage ueber weitere Emissionen. Keine Aussage darueber, ob Emission und Rueckkauf zusammen wertsteigernd waren; dafuer braeuchte es den Vergleich von Ausgabe- und Rueckkaufpreis ueber den ganzen Zeitraum.</p>
+<h2>Bruchindikator</h2>
+<p>Eine weitere Kapitalerhoehung, oder eine Aktienzahl im Quartalsbericht, die nicht zu Emission minus Einzug passt.</p>
+<h2>Ablesung</h2>
+<p>SK Hynix Newsroom zur ADR-Listung, Tier 1a. Emissionsgroesse und Preis zusaetzlich ueber Bloomberg und CNBC, Trade Press, also nur als Bestaetigung. Die Aktienzahl ist im naechsten Abschluss gegenzupruefen.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="mechanisms/buyback-leverage-at-low-pe.html">buyback-leverage-at-low-pe</a></li>
+</ul></div></details><details class="entry" id="sk-hynix-free-cash-flow-2024-h1-2026"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">SK Hynix freier Cashflow 2024 bis H1 2026</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt AI-Lage-Verbund, 2026-10-02; SEC-Prospekt 424B4 und Q2-2026-Folien · <a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-free-cash-flow-2024-h1-2026.md">Markdown</a></p><h2>Aussage</h2>
+<p>Freier Cashflow = operativer Cashflow minus Capex (Zugang Sachanlagen und
+immaterielle Vermögenswerte), in Bio. KRW:</p>
+<table>
+<thead>
+<tr>
+<th>Zeitraum</th>
+<th>Operativer CF</th>
+<th>Capex</th>
+<th>FCF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GJ 2024</td>
+<td>29,80</td>
+<td>15,95</td>
+<td><strong>13,85</strong></td>
+</tr>
+<tr>
+<td>GJ 2025</td>
+<td>53,37</td>
+<td>27,52</td>
+<td><strong>25,85</strong></td>
+</tr>
+<tr>
+<td>Q1 2026</td>
+<td>26,33</td>
+<td>7,66</td>
+<td><strong>18,67</strong></td>
+</tr>
+<tr>
+<td>Q2 2026</td>
+<td>65,71</td>
+<td>10,67</td>
+<td><strong>55,04</strong></td>
+</tr>
+<tr>
+<td>H1 2026</td>
+<td>92,04</td>
+<td>18,33</td>
+<td><strong>73,71</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Kumuliert GJ 2025 plus H1 2026: rund <strong>99,6 Bio. KRW</strong> FCF.</p>
+<p>Zwei Einordnungen:
+- <strong>Policy-Anker.</strong> Die Ausschüttungspolitik verspricht mindestens 50 Prozent
+  des kumulierten FCF 2025 bis 2027, siehe
+  <a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a>.
+  Nach eineinhalb von drei Jahren sind rund 100 Bio. KRW FCF belegt. Das ist
+  der erste Tier-1a-Wert gegen die dort als unzulässig verworfenen Brokerspannen
+  (Samsung Securities rund 220, Hanwha rund 491 Bio. KRW für den ganzen
+  Zeitraum). Die 100 Bio. nach 1,5 Jahren liegen auf einer Bahn, die das untere
+  Brokerende klar übertrifft und das obere nur bei anhaltendem H1-2026-Tempo
+  erreicht.
+- <strong>Capex-Intensität steigt, FCF trotzdem.</strong> Capex wächst stark (H1 2026 plus
+  72,7 Prozent gegen H1 2025), Firmenangabe für das Gesamtjahr 2026: hoher
+  40-Bio.-KRW-Bereich, rund Mitte 30 Prozent vom Umsatz. Weil der operative
+  Cashflow im Aufschwung schneller steigt, wächst der FCF dennoch.</p>
+<h2>Trägt</h2>
+<p>Die FCF-Reihe, die <a href="findings/operating-margin-three-makers.html">operating-margin-three-makers</a>
+und <a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a>
+ausdrücklich fehlte: operative Marge ist nicht FCF, und die Ausschüttung hängt
+am FCF, nicht am Gewinn. Der Einmalertrag aus der Beteiligungsneubewertung ist
+nicht enthalten — er ist überwiegend zahlungsunwirksam und gehört laut
+<a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a> nicht in
+die FCF-Rechnung. Operativer Cashflow weist ihn korrekt nicht aus.</p>
+<h2>Trägt nicht</h2>
+<p>Kein voller Zeitraum. 2025 bis 2027 sind erst zu eineinhalb Jahren belegt; H2
+2026 und 2027 sind offen, und der Policy-Beschluss fällt erst mit den
+Q3-Zahlen (Termin laut Kalendern 27.10.2026).</p>
+<p>Q2 2026 ist zweiter Hand. Operativer Cashflow Q2 (65,71 Bio.) stammt aus den
+Ergebnisfolien, über Trade Press gelesen, nicht aus der Kapitalflussrechnung
+selbst. Der sequentielle Sprung (Q1 26,3 → Q2 65,7 Bio.) ist groß und muss
+gegen das 6-K mit vollständiger Kapitalflussrechnung geprüft werden; ein Teil
+dürfte aus Kundenanzahlungen stammen, vergleichbar
+<a href="findings/micron-customer-deposits-jump.html">micron-customer-deposits-jump</a>. Der Capex Q2
+(10,67 Bio.) ist dagegen gegengeprüft: Halbjahres-Capex 18,33 Bio. minus Q1
+7,66 Bio. ergibt 10,67 Bio.</p>
+<p>Keine Aussage über die Aufteilung des FCF zwischen Rückkauf und Dividende, und
+keine Wertung, ob die ADR-Emission (siehe
+<a href="mechanisms/buyback-leverage-at-low-pe.html">buyback-leverage-at-low-pe</a>) den
+Rückkaufeffekt je Aktie aufgezehrt hat.</p>
+<h2>Bruchindikator</h2>
+<p>Das 6-K oder der Geschäftsbericht weist für Q2/H1 2026 einen deutlich anderen
+operativen Cashflow aus als 65,71 bzw. 92,04 Bio. KRW. Oder der kumulierte FCF
+2025 bis 2027 bleibt unter rund 200 Bio. KRW, dann war die H1-2026-Rate nicht
+haltbar.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>GJ 2024, GJ 2025, Q1 2026: SEC-Prospekt Form 424B4 vom September 2026 (ADR-
+  Emission), konsolidierte Kapitalflussrechnung, Tier 1a.
+  https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm</li>
+<li>Q2 2026 operativer Cashflow 65,71 Bio. und Capex 10,67 Bio.: SK Hynix
+  Q2-2026-Ergebnisfolien, Tier 1a, hier über Investing.com gelesen, also mit
+  Übertragungsrisiko.</li>
+<li>H1-2026-Capex 18,33 Bio. (plus 72,7 Prozent): Halbjahresbericht, über
+  Branchenpresse. 2026-Capex-Guidance (hoher 40-Bio.-Bereich, Mitte 30 Prozent
+  vom Umsatz): Q2-Call, über Trade Press.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a></li>
+<li><a href="mechanisms/buyback-leverage-at-low-pe.html">buyback-leverage-at-low-pe</a></li>
+<li><a href="findings/operating-margin-three-makers.html">operating-margin-three-makers</a></li>
+<li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+</ul></div></details><details class="entry" id="sk-hynix-kioxia-stake"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-kioxia-stake.html">SK Hynix und Kioxia: Herkunft des Q2-Einmalertrags, verbleibende Wandelposition</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt AI-Lage-Verbund, 2026-10-02 · <a href="findings/sk-hynix-kioxia-stake.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-kioxia-stake.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Einmalertrag, der SK Hynix' Q2-2026-Nettogewinn über das Betriebsergebnis
+hob (siehe <a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>,
+63,3 Bio. KRW aus Verkauf und Neubewertung von Beteiligungen, überwiegend
+Kioxia), kommt aus einer Investition von 2018.</p>
+<ul>
+<li><strong>Einstieg 2018:</strong> SK Hynix investierte rund 395 Mrd. Yen (rund 2,5 Mrd. USD,
+  rund 3,9 Bio. KRW) in das Bain-geführte Konsortium, das Toshiba Memory (heute
+  Kioxia) kaufte: rund 129 Mrd. Yen in Wandelanleihen und rund 266 Mrd. Yen als
+  Kommanditist in einem Bain-Fonds.</li>
+<li><strong>Kioxia-IPO:</strong> 18.12.2024 an der Börse Tokio, 1.455 Yen je Aktie, Bewertung
+  rund 784 Mrd. Yen. Der Kurs stieg bis 2026 um das rund 14-Fache, getragen von
+  der KI-getriebenen NAND-Nachfrage.</li>
+<li><strong>Bains Ausstieg 2026:</strong> Bain verkaufte seine Kioxia-Anteile vollständig
+  (Gewinn geschätzt rund 15 Mrd. USD). Dabei wurde SK Hynix' Eigenkapitalteil
+  (Fonds/LP) mitverkauft, abgeschlossen im Juni 2026 — daher der realisierte
+  Ertrag in Q2.</li>
+<li><strong>Was bleibt:</strong> SK Hynix hält weiter die Wandelanleihen. Bei Wandlung ergäben
+  sie einen Anteil in der Größenordnung von 14 Prozent, womit SK Hynix faktisch
+  zweit- bis drittgrößter Anteilseigner wäre. SK Hynix hat aber keine direkten
+  Stimmrechte, ist bis 2028 ohne Kioxias Zustimmung auf 15 Prozent Stimmrechte
+  gedeckelt, und eine Wandlung braucht Kartellfreigaben in mehreren Ländern.</li>
+</ul>
+<p>Spannung im Kern: SK Hynix, weltgrößter DRAM- und HBM-Hersteller, hält eine
+große wandelbare Position am NAND-Wettbewerber Kioxia — kartellrechtlich heikel,
+deshalb bisher nicht gewandelt.</p>
+<h2>Trägt</h2>
+<p>Die Verbindung des Q2-Einmalertrags zu einer konkreten, alten Beteiligung, nicht
+zu einem operativen Vorgang. Das stützt die Trennung von wiederkehrendem Ergebnis
+und Beteiligungsbewertung in
+<a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>. Der Ertrag
+ist überwiegend zahlungsunwirksam (Neubewertung) plus Verkaufserlös im
+Investitions-Cashflow, nicht im operativen — er gehört deshalb nicht in die
+FCF-Rechnung aus
+<a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">sk-hynix-free-cash-flow-2024-h1-2026</a>.</p>
+<h2>Trägt nicht</h2>
+<p>Der genaue aktuelle Anteil ist unklar. Quellen vermischen den Anteil des
+Bain-Vehikels (BCPE Pangea Cayman2, rund 14,19 Prozent zum 03.08.2026) mit SK
+Hynix' eigener Wandelposition; die 14 Prozent sind deshalb eine Größenordnung,
+kein belegter Stand. Ob und wann SK Hynix wandelt, ist offen und hängt an
+Kartellbehörden.</p>
+<p>Die realisierte Höhe ist Tier 1a aus der Q2-Pressemitteilung (63,3 Bio. KRW),
+die vorherigen Analystenschätzungen (Mirae Asset, Meritz: rund 40 bis 41,6 Bio.
+KRW nicht-wiederkehrend) lagen darunter — ein Beispiel dafür, warum Brokerzahlen
+nur Warnsignal sind.</p>
+<h2>Bruchindikator</h2>
+<p>SK Hynix wandelt die Anleihen in Aktien (dann entsteht ein ausgewiesener Anteil
+mit Stimmrechten und Meldepflichten), oder der Abschluss weist den Q2-Ertrag
+anders als aus der Kioxia-Position zu.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Realisierter Q2-Ertrag 63,3 Bio. KRW: SK Hynix Q2-2026-Pressemitteilung,
+  Tier 1a (über <a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a>).</li>
+<li>Investitionsbeträge 2018, IPO-Daten, Anteilsstruktur, Stimmrechtsdeckel: Presse
+  (Korea Herald, TrendForce, Seoul Economic Daily), kein Tier 1a. Der SEC-Prospekt
+  424B4 nennt die Kioxia-Position nicht gesondert.</li>
+<li>SPC1-Verkauf Juni 2026 und Gewinnschätzungen: Analysten (Mirae Asset, Meritz),
+  Warnsignal.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">sk-hynix-q2-2026-oneoff-and-tax</a></li>
+<li><a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">sk-hynix-free-cash-flow-2024-h1-2026</a></li>
+</ul></div></details><details class="entry" id="sk-hynix-nand-solidigm-turnaround"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-nand-solidigm-turnaround.html">SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt AI-Lage-Verbund, 2026-10-02; SEC-Prospekt 424B4 und SK Hynix Halbjahresbericht · <a href="findings/sk-hynix-nand-solidigm-turnaround.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.md">Markdown</a></p><h2>Aussage</h2>
+<p>NAND ist nach HBM/DRAM die zweite, kleinere Säule von SK Hynix und hat sich
+2026 von der Verlust- in die Gewinnzone gedreht.</p>
+<ul>
+<li><strong>Gewicht am Umsatz:</strong> NAND-Flash war 22,0 Prozent des Konzernumsatzes in Q1
+  2026 und 21,3 Prozent 2025. Der Rest ist überwiegend DRAM einschließlich HBM.
+  (Tier 1a, Prospekt)</li>
+<li><strong>Solidigm</strong> ist die US-NAND-Tochter aus dem Intel-NAND-Kauf. Gezahlt wurden
+  6,6 Mrd. USD im Dezember 2021 und 2,2 Mrd. USD im März 2025, zusammen rund
+  8,8 Mrd. USD. (Tier 1a, Prospekt)</li>
+<li><strong>Drehung in den Gewinn:</strong> Solidigm verlor 3,3 Bio. KRW (2022) und 4 Bio. KRW
+  (2023), kehrte 2024 in die Gewinnzone zurück und erzielte H1 2026 bei 12,25
+  Bio. KRW Umsatz einen Nettogewinn von 5,84 Bio. KRW — das 44-Fache der 132
+  Mrd. KRW aus H1 2025. Nettomarge H1 2026 rund 47,7 Prozent. (Halbjahresbericht,
+  Tier 1a, über Branchenpresse gelesen)</li>
+<li><strong>Markt:</strong> SK Hynix ist nach Umsatz die Nummer zwei im NAND (rund 18,5 Prozent,
+  Q1 2026, IDC). Treiber ist Enterprise-SSD für KI-Rechenzentren; die SK-Gruppe
+  ist auch dort Nummer zwei (Q2 2026 über 8,6 Mrd. USD eSSD-Umsatz, TrendForce).
+  (Analysten, kein Befund)</li>
+</ul>
+<p>Lesart: Die Drehung bei Solidigm macht NAND zu einem zweiten KI-Hebel neben HBM
+und dämpft die Abhängigkeit vom HBM-Anteil aus
+<a href="../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a>.
+Sie erklärt auch einen Teil der Margenausweitung aus
+<a href="findings/operating-margin-three-makers.html">operating-margin-three-makers</a>: NAND-Preise
+sind 2026 stark gestiegen.</p>
+<h2>Trägt</h2>
+<p>Das Gewicht von NAND (rund ein Fünftel des Umsatzes) und die Solidigm-Drehung
+sind Tier 1a. Damit ist belegt, dass SK Hynix' Ergebnis 2026 nicht allein HBM
+ist. Die Höhe der Solidigm-Nettomarge (47,7 Prozent H1) ist außergewöhnlich und
+der Grund, sie nachzuprüfen, nicht sie zu verwerfen.</p>
+<h2>Trägt nicht</h2>
+<p>Keine NAND-Marktanteile als Befund — die 18,5 Prozent und die eSSD-Rangfolge
+sind IDC und TrendForce, also Warnsignal. Kein getrennter NAND-Umsatz in KRW:
+der Prospekt nennt nur den Prozentanteil, nicht die absolute Zahl. Die
+Solidigm-H1-Zahlen sind über Branchenpresse aus dem Halbjahresbericht gelesen,
+mit Übertragungsrisiko. Der genannte Solidigm-US-IPO (Bewertung bis 150 Mrd.
+USD, frühestens 2027) ist Gerücht, kein Befund.</p>
+<p>Keine Aussage, wie viel der Konzernmarge aus NAND gegen DRAM/HBM stammt; der
+Prospekt teilt die Marge nicht nach Technologie.</p>
+<h2>Bruchindikator</h2>
+<p>Solidigm fällt in zwei Folgequartalen zurück in die Verlustzone, oder der
+NAND-Anteil am Konzernumsatz fällt deutlich unter 20 Prozent. Dann ist die
+zweite Säule schwächer als hier gelesen.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>NAND-Anteil 22,0 / 21,3 Prozent und Intel-NAND-Kaufpreise: SEC-Prospekt Form
+  424B4, September 2026, Tier 1a.
+  https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm</li>
+<li>Solidigm H1-2026-Zahlen und Vorjahresverluste: SK Hynix Halbjahresbericht,
+  Tier 1a, über Branchenpresse (BigGo) gelesen.</li>
+<li>NAND-Marktanteil (IDC), eSSD-Rangfolge und -Umsatz (TrendForce), IPO-Gerücht:
+  Branchendienste und Presse, Warnsignal.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/operating-margin-three-makers.html">operating-margin-three-makers</a></li>
+<li><a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">sk-hynix-free-cash-flow-2024-h1-2026</a></li>
+<li><a href="../memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a></li>
+</ul></div></details><details class="entry" id="sk-hynix-q2-2026-oneoff-and-tax"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">SK Hynix Q2 2026: Nettogewinn durch Einmaleffekt, Steuerquote abgeleitet</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-16 · <a href="findings/sk-hynix-q2-2026-oneoff-and-tax.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-q2-2026-oneoff-and-tax.md">Markdown</a></p><h2>Aussage</h2>
+<p>Q2 2026 (April bis Juni, gemeldet 29.07.2026):
+- Umsatz 79,3187 Bio. KRW, operatives Ergebnis 60,5426 Bio. KRW (Marge 76 Prozent), Nettogewinn 93,9226 Bio. KRW (118 Prozent vom Umsatz).
+- Der Nettogewinn liegt ueber dem operativen Ergebnis, weil 62,2 Bio. KRW nicht-operative Ertraege enthalten sind, davon 63,3 Bio. KRW aus Verkauf und Neubewertung von Beteiligungen (vor allem Kioxia) und 1,1 Bio. KRW Waehrungsgewinne.
+- Daraus abgeleitet: Vorsteuerergebnis rund 122,7 Bio. KRW, Steueraufwand rund 28,8 Bio. KRW, effektive Steuerquote rund 23,5 Prozent.
+- Abschreibungen im Quartal rund 4 Bio. KRW (Angabe aus dem Call).</p>
+<p>Folge fuer den Vergleich: Ein wiederkehrender Nettogewinn liegt bei rund 46 Bio. KRW (operatives Ergebnis x 0,765). Ein Folgequartal kann beim gemeldeten Nettogewinn niedriger ausfallen als Q2, obwohl das laufende Geschaeft waechst.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Die effektive Steuerquote als Umrechnung von operativem Ergebnis auf Nettogewinn, solange keine Sonderertraege auftreten.</li>
+<li>Die Trennung von wiederkehrendem Ergebnis und Beteiligungsbewertung bei jeder KGV- und Gewinnrenditerechnung, siehe <a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a>.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<p>Keine Prognose. Beteiligungen werden jedes Quartal neu bewertet, der Effekt kann in beide Richtungen gehen. Die 23,5 Prozent sind aus zwei gemeldeten Zahlen abgeleitet, nicht ausgewiesen; der ausgewiesene Steueraufwand im Abschluss ist massgeblich.</p>
+<p>Der Einmalertrag ist ueberwiegend keine Zahlungswirkung im operativen Cashflow und darf nicht in die FCF-Rechnung der Ausschuettungspolitik eingehen.</p>
+<h2>Bruchindikator</h2>
+<p>Quartalsabschluss weist eine deutlich andere Steuerquote aus, oder die Beteiligungsbewertung dreht ins Negative.</p>
+<h2>Ablesung</h2>
+<p>SK Hynix Pressemitteilung zum Q2 2026 vom 29.07.2026, Tier 1a. Zahlen zu nicht-operativen Ertraegen und Abschreibungen aus dem Earnings Call vom 28./29.07.2026, Tier 1a, hier ueber eine Transkript-Wiedergabe gelesen, also mit Uebertragungsrisiko.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/sk-hynix-shareholder-return-policy.html">sk-hynix-shareholder-return-policy</a></li>
+<li><a href="risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+<li><a href="findings/sk-hynix-kioxia-stake.html">sk-hynix-kioxia-stake</a> — woher der Einmalertrag stammt</li>
+</ul></div></details><details class="entry" id="sk-hynix-shareholder-return-policy"><summary><span class="type">Befund</span><span class="t"><a href="findings/sk-hynix-shareholder-return-policy.html">SK Hynix Ausschüttungspolitik 2025 bis 2027</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="findings/sk-hynix-shareholder-return-policy.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/sk-hynix-shareholder-return-policy.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>Ursprünglich (Nov. 2024): Ausschüttung bis zu 50 % des kumulierten FCF 2025 bis 2027.</li>
+<li>Neu (19.08.2026): mindestens 50 % des kumulierten FCF 2025 bis 2027, über Rückkauf mit Einzug und Dividenden. Feste Dividende und Sonderdividende werden erwogen.</li>
+<li>Beschlossen: Rückkauf und Einzug von 40 Bio. KRW, bis zu rund 24 Mio. Aktien, Zeitraum 20.08. bis 19.11.2026.</li>
+<li>Umfang und Form weiterer Ausschüttungen werden mit den Q3-Zahlen beschlossen (Termin laut Kalendern 27.10.2026).</li>
+<li>Netto-Cash Ende Q2 2026: 69,4 Bio. KRW.</li>
+</ul>
+<h2>Trägt</h2>
+<p>Untergrenze der Ausschüttung als Anteil am FCF. Damit hängt die Ausschüttung an der FCF-Rechnung, nicht am Gewinn.</p>
+<h2>Trägt nicht</h2>
+<p>Die Aufteilung zwischen Rückkauf und Dividende, und den Zeitpunkt innerhalb des Policy-Zeitraums. Keine Pflicht, 2026 auszuzahlen.</p>
+<p>Brokerzahlen zum kumulierten FCF (Hanwha rund 491 Bio. KRW für 2025 bis 2027, Samsung Securities rund 220 Bio. KRW) sind unzulässige Quelle, nur Warnsignal. Ihre Spanne zeigt die Unsicherheit.</p>
+<h2>Bruchindikator</h2>
+<p>Q3-Beschluss bleibt unter 50 % des kumulierten FCF oder verschiebt die Ausschüttung.</p>
+<h2>Ablesung</h2>
+<p>SK Hynix Pressemitteilung und Regulatory Filing vom 19.08.2026, Tier 1a (PR Newswire, Reuters-Bericht). SK Hynix Q2-2026-Pressemitteilung vom 29.07.2026, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/sk-hynix-free-cash-flow-2024-h1-2026.html">sk-hynix-free-cash-flow-2024-h1-2026</a> — der FCF, an dem die Untergrenze hängt, jetzt mit Tier-1a-Zahlen</li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="low-pe-at-earnings-peak"><summary><span class="type">Risiko</span><span class="t"><a href="risks/low-pe-at-earnings-peak.html">Niedriges KGV am Gewinngipfel</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="risks/low-pe-at-earnings-peak.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/risks/low-pe-at-earnings-peak.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bei Speicherherstellern trat ein niedriges KGV historisch oft genau am Gewinngipfel auf, weil der Markt das Ende des Gewinnwachstums vorwegnimmt. Zwei mechanische Effekte verstärken das Bild:
+- Trailing-KGV fällt allein, weil schwache Vorjahresquartale aus dem Zwölfmonatsfenster fallen. Rechenbeispiel Micron: Kurs 1053,98 USD (28.09.2026), Trailing-EPS vor FQ4 44,31 USD → KGV 23,8. FY2026-EPS GAAP 74,33 USD → KGV 14,2 bei gleichem Kurs.
+- Forward-KGV auf hochgerechneter Quartals-Guidance unterstellt, dass die Marge hält. Micron: 38,15 × 4 = 152,6 USD → KGV 6,9 beim selben Kurs.
+- Das Q3-Wachstum steckt schon in der Forward-EPS und senkt das Forward-KGV kaum weiter. Entscheidend ist die Dauer des Gewinnniveaus.</p>
+<h2>Trägt</h2>
+<p>Gegenlesart zu "Forward-KGV ist niedrig, also günstig". Bei Zyklikern ist ein niedriges Forward-KGV kein Kaufsignal für sich. Urteil: diese Gegenlesart liegt deutlich über 20 % Wahrscheinlichkeit.</p>
+<h2>Trägt nicht</h2>
+<p>Einen Zeitpunkt für den Gipfel (Setzung Kein Zyklusdatum). Nicht die Aussage, das KGV sei zu hoch oder zu niedrig.</p>
+<h2>Bruchindikator</h2>
+<p>Die Gewinne halten das Niveau über mehrere Quartale bei stabiler Marge, dann war das niedrige KGV Unterbewertung, nicht Gipfelsignal. Ablesbar über realisierten ASP gegen Bit-Growth (Ersatzindikator Angebotslücke).</p>
+<h2>Ablesung</h2>
+<p>Quartalsberichte der Hersteller, Tier 1a. Kurse aus Marktdaten.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="micron-fq4-hbm-split"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/micron-fq4-hbm-split.html">Micron FQ4: HBM gegen konventionelles DRAM</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="open_checks/micron-fq4-hbm-split.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/open_checks/micron-fq4-hbm-split.md">Markdown</a></p><h2>Aussage</h2>
+<p>Offener Erhebungsschritt: DRAM-, NAND- und HBM-Umsatz für Micron FQ4 2026, dazu ASP- und Bit-Veränderung Q/Q je Technologie.</p>
+<h2>Trägt</h2>
+<p>Entscheidet, ob Microns Wachstum aus HBM oder aus konventionellem DRAM kam, und damit wie stark es auf SK Hynix überträgt. Liefert zugleich Microns HBM-Umsatz je Bit, den sekundären Ersatzindikator der Setzung Angebotslücke im SK-Hynix-Projekt.</p>
+<h2>Trägt nicht</h2>
+<p>Noch nichts, nicht erhoben.</p>
+<h2>Bruchindikator</h2>
+<p>Kam das Wachstum überwiegend aus konventionellem DRAM, überträgt es schwach auf SK Hynix. Fällt Microns HBM-Umsatz je Bit zwei Quartale in Folge, löst der Ersatzindikator aus.</p>
+<h2>Ablesung</h2>
+<p>Micron 10-K FY2026 (Abschnitt Results of Operations), Prepared Remarks und Call-Transkript vom 30.09.2026, Tier 1a.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
+<li><a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

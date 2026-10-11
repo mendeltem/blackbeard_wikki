@@ -1,0 +1,1029 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>agent_tooling</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests</p>
+<div class="stripe"><i class="warn" style="width:57.1%" title="vorschlag: 16"></i><i class="ok" style="width:42.9%" title="getragen: 12"></i></div><div class="counts"><span class="warn">16 vorschlag</span> <span class="ok">12 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
+Vorbedingungspruefungen.</p>
+<p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
+ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.</strong> Es wird
+geglaubt, weil es wie eine Messung aussieht.</p>
+<p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkzeug, dessen eigener Fehler wie ein Befund aussieht, ist das gefährlichste.</p>
+<p><strong>Getragen (alles Regeln):</strong> Kein stiller Rückfallwert. Leer ist nicht fehlend. Unbekannt ist kein Wert in Vergleichen (<code>null &lt;= 0</code> ist wahr). Erstmessung ist keine Veränderung. Gerechnetes und Gedeutetes getrennt halten (zwei Schichten).</p>
+<p><strong>Vorschlag (aus dem Projekt rea übernommen):</strong> Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.</p>
+<p><strong>Lesen bei:</strong> Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.</p>
+<p><strong>Vorschlag, neu 2026-10-07 (Alita):</strong> Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".</p>
+<p><strong>Regel (2026-10-07):</strong> Ein <code>pip freeze</code> ist ein Protokoll, keine Installationsdatei (Build-Kennungen wie +cu124 und %2B brechen pip sofort). Auszuliefern ist die minimale, gepinnte Liste der echten Importe; getestet ist sie erst aus einem frischen Clone in neuer Umgebung bis zum Selbsttest, Log ins Repo.</p>
+<p><strong>Vorschlag, neu 2026-10-07 (Aufsicht ueber einen lokalen Agenten, neun Regeln aus neun Vorfaellen):</strong> Jede Sperre und jede zustandsabhaengige Anweisung bekommt beim Setzen ein Verfallsereignis; Sperren an Vollstaendigkeit haengen, nicht an "zu Ende" (eine <code>.rc</code>-Sperre oeffnete fuer einen abgebrochenen Lauf, eine CPU-Anweisung ueberlebte ihren Grund um 12 Stunden, Faktor 49). Die ersten N einer sortierten Liste sind ein Block (dreimal daneben, Vollzaehlung kostete 15 s). Vor dem Probelauf eines fremden Skripts nach Schreibzielen greppen -- ein "Trockenlauf" erfuellte ein Abnahmekriterium des Beaufsichtigten. Vor der ersten Aenderung einer fremden Datei <code>.vor-&lt;stempel&gt;</code> anlegen. Nachlauf als <code>trap EXIT</code>, einmal ausloesen, Logzeile suchen (ein angehaengter Block hinter vier <code>exit</code> war tot). Billige Vorpruefungen ordnen, entscheiden nicht (CPU-Rangliste vom GPU-Lauf widerlegt). Vor der Deutung einer gepoolten Zahl die tragenden Faelle zaehlen (3 Faelle = 28 % aller Laesionen). Namen am Code messen ("3D-ResNet" ohne Residuen). Erst die Definition zweier Zahlen suchen, dann die Differenz deuten (zwei Zuordnungsregeln, kein Widerspruch).</p>
+<p><strong>Regel (2026-10-07):</strong> "Installierbar" heisst frische Umgebung nur mit den README-Befehlen plus Gewichte vom Release, ein CI-Job auf fremdem Runner und jede CLI-Option einmal getestet; externe Programme (FSL) brauchen ihre Umgebungsvariablen vom Paket selbst, sonst haengen sie stumm.
+- 07.10.: Laufende Bash-Skripte nie editieren (bash liest weiter am Byte-Offset); Aenderungen in neue Datei oder auf Prozessende warten.
+- 08.10.: GPU-Auftrag erst nach cuda-Check, vollem Import und Mini-Lauf in derselben Umgebung einreihen (CPU-Build-torch kostete 80 min Sperre).
+- 11.10.: Tafel trennen: Markdown nur Funktionskern (kurz, ueber das Werkzeug, Nummern stabil), alles Verstaendliche als automatisch gebaute HTML-Seiten mit Plots und Datenschutzfilter (vorher 42 unsichtbare Eintraege, 6 doppelte Nummern).</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(28)</span></h2><details class="entry" id="blackboard-short-protocol-long-html"><summary><span class="type">Regel</span><span class="t"><a href="rules/blackboard-short-protocol-long-html.html">Tafel: kurzes Protokoll in Markdown, alles Verstaendliche als gebaute HTML-Seiten</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Tafel-Markdown nur Funktionskern (kurz, ueber das Werkzeug, Nummern stabil); Verstaendliches als gebaute, verlinkte HTML-Seiten mit Plots und Datenschutzfilter</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Nutzerwunsch 2026-10-11; Bestandsaufnahme der Tafel (1614 Eintraege, 920 KB) und Umbau mit Pruefung durch fuenf unabhaengige Agenten · <a href="rules/blackboard-short-protocol-long-html.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/blackboard-short-protocol-long-html.md">Markdown</a></p><h2>Aussage</h2>
+<p>Eine gemeinsame Agenten-Tafel hat zwei Aufgaben, die sich widersprechen: Maschinen lesen sie
+(Zeitfenster, letzte N Eintraege, Nummern als Zitat-IDs), Menschen wollen Zusammenhaenge, Zahlen
+und Verlaeufe sehen. Beides in einer Markdown-Datei endet in einem unlesbaren Log. Trennung:
+- <strong>Markdown = Funktionskern.</strong> Nur ueber das Schreibwerkzeug anhaengen (Sperre, Pruefungen,
+  Nummer = groesste vorhandene + 1), 1-3 Zeilen mit Zahl und Einheit, Nutzerentscheidungen mit
+  Praefix <code>ENTSCHEIDUNG:</code>, dazu ein Verweis auf die HTML-Seite. Nummern sind dauerhafte IDs.
+- <strong>HTML = abgeleitet, nie von Hand.</strong> Ein Generator baut Startseite, Projektseiten mit Kennzahlen
+  (je mit Quelle und Datum), Abbildungen direkt aus den Ergebnisdateien, offenen Punkten,
+  Entscheidungen und Verweisen ins Wiki; ein Protokoll mit Anker je Eintrag. Neubau nach jedem
+  Tafeleintrag (systemd-Path-Unit) und alle 30 Minuten (Timer, fuer neue Ergebnisse).
+- <strong>Datenschutzfilter im Generator</strong>, nicht im Kopf des Schreibers: Fallkennungen und Initialen
+  werden beim Bau ersetzt; die Seiten bleiben lokal und git-ignoriert.</p>
+<h2>Belege (Alita, 11.10.2026)</h2>
+<ul>
+<li>Vorher: 1614 Eintraege, 920 KB; 42 Eintraege fuer das Werkzeug unsichtbar (Kopfzeilen von Hand,
+  Titel im Kopf, <code>[auto]</code>), 6 doppelte Nummern, ein Eintrag versehentlich in einer Wiki-Datei,
+  98 direkte Anhaenge ohne Sperre. Ursache fast immer: Schreiben am Werkzeug vorbei.</li>
+<li>Sieben Programme lesen die Tafel (Zeitfenster 24 h, letzte 40, letzte 12, letzte 10); Nummern
+  werden in 44 Dateien zitiert. Deshalb kein Umnummerieren und Archivieren nur mit byte-genauer
+  Gegenpruefung, unter derselben Sperre, mindestens 14 Tage und 200 Eintraege bleiben.</li>
+<li>Bau: 16 Seiten, 13 Abbildungen in rund 4 s; Pruefung: 0 Fallkennungen, 0 tote lokale Links
+  (3198 Links), Werkzeug erkennt 1614/1614 Eintraege (vorher 1572).</li>
+</ul>
+<h2>Anwendung</h2>
+<p>Langtext, Tabellen, Plots nie auf die Tafel. Wer etwas Ausfuehrliches mitteilen will, schreibt es
+in eine Faktendatei oder Ergebnisdatei, die der Generator liest, und auf die Tafel einen Satz mit Verweis.</p></div></details><details class="entry" id="case-ids-are-dataset-local-prefix-when-pooling"><summary><span class="type">Regel</span><span class="t"><a href="rules/case-ids-are-dataset-local-prefix-when-pooling.html">Fall-Kennungen sind datensatz-lokal -- beim Zusammenlegen zweier Saetze die Schluessel praefixieren und die Zaehlung pruefen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">sub-101 gibt es in HCP und VALDO: ohne Praefix ueberschrieben Testfaelle Trainingsfaelle (Leck, &#x27;Test 6&#x27; statt 12); praefixieren, Zaehlung pruefen, Kurztest mit Kollision</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch G3b (Uebertrag HCP-Aging -&gt; VALDO), 2026-10-11 12:18 · <a href="rules/case-ids-are-dataset-local-prefix-when-pooling.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/case-ids-are-dataset-local-prefix-when-pooling.md">Markdown</a></p><h2>Regel</h2>
+<p><code>sub-101</code> gibt es in HCP-Aging (sub-001..sub-200) UND in VALDO Task 1 (sub-101..sub-106, sub-2xx). Wer Trainings- und Testsatz in
+dasselbe Woerterbuch legt, ueberschreibt stumm: sechs Testfaelle ersetzten sechs Trainingsfaelle, der Testsatz schrumpfte auf 6, und
+die ersetzten Faelle lagen im Training UND im Test (Leck). Kein Fehler, kein Warnhinweis -- nur die Zeile "Training 200 Test 6".
+Deshalb: 1) Schluessel beim Zusammenlegen praefixieren (<code>T|sub-101</code>), Dateinamen und Berichts-IDs erst beim Schreiben wieder
+abstreifen. 2) Nach dem Laden die erwarteten Zahlen ausgeben und PRUEFEN (Training n, Test m, Summe = Eingabe). 3) Kurztests mit
+absichtlich kollidierenden Kennungen fahren, nicht nur mit disjunkten (der erste Kurztest mit sub-001..006 fand den Fehler nicht).</p>
+<h2>Belege</h2>
+<ul>
+<li>11.10. 12:18: logs/versuch_g3b.log "Uebertrag: Training 200 Test 6", Patches 142.801 statt 143.461 (= 6 HCP-Faelle fehlten);
+  Lauf nach 15 min abgebrochen, Praefix eingebaut, Kurztest mit HCP sub-101..106 als Training -&gt; "Training 6 Test 12".</li>
+</ul>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/kill-by-pid-fetched-in-a-separate-command.html">kill-by-pid-fetched-in-a-separate-command</a></li>
+<li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+</ul></div></details><details class="entry" id="kill-by-pid-fetched-in-a-separate-command"><summary><span class="type">Regel</span><span class="t"><a href="rules/kill-by-pid-fetched-in-a-separate-command.html">Prozesse per PID beenden, die PID in einem EIGENEN Kommando holen -- pgrep/pkill -f trifft sonst die eigene Shell</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">pgrep/pkill -f trifft die eigene Shell, wenn der Zielname irgendwo im selben Kommando steht (3 Belege, Exit 144); PID in eigenem Kommando holen, dann nackt killen</span></summary><div class="body"><p class="small muted">Herkunft: drei Selbsttreffer der Agentenshell (07.10. drips_lauf, 11.10. 03:35 synapse get, 11.10. 07:05 G2-Neustart), PVS-Arena Alita · <a href="rules/kill-by-pid-fetched-in-a-separate-command.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/kill-by-pid-fetched-in-a-separate-command.md">Markdown</a></p><h2>Regel</h2>
+<p><code>pkill -f MUSTER</code> und <code>kill $(pgrep -f MUSTER)</code> pruefen jede Kommandozeile, auch die der Shell, die den Aufruf gerade ausfuehrt.
+Steht das Muster -- oder ein Text, auf den das Muster passt -- irgendwo in demselben Kommando (ein spaeterer Aufruf desselben
+Skripts, ein Log-Pfad mit dem Skriptnamen, ein sed auf den Dateinamen), stirbt die eigene Shell mit Exit 144, und alles, was
+nach dem kill kommen sollte (Protokollzeile, Neustart), laeuft nicht. Der Klammertrick (<code>cn[n]</code>) schuetzt nur vor dem Muster
+selbst, nicht vor dem echten Dateinamen weiter hinten im Kommando.
+Deshalb: 1) In einem eigenen Kommando <code>pgrep -f MUSTER</code> ausfuehren und die PID lesen. 2) Im naechsten Kommando <code>kill PID</code>
+(nackte Zahl). 3) Erst danach das Kommando mit Protokoll, Patch und Neustart. Wer es in einem Kommando braucht: PID vorher
+in eine Variable holen und sicherstellen, dass der Zielname sonst nirgends im Kommando vorkommt -- was praktisch nie gelingt,
+wenn man dasselbe Skript danach neu startet.</p>
+<h2>Belege</h2>
+<ul>
+<li>07.10.: pkill auf das DRIPS-Skript, Exit 144, Korrekturzeilen fehlten im Protokoll.</li>
+<li>11.10. 03:35: <code>synapse get</code> beenden + ARBEIT.md anhaengen + sed auf die Memory-Datei in einem Kommando -&gt; Exit 144, zwei von drei Schritten fehlten.</li>
+<li>11.10. 07:05: <code>kill $(pgrep -f "zweite_stufe_cn[n]")</code> gefolgt von py_compile und Neustart desselben Skripts im selben Kommando -&gt; das Muster traf den
+  spaeteren Dateinamen in der eigenen Kommandozeile; Patch und Test fielen aus, die Ursache war erst nach einem weiteren Kommando klar.</li>
+</ul>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/gpu-job-needs-cuda-check-in-its-own-env.html">gpu-job-needs-cuda-check-in-its-own-env</a> (Nachtrag dort war die erste Fassung)</li>
+<li><a href="rules/never-edit-a-running-bash-script.html">never-edit-a-running-bash-script</a></li>
+</ul></div></details><details class="entry" id="data-move-by-rename-symlink-and-protocol"><summary><span class="type">Regel</span><span class="t"><a href="rules/data-move-by-rename-symlink-and-protocol.html">Datenumzug: umbenennen, Symlink zurueck, Protokoll fuer den Rueckweg</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-09</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Umbau ~/data in DATEN/{OPEN,PRIVAT}/{ORIGINAL,DERIVATIVES} und PROJEKT (Werkzeug system/werkzeuge/datenumzug) · <a href="rules/data-move-by-rename-symlink-and-protocol.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/data-move-by-rename-symlink-and-protocol.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Forschungsbaum mit Tausenden fest verdrahteter Pfade (Skripte, Auftraege mit <code>BRAUCHT:</code>, Cron, Agenten-Skills)
+wird nur so umgezogen: <strong>auf demselben Dateisystem umbenennen, am alten Ort sofort einen Symlink setzen und jede
+Operation in ein Protokoll schreiben</strong>, aus dem ein <code>--rueckgaengig</code> die Schritte rueckwaerts abspielt.
+Nichts kopieren, nichts loeschen. Vorher ein Trockenlauf, der je Projekt zeigt, welche Bloecke wohin gehen.</p>
+<h2>Was beim Trennen von Code und Daten zaehlt</h2>
+<ul>
+<li><strong>Ganze Unterordner ohne Code</strong> wandern als Block, einzelne Bild- oder Gewichtsdateien neben Code einzeln.
+  Dateinamen wie <code>x.py.vor-0919</code> gelten als Code (Endung irgendwo im Namen), sonst wandern Sicherungskopien mit den Daten.</li>
+<li><strong>Einteilung oeffentlich/intern: im Zweifel intern.</strong> Ordner, die oeffentliche und eigene Faelle mischen
+  (LOCO, Endmodelle auf allen Daten), stehen als ausdrueckliche Pfadliste im Werkzeug, nicht nur als Muster.</li>
+<li><strong>Muster pruefen, bevor man ihnen traut:</strong> <code>swi</code> traf <code>swinvit</code>, <code>turnier</code> schob alle oeffentlichen Turnierlaeufe
+  nach intern. Erst die Bilanz je Projekt lesen, dann die Muster schaerfen (gemessen: 8 statt 44 GB intern in der VALDO-Linie).</li>
+<li><strong>Git-Repos:</strong> neue Symlinks in <code>.git/info/exclude</code>, sonst werden sie committet.</li>
+<li><strong>Schreibgeschuetzte Rohdatenordner</strong> (r-x) nur fuer den einen Umzug oeffnen und sofort wieder schliessen.</li>
+</ul>
+<h2>Was ein Symlink bricht</h2>
+<ul>
+<li><code>rsync -r</code>/<code>-rt</code> ohne <code>-L</code> <strong>ueberspringt</strong> Symlinks still: Sicherungen vorher auf <code>-rtL</code> stellen.</li>
+<li>Docker-Bind-Mounts loesen nur den eingehaengten Pfad selbst auf; Symlinks <strong>darin</strong>, die aus dem Mount herauszeigen,
+  sind im Container tot.</li>
+<li><code>find</code> ohne <code>-L</code> sieht unter dem alten Pfad nichts mehr; Zaehlungen danach mit <code>-L</code> oder am neuen Ort.</li>
+</ul>
+<h2>Nachpruefung (gehoert ins Werkzeug, nicht in die Erinnerung)</h2>
+<p>Tote Links, <code>BRAUCHT:</code>-Pfade aller offenen Auftraege, echte Datendateien unter PROJEKT, Antwort der QC-Server.</p>
+<h2>Stand</h2>
+<p>Werkzeug und Index-Generator (<code>datenindex</code>: README je Ordner, Index im Home) fertig und am Abbild getestet; die
+Ausfuehrung startet der Nutzer, weil die Rechtepruefung des Agenten einen Massenumzug als irreversibel einstuft.</p></div></details><details class="entry" id="gpu-job-needs-cuda-check-in-its-own-env"><summary><span class="type">Regel</span><span class="t"><a href="rules/gpu-job-needs-cuda-check-in-its-own-env.html">Vor dem Einreihen eines GPU-Auftrags: in GENAU dieser Umgebung CUDA, Importe und einen Mini-Lauf pruefen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">Vor dem Einreihen: cuda.is_available, voller Inferenz-Import, Mini-Lauf mit GPU in GENAU der Umgebung; pkill-Muster nicht woertlich im Kommando</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, GPU-Warteschlange 2026-10-08 01:35-03:05 (drei Fehlversuche in Folge) · <a href="rules/gpu-job-needs-cuda-check-in-its-own-env.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/gpu-job-needs-cuda-check-in-its-own-env.md">Markdown</a></p><h2>Aussage</h2>
+<p>Drei GPU-Auftraege scheiterten nacheinander an Dingen, die ein 30-Sekunden-Test vorher gezeigt haette: (1) das conda-torch
+der frisch gebauten Umgebung war ein CPU-Build; der Auftrag lief 80 Minuten auf der CPU, hielt die GPU-Sperre und liess den
+Modellserver des lokalen Agenten entladen -- der Agent stand. Der vorherige Rauchtest war absichtlich mit
+CUDA_VISIBLE_DEVICES="" gelaufen und hat das verdeckt. (2) nnU-Net v1 importiert matplotlib im Trainer-Modul; das Paket fehlte,
+Abbruch nach einer Sekunde. (3) torch 2.2 mit numpy 2.x gibt nur eine Warnung, scheitert aber beim ersten Tensor-Transfer.
+Vorschrift vor <code>grossauftrag --einreihen</code>: in der Zielumgebung <code>python -c "import torch; assert torch.cuda.is_available()"</code>,
+den vollstaendigen Import des Inferenz-Einstiegs (nicht nur des Pakets) und einen Mini-Lauf mit EINEM Fall MIT GPU.
+Zusaetzlich: pkill-Muster duerfen nicht woertlich in demselben Kommando vorkommen, sonst trifft pkill die eigene Shell
+(dreimal passiert; Bracket-Trick <code>pr[e]dict</code> hilft nur, wenn das Wort sonst nirgends im Kommando steht).</p>
+<h2>Traegt</h2>
+<p>Jede Warteschlange, die eine knappe Ressource exklusiv vergibt (GPU-Sperre, die den Modellserver entlaedt): ein fehlerhafter
+Auftrag kostet dort nicht nur seine Laufzeit, sondern blockiert alle anderen.</p>
+<h2>Traegt nicht</h2>
+<p>Umgebungen, die bereits mit einem Mini-Lauf auf der GPU abgenommen sind.</p>
+<h2>Bruchindikator</h2>
+<p>Keiner; die Regel ist eine Vorbedingung.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/mednet-t1-t050/predict_cpu_fehlversuch_0135.log ("CUDA is not available"),
+pingu-t1-t050/predict_fehlversuch_matplotlib.log, ARBEIT.md 02:20-03:05.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/never-edit-a-running-bash-script.html">never-edit-a-running-bash-script</a></li>
+<li><a href="rules/tests-prove-claims-not-plumbing.html">tests-prove-claims-not-plumbing</a></li>
+<li><a href="rules/release-test-means-fresh-machine-with-release-assets.html">release-test-means-fresh-machine-with-release-assets</a></li>
+</ul></div></details><details class="entry" id="back-up-before-first-edit-of-a-foreign-file"><summary><span class="type">Regel</span><span class="t"><a href="rules/back-up-before-first-edit-of-a-foreign-file.html">Vor der ersten Aenderung an einer fremden Datei eine Sicherung mit Stempel</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/back-up-before-first-edit-of-a-foreign-file.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/back-up-before-first-edit-of-a-foreign-file.md">Markdown</a></p><h2>Aussage</h2>
+<p>Eine fremde Abnahmedatei an einem Vormittag fuenfmal geaendert, kein einziges Mal vorher
+gesichert -- waehrend ich im selben Zeitraum bei anderen genau diese Disziplin pruefte. Ohne
+Versionskontrolle (kein Projekt im Arbeitsverzeichnis hatte ein <code>.git</code>) ist die Konvention
+<code>.vor-&lt;stempel&gt;</code> der einzige Rueckweg; wer sie nicht einhaelt, macht jede Aenderung
+unumkehrbar und merkt es erst, wenn er zurueck will.</p>
+<p>Regel: vor der ERSTEN Aenderung einer Datei, die mir nicht gehoert,
+<code>cp &lt;datei&gt; &lt;datei&gt;.vor-&lt;HHMM&gt;-&lt;wer&gt;</code>. Einmal je Sitzung und Datei genuegt; es geht um den
+Rueckweg, nicht um jede Zwischenstufe. Gilt fuer Abnahmedateien, Auftragstexte, Skripte,
+Protokolle. Beim Pruefen fremder Aenderungen mitzaehlen, ob eine Sicherung von HEUTE existiert:
+<code>find &lt;dir&gt; -maxdepth 1 -name "&lt;datei&gt;.vor-*" -newermt "$(date +%F)"</code>.
+Wo git vorhanden ist, ersetzt ein Commit vor der Aenderung die Kopie.</p>
+<h2>Traegt</h2>
+<p>Jede Datei ausserhalb der Versionskontrolle, die ein anderer Agent oder Mensch liest.</p>
+<h2>Traegt nicht</h2>
+<p>Dateien unter git mit sauberem Arbeitsbaum.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-15. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/grep-for-write-targets-before-a-dry-run.html">grep-for-write-targets-before-a-dry-run</a></li>
+</ul></div></details><details class="entry" id="cheap-precheck-ranks-but-does-not-decide"><summary><span class="type">Regel</span><span class="t"><a href="rules/cheap-precheck-ranks-but-does-not-decide.html">Eine billige Vorpruefung ordnet und beschreibt, sie entscheidet nicht</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/cheap-precheck-ranks-but-does-not-decide.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/cheap-precheck-ranks-but-does-not-decide.md">Markdown</a></p><h2>Aussage</h2>
+<p>Aus einer 3-Minuten-CPU-Messung (Spanne des mittleren Laesionskontrasts zwischen Kohorten)
+eine Rangliste von sieben Intensitaetsskalen gebaut, daraus GPU-Laeufe eingereiht und andere
+ausgeschlossen. Der eingereihte Falsifikationstest fiel negativ aus: Rang 1 war ueberall
+gesichert schlechter, Rang 7 ueberall neutral. Das Werkzeug beschrieb die Bildstatistik richtig
+und schloss trotzdem falsch auf die Netzleistung -- das Netz sieht den Kontrast JE FALL zur
+Umgebung, nicht das Kohortenmittel. Zwei "Bestaetigungen" (Robustheitsprobe, Obergrenze) hatten
+das Muster allgemein erscheinen lassen.</p>
+<p>Regel: eine Vorpruefung darf Laeufe ordnen, nicht ausschliessen, bis sie ihren eigenen
+Falsifikationstest bestanden hat. Die Vorhersage VOR dem Lauf aufschreiben, damit das
+Scheitern sichtbar wird -- hier hat genau das funktioniert.</p>
+<h2>Traegt</h2>
+<p>Jede Heuristik, die GPU-Stunden sparen soll, indem sie Kandidaten vorab aussortiert.</p>
+<h2>Traegt nicht</h2>
+<p>Vorpruefungen, deren Zusammenhang mit der Zielgroesse bereits an Laeufen gemessen ist.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-23 bis 2026-09-28. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/first-n-of-a-sorted-list-is-a-block.html">first-n-of-a-sorted-list-is-a-block</a></li>
+<li><a href="../cmb_detection/rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
+</ul></div></details><details class="entry" id="conditions-need-an-expiry-event"><summary><span class="type">Regel</span><span class="t"><a href="rules/conditions-need-an-expiry-event.html">Jede Sperre und jede zustandsabhaengige Anweisung braucht ein benanntes Verfallsereignis</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/conditions-need-an-expiry-event.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/conditions-need-an-expiry-event.md">Markdown</a></p><h2>Aussage</h2>
+<p>An einem Tag dreimal dieselbe Wurzel: eine Aussage war beim Aufschreiben richtig und wurde
+durch ein Ereignis falsch, ohne dass jemand sie widerrief.
+1. Eine Sperre "warte, bis diese fuenf Ergebnisdateien da sind" gab, als sie entstanden,
+   genau den Auftrag frei, der die 10-Stunden-Rechnung WIEDERHOLT haette.
+2. Eine Sperre auf eine <code>.rc</code>-Datei bezeugte "irgendein Lauf ist zu Ende" -- auch ein
+   abgebrochener bei 21 von 110 Faellen -- statt "der Lauf ist vollstaendig".
+3. Die Anweisung "rechne auf CPU" stand ohne ihren Grund ("weil die GPU belegt ist"); der
+   Grund entfiel nach 15 Minuten, die Anweisung lief 12 Stunden weiter: 408 s je Fall statt 8 s,
+   Faktor 49 verschenkt.</p>
+<p>Zwei Proben beim Setzen:
+- Bei einer Sperre: <em>Was passiert, wenn die Datei entsteht -- will ich DANN, dass genau dieser
+  Auftrag laeuft? Und entsteht sie auch, wenn es schiefging?</em> Sperren gehoeren an
+  <strong>Vollstaendigkeit</strong> (Zeilenzahl, Fallzahl, Pflichtfelder), nicht an "etwas ist zu Ende"
+  (<code>.rc</code>, Prozessende, Zeitpunkt).
+- Bei einer zustandsabhaengigen Anweisung: <em>Woran erkenne ich, dass der Zustand endet, und
+  steht der Widerruf im Text?</em> Richtig: "rechne auf CPU, SOLANGE Lauf X laeuft; danach
+  umstellen", nicht "rechne auf CPU".</p>
+<p>Eine Ausnahme von einem Kriterium soll sich selbst erledigen: "fehlende Ausgabe gilt nur dort
+als entschuldigt, wo NaN sie erklaert" verlangt die Faelle automatisch wieder, sobald die
+Reparatur drin ist; eine feste Ausnahmeliste haette sie dauerhaft entschuldigt.</p>
+<h2>Traegt</h2>
+<p>Auftragstexte, Abnahmekriterien, Warteschlangen-Sperren, Cron-Haken, Anweisungen an Unteragenten.</p>
+<h2>Traegt nicht</h2>
+<p>Einmalige, sofort ausgefuehrte Befehle.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Drei Vorfaelle 2026-09-14, Kosten teils real (12 CPU-Stunden), teils knapp vermieden. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/restart-loop-is-an-alarm-not-a-repair.html">restart-loop-is-an-alarm-not-a-repair</a></li>
+<li><a href="rules/exit-hook-via-trap-then-verify-in-log.html">exit-hook-via-trap-then-verify-in-log</a></li>
+</ul></div></details><details class="entry" id="count-cases-behind-a-pooled-number"><summary><span class="type">Regel</span><span class="t"><a href="rules/count-cases-behind-a-pooled-number.html">Vor der Deutung einer gepoolten Aufschluesselung zaehlen, wie viele Faelle sie tragen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/count-cases-behind-a-pooled-number.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/count-cases-behind-a-pooled-number.md">Markdown</a></p><h2>Aussage</h2>
+<p>Gemeldet: "groesste Luecke: Kleinhirn/Hirnstamm, Sensitivitaet 0,46", mit drei Hypothesen
+(Schichtdicke, Anatomie, Maske). Eine Stunde spaeter nachgezaehlt: drei Faelle hielten 128 von
+207 infratentoriellen Laesionen und 95 von 111 uebersehenen; ohne sie lag die Sensitivitaet
+dort bei 0,80 -- kein schwacher Ort. Uebersehen wurde, was klein UND kontrastarm ist, und das
+Netz war dort nicht knapp dran. Die Maskenhypothese war widerlegt (0 ausserhalb).</p>
+<p>Gepoolte Laesionszahlen werden von wenigen Faellen mit sehr vielen Laesionen getragen (hier
+3 von 75 Faellen = 234 von 828). Eine Tabelle "nach Ort / Groesse / Kohorte" zeigt dann die
+Eigenheit dieser Faelle, nicht eine Eigenschaft des Netzes.</p>
+<p>Regel: vor jeder Deutung die Zahl der tragenden FAELLE nennen und dieselbe Zeile ohne die drei
+groessten Faelle danebenstellen. Hypothesen erst danach.</p>
+<h2>Traegt</h2>
+<p>Jede gepoolte Kennzahl ueber Laesionen, Ereignisse, Fehler, bei der einzelne Einheiten viele Beitraege liefern.</p>
+<h2>Traegt nicht</h2>
+<p>Kennzahlen, die je Fall gemittelt sind.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-20, eigene Kohorte, nur Summen. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/first-n-of-a-sorted-list-is-a-block.html">first-n-of-a-sorted-list-is-a-block</a></li>
+<li><a href="rules/find-the-definition-before-interpreting-a-difference.html">find-the-definition-before-interpreting-a-difference</a></li>
+</ul></div></details><details class="entry" id="exit-hook-via-trap-then-verify-in-log"><summary><span class="type">Regel</span><span class="t"><a href="rules/exit-hook-via-trap-then-verify-in-log.html">Nachlauf als trap EXIT einhaengen, einmal ausloesen und im Log nachsehen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/exit-hook-via-trap-then-verify-in-log.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/exit-hook-via-trap-then-verify-in-log.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Sicherungsblock wurde an ein Synchronisationsskript angehaengt, das ueber vier
+<code>exit</code>-Zweige verlaesst (kein Repository / nichts geaendert / gepusht / Push fehlgeschlagen).
+Der Block stand hinter allen und war toter Code. Gemeldet war: "die Sicherung laeuft ab jetzt
+taeglich" -- sie haette es nie getan. Aufgefallen nur, weil jemand nachsah, ob die erwartete
+Zeile im Log steht.</p>
+<p>Regel: in ein Skript mit mehr als einem Ausgang gehoert der Nachlauf als
+<code>trap &lt;funktion&gt; EXIT</code>, direkt nach dem Log-Kopf definiert -- dann laeuft er auf jedem Zweig.
+Nach dem Einrichten einmal AUSLOESEN und im Log die erwartete Zeile suchen; bei Cron-Haken den
+unauffaelligsten Zweig testen (hier "nichts geaendert"), nicht den Erfolgsfall. Ein Haken, der
+nicht laeuft, ist schlimmer als keiner: man verlaesst sich darauf. Dasselbe Muster wie bei
+Sperren ohne Verfallsereignis -- die Einrichtung bezeugt sich selbst, statt gemessen zu werden.</p>
+<h2>Traegt</h2>
+<p>Shell-Skripte mit Nachlauf (Sicherung, Aufraeumen, Melden), Cron- und systemd-Haken.</p>
+<h2>Traegt nicht</h2>
+<hr />
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-23. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/conditions-need-an-expiry-event.html">conditions-need-an-expiry-event</a></li>
+<li><a href="rules/restart-loop-is-an-alarm-not-a-repair.html">restart-loop-is-an-alarm-not-a-repair</a></li>
+</ul></div></details><details class="entry" id="find-the-definition-before-interpreting-a-difference"><summary><span class="type">Regel</span><span class="t"><a href="rules/find-the-definition-before-interpreting-a-difference.html">Vor dem Vergleich zweier Zahlen die Definition suchen, nicht die Differenz deuten</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/find-the-definition-before-interpreting-a-difference.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/find-the-definition-before-interpreting-a-difference.md">Markdown</a></p><h2>Aussage</h2>
+<p>Aus den Falten-Metadaten eines Trainings (tp/fp/fn) ein gepooltes F1 von 0,33 gerechnet und
+mit den 0,25 des Aggregationsberichts verglichen; erste Deutung: "reproduziert nicht, der
+Bericht ist verdaechtig". Falsch: der Bericht zaehlt aus den Vorhersagedateien neu, mit der
+offiziellen Zuordnungsregel (6er-Nachbarschaft, Schwerpunkt &lt; 5 mm, eins-zu-eins); die
+Metadaten sind die Selbstauskunft des Trainingsskripts nach ANDERER Regel. Zwei Masse, kein
+Widerspruch. Davor derselbe Fehler in klein: aus der abgeflachten Anzeige der eigenen Ausgabe
+auf die Dateistruktur geschlossen (<code>KeyError</code>).</p>
+<p>Regel: vor jedem Vergleich zweier Zahlen klaeren, welches Skript, welche Regel, auf welchen
+Dateien. Bietet ein Werkzeug eine Nachzaehlung an, diese lesen statt aus Rohzahlen selbst zu
+aggregieren -- die eigene Aggregation reproduziert die fremde Regel fast nie. Eine Abweichung
+zwischen Selbstauskunft und unabhaengiger Nachzaehlung ist der Normalfall, nicht der Skandal.
+Und nie aus der eigenen Bildschirmausgabe auf ein Datenformat schliessen; die Schluessel der
+Datei ansehen.</p>
+<h2>Traegt</h2>
+<p>Pruefung fremder Ergebnisse, Reproduktionen, Vergleiche zwischen Berichten.</p>
+<h2>Traegt nicht</h2>
+<hr />
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-15. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/name-a-component-against-its-code.html">name-a-component-against-its-code</a></li>
+<li><a href="rules/count-cases-behind-a-pooled-number.html">count-cases-behind-a-pooled-number</a></li>
+<li><a href="rules/computed-and-judged-must-stay-separable.html">computed-and-judged-must-stay-separable</a></li>
+</ul></div></details><details class="entry" id="first-n-of-a-sorted-list-is-a-block"><summary><span class="type">Regel</span><span class="t"><a href="rules/first-n-of-a-sorted-list-is-a-block.html">Die ersten N einer sortierten Liste sind ein Block, kein Querschnitt</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/first-n-of-a-sorted-list-is-a-block.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/first-n-of-a-sorted-list-is-a-block.md">Markdown</a></p><h2>Aussage</h2>
+<p>Dreimal an einem Tag aus den ersten N einer nach Kennung sortierten Liste hochgerechnet, dreimal
+lag die Vollzaehlung deutlich anders:</p>
+<table>
+<thead>
+<tr>
+<th>Was</th>
+<th>Stichprobe (erste N)</th>
+<th>Vollzaehlung</th>
+<th>Fehler</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schnitte je Fall</td>
+<td>256 (erste 40)</td>
+<td>159 (alle 201)</td>
+<td>Faktor 13 statt 9</td>
+</tr>
+<tr>
+<td>Faltenqualitaet</td>
+<td>2 von 5 Falten</td>
+<td>alle 5</td>
+<td>Schluss zufaellig richtig</td>
+</tr>
+<tr>
+<td>Dice eines Modells</td>
+<td>0,680 (erste 40)</td>
+<td>0,718 (alle 110)</td>
+<td>0,039</td>
+</tr>
+</tbody>
+</table>
+<p>Kennungen tragen Struktur: <code>sub-001..060</code> ist eine Kohorte, <code>cv-001..201</code> mischt vier Kohorten in
+Bloecken, Faltendateien liegen nach Variante. Die ersten 40 sind deshalb eine Kohorte, ein
+Standort, eine Schichtdicke.</p>
+<p>Regel: vollzaehlen, wenn es billig ist (110 NIfTI-Dateien zu messen kostete 14,8 s; die
+Stichprobe sparte nichts und kostete einen falschen Befund). Wo eine Stichprobe noetig ist,
+zufaellig ziehen statt vorn abschneiden: <code>rng.choice(liste, k, replace=False)</code> mit festem Seed,
+Streuung mitberichten. Eine Zahl aus einer Stichprobe nie als Befund melden, sondern als
+Schaetzung mit Fehlerspanne.</p>
+<h2>Traegt</h2>
+<p>Jede Hochrechnung aus Dateilisten, Logs, Tabellen, die nach Kennung, Datum oder Pfad sortiert sind.</p>
+<h2>Traegt nicht</h2>
+<p>Echte Zufallsstichproben.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Drei Vorfaelle 2026-09-15. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/count-cases-behind-a-pooled-number.html">count-cases-behind-a-pooled-number</a></li>
+</ul></div></details><details class="entry" id="grep-for-write-targets-before-a-dry-run"><summary><span class="type">Regel</span><span class="t"><a href="rules/grep-for-write-targets-before-a-dry-run.html">Vor dem Probelauf eines fremden Skripts nach Schreibzielen greppen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/grep-for-write-targets-before-a-dry-run.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/grep-for-write-targets-before-a-dry-run.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein fremdes Skript "zum Ausprobieren, ob es durchlaeuft" gestartet -- es schrieb seine
+Ergebnisdatei (1 651 B) und erfuellte damit ein Abnahmekriterium des beaufsichtigten Agenten:
+die Abnahme sprang von 2/5 auf 3/5, der Monitor meldete "Ergebnisdatei entstanden". Von aussen
+sah das Versehen des Aufsehers wie Fortschritt des Agenten aus. Der Beleg (<code>open(ERG, "w")</code>)
+stand zwei Zeilen vorher in derselben Ausgabe.</p>
+<p>Regel: vor dem Ausfuehren eines fremden Skripts in einem EIGENEN Aufruf davor
+<code>grep -nE "open\(.*[\"']w|write_text|json.dump|to_csv|shutil|os.rename|mv " &lt;datei&gt;</code>.
+Faellt ein Schreibziel an, das in einer Abnahme oder einem Ergebnisordner vorkommt: nicht
+ausfuehren. Statt "laeuft es durch?" Importe und Funktionen einzeln pruefen oder das
+Ausgabeziel auf das Kratzverzeichnis umbiegen. Ist es doch passiert: Datei umbenennen
+(nicht loeschen), Stand gegenmessen, Vorgang ins Protokoll.</p>
+<p>Grundsatz: Wer eine Abnahme bewertet, darf nichts erzeugen, was sie bewertet. Ein selbst
+erfuelltes Kriterium faelscht die Messung wie eine abgeschriebene Zahl.</p>
+<h2>Traegt</h2>
+<p>Aufsicht ueber Agenten mit dateibasierter Abnahme; jedes Skript, das man nicht selbst geschrieben hat.</p>
+<h2>Traegt nicht</h2>
+<p>Skripte, deren Ausgabeziel per Argument ins Kratzverzeichnis zeigt.</p>
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-15. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/back-up-before-first-edit-of-a-foreign-file.html">back-up-before-first-edit-of-a-foreign-file</a></li>
+<li><a href="rules/tests-prove-claims-not-plumbing.html">tests-prove-claims-not-plumbing</a></li>
+</ul></div></details><details class="entry" id="name-a-component-against-its-code"><summary><span class="type">Regel</span><span class="t"><a href="rules/name-a-component-against-its-code.html">Bevor ein Baustein in einem Bericht einen Namen bekommt, die definierende Stelle im Code lesen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Aufsicht ueber einen lokalen Agenten (WMH-Linie), 2026-09-14 bis 2026-09-23 · <a href="rules/name-a-component-against-its-code.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/name-a-component-against-its-code.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein "3D-ResNet" in Berichten, Protokoll und Replikationsdokument war ein schlichtes 3D-CNN ohne
+Residualverbindungen; der Name stammte aus einem Docstring, geschrieben aus der Absicht ("soll
+ein kleines ResNet werden"). Die Nachpruefung fand zwei weitere: "60 feste Epochen" (fest war
+der Plan; geladen wurde der beste Zwischenstand), "Hirnmasken aus HD-BET" (119 von 136 waren
+mitgelieferte Dateien). Keine Zahl war falsch; alle drei Namen haetten im Paper gestanden.</p>
+<p>Regel: vor dem Benennen die Klasse, das <code>forward</code> oder die Laderoutine lesen und den Namen daran
+messen; bei Herkunftsangaben (Masken, Karten) zaehlen, was Symlink auf eine Quelle ist. Ein
+Glossar der verwendeten Namen mit Codestelle fuehren.</p>
+<h2>Traegt</h2>
+<p>Berichte, Protokolle, Veroeffentlichungen, Readmes, die Verfahren benennen.</p>
+<h2>Traegt nicht</h2>
+<hr />
+<h2>Bruchindikator</h2>
+<hr />
+<h2>Ablesung</h2>
+<p>Vorfall 2026-09-21. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/find-the-definition-before-interpreting-a-difference.html">find-the-definition-before-interpreting-a-difference</a></li>
+<li><a href="rules/traceability-map-for-a-results-repo.html">traceability-map-for-a-results-repo</a></li>
+</ul></div></details><details class="entry" id="never-edit-a-running-bash-script"><summary><span class="type">Regel</span><span class="t"><a href="rules/never-edit-a-running-bash-script.html">Ein laufendes Bash-Skript nie editieren: bash liest die Datei waehrend der Ausfuehrung weiter</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">bash liest Skripte waehrend der Ausfuehrung weiter; ein Edit mitten im Lauf erzeugt Syntaxfehler und verwaiste Ergebnisse; Aenderungen in neue Datei</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, DRIPS-Rauchtest 2026-10-07 21:05-21:20 · <a href="rules/never-edit-a-running-bash-script.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/never-edit-a-running-bash-script.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bash liest ein Skript nicht am Anfang komplett ein, sondern Stueck fuer Stueck waehrend es laeuft. Wird die Datei
+veraendert, waehrend ein langer Befehl darin (hier <code>docker run</code>, 40 s) laeuft, setzt bash danach am alten Byte-Offset
+in der NEUEN Datei fort: Zeilenbruchstuecke werden als Befehle gelesen ("syntax error near unexpected token `('"), die
+Nacharbeit (Ergebnisdateien verschieben, Tempordner loeschen) entfaellt, und die Ergebnisse liegen verwaist im
+Tempordner, waehrend das Log einen Fehler meldet, der mit dem Lauf nichts zu tun hat. Beobachtet beim DRIPS-Runner:
+Patch (Resample-Schritt) waehrend eines laufenden Rauchtests eingespielt, der Rauchtest brach mit Syntaxfehler ab,
+die fertige Vorhersage lag in tmp/.</p>
+<h2>Traegt</h2>
+<p>Jedes Bash-Skript, das laenger laeuft als die Zeit bis zum naechsten Edit (Runner, Download-Schleifen, Ketten).
+Vorschrift: Aenderungen in eine NEUE Datei schreiben (v2) oder warten, bis kein Prozess das Skript mehr ausfuehrt
+(<code>pgrep -f &lt;name&gt;</code>); Python- und kompilierte Programme sind davon nicht betroffen (ganz eingelesen).</p>
+<h2>Traegt nicht</h2>
+<p>Skripte, die als Funktion in den Speicher geladen oder per <code>bash -c "$(cat skript)"</code> gestartet wurden.</p>
+<h2>Bruchindikator</h2>
+<p>Ein bash, das Skripte vollstaendig puffert (nicht bekannt).</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/logs/drips_smoke_belove.log (Syntaxfehler in Zeile 13 der inzwischen geaenderten Datei), tmp/drips.AKSt mit
+fertigen Ausgaben; Rekonstruktion 2026-10-07 21:25.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/back-up-before-first-edit-of-a-foreign-file.html">back-up-before-first-edit-of-a-foreign-file</a></li>
+<li><a href="rules/exit-hook-via-trap-then-verify-in-log.html">exit-hook-via-trap-then-verify-in-log</a></li>
+</ul></div></details><details class="entry" id="pip-freeze-is-not-an-install-file"><summary><span class="type">Regel</span><span class="t"><a href="rules/pip-freeze-is-not-an-install-file.html">Ein pip freeze ist ein Protokoll, keine Installationsdatei -- die Installation gilt erst nach dem Test aus dem frischen Clone</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo</span></summary><div class="body"><p class="small muted">Herkunft: Repo cmb-valdo-chain, Install-Test aus frischem Clone, 2026-10-07 · <a href="rules/pip-freeze-is-not-an-install-file.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/pip-freeze-is-not-an-install-file.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein <code>pip freeze</code> der Arbeitsumgebung als <code>requirements-lock.txt</code> auszuliefern sieht nach
+Reproduzierbarkeit aus und scheitert in der ersten Zeile: (1) Build-Kennungen wie
+<code>torch==2.6.0+cu124</code> oder <code>torch_cluster==1.6.3%2Bpt26cu124</code> liegen nicht auf PyPI, das
+<code>%2B</code> ist fuer pip sogar ein Syntaxfehler (sofortiger Abbruch, nichts installiert);
+(2) die Datei enthaelt alles, was je in der Umgebung lag (160 Pakete, TensorFlow,
+Graph-Bibliotheken), nicht das, was der Code importiert. Regel:</p>
+<ol>
+<li>Die Installationsdatei enthaelt nur, was der Code importiert (<code>grep -rhoE '^(import|from) \w+'</code>
+   ueber das Paket, gegen die Standardbibliothek gefiltert), mit den Versionen der
+   Arbeitsumgebung gepinnt; schwere Rahmen (torch) mit ihrem eigenen Index separat davor.</li>
+<li>Das volle <code>pip freeze</code> bleibt als <code>requirements-full-record.txt</code> mit Kopfzeile
+   "Protokoll, nicht installierbar" -- es ist ein Beleg, kein Werkzeug.</li>
+<li>Getestet ist eine Installation erst, wenn sie aus einem FRISCHEN Clone in einer NEUEN
+   Umgebung mit genau den README-Befehlen bis zum Selbsttest laeuft; das Log gehoert ins Repo
+   (<code>docs/INSTALL-TEST.md</code>). Der zweite Fund dieses Tests war ein <code>tqdm</code>-Import im
+   Selbsttest, den die Hauptdatei nicht nannte.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jedes Repo, dessen README "pip install -r" verspricht; besonders Forschungscode, der in
+einer gewachsenen conda-Umgebung entstand.</p>
+<h2>Traegt nicht</h2>
+<p>Container-Images oder conda-lock-Dateien mit explizitem Kanal und Build: dort ist das
+volle Abbild die Installationsdatei.</p>
+<h2>Bruchindikator</h2>
+<p>Ein frischer Clone, der mit der minimalen Datei installiert und dessen Selbsttest trotzdem
+an einem fehlenden Paket scheitert -- dann fehlt ein Import in der Grep-Liste (dynamische
+Importe, optionale Pfade).</p>
+<h2>Ablesung</h2>
+<p>Eigener Test 2026-10-07: Lock-Datei rc=1 in Sekunde 1; minimale Datei + torch-CPU + tqdm:
+SELFTEST PASSED in neuer Umgebung. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/traceability-map-for-a-results-repo.html">traceability-map-for-a-results-repo</a></li>
+</ul></div></details><details class="entry" id="release-test-means-fresh-machine-with-release-assets"><summary><span class="type">Regel</span><span class="t"><a href="rules/release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR</span></summary><div class="body"><p class="small muted">Herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07 · <a href="rules/release-test-means-fresh-machine-with-release-assets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Paket mit vortrainierten Gewichten gilt erst als installierbar, wenn drei Dinge
+unabhaengig voneinander durchlaufen:</p>
+<ol>
+<li><strong>Frische Umgebung, nur README:</strong> <code>pip install torch</code> (CPU-Index), <code>pip install git+https://...</code>,
+   <code>--list-models</code>, <code>--selftest</code> (synthetisches Phantom, keine Downloads), dann ein echter Lauf,
+   bei dem die Gewichte vom oeffentlichen Release geladen und per SHA-256 geprueft werden.
+   Erst dieser Lauf fand den Fehler, den alle lokalen Tests uebersahen: der FSL-Wrapper
+   <code>fast</code> blockiert OHNE <code>FSLDIR</code> stumm (0 % CPU, kein Fehler) -- lokal war die Variable
+   immer gesetzt. Abhilfe: das Paket setzt <code>FSLDIR</code>/<code>FSLOUTPUTTYPE</code> aus dem gefundenen
+   Installationspfad selbst und gibt jedem Fremdaufruf eine Zeitgrenze.</li>
+<li><strong>Anderer Rechner:</strong> ein CI-Job auf einem frischen Runner, der dasselbe tut (Installation von
+   GitHub, Download vom Release, Segmentierung eines Phantoms) -- das ist der einzige "andere
+   Rechner", den ein Agent ohne zweite Maschine hat.</li>
+<li><strong>Jede Option einmal:</strong> eine Testmatrix ueber jeden CLI-Schalter mit echten Gewichten auf dem
+   Phantom (Sekunden je Fall) plus ein Fall mit echtem Bild, Maske, Gewebekarte und externem
+   Werkzeug; Schalter, die nur mit Zusatzsoftware gehen (HD-BET, SimpleITK, FSL, CUDA), werden
+   uebersprungen statt gefaelscht.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jedes Werkzeug, das "einfach installieren und sofort ausfuehren" verspricht; besonders
+Pipelines mit externen Programmen (FSL, FreeSurfer, HD-BET), deren Umgebungsvariablen auf der
+Entwicklungsmaschine immer gesetzt sind.</p>
+<h2>Traegt nicht</h2>
+<p>Bibliotheken ohne externe Programme und ohne Gewichtsdateien -- dort reicht der CI-Lauf.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Nutzer auf einer anderen Maschine, der mit den README-Befehlen scheitert, obwohl alle drei
+Pruefungen gruen waren.</p>
+<h2>Ablesung</h2>
+<p>Eigener Lauf 2026-10-07: erster Neuer-Server-Test haengt 10 min in <code>fast</code>; nach der Abhilfe
+Lauf 2 mit Download 1150 s (FSL 620 s, Fenster 475 s auf CPU), CI-Job fresh-machine gruen,
+Optionsmatrix 14/14. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></li>
+</ul></div></details><details class="entry" id="restart-loop-is-an-alarm-not-a-repair"><summary><span class="type">Regel</span><span class="t"><a href="rules/restart-loop-is-an-alarm-not-a-repair.html">Eine Neustartschleife ist ein Alarm, keine Reparatur</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Modellwache des llama-servers, 2026-10-02 bis 2026-10-07 · <a href="rules/restart-loop-is-an-alarm-not-a-repair.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Waechter, der einen Dienst neu startet, muss vorher die <strong>Vorbedingung</strong> des
+Dienstes pruefen (Treiber geladen, Karte sichtbar, Platz frei, Netz da). Scheitert
+die Vorbedingung, darf er nicht neu starten, sondern muss <strong>einmal</strong> laut melden,
+die Ursache nennen und pausieren, bis die Vorbedingung wieder erfuellt ist.</p>
+<p>Auf Alita startete die Modellwache den llama-server alle 15 Minuten neu, weil er
+auf <code>/health</code> nicht antwortete -- 445 Mal in fuenf Tagen. Der Server konnte nie
+antworten: der NVIDIA-Treiber war nach einem Kernel-Update nicht geladen
+(siehe <a href="../local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.html">secure-boot-kernel-update-unloads-nvidia-dkms</a>).
+Jeder Neustart schrieb eine Zeile auf das Blackboard, die wie Taetigkeit aussah;
+die eine Zeile, die gefehlt hat, war "Treiber nicht geladen, ich warte".
+Das Startskript selbst wartete in einer Schleife auf freien GPU-Speicher und
+verglich dabei einen Fehlertext mit einer Zahl -- der Fehler sah aus wie
+"noch nicht genug Platz".</p>
+<p>Daraus die Regel in drei Teilen:
+1. <strong>Vorbedingung vor Neustart.</strong> Was der Dienst zum Laufen braucht, prueft der
+   Waechter selbst; ein fehlgeschlagener Health-Check ohne erfuellte Vorbedingung
+   ist kein Neustartgrund.
+2. <strong>Einmal melden, dann schweigen.</strong> Dieselbe Ursache erzeugt eine Meldung mit
+   Zeitstempel und einen Zaehler, nicht hundert gleiche Zeilen.
+3. <strong>Fehlertext ist kein Messwert.</strong> Ein Werkzeug, das eine Zahl erwartet, muss
+   bei Nicht-Zahl abbrechen und den Text zeigen -- nicht <code>0</code> annehmen und warten
+   (Sonderfall von <a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a>).</p>
+<h2>Traegt</h2>
+<p>Jeden Waechter, Cron-Job oder systemd-<code>Restart=</code>, der einen Dienst am Leben haelt,
+dessen Betrieb an Hardware oder einem anderen Dienst haengt.</p>
+<h2>Traegt nicht</h2>
+<p>Dienste, die wirklich nur sporadisch haengen und deren Vorbedingungen trivial sind.
+Dort ist ein Neustart mit Begrenzung (StartLimitBurst) richtig.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Fall, in dem das Neustarten ohne Vorbedingungspruefung schneller geholfen hat
+als Melden und Warten -- etwa weil die Vorbedingung selbst durch den Neustart
+hergestellt wird.</p>
+<h2>Ablesung</h2>
+<p>Blackboard-Protokoll Alita, Eintraege [958] bis [1413], 2026-10-02 18:27 bis
+2026-10-07 09:36; Startskript-Log des llama-servers. Tier 1a (eigene Logs).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="../local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.html">secure-boot-kernel-update-unloads-nvidia-dkms</a></li>
+</ul></div></details><details class="entry" id="traceability-map-for-a-results-repo"><summary><span class="type">Regel</span><span class="t"><a href="rules/traceability-map-for-a-results-repo.html">Ein Ergebnis-Repo braucht EINE Karte: Zahl -&gt; Daten -&gt; Befehl -&gt; Datei -&gt; Abschnitt</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Repo cmb-valdo-chain (docs/TRACEABILITY.md), 2026-10-07 · <a href="rules/traceability-map-for-a-results-repo.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/traceability-map-for-a-results-repo.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wenn ein Repository Zahlen berichtet (README-Tabelle), reicht es nicht, dass Laborbuch, Befehlsliste und
+Literaturliste existieren. Es braucht eine Seite, die sie verbindet, mit vier Tabellen:
+1. <strong>Daten</strong>: Herkunft (Zitat, DOI), Lizenz, was davon benutzt wird (Split, Seed), wo es auf der Maschine liegt.
+2. <strong>Code und Methode</strong>: je Baustein die Quelle (Paper, Original-Commit oder eigene Messung), die Datei im Repo
+   und der Abschnitt, in dem die Abweichung oder Messung steht.
+3. <strong>Der Weg</strong>: je Schritt der Kette Eingabe, Befehl, Ausgabe, was er belegt, wo es steht; am besten aus der
+   Schrittliste des Laufwerkzeugs abgeleitet (hier <code>kern.py STEPS</code> mit done-check je Schritt).
+4. <strong>Jede berichtete Zahl</strong>: Daten, Befehl, Ergebnisdatei, Entscheidungsabschnitt; dazu die Bewertungsregeln,
+   die fuer alle Zahlen gelten.
+Dazu: was automatisch protokolliert wird (meta.json je Lauf, Warteschlangenlog, Umgebung, Pruefsummen) und
+die bekannten Luecken, ungeschoent. Literatur traegt je Eintrag ein Flag (an der Quelle geprueft / aus Notiz / aus
+dem Gedaechtnis), damit niemand Ungeprueftes zitiert.</p>
+<h2>Traegt</h2>
+<p>Jedes Repo, das Zahlen fuer ein Paper oder eine Abschlussarbeit liefert, auch mit privaten Daten (dann nur Summen
+und Pfade, nie Bilder).</p>
+<h2>Traegt nicht</h2>
+<p>Reine Werkzeug-Repos ohne berichtete Ergebnisse.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Zahl im README, die nicht in einer Zeile der vierten Tabelle steht.</p>
+<h2>Ablesung</h2>
+<p>Nutzeranforderung 07.10. ("alle Wege und Quellen nachvollziehbar"); Vorlage <code>docs/TRACEABILITY.md</code> in
+cmb-valdo-chain. Setzung, kein Messwert.</p>
+<h2>Verknuepft</h2>
+<p>--</p></div></details><details class="entry" id="agent-tools-by-task-shape"><summary><span class="type">Regel</span><span class="t"><a href="rules/agent-tools-by-task-shape.html">Agenten-Werkzeuge nach Aufgabenform schneiden, nicht nach der API dahinter</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span></summary><div class="body"><p class="small muted">Herkunft: Projekt rea (morluto/rea, MIT), docs/tool-design.md und AGENTS.md, Stand b6c21b1 vom 2026-10-05 · <a href="rules/agent-tools-by-task-shape.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/agent-tools-by-task-shape.md">Markdown</a></p><h2>Aussage</h2>
+<p>rea (Reverse Engineering mit Agenten, 116 MCP-Werkzeuge) schneidet jedes Werkzeug
+nach der Frage, die ein Agent stellt, nicht nach der Schnittstelle der Engine
+darunter (Hopper, Ghidra). Sechs Formen:</p>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>wofür</th>
+<th>gibt zurück</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inspect</td>
+<td>Fakten zu einem ausdrücklich benannten Objekt</td>
+<td>Felder, Fundstelle, welche Teile verfügbar sind</td>
+</tr>
+<tr>
+<td>search / list</td>
+<td>Kandidaten finden</td>
+<td>stabile Reihenfolge, Kontext je Treffer</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>Beziehungen zwischen Dingen</td>
+<td>typisierte Kanten, Beleg je Kante, offene Pfade</td>
+</tr>
+<tr>
+<td>compare</td>
+<td>zwei ausdrücklich gepaarte Dinge</td>
+<td>gleiche Abdeckung, Unterschiede mit Beleg</td>
+</tr>
+<tr>
+<td>workflow</td>
+<td>wiederkehrendes Ergebnis aus mehreren Quellen</td>
+<td>Ergebnis inline, beitragende Belege, Lücken</td>
+</tr>
+<tr>
+<td>observe / capture</td>
+<td>Fragen, die Laufzeit brauchen</td>
+<td>nötige Befugnis, Lebenszyklus, Aufräumstatus</td>
+</tr>
+</tbody>
+</table>
+<p>Dazu sieben Vertragsregeln:
+1. <strong>Primitive zuerst.</strong> Ein Workflow kommt erst, wenn beobachtete Nutzung dieselbe
+   Folge von Aufrufen wiederholt zeigt, und er muss für verschiedene Anwendungen
+   gleich sinnvoll sein. Geschäftslogik einer einzelnen Anwendung gehört nicht ins
+   allgemeine Werkzeug.
+2. <strong>Vollständig per Voreinstellung.</strong> Grenzen nur aus echten Format-, Protokoll-,
+   Befugnis- oder Ressourcengründen, nie um ein vermutetes Kontextbudget zu schonen.
+   Kürzung, Teilausfall und "nicht verfügbar" stehen ausdrücklich im Ergebnis.
+3. <strong>Fehlende Evidenz ist unbekannt, nicht leer und nicht falsch.</strong>
+4. <strong>Beobachtet, abgeleitet und gefolgert getrennt</strong>, jede wichtige Beziehung mit Beleg.
+5. <strong>Belege inline.</strong> Der Agent soll nicht erst eine Ressource oder eine undurchsichtige
+   ID nachladen müssen, um das Ergebnis zu verstehen.
+6. <strong>Wirkungen ehrlich deklarieren</strong> (nur lesen, schreibt, startet Prozess, Netz, UI)
+   und auf das im Aufruf genannte Ziel begrenzen.
+7. <strong>Keine Bestätigungs-Schalter</strong> wie <code>approve: true</code>. Der gewählte Aufruf drückt die
+   Absicht schon aus. Optionen, die nichts bewirken, entfernen.</p>
+<p>Keine Mega-Werkzeuge, die Suchen, Ausführen und Ändern mischen, keine undurchsichtigen
+Modus-Flags.</p>
+<h2>Trägt</h2>
+<p>Entwurf eigener Agenten-Werkzeuge und MCP-Server: Laya-Router, <code>frag</code>, <code>schicht</code>-Abnahmen,
+Prüfskripte unter local_models. Prüffrage vor jedem neuen Werkzeug: Welche Aufgabenform,
+was ist das kleinste Ergebnis, das die Frage beantwortet, und welches bestehende
+Werkzeug ist das nächstliegende?</p>
+<h2>Trägt nicht</h2>
+<p>Dass rea damit gut auffindbar ist. Das belegt rea nach eigener Regel nur über echte
+Host-Spuren, siehe <a href="rules/tool-choice-needs-host-trace.html">tool-choice-needs-host-trace</a>.
+Bei uns ist keine der sieben Regeln gemessen; sie sind übernommen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Agent ruft ein Werkzeug regelmäßig zwei- oder dreimal hintereinander mit
+ähnlichen Argumenten, um eine Frage zu beantworten. Dann fehlt ein Primitiv oder
+ein Workflow ist fällig.</p>
+<h2>Ablesung</h2>
+<p>Projekt-Doku (Selbstbeschreibung des Projekts, keine Fremdmessung):
+- https://github.com/morluto/rea/blob/main/docs/tool-design.md
+- https://github.com/morluto/rea/blob/main/AGENTS.md (Abschnitte "Designing MCP Tools", "Boundary Contracts")</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="rules/computed-and-judged-must-stay-separable.html">computed-and-judged-must-stay-separable</a></li>
+<li><a href="rules/tool-choice-needs-host-trace.html">tool-choice-needs-host-trace</a></li>
+</ul></div></details><details class="entry" id="skill-routes-first-and-closes-its-checklist"><summary><span class="type">Regel</span><span class="t"><a href="rules/skill-routes-first-and-closes-its-checklist.html">Ein Agenten-Skill routet zuerst und schließt mit seiner Checkliste</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span></summary><div class="body"><p class="small muted">Herkunft: Projekt rea (morluto/rea, MIT), skills/reverse-engineer-anything/SKILL.md Version 25, Stand b6c21b1 vom 2026-10-05 · <a href="rules/skill-routes-first-and-closes-its-checklist.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/skill-routes-first-and-closes-its-checklist.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Skill von rea ist kurz und folgt einem Aufbau, der sich auf andere Skills
+übertragen lässt:</p>
+<ol>
+<li><strong>Wann nicht.</strong> Die Beschreibung sagt, wofür der Skill nicht gedacht ist
+   ("für ein vollständiges Quell-Repo normale Werkzeuge nehmen").</li>
+<li><strong>Zuerst routen.</strong> Das erste Werkzeug ergibt sich aus der Art des Ziels
+   (ASAR, Paket, Assembly, Browserseite, Binary). Fehlt das Ziel, nachfragen;
+   nie selbst ein Beispiel wählen.</li>
+<li><strong>Erst die Zusammenfassung.</strong> Mit dem Standardergebnis anfangen, keinen
+   identischen Aufruf wiederholen, nur gezielt nachfassen, wenn eine konkrete
+   Frage offen bleibt.</li>
+<li><strong>Beobachtung, Folgerung, Unbekanntes</strong> in jeder Schlussfolgerung getrennt,
+   mit Beleg-IDs.</li>
+<li><strong>Große Untersuchungen gestuft:</strong> Anfrage in eine Fragen-Checkliste mit nötigem
+   Beleg je Frage zerlegen, vorhandenen Stand wiederverwenden, unabhängige Fragen
+   parallel vergeben, ein knappes Befund-Register führen.</li>
+<li><strong>Vor dem Abschluss die Checkliste erneut durchgehen</strong> und jede Frage als
+   beantwortet, teilweise beantwortet oder offen markieren. Eine breite
+   Untersuchung nie "fertig" nennen, solange Pflichtfragen offen sind.</li>
+<li><strong>Bereitschaft nur bei Bedarf prüfen.</strong> <code>doctor</code> läuft nicht vor jeder Aufgabe,
+   sondern nur, wenn ein Werkzeug fehlt oder die Registrierung veraltet ist.
+   Setup zeigt den Plan und braucht Zustimmung, bevor es etwas schreibt.</li>
+<li><strong>Nur die passende Referenz lesen.</strong> Details liegen in getrennten Dateien unter
+   <code>references/</code>, der Skill verweist je Zielart auf genau eine.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Eigene Skills, etwa unsloth-finetune im Wiki, Hermes-Skills und Aufträge für
+<code>schicht</code>. Punkt 6 ist die Gegenmaßnahme zu Agenten, die "fertig" melden, während
+Teilaufgaben offen sind; Punkt 7 spart Prompt und Zeit bei jedem Aufruf.</p>
+<h2>Trägt nicht</h2>
+<p>Dass kleine lokale Modelle einen Skill dieser Länge befolgen. Lange Regellisten
+im System-Prompt können kleine Modelle zum Ablehnen bringen, siehe
+<a href="../local_llm_operation/findings/rule-lists-make-small-models-refuse.html">rule-lists-make-small-models-refuse</a>.
+Der rea-Skill zielt auf große Hosts.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Agent mit diesem Aufbau meldet eine breite Untersuchung als abgeschlossen,
+obwohl Fragen der eigenen Checkliste offen sind.</p>
+<h2>Ablesung</h2>
+<p>Projekt-Doku: https://github.com/morluto/rea/blob/main/skills/reverse-engineer-anything/SKILL.md</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a></li>
+<li><a href="../local_llm_operation/findings/rule-lists-make-small-models-refuse.html">rule-lists-make-small-models-refuse</a></li>
+</ul></div></details><details class="entry" id="tests-prove-claims-not-plumbing"><summary><span class="type">Regel</span><span class="t"><a href="rules/tests-prove-claims-not-plumbing.html">Tests belegen Aussagen, nicht Verkabelung</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span></summary><div class="body"><p class="small muted">Herkunft: Projekt rea (morluto/rea, MIT), docs/test-suite-audit.md vom 2026-10-04 und AGENTS.md, Stand b6c21b1 · <a href="rules/tests-prove-claims-not-plumbing.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/tests-prove-claims-not-plumbing.md">Markdown</a></p><h2>Aussage</h2>
+<p>rea hat am 2026-10-04 alle 355 Testdateien in drei Durchgängen geprüft und
+Tests gestrichen oder ersetzt, die nichts belegten. Rangfolge der Belegkraft:</p>
+<ol>
+<li>echter End-to-End-Lauf mit dem echten Werkzeug (Hopper, Ghidra, Browser)</li>
+<li>Integration über die echten Schemata und Transportwege (CLI und MCP)</li>
+<li>Goldens aus echten Daten</li>
+</ol>
+<p>Niedrigere Tests werden gestrichen, sobald ein höherer dieselbe Aussage belegt.
+Fehlerfälle, die ein erfolgreicher E2E-Lauf nicht auslösen kann, bleiben.</p>
+<p>Gestrichen oder umgebaut wurden unter anderem:
+- Tests, die <strong>willkürliche Grenzen oder Aufrufreihenfolgen festschreiben</strong>
+  (Seitengröße 10 001, Position eines Werkzeugs in einem Prompt-Vorschlag,
+  CI-Matrix-Werte).
+- Positivtests mit <strong>selbstgebauten Eingaben</strong>, die mit derselben Bibliothek
+  erzeugt wurden, die sie lesen. Ersetzt durch echte erfasste Dateien.
+- Prüfungen, die nur <strong>bedingt auf Erfolg</strong> liefen. Unerwartete Fehler konnten
+  so bestehen; jetzt wird Erfolg zuerst verlangt.
+- Ein Prüflauf, der <strong>verweigerte Berechtigung als bestanden</strong> wertete. Jetzt zwei
+  getrennte Ergebnisse; der Lauf ohne Berechtigung meldet ausdrücklich "kein Beleg".</p>
+<p>Aussagen über echte externe Werkzeuge lassen sich nicht durch Mocks ersetzen.</p>
+<h2>Trägt</h2>
+<p>Tests in local_models (<code>alltag</code>, <code>schicht</code>, <code>laya</code>, <code>finetune</code>). Das dort benutzte
+Muster, jede Prüfung gegen eine bekannt gute <strong>und</strong> eine bekannt schlechte Antwort
+laufen zu lassen, ist die kleine Form derselben Idee. Der OpenCode-Lauf, der
+<code>json.load</code> ein MagicMock reichte, ist ein Beispiel für einen Test, der Verkabelung
+statt Verhalten prüft.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Aussage zur nötigen Abdeckung. rea senkt Abdeckungsschwellen ausdrücklich
+nicht, um Tests streichen zu können.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Test, der grün bleibt, wenn man die geprüfte Funktion durch eine falsche
+ersetzt. Oder ein Prüflauf, der "bestanden" meldet, obwohl das Werkzeug gar nicht
+lief.</p>
+<h2>Ablesung</h2>
+<p>Projekt-Doku: https://github.com/morluto/rea/blob/main/docs/test-suite-audit.md
+und https://github.com/morluto/rea/blob/main/AGENTS.md (Abschnitt "Testing Guidelines").</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+</ul></div></details><details class="entry" id="tool-choice-needs-host-trace"><summary><span class="type">Regel</span><span class="t"><a href="rules/tool-choice-needs-host-trace.html">Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span></summary><div class="body"><p class="small muted">Herkunft: Projekt rea (morluto/rea, MIT), docs/tool-design.md, Stand b6c21b1 vom 2026-10-05; eigene Fälle aus local_models · <a href="rules/tool-choice-needs-host-trace.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/tool-choice-needs-host-trace.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein gültiges Schema, eine schöne Beschreibung oder hohe Wortüberlappung zwischen
+Aufgabe und Werkzeugtext beweisen nicht, dass ein Agent das Werkzeug findet und
+richtig aufruft. rea verlangt dafür Läufe mit repräsentativen Aufgaben, breit und
+direkt formuliert, auf dem Host und Modell, für die das Werkzeug gedacht ist.
+Festgehalten wird je Lauf:</p>
+<ul>
+<li>Host und Modell</li>
+<li>der Werkzeugkatalog, den das Modell tatsächlich sah</li>
+<li>gewähltes Werkzeug und Argumente</li>
+<li>Fehler und Wiederholungen</li>
+<li>ob die Aufgabe gelöst wurde</li>
+</ul>
+<p>Auch die Größe des Katalogs in Bytes misst weder Nutzbarkeit noch Kontextkosten
+für das Modell.</p>
+<h2>Trägt</h2>
+<p>Jede Änderung an Werkzeugnamen, -beschreibungen oder Toolsets für Hermes, OpenCode
+oder eigene MCP-Server. Zwei eigene Fälle passen dazu:
+- Das Nous-Repo hermes-agent-self-evolution bewertet Skill-Varianten mit einer
+  Wortüberlappungs-Metrik, siehe
+  <a href="../local_llm_operation/risks/self-evolution-gepa-silently-falls-back.html">self-evolution-gepa-silently-falls-back</a>.
+  Nach dieser Regel misst das nichts über die Werkzeugwahl.
+- Laya als Werkzeug innerhalb von Hermes brachte keinen Zeitgewinn, Laya als Weiche
+  davor 0,1 s je Entscheidung, siehe
+  <a href="../local_llm_operation/findings/laya-router-before-agent.html">laya-router-before-agent</a>.
+  Das zeigte erst der echte Lauf, nicht die Konfiguration.</p>
+<h2>Trägt nicht</h2>
+<p>Wie viele Läufe reichen. rea nennt keine Zahl.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Werkzeugänderung wird als Verbesserung gemeldet, ohne dass eine Spur mit
+gewähltem Werkzeug und Ergebnis vorliegt.</p>
+<h2>Ablesung</h2>
+<p>Projekt-Doku: https://github.com/morluto/rea/blob/main/docs/tool-design.md
+(Abschnitt "Implement and evaluate") und AGENTS.md (Abschnitt "Testing Guidelines").
+Eigene Fälle wie verlinkt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a></li>
+<li><a href="../local_llm_operation/risks/self-evolution-gepa-silently-falls-back.html">self-evolution-gepa-silently-falls-back</a></li>
+<li><a href="../local_llm_operation/findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="../local_llm_operation/findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></details><details class="entry" id="computed-and-judged-must-stay-separable"><summary><span class="type">Regel</span><span class="t"><a href="rules/computed-and-judged-must-stay-separable.html">Gerechnetes und Gemeintes müssen auseinanderzuhalten sein</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_Lage, Bau der Lageseite 2026-09-05 · <a href="rules/computed-and-judged-must-stay-separable.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/computed-and-judged-must-stay-separable.md">Markdown</a></p><h2>Aussage</h2>
+<p><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a> trennt gemessen von
+gerechnet. Eine Stufe darüber liegt dieselbe Falle noch einmal: gerechnet gegen
+<strong>gemeint</strong>. Ein Bericht, der Zahlen zeigt und sie im selben Atemzug deutet,
+macht beides ununterscheidbar, sobald er älter als ein paar Tage ist.</p>
+<p>Drei Anforderungen, die zusammen gehören:</p>
+<ol>
+<li><strong>Zwei Schichten.</strong> Die Rechenschicht ist deterministisch und jederzeit neu
+   berechenbar. Die Urteilsschicht wird geschrieben, entsteht in einem eigenen
+   Lauf und enthält keine Zahl, die nicht aus der Rechenschicht stammt. Beide
+   sind in der Ausgabe sichtbar verschieden gekennzeichnet.</li>
+<li><strong>Jedes Urteil trägt sein Datum und den eingefrorenen Zahlenstand</strong>, auf den
+   es sich stützt. Ein Urteil ohne beides wird nicht angezeigt.</li>
+<li><strong>Wer urteilt, steht dabei.</strong> Maschinell geschriebene Beschreibung und
+   menschliche Einordnung sind verschiedene Felder, nicht verschiedene Sätze
+   im selben Absatz.</li>
+</ol>
+<p>Der Grund für Punkt 2 ist nicht Ordnungsliebe. Eine Trefferbilanz — die spätere
+Auswertung, welche Einschätzung eingetroffen ist — ist genau dann wertlos, wenn
+sich nicht mehr feststellen lässt, worauf die Einschätzung beruhte. Der Zahlenstand
+von damals ist nicht rekonstruierbar, sobald die Quelle fortgeschrieben wurde.</p>
+<h2>Trägt</h2>
+<p>Jede Ausgabe, die misst und deutet: Lageberichte, Statusseiten, Analysen,
+Agenten, die Befunde in ein gemeinsames Gedächtnis schreiben. Auch diese Wiki:
+<code>typ</code> und <code>status</code> im Kopf jedes Eintrags leisten genau das.</p>
+<h2>Trägt nicht</h2>
+<p>Verzicht auf Deutung. Eine Seite, die nur Zahlen zeigt, verschiebt die Deutung
+nur auf den Leser und zeichnet sie nirgends auf.</p>
+<p>Auch keine Aussage über die Qualität des Urteils. Die Trennung macht ein
+schlechtes Urteil nicht besser, sie macht es nur nachprüfbar.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Urteil ohne Datum oder ohne Bezug auf einen Zahlenstand. Oder: eine
+Trefferbilanz, in der ein Eintrag nachträglich umformuliert oder entfernt wurde —
+ab dann misst sie nicht mehr die Treffsicherheit, sondern die Nachsicht mit sich
+selbst.</p>
+<h2>Ablesung</h2>
+<p>Eigener Entwurf, Projekt AI_Lage, 2026-09-05, umgesetzt und seither in Betrieb.
+Keine fremde Quelle, keine Messung — eine Konstruktionsregel, kein Befund.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
+</ul></div></details><details class="entry" id="empty-is-not-missing"><summary><span class="type">Regel</span><span class="t"><a href="rules/empty-is-not-missing.html">Leer ist nicht fehlend</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Bau von vorflug 2026-08-29 · <a href="rules/empty-is-not-missing.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/empty-is-not-missing.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wer eine Vorbedingung prueft, prueft meist auf Existenz: gibt es den Pfad, die
+Tabelle, den Eintrag. Der haeufigere Fehlerfall ist aber, dass es ihn <strong>gibt</strong>
+und er <strong>leer</strong> ist.</p>
+<p>Der Fall, aus dem die Regel stammt: ein Agentenauftrag verlangte 62 und 150
+Dateien in zwei Arbeitsverzeichnissen. Beide Verzeichnisse existierten, beide
+waren leer, die Quelldaten lagen woanders -- dem Auftrag fehlte eine erste
+Stufe, die sie dorthin verlinkt. Kosten, bis das auffiel: zwei Anlaeufe, rund
+2 h 50 min Rechenzeit, null erzeugte Dateien.</p>
+<p>Das daraufhin gebaute Pruefwerkzeug prueffte in seiner ersten Fassung
+<code>path.exists()</code>. Damit haette es <strong>genau diesen Fall durchgelassen</strong> -- den
+einzigen, fuer den es gebaut wurde. Aufgefallen ist es nur, weil die
+Spielumgebung des Tests das Verzeichnis gar nicht angelegt hatte: richtiges
+Verhalten des Werkzeugs auf eine falsche Testlage.</p>
+<p>Richtig ist: vorhanden <strong>und</strong> nicht leer. Bei Mustern: trifft das Muster
+ueberhaupt etwas.</p>
+<h2>Traegt</h2>
+<p>Jede Vorbedingungspruefung vor einem teuren Lauf -- Eingangsdaten, Modellgewichte,
+Konfigurationsverzeichnisse, Datenbanktabellen, Warteschlangen.</p>
+<p>Und eine zweite Lehre, die weiter traegt als der Einzelfall: <strong>ein Test, dessen
+Lage den geprueften Fall nicht herstellt, ist gruen und wertlos.</strong> Jeder
+Prueffall baut seine Lage selbst, einschliesslich der leeren Variante.</p>
+<h2>Traegt nicht</h2>
+<p>Eine Aussage darueber, ob der Inhalt brauchbar ist. "Nicht leer" heisst nicht
+"richtig" -- eine Datei mit 127 Byte Unsinn ist nicht leer. Dafuer braucht es
+eine inhaltliche Pruefung, und die ist ein anderer Eintrag.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Pruefwerkzeug, das in der Praxis nie ablehnt. Dann prueft es entweder das
+Falsche oder zu schwach.</p>
+<p>Zweiter Indikator: der Test besteht, aber niemand kann sagen, welche Lage er
+herstellt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung. Erste Fassung mit <code>exists()</code>: Testfall gruen, echter Fall
+durchgelassen. Zweite Fassung mit "vorhanden und nicht leer": derselbe Fall
+abgelehnt, zusaetzlicher Pruefstand mit ausdruecklich leerem Verzeichnis.</p>
+<p>Unabhängig bestätigt im Projekt rea (morluto/rea, docs/tool-design.md, 2026-10-05): "Missing evidence is unknown, not empty or false." Siehe <a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a></li>
+</ul></div></details><details class="entry" id="first-measurement-is-not-a-change"><summary><span class="type">Regel</span><span class="t"><a href="rules/first-measurement-is-not-a-change.html">Erstmessung ist keine Veränderung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_Lage, Urteilslauf 2026-09-16 · <a href="rules/first-measurement-is-not-a-change.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/first-measurement-is-not-a-change.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Melder, der Zustandswechsel meldet, vergleicht den heutigen Stand mit dem
+gespeicherten. Dabei zählt er zwangsläufig auch den Wechsel aus "unbekannt" in
+einen bekannten Zustand als Wechsel. Das ist aber keine Veränderung in der
+Sache, sondern nur das Eintreffen von Daten.</p>
+<p>Der Fall: ein Lauf vergleicht 16 Thesen gegen ihre Trägerindikatoren und schreibt
+bei jedem Statuswechsel ein Urteil. Zwischen zwei Läufen kamen fünf bis dahin
+leere Datenquellen dazu. Ergebnis: acht Thesen sprangen von "unbestimmt" auf
+"trägt", zwei Prüfungen von "nicht prüfbar" auf "kein Widerspruch". Der Lauf
+hätte zehn Urteile geschrieben und zehn Einträge in eine Trefferbilanz gelegt,
+die ausdrücklich <strong>nie bereinigt</strong> wird — also zehn dauerhafte Einträge, von
+denen keiner eine Vorhersage ist.</p>
+<p>Richtig ist: Ein Wechsel ist nur dann ein Anlass, wenn <strong>beide</strong> Zustände
+bestimmt sind. Wechsel aus oder nach "unbekannt" werden gemeldet, aber in eine
+eigene Kategorie — hier <em>Messwechsel</em> — und lösen nichts aus.</p>
+<p>Der Kostenunterschied ist nicht der Lauf, sondern das Gedächtnis: ein
+überflüssiges Urteil kostet einmal Rechenzeit, ein überflüssiger Eintrag in
+einer Bilanz, die nie bereinigt wird, verfälscht jede spätere Auswertung.</p>
+<h2>Trägt</h2>
+<p>Jeden Melder mit Gedächtnis: Alarme auf Schwellen, Statusverfolgung,
+Regressionswächter, Trefferbilanzen, alles was "hat sich etwas geändert"
+beantwortet und das Ergebnis aufbewahrt.</p>
+<p>Besonders in Aufbauphasen, in denen Datenquellen nacheinander angeschlossen
+werden — dort ist der Anteil der Erstmessungen an allen Wechseln anfangs nahe
+100 Prozent.</p>
+<h2>Trägt nicht</h2>
+<p>Verschweigen. Erstmessungen gehören in die Ausgabe, nur eben als eigene
+Kategorie. Wer sie unterdrückt, merkt nicht, wann eine Quelle ausgefallen ist:
+der Wechsel <strong>nach</strong> unbekannt ist dieselbe Sorte Ereignis und ebenso wenig ein
+Anlass, aber ebenso meldenswert.</p>
+<p>Auch keine Aussage über Melder ohne Gedächtnis, die nur den Istzustand zeigen.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Ereignisliste, deren Häufungen mit dem Anschluss neuer Datenquellen
+zusammenfallen statt mit Ereignissen in der Sache. Wer das Anschlussdatum der
+Quellen neben die Ereignisliste legt und ein Muster sieht, zählt Erstmessungen.</p>
+<h2>Ablesung</h2>
+<p>Eigener Lauf, 2026-09-16, Projekt AI_Lage: 10 Messwechsel, 0 Anlässe, 0
+geschriebene Urteile. Vor der Korrektur hätte derselbe Lauf 10 Urteile und 10
+Bilanzeinträge erzeugt. Keine fremde Quelle.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/unknown-is-not-a-value-in-comparisons.html">unknown-is-not-a-value-in-comparisons</a></li>
+<li><a href="rules/computed-and-judged-must-stay-separable.html">computed-and-judged-must-stay-separable</a></li>
+</ul></div></details><details class="entry" id="no-silent-fallback-values"><summary><span class="type">Regel</span><span class="t"><a href="rules/no-silent-fallback-values.html">Kein Rueckfallwert ohne eine Zeile, die ihn als solchen benennt</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Codepruefung 2026-08-29 · <a href="rules/no-silent-fallback-values.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/no-silent-fallback-values.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wo eine Messung fehlt, schreibt Code einen plausiblen Ersatzwert hin, statt zu
+sagen, dass er es nicht weiss. Die Ausgabe sieht danach wie eine Messung aus,
+und deshalb merkt niemand, wann sie nicht mehr gilt.</p>
+<p>Eine Pruefung von 32 bestaetigten Befunden in einem Messwerkzeug fand sieben
+Faelle mit derselben Ursache:</p>
+<pre><code>head_dim = (n_emb // n_head) if n_head else 128      geraten, obwohl die
+                                                     Datei den Wert mitbringt
+fits = int(usable // layer_mib) if layer_mib &gt; 0 else 0
+                                                     Division-durch-null-
+                                                     Rueckfall, der sich als
+                                                     Messergebnis liest
+"ram_gb": round(host["ram_gb"] or 0, 1)              eine erfundene Null im
+                                                     Messprotokoll
+"ngl": 99  neben  "gpu": "keine"                     Konstante neben der
+                                                     Feststellung, dass es
+                                                     keine GPU gibt
+</code></pre>
+<p>Keiner dieser Faelle ist Absicht. Sie entstehen, weil <code>or 0</code>, <code>else 0</code> und
+<code>else 128</code> billiger zu tippen sind als eine Fallunterscheidung.</p>
+<p>Die Regel raeumt alle sieben mit einem Satz ab: <strong>jeder Rueckfallwert bekommt
+eine Zeile auf stderr, die ihn benennt.</strong> Dann bleibt die Ausgabe benutzbar, und
+der Leser weiss, welcher Teil gemessen ist.</p>
+<h2>Traegt</h2>
+<p>Jedes Werkzeug, dessen Ausgabe als Grundlage fuer eine Entscheidung dient --
+Kapazitaetsrechner, Vorbedingungspruefer, Statusberichte, Messprotokolle.
+Besonders dort, wo die Ausgabe spaeter zitiert wird: eine Zahl in einer
+Dokumentation, die aus einem Rueckfallwert stammt, ist nicht mehr von einer
+Messung zu unterscheiden.</p>
+<h2>Traegt nicht</h2>
+<p>Verzicht auf Rueckfallwerte. Ein Werkzeug, das bei jeder fehlenden Angabe
+abbricht, ist unbenutzbar. Es geht um die Kennzeichnung, nicht um den Verzicht.</p>
+<p>Auch nicht: Rueckfallwerte in reinen Rechenhilfen ohne Aussenwirkung.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Zahl in einer Dokumentation, zu der niemand mehr sagen kann, ob sie
+gemessen oder gerechnet ist. Im geprueften Fall stand eine KV-Cache-Groesse
+unter der Ueberschrift "Gemessen auf dem Referenzsystem" -- sie war die Ausgabe
+einer Formel mit einem geratenen Eingabewert.</p>
+<p>Zweiter Indikator: ein <code>or 0</code>, <code>else 0</code> oder ein Zahlenliteral im Code, das
+neben einer Feststellung steht, dass etwas fehlt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Codepruefung, 32 bestaetigte Befunde ueber sechs Dimensionen, davon
+sieben mit dieser gemeinsamen Ursache. Keine fremde Quelle.</p>
+<p>Unabhängig bestätigt im Projekt rea (morluto/rea, docs/provider-evaluation.md, 2026-10-05): ein Analyse-Provider bleibt für die Lebensdauer eines Ziels gebunden, "never fail over silently between Hopper and Ghidra". Siehe <a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+<li><a href="rules/agent-tools-by-task-shape.html">agent-tools-by-task-shape</a></li>
+</ul></div></details><details class="entry" id="unknown-is-not-a-value-in-comparisons"><summary><span class="type">Regel</span><span class="t"><a href="rules/unknown-is-not-a-value-in-comparisons.html">Unbekannt ist kein Wert in einem Vergleich</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_Lage, Codeprüfung 2026-09-16 · <a href="rules/unknown-is-not-a-value-in-comparisons.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/unknown-is-not-a-value-in-comparisons.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein fehlender Wert verschwindet nicht, wenn man ihn vergleicht — er wird still
+zu einer Zahl. In JavaScript:</p>
+<pre><code>null &lt;= 0   →  true
+null &gt;= 0   →  true
+null == 0   →  false
+</code></pre>
+<p>Die ersten beiden Zeilen sind der Fallstrick: <code>null</code> wird für relationale
+Vergleiche nach 0 umgewandelt, für den Gleichheitsvergleich nicht. Eine Prüfung
+auf "steigt nicht" ist damit für eine <strong>fehlende</strong> Reihe wahr.</p>
+<p>Der Fall, aus dem die Regel stammt: eine Widerspruchsprüfung über zwei
+Datenquellen, Form</p>
+<pre><code>deckungsquote &lt; 100 &amp;&amp; capexTrend &gt; 0 &amp;&amp; deckungsTrend &lt;= 0
+</code></pre>
+<p>Die Deckungsquote hatte genau einen Messpunkt, der Trend war deshalb <code>null</code>,
+<code>null &lt;= 0</code> war wahr — die Prüfung meldete einen Widerspruch zwischen zwei
+Seiten, obwohl sie die Richtung einer der beiden gar nicht kannte. Die Meldung
+las sich wie ein Befund über die Sache und war ein Befund über die eigene
+Lückenbehandlung.</p>
+<p>Dieselbe Falle in Python, nur dass sie dort absichtlich aussieht:</p>
+<pre><code>(trend(x) or 0) &lt;= 0
+</code></pre>
+<p><code>or 0</code> ist hier kein Rückfallwert für eine Anzeige, sondern eine Behauptung
+über eine Richtung, die niemand gemessen hat.</p>
+<p>Richtig ist: Fehlt ein Eingang, den die Prüfung braucht, ist die Prüfung <strong>nicht
+rechenbar</strong> und sagt, welcher Eingang fehlt. Sie liefert kein Ergebnis.</p>
+<h2>Trägt</h2>
+<p>Jede Prüfung, die eine Richtung, eine Differenz oder einen Schwellenvergleich
+braucht und ihre Eingänge aus Datenquellen zieht, die jemand anderes pflegt.
+Besonders dort, wo die Eingänge nach und nach dazukommen: solange eine Quelle
+erst einen Messpunkt hat, ist jede Trendaussage über sie unbekannt, nicht falsch.</p>
+<h2>Trägt nicht</h2>
+<p>Sprachen und Systeme, in denen Unbekanntes durch den Vergleich hindurch
+unbekannt bleibt — SQL mit <code>NULL</code>, Pandas mit <code>NaN</code> in Vergleichen. Dort ist das
+Ergebnis nicht wahr, sondern unbekannt beziehungsweise falsch, und der Fehler
+äußert sich anders.</p>
+<p>Auch kein Argument gegen Vorgabewerte in reinen Anzeigehilfen. Es geht um
+Vergleiche, deren Ergebnis eine Aussage auslöst.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Prüfung, die in der Praxis nie "nicht rechenbar" ausgibt, obwohl ihre
+Eingänge aus Quellen unterschiedlicher Reife stammen. Dann verrechnet sie
+Lücken zu Ergebnissen.</p>
+<p>Zweiter Indikator: ein <code>&lt;=</code>, <code>&gt;=</code> oder <code>or 0</code> auf einem Wert, der aus einer
+Zeitreihe mit möglicherweise einem einzigen Punkt stammt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Codeprüfung, 2026-09-16, Projekt AI_Lage: zwei Prüfungen betroffen, eine
+davon meldete einen Widerspruch allein aus der Lücke. Nach der Korrektur
+meldeten beide "nicht prüfbar" mit Nennung der fehlenden Reihe. Keine fremde
+Quelle.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

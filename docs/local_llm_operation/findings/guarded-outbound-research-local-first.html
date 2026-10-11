@@ -1,0 +1,97 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-09</span><span>Herkunft</span><span>Alita, Ausgangswache (system/guard) des lokalen Agenten, Reparatur und Umbau 2026-10-09</span><span>Zuletzt geändert</span><span>2026-10-09 local_llm_operation: planner drop option, PVS research chain queued</span><span>Verweist auf</span><span><a href="../open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="local-research-swarm-first-run-2026-10-09.html">Lokaler Rechercheschwarm: erster Lauf vom einen Satz bis zum Bericht</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md">knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md</a></span></div><h2>Aussage</h2>
+<p>Ein lokaler Agent, der Patientendaten sieht, bekommt keinen Netzzugang; sein einziger Weg nach draussen ist ein
+Waechterdienst auf Loopback, der jede Frage prueft (Muster, dann lokales Modell, dann Protokoll). Drei Lehren aus
+dem Betrieb:</p>
+<ol>
+<li><strong>Ein stiller Aussenweg ist ein toter Aussenweg.</strong> Der Dienst rief <code>claude -p</code> mit dem Standardmodell auf;
+   als dessen Kontingent erschoepft war, kam einen Monat lang nur "Fehler" zurueck, ohne dass es jemand merkte.
+   Von 50 Fragen gingen 13 durch.</li>
+<li><strong>Lokal zuerst reicht fuer Literaturfragen.</strong> Offene Schnittstellen ohne Schluessel (arXiv, OpenAlex, Europe PMC,
+   Semantic Scholar) liefern Titel und Abstracts; das lokale 27B-Modell erzeugt die Suchanfragen und antwortet nur
+   aus den Abstracts mit [n]-Belegen. Eine PVS-Frage: 68 s, 47 Treffer, Antwort mit 14 Quellen, keine Cloud-Token.
+   Schwaechen: einzelne fachfremde Treffer, Semantic Scholar drosselt (429), Europe PMC antwortet langsam.
+   Wichtig: fuer die kurzen Aufrufe das Denken abschalten (<code>enable_thinking: false</code>), sonst verbraucht das
+   Reasoning-Modell das Tokenbudget und liefert leere Suchanfragen.</li>
+<li><strong>Der Waechter sperrt nur Eigenes.</strong> Oeffentliche Datensaetze (VALDO, HCP-Aging, EPVS, ADNI, UK Biobank ...)
+   samt Fallkennungen und Zahlen sind kein Datenschutzproblem; eigene Kohortennamen und ihre Kennungen sperren
+   immer, auch neben einem oeffentlichen Namen. Vorher blockierten Muster wie "sub-042" oder "Kohorte" jede
+   Frage zu oeffentlichen Daten.</li>
+</ol>
+<h2>Traegt</h2>
+<ul>
+<li>Literatur- und Methodenfragen ohne Cloud; Cloud-Modell (mit Websuche) nur mit ausdruecklichem Schalter.</li>
+<li>Jede ausgehende Frage protokolliert, mit Kennzeichen, ob Cloud benutzt wurde.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Fragen, die Volltexte oder nicht indizierte Quellen brauchen (Software-Dokumentation, Foren): dort ist die
+  lokale Suche blind; dann Cloud auf Zuruf.</li>
+<li>Paralleles Arbeiten: der lokale Server hat einen Slot, Suchen laufen parallel, das Zusammenfassen nicht.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Die lokale Antwort beruft sich ueberwiegend auf fachfremde Treffer, oder der Waechter laesst eine Frage mit
+eigenem Kohortennamen durch.</p>
+<h2>Ablesung</h2>
+<p>Eigene Tests 2026-10-09: 5 Pruefungen (2 oeffentlich frei, 3 gesperrt: eigene Kohorte, Pfad, Person), eine lokale
+und eine Cloud-Frage end-to-end. Code: system/guard/{ask_outside,daemon,lokal_recherche}.py, frag-draussen.</p>
+<h2>Nachtrag 2026-10-09: Auftragsplaner lokal</h2>
+<p><code>system/werkzeuge/plane "Ziel"</code> laesst das lokale 27B (mit Denken) ein Ziel in 3-6 aufeinander aufbauende Auftraege
+zerlegen (Ziel, Schritte, Ausgabedatei, Abnahme-Stichworte); das Werkzeug setzt den Hausrahmen dazu (keine GPU,
+Recherche nur ueber den Waechter, Quellenpflicht) und verkettet ueber BRAUCHT. Erste Probe "PVS-Segmentierung
+recherchieren": 66 s, fuenf brauchbare Auftraege (Netze, Verluste, zweite Stufe, Empfehlung), einer schwach
+(CPU-Zeit eines untrainierten Netzes). Lehre: Vorschau vor dem Einreihen lesen, weil ein schwacher Auftrag in
+der Kette die folgenden blockiert. Streichen ohne neues Planen: <code>plane --aus &lt;planordner&gt; --weglassen 4 --einreihen</code>;
+danach pruefen, ob spaetere Auftraege noch auf die gestrichene Ausgabe verweisen (hier: Auftrag 5 wollte die
+CPU-Messung lesen, von Hand in plan.json korrigiert). Die PVS-Kette mit vier Auftraegen ist am 2026-10-09 10:40
+eingereiht, Clara arbeitet sie seriell ab.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../open_checks/decision-model-as-profile-orchestrator.html">decision-model-as-profile-orchestrator</a></li>
+<li><a href="lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

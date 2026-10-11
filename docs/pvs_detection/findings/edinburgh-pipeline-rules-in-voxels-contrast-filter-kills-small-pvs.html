@@ -1,0 +1,77 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Die Edinburgh-PVS-Pipeline entscheidet in der Nachverarbeitung, in Voxeln, und ihr Kontrastfilter frisst die kleinen PVS</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Die Edinburgh-PVS-Pipeline entscheidet in der Nachverarbeitung, in Voxeln, und ihr Kontrastfilter frisst die kleinen PVS</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-07</span><span>Herkunft</span><span>MATLAB-Code der uebernommenen Edinburgh-PVS-Pipeline am Code gelesen (Sonnet-Agent + eigene Pruefung der Nachverarbeitung), PVS-Cluster Alita, 2026-10-07; pvs-arena/daten/PIPELINE-EDINBURGH.md</span><span>Zuletzt geändert</span><span>2026-10-07 pvs_detection: Edinburgh pipeline decides in postprocessing, in voxels; contrast filter removes small PVS (code reading)</span><span>Verweist auf</span><span><a href="numeric-ids-became-char-codes-in-filenames.html">30 von 103 Pipeline-Fehlschlaegen waren ein Typfehler: Zahl wurde zum Zeichen im Dateinamen</a> <span class="muted small">(pvs_detection)</span><br><a href="../../lesion_detection_method/rules/pipeline-failures-and-names-before-tuning.html">Fehlschlaege, stille Leerausgaben und Benennungen pruefen, bevor man tunt</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../lesion_detection_method/mechanisms/geometry-follows-the-acquisition.html">Gitter, Netz und Gewichtung folgen der Aufnahme, nicht dem Lehrbuch</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../lesion_detection_method/rules/operating-points-do-not-transfer.html">Arbeitspunkte gehoeren zum Modell und zum Scanner, nie zu einem anderen Lauf</a> <span class="muted small">(lesion_detection_method)</span></span><span>Verwiesen von</span><span><a href="pvs-chain-as-built-2026-10.html">Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.md">knowledge/pvs_detection/findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.md</a></span></div><h2>Aussage</h2>
+<p>Die uebernommene Pipeline (RORPO-Vesselness auf dem z-normierten, invertierten T1; Suchraum WM + tiefe Kerne +
+Mittelhirn aus SynthSeg) setzt ihre Vesselness-Schwellen absolut auf einer 0..255-Skala; die in zehn Saetzen
+durchprobierten Werte 3 bis 8 entsprechen 0,05 bis 0,25 SD -- die Schwellenstufe ist fast offen. Die eigentliche
+Auswahl treffen fuenf Regeln danach (PVS_Postprocessing, Utils/getDefaultOptions.m:112-119): Kontrast Objekt gegen
+1-Voxel-Schale &gt;= 6 Grauwerte (0,19 SD), Groesse 3 bis 2000 Voxel, Randanteil am ROI &lt; 90 %, dazu RORPO-Mindestpfad
+3 Voxel und eine WM-Erosion um ceil(1/Voxelkante). Alle Regeln rechnen in VOXELN, nicht in mm: auf einer Kohorte mit
+acht T1-Geometrien (0,39 bis 1 mm) ist das je Scanner ein anderes Verfahren. Fuer kleine PVS ist der Kontrastfilter
+der Hauptverlust (Teilvolumen druekt den Kontrast unter die Schwelle), dann die 3-Voxel-Grenzen. Ein Formfilter fehlt.
+Nebenbefunde: <code>_PVS_WMH_excluded</code> wird VOR dem WMH-Abzug gespeichert (Name irrefuehrend); das Alters-Template wird
+immer auf 55 Jahre erzwungen; die Zaehl-/Volumenanalyse wird vom Hauptlauf nicht aufgerufen (keine Masstabelle).</p>
+<h2>Traegt</h2>
+<p>Deutung der BELOVE-Pipeline-Masken als Vergleichsgroesse (konservativ, gitterabhaengig, kleine PVS fehlen systematisch);
+jede MATLAB-freie Nachbildung (Frangi/RORPO + ROI + Regeln in mm, Kontrastfilter als Kurve). Allgemein: bei uebernommenen
+Pipelines die Nachverarbeitung zuerst lesen -- dort steht der Arbeitspunkt, nicht in den "Schwellen"-Dateien.</p>
+<h2>Traegt nicht</h2>
+<p>Zahlen zur Wirkung jeder Regel (nicht gemessen, nur aus dem Code gefolgert); RORPO-Pfadlaengen des Binaries unbekannt;
+scborderFilter-Wirkungslosigkeit ist Folgerung, kein Lauf.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Ablation je Regel auf Handreferenz zeigt, dass der Kontrastfilter kleine PVS NICHT ueberproportional entfernt.</p>
+<h2>Ablesung</h2>
+<p>PVS_lib: PVS_Postprocessing/{PVSPostprocessing,contrastFilter,volumeFilter,borderFilter}.m, Utils/getDefaultOptions.m,
+PVS_Segmentation/{VSLFilter,getThresholdImage,PVSSegROI}.m, Structural_Brain_Segmentation/PVSROI.m, checkOptions.m;
+Belege mit Zeilen in pvs-arena/daten/PIPELINE-EDINBURGH.md.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="numeric-ids-became-char-codes-in-filenames.html">numeric-ids-became-char-codes-in-filenames</a></li>
+<li><a href="../../lesion_detection_method/rules/pipeline-failures-and-names-before-tuning.html">pipeline-failures-and-names-before-tuning</a></li>
+<li><a href="../../lesion_detection_method/mechanisms/geometry-follows-the-acquisition.html">geometry-follows-the-acquisition</a></li>
+<li><a href="../../lesion_detection_method/rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

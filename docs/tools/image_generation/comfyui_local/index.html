@@ -1,0 +1,105 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Lokale Bildgenerierung mit ComfyUI auf einer 24-GB-Workstation</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../index.html">blackbeard_wikki</a><a href="../../../index.html">Start</a><a href="../../../rules.html">Regeln</a><a href="../../../todo.html">Offen</a><a href="../../../log.html">Protokoll</a><a href="../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../index.html">Start</a> › <a href="../../index.html">Werkzeuge</a> › comfyui_local</div><h1>Lokale Bildgenerierung mit ComfyUI auf einer 24-GB-Workstation</h1><p class="small muted">tools/image_generation/comfyui_local · <a href="changelog.html">CHANGELOG</a> · <a href="install.html">INSTALL</a> · <a href="papers.html">PAPERS</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/tools/image_generation/comfyui_local">GitHub</a></p><h2>Zweck</h2>
+<p>Bilder ohne API-Kosten und ohne Bildlimit auf einer eigenen GPU erzeugen und über
+die HTTP-API von ComfyUI für einen Skill oder ein Skript bereitstellen.</p>
+<p>Dieser Eintrag ist kein Skript, sondern eine Einrichtung (wie <code>tools/general/yt-dlp-windows</code>).
+ComfyUI und die Modelle sind fremde Software; hier steht, welche Modelle auf 24 GB passen,
+welche Lizenz sie haben und wie die Einrichtung in einem Klinik-Netz mit TLS-Inspektion gelingt.</p>
+<h2>Wann verwenden, wann nicht</h2>
+<p>Verwenden: viele Bilder, unveröffentlichtes Material, das im Haus bleiben soll, oder kein Budget für eine Bild-API.</p>
+<p>Nicht verwenden: wenige Bilder ohne eigene GPU (eine API ist dann einfacher), oder kommerzielle
+Nutzung mit FLUX.2 [dev] (Lizenz nur nicht-kommerziell; dann FLUX.2 [klein] 4B oder Qwen-Image, beide Apache 2.0).</p>
+<table>
+<thead>
+<tr>
+<th>Modell</th>
+<th>Lizenz</th>
+<th>VRAM</th>
+<th>Quelle der Angabe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FLUX.2 [dev] FP8</td>
+<td>nicht-kommerziell</td>
+<td>~24 GB</td>
+<td>Ratgeber 2026 [V]</td>
+</tr>
+<tr>
+<td>FLUX.2 [klein] 4B</td>
+<td>Apache 2.0</td>
+<td>12–16 GB</td>
+<td>Ratgeber 2026 [V]</td>
+</tr>
+<tr>
+<td>Qwen-Image</td>
+<td>Apache 2.0</td>
+<td>ab 16 GB</td>
+<td>Ratgeber 2026 [V]</td>
+</tr>
+</tbody>
+</table>
+<p>[V] = Herstellerangabe oder Ratgeber, hier nicht gemessen.</p>
+<h2>Aufruf</h2>
+<p>Nach der Installation (siehe <a href="install.html">INSTALL.md</a>):</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:8188/system_stats
+</code></pre>
+<p>Bildauftrag: in ComfyUI einen Workflow über <strong>Workflow → Export (API)</strong> als JSON speichern
+und per <code>POST /prompt</code> mit geändertem Prompt abschicken, Ergebnis über <code>/view</code> abholen.</p>
+<h2>Eingabe und Ausgabe</h2>
+<p>Eingabe: Textprompt (und optional ein Workflow-JSON). Ausgabe: PNG in <code>ComfyUI/output/</code>.</p>
+<h2>Teststand</h2>
+<p>Nicht getestet. Die Anleitung wurde ohne Zugriff auf die Workstation geschrieben.
+Erster Lauf auf der A5000 steht aus; danach hier Datum, Umgebung und Ergebnis eintragen.</p>
+<h2>Grenzen</h2>
+<ul>
+<li>Im Klinik-Netz scheitern Downloads ohne installiertes Stammzertifikat (INSTALL.md, Schritt 0).</li>
+<li>ComfyUI hat keine Anmeldung; nur an <code>127.0.0.1</code> binden oder per SSH-Tunnel nutzen.</li>
+<li>„Bestes offenes Modell“ ist ein Community-Urteil, kein kontrollierter Benchmark.</li>
+<li>Der Skill, der die API anspricht, ist noch nicht gebaut.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../search.js"></script></body></html>

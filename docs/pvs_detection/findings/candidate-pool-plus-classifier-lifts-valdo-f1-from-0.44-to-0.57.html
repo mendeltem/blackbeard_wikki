@@ -1,0 +1,84 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>PVS-Arena Alita, Versuch F1 (Pilot zweite Stufe), VALDO Task 1, 12 Maskenfaelle, leave-one-case-out, 2026-10-08 05:25</span><span>Zuletzt geändert</span><span>2026-10-08 pvs_detection: second stage holds on HCP n=200 (single detector, T2 only): 0.58 -&gt; 0.67</span><span>Verweist auf</span><span><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">Auf klinischem 1-mm-T1 fuehrt das auf klinischen T1 trainierte Netz (F1 0,44), findet aber die kleinsten PVS am schlechtesten; das synthetisch trainierte Netz findet sie am besten</a> <span class="muted small">(pvs_detection)</span><br><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">Empfindlichkeit lohnt nur, wenn etwas die zusaetzlichen Kandidaten trennen kann</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.html">Ein einziger Kandidaten-Klassifikator ueber alle Kohorten ersetzt die Liquor-Regel und braucht keine Gewebekarte</a> <span class="muted small">(cmb_detection)</span><br><a href="../../lesion_detection_method/rules/noise-floor-before-effects.html">Erst den Rauschboden messen, dann Effekte deuten</a> <span class="muted small">(lesion_detection_method)</span></span><span>Verwiesen von</span><span><a href="candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.html">Die Kandidatendecke war der Hebel: DRIPS-Schwelle 0,02 statt 0,10 hebt VALDO von 0,591 auf 0,650 und verdoppelt den Recall kleiner PVS</a> <span class="muted small">(pvs_detection)</span><br><a href="epvs-2024-submissions-are-public-docker-images-metric-equals-ours.html">Die sechs EPVS-2024-Einreichungen liegen als oeffentliche Docker-Images vor, und die offizielle Metrik ist unsere Regel</a> <span class="muted small">(pvs_detection)</span><br><a href="patch-cnn-second-stage-adds-nothing-on-valdo.html">Ein Patch-CNN als zweite Stufe bringt bei PVS auf VALDO nichts -- der CMB-Hebel uebertraegt sich nicht</a> <span class="muted small">(pvs_detection)</span><br><a href="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">Auf HCP-Aging hebt ein Patch-CNN als zweite Stufe den Trenner von 0,660 auf 0,695 -- fast ganz ueber die Praezision</a> <span class="muted small">(pvs_detection)</span><br><a href="pvs-chain-as-built-2026-10.html">Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md">knowledge/pvs_detection/findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md</a></span></div><h2>Aussage</h2>
+<p>Kandidaten = 26er-Komponenten der Vereinigung von DRIPS-T2 (Posterior &gt;= 0,1, empfindlich, synthetisch trainiert) und
+MedNet-PVS-T1w (Softmax &gt;= 0,5, praezise, klinisch trainiert). Je Komponente 30 Merkmale ohne gelernte Filter: Groesse,
+Ausdehnung, PCA-Linearitaet/Elongation, Zugehoerigkeit zu A/B/beiden, Posterior-Mittel/-Max beider Netze, z-Intensitaet
+T1/T2/FLAIR innen und in der 1-Voxel-Huelle, SynthSeg-Gruppe am Schwerpunkt und Gruppenanteile der Huelle. Ziel: Komponente
+beruehrt die Rater-1-Referenz. HistGradientBoosting, leave-one-case-out ueber 12 Faelle, Entscheidungsschwelle je Falte auf den
+Trainingsfaellen (0,35-0,45, stabil). Ergebnis gegen Rater 1 (SABRE Ganzhirn, RSS Region): F1 0,572 [0,537; 0,606], Precision
+0,70, Recall 0,51, Klasse 1-2 Voxel 0,30; je Fall 0,46-0,65. Zum Vergleich: MedNet-T1 allein 0,440 [0,366; 0,508] (Precision
+0,45), Vereinigung 0,409 (Recall 0,72 = Decke), Schnitt 0,352, Inter-Rater 0,327. Erwartung vor dem Lauf war 0,46-0,52.</p>
+<p><strong>Nachtrag 08.10. 07:20 (Ablationen und dritter Detektor, LOO, n = 12):</strong> ohne Lage-Merkmale 0,571, ohne Netz-Posteriors
+0,569, ohne Posteriors und Zugehoerigkeit 0,560, ohne Form 0,553, ohne T1-Intensitaeten 0,563, <strong>ohne alle Intensitaeten 0,509</strong>.
+Der Gewinn kommt aus den Intensitaeten von Komponente und 1-Voxel-Huelle in T1/T2/FLAIR (die Netze sehen je eine Sequenz, der
+Trenner drei), etwas aus der Form, nichts aus Lage oder Netz-Wahrscheinlichkeiten: ein Trenner, kein Ensemble. Startwerte 1/2
+identisch (deterministischer GBM). Pool aus drei Detektoren (+ PINGU, F1 allein 0,449 = MedNet-T1): 0,582 [0,543; 0,619].</p>
+<p><strong>Nachtrag 08.10. 13:00 (HCP-Aging, n = 200, 5-fach nach Fall):</strong> derselbe Trenner in seiner schwaechsten Form -- ein Detektor
+(DRIPS-T2-Komponenten), nur T2-Intensitaeten, Form, Lage -- hebt den F1 gegen die HCP-WM-Labels von 0,584 [0,571; 0,597] auf
+0,668 [0,657; 0,680], Precision 0,56 -&gt; 0,80, Recall 0,66 -&gt; 0,60, Klasse 1-2 0,34 -&gt; 0,27. Erwartung vor dem Lauf 0,60-0,65.
+Vorbehalt: 80 % der HCP-Labels sind U-Net-Silber (Stil-Lernen moeglich); VALDO mit Handreferenz zeigt dieselbe Richtung.</p>
+<h2>Traegt</h2>
+<p>Die PVS-Arena und den Plan: Fortschritt kommt aus dem Trenner auf dem Pool, und zwar aus Mehr-Sequenz-Intensitaeten um den Kandidaten;, nicht aus Detektor-Rezepten oder Schwellen (vierte
+Bestaetigung nach CMB-VALDO, CMB-SWI und den flachen PVS-Schwellenkurven). Vorgehen fuer BELOVE ohne eigene Labels: Pool aus
+DRIPS-T1 und MedNet-T1, Trenner auf VALDO trainiert, dann Rating.</p>
+<h2>Traegt nicht</h2>
+<p>n = 12, gelernt wird der Stil von Rater 1; Startwert-Rauschen des GBM noch nicht gemessen (laeuft); Merkmalswichtigkeit offen;
+Uebertrag auf EPVS-2024, HCP und BELOVE offen. VALDO-Faelle mischen 1-mm- und 0,5-mm-Gitter.</p>
+<h2>Bruchindikator</h2>
+<p>Auf EPVS-2024 oder BELOVE-Rating bringt der Trenner gegenueber MedNet-T1 keinen Gewinn, oder die Ablation zeigt, dass nur die
+Posteriors tragen (dann ist es ein Ensemble, kein Trenner).</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/skripte/zweite_stufe_pilot.py, ergebnisse/valdo-task1/stufe2-pilot-drips-t2-mednet-t1/{zusammenfassung.json,ergebnis.csv},
+logs/stufe2_pilot_valdo.log, ARBEIT.md 05:25-05:30.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs</a></li>
+<li><a href="../../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../../cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.html">one-shared-candidate-classifier-for-all-cohorts</a></li>
+<li><a href="../../lesion_detection_method/rules/noise-floor-before-effects.html">noise-floor-before-effects</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,0 +1,64 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Gleiche Daten: 3D- und 2D-U-Net gleich gut; der Dice haengt vor allem an der WMH-Last</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">wmh_segmentation</a> › <a href="../index.html#findings">Befund</a></div><h1>Gleiche Daten: 3D- und 2D-U-Net gleich gut; der Dice haengt vor allem an der WMH-Last</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ">vorlaeufig</span></span><span>Stand</span><span>2026-10-11</span><span>Herkunft</span><span>Alita, WMH-Pool 311 (170 Challenge + 141 eigene Faelle), 5 identische Falten, offizielle Label-2-Auswertung, Schwelle 0,5</span><span>Zuletzt geändert</span><span>2026-10-11 Tafel als HTML (Regel) und WMH-Pool-311-Befund: gleiche Daten 3D = 2D, Dice haengt an der WMH-Last</span><span>Verweist auf</span><span><a href="literature-dice-levers-for-wmh.html">Belegte Dice-Hebel fuer WMH auf FLAIR, und was nachweislich nichts bringt</a> <span class="muted small">(wmh_segmentation)</span><br><a href="unseen-scanners-are-not-the-weak-spot.html">Ungesehene Scanner sind nicht die Schwachstelle; schwierige Faelle auf bekannten Geraeten sind es</a> <span class="muted small">(wmh_segmentation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/same-data-3d-equals-2d-load-drives-dice.md">knowledge/wmh_segmentation/findings/same-data-3d-equals-2d-load-drives-dice.md</a></span></div><h2>Aussage</h2>
+<p>Auf einem gemischten Pool (5 Falten geschichtet nach Kohorte x Aufnahmegeometrie x WMH-Volumen)
+erreichen ein anisotropes 3D-U-Net (Patch 16x96x96, Zentrumskopf) und ein 2D-U-Net mit Attention
+denselben Dice, wenn beide auf denselben Faellen trainiert werden. Der frueher gemessene 3D-Vorsprung
+auf der Challenge (+0,06) war ein Effekt der Trainingsdaten. 3D behaelt einen Vorteil beim
+Laesions-F1 auf 1-mm-isotropen Daten. Beide schlagen BIANCA deutlich.</p>
+<h2>Zahlen (Zwischenstand 11.10., 2D erst 1 von 5 Falten auf identischen Faellen)</h2>
+<ul>
+<li>3D vs 2D, 63 gemeinsame Faelle: Dice +0,004 [-0,011; +0,020], Laesions-F1 +0,016 [-0,005; +0,038];
+  1-mm-Kohorte Laesions-F1 +0,077 [+0,034; +0,123].</li>
+<li>3D vs BIANCA, alle 311: Dice 0,711 vs 0,600, +0,111 [+0,100; +0,123]; Laesions-F1 +0,328.</li>
+<li>Dice nach WMH-Last (3D, 311): &lt; 5 ml 0,573 (n=116), 5-15 ml 0,745 (n=77), &gt; 15 ml 0,824 (n=118).
+  Bei gleicher Last liegen eigene Kohorten unter der Challenge, vor allem bei wenig WMH (0,39-0,47 vs 0,70).</li>
+</ul>
+<h2>Folgerung</h2>
+<p>Dice je Kohorte nur zusammen mit der WMH-Last berichten (geschichtet), sonst sehen Kohorten mit
+wenig WMH schlechter aus, als das Modell ist. Architekturvergleiche nur auf identischen Trainingsdaten.
+Offen: Aequivalenztest nach allen 5 Falten, 2x2 Architektur x Daten, Resampling-Test der 1-mm-Kohorten.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

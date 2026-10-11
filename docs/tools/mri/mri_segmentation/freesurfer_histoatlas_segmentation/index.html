@@ -1,0 +1,190 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>FreeSurfer-Segmentierung mit HistoAtlas (NextBrain) und SynthSeg</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../../index.html">blackbeard_wikki</a><a href="../../../../index.html">Start</a><a href="../../../../rules.html">Regeln</a><a href="../../../../todo.html">Offen</a><a href="../../../../log.html">Protokoll</a><a href="../../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../../index.html">Start</a> › <a href="../../../index.html">Werkzeuge</a> › freesurfer_histoatlas_segmentation</div><h1>FreeSurfer-Segmentierung mit HistoAtlas (NextBrain) und SynthSeg</h1><p class="small muted">tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation · <a href="changelog.html">CHANGELOG</a> · <a href="install.html">INSTALL</a> · <a href="papers.html">PAPERS</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation">GitHub</a></p><h2>Zweck</h2>
+<p>Methodik, um aus einem nativen T1w (und optional einer FLAIR mit WMH-Maske) drei Ebenen von Volumina zu bekommen:</p>
+<ol>
+<li>rund 300 ROIs je Hemisphäre aus dem histologischen Atlas NextBrain (<code>mri_histo_atlas_segment_fireants</code>),</li>
+<li>die aseg-Strukturen aus der Whole-Structure-Segmentierung, die dasselbe Werkzeug nebenbei schreibt,</li>
+<li>GM, WM und CSF als Gruppierung dieser aseg-Labels, mit der WMH-Maske additiv darübergelegt.</li>
+</ol>
+<p>Der Eintrag besteht aus zwei Teilen. Die Methodik (Befehle, Reihenfolge, Fallen) steht in diesem README. Der Code in <code>src/</code> deckt nur Stufe 4 ab, den Teil, der ohne FreeSurfer läuft und sich mit synthetischen Daten testen lässt. Das vollständige Pipeline-Skript bleibt im Projekt, weil es an eine Cluster-Umgebung und ein eigenes BIANCA-Modell gebunden ist.</p>
+<h2>Wann verwenden, wann nicht</h2>
+<p>Verwenden, wenn regionale Volumina feiner als aseg gebraucht werden oder wenn eine WMH-Maske Atlas-ROIs zugeordnet werden soll.</p>
+<p>Nicht verwenden, wenn nur GM, WM und CSF gefragt sind. Dann reicht <code>mri_synthseg --parc</code> plus der Code in <code>src/</code>; der Atlas kostet im Projekt über 52 GB RAM je Subject.</p>
+<p>Nicht verwenden, wenn die Gewebevolumina bei starker WMH-Last zentral sind. Die Whole-Structure-Segmentierung läuft auf dem T1 und verbucht einen Teil der WMH als GM oder Ventrikel (siehe Grenzen). <code>mri_WMHsynthseg</code> auf der FLAIR ist dann die bessere Quelle.</p>
+<h2>Methodik</h2>
+<p>Stand im Projekt: FreeSurfer 8.1.0, FSL 6.0.7.18, CPU. Fünf Stufen je Subject, nacheinander.</p>
+<table>
+<thead>
+<tr>
+<th>Stufe</th>
+<th>Schritt</th>
+<th>Werkzeug</th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>WMH-Maske im FLAIR-Raum</td>
+<td>wählbar: BIANCA, vorhandene Maske, <code>mri_WMHsynthseg</code> (Label 77), keine</td>
+<td>binäre Maske</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Atlas auf nativem T1w, ohne vorheriges Skull-Stripping</td>
+<td><code>mri_histo_atlas_segment_fireants</code></td>
+<td><code>seg.left.nii.gz</code>, <code>seg.right.nii.gz</code> (0,4 mm), <code>lut.txt</code>, <code>vols.left.csv</code>, <code>vols.right.csv</code>, Whole-Structure-Segmentierung (1 mm)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>WMH in den T1-Raum, dann ins Atlas-Grid, als eigenes Label einsetzen</td>
+<td><code>mri_coreg</code> (6 DOF), <code>mri_vol2vol --nearest</code></td>
+<td><code>seg.&lt;side&gt;.withWMH.nii.gz</code>, WMH je ROI</td>
+</tr>
+<tr>
+<td>4</td>
+<td>aseg-Labels zu GM, WM, CSF gruppieren, WMH addieren</td>
+<td><code>src/aseg_tissue.py</code></td>
+<td>Volumina in mm³ je Label und je Gewebeklasse</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T1, FLAIR und Labels in ein gemeinsames Grid für die Sichtkontrolle</td>
+<td><code>mri_vol2vol</code></td>
+<td>QC-Satz je Subject</td>
+</tr>
+</tbody>
+</table>
+<p>Festgelegte Entscheidungen und ihre Gründe:</p>
+<ul>
+<li><strong>Stufe 1 und 5 sind nicht fatal.</strong> Scheitert die WMH-Maske, laufen Atlas und Volumetrie ohne WMH weiter, und der Status vermerkt das.</li>
+<li><strong>Registrierung FLAIR nach T1 rigide, 6 DOF.</strong> Gleiche Session, gleicher Kopf. Masken werden immer mit <code>--nearest</code> resampelt.</li>
+<li><strong>WMH-Volumen wird im nativen FLAIR-Grid gezählt</strong>, nicht nach dem Resampling. Die resampelten Masken dienen nur der Zuordnung zu ROIs.</li>
+<li><strong>WMH wird nur innerhalb der Hemisphäre eingesetzt</strong> (<code>seg &gt; 0</code>). Die Voxelzahl je ROI wird vor dem Überschreiben gezählt.</li>
+<li><strong>WMH-Label prüfen.</strong> Standard ist 77. Ist 77 in der Atlas-LUT schon vergeben, ein freies Label nehmen (im Projekt 9001).</li>
+<li><strong>In Stufe 4 wird die WMH addiert, nicht überschrieben.</strong> Codes: 1 GM, 2 WM, 3 CSF, 11 GM und WMH, 12 WM und WMH, 13 CSF und WMH. So bleibt die Zahl der Voxel mit Code 2 das WM ohne WMH, und man sieht, welcher Teil der Maske außerhalb des WM liegt.</li>
+<li><strong>Jedes aseg-Label bekommt zusätzlich eine eigene Zeile.</strong> GM, WM und CSF lassen sich damit später anders zusammensetzen, ohne die Segmentierung neu zu rechnen.</li>
+</ul>
+<h2>Aufruf</h2>
+<p>Stufen 2 und 3, wie sie im Projekt unter FreeSurfer 8.1.0 liefen (Argumente positional: Eingabe, Ausgabeordner, GPU 0 oder 1, Threads):</p>
+<pre><code class="language-bash">T1=/data/bids/sub-01/ses-01/anat/sub-01_ses-01_T1w.nii.gz
+FLAIR=/data/bids/sub-01/ses-01/anat/sub-01_ses-01_FLAIR.nii.gz
+WMH=/data/derivatives/sub-01/ses-01/wmh/sub-01_ses-01_WMH_mask.nii.gz
+OUT=/data/derivatives/sub-01/ses-01/anat
+
+mri_histo_atlas_segment_fireants &quot;$T1&quot; &quot;$OUT&quot; 0 9
+
+mri_coreg --mov &quot;$FLAIR&quot; --ref &quot;$T1&quot; --reg &quot;$OUT/flair2t1.lta&quot; --dof 6 --threads 9
+mri_vol2vol --mov &quot;$WMH&quot; --targ &quot;$T1&quot; --reg &quot;$OUT/flair2t1.lta&quot; --nearest --o &quot;$OUT/WMH_in_T1.nii.gz&quot;
+mri_vol2vol --mov &quot;$OUT/WMH_in_T1.nii.gz&quot; --targ &quot;$OUT/seg.left.nii.gz&quot; --regheader --nearest --o &quot;$OUT/WMH_on_seg_left.nii.gz&quot;
+mri_vol2vol --mov &quot;$OUT/WMH_in_T1.nii.gz&quot; --targ &quot;$OUT/SynthSeg.mgz&quot; --regheader --nearest --o &quot;$OUT/WMH_on_synthseg.nii.gz&quot;
+</code></pre>
+<p>Die FreeSurfer-Wiki (Stand 2026-04-15) dokumentiert für die Entwicklungsversion eine andere Syntax, ein Aufruf je Seite:</p>
+<pre><code class="language-bash">mri_histo_atlas_segment_fireants --i &quot;$T1&quot; --o &quot;$OUT&quot; --device cpu --side left --mode invivo
+mri_histo_atlas_segment_fireants --i &quot;$T1&quot; --o &quot;$OUT&quot; --device cpu --side right --mode invivo
+</code></pre>
+<p>Welche der beiden Formen gilt, hängt am Build. Vor dem ersten Lauf <code>mri_histo_atlas_segment_fireants --help</code> lesen. Die Flag-Syntax ist hier nicht getestet.</p>
+<p>Stufe 4, mit dem Code aus diesem Ordner:</p>
+<pre><code class="language-bash">TOOL=/path/to/blackbeard_wikki/tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation
+OUT=/data/derivatives/sub-01/ses-01/anat
+
+python &quot;$TOOL/src/run_aseg_tissue_volumes.py&quot; --seg &quot;$OUT/SynthSeg.mgz&quot; --wmh &quot;$OUT/WMH_on_synthseg.nii.gz&quot; --out &quot;$OUT/tissue_volumes.csv&quot; --pallidum-vdc gm --labels-out &quot;$OUT/tissue_labels.nii.gz&quot;
+</code></pre>
+<p>Als Bibliothek:</p>
+<pre><code class="language-python">import sys
+sys.path.insert(0, &quot;/path/to/blackbeard_wikki/tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/src&quot;)
+import aseg_tissue as at
+
+img, aseg = at.load_labels(&quot;/data/derivatives/sub-01/ses-01/anat/SynthSeg.mgz&quot;)
+label_class = at.class_of(at.CONVENTIONS[&quot;gm&quot;])
+lab = at.tissue_label_image(aseg, label_class)
+rows = at.tissue_volumes(lab, at.voxel_mm3(img))
+print(rows)
+</code></pre>
+<h2>Eingabe und Ausgabe</h2>
+<p>Eingabe für <code>run_aseg_tissue_volumes.py</code>:
+- <code>--seg</code>: aseg-Labelbild (<code>.nii.gz</code> oder <code>.mgz</code>), mit oder ohne Desikan-Killiany-Parzellierung.
+- <code>--wmh</code>: optionale binäre Maske im selben Grid wie <code>--seg</code>. Bei abweichendem Grid bricht das Skript mit Rückgabewert 2 ab und schreibt nichts.
+- <code>--pallidum-vdc gm|wm</code>: wohin Pallidum und Ventral DC zählen. Standard <code>gm</code>.</p>
+<p>Ausgabe: CSV im Long-Format mit den Spalten <code>measure, label, structure, side, volume_mm3</code>.
+- <code>measure=tissue_volume</code>: <code>GM</code>, <code>WM</code>, <code>CSF</code>, <code>sum_GM_WM_CSF</code>, mit Maske zusätzlich <code>WM_minus_WMH</code>, <code>WMH_in_GM</code>, <code>WMH_in_WM</code>, <code>WMH_in_CSF</code>, <code>WMH_outside_classes</code>.
+- <code>measure=tissue_fine</code>: eine Zeile je vorkommendem Label. Unbekannte Labels heißen <code>unmapped_label_&lt;n&gt;</code> und zählen in keine Gewebeklasse.</p>
+<p>Rückgabewerte: 0 ohne Auffälligkeit, 1 mit Warnung (Ausgabe wird trotzdem geschrieben), 2 Eingabefehler.</p>
+<p>Der Dateiname der Whole-Structure-Segmentierung hängt am Build: im Projekt <code>SynthSeg.mgz</code>, laut Wiki ein Ordner <code>SuperSynth/</code>. Per Glob suchen, nicht fest eintragen.</p>
+<h2>Teststand</h2>
+<p>2026-10-02, Linux, Python 3.13.15, numpy 2.5.3, nibabel 5.4.2:
+<code>python -m unittest discover -s tests -v</code> im Werkzeugordner → 18 Tests, bestanden. Nur synthetische Labelbilder.</p>
+<p>Nicht in diesem Repo getestet: die Stufen 1, 2, 3 und 5. Sie liefen im Projekt als SLURM-Array über 60 Subjects mit FreeSurfer 8.1.0 erfolgreich durch; die Befehle oben sind aus diesem Skript übernommen.</p>
+<h2>Grenzen</h2>
+<h3>GM, WM und CSF sind Konvention</h3>
+<p>Pallidum und Ventral DC stehen je nach Arbeit in GM oder in WM, bei gleichem SynthSeg-Labelsatz (Quellen in <a href="papers.html">PAPERS.md</a>). Die verwendete Konvention gehört in jede Tabelle und jeden Methodenteil. Choroid Plexus und WM-Hypointensitäten (Label 77) stehen bewusst in keiner Klasse.</p>
+<p><code>sum_GM_WM_CSF</code> ist die Summe der drei Klassen und keine validierte ICV-Schätzung. Ob Label 24 den gesamten extrazerebralen Liquor abdeckt, ist hier nicht geprüft.</p>
+<h3>Der Kortex steckt nicht immer in Label 3 und 42</h3>
+<p>Im Projekt schrieb das Atlas-Werkzeug die Whole-Structure-Segmentierung mit Parzellierung: Kortex in 1001 bis 1035 und 2001 bis 2035, nicht in 3 und 42. Ohne diese Labels in der Zuordnung fiel der gesamte Kortex aus GM: gemessen 168 ml GM und GM/WM 0,31; nach der Korrektur GM/WM 1,32 bis 1,52. <code>src/aseg_tissue.py</code> kennt beide Varianten und warnt bei GM/WM außerhalb 0,8 bis 1,8.</p>
+<h3>T1-basierte Segmentierung verwechselt WMH</h3>
+<p>Ein Teil der WMH ist in der Whole-Structure-Segmentierung als GM oder Ventrikel verbucht. <code>WMH_in_GM</code> und <code>WMH_in_CSF</code> sind deshalb QC-Zahlen, und <code>WM_minus_WMH</code> ist eine Näherung an normal erscheinendes WM, keine saubere Definition.</p>
+<h3>Zwei Auflösungen</h3>
+<p>Der Atlas liegt auf 0,4 mm, die Whole-Structure-Segmentierung auf 1 mm. Die Summen der beiden Ebenen passen nicht aufeinander. Beim Herunterrechnen des Atlas auf 1 mm können dünne ROIs verschwinden; vorher und nachher die Labelmengen vergleichen.</p>
+<h3>FSL und FreeSurfer in einem Prozess</h3>
+<p>HD-BET braucht in einer Conda-Umgebung <code>LD_LIBRARY_PATH=$CONDA_PREFIX/lib</code>. Genau damit bricht <code>fspython</code> beim Import von torch ab (<code>undefined symbol</code>, <code>c10</code>, <code>demangle</code>). Lösung im Projekt: <code>os.environ</code> nicht global ändern, sondern jedem Subprozess ein eigenes Umgebungs-Dict geben.</p>
+<pre><code class="language-python">import os
+import subprocess
+
+FS_ENV = os.environ.copy()
+FS_ENV.pop(&quot;LD_LIBRARY_PATH&quot;, None)
+
+FSL_ENV = os.environ.copy()
+FSL_ENV[&quot;LD_LIBRARY_PATH&quot;] = os.path.join(os.environ[&quot;CONDA_PREFIX&quot;], &quot;lib&quot;)
+
+subprocess.run([&quot;fspython&quot;, &quot;-c&quot;, &quot;import torch; print(torch.__version__)&quot;], env=FS_ENV, check=True)
+</code></pre>
+<p>Dieser Einzeiler vor dem Array-Lauf kostet rund 20 Sekunden und erspart einen mehrstündigen Fehllauf.</p>
+<h3>Ressourcen</h3>
+<p>Atlas auf CPU: maximaler Speicher über 52,8 GB, ein Lauf mit 48 GB brach mit OOM ab. Im Projekt gesetzt: 72 GB, 6 Stunden, 9 Threads je Subject. Laut Wiki ist keine GPU nötig; für <code>mri_WMHsynthseg</code> nennt die Wiki rund 32 GB RAM.</p>
+<h3>Was dieser Eintrag nicht enthält</h3>
+<p>Das Pipeline-Skript selbst, das BIANCA-Modell, den QC-Viewer und alle Daten. Die BIANCA-Stufe (Stufe 1) steht in <a href="../wmh/bianca_flair_wmh/index.html">wmh/bianca_flair_wmh</a>.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../../search.js"></script></body></html>

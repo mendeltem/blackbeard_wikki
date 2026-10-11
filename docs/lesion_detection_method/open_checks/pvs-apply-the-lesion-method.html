@@ -1,0 +1,112 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">lesion_detection_method</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge info">offen</span></span><span>Stand</span><span>2026-10-07</span><span>Herkunft</span><span>PVS-Cluster (Alita, angelegt 2026-09-15), Bestandsaufnahme der Daten 2026-10-07; Uebertragung aus CMB/WMH</span><span>Zuletzt geändert</span><span>2026-10-07 pvs_detection: new topic -- numeric ids became char codes (30/103 failures), public reference data and pretrained models; open check progress</span><span>Verweist auf</span><span><a href="../rules/reference-first-then-metric-then-model.html">Erst die Referenz, dann das Mass, dann das Modell</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../rules/pipeline-failures-and-names-before-tuning.html">Fehlschlaege, stille Leerausgaben und Benennungen pruefen, bevor man tunt</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../mechanisms/sensitivity-needs-a-discriminator.html">Empfindlichkeit lohnt nur, wenn etwas die zusaetzlichen Kandidaten trennen kann</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../mechanisms/false-alarms-cluster-by-anatomy.html">Fehlalarme haben einen Ort: erst zaehlen, dann eine parameterfreie Regel nach dem Netz</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../mechanisms/geometry-follows-the-acquisition.html">Gitter, Netz und Gewichtung folgen der Aufnahme, nicht dem Lehrbuch</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../rules/operating-points-do-not-transfer.html">Arbeitspunkte gehoeren zum Modell und zum Scanner, nie zu einem anderen Lauf</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../rules/count-cases-behind-pooled-numbers.html">Hinter jeder gepoolten Zahl die Faelle zaehlen</a> <span class="muted small">(lesion_detection_method)</span></span><span>Verwiesen von</span><span><a href="wmh-apply-the-lesion-method.html">WMH: die Methode aus CMB und PVS noch einmal anwenden</a> <span class="muted small">(lesion_detection_method)</span><br><a href="../../pvs_detection/findings/numeric-ids-became-char-codes-in-filenames.html">30 von 103 Pipeline-Fehlschlaegen waren ein Typfehler: Zahl wurde zum Zeichen im Dateinamen</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md">knowledge/lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md</a></span></div><h2>Aussage</h2>
+<p>Ausgangslage (gezaehlt, nicht geschaetzt): eine Kohorte von 103 Faellen mit je T1 (1 mm
+isotrop) und FLAIR (0,86 x 0,86 x 5 mm, 27 Schichten); eine uebernommene MATLAB-Pipeline
+(FreeSurfer, FSL, RORPO-Vesselness auf T1, WMH-Ausschluss ueber FLAIR) mit elf
+Schwellensaetzen und einem vollen Lauf (Satz 11); 31 von 103 Faellen mit technischen
+Fehlschlaegen (Orientierung T1, Dateityp); keine Handreferenz gesichtet. PVS sind
+perivaskulaere Raeume (Virchow-Robin), nicht periventrikulaer.</p>
+<p>Uebertragung, in dieser Reihenfolge, mit erwartetem Aufwand:
+1. <strong>Referenz klaeren</strong> (Tage, keine GPU). Gibt es Handzeichnungen oder visuelle
+   Ratings (Skala je Region: Basalganglien, Centrum semiovale, Mittelhirn, Hippocampus)?
+   Wenn nein: 20 bis 30 zufaellige Faelle von Hand bewerten lassen, bevor eine Schwelle
+   bewegt wird. Die OUTPUT-Ordner sind keine Wahrheit. [reference-first-then-metric-then-model]
+2. <strong>Fehlschlaege reparieren und Zwischenausgaben zaehlen</strong> (Stunden). 31 Fehlschlaege
+   klingen nach Technik; jede Ausgabe (T1-Normierung, RORPO-Karte, PVS-Maske,
+   WMH-Ausschluss) einmal oeffnen, Voxel zaehlen, Masken-Anteil Nicht-Hirn messen.
+   Pipeline in eigenen Worten beschreiben und am MATLAB-Code pruefen (welcher Filter,
+   welche Sequenz, welche Maske wirklich). [pipeline-failures-and-names-before-tuning]
+3. <strong>Mass festlegen</strong>: je Instanz (PVS-Zaehlung und Volumen je Region), gepaart je Fall
+   mit Bootstrap; Verteilung je Fall mitberichten (PVS-Lasten sind schief).
+   [count-cases-behind-pooled-numbers]
+4. <strong>Die elf Schwellensaetze als Kurve lesen, nicht als Kandidaten.</strong> Jeder Satz ist ein
+   Arbeitspunkt der Vesselness-Schwellen; wiederherstellen, womit Satz 11 gewaehlt wurde.
+   Fortschritt kommt nicht aus Satz 12, sondern aus einem Trenner: PVS gegen Gefaess,
+   gegen Lakune, gegen WMH. Erwartung: eine zweite Stufe (kleiner Kandidaten-
+   Klassifikator auf RORPO-Kandidaten, Merkmale Form, Lage, T1/FLAIR-Verhaeltnis).
+   [sensitivity-needs-a-discriminator], [operating-points-do-not-transfer]
+5. <strong>Fehlalarme nach Ort zaehlen</strong> (Stunden, CPU) auf der Stichprobe aus 1: Anteil in
+   Sulci, Kortex, Ventrikelnaehe, WMH-Rand. Vorsicht: PVS tragen selbst Liquorsignal,
+   die Ortsregel darf nur ueber Lage gehen, nicht ueber Intensitaetsklasse.
+   [false-alarms-cluster-by-anatomy]
+6. <strong>Rechenebene = T1.</strong> 1 mm isotrop traegt das Signal; FLAIR mit 5 mm nur als grobe
+   Nebenbedingung (WMH-Ausschluss), nie als Eingabe eines feinen Netzes ohne
+   anisotrope erste Ebene. [geometry-follows-the-acquisition]
+7. Erst danach ein lernendes Modell, und nur mit Rauschboden (drei Startwerte) und
+   vorab festgelegter Regel. [noise-floor-before-effects]</p>
+<h2>Traegt</h2>
+<p>Diesen PVS-Cluster; sinngemaess jede uebernommene Laesionspipeline mit Parameterdateien
+und ohne Referenz.</p>
+<h2>Traegt nicht</h2>
+<p>Die Punkte 4 bis 7 sind Erwartungen aus CMB/WMH, keine PVS-Messungen. Ob eine zweite
+Stufe bei PVS traegt, ist offen; die Verwechsler (Gefaesse, Lakunen) sind andere.</p>
+<h2>Bruchindikator</h2>
+<p>Punkt 1 ergibt eine belastbare Referenz mit hoher Uebereinstimmung zur Pipeline-Ausgabe
+(ueber dem Rauschboden) -- dann ist die Pipeline die Referenz, und die Reihenfolge kippt
+auf 2, 3, 5.</p>
+<h2>Ablesung</h2>
+<p>Datenlage eigene Zaehlung 2026-09-15 und 2026-10-07 (Patientendaten, nur Summen).
+Uebertragung: Erfahrungswerte aus den verknuepften Eintraegen. Visuelle PVS-Skala:
+Potter et al., Cerebrovasc Dis 2015, doi:10.1159/000375153 (DOI nicht nachgeprueft).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+<li><a href="../rules/pipeline-failures-and-names-before-tuning.html">pipeline-failures-and-names-before-tuning</a></li>
+<li><a href="../mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../mechanisms/false-alarms-cluster-by-anatomy.html">false-alarms-cluster-by-anatomy</a></li>
+<li><a href="../mechanisms/geometry-follows-the-acquisition.html">geometry-follows-the-acquisition</a></li>
+<li><a href="../rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+<li><a href="../rules/count-cases-behind-pooled-numbers.html">count-cases-behind-pooled-numbers</a></li>
+</ul>
+<h2>Fortschritt 2026-10-07 abends</h2>
+<p>Schritt 2 im Kern erledigt: die Fehlschlaege sind erklaert (siehe
+<a href="../../pvs_detection/findings/numeric-ids-became-char-codes-in-filenames.html">numeric-ids-became-char-codes-in-filenames</a>),
+Zwischenausgaben gezaehlt (Masken binaer, 280-920 Komponenten je Fall nach Postprocessing). Schritt 1:
+oeffentliche Referenzen gefunden und im Download (VALDO Task 1, HCP-Aging PVS), EPVS-2024 auf Antrag; BELOVE-Rating
+noch offen. Schritt 3: Metrik <code>pvs-arena/pvs_metrik.py</code> (Instanz, Bootstrap, Zaehlkorrelation). Ergaenzung zu
+Schritt 3 aus Nutzerwunsch: Sensitivitaet nach Groessenklassen, weil auch kleine PVS gewollt sind.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

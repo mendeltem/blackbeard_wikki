@@ -1,0 +1,137 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>decider-4b trifft auf 60 Routing-Faellen so oft wie kNN auf dem vorhandenen Embedding-Server, aber mit brauchbarer Konfidenz</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>decider-4b trifft auf 60 Routing-Faellen so oft wie kNN auf dem vorhandenen Embedding-Server, aber mit brauchbarer Konfidenz</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>Alita, decider-4b v2.1 Q4_K_M auf CPU (llama-cpp-python 0.3.36, 16 Threads) gegen bge-m3-kNN, 60 Routing-Faelle aus local_models tools/laya/faelle/route.jsonl, 2026-10-08</span><span>Zuletzt geändert</span><span>2026-10-08 local_llm_operation: decider-4b matches kNN on 60 routing cases, confidence is the gain</span><span>Verweist auf</span><span><a href="../open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="laya-router-before-agent.html">Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s</a> <span class="muted small">(local_llm_operation)</span><br><a href="lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/decider-4b-matches-knn-on-60-routing-cases.md">knowledge/local_llm_operation/findings/decider-4b-matches-knn-on-60-routing-cases.md</a></span></div><h2>Aussage</h2>
+<p>Weiche vor dem Agenten mit drei Zielen (trivial / coding / schwer), 60 echte
+Anfragen mit Soll-Label von Hand, dieselben wie fuer Laya auf Victus:</p>
+<table>
+<thead>
+<tr>
+<th>Verfahren</th>
+<th>Treffer</th>
+<th>schwer zu niedrig</th>
+<th>Treffer bei p &gt;= 0,8</th>
+<th>Zeit je Fall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kNN k=5, bge-m3 (Port 8001), leave-one-out</td>
+<td>49/60 (0,82)</td>
+<td>2</td>
+<td>–</td>
+<td>0,03 s</td>
+</tr>
+<tr>
+<td>kNN k=1</td>
+<td>44/60</td>
+<td>3</td>
+<td>–</td>
+<td>0,03 s</td>
+</tr>
+<tr>
+<td>decider-4b Q4, deutsche Formulierung</td>
+<td><strong>50/60 (0,83)</strong></td>
+<td>2</td>
+<td><strong>21/21</strong></td>
+<td>0,75 s</td>
+</tr>
+<tr>
+<td>decider-4b Q4, englische Formulierung</td>
+<td>46/60</td>
+<td>4</td>
+<td>21/21</td>
+<td>0,69 s</td>
+</tr>
+<tr>
+<td>Laya multilingual (Victus, 30 Faelle)</td>
+<td>24/30 (0,80)</td>
+<td>3 von 7</td>
+<td>10/12</td>
+<td>0,06 s</td>
+</tr>
+</tbody>
+</table>
+<p>decider laedt in 2,5 s (2,7 GB GGUF, CPU), antwortet ohne Feinjustierung und
+ohne Beispiele. Alle zehn Fehler der deutschen Fassung liegen unter p 0,8; mit
+der Regel "unter 0,8 an das Hauptmodell" ist keine Entscheidung falsch, aber nur
+21 von 60 werden ueberhaupt entschieden. Sieben der zehn Fehler sind kleine
+Shell-Aufgaben, die das Label "trivial" tragen und die decider als "coding"
+liest; das ist eine Konvention der Labels, keine Schwaeche des Modells. Die
+teure Richtung (schwere Anfrage nach unten) trifft decider und kNN gleich
+selten, je zwei.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Ein Entscheidungsmodell auf CPU neben dem 27B, 0,75 s je Entscheidung, 2,7 GB
+  Platte, 16 Threads kurz voll.</li>
+<li>Die Formulierung der Ziele in der Sprache der Anfragen (deutsch) ist vier
+  Treffer besser als englisch.</li>
+<li>Konfidenz als Schalter: ab 0,8 verlaesslich (21/21), darunter nachfragen oder
+  Standardziel.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Ein Vorsprung vor kNN auf dem Embedding-Server, der ohnehin laeuft: ein Fall
+  von 60 ist Rauschen. Wer die Konfidenz nicht braucht, braucht decider nicht.</li>
+<li>Die Labels selbst: "Shell-Befehl = trivial" ist eine Setzung; mit "Shell =
+  coding" waere decider bei 57/60.</li>
+<li>Mehr als drei Ziele (ungemessen) und Anfragen ueber 1.536 Token (Kontextkappung
+  des Prompt-Bauers).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Auf 200 statt 60 Faellen faellt decider unter kNN, oder die Treffer bei p &gt;= 0,8
+sinken unter 90 %.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, <code>system/werkzeuge/decider-route-test.py</code>, Ergebnis
+<code>ergebnisse/decider/route_ergebnis.json</code>. Download der Gewichte ueber WLAN: curl
+mit <code>-C -</code> und <code>-r</code> zusammen liefert bei Wiederaufnahme falsche Bytes, die
+SHA-256 gegen Hugging Face entlarvte es; Bereiche ohne Wiederaufnahme laden.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../open_checks/decision-model-as-profile-orchestrator.html">decision-model-as-profile-orchestrator</a></li>
+<li><a href="laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

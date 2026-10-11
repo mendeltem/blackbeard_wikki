@@ -1,0 +1,210 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>web_globes</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › web_globes</div><h1>web_globes</h1><p>3D-Globen und Karten als Einzeldatei-HTML: freie Kachelquellen, Cesium-Fallen, Wandel sichtbar machen</p><p class="muted small">Globus, Weltkarte, Cesium, Satellitenbilder, Kacheln, Esri, NASA GIBS, Supply Atlas, Earth Digital Twin, Zeitreise</p>
+<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 4"></i></div><div class="counts"><span class="ok">4 getragen</span></div><div class="small"><p>3D-Globen und Karten als Einzeldatei-HTML im Browser: freie Kachelquellen
+ohne API-Key, Cesium-Fallen, Darstellung von Wandel über die Zeit.</p>
+<p>Abgrenzung zu <a href="../ai_application_layer/index.html">ai_application_layer</a>: dort
+steht, was auf den Atlas-Seiten inhaltlich gezeigt wird; hier steht, wie man
+solche Seiten technisch baut, ohne an Keys, API-Drift oder Renderlast zu
+scheitern.</p>
+<p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Wie man 3D-Globen und Karten als Einzeldatei-HTML baut, ohne API-Keys und ohne an Cesium zu scheitern.</p>
+<p><strong>Kachelquellen (getragen):</strong> Esri World Imagery (Satellit bis Level 19), Esri Reference (Labels) und NASA GIBS MODIS (Tagesbilder ab 2000-02-24, Datum in der URL, Level 9) laufen ohne Key per <code>UrlTemplateImageryProvider</code>. Google-Earth-Bilder brauchen einen bezahlten Key; Esri ist der freie Ersatz. Länderpolygone mit ISO3 ohne Hosting: datamaps worldTopo (TopoJSON, cdnjs).</p>
+<p><strong>Cesium-Fallen:</strong> Dauerrendern plus Hover-Umstyling der Polygone crasht nach Minuten (RangeError: Too many properties to enumerate); Gegenmittel requestRenderMode, eine wiederverwendete Highlight-Entity, renderError-Neustart (Wirkung nicht nachgemessen). API-Drift: <code>.otherwise</code> → <code>.catch</code> (seit 1.92), <code>ImagerySplitDirection</code> → <code>SplitDirection</code>; CDN-Version pinnen, Enums per Oder-Fallback.</p>
+<p><strong>Darstellung:</strong> Zeitreise über MODIS wirkt global statisch (nur Wolken/Schnee ändern sich). Sichtbarer Wandel braucht kuratierte Hotspots (Aralsee, Dubai, Rondônia, Lake Mead, Drei Schluchten, Las Vegas), Split-Screen-Vergleich gegen heute und Monatswahl.</p>
+<p><strong>Offen:</strong> nichts.</p>
+<p><strong>Lesen bei:</strong> Globus, Weltkarte, Cesium, Satellitenbilder, Kacheln, Supply Atlas, Earth Digital Twin, Zeitreise, Vorher/Nachher.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="cesium-api-drift"><summary><span class="type">Regel</span><span class="t"><a href="rules/cesium-api-drift.html">Cesium-Version pinnen und API-Drift einpreisen: .otherwise ist weg, SplitDirection wurde umbenannt</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Chat Earth Digital Twin (claude.ai), 2026-10-02 · <a href="rules/cesium-api-drift.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/web_globes/rules/cesium-api-drift.md">Markdown</a></p><h2>Aussage</h2>
+<p>KI-generierter Cesium-Code mischt regelmäßig API-Stände. Zwei Fallen, die
+bei uns real auftraten oder abgefangen wurden:</p>
+<ol>
+<li>Seit Cesium 1.92 (2022) sind die when.js-Promises durch native ersetzt:
+   <code>.otherwise(...)</code> existiert nicht mehr, es heißt <code>.catch(...)</code>.
+   Symptom: <code>TypeError: ... .otherwise is not a function</code> erst zur Laufzeit,
+   die Seite bleibt halb initialisiert (bei uns: Grenzen und Hover fehlten).</li>
+<li><code>ImagerySplitDirection</code> heißt in neueren Versionen <code>SplitDirection</code>,
+   <code>scene.imagerySplitPosition</code> wurde zu <code>scene.splitPosition</code>.
+   Robust: <code>const SPLIT = Cesium.SplitDirection || Cesium.ImagerySplitDirection</code>
+   und Schreiben über <code>"splitPosition" in scene</code>.</li>
+</ol>
+<p>Regel: Die CDN-Version im <code>&lt;script&gt;</code>-Tag ist die Wahrheit, nicht das
+Trainingswissen des Agenten. Version explizit pinnen (z. B. 1.95 auf cdnjs,
+<code>window.CESIUM_BASE_URL</code> setzen), bei Laufzeit-TypeErrors auf entfernte
+Methoden zuerst die Migrationsliste der gepinnten Version prüfen, und
+umbenannte Enums per Oder-Fallback abfangen.</p>
+<h2>Trägt</h2>
+<p>Jede Einzeldatei-Seite, die Cesium (oder eine andere schnell wandernde
+Bibliothek) vom CDN lädt und von einem Agenten geschrieben oder geändert wird.</p>
+<h2>Trägt nicht</h2>
+<p>Gebundelte Projekte mit package.json und Typprüfung; dort fällt Drift beim
+Build auf, nicht erst zur Laufzeit.</p>
+<h2>Bruchindikator</h2>
+<p>Eine gepinnte Version, deren Kacheln oder Widgets gegen heutige Browser
+brechen; dann zwingt der Pin selbst zum Upgrade und die Oder-Fallbacks
+müssen mitwandern.</p>
+<h2>Ablesung</h2>
+<p>Eigener Vorfall 2026-10-02: <code>.otherwise</code>-TypeError in der Konsole des
+Nutzers, Fix auf <code>.catch</code> behob Grenzen und Hover. Promise-Umstellung in
+1.92 laut Cesium-Changelog (Tier 1b). SplitDirection-Fallback eingebaut,
+Umbenennung laut Changelog, bei uns nicht einzeln nachgestellt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="risks/cesium-render-loop-crash.html">cesium-render-loop-crash</a></li>
+<li><a href="findings/free-satellite-tile-sources.html">free-satellite-tile-sources</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(2)</span></h2><details class="entry" id="free-satellite-tile-sources"><summary><span class="type">Befund</span><span class="t"><a href="findings/free-satellite-tile-sources.html">Echte Satellitenbilder im Browser ohne API-Key: Esri World Imagery und NASA GIBS</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Chat Earth Digital Twin (claude.ai), 2026-10-02 · <a href="findings/free-satellite-tile-sources.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/web_globes/findings/free-satellite-tile-sources.md">Markdown</a></p><h2>Aussage</h2>
+<p>Drei Kachelquellen liefern ohne Anmeldung, Token oder Key echte Satelliten-
+und Referenzbilder als XYZ/WMTS-Kacheln, direkt aus dem Browser:</p>
+<ol>
+<li><strong>Esri World Imagery</strong> (aktuelle Satelliten-/Luftbilder, bis Straßenebene,
+   maximumLevel 19):
+   <code>https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}</code></li>
+<li><strong>Esri Reference</strong> (Grenzen und Ortsnamen als transparente Beschriftungsebene):
+   <code>https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}</code></li>
+<li><strong>NASA GIBS, MODIS Terra TrueColor</strong> (historische Tagesbilder ab 2000-02-24,
+   ~250 m, maximumLevel 9, Datum steht in der URL):
+   <code>https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{JJJJ-MM-TT}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg</code></li>
+</ol>
+<p>In CesiumJS genügt je Quelle ein <code>UrlTemplateImageryProvider</code>. Google-Earth-
+Bildmaterial ist dagegen nur mit bezahltem API-Key nutzbar; Esri ist der
+freie Ersatz mit sehr ähnlichem Bild.</p>
+<p>Länderpolygone mit ISO3-Ids ohne eigenes Hosting: <code>Datamap.prototype.worldTopo</code>
+aus datamaps 0.5.9 (cdnjs) plus topojson 1.6.9 liefert Natural-Earth-Grenzen
+als eingebettetes TopoJSON; daraus lässt sich die Hover-Ebene eines Globus
+bauen, ohne eine GeoJSON-Datei auszuliefern.</p>
+<h2>Trägt</h2>
+<p>Jede Einzeldatei-HTML-Seite mit 3D-Globus oder Karte, die ohne Build und ohne
+Secrets auskommen soll (Earth Digital Twin, Kartenprojekte). GIBS trägt
+Zeitreihen: das Datum in der URL macht jede Tageskachel seit 2000 adressierbar.</p>
+<h2>Trägt nicht</h2>
+<p>Offline-Betrieb; die Kacheln werden gestreamt. Esri nennt keine harte, aber
+eine Fair-Use-Grenze, für Massenabruf (Tile-Scraping) nicht geeignet. GIBS
+Level 9 reicht nicht für Stadtdetails. Lizenzlage für kommerzielle
+Einbettung hier nicht geprüft.</p>
+<h2>Bruchindikator</h2>
+<p>HTTP 403/404 auf den Template-URLs oder eine Esri-Ankündigung, World Imagery
+hinter einen Key zu legen.</p>
+<h2>Ablesung</h2>
+<p>Eigene Nutzung im Chat Earth Digital Twin, 2026-10-02: alle drei Quellen
+gerendert (Screenshots). URL-Muster sind Herstellerdoku (Tier 1b),
+Verfügbarkeitsbeginn MODIS 2000-02-24 laut NASA-GIBS-Doku.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/cesium-api-drift.html">cesium-api-drift</a></li>
+<li><a href="findings/global-imagery-change-is-local.html">global-imagery-change-is-local</a></li>
+</ul></div></details><details class="entry" id="global-imagery-change-is-local"><summary><span class="type">Befund</span><span class="t"><a href="findings/global-imagery-change-is-local.html">Historische Satellitenbilder wirken auf Globus-Zoom statisch; sichtbarer Wandel braucht Hotspots und Split-Vergleich</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Chat Earth Digital Twin (claude.ai), 2026-10-02 · <a href="findings/global-imagery-change-is-local.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/web_globes/findings/global-imagery-change-is-local.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Jahr-Schieberegler über NASA-GIBS-Tagesbilder (MODIS, ~250 m) zeigt auf
+globaler Zoomstufe fast keinen Unterschied zwischen z. B. 2003 und 2019:
+was sich global sichtbar ändert, sind Wolken und Schneelage, nicht die
+Landoberfläche. Der Nutzer liest das als "funktioniert nicht".</p>
+<p>Wandel wird sichtbar durch drei Mittel zusammen:
+1. <strong>Hotspots anfliegen</strong>, an denen die Änderung die Kachelauflösung
+   übersteigt: Aralsee (45.2 N, 59.4 O), Küste Dubai (25.05 N, 55.2 O),
+   Rondônia/Amazonas (-10.5 S, -63.5 W), Lake Mead (36.2 N, -114.6 W),
+   Drei-Schluchten-Stausee (30.8 N, 111.0 O), Las Vegas (36.12 N, -115.17 W).
+2. <strong>Split-Screen</strong>: historische Ebene mit <code>splitDirection</code> links, aktuelle
+   Esri-Ebene rechts, Trennlinie per Maus; der Unterschied springt ins Auge,
+   wo Nebeneinander-Umschalten unsichtbar bleibt.
+3. <strong>Monatswahl</strong> statt fester Jahresmitte: Januar gegen Juli macht
+   Saisonalität (Schnee, Vegetation) auch global sichtbar.</p>
+<h2>Trägt</h2>
+<p>Jede Zeitreisen-Funktion auf Globus- oder Kartenseiten (Earth Digital Twin,
+Atlas-Seiten mit Vorher/Nachher). Allgemeiner: ein Regler, dessen Effekt
+unterhalb der Darstellungsauflösung liegt, braucht kuratierte Beispiele,
+sonst gilt das Feature als kaputt.</p>
+<h2>Trägt nicht</h2>
+<p>Hochauflösende historische Stapel (z. B. Google Earth Engine, Landsat auf
+30 m serverseitig gerendert); dort ist Wandel auch ohne Hotspot-Kuratierung
+sichtbar. Statistische Änderungsdetektion; hier geht es nur um Wahrnehmung.</p>
+<h2>Bruchindikator</h2>
+<p>Eine frei nutzbare Kachelquelle mit hochauflösenden Jahresmosaiken; dann
+entfällt die Begründung über die 250-m-Grenze.</p>
+<h2>Ablesung</h2>
+<p>Eigene Beobachtung im Chat 2026-10-02 (Nutzerrückmeldung "doesn't change
+much", danach Umbau auf Hotspots plus Split). Hotspot-Koordinaten sind die
+im Projekt verbauten Werte, Änderungsgeschichte der Orte allgemeinkundig.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/free-satellite-tile-sources.html">free-satellite-tile-sources</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="cesium-render-loop-crash"><summary><span class="type">Risiko</span><span class="t"><a href="risks/cesium-render-loop-crash.html">Cesium-Dauerrendern plus Hover-Umstyling crasht nach Minuten: &quot;RangeError: Too many properties to enumerate&quot;</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Chat Earth Digital Twin (claude.ai), 2026-10-02 · <a href="risks/cesium-render-loop-crash.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/web_globes/risks/cesium-render-loop-crash.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein CesiumJS-Globus (1.95, cdnjs) mit Standard-Renderloop (60 fps durchgehend)
+und einer Hover-Hervorhebung, die bei jedem Länderwechsel das <code>material</code> der
+GeoJSON-Polygone neu setzt, stürzt nach einigen Minuten Nutzung ab:
+Dialog "An error occurred while rendering. Rendering has stopped.",
+<code>RangeError: Too many properties to enumerate</code>. Der Fehler ist im
+Cesium-Forum als Crash unter GPU-/Speicherdruck bekannt, ohne geklärte
+Einzelursache.</p>
+<p>Gegenmittel (im Projekt eingebaut, Wirkung nicht nachgemessen, deshalb hier
+als Annahme):
+1. <code>requestRenderMode: true</code> plus <code>maximumRenderTimeInterval</code>, rendern nur
+   bei Änderung statt durchgehend; nach eigenen Änderungen <code>scene.requestRender()</code>.
+2. Hover nicht per Umstyling der Länder-Entities, sondern eine einzige
+   wiederverwendete Highlight-Entity mit <code>CallbackProperty</code>-Hierarchie;
+   das vermeidet Geometrie-Neubauten bei jedem Grenzübertritt.
+3. <code>scene.renderError.addEventListener</code> mit Neustart des Renderloops
+   (<code>viewer.useDefaultRenderLoop = true</code>) statt des blockierenden Dialogs
+   (<code>showRenderLoopErrors: false</code>).</p>
+<h2>Trägt</h2>
+<p>Jede länger offene Cesium-Seite mit Hover-Interaktion über viele Polygone
+(Globus mit Länder-Tooltips, Supply-Atlas-artige Seiten, Dashboards).</p>
+<h2>Trägt nicht</h2>
+<p>Kurz geöffnete Seiten; der Crash brauchte Minuten. Nicht-Cesium-Globen
+(three.js, eigene Canvas-Renderer).</p>
+<h2>Bruchindikator</h2>
+<p>Crash tritt trotz der drei Gegenmittel weiter auf; dann liegt die Ursache
+woanders (Treiber, WebGL-Kontextverlust) und dieser Eintrag greift zu kurz.</p>
+<h2>Ablesung</h2>
+<p>Eigener Vorfall 2026-10-02 (Screenshot des Dialogs), reproduziert beim
+Nutzer auf normalem Laptop. Forum: community.cesium.com Thread 45760
+"Crashes after launch: Too many properties to enumerate" (2026-04), dort
+ebenfalls ohne Auflösung. Gegenmittel: Cesium-Doku zu requestRenderMode
+(Tier 1b), Wirksamkeit bei uns blind.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/cesium-api-drift.html">cesium-api-drift</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

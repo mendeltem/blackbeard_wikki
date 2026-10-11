@@ -1,0 +1,83 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Die Kandidatendecke war der Hebel: DRIPS-Schwelle 0,02 statt 0,10 hebt VALDO von 0,591 auf 0,650 und verdoppelt den Recall kleiner PVS</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Die Kandidatendecke war der Hebel: DRIPS-Schwelle 0,02 statt 0,10 hebt VALDO von 0,591 auf 0,650 und verdoppelt den Recall kleiner PVS</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-11</span><span>Herkunft</span><span>PVS-Arena Alita, F7.8 (skripte/kandidatendecke.py) und Versuch G4 (skripte/zweite_stufe_cnn.py --ta 0.02), VALDO Task 1 12 Handfaelle referenz_v2, LOO, 2026-10-11 14:40</span><span>Zuletzt geändert</span><span>2026-10-11 pvs: Wiederholung G4 -- Mischungsgewinn Rauschen, Stapelung ohne Gewinn, GBM-Stand 0,658</span><span>Verweist auf</span><span><a href="candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich</a> <span class="muted small">(pvs_detection)</span><br><a href="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">Auf HCP-Aging hebt ein Patch-CNN als zweite Stufe den Trenner von 0,660 auf 0,695 -- fast ganz ueber die Praezision</a> <span class="muted small">(pvs_detection)</span><br><a href="patch-cnn-second-stage-adds-nothing-on-valdo.html">Ein Patch-CNN als zweite Stufe bringt bei PVS auf VALDO nichts -- der CMB-Hebel uebertraegt sich nicht</a> <span class="muted small">(pvs_detection)</span></span><span>Verwiesen von</span><span><a href="epvs-2024-winner-scores-0.28-on-valdo-below-every-single-method.html">Der EPVS-2024-Sieger BIG_AEHRC erreicht auf VALDO nur 0,28 -- unter jedem unserer Einzelverfahren</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.md">knowledge/pvs_detection/findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.md</a></span></div><h2>Aussage</h2>
+<p>Zaehlung (F7.8): bei DRIPS-Posterior &gt;= 0,10 traegt nur 45 % der Referenzkomponenten der Klasse 1-2 Voxel ueberhaupt einen Kandidaten
+(VALDO; HCP 34 %), bei 0,02 sind es 75 % (HCP 63 %) bei 2,3x (2,0x) Kandidaten. Versuch G4 (Dreier-Pool DRIPS ∪ MedNet-T1 ∪ PINGU,
+DRIPS-Schwelle 0,02, zweite Stufe GBM auf 35 Handmerkmalen bzw. Mischung GBM+Patch-CNN, LOO, Schwelle auf zurueckgehaltenen Faellen):
+GBM 0,631 [0,586; 0,669], Mischung 0,650 [0,600; 0,697]; gepaart gegen Schwelle 0,10: GBM +0,040 [+0,013; +0,069] (9/12), Mischung +0,070
+[+0,034; +0,107] (11/12). Gepoolt: Recall 0,526 -&gt; 0,693 bei Praezision 0,72 -&gt; 0,71 (Mischung 0,74); Klasse 1-2 Recall 0,31 -&gt; 0,53,
+TP 56 -&gt; 101. Beide Geometrien gewinnen (SABRE 0,575 -&gt; 0,643, RSS 0,584 -&gt; 0,658). Mit den vielen schwachen Kandidaten traegt auch das
+CNN in der Mischung (+0,019 [+0,007; +0,033]), waehrend es bei 0,10 nichts brachte.</p>
+<h2>Traegt</h2>
+<p>Reihenfolge der Hebel bei Kandidat-plus-Trenner-Ketten: ERST die Decke messen (Anteil der Referenz, der ueberhaupt Kandidat ist, je
+Groessenklasse), DANN den Trenner verbessern. Eine zweite Stufe, die Praezision liefert, erlaubt einen viel empfindlicheren
+Kandidatengeber; die alte Schwelle 0,10 (aus der OOF-Kurve des Einzelverfahrens) war fuer die Kette falsch. Ziel "kleine PVS" ist damit
+zum ersten Mal spuerbar bewegt. Neuer VALDO-Stand 0,650 (Inter-Rater 0,327).</p>
+<h2>Traegt nicht</h2>
+<p>Wo der Tausch endet (0,01? MedNet/PINGU-Schwellen 0,3?) und ob HCP gleich reagiert, ist offen (G4b, G4-HCP). 12 Faelle, KI-Breite ~0,05.
+BELOVE ohne T2: DRIPS-T1-Decke dort nicht gemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Auf HCP (200) bringt 0,02 statt 0,10 keinen gepaarten Gewinn, oder die Praezision bricht bei 0,01 ein, ohne dass der Recall weiter steigt.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/kandidatendecke-drips-t2 und hcp-aging/kandidatendecke-drips-t2 (zusammenfassung.json);
+ergebnisse/valdo-task1/stufe2-cnn-pool3-ta002/{gbm,mix}; gepaarte Rechnung ARBEIT.md 11.10. 14:40.</p>
+<h2>Nachtrag 2026-10-11 16:05: der Tausch endet bei 0,01/0,3 noch nicht (G4b)</h2>
+<p>DRIPS 0,01, MedNet-T1 0,3, PINGU 0,3 (12.356 Kandidaten, 3,4x): GBM 0,658 [0,610; 0,704], gepaart gegen 0,02/0,5 +0,027 [+0,003; +0,052] (9/12);
+gepoolt Praezision 0,744 -&gt; 0,779 UND Recall 0,693 -&gt; 0,766, Klasse 1-2 Recall 0,66. Die 0,5-Mischung mit dem CNN liegt hier gleichauf (0,657, -0,001):
+bei sehr vielen schwachen Kandidaten traegt das GBM die Posterior-Merkmale allein. Neuer VALDO-Stand 0,658; 0,005/0,2 wird geprueft (G4d).</p>
+<h2>Nachtrag 2026-10-11 16:55: Wiederholung -- der Mischungsgewinn war Rauschen, die Schwellengewinne nicht</h2>
+<p>Exakte Wiederholung von G4 (gleicher Cache, gleiche Parameter, Schwellenfaelle jetzt deterministisch): GBM wieder 0,631, Mischung aber 0,632 statt
+0,650 (gepaart -0,019 [-0,041; -0,000]). Der CNN-Anteil schwankt auf 12 Faellen zwischen Laeufen um ~0,02; mit vortrainierter Initialisierung ist
+er dagegen reproduzierbar (G5b/G5c +0,001). Stapelung statt Mittel traegt nicht (+0,005 n.s. / -0,012). Belastbar bleibt der GBM-Trenner:
+0,591 (0,10) -&gt; 0,631 (0,02) -&gt; 0,658 (0,01/0,3), alle gepaart mit KI ohne Null. Regel fuer VALDO: Gewinne unter 0,02 aus dem CNN-Anteil
+nicht berichten, bevor sie nicht in Wiederholungen stehen; GBM-Vergleiche sind bei festen Schwellenfaellen deterministisch.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+<li><a href="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision</a></li>
+<li><a href="patch-cnn-second-stage-adds-nothing-on-valdo.html">patch-cnn-second-stage-adds-nothing-on-valdo</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

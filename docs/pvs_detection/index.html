@@ -1,0 +1,688 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>pvs_detection</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › pvs_detection</div><h1>pvs_detection</h1><p>Perivaskulaere Raeume (PVS) im MRT erkennen: BELOVE-Pipeline-Fehlschlaege, oeffentliche Referenzdaten, vortrainierte Modelle, Arena</p><p class="muted small">PVS, perivascular spaces, Virchow-Robin, ePVS, BELOVE, RORPO, Frangi, MedNet-PVS, SHIVA, VALDO Task 1, HCP-Aging, MRT</p>
+<div class="stripe"><i class="ok" style="width:47.4%" title="getragen: 9"></i><i class="warn" style="width:42.1%" title="vorschlag: 8"></i><i class="bad" style="width:5.3%" title="widerlegt: 1"></i><i class="" style="width:5.3%" title="eingeschraenkt: 1"></i></div><div class="counts"><span class="ok">9 getragen</span> <span class="warn">8 vorschlag</span> <span class="bad">1 widerlegt</span> <span class="">1 eingeschraenkt</span></div><div class="small"><p>Perivaskulaere Raeume (PVS, Virchow-Robin; nicht periventrikulaer) im Hirn-MRT automatisch erkennen.
+Eigene Kohorte BELOVE (103 Faelle, Patientendaten, nur Summen), Arena unter <code>~/data/work/pvs-arena</code>.
+Methode: <a href="../lesion_detection_method/index.html">lesion_detection_method</a>, Pruefpunkt
+<a href="../lesion_detection_method/open_checks/pvs-apply-the-lesion-method.html">pvs-apply-the-lesion-method</a>.</p>
+<p>Stand 2026-10-11. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><ul>
+<li>Neue Linie seit 2026-10-07 (Arena <code>~/data/work/pvs-arena</code>, Daten <code>~/data/work/pvs</code>). PVS = perivascular spaces.</li>
+<li>BELOVE: 103 Faelle, T1 ~1 mm (8 Geometrien, 8 Faelle 0,49 mm PSR), FLAIR 3-6 mm dick. Rechenebene T1.</li>
+<li>Uebernommene Edinburgh-MATLAB-Pipeline (RORPO): 73/103 Masken (Satz 11 = paramters_10, nbScales 10,
+  GM-Schwelle 4). Die 30 Fehlschlaege sind ein Typfehler (Zahl -&gt; Zeichen), keine Anatomie. MATLAB fehlt lokal.</li>
+<li>Masken: Hunderte Komponenten je Fall (280-920 nach Postprocessing). Metrik muss Zaehlung und Groessenklassen tragen.</li>
+<li>Keine Handreferenz. Oeffentlich: VALDO Task 1 (Zenodo), HCP-Aging PVS (OpenNeuro, 40 Hand), EPVS-2024 (Antrag).</li>
+<li>Modelle: MedNet-PVS (Apache, Gewichte CC BY), SHIVA v4 (NC), PINGU; Filter Frangi/RORPO. Metrik <code>pvs_metrik.py</code>.</li>
+<li>Nutzerwunsch: auch kleine PVS; Grenze ist die Voxelgroesse, Sensitivitaet nach Groessenklassen berichten.</li>
+<li>Literatur Runde 2 (07.10.): kleine PVS stehen nur in der HCP-T2-Referenz; Edinburgh verwirft &lt; 3 mm; kein belegter
+  Werkzeugvergleich mit gemeinsamer Metrik (Waymont 2024: 67 Ansaetze). MedNet-PVS-Gewichte: figshare defekt, Drive komplett.</li>
+<li>Metrik pvs_metrik.py misst jetzt Recall und Fehlalarmanteil je Groessenklasse (1-2, 3-5, 6-20, &gt;20 Voxel).</li>
+<li>Nutzerziel 07.10. abends: Instanz-F1 maximieren; Plan A-F in pvs-arena/ARBEIT.md (Grundlinien, vortrainiert, Ortsregel, nnU-Net, zweite Stufe).</li>
+<li>Runde 3 (07.10. abends): EPVS-2024-Daten: API sagt OPEN, Download aber nur fuer das Team "EPVS Challenge Participants" (Antrag per Mail, Stand 11.10. offen; Skript
+  pvs-arena/skripte/epvs2024_synapse_laden.sh). HCP-Aging: 160/200 Masken sind U-Net-Silber, 40 Handfaelle nicht gekennzeichnet,
+  nur WM -&gt; Entwicklungsdaten, nicht Experten-Wahrheit. VALDO-Rater: Dice 0,53, F1 ~0,20 (Etikett-Decke niedrig). VALDO-Metrik:
+  6er-Nachbarschaft, IoU &gt; 10 %. Keine weiteren oeffentlichen Voxelmasken-Saetze; DoRA-PVS-Challenge 2026 verteilt keine Daten.
+  Zweite Stufe: Startmerkmale aus MAPS-T1 (T1 &lt; 0,9 Median, FLAIR &lt; Mittel+SD, Linearitaet &gt; 80 %), Gewinn selbst messen.</li>
+<li>Pipeline am Code (07.10.): Schwellen fast offen, Auswahl in der Nachverarbeitung (Kontrast 0,19 SD, 3-2000 Voxel, Rand 90 %),
+  alles in Voxeln -&gt; je Scanner ein anderes Verfahren; Kontrastfilter ist der Hauptverlust kleiner PVS. DRIPS (Bernal, Apache,
+  Docker, Domain Randomisation) als vortrainiertes Verfahren G aufgenommen. STRIVE-2: Groesse trennt PVS/Lakune nicht, FLAIR-Rand und Form schon.</li>
+<li>ERSTE ZAHLEN (07.10. 23:00): VALDO Inter-Rater F1 0,29; DRIPS (synthetisch trainiert, Docker) auf T2 0,31 (SABRE 0,37), Recall 0,48,
+  Precision 0,25, Schwellenkurve flach, Klasse 1-2 Recall 0,33 -&gt; naechster Hebel Fehlalarme nach Ort (Clara wp7). Frangi auf HCP 0,16.</li>
+<li>08.10. 02:00: DRIPS auf 200 HCP: F1 0,55 (0,58 WM-beschnitten), OOF-Schwelle 0,15-0,2 stabil, Klasse 1-2 Recall 0,33 bei 0,1;
+  Frangi 0,28. VALDO (12): DRIPS-T2 0,35, T1 0,33, beide ueber Inter-Rater 0,29. Hebel: Ortsregel/zweite Stufe, nicht Schwelle.</li>
+<li>KORREKTUR 08.10. 04:20: VALDO-SABRE-Masken sind Ganzhirn, Regions = Zaehl-Slabs. Korrigiert: Inter-Rater 0,33; MedNet-T2 0,39,
+  DRIPS-T2 0,35 (Klasse 1-2 Recall 0,45), DRIPS-T1 0,35. DRIPS gewinnt SABRE, MedNet-T2 gewinnt RSS; MedNet-T2 vs Rater 2 nur 0,07.</li>
+<li>08.10. 05:00: MedNet-T1w (klinische T1) fuehrt VALDO mit F1 0,44 (Precision 0,45), findet aber die 1-2-Voxel-PVS am schlechtesten
+  (0,12); DRIPS findet sie am besten (0,45). Naechster Schritt: Kandidaten-Pool DRIPS ∪ MedNet-T1 + Trenner.</li>
+<li>DURCHBRUCH 08.10. 05:25: zweite Stufe (Pool DRIPS ∪ MedNet-T1 + kleiner GBM-Trenner, LOO) auf VALDO F1 0,57 [0,54; 0,61] gegen 0,44;
+  Precision 0,70, Klasse 1-2 0,30. Die CMB-Lektion (Trenner statt Schwelle) gilt auch fuer PVS. Offen: Rauschboden, Merkmale, EPVS/BELOVE.</li>
+<li>08.10. 07:20: Ablation der zweiten Stufe: Mehr-Sequenz-Intensitaeten (Komponente vs Huelle) tragen den Gewinn (-0,06 ohne), Form -0,02,
+  Lage und Posteriors 0; Pool aus drei Detektoren 0,58. PINGU auf VALDO 0,45 = MedNet-T1 (publizierte Dice ordneten falsch).</li>
+<li>08.10. 13:00: Trenner auf HCP (200 Faelle, ein Detektor, nur T2): F1 0,58 -&gt; 0,67 [0,66; 0,68], Precision 0,80 -- der Gewinn der
+  zweiten Stufe haelt auf grosser Stichprobe und mit einer Sequenz. Clara wp7: Fehlalarme sitzen im WM, Ortsregel traegt nicht.</li>
+</ul>
+<p><strong>Befund, neu 2026-10-08 (Alita):</strong> Die PVS-Kette steht als Dokument: zwei Detektoren auf T1 (DRIPS &gt;= 0,10 empfindlich, MedNet &gt;= 0,50 praezise), Pool der 26er-Komponenten, 29 Merkmale (Form, Posterior, z-Intensitaeten innen/Huelle, SynthSeg-Gruppen), HistGradientBoosting-Trenner auf VALDO Rater 1 mit Schwelle 0,4. VALDO LOO 0,57 gegen 0,44; HCP-Aging 200 Faelle nur T2, nur DRIPS: 0,668 [0,657; 0,680] gegen 0,584. Eigene Kohorte ohne Referenz: Uebereinstimmung mit der Pipeline-Maske 0,35 (Praezision 0,83, Recall 0,23), 95 % der 1-2-Voxel-Kandidaten verworfen; QC-Schichtbetrachter lokal fuer die Expertensicht, Rating der 25 Faelle entscheidet.
+- 08.10. 16:25: Rater 2 ist BG-lastig (510 BG / 498 WM), MedNet-T2 (HCP-WM-Labels) findet 2 BG-Komponenten -&gt; Trainingslabels muessen
+  die Zielregionen enthalten. DRIPS ueberpraediziert 3-8x bei niedriger PVS-Last. Rating-Seite (Clara wp8) fertig; Nutzer-Rating ist der Engpass.
+- Runde 11.10. frueh: DoRA-Baseline ist ein einfaches U-Net (nicht DRIPS), Dateien gesperrt; DoRA testet zu 4/5 auf T2w 0,5-1 mm -&gt; BELOVE (T1+FLAIR) liegt ausserhalb des Feldes. EPVS-2024-Methoden-PDFs: 7 Teams, gesperrt (Team-Mitgliedschaft). Versuch G (Patch-CNN als zweite Stufe, VALDO) laeuft.
+- 11.10. 04:15: Die sechs EPVS-2024-Einreichungen sind oeffentliche Docker-Images (Sieger BIG_AEHRC/CSIRO, MedNeXt 2D/3D) -&gt; Versuch H auf VALDO ohne Datenfreigabe. Offizielle Metrik = unsere Regel; Sieger im Test F1 ~0,40 (CSO), Recall ueberall der Engpass.
+- 11.10. 04:30: Versuch G: Patch-CNN als zweite Stufe bringt auf VALDO nichts (Mischung 0,580 vs GBM 0,591, gepaart -0,011); der CMB-Hebel uebertraegt sich nicht; naechster Pruefstein HCP (G2). Rangliste VALDO: GBM-Trenner Pool3 0,591.
+- 11.10. 11:55: Versuch G2: auf HCP (200, 5-fach, nur T2) hebt das Patch-CNN den Trenner 0,660 -&gt; 0,695 (gepaart +0,035, 191/200), Gewinn = Praezision, kleine PVS unveraendert. VALDO-Negativbefund = Fallzahlfrage. Naechstes: Uebertrag HCP -&gt; VALDO (G3), empfindlichere Kandidaten (G4), EPVS-Container (H, Pull laeuft).
+- 11.10. 12:55: G3: CNN-Gewinn haelt auf VALDO-Handreferenz (Zero-Shot +0,061 gepaart), der Uebertrag selbst liegt unter DRIPS allein -&gt; naechster Hebel Vortraining HCP + Feintuning VALDO (G5); Kandidatendecke kleiner PVS pruefen (G4).
+- 11.10. 14:40: NEUER VALDO-STAND 0,650 (G4): DRIPS-Schwelle 0,02 statt 0,10 im Dreier-Pool, zweite Stufe GBM+CNN; Recall kleiner PVS 0,31 -&gt; 0,53. Lehre: erst die Kandidatendecke messen, dann den Trenner. G5: Vortraining HCP + Feintuning +0,02 (klein, echt). Laufend: G5b, Siegermodell BIG_AEHRC lokal auf GPU (Kette = Container).
+- 11.10. 15:25: G5b: Vortraining im Pool hebt das CNN allein (0,607), die 0,5-Mischung nicht (0,632 &lt; 0,650) -&gt; Kombinationsregel ist der naechste Hebel (Stapelung); VALDO-Stand bleibt 0,650.
+- 11.10. 16:05: G4b: Schwellen 0,01/0,3/0,3 -&gt; VALDO-Stand 0,658 (GBM allein, Praezision und Recall steigen beide, Klasse-1-2-Recall 0,66); Tausch noch nicht am Ende, G4d (0,005/0,2) laeuft.
+- 11.10. 16:35: Versuch H: EPVS-2024-Sieger BIG_AEHRC auf VALDO nur 0,28 (OOF), unter jedem Einzelverfahren; nur als vierter Kandidatengeber noch offen (G6). EPVS-Daten: Registrierungsmail vom Nutzer raus, Team-Antrag offen, Waechter als systemd-Dienst.
+- 11.10. 16:55: Wiederholung von G4: Mischung 0,632 statt 0,650 (GBM identisch) -&gt; CNN-Anteil auf VALDO ist +-0,02 Rauschen, Stapelung traegt nicht. Belastbarer VALDO-Stand: GBM-Trenner 0,658 (G4b). HCP-CNN-Gewinn (+0,035, 191/200) bleibt.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="findings">Befund <span class="muted small">(19)</span></h2><details class="entry" id="candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles"><summary><span class="type">Befund</span><span class="t"><a href="findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.html">Die Kandidatendecke war der Hebel: DRIPS-Schwelle 0,02 statt 0,10 hebt VALDO von 0,591 auf 0,650 und verdoppelt den Recall kleiner PVS</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Decke: bei DRIPS 0,10 nur 45 % der 1-2-Voxel-PVS Kandidaten, bei 0,02 75 %; G4: 0,591 -&gt; 0,650 (gepaart +0,070, 11/12), Klasse-1-2-Recall 0,31 -&gt; 0,53; G4b 0,01/0,3: 0,658</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, F7.8 (skripte/kandidatendecke.py) und Versuch G4 (skripte/zweite_stufe_cnn.py --ta 0.02), VALDO Task 1 12 Handfaelle referenz_v2, LOO, 2026-10-11 14:40 · <a href="findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.md">Markdown</a></p><h2>Aussage</h2>
+<p>Zaehlung (F7.8): bei DRIPS-Posterior &gt;= 0,10 traegt nur 45 % der Referenzkomponenten der Klasse 1-2 Voxel ueberhaupt einen Kandidaten
+(VALDO; HCP 34 %), bei 0,02 sind es 75 % (HCP 63 %) bei 2,3x (2,0x) Kandidaten. Versuch G4 (Dreier-Pool DRIPS ∪ MedNet-T1 ∪ PINGU,
+DRIPS-Schwelle 0,02, zweite Stufe GBM auf 35 Handmerkmalen bzw. Mischung GBM+Patch-CNN, LOO, Schwelle auf zurueckgehaltenen Faellen):
+GBM 0,631 [0,586; 0,669], Mischung 0,650 [0,600; 0,697]; gepaart gegen Schwelle 0,10: GBM +0,040 [+0,013; +0,069] (9/12), Mischung +0,070
+[+0,034; +0,107] (11/12). Gepoolt: Recall 0,526 -&gt; 0,693 bei Praezision 0,72 -&gt; 0,71 (Mischung 0,74); Klasse 1-2 Recall 0,31 -&gt; 0,53,
+TP 56 -&gt; 101. Beide Geometrien gewinnen (SABRE 0,575 -&gt; 0,643, RSS 0,584 -&gt; 0,658). Mit den vielen schwachen Kandidaten traegt auch das
+CNN in der Mischung (+0,019 [+0,007; +0,033]), waehrend es bei 0,10 nichts brachte.</p>
+<h2>Traegt</h2>
+<p>Reihenfolge der Hebel bei Kandidat-plus-Trenner-Ketten: ERST die Decke messen (Anteil der Referenz, der ueberhaupt Kandidat ist, je
+Groessenklasse), DANN den Trenner verbessern. Eine zweite Stufe, die Praezision liefert, erlaubt einen viel empfindlicheren
+Kandidatengeber; die alte Schwelle 0,10 (aus der OOF-Kurve des Einzelverfahrens) war fuer die Kette falsch. Ziel "kleine PVS" ist damit
+zum ersten Mal spuerbar bewegt. Neuer VALDO-Stand 0,650 (Inter-Rater 0,327).</p>
+<h2>Traegt nicht</h2>
+<p>Wo der Tausch endet (0,01? MedNet/PINGU-Schwellen 0,3?) und ob HCP gleich reagiert, ist offen (G4b, G4-HCP). 12 Faelle, KI-Breite ~0,05.
+BELOVE ohne T2: DRIPS-T1-Decke dort nicht gemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Auf HCP (200) bringt 0,02 statt 0,10 keinen gepaarten Gewinn, oder die Praezision bricht bei 0,01 ein, ohne dass der Recall weiter steigt.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/kandidatendecke-drips-t2 und hcp-aging/kandidatendecke-drips-t2 (zusammenfassung.json);
+ergebnisse/valdo-task1/stufe2-cnn-pool3-ta002/{gbm,mix}; gepaarte Rechnung ARBEIT.md 11.10. 14:40.</p>
+<h2>Nachtrag 2026-10-11 16:05: der Tausch endet bei 0,01/0,3 noch nicht (G4b)</h2>
+<p>DRIPS 0,01, MedNet-T1 0,3, PINGU 0,3 (12.356 Kandidaten, 3,4x): GBM 0,658 [0,610; 0,704], gepaart gegen 0,02/0,5 +0,027 [+0,003; +0,052] (9/12);
+gepoolt Praezision 0,744 -&gt; 0,779 UND Recall 0,693 -&gt; 0,766, Klasse 1-2 Recall 0,66. Die 0,5-Mischung mit dem CNN liegt hier gleichauf (0,657, -0,001):
+bei sehr vielen schwachen Kandidaten traegt das GBM die Posterior-Merkmale allein. Neuer VALDO-Stand 0,658; 0,005/0,2 wird geprueft (G4d).</p>
+<h2>Nachtrag 2026-10-11 16:55: Wiederholung -- der Mischungsgewinn war Rauschen, die Schwellengewinne nicht</h2>
+<p>Exakte Wiederholung von G4 (gleicher Cache, gleiche Parameter, Schwellenfaelle jetzt deterministisch): GBM wieder 0,631, Mischung aber 0,632 statt
+0,650 (gepaart -0,019 [-0,041; -0,000]). Der CNN-Anteil schwankt auf 12 Faellen zwischen Laeufen um ~0,02; mit vortrainierter Initialisierung ist
+er dagegen reproduzierbar (G5b/G5c +0,001). Stapelung statt Mittel traegt nicht (+0,005 n.s. / -0,012). Belastbar bleibt der GBM-Trenner:
+0,591 (0,10) -&gt; 0,631 (0,02) -&gt; 0,658 (0,01/0,3), alle gepaart mit KI ohne Null. Regel fuer VALDO: Gewinne unter 0,02 aus dem CNN-Anteil
+nicht berichten, bevor sie nicht in Wiederholungen stehen; GBM-Vergleiche sind bei festen Schwellenfaellen deterministisch.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+<li><a href="findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision</a></li>
+<li><a href="findings/patch-cnn-second-stage-adds-nothing-on-valdo.html">patch-cnn-second-stage-adds-nothing-on-valdo</a></li>
+</ul></div></details><details class="entry" id="cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer"><summary><span class="type">Befund</span><span class="t"><a href="findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.html">Der CNN-Gewinn der zweiten Stufe hält auf VALDO-Handreferenzen (+0,061 gepaart), der Zero-Shot-Uebertrag selbst ist unbrauchbar</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Zero-Shot HCP-&gt;VALDO absolut unbrauchbar (0,317 &lt; DRIPS 0,354), aber CNN-GBM gepaart +0,061 [+0,019; +0,111] auf Handreferenz; VALDO-intern T2-only 0,425</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuche G3a/G3b (skripte/zweite_stufe_cnn.py, Uebertragsmodus), VALDO Task 1 12 Handfaelle referenz_v2, 2026-10-11 12:51 · <a href="findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.md">Markdown</a></p><h2>Aussage</h2>
+<p>Auf denselben VALDO-Kandidaten (DRIPS-T2 &gt;= 0,1, nur T2) und gleicher Schwellenlogik: VALDO-intern (LOO, 11 Trainingsfaelle) GBM 0,412,
+CNN 0,417, Mischung 0,425 (gepaart +0,014 [-0,019; +0,038], SABRE +0,038 / RSS -0,011). Zero-Shot von HCP (200 Faelle, nur WM-Silber)
+auf VALDO: GBM 0,256, CNN 0,321, Mischung 0,317 -- alle unter DRIPS allein (0,354), weil der HCP-Trenner auf VALDO zu viel wegwirft
+(GBM-Recall 0,19). Aber gepaart Mischung - GBM +0,061 [+0,019; +0,111], CNN - GBM +0,065 [+0,008; +0,131], besser in 9/12, auch auf RSS.
+Der relative CNN-Gewinn aus HCP (+0,035) ist damit auf Handreferenzen belegt; der absolute Zero-Shot-Uebertrag nicht.</p>
+<h2>Traegt</h2>
+<p>Die zweite Stufe fuer PVS soll ein CNN enthalten, aber auf der Zielkohorte feingetunt werden: Vortraining HCP + Feintuning VALDO (G5)
+ist der naechste Hebel, nicht Zero-Shot. Auf VALDO tragen T1+FLAIR und der Dreier-Pool weit mehr (0,591) als jede T2-only-Stufe (0,425).</p>
+<h2>Traegt nicht</h2>
+<p>Ob das CNN kleine PVS (Klasse 1-2) findet: in allen Varianten Recall 0,11-0,32, die Decke liegt beim Kandidatengeber (F7.8/G4).
+BELOVE (kein T2) ist von diesem Befund nicht abgedeckt.</p>
+<h2>Bruchindikator</h2>
+<p>Feintuning auf VALDO (G5) hebt die T2-only-Mischung nicht ueber 0,425 oder den Dreier-Pool-Trenner nicht ueber 0,591.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-drips-t2only-loo (G3a) und stufe2-cnn-uebertrag-hcp (G3b), gepaarte Rechnung in ARBEIT.md
+11.10. 12:17/12:51. Fehlerlehre: ID-Kollision sub-101..106 zwischen HCP und VALDO (Regel case-ids-are-dataset-local-prefix-when-pooling).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision</a></li>
+<li><a href="findings/patch-cnn-second-stage-adds-nothing-on-valdo.html">patch-cnn-second-stage-adds-nothing-on-valdo</a></li>
+<li><a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+</ul></div></details><details class="entry" id="dora-baseline-is-plain-unet-and-field-evaluates-on-t2w"><summary><span class="type">Befund</span><span class="t"><a href="findings/dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.html">Die DoRA-PVS-Baseline ist ein einfaches U-Net (nicht DRIPS), und das Feld misst PVS fast nur auf T2w</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">DoRA-Baseline = einfaches U-Net + Randomisierung, nicht DRIPS, gesperrt; Testkohorten 4/5 T2w 0,5-1 mm; EPVS-2024: 7 Methoden-PDFs (TheGPU fehlt), gesperrt</span></summary><div class="body"><p class="small muted">Herkunft: Synapse-REST-API mit Nutzer-Token (Wiki-Seiten 639483/639429, bundle2, entity/children), PVS-Arena Alita, 2026-10-11 04:03 · <a href="findings/dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.md">Markdown</a></p><h2>Aussage</h2>
+<p>Das DoRA-PVS-Projekt (syn72039291) liefert als Baseline <code>pvs_segmentation.py</code> ("U-Net-based", "not intended to be competitive"),
+eine einfache Domain-Randomisierung und <code>Atlas.zip</code> (Labelkarten). Das ist nicht der DRIPS-Code (Bernal), nur dessen Prinzip;
+DRIPS selbst liegt bei uns als Docker vor und ist das staerkere Verfahren. Alle fuenf Baseline-Dateien sind trotz canView
+canDownload=false (Registrierung), die Challenge endete am 28.08.2026, Daten werden nicht verteilt. Die DoRA-Testkohorten
+(LBC1936, Sleep, MSS3, STRADL, PCB, ADNI-3, 7 weitere) sind zu vier Fuenfteln T2w mit 0,5-1 mm; T1w nur PCB (0,8 mm) und ADNI-3.
+Der EPVS-2024-Ordner "submitted method description" (syn64956514) enthaelt sieben PDFs (Abdul, BIG_AEHRC, CCNU_CS_24_EPVS,
+HufsAIM, SHIVA, bear_walker, nic-vicorob); der RSS-Sieger TheGPU fehlt; alle gesperrt bis zur Team-Mitgliedschaft.</p>
+<h2>Traegt</h2>
+<p>Methodenwahl: Zeit nicht in die DoRA-Baseline stecken; DRIPS ist bereits die bessere Vertretung dieser Idee. Domaenenfrage:
+eine T1+FLAIR-Kohorte ohne T2 (BELOVE) liegt ausserhalb des Feldes -- Vergleiche mit Challenge-Zahlen sind deshalb nicht
+uebertragbar. Die Teamnamen sind der Suchschluessel fuer oeffentlichen Code (Frage F7.1 der Arena).</p>
+<h2>Traegt nicht</h2>
+<p>Was in den PDFs steht; ob TheGPU je eine Beschreibung geliefert hat; die abgeschnittene Tabellenhaelfte der DoRA-Kohorten.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Download der Baseline zeigt DRIPS-Quelltext oder -Gewichte; oder ein DoRA-Report nennt ueberwiegend T1w-Testkohorten.</p>
+<h2>Ablesung</h2>
+<p>GET /entity/syn72039291/wiki/639483 und /639429; POST /entity/children (syn72039291: 5 Dateien, syn64956514: 7 PDFs);
+POST /entity/<id>/bundle2 mit includePermissions -&gt; canDownload false fuer alle. Arena-Notiz pvs-arena/literatur/dora_baseline.md.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/epvs-2024-data-open-for-certified-synapse-users.html">epvs-2024-data-open-for-certified-synapse-users</a></li>
+<li><a href="findings/public-pvs-reference-data-and-models-2026-10.html">public-pvs-reference-data-and-models-2026-10</a></li>
+</ul></div></details><details class="entry" id="epvs-2024-data-open-for-certified-synapse-users"><summary><span class="type">Befund</span><span class="t"><a href="findings/epvs-2024-data-open-for-certified-synapse-users.html">Die EPVS-Challenge-Daten 2024 brauchen keinen Antrag, nur ein zertifiziertes Synapse-Konto</a></span><span class="badge bad">widerlegt</span><span class="muted small">2026-10-11</span><span class="i">Synapse-API: keine Access Requirements, OPEN; Download nur mit zertifiziertem Konto + Token; &quot;nur auf Anfrage&quot; war falsch</span></summary><div class="body"><p class="small muted">Herkunft: Synapse-REST-API direkt abgefragt (repo-prod.prod.sagebase.org), PVS-Cluster Alita, 2026-10-07 · <a href="findings/epvs-2024-data-open-for-certified-synapse-users.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/epvs-2024-data-open-for-certified-synapse-users.md">Markdown</a></p><h2>Aussage</h2>
+<p>Das Synapse-Projekt syn54100278 (EPVS Segmentation Challenge, MICCAI 2024) traegt laut API keine Access
+Requirements, restrictionLevel OPEN, canPublicRead true. Der Ordner Train (syn60055636) listet 100 Fall-Ordner
+(ED_<em> Edinburgh, SG</em> Singapur ...), dazu Val.zip (syn61767476), eine Beispielmaske und die Terms of Use v3
+(syn59814292). Anonym ist nur Lesen moeglich (Download 403, isCertificationRequired true): noetig sind ein
+kostenloses Konto, das Certified-User-Quiz und ein Personal Access Token; dann <code>synapse get -r syn60055636</code>.
+Die Vorrecherche ("nur auf Anfrage") war falsch; sie stammte aus der Challenge-Webseite, nicht aus der API.</p>
+<h2>Traegt</h2>
+<p>Beschaffung der einzigen oeffentlichen PVS-Referenz mit Handmasken in CSO und Basalganglien, drei Standorte,
+T1+T2+FLAIR. Allgemein: Zugangsbedingungen eines Synapse-Datensatzes an der API (accessRequirement,
+restrictionInformation) ablesen, nicht an der Projektseite.</p>
+<h2>Traegt nicht</h2>
+<p>Ob Val.zip Labels enthaelt und was die Terms of Use erlauben, ist bis zum Download offen.</p>
+<h2>Bruchindikator</h2>
+<p>Download mit zertifiziertem Konto wird mit einem Access Requirement abgewiesen.</p>
+<h2>Ablesung</h2>
+<p>GET /repo/v1/entity/syn54100278/accessRequirement (0 Ergebnisse), POST /entity/children, POST
+/entity/syn61767476/bundle2 (restrictionLevel OPEN), GET /entity/syn61767476/file -&gt; 403 anonym. 2026-10-07 20:25.</p>
+<h2>Nachtrag 2026-10-08: Bruchindikator eingetreten, es braucht doch einen Antrag</h2>
+<p>Mit zertifiziertem Konto (Quiz 15/15) und Token: canDownload false fuer alle Dateien, obwohl
+restrictionLevel OPEN und keine Access Requirements. Der Download haengt an der ACL: nur das Team
+"EPVS Challenge Participants" (3502876) hat DOWNLOAD. Beitritt nur mit Zustimmung; Weg laut
+Teambeschreibung: Terms of Use unterschreiben und an epvs.challenge@gmail.com mit Betreff
+"[EPVS Challenge Registration Request]" schicken, dann Mitgliedschaft beantragen. Lehre: neben
+accessRequirement und restrictionInformation auch die ACL und <code>permissions.canDownload</code> im bundle2
+pruefen, bevor man "offen" schreibt.</p>
+<h2>Nachtrag 2026-10-11: weiterhin gesperrt</h2>
+<p>Erneute Pruefung mit zertifiziertem Konto: canDownload fuer Val.zip (syn61767476) weiterhin false, Team-Mitgliedschaft
+noch nicht erteilt. Eigener Download-Versuch (lade_jetzt.sh) sauber abgebrochen; Waechter warte_und_lade.sh und
+Clara-Auftrag wp10 warten auf die Freigabe. Die Huerde ist extern (Challenge-Organisatoren), nicht technisch.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/public-pvs-reference-data-and-models-2026-10.html">public-pvs-reference-data-and-models-2026-10</a></li>
+</ul></div></details><details class="entry" id="epvs-2024-submissions-are-public-docker-images-metric-equals-ours"><summary><span class="type">Befund</span><span class="t"><a href="findings/epvs-2024-submissions-are-public-docker-images-metric-equals-ours.html">Die sechs EPVS-2024-Einreichungen liegen als oeffentliche Docker-Images vor, und die offizielle Metrik ist unsere Regel</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">6 Einreichungen als Docker-Images (hub.docker.com/u/epvschallenge), run_inference.sh &lt;ckpt&gt; &lt;in&gt; &lt;out&gt;; offizielle Metrik = 26er + Beruehrung = unsere; Sieger-Test-F1 CSO ~0,40</span></summary><div class="body"><p class="small muted">Herkunft: Docker-Hub-/Registry-API (hub.docker.com/u/epvschallenge, kleine Layer gelesen), Report arXiv 2512.18197 (PDF), hzlab/EPVS_challenge evaluate.py; PVS-Arena Alita, 2026-10-11 04:15 · <a href="findings/epvs-2024-submissions-are-public-docker-images-metric-equals-ours.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/epvs-2024-submissions-are-public-docker-images-metric-equals-ours.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Organisatoren haben die eingereichten Verfahren am 18.03.2025 oeffentlich auf Docker Hub gestellt (Konto epvschallenge):
+big_aehrc_epvs_segment (CSIRO, Sieger; MedNeXt, 3D unter 2,5 mm Schichtdicke, sonst 2D; 9,8 GiB), ccnu (11,1), hufsaim (3,5),
+bearwalker (nnU-Net, 3,6), shivai_miccai2024_image (4,8), epvs_nicvicorob (mit FreeSurfer 7.4.1, 21,8). Einheitliche Schnittstelle
+<code>/workspace/run_inference.sh &lt;checkpoint&gt; &lt;inDir&gt; &lt;outDir&gt;</code>, Eingabe <code>&lt;id&gt;/&lt;id&gt;_T1w|T2w|FLAIR.nii.gz</code>. Die MODELLE sind damit ohne
+Synapse-Freigabe nutzbar; nur die DATEN bleiben gesperrt. Die offizielle Metrik (evaluate.py) ist skimage-label connectivity=3
+(26er), Treffer = irgendein Vorhersagevoxel auf der Referenzkomponente, keine IoU-Schwelle, keine Mindestgroesse -- exakt die
+Regel von pvs-arena/pvs_metrik.py. Testzahlen des Siegers (ungesehener Standort mit dicken Schichten im Test): Recall/Precision
+CSO 0,32/0,53 (F1 ~0,40), BG 0,51/0,62 (~0,56); Recall ist bei allen Teams der Engpass (CSO 0,14-0,35).</p>
+<h2>Traegt</h2>
+<p>Turnierplanung: sechs vortrainierte Teilnehmer ohne Antrag, ein Image zur Zeit (Platte), Mini-Lauf vor dem Volllauf. Vergleich der
+Regel: unsere VALDO-/HCP-F1-Zahlen sind mit den Challenge-Zahlen in der Regel vergleichbar, in den Daten nicht. Erwartung: die
+Container sind konservativ (Precision &gt; Recall) -- als Kandidatengeber fuer den Pool begrenzt, als Trenner-Signal moeglich.</p>
+<h2>Traegt nicht</h2>
+<p>Lizenz der Teamcodes (in den Images nur MedNeXt-Apache und NVIDIA-Basislizenz, "(c)2024 CSIRO"): lokale Forschungsauswertung ja,
+Weitergabe nein. Laufzeit auf CPU (Docker hier ohne GPU-Zugang) ist ungemessen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Image verlangt ein anderes Eingabeformat oder liefert auf VALDO leere Masken; oder Docker Hub nimmt die Images offline.</p>
+<h2>Ablesung</h2>
+<p>hub.docker.com/v2/repositories/epvschallenge/ (6 Repos, 173-932 Pulls); Registry-Manifeste und Konfigurations-Blobs; kleine Layer
+mit run_inference.sh gelesen (Scratch cfg_*.json, layers/); Report Tabellen 2, 5, 7; hzlab/EPVS_challenge evaluate.py Zeilen 58-95.
+Arena-Notizen: pvs-arena/literatur/epvs2024_teams.md, epvs2024_report.md; Versuch H in ARBEIT.md.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/epvs-2024-data-open-for-certified-synapse-users.html">epvs-2024-data-open-for-certified-synapse-users</a></li>
+<li><a href="findings/dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.html">dora-baseline-is-plain-unet-and-field-evaluates-on-t2w</a></li>
+<li><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+</ul></div></details><details class="entry" id="epvs-2024-winner-scores-0.28-on-valdo-below-every-single-method"><summary><span class="type">Befund</span><span class="t"><a href="findings/epvs-2024-winner-scores-0.28-on-valdo-below-every-single-method.html">Der EPVS-2024-Sieger BIG_AEHRC erreicht auf VALDO nur 0,28 -- unter jedem unserer Einzelverfahren</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Siegercontainer BIG_AEHRC auf VALDO OOF 0,279 (unter DRIPS 0,354, PINGU 0,449); lokale GPU-Kette = Container; Rang ist kein Vorhersager fuer fremde Kohorten</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch H (verfahren/epvs24_big_aehrc.sh, Kettenpruefung gegen den Container identisch), VALDO Task 1 12 Handfaelle referenz_v2, 2026-10-11 16:30 · <a href="findings/epvs-2024-winner-scores-0.28-on-valdo-below-every-single-method.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/epvs-2024-winner-scores-0.28-on-valdo-below-every-single-method.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Siegercontainer (CSIRO, MedNeXt-S kernel5, 5 Falten, T1+T2+FLAIR, 3D-Zweig) liefert auf den 12 VALDO-Handfaellen mit seiner eigenen
+Regel (Prob &gt;= 0,3) Instanz-F1 0,268 [0,222; 0,313] (Recall 0,27, Praezision 0,32); die Schwellenkurve ist flach (0,25-0,30), out-of-fold
+0,279 [0,226; 0,332] (Recall 0,36, Praezision 0,26). Zum Vergleich auf denselben Faellen: PINGU 0,449, MedNet-T1 0,440, MedNet-T2 0,388,
+DRIPS-T2 0,354; unser Dreier-Pool mit Trenner 0,658. Lokale GPU-Kette (Code + Checkpoint aus dem Image, PYTHONPATH) reproduziert den
+Container exakt (TP 70 / FP 203 auf sub-101) in 5 statt 42 Minuten.</p>
+<h2>Traegt</h2>
+<p>Challenge-Rang ist kein Vorhersager fuer eine fremde Kohorte: der Report selbst zeigt den Einbruch auf dem ungesehenen Standort Shanghai,
+VALDO (Ganzhirn-Annotation inkl. BG, 0,49-mm-RSS) ist ein weiterer. Fuer die Arena bleibt BIG_AEHRC hoechstens ein vierter Kandidatengeber
+(Posteriors liegen); als Einzelverfahren ist es erledigt. Praktisch: Challenge-Container lassen sich ohne GPU-Docker lokal nachbauen
+(Checkpoint + mitgelieferter Code), Kettenpruefung an einem Fall gegen den Container ist Pflicht.</p>
+<h2>Traegt nicht</h2>
+<p>Wie BIG_AEHRC auf HCP-Aging (T2, 0,8 mm) abschneidet; ob die anderen fuenf Container besser uebertragen (hufsaim, ccnu als naechste).
+Keine Aussage ueber die Challenge-Testdaten selbst.</p>
+<h2>Bruchindikator</h2>
+<p>Ein anderer EPVS-Container liegt auf VALDO ueber 0,45, oder BIG_AEHRC im Pool hebt den Trenner um mehr als 0,02.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/epvs24-big_aehrc (Posteriors, Masken), epvs24-big_aehrc-oof.json, epvs24-big_aehrc-docker-mini vs -lokal-mini;
+ARBEIT.md 11.10. 16:30.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/epvs-2024-submissions-are-public-docker-images-metric-equals-ours.html">epvs-2024-submissions-are-public-docker-images-metric-equals-ours</a></li>
+<li><a href="findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.html">candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles</a></li>
+<li><a href="findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs</a></li>
+</ul></div></details><details class="entry" id="hcp-pretraining-plus-valdo-finetuning-small-but-real-gain"><summary><span class="type">Befund</span><span class="t"><a href="findings/hcp-pretraining-plus-valdo-finetuning-small-but-real-gain.html">Vortraining auf HCP + Feintuning auf VALDO hebt das Patch-CNN um +0,02 -- klein, aber mit Intervall ohne Null</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Vortraining HCP + Feintuning VALDO: CNN +0,022 [+0,008; +0,038], Mischung +0,015; str-hash-Nichtdeterminismus (+-0,013) behoben</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch G5 (--vortrainieren auf 200 HCP, --init + lr 3e-4 je VALDO-LOO-Falte), nur T2, DRIPS-Kandidaten &gt;= 0,1, 2026-10-11 14:25 · <a href="findings/hcp-pretraining-plus-valdo-finetuning-small-but-real-gain.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/hcp-pretraining-plus-valdo-finetuning-small-but-real-gain.md">Markdown</a></p><h2>Aussage</h2>
+<p>Gleiche Kandidaten, gleiches Protokoll wie die VALDO-interne Kontrolle (G3a): CNN 0,439 statt 0,417 (gepaart +0,022 [+0,008; +0,038], 9/12),
+Mischung 0,440 statt 0,425 (+0,015 [+0,002; +0,027], 10/12). Gewinn auf SABRE (Mischung 0,499 -&gt; 0,527), auf RSS nur beim CNN allein.
+Nebenbefund Reproduzierbarkeit: die Wahl der Schwellenfaelle hing an Pythons prozess-zufaelligem String-Hash; der unveraenderte GBM schwankte
+dadurch um +0,013 zwischen Laeufen. Jetzt crc32; Vergleiche ZWISCHEN aelteren Laeufen tragen +-0,013 Schwellenrauschen, gepaarte Vergleiche
+innerhalb eines Laufs nicht.</p>
+<h2>Traegt</h2>
+<p>Der Weg fuer Kohorten ohne grosse eigene Etiketten: CNN auf HCP vortrainieren, auf der Zielkohorte feintunen. Fuer BELOVE (kein T2) heisst
+das: Ratings als Etiketten der Zielkohorte sind der Engpass, nicht das Netz.</p>
+<h2>Traegt nicht</h2>
+<p>Groesse des Gewinns im Dreier-Pool (G5b laeuft); Erweiterung auf T1-/FLAIR-Kanaele ist nur kanalweise Teiluebernahme.</p>
+<h2>Bruchindikator</h2>
+<p>G5b (Pool, 7 Kanaele) liegt gepaart unter G4.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-drips-t2only-loo-feintuning, modelle/cnn_hcp_t2; ARBEIT.md 11.10. 14:25.</p>
+<h2>Nachtrag 2026-10-11 15:25: im Dreier-Pool (G5b) hilft das Vortraining dem CNN allein, nicht der Mischung</h2>
+<p>Kanalweise Uebernahme in das 7-Kanal-Netz, DRIPS 0,02: CNN allein 0,548 -&gt; 0,607 (gepaart +0,059 [+0,012; +0,115]), aber die feste
+0,5-Mischung mit dem GBM faellt von 0,650 auf 0,632 (-0,018 [-0,040; +0,001], 4/12). Das Vortraining ist damit belegt, das feste Mittel
+als Kombinationsregel ist der schwache Punkt (Kalibrierung) -&gt; Stapelung auf den Schwellenfaellen pruefen (Arena F7.14).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.html">cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer</a></li>
+<li><a href="findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision</a></li>
+</ul></div></details><details class="entry" id="patch-cnn-second-stage-adds-nothing-on-valdo"><summary><span class="type">Befund</span><span class="t"><a href="findings/patch-cnn-second-stage-adds-nothing-on-valdo.html">Ein Patch-CNN als zweite Stufe bringt bei PVS auf VALDO nichts -- der CMB-Hebel uebertraegt sich nicht</a></span><span class="badge ">eingeschraenkt</span><span class="muted small">2026-10-11</span><span class="i">Patch-CNN als zweite Stufe: 0,517 allein, Mischung 0,580 vs GBM 0,591 (gepaart -0,011); Klasse 1-2 unveraendert; Verlust in den RSS-Faellen</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch G (skripte/zweite_stufe_cnn.py), VALDO Task 1, 12 Faelle mit Handmasken, referenz_v2, LOO, 2026-10-11 04:29 · <a href="findings/patch-cnn-second-stage-adds-nothing-on-valdo.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/patch-cnn-second-stage-adds-nothing-on-valdo.md">Markdown</a></p><h2>Aussage</h2>
+<p>Auf den Kandidaten des Dreier-Pools (DRIPS-T2 ∪ MedNet-T1 ∪ PINGU) wurde ein kleines 3D-CNN (16-mm-Wuerfel, 7 Kanaele T1z/T2z/
+FLAIRz/Maske/3 Posteriors, 3 Startwerte, 25 Epochen) gegen den HistGradientBoosting-Trenner auf 35 Handmerkmalen gemessen,
+gleiches Protokoll (LOO je Fall, Schwelle auf zurueckgehaltenen Faellen): CNN allein 0,517 [0,433; 0,578], GBM 0,591 [0,558; 0,623],
+Mischung 0,580 [0,538; 0,615]. Gepaart: Mischung - GBM -0,011 [-0,033; +0,007], besser in 4/12; CNN - GBM -0,074 [-0,145; -0,020].
+Groessenklasse 1-2 unveraendert (Recall 0,31 / 0,31 / 0,27). Der CNN-Verlust sitzt in den RSS-Faellen (0,49 mm, 106-171 Kandidaten
+je Fall): sub-209 0,156 gegen 0,525. Nebenbefund: Schwelle auf zurueckgehaltenen statt Trainingsfaellen aendert den GBM um +0,009.</p>
+<h2>Traegt</h2>
+<p>Hebelwahl bei PVS: die zweite Stufe lebt von den Intensitaetsmerkmalen (FLAIR/T2-Huelle), die das GBM schon hat; ein gelerntes
+Filter auf ~1000 positiven Komponenten aus 9 Faellen bringt keine Information dazu. Der Kontrast zur CMB-Linie (+0,045 durch das
+gemeinsame CNN) ist eine Fallzahl- und Erscheinungsfrage, kein Widerspruch. Zwei Geometrien in 12 Faellen sind fuer ein CNN zu wenig.</p>
+<h2>Traegt nicht</h2>
+<p>HCP-Aging (200 Faelle, eine Geometrie, zehnmal mehr Positive) ist nicht gemessen -- dort koennte das CNN anders ausfallen (G2 geplant).
+Andere CNN-Groessen, laengeres Training, Vortraining ohne Etiketten wurden nicht probiert.</p>
+<h2>Bruchindikator</h2>
+<p>Auf HCP (5-fach, nur T2, DRIPS-Kandidaten) hebt die Mischung den Trenner um mehr als 0,02 gegen 0,668.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-pool3/{cnn,gbm,mix}/zusammenfassung.json; gepaarte Rechnung in ARBEIT.md 11.10. 04:30.</p>
+<h2>Nachtrag 2026-10-11 11:55: Bruchindikator eingetreten</h2>
+<p>Auf HCP (200 Faelle, eine Geometrie) hebt dasselbe CNN den Trenner um +0,035 (siehe patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision).
+Der VALDO-Befund gilt damit als Fallzahl-/Geometrie-Befund, nicht als Aussage ueber PVS allgemein.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+</ul></div></details><details class="entry" id="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision"><summary><span class="type">Befund</span><span class="t"><a href="findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">Auf HCP-Aging hebt ein Patch-CNN als zweite Stufe den Trenner von 0,660 auf 0,695 -- fast ganz ueber die Praezision</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">HCP 200, 5-fach: CNN+GBM 0,695 vs GBM 0,660 (gepaart +0,035, 191/200), Gewinn = Praezision, Klasse 1-2 unveraendert; Bruchindikator des VALDO-Befunds eingetreten</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch G2 (skripte/zweite_stufe_cnn.py --falten 5 --kanaele t2,maske,pa --cache), HCP-Aging 200 Faelle, referenz_wm, 2026-10-11 11:50 · <a href="findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.md">Markdown</a></p><h2>Aussage</h2>
+<p>Gleiches Protokoll wie auf VALDO (5-fach nach Fall, je Startwert 2 Schwellenfaelle zurueckgehalten, 3 Startwerte, 25 Epochen), aber
+200 Faelle einer Geometrie (0,8 mm), nur T2, DRIPS-Kandidaten (Posterior &gt;= 0,1), 143.461 Kandidaten: CNN allein 0,693 [0,680; 0,705],
+GBM 0,660 [0,648; 0,672], Mischung 0,695 [0,682; 0,707]. Gepaart Mischung - GBM +0,035 [+0,032; +0,038], besser in 191/200.
+Der Gewinn ist Praezision (gepoolt 0,821 -&gt; 0,899, Fehlalarme 14.366 -&gt; 7.480) bei gleichem Recall (0,563 -&gt; 0,572); Klasse 1-2
+bleibt bei Recall 0,24 -- die kleinen PVS fehlen schon im Kandidatensatz, nicht erst im Trenner. Gegen den alten Trenner F3 (0,668,
+in-sample-Schwelle) +0,026, besser in 163/200.</p>
+<h2>Traegt</h2>
+<p>Der Bruchindikator des VALDO-Befunds ist eingetreten: der CMB-Hebel (gemeinsames kleines 3D-CNN auf Kandidaten) traegt auch bei PVS,
+sobald genug Positive einer Geometrie vorliegen (~80k statt ~1k). Fuer die HCP-Entwicklungslinie ist Mischung CNN+GBM der neue Stand.
+Rezept: Patch 16 mm um den Schwerpunkt, Kanaele T2z/Komponentenmaske/Posterior, Flips + Verschiebung, BCE mit pos_weight, AdamW.</p>
+<h2>Traegt nicht</h2>
+<p>Expertenevidenz: 160/200 HCP-Masken sind U-Net-Silber (nur WM). Ob der Gewinn auf Handreferenzen uebertraegt, zeigt erst
+der Uebertrag HCP -&gt; VALDO-T2 (Versuch G3). Recall-Gewinn fuer kleine PVS: keiner; dafuer muss der Kandidatengeber (DRIPS-Schwelle)
+empfindlicher werden, dann kann das CNN mehr aussortieren (Versuch G4).</p>
+<h2>Bruchindikator</h2>
+<p>Auf VALDO-T2-Kandidaten (12 Handfaelle) liegt das HCP-trainierte CNN+GBM nicht ueber dem VALDO-eigenen GBM auf denselben Kandidaten.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/hcp-aging/stufe2-cnn-drips-t2/{cnn,gbm,mix}/zusammenfassung.json + ergebnis.csv; gepaarte Rechnung und
+Fehlalarme je Groessenklasse in ARBEIT.md 11.10. 11:55. Speicherlehre: Komponentenkarten nicht im RAM halten (19,8 GB bei 147 Faellen),
+--cache je Fall (.npz, komprimiert, ~15 MB/Fall).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/patch-cnn-second-stage-adds-nothing-on-valdo.html">patch-cnn-second-stage-adds-nothing-on-valdo</a></li>
+<li><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+<li><a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+</ul></div></details><details class="entry" id="candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57"><summary><span class="type">Befund</span><span class="t"><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">Pool DRIPS ∪ MedNet-T1 (+ PINGU) + GBM-Trenner, LOO: F1 0,57-0,58, Precision 0,70, Klasse 1-2 0,30; Ablation: Intensitaeten tragen (-0,06), Lage/Posteriors nichts; HCP n=200 (nur DRIPS, nur T2): 0,58 -&gt; 0,67</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch F1 (Pilot zweite Stufe), VALDO Task 1, 12 Maskenfaelle, leave-one-case-out, 2026-10-08 05:25 · <a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md">Markdown</a></p><h2>Aussage</h2>
+<p>Kandidaten = 26er-Komponenten der Vereinigung von DRIPS-T2 (Posterior &gt;= 0,1, empfindlich, synthetisch trainiert) und
+MedNet-PVS-T1w (Softmax &gt;= 0,5, praezise, klinisch trainiert). Je Komponente 30 Merkmale ohne gelernte Filter: Groesse,
+Ausdehnung, PCA-Linearitaet/Elongation, Zugehoerigkeit zu A/B/beiden, Posterior-Mittel/-Max beider Netze, z-Intensitaet
+T1/T2/FLAIR innen und in der 1-Voxel-Huelle, SynthSeg-Gruppe am Schwerpunkt und Gruppenanteile der Huelle. Ziel: Komponente
+beruehrt die Rater-1-Referenz. HistGradientBoosting, leave-one-case-out ueber 12 Faelle, Entscheidungsschwelle je Falte auf den
+Trainingsfaellen (0,35-0,45, stabil). Ergebnis gegen Rater 1 (SABRE Ganzhirn, RSS Region): F1 0,572 [0,537; 0,606], Precision
+0,70, Recall 0,51, Klasse 1-2 Voxel 0,30; je Fall 0,46-0,65. Zum Vergleich: MedNet-T1 allein 0,440 [0,366; 0,508] (Precision
+0,45), Vereinigung 0,409 (Recall 0,72 = Decke), Schnitt 0,352, Inter-Rater 0,327. Erwartung vor dem Lauf war 0,46-0,52.</p>
+<p><strong>Nachtrag 08.10. 07:20 (Ablationen und dritter Detektor, LOO, n = 12):</strong> ohne Lage-Merkmale 0,571, ohne Netz-Posteriors
+0,569, ohne Posteriors und Zugehoerigkeit 0,560, ohne Form 0,553, ohne T1-Intensitaeten 0,563, <strong>ohne alle Intensitaeten 0,509</strong>.
+Der Gewinn kommt aus den Intensitaeten von Komponente und 1-Voxel-Huelle in T1/T2/FLAIR (die Netze sehen je eine Sequenz, der
+Trenner drei), etwas aus der Form, nichts aus Lage oder Netz-Wahrscheinlichkeiten: ein Trenner, kein Ensemble. Startwerte 1/2
+identisch (deterministischer GBM). Pool aus drei Detektoren (+ PINGU, F1 allein 0,449 = MedNet-T1): 0,582 [0,543; 0,619].</p>
+<p><strong>Nachtrag 08.10. 13:00 (HCP-Aging, n = 200, 5-fach nach Fall):</strong> derselbe Trenner in seiner schwaechsten Form -- ein Detektor
+(DRIPS-T2-Komponenten), nur T2-Intensitaeten, Form, Lage -- hebt den F1 gegen die HCP-WM-Labels von 0,584 [0,571; 0,597] auf
+0,668 [0,657; 0,680], Precision 0,56 -&gt; 0,80, Recall 0,66 -&gt; 0,60, Klasse 1-2 0,34 -&gt; 0,27. Erwartung vor dem Lauf 0,60-0,65.
+Vorbehalt: 80 % der HCP-Labels sind U-Net-Silber (Stil-Lernen moeglich); VALDO mit Handreferenz zeigt dieselbe Richtung.</p>
+<h2>Traegt</h2>
+<p>Die PVS-Arena und den Plan: Fortschritt kommt aus dem Trenner auf dem Pool, und zwar aus Mehr-Sequenz-Intensitaeten um den Kandidaten;, nicht aus Detektor-Rezepten oder Schwellen (vierte
+Bestaetigung nach CMB-VALDO, CMB-SWI und den flachen PVS-Schwellenkurven). Vorgehen fuer BELOVE ohne eigene Labels: Pool aus
+DRIPS-T1 und MedNet-T1, Trenner auf VALDO trainiert, dann Rating.</p>
+<h2>Traegt nicht</h2>
+<p>n = 12, gelernt wird der Stil von Rater 1; Startwert-Rauschen des GBM noch nicht gemessen (laeuft); Merkmalswichtigkeit offen;
+Uebertrag auf EPVS-2024, HCP und BELOVE offen. VALDO-Faelle mischen 1-mm- und 0,5-mm-Gitter.</p>
+<h2>Bruchindikator</h2>
+<p>Auf EPVS-2024 oder BELOVE-Rating bringt der Trenner gegenueber MedNet-T1 keinen Gewinn, oder die Ablation zeigt, dass nur die
+Posteriors tragen (dann ist es ein Ensemble, kein Trenner).</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/skripte/zweite_stufe_pilot.py, ergebnisse/valdo-task1/stufe2-pilot-drips-t2-mednet-t1/{zusammenfassung.json,ergebnis.csv},
+logs/stufe2_pilot_valdo.log, ARBEIT.md 05:25-05:30.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs</a></li>
+<li><a href="../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.html">one-shared-candidate-classifier-for-all-cohorts</a></li>
+<li><a href="../lesion_detection_method/rules/noise-floor-before-effects.html">noise-floor-before-effects</a></li>
+</ul></div></details><details class="entry" id="drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third"><summary><span class="type">Befund</span><span class="t"><a href="findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">DRIPS auf HCP-Aging: F1 0,55-0,58 ohne Training, Arbeitspunkt 0,15-0,2 stabil, ein Drittel der 1-2-Voxel-PVS -- Frangi bei 0,28</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">200 HCP-Faelle: DRIPS F1 0,55/0,58 (WM), OOF-Schwelle 0,15-0,2 stabil, Klasse 1-2 Recall 0,33; Frangi 0,28</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuch C1 (DRIPS auf allen 200 HCP-Aging-Faellen, CPU) und Clara wp5 (Frangi), 2026-10-07/08 · <a href="findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.md">Markdown</a></p><h2>Aussage</h2>
+<p>Auf allen 200 HCP-Aging-Faellen (T2 0,8 mm; Labels: 40 Hand, 160 U-Net-Silber, nur weisse Substanz) erreicht DRIPS
+(synthetisch trainiert, Standardschwelle 0,1, CPU 70 s/Fall) Instanz-F1 0,549 [0,536; 0,562]; auf die SynthSeg-WM-Maske
+beschnitten 0,584 (die Beschneidung entfernt nur Nicht-Annotiertes, also Label-Abdeckung, kein Modellgewinn). Recall 0,65,
+Precision 0,51-0,56, Zaehlkorrelation je Fall Spearman 0,67-0,69. Schwellenkurve: Maximum 0,559 bei 0,15-0,2, out-of-fold
+gewaehlte Falten-Schwellen 0,15/0,2/0,15/0,2/0,2 -&gt; OOF-F1 0,558: der Arbeitspunkt ist auf 200 Faellen stabil, auf VALDO mit
+12 Faellen springt er (0,1-0,3). Precision steigt mit der Schwelle bis 0,69, F1 nicht -- dieselbe flache Kurve wie auf VALDO.
+Groessenklassen (Recall): 1-2 Voxel 0,33 bei Schwelle 0,1, 0,24 bei OOF-Schwelle; 3-5: 0,57; 6-20: 0,81; &gt;20: 0,96.
+Frangi mit festem Perzentil (99,0) auf denselben Daten: F1 0,279, Klasse 1-2 0,12; bei 99,8: 0,19 und 0,01.</p>
+<h2>Traegt</h2>
+<p>Grundlinie und Arbeitspunkt fuer die PVS-Arena: DRIPS bei 0,1 plus Trenner (nicht hoehere Schwelle), weil die OOF-Schwelle
+Precision mit den kleinsten PVS bezahlt (0,33 -&gt; 0,24), die das Nutzerziel ausdruecklich will. Bestaetigt auf der dritten
+Laesionslinie: Schwellen sind Arbeitspunkte, Fortschritt braucht einen Trenner.</p>
+<h2>Traegt nicht</h2>
+<p>Experten-Wahrheit: 160 der 200 Masken stammen aus einem Frangi+U-Net; die Zahl misst Uebereinstimmung damit. Die ehrlichen
+Punkte sind VALDO (0,33-0,35, Inter-Rater 0,29) und spaeter EPVS-2024. Basalganglien sind in HCP nicht markiert.</p>
+<h2>Bruchindikator</h2>
+<p>Die 40 Handfaelle werden bekannt und DRIPS liegt dort deutlich unter 0,5; oder eine Ortsregel/zweite Stufe hebt den F1 nicht.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/hcp-aging/{drips-t010,drips-t010-wm,frangi-p990}/zusammenfassung.json, drips-t010_schwellenkurve.json
+(skripte/schwellenkurve_oof.py), ARBEIT.md 02:00. Daten OpenNeuro ds005595 (CC BY-ND, lokal).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/valdo-interrater-ceiling-and-drips-first-numbers.html">valdo-interrater-ceiling-and-drips-first-numbers</a></li>
+<li><a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+<li><a href="../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../lesion_detection_method/rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+</ul></div></details><details class="entry" id="mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs"><summary><span class="type">Befund</span><span class="t"><a href="findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">Auf klinischem 1-mm-T1 fuehrt das auf klinischen T1 trainierte Netz (F1 0,44), findet aber die kleinsten PVS am schlechtesten; das synthetisch trainierte Netz findet sie am besten</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">VALDO 12: MedNet-T1 0,44 (Prec 0,45, Klasse 1-2 nur 0,12), MedNet-T2 0,39, DRIPS 0,35 (Klasse 1-2 0,45), Rater 0,33; Kurven flach -&gt; Pool + Trenner</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Versuche C2/C3/C5 auf VALDO Task 1 (12 Maskenfaelle, korrigierte Referenz), GPU, 2026-10-08 02:00-05:00 · <a href="findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.md">Markdown</a></p><h2>Aussage</h2>
+<p>VALDO Task 1, 12 Maskenfaelle (SABRE Ganzhirn, RSS mit Region), Instanz-F1 gegen Rater 1, Mittel ueber Faelle [KI95]:
+MedNet-PVS-T1w (MedNeXt-L, trainiert auf 40 klinischen T1 mit WM+BG-Labels) 0,440 [0,366; 0,508], Precision 0,45, OOF-Schwelle
+0,3 stabil, Kurve flach; MedNet-PVS-T2w (trainiert auf HCP-Aging-T2, nur WM) 0,388; DRIPS-T2 (synthetisch) 0,354; DRIPS-T1 0,351;
+Inter-Rater 0,327. Groessenklasse 1-2 Voxel, Recall: DRIPS-T2 0,45, DRIPS-T1 0,32, MedNet-T2 0,19, MedNet-T1 0,12 (OOF 0,21);
+Rater untereinander 0,34. Kohortenprofil: DRIPS gewinnt SABRE (Ganzhirn, 1 mm: 0,38 vs 0,37 MedNet-T1), MedNet-T1 gewinnt RSS
+(0,5-mm-Gitter, Teilschichten: 0,52 vs 0,32). Gegen Rater 2: MedNet-T1 0,26, DRIPS-T2 0,24, MedNet-T2 0,07 (der HCP-T2-Trainer kennt
+keine Basalganglien-PVS). Alle Schwellenkurven sind flach (0,1-0,5); Precision steigt, F1 nicht.</p>
+<p><strong>Nachtrag 08.10. 16:25 (Gewebe am Schwerpunkt, SABRE 6 Faelle, Ganzhirn):</strong> Rater 1 markiert 1103 WM- und 291 BG-Komponenten,
+Rater 2 498 WM und 510 BG (BG-lastig). MedNet-T2w (HCP-Trainer, nur WM-Labels) sagt 1917 WM und <strong>2</strong> BG voraus -- das erklaert
+sein 0,07 gegen Rater 2 vollstaendig; MedNet-T1w 1342/181, DRIPS-T2 2646/423. Ein auf WM-only-Labels trainiertes Netz ist fuer
+Basalganglien-PVS (klinisch die wichtigere Region) unbrauchbar; Trainingslabels muessen die Zielregionen enthalten.</p>
+<h2>Traegt</h2>
+<p>Wahl der Bausteine: fuer klinisches T1 (BELOVE) ist MedNet-T1 die praezise Basis; fuer das Ziel "auch kleine PVS" ist DRIPS der
+Kandidatengeber (empfindlich, Klasse 1-2 ueber Rater-Niveau). Daraus folgt der naechste Schritt: Kandidaten-Pool beider plus
+Trenner, nicht ein hoeherer Arbeitspunkt. Bestaetigt die Regel "Trainingsdomaene muss die Zieldomaene abdecken" (T1-Trainer
+schlaegt T2-Trainer und Synthese auf T1) auf der dritten Laesionslinie.</p>
+<h2>Traegt nicht</h2>
+<p>n = 12, Intervalle ueberlappen (Richtungsangabe, kein Befund); nur VALDO; EPVS-2024 und BELOVE-Rating stehen aus. Die
+Inter-Rater-Grenze 0,33 ist fuer Modelle keine harte Decke (Modelle koennen "mittlere Annotation" lernen).</p>
+<h2>Bruchindikator</h2>
+<p>Auf EPVS-2024 (200 Faelle, zwei Regionen) kehrt sich die Reihenfolge um, oder der Kandidaten-Pool hebt den F1 nicht.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/{mednet-t1-t050,mednet-t2-t050,drips-t2-t010,drips-t1-t010}-v2/zusammenfassung.json,
+*-v2_schwellenkurve.json, ARBEIT.md 04:20-05:00. Oeffentliche Daten CC BY-NC 4.0.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/valdo-interrater-ceiling-and-drips-first-numbers.html">valdo-interrater-ceiling-and-drips-first-numbers</a></li>
+<li><a href="findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third</a></li>
+<li><a href="../cmb_detection/findings/training-geometry-must-cover-target-geometry.html">training-geometry-must-cover-target-geometry</a></li>
+<li><a href="../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+</ul></div></details><details class="entry" id="pvs-chain-as-built-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/pvs-chain-as-built-2026-10.html">Die PVS-Kette, wie sie am 08.10.2026 gebaut ist: zwei Detektoren, ein Kandidatenpool, ein Trenner mit 29 Merkmalen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">Die Kette Schritt fuer Schritt: DRIPS &gt;= 0,10 und MedNet &gt;= 0,50 auf T1, Pool, 29 Merkmale, VALDO-Trenner 0,4; VALDO 0,57, HCP 0,668, eigene Kohorte nur Uebereinstimmung 0,35; QC-Betrachter lokal</span></summary><div class="body"><p class="small muted">Herkunft: Projekt pvs-arena (Alita), ARBEIT.md Abschnitte F1, F6.2, F3, QC-Betrachter 2026-10-08 · <a href="findings/pvs-chain-as-built-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/pvs-chain-as-built-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Kette ist die Uebertragung der Mikroblutungs-Methode auf perivaskulaere Raeume:
+Kandidaten breit sammeln, dann eine zweite Stufe entscheiden lassen. Schritt fuer Schritt:</p>
+<ol>
+<li><strong>Eingabe.</strong> T1w 1 mm isotrop (RAS), dazu FLAIR auf T1 registriert (eigene Kohorte:
+   FLAIR 0,86 x 0,86 x 5 mm; HCP-Aging nur T2; VALDO Task 1 T1 + T2 + FLAIR). Keine
+   Schaedelentfernung, keine Intensitaetsnormierung ausser der je Detektor.</li>
+<li><strong>Detektor A: DRIPS</strong> (3D U-Net, oeffentliche Gewichte) auf T1, Posterior &gt;= 0,10.
+   Der empfindliche Detektor: auf HCP-Aging allein F1 0,58, kleine PVS (1-2 Voxel) Recall 0,34.</li>
+<li><strong>Detektor B: MedNet-PVS</strong> (klinischer Trainer) auf T1, Posterior &gt;= 0,50. Der praezise
+   Detektor: auf der eigenen Kohorte Praezision 0,77 gegen die Pipeline-Maske, findet aber
+   nur ein Viertel der Komponenten und fast keine kleinen.</li>
+<li><strong>Kandidatenpool.</strong> 26-verbundene Komponenten der Vereinigung A ∪ B. Eigene Kohorte,
+   73 Faelle: 36.618 Kandidaten (A-nur 21.467, beide 12.696, B-nur 2.455).</li>
+<li><strong>29 Merkmale je Komponente.</strong> Groesse, Ausdehnung, PCA-Linearitaet und Elongation;
+   Mitgliedschaft in A / B / beiden; Posterior-Mittel und -Maximum beider Detektoren;
+   z-normierte Intensitaet T1 und FLAIR innen und in der 1-Voxel-Huelle samt Differenz;
+   SynthSeg-Gruppe am Schwerpunkt und Gruppenanteile in der Huelle (WM, Basalganglien,
+   Kortex, Liquor, Stamm). Ohne T2, weil die eigene Kohorte keines hat.</li>
+<li><strong>Trenner.</strong> HistGradientBoosting, trainiert auf VALDO Task 1 (12 Faelle, 4.083
+   Kandidaten, 1.156 positiv = beruehrt die Rater-1-Referenz), Schwelle 0,4. Auf VALDO
+   leave-one-case-out F1 0,57 gegen 0,44 des besten Einzeldetektors; auf HCP-Aging in der
+   schwaechsten Form (nur DRIPS, nur T2, 5-fach nach Fall, 200 Faelle) 0,668 [0,657; 0,680]
+   gegen 0,584.</li>
+<li><strong>Ausgabe.</strong> Behaltene Komponenten als Maske und Liste (p, Voxel, Herkunft). Eigene
+   Kohorte: 12.130 von 36.618 behalten (33 %); von den 12.841 Kandidaten mit 1-2 Voxeln
+   nur 597 (5 %).</li>
+<li><strong>Vergleich ohne Wahrheit.</strong> Gegen die MATLAB-Pipeline-Maske (RORPO, Satz 11,
+   Kontrast- und Groessenfilter) F1 0,348 [0,321; 0,375], Recall 0,23, Praezision 0,83.
+   Das ist Uebereinstimmung, keine Genauigkeit: die Pipeline wirft kleine Komponenten
+   selbst weg und fehlt bei 31 von 103 Faellen.</li>
+<li><strong>Qualitaetskontrolle.</strong> Schichtbetrachter wie bei den Mikroblutungen (zwei grosse
+   axiale Bilder, links Pipeline-Maske blau, rechts schaltbar: behalten gruen, verworfen
+   orange, DRIPS, MedNet; Zaehler je Schicht und Fall als Uebereinstimmung beschriftet).
+   Nur lokal (127.0.0.1), fuer die Expertensicht. Dazu die verblindete Bewertungsseite
+   fuer 25 Faelle (Kandidaten bestaetigen statt zeichnen) als erste Handreferenz.</li>
+</ol>
+<h2>Traegt</h2>
+<ul>
+<li>Die Reihenfolge "breit sammeln, dann trennen" traegt auf drei Datensaetzen (VALDO,
+  HCP-Aging, eigene Kohorte in der Uebereinstimmung) und mit einer wie mit drei Sequenzen.</li>
+<li>Der Trenner ersetzt Ortsregeln: die Fehlalarme sitzen im WM und sind klein, eine
+  Regel nach Ort hilft auf VALDO nicht (wp7), Intensitaets- und Formmerkmale schon.</li>
+<li>Form, Posterior und Lage reichen fuer die Untergrenze (HCP: nur T2). Jede weitere
+  Sequenz hebt (VALDO-Ablationen: ohne T1 -0,009, ohne alles ausser Form deutlich mehr).</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Genauigkeit auf der eigenen Kohorte: ohne Handreferenz sind alle Zahlen dort
+  Uebereinstimmung mit einer Pipeline, die selbst nicht Wahrheit ist.</li>
+<li>Kleine PVS (1-2 Voxel): der Trenner im Rater-1-Stil wirft 95 % davon weg; ob das
+  richtig ist, entscheidet nur das Rating.</li>
+<li>HCP-Labels sind zu 80 % U-Net-Silber: ein Teil des HCP-Gewinns kann Silber-Echo sein.</li>
+<li>Dicke FLAIR (5 mm) auf der eigenen Kohorte: die FLAIR-Merkmale sind dort groeber als
+  im Training (VALDO).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Das Rating der 25 Faelle zeigt, dass die vom Trenner verworfenen kleinen Kandidaten
+mehrheitlich echte PVS sind (dann ist die Schwelle 0,4 oder der Rater-1-Stil falsch fuer
+die eigene Kohorte), oder die Praezision der behaltenen faellt unter 0,7.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messungen in pvs-arena/ARBEIT.md (F1, F2, F3, F6.1, F6.2), pvs_metrik.py
+(Komponenten-F1, Bootstrap ueber Faelle). Eigene Kohorte nur als Summen, nie Einzelfaelle;
+Betrachter und Bewertungsseite verlassen das Haus nicht. Code als Repository
+<code>pvs-arena-chain</code> (privat, ohne Daten).</p>
+<h2>Nachtrag 2026-10-08: oeffentliche QC-Seite</h2>
+<p>VALDO Task 1 (12 Faelle, Rater 1) als oeffentliche QC-Seite mit dem Wiki-Tool qc_slice_viewer:
+https://mendeltem.github.io/valdo-pvs-qc/ (Urteilsmodus und Vergleich der Teile; Zaehler der Seite =
+Messskript 903 / 335 / 878; CC BY-NC 4.0). Die eigene Kohorte bleibt lokal.</p>
+<h2>Nachtrag 2026-10-08: Turnier auf EPVS 2024 vorbereitet</h2>
+<p>Naechster Schritt nach CMB-Vorbild: eigenes Segmentierungsnetz statt fremder Detektoren, dann dieselbe zweite Stufe.
+Plan mit Erwartungen vorher (pvs-arena/TURNIER_EPVS.md): Runde 0 fertige Modelle zero-shot, Runde 1 alle 15 Netze des
+CMB-Turniers mit einem Rezept (T2 + invertiertes T1, 1 mm iso, 5 Falten nach Kohorte), Runde 1b komplette Rezepte mit
+FLAIR (nnU-Net ResEnc-M, MedNeXt wie der Challenge-Sieger), Stufe 2 auf dem Pool der zwei besten. Das CMB-Turnier laeuft
+ueber sein --manifest unveraendert, der zweite Kanal belegt den FRST-Platz. Sieger EPVS 2024 laut Ergebnispapier
+(arXiv 2512.18197): MedNeXt T1+T2+FLAIR, Dice+TopK-CE, Schwelle 0,3; Val R 0,58 / P 0,74. Daten: Terms of Use erlauben
+nur den Challenge-Zweck; Veroeffentlichung braucht die Zustimmung der Daten-PIs.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.html">candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57</a></li>
+<li><a href="findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.html">mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs</a></li>
+<li><a href="findings/drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third.html">drips-on-hcp-aging-f1-0.55-threshold-flat-small-pvs-a-third</a></li>
+<li><a href="findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.html">edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs</a></li>
+<li><a href="../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">show-what-a-rule-removes-before-trusting-it</a></li>
+</ul></div></details><details class="entry" id="valdo-interrater-ceiling-and-drips-first-numbers"><summary><span class="type">Befund</span><span class="t"><a href="findings/valdo-interrater-ceiling-and-drips-first-numbers.html">VALDO Task 1: Rater stimmen zu F1 0,29 ueberein; ein synthetisch trainiertes Netz erreicht diese Decke ohne Training, mit Recall statt Precision</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">Inter-Rater F1 0,29 (Klasse 1-2: 0,17); DRIPS ohne Training T2 0,31 / SABRE 0,37, Recall 0,48, Precision 0,25, Kurve flach -&gt; Ort statt Schwelle</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Arena Alita, Clara wp4 (Inter-Rater-Kette) und Versuch C2 (DRIPS auf VALDO Task 1), 2026-10-07 22:00-23:00 · <a href="findings/valdo-interrater-ceiling-and-drips-first-numbers.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/valdo-interrater-ceiling-and-drips-first-numbers.md">Markdown</a></p><h2>Aussage</h2>
+<p><strong>Korrektur 2026-10-08 04:20:</strong> Die VALDO-Regions-Datei ist bei SABRE nur die Zaehl-Slab-Maske, die PVSSeg-Masken sind
+Ganzhirn; die Zahlen vom 07.10. beschnitten drei Viertel der SABRE-Referenz. Korrigiert (SABRE Ganzhirn, RSS mit Region, n = 12):
+Inter-Rater F1 0,327 [0,253; 0,397] (Klasse 1-2: 0,34); MedNet-PVS-T2w (auf HCP trainiert) 0,388 [0,302; 0,468], DRIPS-T2 0,354
+[0,260; 0,448], DRIPS-T1 0,351; DRIPS-T2 trifft 45 % der 1-2-Voxel-Referenz, MedNet-T2 19 %. DRIPS gewinnt SABRE (0,38 vs 0,30),
+MedNet-T2 gewinnt RSS (0,47 vs 0,32). MedNet-T2 gegen Rater 2 nur 0,07 (verschiedene PVS-Populationen, offen). Der urspruengliche
+Text unten bleibt als Beleg des Fehlers stehen.</p>
+<p>Auf VALDO Task 1 (12 von 40 Trainingsfaellen haben Masken; 6 SABRE-Faelle mit zwei Ratern) betraegt die Uebereinstimmung
+Rater 2 gegen Rater 1 mit der Arena-Metrik (26er-Komponenten, Beruehrung = Treffer, Region beschnitten) F1 0,294
+[0,230; 0,363], Dice 0,24; in der Klasse 1-2 Voxel nur 0,17. Rater 2 markiert 2- bis 7-mal weniger PVS als Rater 1.
+DRIPS (Bitar/Bernal 2025, nur auf synthetischen Roehren trainiert, Docker, CPU 70 s/Fall) erreicht ohne jedes Training
+auf T2 gegen Rater 1 F1 0,309 (n = 8; nur SABRE 0,369, also UEBER der Inter-Rater-Grenze), auf T1 0,260; gegen Rater 2
+0,20. Recall 0,48-0,51, Precision 0,20-0,25; die Schwellenkurve 0,05-0,6 ist flach (F1 0,28-0,31), Precision steigt
+hoechstens auf 0,42 bei fallendem Recall. Klasse 1-2 Voxel: Recall 0,33 (T2) bei 88 % Fehlalarmanteil. Frangi mit fester
+Perzentilschwelle liegt auf HCP-Labels bei F1 0,16.</p>
+<h2>Traegt</h2>
+<p>Deutung jeder PVS-Zahl auf VALDO: Werte ueber ~0,3 gegen einen Rater sind Naehe zu dessen Stil, nicht "besser als Mensch";
+beide Rater berichten. Hebelwahl: nicht die Schwelle (flach), sondern Fehlalarme nach Ort zaehlen und eine Ortsregel oder
+zweite Stufe bauen (Wiki-Mechanismen bestaetigen sich auf der dritten Linie). Kleine PVS sind erreichbar (ein Drittel),
+aber nur mit einem Trenner bezahlbar.</p>
+<h2>Traegt nicht</h2>
+<p>n = 8 bzw. 6 Faelle: Intervalle breit, Richtungsangabe. Vier RSS-Faelle fehlten (Speicherabbruch) und laufen nach.
+Keine Aussage ueber HCP (laeuft) oder EPVS-2024 (noch nicht geladen).</p>
+<h2>Bruchindikator</h2>
+<p>Mit allen 12 Faellen oder auf EPVS-2024 faellt DRIPS-T2 deutlich unter 0,25, oder eine Ortsregel entfernt keine Fehlalarme
+ohne Treffer zu kosten.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/{rater2-gegen-rater1,drips-t2-t010,drips-t1-t010}/zusammenfassung.json, Schwellenkurve
+in ARBEIT.md 23:00; pvs_metrik.py mit Groessenklassen. Oeffentliche Daten (CC BY-NC 4.0).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+<li><a href="../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+<li><a href="../lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.html">sensitivity-needs-a-discriminator</a></li>
+<li><a href="../lesion_detection_method/mechanisms/false-alarms-cluster-by-anatomy.html">false-alarms-cluster-by-anatomy</a></li>
+</ul></div></details><details class="entry" id="edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs"><summary><span class="type">Befund</span><span class="t"><a href="findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.html">Die Edinburgh-PVS-Pipeline entscheidet in der Nachverarbeitung, in Voxeln, und ihr Kontrastfilter frisst die kleinen PVS</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Schwellen fast offen (0,05-0,25 SD); Auswahl durch Kontrast &gt;= 0,19 SD, 3-2000 Voxel, Rand 90 %, alles in Voxeln auf 8 Geometrien; kein Formfilter</span></summary><div class="body"><p class="small muted">Herkunft: MATLAB-Code der uebernommenen Edinburgh-PVS-Pipeline am Code gelesen (Sonnet-Agent + eigene Pruefung der Nachverarbeitung), PVS-Cluster Alita, 2026-10-07; pvs-arena/daten/PIPELINE-EDINBURGH.md · <a href="findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/edinburgh-pipeline-rules-in-voxels-contrast-filter-kills-small-pvs.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die uebernommene Pipeline (RORPO-Vesselness auf dem z-normierten, invertierten T1; Suchraum WM + tiefe Kerne +
+Mittelhirn aus SynthSeg) setzt ihre Vesselness-Schwellen absolut auf einer 0..255-Skala; die in zehn Saetzen
+durchprobierten Werte 3 bis 8 entsprechen 0,05 bis 0,25 SD -- die Schwellenstufe ist fast offen. Die eigentliche
+Auswahl treffen fuenf Regeln danach (PVS_Postprocessing, Utils/getDefaultOptions.m:112-119): Kontrast Objekt gegen
+1-Voxel-Schale &gt;= 6 Grauwerte (0,19 SD), Groesse 3 bis 2000 Voxel, Randanteil am ROI &lt; 90 %, dazu RORPO-Mindestpfad
+3 Voxel und eine WM-Erosion um ceil(1/Voxelkante). Alle Regeln rechnen in VOXELN, nicht in mm: auf einer Kohorte mit
+acht T1-Geometrien (0,39 bis 1 mm) ist das je Scanner ein anderes Verfahren. Fuer kleine PVS ist der Kontrastfilter
+der Hauptverlust (Teilvolumen druekt den Kontrast unter die Schwelle), dann die 3-Voxel-Grenzen. Ein Formfilter fehlt.
+Nebenbefunde: <code>_PVS_WMH_excluded</code> wird VOR dem WMH-Abzug gespeichert (Name irrefuehrend); das Alters-Template wird
+immer auf 55 Jahre erzwungen; die Zaehl-/Volumenanalyse wird vom Hauptlauf nicht aufgerufen (keine Masstabelle).</p>
+<h2>Traegt</h2>
+<p>Deutung der BELOVE-Pipeline-Masken als Vergleichsgroesse (konservativ, gitterabhaengig, kleine PVS fehlen systematisch);
+jede MATLAB-freie Nachbildung (Frangi/RORPO + ROI + Regeln in mm, Kontrastfilter als Kurve). Allgemein: bei uebernommenen
+Pipelines die Nachverarbeitung zuerst lesen -- dort steht der Arbeitspunkt, nicht in den "Schwellen"-Dateien.</p>
+<h2>Traegt nicht</h2>
+<p>Zahlen zur Wirkung jeder Regel (nicht gemessen, nur aus dem Code gefolgert); RORPO-Pfadlaengen des Binaries unbekannt;
+scborderFilter-Wirkungslosigkeit ist Folgerung, kein Lauf.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Ablation je Regel auf Handreferenz zeigt, dass der Kontrastfilter kleine PVS NICHT ueberproportional entfernt.</p>
+<h2>Ablesung</h2>
+<p>PVS_lib: PVS_Postprocessing/{PVSPostprocessing,contrastFilter,volumeFilter,borderFilter}.m, Utils/getDefaultOptions.m,
+PVS_Segmentation/{VSLFilter,getThresholdImage,PVSSegROI}.m, Structural_Brain_Segmentation/PVSROI.m, checkOptions.m;
+Belege mit Zeilen in pvs-arena/daten/PIPELINE-EDINBURGH.md.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/numeric-ids-became-char-codes-in-filenames.html">numeric-ids-became-char-codes-in-filenames</a></li>
+<li><a href="../lesion_detection_method/rules/pipeline-failures-and-names-before-tuning.html">pipeline-failures-and-names-before-tuning</a></li>
+<li><a href="../lesion_detection_method/mechanisms/geometry-follows-the-acquisition.html">geometry-follows-the-acquisition</a></li>
+<li><a href="../lesion_detection_method/rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+</ul></div></details><details class="entry" id="hcp-aging-labels-are-mostly-unet-silver"><summary><span class="type">Befund</span><span class="t"><a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">HCP-Aging-PVS: 160 von 200 Masken sind U-Net-Vorhersagen, die 40 Handfaelle sind nicht gekennzeichnet; VALDO-Rater stimmen nur zu F1 0,20 ueberein</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span><span class="i">160/200 HCP-Masken sind U-Net-Vorhersagen, 40 Handfaelle unmarkiert, nur WM; VALDO-Inter-Rater F1 ~0,20</span></summary><div class="body"><p class="small muted">Herkunft: Literaturrunde 3 (Sonnet-Agent, Preprint-Volltext ueber Europe PMC), PVS-Cluster Alita, 2026-10-07; Details pvs-arena/literatur/hcp_labels.md, valdo_task1_protokoll.md · <a href="findings/hcp-aging-labels-are-mostly-unet-silver.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/hcp-aging-labels-are-mostly-unet-silver.md">Markdown</a></p><h2>Aussage</h2>
+<p>Im HCP-Aging-PVS-Datensatz (OpenNeuro ds005595) sind 40 Faelle (4-5 je Lebensdekade) von zwei Neuroanatomen
+korrigiert; die uebrigen 160 Masken stammen von einem U-Net, das auf diesen 40 (plus 40 semi-supervised) nach
+Frangi-Vorfilter trainiert wurde. Welche 40 das sind, steht weder in participants.tsv noch in den JSONs oder im
+Repo. Markiert ist nur weisse Substanz, Basalganglien ausdruecklich nicht; Masken bis 1 Voxel (0,8 mm) duenn.
+Der Inter-Rater-Dice 0,97 stammt aus 10 Faellen mit gemeinsamer Vorlage. Folge: ein F1 auf HCP misst
+Uebereinstimmung mit deren Frangi+U-Net, und Frangi-Verfahren sehen dort systematisch gut aus.
+Zum Vergleich VALDO Task 1 (1 mm, T1+T2+FLAIR, SABRE-Ganzhirn): Inter-Rater Dice 0,53 und Instanz-F1 etwa 0,20;
+der Sieger (0,39 F1) lag ueber der Rater-Uebereinstimmung. Die Etikett-Decke fuer PVS bei 1 mm ist also niedrig.</p>
+<h2>Traegt</h2>
+<p>Wahl und Deutung der Messlatten einer PVS-Arena: HCP = Trainings-/Entwicklungsdaten fuer kleine PVS, nicht
+Experten-Wahrheit; EPVS-2024 und VALDO = ehrliche, aber rater-begrenzte Messlatten. Jedes eigene Rating braucht
+zwei Rater und eine gemessene Uebereinstimmung, bevor Modelle daran gemessen werden.</p>
+<h2>Traegt nicht</h2>
+<p>Ob die Autoren die 40er-Liste herausgeben (Kontakt im Preprint); ob der Vorlagen-Bias den 0,97 wirklich aufblaeht,
+ist Vermutung.</p>
+<h2>Bruchindikator</h2>
+<p>Eine veroeffentlichte 40er-Liste; oder Inter-Rater-Werte ohne gemeinsame Vorlage nahe 0,97.</p>
+<h2>Ablesung</h2>
+<p>Chai et al., medRxiv 10.1101/2025.03.19.25324269 (Volltext Europe PMC); VALDO-Paper arXiv 2208.07167 (Tabelle,
+Fliesstext widerspruechlich: 59,49/45,5 ist der Lakunen-Wert). DOIs nicht alle nachgeprueft.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/small-pvs-only-in-hcp-t2-reference.html">small-pvs-only-in-hcp-t2-reference</a></li>
+<li><a href="../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+</ul></div></details><details class="entry" id="numeric-ids-became-char-codes-in-filenames"><summary><span class="type">Befund</span><span class="t"><a href="findings/numeric-ids-became-char-codes-in-filenames.html">30 von 103 Pipeline-Fehlschlaegen waren ein Typfehler: Zahl wurde zum Zeichen im Dateinamen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">30/103 Fehlschlaege der uebernommenen MATLAB-Pipeline sind char(Fallnummer) im Dateinamen; 73 Faelle haben Masken</span></summary><div class="body"><p class="small muted">Herkunft: PVS-Cluster Alita, Bestandsaufnahme der uebernommenen Edinburgh-MATLAB-Pipeline, 2026-10-07 · <a href="findings/numeric-ids-became-char-codes-in-filenames.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/numeric-ids-became-char-codes-in-filenames.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die uebernommene PVS-Pipeline (MATLAB, Edinburgh; FreeSurfer, FSL, RORPO) liest die Fallkennungen
+mit <code>readtable</code> aus einer CSV. Kennungen wie 1, 10, 100 werden dabei numerisch, und MATLAB macht aus
+<code>[StudyTag '_T1w_reoriented']</code> das Zeichen <code>char(Fallnummer)</code> als Praefix jedes Dateinamens
+(65 -&gt; <code>A</code>, 100 -&gt; <code>d</code>, 50 -&gt; <code>2</code>, 58 -&gt; <code>:</code>, 10 -&gt; Zeilenumbruch). Faelle, deren Code ein
+Shell-Sonder- oder Steuerzeichen ergibt, brechen in <code>fslreorient2std</code>/<code>run_samseg</code> ab (26 von 30);
+vier weitere (Codes <code>.</code>, <code>0</code>, <code>2</code>, <code>C</code>) brechen spaeter und sind getrennt anzusehen. Die gemeldeten
+Fehlertexte ("Error changing the orientation", "Unrecognized file type _template_LBG") und die leere
+Spalte "Study Tag" in der Fehlerliste (<code>fprintf('%s', Zahl)</code>) sind Folgefehler derselben Ursache.
+Ergebnis: 73 Faelle mit Masken statt 72 gemeldet; mit Textkennungen (z. B. <code>sub-001</code>) laufen alle.</p>
+<h2>Traegt</h2>
+<p>Jede uebernommene Pipeline mit Kennungen aus CSV; jede Sprache, die Zahl und Zeichen implizit wandelt.
+Vor dem Deuten von Fehlertexten: erstes Byte der erzeugten Dateinamen ansehen (<code>od -c</code>).</p>
+<h2>Traegt nicht</h2>
+<p>Sagt nichts ueber die Qualitaet der Masken. Die vier Restfaelle sind nicht erklaert.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Lauf mit Textkennungen auf den 30 Faellen scheitert erneut.</p>
+<h2>Ablesung</h2>
+<p>Eigene Zaehlung (<code>pvs-arena/skripte/bestandsaufnahme.py</code>, <code>daten/BESTANDSAUFNAHME.md</code>), Code
+<code>PVS_lib/Utils/process_dataset_from_csv_files.m</code> Zeile 7 und 14. Patientendaten, nur Summen.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../lesion_detection_method/rules/pipeline-failures-and-names-before-tuning.html">pipeline-failures-and-names-before-tuning</a></li>
+<li><a href="../lesion_detection_method/open_checks/pvs-apply-the-lesion-method.html">pvs-apply-the-lesion-method</a></li>
+</ul></div></details><details class="entry" id="public-pvs-reference-data-and-models-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/public-pvs-reference-data-and-models-2026-10.html">Oeffentliche PVS-Referenzdaten und vortrainierte Modelle, Stand Oktober 2026</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span><span class="i">VALDO T1, EPVS-2024 (Antrag), HCP-Aging (40 Hand); MedNet-PVS, SHIVA v4, PINGU, Frangi/RORPO</span></summary><div class="body"><p class="small muted">Herkunft: Webrecherche zweier Sonnet-Agenten im PVS-Cluster Alita, 2026-10-07 (Details pvs-arena/literatur/) · <a href="findings/public-pvs-reference-data-and-models-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/public-pvs-reference-data-and-models-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<p>Drei Quellen mit Handreferenz: (1) VALDO 2021 Task 1, 40 Trainingsfaelle, T1/T2/FLAIR, Referenz
+lueckenhaft (Ganzhirn-Masken nur SABRE, RSS Teilschichten und Zaehlungen), Zenodo 4687995, CC BY-NC;
+(2) EPVS Segmentation Challenge MICCAI 2024, 200 Faelle, Handmasken CSO+BG, drei Standorte, nur auf
+Antrag (Synapse syn54100278), bester Test-Dice 0,33 CSO / 0,44 BG, Einbruch auf ungesehener Kohorte;
+(3) HCP-Aging PVS, 200 T2 0,8 mm, OpenNeuro ds005595, CC BY-ND, nur 40 handkorrigiert, Rest Silver.
+Vortrainiert und lokal lauffaehig: MedNet-PVS (MedNeXt, T1w klinisch und T2w HCP, Apache 2.0,
+Gewichte CC BY 4.0, figshare braucht Browser-User-Agent), SHIVA-PVS v4 (T1 oder T1+FLAIR, TF &gt;= 2.17,
+CC BY-NC-SA, Gewichte nur per Browser), PINGU (nnU-Net v1, T1, ohne Lizenzangabe). Filter: Frangi
+(skimage), RORPO (C++/pybind). Alle publizierten Zahlen stammen aus verschiedenen Kohorten und sind
+nicht vergleichbar; ausserhalb des Trainingsstandorts bricht jede Methode ein.</p>
+<h2>Traegt</h2>
+<p>Aufbau einer PVS-Arena: Referenz zuerst oeffentlich (HCP-40, VALDO), eigene Kohorte danach.</p>
+<h2>Traegt nicht</h2>
+<p>Eignung fuer kleine PVS unter 1 mm; dafuer traegt kein 1-mm-T1. Nicht geprueft: PMC12782799
+("Comprehensive Evaluation of Multiple ePVS Segmentation Tools"), segcsvd_PVS, Lizenz EPVS-2024.</p>
+<h2>Bruchindikator</h2>
+<p>Ein weiterer offener Datensatz mit Voxel-Handlabels taucht auf (Repositorien nicht direkt durchsucht).</p>
+<h2>Ablesung</h2>
+<p>Webseiten und arXiv (2208.07167, 2512.18197, 2508.20256, 2405.08337), DOIs nicht alle nachgeprueft;
+Tabellen in <code>pvs-arena/literatur/datensaetze.md</code> und <code>methoden.md</code>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+<li><a href="../lesion_detection_method/rules/operating-points-do-not-transfer.html">operating-points-do-not-transfer</a></li>
+</ul></div></details><details class="entry" id="small-pvs-only-in-hcp-t2-reference"><summary><span class="type">Befund</span><span class="t"><a href="findings/small-pvs-only-in-hcp-t2-reference.html">Kleine PVS stehen nur in der HCP-Aging-T2-Referenz; Edinburgh- und Challenge-Referenzen sind nach unten beschnitten</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span><span class="i">Edinburgh/Challenge-Referenzen beschneiden unter 3 mm; nur HCP-Aging-T2 (0,8 mm) traegt 1-Voxel-PVS; kein Werkzeugvergleich mit gemeinsamer Metrik</span></summary><div class="body"><p class="small muted">Herkunft: Literaturrunde 2 im PVS-Cluster Alita (Sonnet-Agent, ~17 Aufrufe), 2026-10-07; Details pvs-arena/literatur/vergleich_und_kleine_pvs.md · <a href="findings/small-pvs-only-in-hcp-t2-reference.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/small-pvs-only-in-hcp-t2-reference.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wer PVS unterhalb von 3 mm Laenge finden will, braucht eine Referenz, die sie enthaelt. Die Edinburgh-Pipeline
+(Ballerini 2018) verwirft Komponenten unter 3 mm Laenge, und die EPVS-Challenge-2024-Referenz folgt deren Vorgaben;
+typische Referenz-PVS bei 1 mm T1 haben 4 bis 9 Voxel (Rashid 2023, Tab. S2). Die HCP-Aging-T2-Masken (0,8 mm
+isotrop, OpenNeuro ds005595) enthalten PVS bis zu einer Voxeldicke, Inter-Rater-Dice 0,97 laut Preprint, aber nur
+im Marklager und nur 40 der 200 Faelle sind handkorrigiert (welche, ist im Datensatz nicht markiert). Im
+rauschfreien Phantom (Bernal 2022, Duarte Coello 2024) findet Frangi bei 1 mm Zylinder ab 1 mm Durchmesser und 2 mm
+Laenge, RORPO noch 0,4 mm; T1 allein verpasst kleine PVS (Valdes Hernandez 2024, 228 Faelle; Rashid: T2 0,81/0,83
+gegen T1 0,63/0,77 Sensitivitaet/Praezision). Keine gefundene Studie misst, ob 1-2-Voxel-Kandidaten bei 1 mm T1
+echte PVS oder Rauschen sind. Vergleiche mehrerer Werkzeuge auf denselben Daten gibt es kaum: Waymont 2024
+(NeuroImage 297:120685) zaehlt 112 Arbeiten, 67 Ansaetze, keine vergleichbaren Metriken; LeFevre 2026
+(Alzheimer's &amp; Dementia, n = 30) nennt nur fuer das hauseigene nnU-Net Zahlen (Dice BG 0,73, WM 0,63).</p>
+<h2>Traegt</h2>
+<p>Wahl der Referenz fuer eine PVS-Arena mit dem Ziel "auch kleine PVS": kleine Klassen auf HCP-T2 messen,
+T1-Modelle dagegen pruefen; Mindestgroesse als Kurve fahren; 1-2-Voxel-Treffer bei 1 mm T1 als Klasse "unsicher".</p>
+<h2>Traegt nicht</h2>
+<p>Ob die kleinen HCP-Markierungen klinisch relevante PVS sind; STRIVE-, Potter- und 7-T-Angaben stammen aus
+Suchzusammenfassungen, nicht aus gelesenen Volltexten.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Datensatz mit 1-mm-T1-Handlabels, der 1-2-Voxel-PVS enthaelt und Inter-Rater-Werte dafuer berichtet.</p>
+<h2>Ablesung</h2>
+<p>arXiv 2512.18197 (EPVS-Challenge, Tabellen gelesen), Ballerini 2018 (arXiv 1704.07699), Bernal 2022
+(doi 10.1016/j.mri.2022.07.016), Rashid 2023, Waymont 2024 (PDF), medRxiv 2025.03.19.25324269 (HCP-Aging);
+DOIs teils nicht nachgeprueft, siehe Datei.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/public-pvs-reference-data-and-models-2026-10.html">public-pvs-reference-data-and-models-2026-10</a></li>
+<li><a href="../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+<li><a href="../lesion_detection_method/mechanisms/geometry-follows-the-acquisition.html">geometry-follows-the-acquisition</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

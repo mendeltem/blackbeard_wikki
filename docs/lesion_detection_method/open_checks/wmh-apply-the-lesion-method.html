@@ -1,0 +1,169 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>WMH: die Methode aus CMB und PVS noch einmal anwenden</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">lesion_detection_method</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>WMH: die Methode aus CMB und PVS noch einmal anwenden</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge info">offen</span></span><span>Stand</span><span>2026-10-09</span><span>Herkunft</span><span>Alita, Plan wmh-modell201/PLAN-METHODE-1009.md; Lehren aus cmb_detection, pvs_detection, wmh_segmentation</span><span>Zuletzt geändert</span><span>2026-10-10 lesion_detection_method: WMH domain-gap levers on BELOVE, translator rejected</span><span>Verweist auf</span><span><a href="pvs-apply-the-lesion-method.html">PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird</a> <span class="muted small">(lesion_detection_method)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/lesion_detection_method/open_checks/wmh-apply-the-lesion-method.md">knowledge/lesion_detection_method/open_checks/wmh-apply-the-lesion-method.md</a></span></div><h2>Warum</h2>
+<p>Die WMH-Linie lief mit 2D-U-Nets und Trainingsrezept-Hebeln (ausgeliefert 0,725 Dice auf dem 110er-Test). Die CMB-Linie
+zeigte danach, dass die Gewinne in der Datenkette liegen: Gitter, das der Aufnahme folgt (+0,159 F1), Ortsregel nach dem Netz,
+EIN Kandidaten-Klassifikator. Die Challenge-FLAIRs haben durchgehend 3-mm-Schichten bei ~1 mm in der Schicht: genau der
+Fall des anisotropen Netzes.</p>
+<h2>Schritte (Reihenfolge der Methode)</h2>
+<ol>
+<li>M1 Gitter auf nativem Raster, je Fall pruefen (Referenz ausserhalb der Hirnmaske, Label 2, Geometrie). Probe: 0 % ausserhalb.</li>
+<li>M2 Auswertung mit offizieller Label-2-Regel; muss die alte 2D-Kreuzvalidierung auf 0,001 wiedergeben.</li>
+<li>M3 Rauschboden: anisotropes 3D-U-Net, 3 Startwerte x 5 feste Falten, gepaart gegen die 2D-Grundlinie.</li>
+<li>M4 Turnier aller Netze + nnU-Net v2 (gleiche Falten).</li>
+<li>M5 Ortsregel (ausserhalb WM/periventrikulaer) erst im Betrachter, dann messen.</li>
+<li>M6 Kandidaten-Klassifikator als zweite Stufe.</li>
+<li>M7 eingefrorene Kette einmal auf dem 110er-Test; M8 eigene Kohorte (nur lokal), stratifiziert nach Voxelvolumen.</li>
+</ol>
+<h2>Entscheidungsregel (vorab)</h2>
+<p>Gewinn = gepaartes 95-%-Bootstrap-Intervall (Dice oder Laesions-F1) ueber 0 UND groesser als die Startwert-Streuung aus M3.
+Kein Verlust-/Augmentierungs-Suchen vor M5/M6.</p>
+<h2>Stand 2026-10-09 abends</h2>
+<ul>
+<li>M1 fertig (60/60, Referenz vollstaendig in der Hirnmaske). M2 fertig: Messcode gibt die alte Testzahl 0,7719 Dice,
+  Laesions-F1 0,7517, Recall 0,7921, AVD 29,48 % bitgenau wieder (AVD der alten Kette ist relativ in %).</li>
+<li>Reihenfolge geaendert: erst Patch-Vorlauf mit dem anisotropen Netz (16x64x64, 16x96x96, 16x160x160, 32x96x96), Wahl nach
+  vorab festgelegter Regel, dann Arena mit 16 Netzen, 60 Epochen, nnU-Net v2 als Referenz; zuletzt Sieger mit gegen ohne Patches
+  (ganzes Volumen) samt gemessenem Speicherbedarf. Grund: die Patchgroesse gilt fuer alle Netze, bei CMB kostete ein zu kleiner
+  Patch -0,216 F1; "passt nicht auf die Karte" gilt erst mit gemessener Zahl (CMB-Patches brauchten nur 0,6-2,7 GiB).</li>
+</ul>
+<h2>Stand 2026-10-10 frueh</h2>
+<ul>
+<li>Vorlauf gerechnet. Falle: die binaeren Masken des CMB-Turniers loeschen Komponenten ueber 2100 Voxel (Klumpenwaechter
+  fuer Mikroblutungen) -- fuer WMH falsch, Dice scheinbar 0,46. Auf den Wahrscheinlichkeitskarten (Schwelle 0,5):
+  anisotropes 3D-U-Net 0,798 gegen 2D 0,783 Dice, gepaart +0,015 [+0,009; +0,023], 43 von 60 Faellen besser, alle drei
+  Scanner positiv. Patchgroessen 16x64x64 bis 32x96x96 gleichauf (Unterschiede +-0,002). Rauschboden ueber Startwerte offen.</li>
+<li>Regel fuer uebernommene Pipelines: Nachbearbeitung der Herkunftslinie (hier Groessenfilter fuer CMB) vor der ersten Zahl
+  pruefen; Verdacht, wenn Laesions-F1 gleich bleibt, der Dice aber einbricht und die Streuung riesig ist.</li>
+</ul>
+<h2>Stand 2026-10-10 morgens: Laesions-F1 und QC</h2>
+<ul>
+<li>Offizielles Mass (Label-2-Regel, Hirnmaske), Schwelle 0,5, 60 Faelle out-of-fold: 3D Dice 0,798 / Laesions-F1 0,747 /
+  Laesions-Recall 0,742; 2D 0,783 / 0,739 / 0,690. Gepaart: Dice +0,015 [+0,009; +0,023], F1 +0,009 [-0,006; +0,024].
+  Der 3D-Gewinn liegt im Voxel-Dice und im Recall, beim Laesions-F1 ist er nicht gesichert.</li>
+<li>Zwei Messfallen im eigenen Auswerteskript: eine Wahrscheinlichkeitskarte als uint8 (0..255) wurde wie eine Maske gelesen
+  (effektive Schwelle 1/255: Dice 0,72 statt 0,80), und ein Pfad nahm die Label-2-Datei als Hirnmaske (alles 0).
+  Regel: den Datentyp der Vorhersage vor dem Schwellen pruefen; ein Mass, das bei der Grundlinie stimmt, kann beim neuen
+  Dateiformat falsch sein -- jede neue Vorhersageart einmal gegen eine Direktrechnung halten.</li>
+<li>QC-Seite mit dem gemeinsamen Werkzeug qc_slice_viewer gebaut (60 Faelle, beide Modelle), nur lokal.</li>
+</ul>
+<h2>Stand 2026-10-10 vormittags: extern auf eigener Kohorte (BELOVE, 56 Faelle mit Handmaske)</h2>
+<ul>
+<li>Das nur auf den 60 Challenge-Faellen trainierte 3D-Netz faellt auf BELOVE auf Dice 0,42 (Sensitivitaet 0,33, Praezision 0,78);
+  ein 2D-Modell mit BELOVE im Training erreicht auf denselben Faellen 0,665.</li>
+<li>Der Einbruch folgt der Geometrie: 5 mm / 0,86 mm Pixel 0,57; 5 mm / 0,69 mm 0,44; 6 mm / 0,96 mm 0,32; 6 mm / 0,43 mm 0,20 (das 2D-Modell
+  mit Eigendaten bleibt ueber alle Geometrien bei 0,64-0,68). Pixel in der Schicht vor der Vorhersage auf ~1 mm umrechnen hebt die 0,43-mm-Faelle
+  von 0,21 auf 0,37 Dice (Praezision 0,97), die Sensitivitaet bleibt niedrig.</li>
+<li>Regel: Ein Patch-Netz lernt Strukturen in Voxeln, nicht in mm. Vor der Anwendung auf fremde Daten die Pixelgroesse auf die des Trainings bringen;
+  was danach fehlt, ist Domaene (Schichtdicke, Kontrast, Zeichenstil) und braucht eigene Trainingsdaten.</li>
+</ul>
+<h2>Stand 2026-10-10 abends: was gegen die Domaenenluecke hilft (BELOVE-56, extern, nur Challenge-Training)</h2>
+<table>
+<thead>
+<tr>
+<th>Hebel</th>
+<th>Dice @0,5</th>
+<th>Laesions-F1 @0,5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keiner</td>
+<td>0,422</td>
+<td>0,416</td>
+</tr>
+<tr>
+<td>Pixel in der Schicht auf ~1 mm</td>
+<td>0,482</td>
+<td>0,389</td>
+</tr>
+<tr>
+<td>+ Histogramm-Angleichung an die Challenge-Kanalverteilung</td>
+<td>0,569</td>
+<td>0,449</td>
+</tr>
+<tr>
+<td>a12 (Zentrumskopf) + Pixel + Histogramm</td>
+<td>0,571</td>
+<td>0,458</td>
+</tr>
+<tr>
+<td>Lehrer-Schueler auf duenn/dick-Paaren + Pixel + Histogramm</td>
+<td>0,585</td>
+<td>0,442</td>
+</tr>
+<tr>
+<td>Dickschicht-Augmentierung im Training (+ Pixel + Histogramm)</td>
+<td>0,565</td>
+<td>0,458</td>
+</tr>
+<tr>
+<td>U-Net-Uebersetzer dick -&gt; 3 mm (gepaart, nur FLAIR)</td>
+<td>-0,020 Dice gegen ohne</td>
+<td>verworfen</td>
+</tr>
+<tr>
+<td>Ziel: 2D-Modell mit BELOVE im Training</td>
+<td>0,665</td>
+<td>0,543</td>
+</tr>
+<tr>
+<td>- Herdlast und Herdgroesse sind in beiden Kohorten gleich (Median 15,9 gegen 16,3 ml); die Luecke liegt an Bild (Schicht, Pixel, Kontrast) und Referenzstil.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Regel: zuerst die billigen, deterministischen Angleichungen (Pixelgroesse, Histogramm), gemessen gepaart; gelernte Bilduebersetzung erst, wenn sie das schlaegt -- hier verschlechterte sie. Den Rest schliesst nur Training auf Daten der Zieldomaene.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Zu pruefen</h2>
+<ul>
+<li>M1-M3 eingereiht 2026-10-09 (lokaler Agent); M4 braucht ~2 Tage GPU und pausiert das Sprachmodell.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

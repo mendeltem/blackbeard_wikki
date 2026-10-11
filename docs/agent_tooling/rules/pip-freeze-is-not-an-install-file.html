@@ -1,0 +1,81 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Ein pip freeze ist ein Protokoll, keine Installationsdatei -- die Installation gilt erst nach dem Test aus dem frischen Clone</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>Ein pip freeze ist ein Protokoll, keine Installationsdatei -- die Installation gilt erst nach dem Test aus dem frischen Clone</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-07</span><span>Herkunft</span><span>Repo cmb-valdo-chain, Install-Test aus frischem Clone, 2026-10-07</span><span>Zuletzt geändert</span><span>2026-10-07 cmb_detection: shared candidate classifier on the pooled candidates (one threshold, no tissue map); agent_tooling: rule pip freeze is not an install file</span><span>Verweist auf</span><span><a href="traceability-map-for-a-results-repo.html">Ein Ergebnis-Repo braucht EINE Karte: Zahl -&gt; Daten -&gt; Befehl -&gt; Datei -&gt; Abschnitt</a> <span class="muted small">(agent_tooling)</span></span><span>Verwiesen von</span><span><a href="release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/pip-freeze-is-not-an-install-file.md">knowledge/agent_tooling/rules/pip-freeze-is-not-an-install-file.md</a></span></div><h2>Aussage</h2>
+<p>Ein <code>pip freeze</code> der Arbeitsumgebung als <code>requirements-lock.txt</code> auszuliefern sieht nach
+Reproduzierbarkeit aus und scheitert in der ersten Zeile: (1) Build-Kennungen wie
+<code>torch==2.6.0+cu124</code> oder <code>torch_cluster==1.6.3%2Bpt26cu124</code> liegen nicht auf PyPI, das
+<code>%2B</code> ist fuer pip sogar ein Syntaxfehler (sofortiger Abbruch, nichts installiert);
+(2) die Datei enthaelt alles, was je in der Umgebung lag (160 Pakete, TensorFlow,
+Graph-Bibliotheken), nicht das, was der Code importiert. Regel:</p>
+<ol>
+<li>Die Installationsdatei enthaelt nur, was der Code importiert (<code>grep -rhoE '^(import|from) \w+'</code>
+   ueber das Paket, gegen die Standardbibliothek gefiltert), mit den Versionen der
+   Arbeitsumgebung gepinnt; schwere Rahmen (torch) mit ihrem eigenen Index separat davor.</li>
+<li>Das volle <code>pip freeze</code> bleibt als <code>requirements-full-record.txt</code> mit Kopfzeile
+   "Protokoll, nicht installierbar" -- es ist ein Beleg, kein Werkzeug.</li>
+<li>Getestet ist eine Installation erst, wenn sie aus einem FRISCHEN Clone in einer NEUEN
+   Umgebung mit genau den README-Befehlen bis zum Selbsttest laeuft; das Log gehoert ins Repo
+   (<code>docs/INSTALL-TEST.md</code>). Der zweite Fund dieses Tests war ein <code>tqdm</code>-Import im
+   Selbsttest, den die Hauptdatei nicht nannte.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jedes Repo, dessen README "pip install -r" verspricht; besonders Forschungscode, der in
+einer gewachsenen conda-Umgebung entstand.</p>
+<h2>Traegt nicht</h2>
+<p>Container-Images oder conda-lock-Dateien mit explizitem Kanal und Build: dort ist das
+volle Abbild die Installationsdatei.</p>
+<h2>Bruchindikator</h2>
+<p>Ein frischer Clone, der mit der minimalen Datei installiert und dessen Selbsttest trotzdem
+an einem fehlenden Paket scheitert -- dann fehlt ein Import in der Grep-Liste (dynamische
+Importe, optionale Pfade).</p>
+<h2>Ablesung</h2>
+<p>Eigener Test 2026-10-07: Lock-Datei rc=1 in Sekunde 1; minimale Datei + torch-CPU + tqdm:
+SELFTEST PASSED in neuer Umgebung. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="traceability-map-for-a-results-repo.html">traceability-map-for-a-results-repo</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

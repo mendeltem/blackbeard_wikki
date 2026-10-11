@@ -1,0 +1,64 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Abwesenheit einer Messung ist keine Messung von Abwesenheit</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_application_layer</a> › <a href="../index.html#rules">Regel</a></div><h1>Abwesenheit einer Messung ist keine Messung von Abwesenheit</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Projekt ki-anwendungsschicht, Gespräch 2026-09-05 bis 2026-10-02</span><span>Zuletzt geändert</span><span>2026-10-02 knowledge: drei Themen von der Verbundseite ki-anwendungsschicht</span><span>Verweist auf</span><span><a href="../../ai_demand_drivers/mechanisms/secrecy-supports-motive-not-volume.html">Geheimhaltung stützt das Motiv, nicht die Menge</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../mechanisms/distillation-substitutes-compute.html">Destillation ersetzt Rechenzeit, sie verbraucht sie nicht</a> <span class="muted small">(ai_application_layer)</span><br><a href="../open_checks/accelerator-mass-balance.html">Mengenbilanz der Beschleuniger</a> <span class="muted small">(ai_application_layer)</span></span><span>Verwiesen von</span><span><a href="../findings/supply-atlas-ai-use-level5.html">KI-Einsatz an den 128 wichtigsten Standorten des Supply Atlas</a> <span class="muted small">(ai_application_layer)</span><br><a href="../mechanisms/distillation-substitutes-compute.html">Destillation ersetzt Rechenzeit, sie verbraucht sie nicht</a> <span class="muted small">(ai_application_layer)</span><br><a href="../open_checks/accelerator-mass-balance.html">Mengenbilanz der Beschleuniger</a> <span class="muted small">(ai_application_layer)</span><br><a href="../open_checks/airport-biometric-checkin-use-case.html">Flughafen: biometrischer Check-in als Use Case erfassen</a> <span class="muted small">(ai_application_layer)</span><br><a href="operator-evidence-is-not-site-evidence.html">Konzernbeleg ist kein Standortbeleg</a> <span class="muted small">(ai_application_layer)</span><br><a href="../../china_industrial_strategy/mechanisms/abundant-bad-compute-scarce-good.html">Reichlich schlechte Rechenleistung, knappe gute</a> <span class="muted small">(china_industrial_strategy)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_application_layer/rules/absence-of-measurement-is-not-measurement-of-absence.md">knowledge/ai_application_layer/rules/absence-of-measurement-is-not-measurement-of-absence.md</a></span></div><h2>Aussage</h2>
+<p>Ein Kanal, der Fingerabdrücke hinterlässt, ist zählbar; einer ohne nicht. Dass für einen Kanal eine Zahl vorliegt und für den anderen keine, sagt etwas über Erkennbarkeit, nichts über Größe. Beispiel verdeckte Rechenzeitnachfrage aus China: Das Abschöpfen von Modellausgaben über Scheinkonten war zählbar (Anthropic: rund 24.000 Konten, über 16 Millionen Austausche), weil das Nutzungsmuster auffällig ist. Ein gemieteter Beschleunigerverbund, der einen Trainingslauf fährt, sieht aus wie jeder andere.</p>
+<p>Belegte Einzelfälle des unzählbaren Kanals: Tencent, Verträge über 1,2 Milliarden Dollar für 15.000 Blackwell über den japanischen Anbieter Datasection; INF Tech (Shanghai), rund 100 Millionen Dollar für 2.300 Beschleuniger über einen indonesischen Telekomanbieter. Beides zum Zeitpunkt zulässig: Die Ausfuhrkontrolle erfasste die Lieferung, nicht die Anmietung. Reaktion: Remote Access Security Act, Repräsentantenhaus 12.01.2026, 369 zu 22.</p>
+<p>Regel: Eine fehlende Zahl nie als kleine Zahl lesen. Neben jede Mengenangabe die Erkennbarkeit ihres Kanals schreiben.</p>
+<h2>Trägt</h2>
+<p>Die Behandlung verdeckter Nachfrage auf der Verbundseite (Ansicht 6: belegte Sachverhalte, ausdrücklich kein Mengenanteil). Dass eine Behörde eine Lücke schließen will, ist der belastbarste Beleg, dass sie besteht.</p>
+<h2>Trägt nicht</h2>
+<p>Eine Schätzung. Strukturelle Obergrenze: Verdeckte Nachfrage lebt nur in dem Teil der Flotte, der an Dritte vermietet wird. Meta vermietet nichts, Google und Microsoft rechnen überwiegend für sich. Hauptschauplatz sind Neoclouds und Wiederverkäufer in Drittländern.</p>
+<h2>Bruchindikator</h2>
+<p>Das Gesetz tritt in Kraft, und der Umsatz der betroffenen Anbieter wächst in den zwei folgenden Quartalen unverändert: Der Kanal war klein.</p>
+<h2>Ablesung</h2>
+<p>Fälle: Presse (Tier 2, kein Befund). Abstimmung: öffentlicher Vorgang. Menge: blind, siehe <a href="../open_checks/accelerator-mass-balance.html">Mengenbilanz</a>.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../../ai_demand_drivers/mechanisms/secrecy-supports-motive-not-volume.html">secrecy-supports-motive-not-volume</a></li>
+<li><a href="../mechanisms/distillation-substitutes-compute.html">distillation-substitutes-compute</a></li>
+<li><a href="../open_checks/accelerator-mass-balance.html">accelerator-mass-balance</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

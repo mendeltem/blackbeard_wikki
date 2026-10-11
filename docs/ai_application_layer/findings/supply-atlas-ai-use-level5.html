@@ -1,0 +1,122 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>KI-Einsatz an den 128 wichtigsten Standorten des Supply Atlas</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_application_layer</a> › <a href="../index.html#findings">Befund</a></div><h1>KI-Einsatz an den 128 wichtigsten Standorten des Supply Atlas</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-06</span><span>Herkunft</span><span>Claude-Code-Sitzung, Webrecherche mit sechs Agenten, 2026-10-06</span><span>Zuletzt geändert</span><span>2026-10-06 Seitenverbund und KI-Pruefung der Supply-Atlas-Standorte</span><span>Verweist auf</span><span><a href="../rules/operator-evidence-is-not-site-evidence.html">Konzernbeleg ist kein Standortbeleg</a> <span class="muted small">(ai_application_layer)</span><br><a href="../open_checks/supply-atlas-ai-use-level4.html">KI-Prüfung im Supply Atlas fortsetzen</a> <span class="muted small">(ai_application_layer)</span><br><a href="../rules/absence-of-measurement-is-not-measurement-of-absence.html">Abwesenheit einer Messung ist keine Messung von Abwesenheit</a> <span class="muted small">(ai_application_layer)</span></span><span>Verwiesen von</span><span><a href="../open_checks/supply-atlas-ai-use-level4.html">KI-Prüfung im Supply Atlas fortsetzen</a> <span class="muted small">(ai_application_layer)</span><br><a href="../rules/operator-evidence-is-not-site-evidence.html">Konzernbeleg ist kein Standortbeleg</a> <span class="muted small">(ai_application_layer)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_application_layer/findings/supply-atlas-ai-use-level5.md">knowledge/ai_application_layer/findings/supply-atlas-ai-use-level5.md</a></span></div><h2>Aussage</h2>
+<p>Alle 128 Standorte der höchsten Stufe (lv 5) im
+<a href="https://mendeltem.github.io/Supply_Atlas3D/">Supply Atlas</a> wurden auf
+dokumentierten KI-Einsatz geprüft. Maßstab: maschinelles Lernen, Bildverarbeitung,
+autonome Fahrzeuge/Bohrer, KI-Wartung oder KI-Prozessoptimierung. Automatisierung
+oder „Smart Factory“ ohne ausdrückliche KI-/ML-Angabe zählt nicht.</p>
+<table>
+<thead>
+<tr>
+<th>Klasse</th>
+<th>Anzahl</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>site</td>
+<td>42</td>
+<td>KI am Standort selbst belegt</td>
+</tr>
+<tr>
+<td>operator</td>
+<td>39</td>
+<td>KI beim Betreiber belegt, nicht für diesen Standort</td>
+</tr>
+<tr>
+<td>none</td>
+<td>27</td>
+<td>kein öffentlicher Beleg gefunden</td>
+</tr>
+<tr>
+<td>infra</td>
+<td>13</td>
+<td>Standort ist selbst KI-Infrastruktur (Rechenzentren)</td>
+</tr>
+<tr>
+<td>open</td>
+<td>3</td>
+<td>nicht geprüft (Suchbudget erschöpft): Vindhyachal, Surgut-2, Gansu Jiuquan</td>
+</tr>
+<tr>
+<td>na</td>
+<td>4</td>
+<td>Meerengen, kein Betreiber</td>
+</tr>
+</tbody>
+</table>
+<p>Muster: Am häufigsten belegt sind KI-Hochöfen (POSCO, Baowu), autonome
+Minenflotten (Pilbara, Nevada, Bayan Obo), chinesische Containerterminals
+(Yangshan, Qingdao, Ningbo) und WEF-Lighthouse-Werke (CATL, ASE). Bei Chip- und
+Speicherfabriken belegen TSMC, Samsung, SK hynix und Micron KI fast nur auf
+Konzernebene, nicht je Fab.</p>
+<p>Ergebnis steht je Standort im Atlas (Feld <code>AI_USE</code>, Tooltip, Detailfenster mit Quelle,
+Schalter „KI-Einsatz hervorheben“).</p>
+<h2>Trägt</h2>
+<ul>
+<li>Aussagen der Form „an Standort X ist KI dokumentiert“ für die 42 site-Fälle, jeweils mit Quelle im Atlas.</li>
+<li>Die Beobachtung, dass Konzernmeldungen selten einen Standort nennen.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Dass an den 27 none-Standorten keine KI läuft (siehe absence-of-measurement-is-not-measurement-of-absence).</li>
+<li>Einen Anteil für die ganze Industrie: nur lv 5, nicht zufällig gezogen.</li>
+<li>Schwache site-Fälle als gleichwertig: Weda Bay (nur Werbetext), Baotou (nur Newsletter), Hyundai Ulsan (angekündigt), Cigar Lake (Prototyp), Port Hedland (KI nur beim Schlepperbetreiber).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Eine Nachprüfung findet bei mehr als jedem fünften site-Fall keine standortbezogene Quelle.</p>
+<h2>Ablesung</h2>
+<p>Überwiegend Trade Press, Firmenpressemitteilungen, WEF-Lighthouse-Seiten und
+chinesische Staatsmedien; kaum Tier 1a. Je Standort ein Satz und eine URL in
+<code>Supply_Atlas3D/index.html</code> (<code>const AI_USE</code>). Recherche mit Websuche,
+Stand 2026-10-06. SMIC Shanghai von site auf none gestuft (einzige Quelle 2007, kein ML).</p>
+<h2>Verknüpft</h2>
+<p><a href="../rules/operator-evidence-is-not-site-evidence.html">operator-evidence-is-not-site-evidence</a>,
+<a href="../open_checks/supply-atlas-ai-use-level4.html">supply-atlas-ai-use-level4</a>,
+<a href="../rules/absence-of-measurement-is-not-measurement-of-absence.html">absence-of-measurement-is-not-measurement-of-absence</a></p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

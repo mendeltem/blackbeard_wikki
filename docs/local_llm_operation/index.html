@@ -1,0 +1,1674 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>local_llm_operation</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness</p>
+<div class="stripe"><i class="warn" style="width:40.0%" title="vorschlag: 12"></i><i class="ok" style="width:36.7%" title="getragen: 11"></i><i class="info" style="width:20.0%" title="offen: 6"></i><i class="" style="width:3.3%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">12 vorschlag</span> <span class="ok">11 getragen</span> <span class="info">6 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
+<p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
+31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
+llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
+Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
+<p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="31.8" width="319.0" height="18.2" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 22</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 22)</figcaption></figure>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="foreign-gpu-process-before-measuring"><summary><span class="type">Regel</span><span class="t"><a href="rules/foreign-gpu-process-before-measuring.html">Vor jeder Messung pruefen, wer sonst auf der GPU und im RAM sitzt</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-04</span><span class="i">Vergessener `llama-server` auf der GPU: Prefill 30 statt 397 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Victus, Einrichtung Hermes + OpenCode, 2026-10-04 · <a href="rules/foreign-gpu-process-before-measuring.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/foreign-gpu-process-before-measuring.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein vergessener <code>llama-server</code> aus einem frueheren Vergleichslauf hielt seit
+3,5 Stunden <strong>5 GB von 8 GB VRAM</strong> und eine zweite Kopie des Modells im RAM.
+Der Swap war voll (7/7 GB). Ollama bekam 2,4 GB VRAM.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prefill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mit fremdem Prozess, OpenCode-Prompt ~11k Token</td>
+<td>~30 t/s, erste Anfrage nach 5 min abgebrochen</td>
+</tr>
+<tr>
+<td>nach Beenden, 6k-Token-Prompt</td>
+<td>397 t/s</td>
+</tr>
+</tbody>
+</table>
+<p>Faktor 13. Fuer Ollama sah alles normal aus: das Modell lud, es kam keine
+Fehlermeldung.</p>
+<p>Nicht verwechseln: <code>ollama ps</code> zeigt bei Qwen3.6-35B-A3B immer ~98 % CPU. Das
+ist das gewollte Expert-Offloading, kein Fehler.</p>
+<h2>Traegt</h2>
+<p>Jede Durchsatzmessung und jede Fehlersuche "warum ist es heute langsam".
+Zwei Befehle vorher:</p>
+<pre><code>nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv
+free -g
+</code></pre>
+<p>Mehr als ein Inferenzprozess auf der GPU oder voller Swap: erst aufraeumen,
+dann messen.</p>
+<h2>Traegt nicht</h2>
+<p>Andere Ursachen fuer langsames Prefill, etwa der Kaltstart nach dem Laden
+(erste Decode-Messung 17 t/s, warm 30-35 t/s).</p>
+<h2>Bruchindikator</h2>
+<p>Prefill weit unter dem bekannten Wert, ohne dass sich Modell oder Prompt
+geaendert hat.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Ollama 0.35.1. Prefill aus <code>print_timing</code> im Ollama-Log und
+<code>prompt_eval_duration</code> der <code>/api/generate</code>-Antwort. Die beiden Zeilen der
+Tabelle haben verschiedene Promptlaengen, siehe
+<a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a>. Der Faktor ist
+deshalb eine Groessenordnung, keine genaue Zahl.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+</ul></div></details><details class="entry" id="separate-prefill-from-decode"><summary><span class="type">Regel</span><span class="t"><a href="rules/separate-prefill-from-decode.html">Prefill und Decode getrennt messen, nie ueber die Wanduhr</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">Durchsatz nie ueber die Wanduhr: 0,4 gegen 27,4 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="rules/separate-prefill-from-decode.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/separate-prefill-from-decode.md">Markdown</a></p><h2>Aussage</h2>
+<p>Wer <code>completion_tokens / Gesamtdauer</code> rechnet, misst Prefill, Decode und
+HTTP-Overhead in einer Zahl. Bei kurzen Antworten dominiert der Overhead.</p>
+<p>Gemessen: dieselbe Anfrage meldete <strong>0,4 t/s</strong> nach Wanduhr, waehrend der Server
+im selben Moment mit <strong>27,4 t/s</strong> dekodierte. Ein Faktor 68 zwischen Messfehler
+und Wirklichkeit.</p>
+<p><code>llama-server</code> liefert beides getrennt im Feld <code>timings</code>:
+<code>prompt_per_second</code> und <code>predicted_per_second</code>.</p>
+<p>Zweite Haelfte der Regel: eine einzelne Prefill-Zahl ist ebenfalls irrefuehrend.
+Innerhalb einer Sitzung gemessen: 6,1 / 25,7 / 90,2 / 243,3 t/s - abhaengig davon,
+wie viele Modellseiten schon im RAM liegen und wie lang der Prompt ist. Kurze
+Prompts sehen dabei <strong>langsamer</strong> aus als lange, weil der feste Aufwand je Anfrage
+sich auf wenige Token verteilt.</p>
+<h2>Traegt</h2>
+<p>Jede Durchsatzangabe zu einem lokalen Modell. Ohne Trennung ist sie nicht
+vergleichbar - auch nicht mit sich selbst von gestern.</p>
+<h2>Traegt nicht</h2>
+<p>Die Frage, wie lange ein Nutzer wartet. Dafuer ist die Wanduhr genau richtig -
+sie darf nur nicht Durchsatz heissen.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Durchsatzzahl ohne Angabe von Promptlaenge und Waermezustand.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, llama.cpp b10603, Feld <code>timings</code> der
+OpenAI-kompatiblen Antwort gegen eigene Wanduhrmessung.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(2)</span></h2><details class="entry" id="moe-expert-offloading"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/moe-expert-offloading.html">Ein MoE-Modell laeuft auf einer GPU, auf die es nicht passt</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">`-ngl` plus `-ncmoe`: ein 35-B-Modell auf 8 GB VRAM, 19,4 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="mechanisms/moe-expert-offloading.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/mechanisms/moe-expert-offloading.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein dichtes Modell muss fuer jedes Token alle Gewichte lesen, ein Mixture-of-Experts
+nur die aktiven. Damit laesst sich ein 35-B-Modell mit 3 B aktiven Parametern auf
+einer 8-GB-Karte interaktiv betreiben: <code>-ngl 99</code> legt Attention, Embeddings und
+KV-Cache ins VRAM, <code>-ncmoe N</code> laesst die Expert-Gewichte der ersten N Layer im RAM
+und rechnet sie auf der CPU. Beides arbeitet gleichzeitig.</p>
+<p>Gemessen auf Victus (RTX 4070 Laptop, 8 GB; Qwen3.6-35B-A3B UD-IQ4_XS, 40 Layer):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>-ncmoe 99</code> (alles CPU)</th>
+<th><code>-ncmoe 34</code> (6 Layer GPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VRAM</td>
+<td>5132 MiB</td>
+<td>6733 MiB</td>
+</tr>
+<tr>
+<td>Decode</td>
+<td>15,9 t/s</td>
+<td>19,4 t/s</td>
+</tr>
+<tr>
+<td>Prefill, warm</td>
+<td>160 t/s</td>
+<td>180-306 t/s</td>
+</tr>
+</tbody>
+</table>
+<h2>Traegt</h2>
+<p>Dass sich die Modellgroesse von der Kartengroesse entkoppeln laesst, solange das
+Modell MoE ist. Die Richtung der Abwaegung: jeder Expert-Layer, der auf die GPU
+wandert, bringt ein paar Prozent.</p>
+<h2>Traegt nicht</h2>
+<p>Ein dichtes Modell. Dort gilt nichts davon - ein dichtes 27 B blieb auf derselben
+Karte bei etwa 4 t/s.
+Auch kein Argument fuer grossen Kontext: der Prefill laeuft CPU-seitig und ist
+compute-bound, ein 16k-Prompt kostet rund eine Minute.</p>
+<h2>Bruchindikator</h2>
+<p>Decode-Rate faellt unter die Rate bei <code>-ncmoe 99</code>. Dann ist nicht die Aufteilung
+schuld, sondern RAM-Mangel - Modellseiten werden verdraengt und von SSD neu
+gelesen. Erster gemessener Prefill auf Victus: 6 t/s statt 243.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Tier 1b-aequivalent: llama.cpp b10603, CUDA 13.3, <code>/v1/chat/completions</code>
+mit <code>timings</code>. Nicht uebertragbar auf andere Karten ohne Nachmessen.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="risks/dynamic-quants-break-metadata-math.html">dynamic-quants-break-metadata-math</a></li>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+</ul></div></details><details class="entry" id="prefix-cache-single-slot"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/prefix-cache-single-slot.html">Ein Slot, und die Historie nie umschreiben</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">`-np 1`, und warum Prompt-Kompaktierung den Cache zerstoert</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="mechanisms/prefix-cache-single-slot.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/mechanisms/prefix-cache-single-slot.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>llama-server</code> legt standardmaessig mehrere Slots an, jeder mit <strong>eigenem</strong>
+Prefix-Cache. Ein sequenzieller Client landet dann abwechselnd in verschiedenen
+Slots, und der System-Prompt wird jedes Mal neu prefillt. <code>-np 1</code> haelt alles in
+einem Cache.</p>
+<p>Daraus folgt eine zweite, wichtigere Regel: bei append-only Verlauf traegt der
+Prefix-Cache den gesamten Kontext, pro Schritt werden nur die neuen Tokens
+prefillt. Jede Operation, die die Historie <strong>umschreibt</strong> - Kompaktierung,
+Zeitstempel im System-Prompt, nachtraegliches Kuerzen - wirft den Cache weg und
+erzwingt vollen Re-Prefill.</p>
+<p>Beleg aus dem Serverlog: nach einem Treffer meldet der Server
+<code>selected slot by LCP similarity, f_sim_best = 1.000</code> und wertet nur noch 4 Token
+statt 80 aus.</p>
+<h2>Traegt</h2>
+<p>Die Entscheidung <code>-np 1</code> fuer jeden sequenziellen Client. Und die Entscheidung
+gegen Prompt-Kompaktierung in Agent-Schleifen auf lokaler Hardware.</p>
+<h2>Traegt nicht</h2>
+<p>Batch-Durchsatz. Dort ist das Gegenteil richtig: mehrere parallele Anfragen lasten
+die Expert-Matmuls besser aus. Zwei Startprofile anlegen, eines je Zweck.</p>
+<h2>Bruchindikator</h2>
+<p>Jeder Aufruf kostet gleich viel Prefill, obwohl der Prompt sich nur am Ende
+verlaengert. Dann greift der Cache nicht.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, llama.cpp b10603, Serverlog mit <code>-lv 3</code>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(15)</span></h2><details class="entry" id="guarded-outbound-research-local-first"><summary><span class="type">Befund</span><span class="t"><a href="findings/guarded-outbound-research-local-first.html">Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-09</span><span class="i">Agent ohne Netz: Waechter sperrt nur eigene Kohorten, Recherche lokal ueber offene Literatur-APIs + 27B (68 s, keine Cloud), Cloud nur auf Zuruf; stiller Aussenweg war einen Monat tot</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Ausgangswache (system/guard) des lokalen Agenten, Reparatur und Umbau 2026-10-09 · <a href="findings/guarded-outbound-research-local-first.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein lokaler Agent, der Patientendaten sieht, bekommt keinen Netzzugang; sein einziger Weg nach draussen ist ein
+Waechterdienst auf Loopback, der jede Frage prueft (Muster, dann lokales Modell, dann Protokoll). Drei Lehren aus
+dem Betrieb:</p>
+<ol>
+<li><strong>Ein stiller Aussenweg ist ein toter Aussenweg.</strong> Der Dienst rief <code>claude -p</code> mit dem Standardmodell auf;
+   als dessen Kontingent erschoepft war, kam einen Monat lang nur "Fehler" zurueck, ohne dass es jemand merkte.
+   Von 50 Fragen gingen 13 durch.</li>
+<li><strong>Lokal zuerst reicht fuer Literaturfragen.</strong> Offene Schnittstellen ohne Schluessel (arXiv, OpenAlex, Europe PMC,
+   Semantic Scholar) liefern Titel und Abstracts; das lokale 27B-Modell erzeugt die Suchanfragen und antwortet nur
+   aus den Abstracts mit [n]-Belegen. Eine PVS-Frage: 68 s, 47 Treffer, Antwort mit 14 Quellen, keine Cloud-Token.
+   Schwaechen: einzelne fachfremde Treffer, Semantic Scholar drosselt (429), Europe PMC antwortet langsam.
+   Wichtig: fuer die kurzen Aufrufe das Denken abschalten (<code>enable_thinking: false</code>), sonst verbraucht das
+   Reasoning-Modell das Tokenbudget und liefert leere Suchanfragen.</li>
+<li><strong>Der Waechter sperrt nur Eigenes.</strong> Oeffentliche Datensaetze (VALDO, HCP-Aging, EPVS, ADNI, UK Biobank ...)
+   samt Fallkennungen und Zahlen sind kein Datenschutzproblem; eigene Kohortennamen und ihre Kennungen sperren
+   immer, auch neben einem oeffentlichen Namen. Vorher blockierten Muster wie "sub-042" oder "Kohorte" jede
+   Frage zu oeffentlichen Daten.</li>
+</ol>
+<h2>Traegt</h2>
+<ul>
+<li>Literatur- und Methodenfragen ohne Cloud; Cloud-Modell (mit Websuche) nur mit ausdruecklichem Schalter.</li>
+<li>Jede ausgehende Frage protokolliert, mit Kennzeichen, ob Cloud benutzt wurde.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Fragen, die Volltexte oder nicht indizierte Quellen brauchen (Software-Dokumentation, Foren): dort ist die
+  lokale Suche blind; dann Cloud auf Zuruf.</li>
+<li>Paralleles Arbeiten: der lokale Server hat einen Slot, Suchen laufen parallel, das Zusammenfassen nicht.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Die lokale Antwort beruft sich ueberwiegend auf fachfremde Treffer, oder der Waechter laesst eine Frage mit
+eigenem Kohortennamen durch.</p>
+<h2>Ablesung</h2>
+<p>Eigene Tests 2026-10-09: 5 Pruefungen (2 oeffentlich frei, 3 gesperrt: eigene Kohorte, Pfad, Person), eine lokale
+und eine Cloud-Frage end-to-end. Code: system/guard/{ask_outside,daemon,lokal_recherche}.py, frag-draussen.</p>
+<h2>Nachtrag 2026-10-09: Auftragsplaner lokal</h2>
+<p><code>system/werkzeuge/plane "Ziel"</code> laesst das lokale 27B (mit Denken) ein Ziel in 3-6 aufeinander aufbauende Auftraege
+zerlegen (Ziel, Schritte, Ausgabedatei, Abnahme-Stichworte); das Werkzeug setzt den Hausrahmen dazu (keine GPU,
+Recherche nur ueber den Waechter, Quellenpflicht) und verkettet ueber BRAUCHT. Erste Probe "PVS-Segmentierung
+recherchieren": 66 s, fuenf brauchbare Auftraege (Netze, Verluste, zweite Stufe, Empfehlung), einer schwach
+(CPU-Zeit eines untrainierten Netzes). Lehre: Vorschau vor dem Einreihen lesen, weil ein schwacher Auftrag in
+der Kette die folgenden blockiert. Streichen ohne neues Planen: <code>plane --aus &lt;planordner&gt; --weglassen 4 --einreihen</code>;
+danach pruefen, ob spaetere Auftraege noch auf die gestrichene Ausgabe verweisen (hier: Auftrag 5 wollte die
+CPU-Messung lesen, von Hand in plan.json korrigiert). Die PVS-Kette mit vier Auftraegen ist am 2026-10-09 10:40
+eingereiht, Clara arbeitet sie seriell ab.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="open_checks/decision-model-as-profile-orchestrator.html">decision-model-as-profile-orchestrator</a></li>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></details><details class="entry" id="local-research-swarm-first-run-2026-10-09"><summary><span class="type">Befund</span><span class="t"><a href="findings/local-research-swarm-first-run-2026-10-09.html">Lokaler Rechercheschwarm: erster Lauf vom einen Satz bis zum Bericht</a></span><span class="badge ">gemessen</span><span class="muted small">2026-10-09</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Werkzeuge plane --selbst/--schwarm, schwarm, Skill ziele-planen; Lauf vr-neuro-distillation · <a href="findings/local-research-swarm-first-run-2026-10-09.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/local-research-swarm-first-run-2026-10-09.md">Markdown</a></p><p><img alt="Local research workflow" src="../assets/local-research-workflow-en.png" /></p>
+<h2>Aufbau</h2>
+<p>Nutzer schreibt dem lokalen Agenten einen Satz. Agent ruft <code>plane "&lt;Satz&gt;" --schwarm 3</code> (Skill <code>ziele-planen</code>,
+Regel im geladenen Gedaechtnis). Das 27B plant 3-6 Auftraege, ein zweiter Durchgang prueft den Plan.
+Recherche-Auftraege erledigen drei parallele Arbeiter (<code>schwarm</code>): Suchfragen -&gt; Waechter -&gt; offene
+Literatur-APIs -&gt; Antwort aus Abstracts -&gt; Abschnitt mit Quellen -&gt; Selbstabnahme. Messauftraege gehen in den dauerlauf.</p>
+<h2>Gemessen (ein Lauf, 4 Rechercheauftraege)</h2>
+<table>
+<thead>
+<tr>
+<th>Groesse</th>
+<th>Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Satz bis Plan eingereiht</td>
+<td>ca. 4 min</td>
+</tr>
+<tr>
+<td>drei Arbeiter parallel fertig</td>
+<td>13-20 min</td>
+</tr>
+<tr>
+<td>alle vier Recherchen inkl. Synthese</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Suchfragen beantwortet</td>
+<td>19 von 20 (1 vom Waechter gesperrt: Pruefmodell im Zeitzaun)</td>
+</tr>
+<tr>
+<td>zitierte DOIs im DOI-Register vorhanden</td>
+<td>64 von 64</td>
+</tr>
+<tr>
+<td>Abnahme</td>
+<td>4 von 4 im ersten Anlauf</td>
+</tr>
+</tbody>
+</table>
+<h2>Lehren</h2>
+<ul>
+<li><strong>Faehigkeit im richtigen Profil ablegen.</strong> Der Agent lief im Profil <code>projekt</code>, die Fertigkeit lag im Standardprofil:
+  zweimal recherchierte er im Chat selbst. Erst Verlinkung ins Profil plus EIN Eintrag im wirklich geladenen
+  Gedaechtnis (<code>memories/MEMORY.md</code>, nicht <code>MEMORY.md</code> im Profilwurzelverzeichnis) brachten den Aufruf.</li>
+<li><strong>Lesart ist die groesste Fehlerquelle.</strong> Der Agent hat das Ziel umformuliert und eigene Projektthemen hineingelesen.
+  Inhalt und Quellen waren sauber, die Frage womoeglich die falsche. Naechster Schritt: Satz woertlich weitergeben,
+  bei Mehrdeutigkeit Lesarten nennen.</li>
+<li><strong>Ein Modellplatz ist der Engpass.</strong> Abfragen laufen parallel, Modellschritte warten; dadurch lief die
+  Waechterpruefung einmal in den Zeitzaun und sperrte (richtig, aber verlustreich).</li>
+<li><strong>Planpruefung kann an kaputtem JSON scheitern</strong> (einmal); jetzt mit einem Reparaturversuch.</li>
+<li>Planpruefung erkennt Abschweifungen und tote Verweise, aber keine Sachfehler (Plan wollte Gefaessmasken aus SynthSeg).</li>
+</ul>
+<h2>Offene Schritte (siehe Bild)</h2>
+<p>Nachfass-Schleife je Arbeiter, automatischer Zitatpruefer (DOI-Register, Aussage gegen Abstract), Bericht an den Nutzer
+per Telegram, Auswertung ueber viele Laeufe.</p>
+<h2>Nachtrag 2026-10-09 abends: Uebergabe als Standard</h2>
+<p>Nutzerregel: Aufgaben gehen an den lokalen Agenten, wenn er arbeiten kann; sonst erledigt sie die Cloud-Sitzung.
+Werkzeug <code>weiterreichen --pruefen</code> (Modell antwortet, keine GPU-Sperre, dauerlauf aktiv), dann <code>weiterreichen "&lt;Ziel&gt;"</code>
+(planen + einreihen), <code>--schwarm</code> (Recherche), <code>--direkt</code> (kurzes Gespraech) oder <code>--datei</code> (fertiger Auftrag mit Abnahme).
+Stand des Tages: 11 Auftraege in Folge ohne Eingriff, alle in Runde 2 abgenommen, keiner in Runde 1.</p></div></details><details class="entry" id="decider-4b-matches-knn-on-60-routing-cases"><summary><span class="type">Befund</span><span class="t"><a href="findings/decider-4b-matches-knn-on-60-routing-cases.html">decider-4b trifft auf 60 Routing-Faellen so oft wie kNN auf dem vorhandenen Embedding-Server, aber mit brauchbarer Konfidenz</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-08</span><span class="i">decider-4b Q4 auf CPU 50/60 gegen kNN 49/60 auf dem Embedding-Server; ab p 0,8 21/21; deutsch besser als englisch; Vorsprung ist Rauschen, Konfidenz ist der Gewinn</span></summary><div class="body"><p class="small muted">Herkunft: Alita, decider-4b v2.1 Q4_K_M auf CPU (llama-cpp-python 0.3.36, 16 Threads) gegen bge-m3-kNN, 60 Routing-Faelle aus local_models tools/laya/faelle/route.jsonl, 2026-10-08 · <a href="findings/decider-4b-matches-knn-on-60-routing-cases.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/decider-4b-matches-knn-on-60-routing-cases.md">Markdown</a></p><h2>Aussage</h2>
+<p>Weiche vor dem Agenten mit drei Zielen (trivial / coding / schwer), 60 echte
+Anfragen mit Soll-Label von Hand, dieselben wie fuer Laya auf Victus:</p>
+<table>
+<thead>
+<tr>
+<th>Verfahren</th>
+<th>Treffer</th>
+<th>schwer zu niedrig</th>
+<th>Treffer bei p &gt;= 0,8</th>
+<th>Zeit je Fall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kNN k=5, bge-m3 (Port 8001), leave-one-out</td>
+<td>49/60 (0,82)</td>
+<td>2</td>
+<td>–</td>
+<td>0,03 s</td>
+</tr>
+<tr>
+<td>kNN k=1</td>
+<td>44/60</td>
+<td>3</td>
+<td>–</td>
+<td>0,03 s</td>
+</tr>
+<tr>
+<td>decider-4b Q4, deutsche Formulierung</td>
+<td><strong>50/60 (0,83)</strong></td>
+<td>2</td>
+<td><strong>21/21</strong></td>
+<td>0,75 s</td>
+</tr>
+<tr>
+<td>decider-4b Q4, englische Formulierung</td>
+<td>46/60</td>
+<td>4</td>
+<td>21/21</td>
+<td>0,69 s</td>
+</tr>
+<tr>
+<td>Laya multilingual (Victus, 30 Faelle)</td>
+<td>24/30 (0,80)</td>
+<td>3 von 7</td>
+<td>10/12</td>
+<td>0,06 s</td>
+</tr>
+</tbody>
+</table>
+<p>decider laedt in 2,5 s (2,7 GB GGUF, CPU), antwortet ohne Feinjustierung und
+ohne Beispiele. Alle zehn Fehler der deutschen Fassung liegen unter p 0,8; mit
+der Regel "unter 0,8 an das Hauptmodell" ist keine Entscheidung falsch, aber nur
+21 von 60 werden ueberhaupt entschieden. Sieben der zehn Fehler sind kleine
+Shell-Aufgaben, die das Label "trivial" tragen und die decider als "coding"
+liest; das ist eine Konvention der Labels, keine Schwaeche des Modells. Die
+teure Richtung (schwere Anfrage nach unten) trifft decider und kNN gleich
+selten, je zwei.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Ein Entscheidungsmodell auf CPU neben dem 27B, 0,75 s je Entscheidung, 2,7 GB
+  Platte, 16 Threads kurz voll.</li>
+<li>Die Formulierung der Ziele in der Sprache der Anfragen (deutsch) ist vier
+  Treffer besser als englisch.</li>
+<li>Konfidenz als Schalter: ab 0,8 verlaesslich (21/21), darunter nachfragen oder
+  Standardziel.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Ein Vorsprung vor kNN auf dem Embedding-Server, der ohnehin laeuft: ein Fall
+  von 60 ist Rauschen. Wer die Konfidenz nicht braucht, braucht decider nicht.</li>
+<li>Die Labels selbst: "Shell-Befehl = trivial" ist eine Setzung; mit "Shell =
+  coding" waere decider bei 57/60.</li>
+<li>Mehr als drei Ziele (ungemessen) und Anfragen ueber 1.536 Token (Kontextkappung
+  des Prompt-Bauers).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Auf 200 statt 60 Faellen faellt decider unter kNN, oder die Treffer bei p &gt;= 0,8
+sinken unter 90 %.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, <code>system/werkzeuge/decider-route-test.py</code>, Ergebnis
+<code>ergebnisse/decider/route_ergebnis.json</code>. Download der Gewichte ueber WLAN: curl
+mit <code>-C -</code> und <code>-r</code> zusammen liefert bei Wiederaufnahme falsche Bytes, die
+SHA-256 gegen Hugging Face entlarvte es; Bereiche ohne Wiederaufnahme laden.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="open_checks/decision-model-as-profile-orchestrator.html">decision-model-as-profile-orchestrator</a></li>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></details><details class="entry" id="flash-next-177b-moe-on-24gb-card"><summary><span class="type">Befund</span><span class="t"><a href="findings/flash-next-177b-moe-on-24gb-card.html">Ein 177B-MoE (Qwen3.8-Flash-Next GSQ-RCO) laeuft auf einer 24-GB-Karte: Experten im RAM, n-Gramm-Tabelle auf der Platte</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">177B-MoE auf 24 GB: Experten im RAM, Tabelle auf der Platte; 8 Laeufe, 127-349 tok/s Prompt, 11-23 tok/s Erzeugung; RAM ist der Engpass, Q2_0 auf CUDA nicht schneller</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB, 62 GB RAM, 24 Kerne, NVMe), acht Messlaeufe 2026-10-07 19:49 bis 21:15, llama.cpp 448147d · <a href="findings/flash-next-177b-moe-on-24gb-card.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/flash-next-177b-moe-on-24gb-card.md">Markdown</a></p><h2>Aussage</h2>
+<p>ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (512 Experten je Schicht, 10 aktiv, 48 Schichten,
+Architektur qwen4exp, zwei Shards: Gewichte 37,6 bis 54,8 GB plus 28,8 GB n-Gramm-Tabelle,
+die bei allen vier Varianten dieselbe Datei ist) laeuft mit einem aktuellen llama.cpp
+(Build vom 2026-10-07; der Build vom 24.08. kennt die Architektur nicht) auf einer 24-GB-Karte
+mit 62 GB RAM, wenn man <code>--n-cpu-moe N --load-mode mmap --lazy-mode on</code> setzt: die Experten der
+ersten N Schichten bleiben im RAM, die Tabelle wird je Token von der NVMe nachgeschlagen.
+Alle acht Laeufe beantworteten sechs Pruefragen (Rechnen, Zaehlen, Regex, Uhrzeit, Sortieren,
+JSON) 6/6 richtig; Unterschiede in der Qualitaet sind damit nicht aufgeloest, dafuer gelten die
+Benchmarks der Modellkarte (Task-Mittel Q2_0 89,1 / IQ2_XS 89,2 / IQ3_XXS 92,6 / IQ3_S 93,3).
+Kontext 16k, ein Slot, 20 Threads, Prompt von 5 677 Token.</p>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Experten</th>
+<th>VRAM</th>
+<th>RSS / Seitencache</th>
+<th>Laden</th>
+<th>Prompt tok/s</th>
+<th>Erzeugung tok/s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IQ2_XS</td>
+<td>alle 48 Schichten CPU</td>
+<td>5,6 GB</td>
+<td>31 / 30 GB</td>
+<td>20 s</td>
+<td>228</td>
+<td>15,1</td>
+</tr>
+<tr>
+<td>Q2_0</td>
+<td>alle CPU</td>
+<td>5,5 GB</td>
+<td>31 / 31 GB</td>
+<td>21 s</td>
+<td>251</td>
+<td>10,7</td>
+</tr>
+<tr>
+<td>IQ3_XXS</td>
+<td>alle CPU</td>
+<td>6,4 GB</td>
+<td>30 / 31 GB</td>
+<td>15 s</td>
+<td>127</td>
+<td>12,5</td>
+</tr>
+<tr>
+<td>IQ3_S</td>
+<td>alle CPU</td>
+<td>6,7 GB</td>
+<td>30 / 32 GB</td>
+<td>30 s</td>
+<td>135</td>
+<td>11,7</td>
+</tr>
+<tr>
+<td>IQ2_XS</td>
+<td>16 Schichten GPU</td>
+<td>17,2 GB</td>
+<td>25 / 29 GB</td>
+<td>21 s</td>
+<td>349</td>
+<td>20,5</td>
+</tr>
+<tr>
+<td>Q2_0</td>
+<td>16 Schichten GPU</td>
+<td>16,3 GB</td>
+<td>23 / 31 GB</td>
+<td>15 s</td>
+<td>345</td>
+<td>13,9</td>
+</tr>
+<tr>
+<td>IQ3_XXS</td>
+<td>16 Schichten GPU</td>
+<td>22,1 GB</td>
+<td>29 / 30 GB</td>
+<td>25 s</td>
+<td>349</td>
+<td>20,1</td>
+</tr>
+<tr>
+<td>IQ3_S</td>
+<td>16 Schichten GPU</td>
+<td>23,6 GB</td>
+<td>30 / 32 GB</td>
+<td>30 s</td>
+<td>251</td>
+<td>23,3</td>
+</tr>
+</tbody>
+</table>
+<p>Drei Befunde darin:
+1. <strong>Kurze Prompts taeuschen.</strong> Bei 50 bis 70 Token lagen die Prompt-Raten bei 3 bis 38 tok/s,
+   beim 5 677-Token-Prompt bei 127 bis 349 tok/s. Die Tabelle muss je Token nachgeschlagen
+   werden; das dominiert bei kleinen Stapeln. Tempo nur mit langem Prompt messen.
+2. <strong>Q2_0 ist auf der Karte NICHT schneller.</strong> Die Modellkarte verspricht 3,4-fachen
+   Prompt-Durchsatz gegen IQ2_XS; das gilt fuer den CPU-Pfad (251 gegen 228) und nicht fuer die
+   CUDA-Kerne (13,9 gegen 20,5 tok/s Erzeugung). Mit Experten auf der Karte ist IQ2_XS die
+   schnellere 2-Bit-Variante.
+3. <strong>RAM ist der Engpass, nicht VRAM.</strong> RSS plus Seitencache liegen bei allen Laeufen bei
+   rund 60 GB, also am Rand der 62 GB. Neben einem Training (18 GB RAM) bleibt nur die
+   39-GB-Variante IQ2_XS rechnerisch resident; IQ3_XXS (47 GB) und IQ3_S (55 GB) wuerden
+   seitenweise von der Platte nachladen. Zwei Flash-Next parallel passen nicht.</p>
+<p>Zum Vergleich der 27B-Dense-Server derselben Maschine: ~30 tok/s Erzeugung, 80k Kontext, 21 GB VRAM.</p>
+<h2>Traegt</h2>
+<p>Karten mit 16 bis 24 GB und 64 GB RAM; MoE-GGUFs mit per_layer_token_embd; die Flaggen
+sind llama.cpp-Standard ab Oktober 2026.</p>
+<h2>Traegt nicht</h2>
+<p>Rechner mit 32 GB RAM (kein Experten-Shard passt); Erzeugungslast, bei der 15 bis 23 tok/s
+zu langsam sind; Kontexte ueber 16k sind ungemessen (bei Experten auf der CPU bleiben
+18 GB VRAM fuer den KV-Cache, bei 16 Schichten auf der Karte fast nichts).</p>
+<h2>Bruchindikator</h2>
+<p>Ein llama.cpp-Build, der Q2_0-CUDA-Kerne beschleunigt (dann Punkt 2 neu messen), oder
+ein Lauf, bei dem RSS plus Seitencache deutlich unter 60 GB bleibt (dann ist die
+RAM-Rechnung in Punkt 3 zu pessimistisch).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Skripte <code>system/werkzeuge/flashnext-test.sh</code> und <code>flashnext-quality.py</code>
+(Alita), Ergebnisse <code>ergebnisse/flashnext-&lt;Variante&gt;-cmoe&lt;N&gt;.json</code>. Tier 1a.
+Modellkarte: https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF (Herstellerangabe, Tier 1b).</p>
+<h2>Nachtrag 2026-10-08: als Profil im Dienst</h2>
+<p>Die Varianten sind als Registry-Profile eingebunden (<code>flash</code> = IQ2_XS alle
+Experten im RAM, <code>flash-xxs</code>/<code>flash-s</code> = 16 Schichten auf der Karte). Ein
+Profil traegt eigenes Binary, Lademodus mmap, Zusatzargumente, VRAM-Bedarf
+fuer die Warteschleife und cgroup-Grenzen (ein mmap-Modell zaehlt seinen
+Seitencache mit; die 20G/26G des dichten 27B wuerden es drosseln und toeten).
+Probelauf <code>flash</code> ueber das Startskript selbst, Kontext 32k: 20 s Laden,
+6,1 GB VRAM, 6/6 Pruefffragen, 5677-Token-Prompt 206 tok/s, Erzeugung 18 tok/s,
+RSS 31 GB plus 35 GB Seitencache. Eine System-Nachricht mitten im Verlauf
+geht mit dem entschaerften Template durch. Umschalten wartet auf einen freien
+Slot, sonst stirbt der laufende Agentenaufruf.</p>
+<h2>Nachtrag 2026-10-08: Grenztest der Profile (Kontext bis zum Rand, Ueberlauf, Gespraech)</h2>
+<p>Ein Prompt je Stufe, Antwort 200 Token, ein Slot. <strong>flash</strong> (IQ2_XS, alle Experten
+im RAM, Kontext 32k): Prompt 248-255 tok/s von 8k bis 31,5k Token, Erzeugung 17-19
+tok/s unveraendert, VRAM 6,1 GB, RSS 30-31,5 GB; die 31.517-Token-Stufe dauerte 141 s.
+Nur der 2k-Prompt faellt ab (106 tok/s, Ladeeffekt der n-Gramm-Tabelle).
+<strong>flash-xxs</strong> (IQ3_XXS, 16 Schichten GPU, Kontext 16k): 290-331 tok/s Prompt, 22-24 tok/s
+Erzeugung, VRAM 22,1 GB, RSS bis 25,6 GB. Ein Prompt ueber dem Fenster wird mit HTTP 400
+abgewiesen, der Server lebt weiter (beide Profile). Fuenf Zuege zu je 3.900 Token:
+der Praefix-Cache greift trotz der Warnung "cache_reuse is not supported by this
+context" (cache_n waechst 3.885 -&gt; 15.425), neue Token 200-240 bzw. 294-340 tok/s;
+beim 16k-Profil scheitert Zug 5 (19.316 Token) am Fenster, der Agent muss dort frueher
+verdichten (modellwahl setzt Hermes' context_length auf das Profil).
+Lehre: die Prompt-Rate ist ueber den ganzen Kontext flach, die Wartezeit waechst
+linear mit der Laenge; 16k reicht fuer Agentenarbeit nicht, 32k knapp.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/opencode-against-llama-server-one-slot.html">opencode-against-llama-server-one-slot</a></li>
+</ul></div></details><details class="entry" id="opencode-against-llama-server-one-slot"><summary><span class="type">Befund</span><span class="t"><a href="findings/opencode-against-llama-server-one-slot.html">OpenCode laeuft gegen llama-server ueber eine Konfigdatei; mit einem Slot wartet es hinter dem Agenten</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">OpenCode 1.18 gegen llama-server per opencode.json (openai-compatible, kein Schluessel); bei einem Slot wartet es hinter dem Agenten und sieht haengend aus</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB), Installation und Rauchtest 2026-10-07 20:10 · <a href="findings/opencode-against-llama-server-one-slot.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/opencode-against-llama-server-one-slot.md">Markdown</a></p><h2>Aussage</h2>
+<p>OpenCode 1.18.35 (npm <code>opencode-ai</code>, Node 22, ohne sudo) spricht einen lokalen llama-server
+ueber den Anbieter <code>@ai-sdk/openai-compatible</code> an. Noetig ist nur <code>~/.config/opencode/opencode.json</code>
+mit <code>provider.&lt;name&gt;.options.baseURL = http://127.0.0.1:8000/v1</code>, der Modell-ID genau wie in
+<code>/v1/models</code> des Servers, und <code>limit.context</code> passend zur <code>--ctx-size</code>. Kein API-Schluessel.
+Rauchtest <code>opencode run --model llamacpp/&lt;id&gt; "Antworte nur mit BEREIT"</code>: 25 s, richtig.</p>
+<p>Fallstrick: llama-server mit <code>--parallel 1</code> hat EINEN Slot. Laeuft dort ein Agent (Hermes-Auftrag),
+steht OpenCode in der Warteschlange und sieht aus wie haengend -- der erste Rauchtest lief in
+einen 300-s-Timeout, ohne Fehler im OpenCode-Log, weil der Slot belegt war. Erst <code>curl /slots</code>
+(<code>is_processing</code>) zeigt den Grund. Zweiter Versuch bei freiem Slot: 25 s.</p>
+<p>Beim Start versucht OpenCode den Modellkatalog models.dev zu laden; ohne oder mit langsamem
+Internet steht ein <code>Failed to fetch models.dev</code> im Log. Lokaler Betrieb ist davon unberuehrt.</p>
+<h2>Traegt</h2>
+<p>Jeder OpenAI-kompatible lokale Server (llama-server, Ollama) mit OpenCode als Arbeiter, auch
+als zweiter Anbieter fuer einen Testserver auf anderem Port.</p>
+<h2>Traegt nicht</h2>
+<p>Parallelbetrieb mit einem Agenten auf demselben Ein-Slot-Server: beide verdraengen sich den
+Prefix-Cache, und die Wartezeit addiert sich; dafuer <code>--parallel 2</code> mit halbem Kontext je Slot
+oder ein zweiter Server.</p>
+<h2>Bruchindikator</h2>
+<p>Eine OpenCode-Version, die den Anbieter ohne <code>npm</code>-Feld oder mit anderem Schema erwartet
+(Schema: https://opencode.ai/config.json).</p>
+<h2>Ablesung</h2>
+<p>Eigene Installation und Messung auf Alita, 2026-10-07. Tier 1a.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/hermes-delegates-to-opencode-locally.html">hermes-delegates-to-opencode-locally</a></li>
+</ul></div></details><details class="entry" id="everyday-tasks-qwen36-vs-qwen35-9b"><summary><span class="type">Befund</span><span class="t"><a href="findings/everyday-tasks-qwen36-vs-qwen35-9b.html">20 Alltagsaufgaben: Qwen3.6-35B-A3B 20/20 mit Denken, Qwen3.5-9B schnell aber unzuverlässig</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span><span class="i">20 Alltagsaufgaben: Qwen3.6 20/20 mit Denken, 17/20 ohne; Qwen3.5-9B 13/20 in 31 s, mit Denken 18/20 und dreimal langsamer</span></summary><div class="body"><p class="small muted">Herkunft: Victus, local_models tools/alltag, Läufe 2026-10-06 08:34 bis 10:56 · <a href="findings/everyday-tasks-qwen36-vs-qwen35-9b.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/everyday-tasks-qwen36-vs-qwen35-9b.md">Markdown</a></p><h2>Aussage</h2>
+<p>20 Aufgaben, die man an ein lokales Modell abgeben würde, jede maschinell geprüft:
+Rechnen, Wochentag, Mail nach JSON, Tickets einordnen, Übersetzen, Zusammenfassen,
+Regex, <code>slugify</code>, Bugfix, SQL, Bash-Befehl, Log zählen, CSV-Umsatz, Commit-Zeile,
+erfundene Firma, Primzahlen, Buchstaben zählen, Mail an Vermieter, GB nach GiB,
+Code-Ausgabe. Python und SQL werden ausgeführt. Jede Prüfung ist gegen eine bekannt
+gute und eine bekannt schlechte Antwort getestet. Direkt über die Ollama-API, ohne
+Agenten, Temperatur 0, jede Variante allein auf der GPU.</p>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>richtig</th>
+<th>Gesamt</th>
+<th>Median je Aufgabe</th>
+<th>Ausgabe-Token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen3.6-35B-A3B (<code>qwen3.6-64k</code>) ohne Denken</td>
+<td>17/20</td>
+<td>223 s</td>
+<td>10,7 s</td>
+<td>875</td>
+</tr>
+<tr>
+<td>Qwen3.6-35B-A3B mit Denken</td>
+<td><strong>20/20</strong></td>
+<td>479 s</td>
+<td>21,2 s</td>
+<td>23 967</td>
+</tr>
+<tr>
+<td>Qwen3.5-9B (<code>num_ctx 32768</code>) ohne Denken</td>
+<td>13/20</td>
+<td><strong>31 s</strong></td>
+<td><strong>0,6 s</strong></td>
+<td>757</td>
+</tr>
+<tr>
+<td>Qwen3.5-9B mit Denken</td>
+<td>18/20</td>
+<td>1 481 s</td>
+<td>66,4 s</td>
+<td>58 584</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Qwen3.6 ohne Denken</strong> scheitert an <code>slugify</code>, an der CSV-Summe (nennt die Region
+  mit dem größten Einzelpreis) und am Zählen der e in "Erdbeerkuchen" (2 statt 4).
+  Mit Denken löst es alle drei. Passt zu <a href="findings/counting-needs-thinking.html">counting-needs-thinking</a>.</li>
+<li><strong>Qwen3.5-9B ohne Denken</strong> liegt ganz auf der GPU und antwortet im Median nach
+  0,6 s, verrechnet sich aber: Serverkosten 95,76 statt 302,40 €, 22,76 statt
+  22,35 GiB, eine Primzahl vergessen, eine Log-Zeile eines anderen Dienstes
+  mitgezählt, Code-Ausgabe falsch vorhergesagt. Text, Übersetzung, Einordnen und
+  JSON-Extraktion löst es alle.</li>
+<li><strong>Qwen3.5-9B mit Denken</strong> denkt rund 2,4-mal so viel wie Qwen3.6 und ist dadurch
+  dreimal langsamer als dieses, obwohl es ganz auf der GPU liegt. Einmal lief es in die Grenze von
+  8 192 Ausgabe-Token, einmal kam eine leere Antwort ohne Token-Angabe.</li>
+</ul>
+<p>Wiederholt wurden Qwen3.6 mit Denken (drei Läufe) und Qwen3.5-9B ohne Denken
+(drei Läufe, zwei davon mit 4 096 Kontext, was ohne Denken nicht stört): jeweils
+gleiche Punktzahl, bei Temperatur 0 reproduzierbar. Qwen3.6 ohne Denken und
+Qwen3.5-9B mit Denken bei 32k liefen je einmal. Zeiten nur aus Läufen ohne fremde Last.</p>
+<h2>Trägt</h2>
+<p>Die Modellwahl auf Victus für kurze Einzelaufgaben: Qwen3.6 mit Denken als Standard,
+Denken nötig bei Zählen, Code und Rechnen über Tabellen. Qwen3.5-9B ohne Denken
+höchstens für Text- und Extraktionsaufgaben, bei denen ein Fehler billig ist.</p>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Agenten-Aufgaben mit Werkzeugen (Hermes, OpenCode). Hier wurde nur die API gefragt.</li>
+<li>Andere Rechner: Qwen3.6 liegt auf Victus zu 78 % auf der CPU, auf 24 GB ganz auf der GPU.</li>
+<li>Allgemeine Rangfolge der Modelle. 20 Aufgaben, je ein Lauf je Variante ohne Last.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Ein zweiter Satz Aufgaben derselben Art, bei dem Qwen3.5-9B ohne Denken bei Rechen-
+und Zählaufgaben mithält oder Qwen3.6 mit Denken deutlich unter 20/20 fällt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung. local_models <code>tools/alltag/</code> (aufgaben.json, alltag.py), Läufe
+<code>laeufe/20261006-0834_qwen3.6-64k-ohne-denken</code>, <code>20261006-1031_qwen3.6-64k</code>,
+<code>20261006-1031_qwen3.5-9b-32k-ohne-denken</code>, <code>20261006-1056_qwen3.5-9b-32k</code>.</p>
+<p>Zwei eigene Fehler unterwegs, behoben:
+- Die Prüfung der Firma-Frage lehnte eine richtige Antwort ab ("keine öffentlichen
+  oder verifizierten Daten"). Nach Korrektur und Neubewertung: Qwen3.6 mit Denken
+  20 statt 19.
+- Der erste 9B-Lauf mit Denken nutzte Ollamas Standardkontext von 4 096 Token,
+  sieben Antworten waren leer, siehe <a href="risks/ollama-silently-truncates-context.html">ollama-silently-truncates-context</a>.</p>
+<p>Laya routete 19 der 20 Aufgaben lokal (nur das Zählen an Claude), 13/20 richtig
+zwischen Hermes und OpenCode, siehe <a href="findings/laya-router-before-agent.html">laya-router-before-agent</a>.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/counting-needs-thinking.html">counting-needs-thinking</a></li>
+<li><a href="risks/ollama-silently-truncates-context.html">ollama-silently-truncates-context</a></li>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+</ul></div></details><details class="entry" id="laya-router-before-agent"><summary><span class="type">Befund</span><span class="t"><a href="findings/laya-router-before-agent.html">Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span><span class="i">Laya als Weiche vor Hermes/OpenCode/Claude: 24/30, 0,1 s als Dienst, als Tool kein Gewinn</span></summary><div class="body"><p class="small muted">Herkunft: Victus, Laya 0.3.28 als Weiche vor Hermes/OpenCode/Claude, 2026-10-05/06 · <a href="findings/laya-router-before-agent.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/laya-router-before-agent.md">Markdown</a></p><h2>Aussage</h2>
+<p>Laya (Convai Innovations, Apache 2.0) ist eine offene Alternative zu TypeSafes
+Jev: ein Entscheidungsmodell, das keinen Text schreibt, sondern eine Wahl mit
+Wahrscheinlichkeit liefert. Getestet als Weiche: Soll eine Anfrage an einen
+schlanken Hermes (<code>trivial</code>), an OpenCode (<code>coding</code>) oder an Claude (<code>schwer</code>)?</p>
+<p>30 echte Anfragen (18 aus Hermes-Sessions, 12 aus Claude-Code-Sitzungen),
+Soll-Labels von Hand:</p>
+<table>
+<thead>
+<tr>
+<th>Checkpoint</th>
+<th>Ziele</th>
+<th>richtig</th>
+<th>Zeit je Anfrage, CPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>multilingual (322 Mio.)</td>
+<td>3</td>
+<td><strong>24/30</strong></td>
+<td>61 ms</td>
+</tr>
+<tr>
+<td>english (421 Mio.)</td>
+<td>3</td>
+<td>17/30</td>
+<td>193 ms</td>
+</tr>
+<tr>
+<td>multilingual</td>
+<td>4 (trivial geteilt in chat/shell)</td>
+<td>15-16/30</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Fehlerrichtung beim besten Lauf: 3 von 7 schweren Anfragen gingen zu niedrig
+(2 an <code>coding</code>, 1 an <code>trivial</code>). Das ist die teure Richtung: die schwere Frage
+landet beim lokalen Modell und bekommt eine plausible, schwache Antwort.</p>
+<p>Als <strong>Tool in Hermes</strong> (MCP) bringt Laya keine Zeit: Hermes brauchte 3:17 min,
+fast alles Prefill des Hermes-Prompts, bevor Qwen das Tool ueberhaupt aufruft.
+Der Gewinn entsteht nur <strong>vor</strong> dem Agenten.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Weiche vor dem Agenten mit Schwelle: ab p 0,8 entscheidet Laya, darunter wird
+  nachgefragt, <code>schwer</code> geht immer an das starke Modell.</li>
+<li>Betrieb als Dienst (<code>laya-serve</code>, 127.0.0.1): 0,1 s je Entscheidung, rund
+  1,6 GB RAM. Ohne Dienst kostet jeder Aufruf rund 6-7 s Modellladen.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Mehr als drei grobe Ziele. Mit vier fiel die Trefferquote auf die Haelfte.</li>
+<li>Die Konfidenz als Garantie: im Bereich ab 0,8 lagen 10 von 12 richtig, zwei
+  Fehler mit 0,96 und 0,97. Bei 30 Faellen ist das eine Tendenz.</li>
+<li>Die englische Variante fuer deutsche Anfragen.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Im Log <code>frag.log</code> weicht die Trefferquote bei p &gt;= 0,8 deutlich unter 80 % ab,
+oder schwere Anfragen landen dort regelmaessig bei OpenCode.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Laya 0.3.28, PyTorch CPU, <code>Router.predict</code> mit einer
+<code>choice</code>-Frage, Checkpoint explizit gewaehlt. Labels sind eine Einschaetzung,
+keine objektive Wahrheit. Beliebtheit des Projekts auffaellig: 5224 Likes bei
+11 733 Downloads auf Hugging Face, Repo zwei Wochen alt.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+<li><a href="open_checks/minimal-harness-prompt-size.html">minimal-harness-prompt-size</a></li>
+<li><a href="findings/hermes-delegates-to-opencode-locally.html">hermes-delegates-to-opencode-locally</a></li>
+</ul></div></details><details class="entry" id="lean-hermes-toolsets"><summary><span class="type">Befund</span><span class="t"><a href="findings/lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span><span class="i">`-t terminal,file --ignore-rules`: 5 648 statt ~13 000 Token Prompt</span></summary><div class="body"><p class="small muted">Herkunft: Victus, Hermes Agent v0.21.5 + Qwen3.6-35B-A3B ueber Ollama, 2026-10-06 · <a href="findings/lean-hermes-toolsets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/lean-hermes-toolsets.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>hermes -z "&lt;frage&gt;" -t terminal,file --ignore-rules</code> laedt nur die Werkzeuge
+Terminal und Dateien und laesst AGENTS.md, SOUL.md, Memory und vorgeladene
+Skills weg.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt erste Anfrage</th>
+<th>Wanduhr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hermes voll</td>
+<td>rund 13 000 Token</td>
+<td>3:17 min (Laya-Toolaufruf, 3 Modellrunden)</td>
+</tr>
+<tr>
+<td>Hermes schlank</td>
+<td><strong>5 648 Token</strong></td>
+<td><strong>37 s</strong> (Dateien zaehlen, 2 Modellrunden)</td>
+</tr>
+</tbody>
+</table>
+<p>Die Antwort des schlanken Laufs war richtig (4 Dateien, Rest Ordner).</p>
+<h2>Traegt</h2>
+<p>Kurze Aufgaben am Rechner: zaehlen, nachsehen, eine Einstellung aendern. Bei
+einem Slot (siehe [prefix-cache-single-slot]) zaehlt jeder Token Prompt bei
+jedem Cache-Verlust neu.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Aufgaben, die Regeln, Memory oder Skills brauchen: die fehlen hier bewusst.</li>
+<li>Einen sauberen Zeitvergleich. Die beiden Laeufe hatten verschiedene Aufgaben
+  und Rundenzahlen; nur die Prompt-Groesse ist direkt vergleichbar.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Der schlanke Hermes loest Aufgaben falsch, die der volle loest, weil eine
+Regel aus AGENTS.md oder SOUL.md fehlt.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, <code>--usage-file</code> von Hermes (<code>input_tokens</code>, <code>api_calls</code>).
+Teilantwort auf [minimal-harness-prompt-size]: halb so viel Prompt ohne
+Harness-Wechsel, aber noch weit ueber den unter 1000 Token von Pi.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="open_checks/minimal-harness-prompt-size.html">minimal-harness-prompt-size</a></li>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+</ul></div></details><details class="entry" id="hermes-delegates-to-opencode-locally"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-delegates-to-opencode-locally.html">Hermes gibt Programmieraufgaben lokal an OpenCode ab: funktioniert, 160 s</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-04</span><span class="i">Hermes gibt Aufgaben an OpenCode ab, lokal, 160 s; kein zweiter Slot fuer qwen35moe</span></summary><div class="body"><p class="small muted">Herkunft: Victus, Einrichtung Hermes + OpenCode, 2026-10-04 · <a href="findings/hermes-delegates-to-opencode-locally.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-delegates-to-opencode-locally.md">Markdown</a></p><h2>Aussage</h2>
+<p>Hermes Agent hat eine eingebaute Skill <code>opencode</code>, die den OpenCode-CLI per
+<code>opencode run '...'</code> als Arbeiter aufruft. Beide Agenten laufen gegen dasselbe
+Ollama-Modell (<code>qwen3.6-64k</code> = Qwen3.6-35B-A3B, <code>num_ctx 65536</code>).</p>
+<p>Testauftrag an Hermes (<code>hermes -z</code>): in <code>calc.py</code> die Funktion <code>mul(a, b)</code>
+ergaenzen und <code>test_calc.py</code> mit Tests fuer <code>add</code> und <code>mul</code> anlegen.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wanduhr gesamt</td>
+<td>160 s</td>
+</tr>
+<tr>
+<td>Hermes-Aufrufe</td>
+<td>4, 17 848 Input-Token, 48 460 aus dem Cache</td>
+</tr>
+<tr>
+<td>OpenCode-Sitzung angelegt</td>
+<td>ja, eigene Session in <code>opencode session list</code></td>
+</tr>
+<tr>
+<td>Code korrekt</td>
+<td>ja, beide Testfunktionen laufen fehlerfrei</td>
+</tr>
+<tr>
+<td>Kosten</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Hermes meldete danach "pytest passed". <strong>pytest war auf dem System nicht
+installiert.</strong> Der Code stimmt, die Erfolgsmeldung ist trotzdem nicht belegt.</p>
+<p>Zweite Haelfte: zwei Slots, damit sich die beiden Agenten nicht gegenseitig den
+Prefix-Cache verdraengen, gibt es nicht. Mit <code>OLLAMA_NUM_PARALLEL=2</code> startet
+Ollama trotzdem <code>-np 1</code> und loggt
+<code>model architecture does not currently support parallel requests architecture=qwen35moe</code>.</p>
+<h2>Traegt</h2>
+<p>Kleine, abgegrenzte Programmieraufgaben in einem Repo: eine Funktion, Tests
+dazu, eine Fehlererklaerung. Alles bleibt auf der Maschine.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Lange Sitzungen mit vielen Wechseln. Hermes-Prompt rund 13k Token, OpenCode
+  rund 11k. Bei einem Slot heisst jeder Wechsel neues Prefill, bei ~400 t/s etwa
+  30 s. Geschaetzt, nicht gemessen.</li>
+<li>Groessere Umbauten ueber viele Dateien. Nicht getestet.</li>
+<li>Eine einzelne Aufgabe ist kein Zuverlaessigkeitsmass. Deshalb Status
+  <code>vorschlag</code>.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Hermes meldet Testerfolg, ohne dass ein Testlauf im Protokoll steht.</li>
+<li>Eine Ollama-Version, die <code>qwen35moe</code> parallel bedient. Dann zwei Slots neu
+  messen.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Eigene Messung. Ollama 0.35.1, Hermes Agent v0.21.5 (upstream 5d3c0597),
+OpenCode 1.18.34. Ollama-Override: <code>OLLAMA_KEEP_ALIVE=24h</code>,
+<code>OLLAMA_FLASH_ATTENTION=1</code>, <code>OLLAMA_KV_CACHE_TYPE=q8_0</code>. Danach gemessen:
+Prefill 397 t/s (6014-Token-Prompt), Decode 30-35 t/s warm.
+Zeitstempel aus <code>hermes -z --usage-file</code>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="risks/opencode-run-hangs-on-open-stdin.html">opencode-run-hangs-on-open-stdin</a></li>
+<li><a href="rules/foreign-gpu-process-before-measuring.html">foreign-gpu-process-before-measuring</a></li>
+</ul></div></details><details class="entry" id="hermes-agent-local-qwen-benchmark"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-agent-local-qwen-benchmark.html">Hermes Agent mit lokalem Qwen3.6 loest Alltagsaufgaben, scheitert an Format und Rueckfragen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-03</span><span class="i">Hermes Agent + Qwen3.6 lokal: 14 Aufgaben inhaltlich geloest, Schwaechen Format und Rueckfrage</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung auf Victus, 2026-10-03 · <a href="findings/hermes-agent-local-qwen-benchmark.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-agent-local-qwen-benchmark.md">Markdown</a></p><h2>Aussage</h2>
+<p>Hermes Agent (Nous Research) auf Victus, Modell <code>qwen3.6:35b</code> ueber Ollama mit
+<code>num_ctx 65536</code>, Aufruf <code>hermes -z &lt;aufgabe&gt;</code>. 14 Aufgaben, jede mit Pruefskript,
+das Hermes nicht sieht:</p>
+<ul>
+<li>13/14 laut Pruefung bestanden, in 10 Minuten zusammen; 9 bis 110 s je Aufgabe,
+  1 bis 11 Modellaufrufe.</li>
+<li>Inhaltlich alle richtig: Dateien zaehlen, Skript schreiben, JSON ohne Beiwerk,
+  Bugfix, Absturz mit falschen Datentypen, Umbenennen ueber drei Dateien, CSV mit
+  800 Zeilen, 16 Dateien anlegen, git mit Branch, LIS in O(n log n) (200k
+  Elemente in 0,02 s), Todo-CLI gegen versteckte Tests.</li>
+<li><strong>Format:</strong> CSV-Ergebnis mit deutschem Dezimalkomma (<code>101898,03</code>) statt dem
+  verlangten Punkt.</li>
+<li><strong>Rueckfrage:</strong> "Aendere den Port" bei zwei Ports in der Datei - Hermes nahm den
+  ersten und sagte das hinterher, statt vorher zu fragen. Die Pruefung hat das
+  als bestanden gewertet; streng genommen ist es keins.</li>
+</ul>
+<p>Der Hermes-System-Prompt allein ist rund 13k Token gross und geht bei jeder
+Aufgabe mit, auch bei Kopfrechnen.</p>
+<h2>Traegt</h2>
+<p>Lokales Qwen3.6 als Agent fuer abgegrenzte Aufgaben mit klarer Pruefung. Ausgaben,
+die Maschinen weiterlesen, brauchen eine Formatpruefung. Mehrdeutige Auftraege
+nicht unbeaufsichtigt laufen lassen.</p>
+<h2>Traegt nicht</h2>
+<p>Lange, offene Aufgaben (mehr als ~20 Schritte, fremde grosse Codebasen). Die
+Aufgaben hier waren zu klein, um die Grenze zu finden. Einmaliger Lauf, eigene
+Aufgaben - kein Vergleichswert zu anderen Modellen.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Lauf, in dem inhaltliche Fehler auftauchen, oder Aufgaben, die mitten im
+Verlauf die 50k nutzbaren Token ueberschreiten (siehe Kuerzungsrisiko).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Hermes Agent main @ 5d3c05977, Ollama, Victus Ubuntu 26.04.
+Aufgaben und Pruefungen: <code>tasks.py</code> in <code>~/hermes-bench</code> auf Victus.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="risks/ollama-silently-truncates-context.html">ollama-silently-truncates-context</a></li>
+<li><a href="findings/counting-needs-thinking.html">counting-needs-thinking</a></li>
+<li><a href="findings/rule-lists-make-small-models-refuse.html">rule-lists-make-small-models-refuse</a></li>
+</ul></div></details><details class="entry" id="needle-recall-holds-to-125k"><summary><span class="type">Befund</span><span class="t"><a href="findings/needle-recall-holds-to-125k.html">Qwen3.6-35B-A3B findet eine Einzelangabe bis 125k Token, und der Prefill bleibt fast flach</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-03</span><span class="i">20/20 Needle-Treffer bis 125k Token, Prefill flach bei 330-400 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung auf Victus, 2026-10-03 · <a href="findings/needle-recall-holds-to-125k.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/needle-recall-holds-to-125k.md">Markdown</a></p><h2>Aussage</h2>
+<p>Needle-in-a-Haystack auf Victus (Ubuntu, Ollama, <code>qwen3.6:35b</code>): ein Code in
+deutschem Fuelltext, bei 10 % und 50 % Tiefe, dazu ein Koeder-Code bei 90 %.
+Alle 20 Laeufe innerhalb des Kontextfensters richtig (64k- und 128k-Fenster zusammen), keiner fiel auf den Koeder herein.</p>
+<table>
+<thead>
+<tr>
+<th>echte Token</th>
+<th>Treffer</th>
+<th>Prefill</th>
+<th>Dauer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2,6k</td>
+<td>2/2</td>
+<td>330-365 t/s</td>
+<td>8 s</td>
+</tr>
+<tr>
+<td>20k</td>
+<td>2/2</td>
+<td>397 t/s</td>
+<td>52 s</td>
+</tr>
+<tr>
+<td>40k</td>
+<td>2/2</td>
+<td>388-395 t/s</td>
+<td>105 s</td>
+</tr>
+<tr>
+<td>63k</td>
+<td>4/4</td>
+<td>360-387 t/s</td>
+<td>165-203 s</td>
+</tr>
+<tr>
+<td>100k</td>
+<td>2/2</td>
+<td>348-353 t/s</td>
+<td>285 s</td>
+</tr>
+<tr>
+<td>125k</td>
+<td>2/2</td>
+<td>329-334 t/s</td>
+<td>380 s</td>
+</tr>
+</tbody>
+</table>
+<p>Mit <code>num_ctx 131072</code> lag der RAM-Bedarf des Gesamtsystems bei hoechstens 10 GB
+belegt (20,8 GB verfuegbar), VRAM 7,0 GB. Decode faellt mit dem Kontext von
+~30 auf ~15 t/s.</p>
+<h2>Traegt</h2>
+<p><code>num_ctx 131072</code> ist auf Victus tragbar. Langer Kontext ist eine Frage der
+Wartezeit (rund 6 Minuten fuer 125k beim ersten Lesen), nicht der Trefferquote.
+Das widerspricht dem Satz in <a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a>,
+grosser Kontext lohne nicht: unter Ubuntu kostet ein 16k-Prompt rund 40 s statt einer Minute.</p>
+<h2>Traegt nicht</h2>
+<p>Verstaendnis ueber lange Texte. Einen markierten Satz wiederzufinden ist die
+leichteste Aufgabe mit langem Kontext; Zusammenhaenge ueber viele Stellen sind
+nicht geprueft.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Fehltreffer innerhalb des Fensters, oder Prefill unter 200 t/s bei langen
+Prompts (dann verdraengt RAM-Mangel die Modellseiten).</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Ollama, <code>/api/generate</code>, Temperatur 0, Thinking aus. Skript
+<code>context_test.py</code> in <code>~/hermes-bench</code> auf Victus.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="risks/ollama-silently-truncates-context.html">ollama-silently-truncates-context</a></li>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+</ul></div></details><details class="entry" id="ubuntu-faster-than-windows-same-flags"><summary><span class="type">Befund</span><span class="t"><a href="findings/ubuntu-faster-than-windows-same-flags.html">Unter Ubuntu laeuft dasselbe Modell mit denselben Flags gut 50 Prozent schneller als unter Windows 10</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-03</span><span class="i">Gleiche Flags, Ubuntu statt Windows 10: Decode 19,4 auf 29,5 t/s, Prefill 500 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung auf Victus, 2026-10-03 · <a href="findings/ubuntu-faster-than-windows-same-flags.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/ubuntu-faster-than-windows-same-flags.md">Markdown</a></p><h2>Aussage</h2>
+<p>Victus wurde von Windows 10 auf Ubuntu 26.04 umgestellt. Gleiches Modell
+(Qwen3.6-35B-A3B UD-IQ4_XS, 17,73 GB), gleiche Flags wie im Windows-Startskript
+(<code>-ngl 99 -ncmoe 34 -c 16384 -t 8 -fa on -np 1 -lm mmap</code>), gleiche Messart
+(<code>timings</code> aus <code>/v1/chat/completions</code>, Thinking aus):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Windows 10, b10603</th>
+<th>Ubuntu 26.04, b11379</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Decode, kurzer Prompt</td>
+<td>19,4 t/s</td>
+<td>29,5 t/s</td>
+</tr>
+<tr>
+<td>Decode nach 15k Prompt</td>
+<td>-</td>
+<td>28,1 t/s</td>
+</tr>
+<tr>
+<td>Prefill, langer Prompt</td>
+<td>180-306 t/s</td>
+<td>500 t/s (15k Token)</td>
+</tr>
+</tbody>
+</table>
+<p><code>llama-bench</code> bestaetigt das: tg128 30,9 t/s, pp4096 510 t/s.</p>
+<p>Auf Ubuntu haengt das Display an der AMD-iGPU; die RTX 4070 belegt im Leerlauf
+62 MiB. <code>-ncmoe 30</code> passt damit ebenfalls (6,6 GB VRAM bei Bench-Kontext), bringt
+aber nur Prefill +8 %, Decode unveraendert. <code>-ncmoe 26</code> scheitert an cudaMalloc.</p>
+<h2>Traegt</h2>
+<p>Fuer Expert-Offloading auf Victus Linux bevorzugen. Der Gewinn ist gross genug,
+dass er die Wahl zwischen den Systemen entscheidet, wenn das Modell lokal laufen soll.</p>
+<h2>Traegt nicht</h2>
+<p>Die Zuordnung allein zum Betriebssystem. Zwischen den Messungen liegen auch
+sechs Wochen llama.cpp-Entwicklung (b10603 -&gt; b11379). Fuer b10603 gibt es keinen
+Linux-CUDA-Build, ein Gegentest mit gleicher Version ist so nicht moeglich.
+Ebenso wenig traegt die Vermutung, IQ4_XS sei auf der CPU der Bremser: dieselbe
+Datei ist unter Ubuntu nicht langsamer als Ollamas eigenes Quant.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Windows-Lauf mit b11379 (oder neuer) und denselben Flags, der in die Naehe von
+29 t/s kommt. Dann war es die Version, nicht das System.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, llama.cpp b11379 (<code>llama-b11379-bin-ubuntu-cuda-13.4-x64</code>),
+Treiber 595.91. Windows-Werte aus <a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a>.
+Rohdaten: <code>~/hermes-bench</code> auf Victus.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+</ul></div></details><details class="entry" id="counting-needs-thinking"><summary><span class="type">Befund</span><span class="t"><a href="findings/counting-needs-thinking.html">Zaehlen braucht Thinking, und kostet das Zwanzigfache</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">Laengen und Anzahlen brauchen Thinking, Kosten Faktor 20</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="findings/counting-needs-thinking.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/counting-needs-thinking.md">Markdown</a></p><h2>Aussage</h2>
+<p>Qwen3.6-35B-A3B scheitert ohne Thinking zuverlaessig an Aufgaben mit Laengen,
+Anzahlen oder Positionen - und zwar <strong>plausibel aussehend</strong>.</p>
+<p>Aufgabe: Regex fuer deutsche IBANs. Drei Anlaeufe ohne Thinking, drei verschiedene
+falsche Antworten (26 Ziffern, 29 Ziffern, einmal ganz ohne Laenderkennung). Mit
+Thinking beim ersten Anlauf korrekt:</p>
+<pre><code>DE\d{2}(?:\s?\d{4}){4}\s?\d{2}
+</code></pre>
+<p>Gegengeprueft: matcht <code>DE89 3704 0044 0532 0130 00</code> mit und ohne Leerzeichen,
+verwirft eine zu kurze und eine franzoesische IBAN.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Ergebnis</th>
+<th>Zeit</th>
+<th>Token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ohne Thinking</td>
+<td>falsch</td>
+<td>4,7 s</td>
+<td>64</td>
+</tr>
+<tr>
+<td>mit Thinking</td>
+<td>korrekt</td>
+<td>92,7 s</td>
+<td>2582</td>
+</tr>
+</tbody>
+</table>
+<h2>Traegt</h2>
+<p>Thinking als Vorgabe <strong>pro Aufgabentyp</strong> setzen, nicht global. Alles mit Laengen,
+Anzahlen oder Positionen bekommt es, der Rest nicht.</p>
+<h2>Traegt nicht</h2>
+<p>Dass Thinking allgemein bessere Ergebnisse liefert. Bei Umformulieren, Uebersetzen
+und Klassifikation brachte es nichts und kostete die zwanzigfache Wartezeit.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Ergebnis, das richtig aussieht und bei der Gegenprobe durchfaellt. Das ist der
+teure Fehlermodus - nicht offensichtlicher Unsinn, sondern etwas, das man pruefen
+muss. Jede Zaehl-Ausgabe gehoert maschinell gegengeprueft, egal welcher Modus.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, llama.cpp b10603, <code>chat_template_kwargs: {"enable_thinking": ...}</code>.
+Gegenprobe der Regex per Skript gegen vier Beispiele.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/rule-lists-make-small-models-refuse.html">rule-lists-make-small-models-refuse</a></li>
+<li><a href="findings/vendor-sampling-params-no-gain.html">vendor-sampling-params-no-gain</a></li>
+</ul></div></details><details class="entry" id="rule-lists-make-small-models-refuse"><summary><span class="type">Befund</span><span class="t"><a href="findings/rule-lists-make-small-models-refuse.html">Eine Liste von Abbruchgruenden im System-Prompt laesst kleine Modelle abmustern</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">Eskalationsliste im System-Prompt: 0 auf 100 Prozent nach dem Entfernen</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="findings/rule-lists-make-small-models-refuse.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/rule-lists-make-small-models-refuse.md">Markdown</a></p><h2>Aussage</h2>
+<p>Qwen3.6-35B-A3B mit abgeschaltetem Thinking ging bei zwei Aufgabentypen <strong>von
+0 auf 100 Prozent</strong>, nachdem ein einzelner Absatz aus dem System-Prompt entfernt
+wurde.</p>
+<p>Der Absatz war eine Eskalationsregel mit Aufzaehlung: eskaliere bei Websuche,
+aktuellen Fakten, mehreren Dateien, mehr als 30 Zeilen Code, offener Bewertung.
+Das Modell lehnte daraufhin ab:</p>
+<table>
+<thead>
+<tr>
+<th>Aufgabe</th>
+<th>Antwort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit-Message aus einem Vier-Zeilen-Diff</td>
+<td><code>ESKALIEREN: mehr als 30 Zeilen Code</code></td>
+</tr>
+<tr>
+<td>Fuenfzeilige Python-Funktion</td>
+<td><code>ESKALIEREN: Keine Websuche oder aktuelle Fakten</code></td>
+</tr>
+</tbody>
+</table>
+<p>Der Versuch, die Regel zu <strong>praezisieren</strong>, machte es schlimmer - die Begruendungen
+wurden frei erfunden (<code>ESKALIEREN: mehrere Dateien geaendert</code> bei einem
+Ein-Datei-Diff). Erst das Entfernen half. Danach beide Aufgaben korrekt.</p>
+<h2>Traegt</h2>
+<p>Bedingungen gehoeren nur zu den Aufgabentypen, die sie brauchen, nicht in einen
+gemeinsamen System-Prompt. Und: je kuerzer der System-Prompt, desto besser - auf
+CPU-seitigem Prefill zahlt man ihn bei jedem Aufruf.</p>
+<h2>Traegt nicht</h2>
+<p>Ein Urteil ueber grosse Modelle oder ueber dasselbe Modell <strong>mit</strong> Thinking. Beides
+ungeprueft. Der Mechanismus ist vermutlich, dass ohne Reasoning-Schritt gemustert
+statt begruendet wird - das ist eine Deutung, kein Befund.</p>
+<h2>Bruchindikator</h2>
+<p>Eskalationsquote eines Aufgabentyps dauerhaft ueber etwa 30 Prozent. Dann liegt es
+am Zuschnitt oder am Prompt, nicht am Modell.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, 10 Aufgaben mit maschineller Pruefung, je drei Laeufe.
+Vorher/Nachher am selben Modell, selber Maschine, selbem Tag.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/counting-needs-thinking.html">counting-needs-thinking</a></li>
+</ul></div></details><details class="entry" id="vendor-sampling-params-no-gain"><summary><span class="type">Befund</span><span class="t"><a href="findings/vendor-sampling-params-no-gain.html">Die Sampling-Empfehlung der Modellkarte bringt bei kurzen Aufgaben nichts</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-08-29</span><span class="i">Sampling-Empfehlung der Modellkarte: 15/15 gegen 15/15</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="findings/vendor-sampling-params-no-gain.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/vendor-sampling-params-no-gain.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die Qwen3.6-Modellkarte empfiehlt fuer den Instruct-Modus
+<code>temperature=0.7, top_p=0.8, top_k=20, min_p=0.0, presence_penalty=1.5</code>.
+Gegen strenges Sampling (<code>temperature=0</code>, keine Penalties) getestet, fuenf
+mechanische Aufgaben je drei Laeufe:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Treffer</th>
+<th>Reproduzierbarkeit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>streng (<code>temp=0</code>)</td>
+<td>15/15</td>
+<td>dreimal identische Ausgabe</td>
+</tr>
+<tr>
+<td>Modellkarte</td>
+<td>15/15</td>
+<td>2-3 verschiedene Varianten je Aufgabe</td>
+</tr>
+</tbody>
+</table>
+<p>Kein Qualitaetsunterschied, aber Determinismus nur bei <code>temp=0</code>.</p>
+<h2>Traegt</h2>
+<p>Fuer Extraktion, Klassifikation, Uebersetzung und andere formatgebundene Aufgaben
+streng fahren. Reproduzierbarkeit ist dort ein Wert an sich - man kann Ausgaben
+vergleichen und Regressionen erkennen.</p>
+<h2>Traegt nicht</h2>
+<p>Lange, freie Texte. Die <code>presence_penalty=1.5</code> der Karte zielt laut Karte auf
+<strong>endlose Wiederholungen in langen Generierungen</strong> - ein Fehlermodus, den dieser
+Test mit kurzen Ausgaben gar nicht ausloest. Dort bleibt die Empfehlung plausibel
+und ungeprueft. Deshalb Status <code>vorschlag</code>, nicht <code>getragen</code>.</p>
+<h2>Bruchindikator</h2>
+<p>Wiederholungsschleifen oder Sprachmischung in laengeren Ausgaben. Dann
+<code>presence_penalty</code> zwischen 0 und 2 probieren.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung gegen die Hersteller-Modellkarte auf Hugging Face
+(<code>Qwen/Qwen3.6-35B-A3B</code>, Abschnitt Best Practices), Stand 2026-08-29.
+Stichprobe klein: 5 Aufgaben, 3 Laeufe, ein Modell, eine Maschine.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/counting-needs-thinking.html">counting-needs-thinking</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(5)</span></h2><details class="entry" id="secure-boot-kernel-update-unloads-nvidia-dkms"><summary><span class="type">Risiko</span><span class="t"><a href="risks/secure-boot-kernel-update-unloads-nvidia-dkms.html">Ein Kernel-Update nimmt bei Secure Boot den NVIDIA-Treiber mit</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Kernel-Update bei Secure Boot: lokal signiertes DKMS-Modul laedt nicht, GPU weg, kein Log sagt es; Abhilfe signiertes `linux-modules-nvidia`-Paket</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita (Ubuntu 24.04, RTX A5000), 2026-10-02 bis 2026-10-07 · <a href="risks/secure-boot-kernel-update-unloads-nvidia-dkms.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bei eingeschaltetem Secure Boot laedt der Kernel nur signierte Module. Nach einem
+Kernel-Update (hier 7.0.0-31 auf 7.0.0-34) baut DKMS das NVIDIA-Modul fuer den neuen
+Kernel neu und signiert es mit dem <strong>lokalen</strong> MOK-Schluessel
+(<code>/var/lib/shim-signed/mok/MOK.der</code>). Ist dieser Schluessel nie in der Firmware
+eingetragen worden, verweigert der Kernel das Modul: <code>modprobe nvidia</code> meldet
+<code>Operation not permitted</code>, <code>nvidia-smi</code> findet keinen Treiber, und jeder Dienst, der
+die GPU braucht (llama-server, Training), steht -- ohne dass irgendein Log einen
+Treiberfehler nennt. Auf Alita blieb das fuenf Tage unbemerkt wirksam, ein zweiter
+Neustart aenderte nichts.</p>
+<p>Drei Auswege, alle mit sudo:
+1. Das von Canonical signierte Modulpaket zum neuen Kernel installieren:
+   <code>apt install linux-modules-nvidia-&lt;treiber&gt;-&lt;kernelversion&gt;-generic</code> (zieht die
+   passende Treiberversion nach), dann Neustart. <strong>Gewaehlt, funktioniert.</strong>
+2. Den eigenen MOK-Schluessel eintragen (<code>mokutil --import MOK.der</code>, beim Booten
+   bestaetigen). Danach laedt jedes DKMS-Modul, auch kuenftige.
+3. Im GRUB den alten Kernel booten, fuer den das signierte Paket noch da ist.</p>
+<p><strong>Nachtrag 07.10. 10:45 (Ursache eingegrenzt):</strong> Nach einem weiteren Kernel-Update lagen fuer den
+laufenden Kernel ZWEI Module: <code>updates/dkms/nvidia.ko.zst</code> (DKMS, lokaler MOK-Schluessel, nicht
+eingetragen) und <code>kernel/nvidia-580/nvidia.ko</code> aus <code>linux-modules-nvidia-580-&lt;kernel&gt;</code> (vom
+Distributor signiert, laedt unter Secure Boot). <code>modprobe</code> nimmt <code>updates/</code> zuerst, daher
+"Operation not permitted", obwohl ein lauffaehiges Modul daneben liegt. Pruefen: <code>modinfo</code> beider
+Pfade (Zeile <code>signer</code>), <code>modprobe -n -v nvidia</code> zeigt, welches gewaehlt wird. Abhilfe ohne Neustart:
+<code>dkms remove nvidia/&lt;version&gt; -k &lt;kernel&gt; &amp;&amp; depmod -a &amp;&amp; modprobe nvidia</code>; dauerhaft den
+MOK-Schluessel eintragen, sonst kommt das DKMS-Modul beim naechsten Kernel-Update wieder davor.</p>
+<h2>Traegt</h2>
+<p>Jede Workstation mit Secure Boot, NVIDIA-DKMS und automatischen Kernel-Updates
+(Ubuntu <code>unattended-upgrades</code>). Pruefbefehl vor dem Neustart:
+<code>dkms status</code> zeigt das Modul fuer den neuen Kernel, <code>mokutil --sb-state</code> sagt
+<code>SecureBoot enabled</code>, <code>mokutil --list-enrolled | grep -c Canonical</code> -- steht dort
+nur Canonical, fehlt der lokale Schluessel und Weg 1 oder 2 ist faellig.</p>
+<h2>Traegt nicht</h2>
+<p>Maschinen ohne Secure Boot, oder mit eingetragenem MOK. Dort laedt das DKMS-Modul
+nach dem Update normal.</p>
+<h2>Bruchindikator</h2>
+<p><code>cat /proc/driver/nvidia/version</code> liefert etwas, obwohl <code>dkms status</code> nur ein
+lokal signiertes Modul fuer den laufenden Kernel zeigt -- dann ist die Aussage
+ueber die Signaturpruefung falsch oder Secure Boot aus.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung auf Alita, Tier 1a (Journal, <code>dkms status</code>, <code>mokutil</code>), 2026-10-02
+und 2026-10-07. Die Dauer des Ausfalls (fuenf Tage) kam daher, dass der Waechter des
+Modellservers den Treiber nicht prueft, siehe
+<a href="../agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.html">restart-loop-is-an-alarm-not-a-repair</a>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.html">restart-loop-is-an-alarm-not-a-repair</a></li>
+</ul></div></details><details class="entry" id="self-evolution-gepa-silently-falls-back"><summary><span class="type">Risiko</span><span class="t"><a href="risks/self-evolution-gepa-silently-falls-back.html">hermes-agent-self-evolution: GEPA laeuft gar nicht</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-06</span><span class="i">Nous-Repo: `dspy.GEPA` scheitert, stummer Rueckfall auf MIPROv2</span></summary><div class="body"><p class="small muted">Herkunft: Code-Lektuere NousResearch/hermes-agent-self-evolution, Commit 0a929e3, dspy 3.4.0, 2026-10-05 · <a href="risks/self-evolution-gepa-silently-falls-back.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/risks/self-evolution-gepa-silently-falls-back.md">Markdown</a></p><h2>Aussage</h2>
+<p>Das Nous-Repo verspricht, Hermes-Skills per DSPy + GEPA zu verbessern. Im
+aktuellen Stand (Commit 0a929e3) passiert etwas anderes:</p>
+<ol>
+<li><code>dspy.GEPA(metric=..., max_steps=iterations)</code> wirft unter dspy 3.4.0
+   <code>TypeError: unexpected keyword argument 'max_steps'</code>. Das Skript faengt den
+   Fehler ab und nimmt <strong>stumm MIPROv2</strong>. <code>--optimizer-model</code> wird nie benutzt,
+   weil kein <code>reflection_lm</code> uebergeben wird.</li>
+<li>Die Bewertung <code>skill_fitness_metric</code> ist <strong>Wortueberschneidung</strong> zwischen
+   Antwort und erwarteter Antwort, kein LLM-Judge, und liefert GEPA kein
+   Text-Feedback. Hermes selbst fuehrt dabei keine Werkzeuge aus.</li>
+</ol>
+<p>Ein Lauf zeigt also nicht, was GEPA kann, und die Ausgabe sagt es nur in einer
+gelben Zeile.</p>
+<h2>Traegt</h2>
+<p>Jede Entscheidung, Geld oder Rechenzeit in einen Lauf zu stecken. Vorher den
+Aufruf pruefen: <code>reflection_lm</code> und <code>max_metric_calls</code> oder <code>auto</code> setzen.</p>
+<h2>Traegt nicht</h2>
+<p>Eine Aussage ueber GEPA selbst (ICLR 2026). Das Problem ist die Anbindung.</p>
+<h2>Bruchindikator</h2>
+<p>Ein neuerer Commit im Repo ruft <code>dspy.GEPA</code> mit gueltigen Argumenten auf.</p>
+<h2>Ablesung</h2>
+<p>Code gelesen, Aufruf in eigener venv nachgestellt (TypeError reproduziert).
+Kein voller Lauf gemacht.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li>Repo: <a href="https://github.com/NousResearch/hermes-agent-self-evolution">https://github.com/NousResearch/hermes-agent-self-evolution</a></li>
+</ul></div></details><details class="entry" id="opencode-run-hangs-on-open-stdin"><summary><span class="type">Risiko</span><span class="t"><a href="risks/opencode-run-hangs-on-open-stdin.html">`opencode run` haengt ohne Meldung, wenn stdin offen bleibt</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-04</span><span class="i">`opencode run` haengt ohne `&lt;/dev/null`, keine Anfrage erreicht das Modell</span></summary><div class="body"><p class="small muted">Herkunft: Victus, Einrichtung Hermes + OpenCode, 2026-10-04 · <a href="risks/opencode-run-hangs-on-open-stdin.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/risks/opencode-run-hangs-on-open-stdin.md">Markdown</a></p><h2>Aussage</h2>
+<p>Aus einem Skript oder Agenten-Tool gestartet, blieb <code>opencode run '...'</code> nach
+<code>message=init</code> stehen. In 10 Minuten <strong>kam keine einzige Anfrage bei Ollama an</strong>.
+Der Prozess lag in <code>ep_poll</code> bei 1 % CPU, ohne Netzwerkverbindung.</p>
+<p>Derselbe Aufruf mit `</p></div></details><details class="entry" id="ollama-silently-truncates-context"><summary><span class="type">Risiko</span><span class="t"><a href="risks/ollama-silently-truncates-context.html">Ollama kuerzt einen zu langen Prompt stumm auf die Haelfte, und das Modell antwortet trotzdem</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-03</span><span class="i">Prompt ueber `num_ctx`: Ollama behaelt stumm 32k vom Ende, Modell nennt den Koeder</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung auf Victus, 2026-10-03 · <a href="risks/ollama-silently-truncates-context.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/risks/ollama-silently-truncates-context.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ist der Prompt laenger als <code>num_ctx</code>, gibt Ollama keinen Fehler zurueck. Es
+schneidet den <strong>Anfang</strong> ab und behaelt nur etwa <code>num_ctx / 2</code> Token vom Ende.
+Gemessen mit <code>num_ctx 65536</code>: Prompts von 71k und 100k Token kamen jeweils mit
+<code>prompt_eval_count = 32770</code> beim Modell an.</p>
+<p>Das Modell merkt davon nichts. Im Needle-Test lag der echte Code im
+abgeschnittenen Teil, ein Koeder ("der alte, ungueltige Code war ...") im
+behaltenen. In 4 von 4 Laeufen nannte Qwen3.6 den Koeder, ohne Hinweis auf
+Unsicherheit.</p>
+<h2>Traegt</h2>
+<p>Jeder Agent auf Ollama (z. B. Hermes Agent) mit langen Sitzungen. Hermes bringt
+allein rund 13k Token System-Prompt mit; bei <code>num_ctx 65536</code> bleiben etwa 50k fuer
+die Arbeit, danach wird ohne Meldung die Haelfte des Verlaufs verworfen.
+Gegenmittel: <code>num_ctx</code> so gross setzen, wie RAM es zulaesst (128k lief auf Victus,
+siehe <a href="findings/needle-recall-holds-to-125k.html">needle-recall-holds-to-125k</a>),
+und <code>prompt_eval_count</code> gegen die erwartete Laenge pruefen.</p>
+<h2>Traegt nicht</h2>
+<p>llama.cpp-Server direkt: der lehnt einen zu langen Prompt mit HTTP 400 ab. Das ist
+das gewuenschte Verhalten.</p>
+<h2>Bruchindikator</h2>
+<p><code>prompt_eval_count</code> in der Ollama-Antwort kleiner als die Laenge, die man geschickt
+hat. Bei 32770 trotz laengerem Prompt ist die Kuerzung sicher.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung, Ollama mit <code>qwen3.6:35b</code>, <code>/api/generate</code>, <code>num_ctx 65536</code>,
+Temperatur 0, Thinking aus. 4 Laeufe ueber dem Limit, alle gekuerzt, alle falsch.</p>
+<p>Zweiter Fall, 2026-10-06: Ein frisch geholtes <code>qwen3.5:9b</code> läuft in Ollama mit dem Standardkontext von 4 096 Token. Mit Denken brachen sieben von 20 Antworten bei rund 4 000 Token mitten im Denkteil ab und kamen leer zurück, ohne Fehlermeldung. Abhilfe wie bei Qwen3.6: eigene Variante mit <code>PARAMETER num_ctx 32768</code>. Siehe <a href="findings/everyday-tasks-qwen36-vs-qwen35-9b.html">everyday-tasks-qwen36-vs-qwen35-9b</a>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/needle-recall-holds-to-125k.html">needle-recall-holds-to-125k</a></li>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="findings/everyday-tasks-qwen36-vs-qwen35-9b.html">everyday-tasks-qwen36-vs-qwen35-9b</a></li>
+</ul></div></details><details class="entry" id="dynamic-quants-break-metadata-math"><summary><span class="type">Risiko</span><span class="t"><a href="risks/dynamic-quants-break-metadata-math.html">Groessen aus Metadaten und nomineller Bitbreite rechnen sich falsch</a></span><span class="badge ok">getragen</span><span class="muted small">2026-08-29</span><span class="i">Groessenrechnung aus Metadaten liegt um Faktor zwei daneben</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="risks/dynamic-quants-break-metadata-math.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/risks/dynamic-quants-break-metadata-math.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der naheliegende Weg, die Groesse der Expert-Gewichte je Layer zu bestimmen -
+<code>expert_count x 3 x embedding x ffn_length x Bits / 8</code> aus den GGUF-Metadaten -
+geht bei modernen Quantisierungen daneben. Dynamische Quants (unsloth "UD",
+i-Quants) geben verschiedenen Tensoren <strong>verschiedene</strong> Bitbreiten: Experten
+weniger, Attention und Embeddings mehr. Auf Victus lag die Rechnung um Faktor zwei
+daneben.</p>
+<p>Richtig ist, die <strong>Tensor-Tabelle</strong> im GGUF-Header auszuwerten. Dort steht jeder
+Tensor mit Name, Typ und Datei-Offset; die Differenz zweier aufeinanderfolgender
+Offsets ist die exakte Groesse - unabhaengig vom Quant-Typ, auch fuer Typen, die
+es beim Schreiben dieses Eintrags noch nicht gab.</p>
+<p>Gegenprobe: Summe aller Tensoren 17,72 GB gegen 17,73 GB Dateigroesse.</p>
+<h2>Traegt</h2>
+<p>Jede Kapazitaetsrechnung vor dem Laden: passt das Modell, wie viele Layer auf die
+GPU, wie viel bleibt im RAM.</p>
+<h2>Traegt nicht</h2>
+<p>Eine Aussage ueber Qualitaet. Dass Experten weniger Bits bekommen, heisst nicht,
+dass das Modell schlechter ist - es ist die Absicht des Quantisierers.</p>
+<h2>Bruchindikator</h2>
+<p>Die Summe aller Tensoren weicht deutlich von der Dateigroesse ab. Dann stimmt die
+Leseroutine nicht, nicht das Modell.</p>
+<p>Zweiter Indikator: eine ggml-Typtabelle im eigenen Code. Sie veraltet mit jedem
+neuen Quant-Typ und rechnet dann <strong>still</strong> falsch - genau der erste Fehler, der
+hier gemacht wurde.</p>
+<h2>Ablesung</h2>
+<p>Eigene Messung. Erster Versuch mit Typtabelle: Experten 7,75 GiB bei 17,73 GB
+Datei. Zweiter Versuch ueber Offsets: 14,12 GiB, Summe stimmt mit der Datei.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(6)</span></h2><details class="entry" id="decision-model-as-profile-orchestrator"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Laya/Jev/Arch-Router als Weiche: nur zwischen residenten Zielen (klein/gross/Cloud), nie je Anfrage zwischen exklusiven Profilen; Laya zero-shot 0,36, erst gegen kNN messen</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Webrecherche 2026-10-08 zu Laya 0.4.0, Jev, Arch-Router, Routing-Benchmarks; eigene Profilmessungen · <a href="open_checks/decision-model-as-profile-orchestrator.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Entscheidungsmodell (Jev von TypeSafe, offen: Laya von Convai) liefert in
+30 bis 100 ms eine Wahl mit Wahrscheinlichkeit statt Text. Als Orchestrator
+taugt es nur dort, wo beide Ziele gleichzeitig antworten koennen. Auf einer
+24-GB-Karte sind die grossen Profile (27B dicht, 177B-MoE) exklusiv: ein
+Wechsel kostet 20 bis 40 s Laden plus Verdraengung des Vorgaengers. Eine
+Weiche je Anfrage zwischen diesen Profilen ist darum ein Fehlentwurf; die
+Weiche gehoert zwischen das grosse residente Modell, ein kleines residentes
+Nebenmodell und das Cloud-Modell.</p>
+<p>Stand der Recherche (alles Fremdzahlen, siehe Ablesung):</p>
+<table>
+<thead>
+<tr>
+<th>Modell</th>
+<th>Groesse, Lizenz</th>
+<th>Latenz</th>
+<th>Treffer (fremd gemessen)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Laya 0.4.0 (Convai, 18.09.2026)</td>
+<td>322-421 Mio., Apache 2.0, CPU-faehig, 0,8-2,5 GB</td>
+<td>33 ms T4, ~60 ms CPU (Victus)</td>
+<td>typed decisions 0,77 feinjustiert, <strong>0,36 zero-shot</strong> (Zufall 0,32); AG News 0,95; Banking77 0,43</td>
+</tr>
+<tr>
+<td>Jev (TypeSafe, API)</td>
+<td>geschlossen, $0,042/M Token</td>
+<td>70-500 ms, Median 0,65 s</td>
+<td>typed decisions 0,73; Banking77 0,87; Routing-Bench 67,8 % gegen 74,1 % der Konkurrenz; 40/40 in einem Vier-Stufen-Test</td>
+</tr>
+<tr>
+<td>Arch-Router-1.5B (Katanemo)</td>
+<td>1,5B, generativ, HF</td>
+<td>~1 s</td>
+<td>+7,7 % gegen proprietaere Modelle laut eigener Arbeit</td>
+</tr>
+<tr>
+<td>Qwen2.5-3B als Klassifikator (arXiv 2604.02367)</td>
+<td>3B</td>
+<td>988 ms Median</td>
+<td>0,78-0,79; Luecke 6-8 Punkte zur Produktionsschwelle 0,85</td>
+</tr>
+</tbody>
+</table>
+<p>LLMRouterBench (400k Faelle, 33 Modelle) und RouterArena (ICLR 2026) finden,
+dass viele Router, auch kommerzielle, eine einfache kNN-Baseline nicht
+zuverlaessig schlagen. Laya ist rund 8-mal schneller als Jev und besser
+kalibriert (ECE 0,08 gegen 0,25), aber ohne Feinjustierung fast Zufall auf
+typisierten Entscheidungen; die 24/30 auf Victus kamen mit nur drei Zielen.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Weiche VOR dem Agenten (nicht als Tool im Agenten, siehe Victus-Befund)
+  mit hoechstens drei Zielen, die ALLE sofort antworten koennen:
+  <code>klein</code> (residentes Nebenmodell &lt;= 9B), <code>gross</code> (laufendes Hauptprofil),
+  <code>schwer</code> (Cloud). Schwelle p &gt;= 0,8, darunter an <code>gross</code>.</li>
+<li>Das Profil <code>flash</code> (Flash-Next IQ2_XS, 6 GB VRAM) laesst neben sich ein
+  kleines dichtes Modell auf der Karte zu; erst damit gibt es zwei lokale
+  Ziele fuer eine Weiche. Mit dem 27B (21 GB) bleibt nur klein-CPU oder Cloud.</li>
+<li>Laya als Dienst (<code>laya-serve</code>, CPU, ~1,6 GB RAM): 0,1 s je Entscheidung.
+  Ohne Dienst 6-7 s Modellladen je Aufruf.</li>
+<li>Vor jeder Einfuehrung: 60 Faelle mit Soll-Label (local_models
+  <code>tools/laya/faelle/route.jsonl</code>) gegen Embedding+kNN auf demselben
+  Embedding-Server (Port 8001) messen. Gewinnt kNN, braucht es kein Laya.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Profilwechsel je Anfrage (q4 gegen flash gegen flash-s): Ladezeit und
+  Exklusivitaet der Karte machen die Weiche hier sinnlos.</li>
+<li>Zero-shot-Einsatz von Laya fuer feine Kategorien (Banking77 0,43). Mehr
+  als drei bis vier Ziele.</li>
+<li>Die Konfidenz als Garantie (Victus: zwei Fehler bei 0,96/0,97).</li>
+<li>Dass Laya 0.4.0 auf Alita ohne weiteres laeuft: es verlangt PyTorch 2.14
+  und transformers 5.x, die Umgebung <code>dl</code> hat 2.6. Eigene CPU-Umgebung noetig
+  (Wheel plus 2,5 GB Gewichte ueber die Telefonleitung).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Auf den 60 Routing-Faellen liegt Laya nicht mindestens 5 Punkte vor
+Embedding+kNN, oder schwere Anfragen landen bei p &gt;= 0,8 regelmaessig beim
+kleinen Modell.</p>
+<h2>Ablesung</h2>
+<p>Webrecherche 2026-10-08: PyPI laya 0.4.0; flowtivity.ai Laya-gegen-Jev-
+Benchmark (T4, eigene Testsaetze des Autors); dev.classmethod.jp Jev-
+Routing-Test (40 Faelle, nicht produktiv); arXiv 2604.02367 (SLM-Front-Door-
+Routing), 2601.07206 (LLMRouterBench), 2510.00202 (RouterArena), 2506.16655
+(Arch-Router). Keine der Zahlen auf Alita gemessen. Eigene Zahl: Profilwechsel
+flash ueber start.sh 20 s Ladezeit, 6,1 GB VRAM bei 32k Kontext.</p>
+<h2>Nachtrag 2026-10-08: Jev auf der eigenen Maschine</h2>
+<p>Jev gibt es nur als gehosteten Dienst (api.typesafe.ai, <code>POST /v1/systemone</code>,
+SDK <code>pip install typesafe-sdk</code>, auch ueber OpenRouter: 0,042 $/M Eingabetoken,
+32k Kontext). Keine Gewichte, kein On-Prem; Zero-Data-Retention nur fuer
+Enterprise-Kunden auf Anfrage. Fuer eine Workstation mit Patientendaten heisst
+das: Jev darf nur Entscheidungen ueber Text sehen, der keine Daten enthaelt
+(Routing von Nutzeranfragen, nicht Shell-Befehle mit Pfaden, nicht Berichte).
+Lokal laufen stattdessen die Nachbauten mit demselben Draht-Format: Mapika
+<code>decider</code> (Qwen3.5-Feinjustierung, Apache 2.0, 2B = 4 GB VRAM, 4B = 8,4 GB,
+35B-A3B = 20-65 GB; serviert <code>/v1/systemone</code>, TypeSafes SDK laeuft gegen eine
+andere Basis-URL), JevBench v1.3: Jev 74,4 / Kalibrierung 83, decider-4b v2
+64,1 (bestes offenes), decider-35b-a3b 67,6 / 72, decider-2b 61,7 / 47
+(schlecht kalibriert). GGUF-Varianten (Q4_K_M, 2,7 GB) existieren fuer
+llama.cpp. Laya bleibt der kleinste Weg (322-421 Mio., CPU, 60 ms).</p>
+<p>Folge fuer Alita: decider-4b als GGUF passt neben das Profil <code>flash</code> (6 GB)
+oder als CPU-Dienst neben das 27B; ein zweiter llama-server auf 8003 mit
+<code>--n-gpu-layers 0</code> kostet nur RAM. Messung wie oben: 60 Faelle, drei Ziele,
+gegen Embedding+kNN und Laya.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="findings/flash-next-177b-moe-on-24gb-card.html">flash-next-177b-moe-on-24gb-card</a></li>
+<li><a href="open_checks/local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a></li>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></details><details class="entry" id="local-stack-landscape-2026-10"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a></span><span class="badge info">offen</span><span class="muted small">2026-10-06</span><span class="i">Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Victus, Webrecherche in drei Strängen, 2026-10-06 · <a href="open_checks/local-stack-landscape-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/local-stack-landscape-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<p>Webrecherche vom 2026-10-06 zu Modellen, Methoden und Entscheidungsmodellen für
+eine Consumer-GPU. Fast alle Zahlen sind Herstellerangaben oder Blogs [V];
+unabhängig [U] sind nur Artificial Analysis, localbench, Kaitchup und einzelne
+Community-Messungen. Daraus folgen Messungen auf Victus, keine Setzungen.</p>
+<p><strong>Modelle.</strong>
+- 8 GB: Qwen3.6-35B-A3B mit Experten auf der CPU bleibt die Wahl; nichts schlägt es nachweislich.
+  Schnell und ganz auf der GPU: Qwen3.5-9B oder MiMo-V2.6-Distill-Qwen-9B [V].
+  Ternary Bonsai 2 27B (Qwen3.8-27B ternär, 5,9 GB, 17.09.2026) ist unabhängig ungeprüft und braucht einen Fork.
+- 24 GB: Qwen3.8-27B (14.08.2026, Apache 2.0) laut Artificial Analysis stärkstes kleines Open-Modell [U].
+  Alternativen Laguna XS 2.1 (33B-A3B, braucht llama.cpp-PR #25165), Gemma 4 26B-A4B/31B.
+  Deutsch: Soofi S (31,6B-A3,2B, Lizenz unklar).</p>
+<p><strong>Methoden.</strong>
+- MTP-Speculative-Decoding in llama.cpp seit 16.05.2026 (<code>--spec-type draft-mtp --spec-draft-n-max 2</code>), +78 % auf Qwen3.6-27B [U, Blog].
+- <code>--n-cpu-moe</code>-Sweep: auf 8 GB 32–41 tok/s für Qwen3.6-35B-A3B, bestes N 25, nicht monoton [U, Community].
+  Victus misst bisher 19,4 (Windows) und 29,5 t/s (Ubuntu), siehe <a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a>.
+- Prefix-Cache über <code>--cache-ram</code>/<code>--cache-reuse</code> nur bei byte-stabilem System-Prompt und Tool-Liste.
+- KV-Cache q8_0 bei Qwen3.6 fast verlustfrei (KLD &lt; 0,04), bei Gemma 4 nicht (0,108) [U, localbench 24.04.2026].
+- OpenCode ohne ungenutzte Tools: 7 516 auf 5 335 Token im ersten Turn [U, Einzelmessung].</p>
+<p><strong>Entscheidungsmodelle.</strong>
+- Routing: Arch-Router-1.5B und Embedding+kNN als Gegner für Laya. RouterArena und LLMRouterBench (2026) finden einfache kNN-Router oft gleichauf [U].
+- Wächter für Shell-Befehle: Regelparser mit Allowlist, Modell nur für Grauzonen (Granite Guardian 4.1 8B, eigene Kriterien, Apache 2.0).
+  Inhalts-Guards wie Qwen3Guard oder Llama Guard decken Shell-Gefahr nicht ab.
+- Antwortprüfung: Skywork-Reward-V2 (0.6B–8B), LettuceDetect (ModernBERT, CPU).</p>
+<h2>Zu prüfen</h2>
+<ol>
+<li><code>--n-cpu-moe</code> 15–40 mit <code>llama-bench</code>, pp512/tg128, <code>-ub 512</code> gegen <code>-ub 4096</code>.</li>
+<li>MTP an/aus, <code>--spec-draft-n-max</code> 1/2/3, Akzeptanz bei Code und Prosa.</li>
+<li>KV f16/q8/q4 mit <code>llama-perplexity --kl-divergence</code> auf eigenen Agent-Logs.</li>
+<li>Time-to-first-token ab Turn 2 mit/ohne <code>--cache-ram</code>, volles gegen reduziertes Tool-Set.</li>
+<li>Laya gegen Arch-Router gegen Embedding+kNN auf den 60 Routing-Fällen in local_models <code>tools/laya/faelle/route.jsonl</code>.</li>
+<li>50 gefährliche und 50 harmlose Shell-Befehle: Regelparser gegen Granite Guardian 4.1.</li>
+</ol>
+<h2>Trägt nicht</h2>
+<p>Dass eines der genannten Modelle auf Victus besser ist. Keine der Zahlen ist hier gemessen;
+mehrere Ranking-Seiten widersprachen den Modellkarten und wurden verworfen.</p>
+<h2>Bruchindikator</h2>
+<p>Je Punkt unter "Zu prüfen" eine eigene Messung auf Victus; Ergebnis als Befund, dieser Prüfpunkt wird dann geschlossen oder verkleinert.</p>
+<h2>Ablesung</h2>
+<p>Quellen [V]/[U] wie markiert, unter anderem:
+- https://github.com/ggml-org/llama.cpp/pull/23269
+- https://huggingface.co/blog/Doctor-Shotgun/llamacpp-moe-offload-guide
+- https://localbench.substack.com/p/kv-cache-quantization-benchmark
+- https://kaitchup.substack.com/p/serving-exllamav3-with-tabbyapi-accuracy
+- https://artificialanalysis.ai/models/open-source/small
+- https://jacar.es/en/opencode-with-local-models/
+- https://arxiv.org/abs/2506.16655 (Arch-Router)
+- https://arxiv.org/abs/2601.07206 (LLMRouterBench)
+- https://huggingface.co/ibm-granite/granite-guardian-4.1-8b</p>
+<p>Vollständiger Stand mit allen Quellen: local_models <code>recherche/stand/2026-10-06.md</code>, täglich fortgeschrieben.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="open_checks/dense-27b-vs-moe-on-8gb.html">dense-27b-vs-moe-on-8gb</a></li>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+<li><a href="open_checks/minimal-harness-prompt-size.html">minimal-harness-prompt-size</a></li>
+</ul></div></details><details class="entry" id="dense-27b-vs-moe-on-8gb"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/dense-27b-vs-moe-on-8gb.html">Weniger Denken bei einem dichten 27B: schneller als das MoE auf 8 GB?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-04</span><span class="i">Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Video Sam Witteveen &quot;Which is The Best Qwen3.8-27B?&quot;, 2026-10-04 · <a href="open_checks/dense-27b-vs-moe-on-8gb.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/dense-27b-vs-moe-on-8gb.md">Markdown</a></p><h2>Aussage</h2>
+<p>Drei Fine-Tunes von Qwen3.8-27B sollen bei fast gleicher Genauigkeit weniger
+Denk-Token erzeugen. Die Zahlen stammen von den Herstellern, berichtet im Video:</p>
+<table>
+<thead>
+<tr>
+<th>Modell</th>
+<th>Versprechen</th>
+<th>Lizenz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ThinkingCap (BottleCapAI)</td>
+<td>37 % weniger Token ueber 12 Benchmarks, Genauigkeit 86,6 auf 85,8</td>
+<td>klein-gewerblich und privat</td>
+</tr>
+<tr>
+<td>Swift 1.5 (UkisAI)</td>
+<td>bis 58,5 % weniger; LiveCodeBench 77 auf 81,7 % bei 11 200 auf 8 400 Token</td>
+<td>eigene, frei bis 1 Mio. $ Umsatz</td>
+</tr>
+<tr>
+<td>QwenPi</td>
+<td>fuer den Pi-Harness; medium so gut wie Basis-xhigh auf Terminal Bench, 41 % weniger Output</td>
+<td>Apache 2</td>
+</tr>
+</tbody>
+</table>
+<p>Fuer Victus zaehlt etwas anderes: <strong>Qwen3.8-27B ist dicht.</strong> Pro Token wirken
+alle 27 Mrd. Parameter, beim jetzigen Qwen3.6-35B-A3B etwa 3 Mrd. Expert-Offloading
+greift bei einem dichten Modell nicht.</p>
+<p>Eigene Schaetzung, nicht gemessen: Q4 rund 16 GB, davon passen etwa 6,5 GB ins
+VRAM. Die restlichen rund 10 GB muessen je Token aus dem RAM gelesen werden. Bei
+rund 60 GB/s ergibt das <strong>5-8 t/s Decode</strong>, gegen gemessene 30-35 t/s beim MoE.
+Auch 58 % weniger Denk-Token holen einen Faktor 4-6 nicht ein.</p>
+<p>Dazu kommt der Speicher: 16 GB neben den 22 GB des MoE-Modells passen nicht in
+30 GB RAM. Ein Wechsel heisst jedes Mal neu laden.</p>
+<h2>Traegt</h2>
+<p>Nichts. Die Tabelle ist Herstellerangabe aus zweiter Hand, die Geschwindigkeit
+ist eine Rechnung.</p>
+<h2>Traegt nicht</h2>
+<p>Die Annahme "weniger Denken = schneller" laesst sich nicht von einer RTX Pro
+6000 mit 96 GB (Testmaschine im Video) auf 8 GB uebertragen. Dort ist das
+Modell decode-gebunden im VRAM, hier im RAM.</p>
+<h2>Bruchindikator</h2>
+<p>Ein gemessener Decode ueber 15 t/s fuer ein dichtes 27B auf Victus. Dann ist
+die Rechnung oben falsch und der Vergleich offen.</p>
+<h2>Ablesung</h2>
+<p>Video von Sam Witteveen, 2026-10-04, Kapitel 6-8, Testmaschine Dell Pro Max mit
+RTX Pro 6000, vLLM. Einzelbeobachtung aus den Kommentaren, nicht pruefbar: auf
+einem MacBook M5 mit 32 GB loeste Qwen3.6-35B-A3B eine HTML/JS-Aufgabe in 2:44
+min, Qwen3.8-27B in 4:30 min, ein erster Anlauf des 27B lief 10 min in einer
+Schleife.</p>
+<h2>Zu messen</h2>
+<p>Swift 1.5 als GGUF (Q4) auf Victus, gleicher Prompt wie beim MoE: Prefill und
+Decode getrennt (siehe [separate-prefill-from-decode]), dazu Denk-Token und
+Wanduhr bis zur fertigen Antwort. Swift, weil es als einziges GGUFs fuer kleine
+GPUs anbietet. Vorher das MoE-Modell entladen.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="open_checks/reasoning-effort-for-routine-agent-tasks.html">reasoning-effort-for-routine-agent-tasks</a></li>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+</ul></div></details><details class="entry" id="minimal-harness-prompt-size"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/minimal-harness-prompt-size.html">Kleiner Harness statt kleineres Modell?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-04</span><span class="i">Pi unter 1000 Token Prompt gegen OpenCode 10 879 und Hermes ~13 000</span></summary><div class="body"><p class="small muted">Herkunft: Video Sam Witteveen &quot;Which is The Best Qwen3.8-27B?&quot;, 2026-10-04; eigene Messung Hermes + OpenCode · <a href="open_checks/minimal-harness-prompt-size.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/minimal-harness-prompt-size.md">Markdown</a></p><h2>Aussage</h2>
+<p>Der Coding-Agent <strong>Pi</strong> kommt laut Video mit vier Werkzeugen (read, write, edit,
+bash) und einem System-Prompt <strong>unter 1000 Token</strong> aus.</p>
+<p>Gemessen auf Victus, Ollama-Log:</p>
+<table>
+<thead>
+<tr>
+<th>Harness</th>
+<th>Prompt der ersten Anfrage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenCode 1.18.34</td>
+<td>10 879 Token</td>
+</tr>
+<tr>
+<td>Hermes Agent v0.21.5</td>
+<td>rund 13 000 Token</td>
+</tr>
+</tbody>
+</table>
+<p>Bei einem Slot (siehe [prefix-cache-single-slot]) wird dieser Prompt nach jedem
+Cache-Verlust neu eingelesen, bei rund 400 t/s also 27-33 s, bevor das Modell das
+erste Token schreibt. Mit unter 1000 Token waeren es etwa 2-3 s.</p>
+<p>Vermutung: Auf Victus ist der Harness ein groesserer Hebel als ein schnelleres
+Modell. Dazu passt [rule-lists-make-small-models-refuse]: lange System-Prompts
+schaden kleinen Modellen auch inhaltlich.</p>
+<h2>Traegt</h2>
+<p>Nichts. Die Prompt-Groessen sind gemessen, die Wirkung auf Ergebnis und Wanduhr
+nicht.</p>
+<h2>Traegt nicht</h2>
+<p>QwenPi ist eigens fuer Pi trainiert. Laut Video ist nicht belegt, dass ein
+Modell ohne dieses Training, etwa Qwen3.6-35B-A3B, in Pi gut arbeitet.</p>
+<h2>Bruchindikator</h2>
+<p>entfaellt</p>
+<h2>Ablesung</h2>
+<p>blind</p>
+<h2>Zu messen</h2>
+<p>Pi mit Qwen3.6-35B-A3B ueber Ollama gegen OpenCode, dieselben Aufgaben wie in
+[hermes-delegates-to-opencode-locally]. Erfasst werden Prompt-Token je Anfrage,
+Wanduhr gesamt und ob die Tests gruen sind.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="findings/hermes-delegates-to-opencode-locally.html">hermes-delegates-to-opencode-locally</a></li>
+<li><a href="findings/rule-lists-make-small-models-refuse.html">rule-lists-make-small-models-refuse</a></li>
+</ul></div></details><details class="entry" id="reasoning-effort-for-routine-agent-tasks"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/reasoning-effort-for-routine-agent-tasks.html">Wie viel Thinking brauchen Routineaufgaben im Agenten?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-04</span><span class="i">Wie viel Thinking Routineaufgaben im Agenten brauchen, ungemessen</span></summary><div class="body"><p class="small muted">Herkunft: Video Sam Witteveen &quot;Which is The Best Qwen3.8-27B?&quot;, 2026-10-04; eigene Einrichtung Hermes + OpenCode · <a href="open_checks/reasoning-effort-for-routine-agent-tasks.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/reasoning-effort-for-routine-agent-tasks.md">Markdown</a></p><h2>Aussage</h2>
+<p>Lokal ist das Modell decode-gebunden: jedes Denk-Token ist Wartezeit. Bei
+30-35 t/s kosten 3000 Denk-Token rund eineinhalb Minuten.</p>
+<p>Im Video halbiert eine niedrigere Reasoning-Stufe bei Qwen3.8-27B die Denk-Token,
+kostet aber rund <strong>9 Punkte Genauigkeit</strong> (Herstellerangabe ThinkingCap).
+Gleichzeitig ist auf Victus gemessen, dass Zaehlen und Laengen ohne Thinking
+plausibel falsch werden (siehe [counting-needs-thinking]).</p>
+<p>Offen ist der Bereich dazwischen: Code erklaeren, eine kleine Funktion, eine
+Datei umbenennen. Ob Hermes und OpenCode dafuer volles Thinking brauchen, ist
+nicht gemessen. Beide Werkzeuge lassen es einstellen: Hermes <code>--reasoning</code>,
+OpenCode <code>--variant</code>.</p>
+<h2>Traegt</h2>
+<p>Nichts.</p>
+<h2>Traegt nicht</h2>
+<p>Eine pauschale Empfehlung "Thinking aus fuer schnelle Antworten". Der
+IBAN-Befund zeigt, dass der Fehler dann nicht auffaellt.</p>
+<h2>Bruchindikator</h2>
+<p>entfaellt</p>
+<h2>Ablesung</h2>
+<p>blind</p>
+<h2>Zu messen</h2>
+<p>Fuenf Routineaufgaben, je drei Laeufe, mit OpenCode auf Qwen3.6-35B-A3B bei
+hoher und bei niedriger Stufe. Erfasst werden Denk-Token, Wanduhr und ob das
+Ergebnis stimmt, geprueft durch Tests, nicht durch die Meldung des Agenten.
+Eine der fuenf Aufgaben soll eine Zaehl- oder Laengenaufgabe sein, als Kontrolle
+gegen [counting-needs-thinking].</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/counting-needs-thinking.html">counting-needs-thinking</a></li>
+<li><a href="findings/hermes-delegates-to-opencode-locally.html">hermes-delegates-to-opencode-locally</a></li>
+<li><a href="open_checks/dense-27b-vs-moe-on-8gb.html">dense-27b-vs-moe-on-8gb</a></li>
+</ul></div></details><details class="entry" id="mmap-vs-load-mode-none"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/mmap-vs-load-mode-none.html">Lademodus bei Expert-Offloading: mmap oder none?</a></span><span class="badge info">offen</span><span class="muted small">2026-08-29</span><span class="i">Lademodus bei Expert-Offloading, ungemessen</span></summary><div class="body"><p class="small muted">Herkunft: Projekt local_models, Victus, 2026-08-29 · <a href="open_checks/mmap-vs-load-mode-none.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/mmap-vs-load-mode-none.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>llama-server</code> warnt beim Start mit <code>-ncmoe</code>:</p>
+<pre><code>tensor overrides to CPU are used with mmap enabled
+ - consider using --load-mode none for better performance
+</code></pre>
+<p>Die eigene Doku in <code>local_models/docs/02-tuning.md</code> empfiehlt dagegen <code>mmap</code>,
+begruendet mit SSD-Schonung: Verschleiss entsteht durch Schreiben, nicht durch
+Lesen. Unter <code>-lm none</code> liegt das Modell in anonymem Speicher und landet bei
+RAM-Mangel im Pagefile - echte Schreibvorgaenge.</p>
+<p>Beide Seiten haben ein Argument. <strong>Keine der beiden ist gemessen.</strong></p>
+<h2>Traegt</h2>
+<p>Nichts. Das ist der Punkt des Eintrags.</p>
+<h2>Traegt nicht</h2>
+<p>Die aktuelle Empfehlung <code>mmap</code> ist eine Vermutung, kein Befund. Wer sie zitiert,
+zitiert eine Vermutung.</p>
+<h2>Bruchindikator</h2>
+<p>entfaellt</p>
+<h2>Ablesung</h2>
+<p>blind</p>
+<h2>Zu messen</h2>
+<p>Beide Modi auf derselben Maschine, gleicher <code>-ncmoe</code>, gleicher Prompt:
+Prefill und Decode getrennt (siehe [separate-prefill-from-decode]), dazu freier
+RAM und Pagefile-Schreibrate waehrend des Laufs. Entscheidend ist der Fall mit
+<strong>wenig freiem RAM</strong> - bei viel freiem RAM duerften sich beide Modi kaum
+unterscheiden.</p>
+<p>Auf Victus waren waehrend des Betriebs 1,5 GB frei, das ist der interessante Fall.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

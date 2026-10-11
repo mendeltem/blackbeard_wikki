@@ -1,0 +1,193 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_demand_drivers</a> › <a href="../index.html#findings">Befund</a></div><h1>GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-02</span><span>Herkunft</span><span>Projekt AI-Lage-Verbund (Seite roadmap), 2026-10-02</span><span>Zuletzt geändert</span><span>2026-10-03 Branches nach main aufgeloest, README: nur main gilt</span><span>Verweist auf</span><span><a href="../open_checks/hbm-gb-per-mw.html">GB HBM je MW über drei Generationen</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../mechanisms/refresh-instead-of-new-build.html">Refresh statt Neubau</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../mechanisms/induced-innovation.html">Induzierte Innovation unter Knappheit</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../axioms/bandwidth-bottleneck.html">Bandbreiten-Engpass (Von-Neumann-Bottleneck)</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../../memory_supply/mechanisms/hbm-eats-wafer-area.html">HBM frisst Waferflaeche</a> <span class="muted small">(memory_supply)</span></span><span>Verwiesen von</span><span><a href="../open_checks/rubin-share-of-blackwell-base.html">Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../../compute_bottlenecks/mechanisms/bottleneck-migration.html">Der bindende Engpass wandert</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../../memory_supply/mechanisms/gpu-memory-absorbs-fab-additions.html">Mehr Speicher je GPU frisst den Fab-Zubau</a> <span class="muted small">(memory_supply)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.md">knowledge/ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.md</a></span></div><h2>Aussage</h2>
+<p>Rechnung zum offenen Prüfpunkt <a href="../open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a>.
+HBM-Kapazität je Beschleuniger geteilt durch dessen TDP, SXM-/OAM-Variante,
+dichte Werte. GDDR6-Generationen bleiben draußen, sie tragen kein HBM.</p>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Jahr</th>
+<th>HBM GB</th>
+<th>TDP W</th>
+<th>GB je W</th>
+<th>GB je MW</th>
+<th>ggü. Vorgänger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ampere A100</td>
+<td>2020</td>
+<td>80</td>
+<td>400</td>
+<td>0,2000</td>
+<td>200.000</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hopper H100</td>
+<td>2022</td>
+<td>80</td>
+<td>700</td>
+<td>0,1143</td>
+<td>114.286</td>
+<td>−42,9 %</td>
+</tr>
+<tr>
+<td>Hopper H200</td>
+<td>2023</td>
+<td>141</td>
+<td>700</td>
+<td>0,2014</td>
+<td>201.429</td>
+<td>+76,2 %</td>
+</tr>
+<tr>
+<td>Blackwell B200</td>
+<td>2024</td>
+<td>192</td>
+<td>1.000</td>
+<td>0,1920</td>
+<td>192.000</td>
+<td>−4,7 %</td>
+</tr>
+<tr>
+<td>Blackwell Ultra B300</td>
+<td>2025</td>
+<td>288</td>
+<td>1.400</td>
+<td>0,2057</td>
+<td>205.714</td>
+<td>+7,1 %</td>
+</tr>
+<tr>
+<td>Rubin R200</td>
+<td>2026</td>
+<td>288</td>
+<td>~1.800</td>
+<td>0,1600</td>
+<td>160.000</td>
+<td>−22,2 %</td>
+</tr>
+</tbody>
+</table>
+<p>Die drei letzten <strong>ausgelieferten</strong> Generationen, nach denen der Prüfpunkt fragt:
+B200 192.000 → B300 205.714 → R200 160.000 GB je MW. Netto B200 → R200
+<strong>−16,7 %</strong>. Über sechs Jahre, A100 2020 gegen R200 2026: <strong>−20,0 %</strong>.</p>
+<p>Die Gegenbewegung steckt in der Rechenleistung, nicht im Speicher. Im selben
+Schritt B200 → R200 steigt die dichte Rechenleistung je Watt von 10,0 auf
+27,8 PFLOPS je kW, <strong>+178 %</strong>, während GB je PFLOPS von 19,2 auf 5,8 fällt,
+<strong>−70 %</strong>. Der Beschleuniger wurde rechendichter, nicht speicherdichter.</p>
+<p>Angekündigt, nicht ausgeliefert: Rubin Ultra VR300 mit 1 TB HBM4e bei ~2.300 W
+wären 0,4452 GB je W, 445.217 GB je MW, <strong>+178 %</strong> gegenüber Rubin. Das würde
+die Richtung umkehren. Die Angabe stammt aus Roadmap-Folien der GTC und ist
+bis zum Marktstart nicht verbindlich.</p>
+<h2>Trägt</h2>
+<p>Die Antwort auf die erste Hälfte des Prüfpunkts: <strong>Refresh allein trägt die
+Bitnachfrage nicht.</strong> Wer einen alten Beschleuniger im gleichen Leistungsbudget
+gegen einen neuen tauscht, kauft dabei nicht mehr HBM-Bits, seit sechs Jahren
+nicht. Zusätzliche Bitnachfrage muss deshalb aus zusätzlichen Megawatt kommen,
+nicht aus dichterem Ersatz. Damit hängt die HBM-Bitnachfrage am Netzanschluss,
+und <a href="../mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a>
+wird für HBM zum tragenden, nicht zum nebenläufigen Mechanismus.</p>
+<p>Zusammen mit der Angebotsseite ergibt das eine Klemme von beiden Enden:
+<a href="../../memory_supply/mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a>
+rechnet, dass jedes HBM-Bit drei- bis viermal die Waferfläche eines DDR-Bits
+kostet. Wenn gleichzeitig jedes zusätzliche HBM-Bit ein zusätzliches Megawatt
+braucht, ist die HBM-Menge nach oben durch den Netzanschluss und nach unten
+durch die aufgegebene DDR-Bitmenge begrenzt. Beide Grenzen sind unabhängig
+voneinander, und keine der beiden wird durch Refresh gelockert.</p>
+<h2>Trägt nicht</h2>
+<p>Die zweite Hälfte des Prüfpunkts. Der Bruchindikator dort liest ein fallendes
+GB je MW als "Einsparung läuft". Diese Rechnung belegt das <strong>nicht</strong>. Sie zeigt
+eine Verschiebung des Entwurfspunkts — Rechenleistung wuchs schneller als
+Speicher —, und das ist etwas anderes als Forschung, die HBM gezielt ersetzt.
+Beide Lesarten sind mit diesen Zahlen vereinbar; die Rechnung unterscheidet
+sie nicht.</p>
+<p>Ebenfalls nicht getragen: eine Aussage über Bandbreite. Gerechnet ist
+Kapazität. Die Bandbreite je Beschleuniger stieg von 8 auf 22 TB/s, je PFLOPS
+fiel sie von 0,80 auf 0,44 TB/s — eigene Rechnung, hier nicht geprüft.</p>
+<p>Keine Aussage zur Rackebene. GB200 NVL72 kommt auf 112.500 GB je MW, GB300
+NVL72 auf 166.667, aber der Nenner ist ein anderer: Rackleistung enthält CPUs,
+Switches und Kühlung. VR200 NVL72 ist nicht rechenbar, die Rackleistung ist
+nicht veröffentlicht. Für NVL576 Kyber passen die Angaben nicht zusammen
+(365 TB bei 576 × 1.024 GB = 589.824 GB), die Zahl ist deshalb nicht reines HBM
+und bleibt ungerechnet.</p>
+<p>Eine frühere Rack-Rechnung (Eintrag hbm-gb-per-mw-first-pass, Projekt KI-Compute-Stack, hier aufgegangen) setzte VR200 NVL72 nach Sekundärreports auf 190 bis 230 kW und kam auf 90 bis 109 TB HBM je MW gegen 97 bis 115 bei Blackwell NVL72 (120 bis 142 kW): auf Rack-Ebene flach statt fallend. Gleichstand bei rund dem 1,5-Fachen der Blackwell-Rackleistung (180 bis 213 kW). Die Rackleistung ist nicht von NVIDIA veröffentlicht, deshalb kein Ersatz für die Rechnung je Beschleuniger.</p>
+<h2>Bruchindikator</h2>
+<p>Der Befund hängt an <strong>einer</strong> approximativen Zahl: Rubins TDP, von NVIDIA als
+"~1.800 W" angegeben.</p>
+<ul>
+<li>Liegt Rubins reale TDP bei <strong>1.400 W</strong>, ist GB je W gleich dem von B300 — die Reihe steigt dann weiter.</li>
+<li>Liegt sie bei <strong>1.500 W oder darunter</strong>, ist GB je W mindestens gleich dem von B200 — der Rückgang verschwindet.</li>
+<li>Erst oberhalb von 1.500 W fällt die Reihe tatsächlich.</li>
+</ul>
+<p>Der Befund bricht also, sobald eine belastbare Rubin-TDP unter 1.500 W
+vorliegt. Zweiter Bruch: liefert Rubin Ultra tatsächlich 1 TB HBM4e bei
+~2.300 W aus, kehrt sich die Richtung um und Refresh trägt wieder.</p>
+<h2>Ablesung</h2>
+<p>Tier 1b. Vergleichstabelle der Seite roadmap
+(https://mendeltem.github.io/nvidia-roadmap/#vergleich, Datenstand August 2026),
+die NVIDIA-Datenblätter, Architektur-Whitepapers und GTC-Präsentationen
+auswertet. Methodik der Seite: dichte Werte ohne Sparsity-Verdopplung,
+SXM-/OAM-Variante.</p>
+<p>Einschränkung, die den Status <code>vorschlag</code> begründet: Die Einzelspezifikationen
+sind nicht von mir gegen NVIDIAs Originaldokumente nachgelesen, sondern aus
+dieser Tabelle übernommen. Die Werte für Rubin und Rubin Ultra sind dort
+ausdrücklich als Näherung gekennzeichnet (~1.800 W, ~2.300 W). Die Rechnung
+selbst ist Arithmetik und reproduzierbar.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="../open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a> — der Prüfpunkt, den diese Rechnung beantwortet</li>
+<li><a href="../mechanisms/refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="../mechanisms/induced-innovation.html">induced-innovation</a></li>
+<li><a href="../axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="../mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a></li>
+<li><a href="../../memory_supply/mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a> — die Angebotsseite derselben Frage</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

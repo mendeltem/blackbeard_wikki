@@ -1,0 +1,174 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>ai_buyers</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › ai_buyers</div><h1>ai_buyers</h1><p>Wer die Rechenleistung kauft: Modellanbieter, ihre Umsaetze und ihre Rechenzusagen</p><p class="muted small">Investieren, Anthropic, OpenAI, Hyperscaler, Rechenzusagen, Umsatz</p>
+<div class="stripe"><i class="warn" style="width:60.0%" title="vorschlag: 3"></i><i class="info" style="width:20.0%" title="offen: 1"></i><i class="ok" style="width:20.0%" title="getragen: 1"></i></div><div class="counts"><span class="warn">3 vorschlag</span> <span class="info">1 offen</span> <span class="ok">1 getragen</span></div><div class="small"><p>Wer die Rechenleistung kauft, womit diese Kaeufer ihr Geld verdienen und wie belastbar ihre Zusagen sind. Die Nachfragemechanik steht in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, die Angebotsseite in <a href="../memory_supply/index.html">memory_supply</a>.</p>
+<p>Alles in diesem Thema steht auf schwaecherer Quellenlage als die Herstellerzahlen: Modellanbieter sind privat, es gibt keinen geprueften Abschluss. Firmenmitteilungen sind IR-Kommunikation ohne Pruefung, alles Weitere ist Presse.</p>
+<p>Stand 2026-10-02. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Wer die Rechenleistung kauft. Quellenlage schwächer: Modellanbieter sind privat.</p>
+<p><strong>Kernstand (vorschlag):</strong> Anthropic Laufrate ~9 Mrd. $ Ende 2025 auf ~65 Mrd. $ Juli 2026 (spätere Werte Presse). Rechenzusagen: AWS &gt;100 Mrd. $ über zehn Jahre, bis 5 GW; Google erweitert. Abrechnung je Token bindet Umsatz an Aufgaben, agentische Arbeit vervielfacht Aufrufe.</p>
+<p><strong>Getragen:</strong> Risiko zirkuläre Finanzierung, Geldgeber sind zugleich Lieferanten.</p>
+<p><strong>Offen:</strong> Anthropic S-1 gegenprüfen, sobald öffentlich.</p>
+<p><strong>Lesen bei:</strong> Investieren, Hyperscaler, Modellanbieter, Nachfrage nach Compute.</p>
+<p><strong>Auf den Seiten:</strong> Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MSFT">Microsoft</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/GOOGL">Alphabet</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/AMZN">Amazon</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/META">Meta</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/ORCL">Oracle</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/CRWV">CoreWeave</a>; Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=MSFT">Microsoft-Standorte</a>.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="mechanisms">Mechanismus <span class="muted small">(1)</span></h2><details class="entry" id="token-billing-scales-with-tasks"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/token-billing-scales-with-tasks.html">Abrechnung je Token bindet Umsatz an Aufgaben</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09 · <a href="mechanisms/token-billing-scales-with-tasks.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_buyers/mechanisms/token-billing-scales-with-tasks.md">Markdown</a></p><h2>Aussage</h2>
+<p>Modellanbieter rechnen ueberwiegend je verarbeitetem Token ab, nicht je Nutzer und Monat. Damit haengt ihr Umsatz an der Zahl erledigter Aufgaben und an der Laenge jeder Aufgabe, nicht an der Zahl der Sitzplaetze.</p>
+<p>Agentische Arbeit verstaerkt beides: Eine Aufgabe besteht aus mehreren Modellaufrufen hintereinander (Groessenordnung zehn bis zwanzig, Annahme), und jeder Aufruf traegt den bis dahin gewachsenen Kontext mit. Rechenbedarf und vor allem Speicherbedarf je Aufgabe wachsen deshalb schneller als die Nutzerzahl.</p>
+<p>Fuer die Hardwareseite folgt daraus: Der Bedarf an Bandbreite und an Platz fuer Zwischenzustaende (KV-Cache) waechst mit der Aufgabenzahl, nicht mit der Zahl verkaufter Lizenzen.</p>
+<h2>Traegt</h2>
+<p>Eine Erklaerung, warum die Nachfrage nach Rechen- und Speicherkapazitaet schneller steigen kann als die Verbreitung der Werkzeuge, und warum Preissenkungen je Token den Gesamtverbrauch erhoehen koennen statt ihn zu senken.</p>
+<h2>Traegt nicht</h2>
+<p>Keine Zahl. Die zehn bis zwanzig Aufrufe je Aufgabe sind eine Annahme aus der Beobachtung, kein gemessener Wert; ebenso wenig ist belegt, wie viel Speicher je Aufgabe tatsaechlich gebunden wird.</p>
+<p>Kein Schluss auf Gewinn, weder beim Modellanbieter noch beim Speicherhersteller; dafuer gilt <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a>.</p>
+<p>Effizienzfortschritte wirken gegen den Mechanismus: kuerzere Kontexte, Quantisierung, Cache-Kompression, kleinere Modelle fuer einfache Schritte.</p>
+<p>Der Preis je Token faellt gemessen schnell: fuer ein festes Faehigkeitsniveau halbiert er sich alle 1,6 bis 7,3 Monate (<a href="../model_capability_cost/findings/iso-capability-cost-halving.html">iso-capability-cost-halving</a>). Umsatz je Aufgabe entsteht also nur, wenn die Zahl der Aufrufe schneller steigt als der Preis faellt. Beide Groessen sind hier nicht gemessen, deshalb traegt dieser Eintrag keine Umsatzaussage, sondern nur die Richtung der Mengenseite. Was tatsaechlich abgerechnet wird, ist offen (<a href="../model_capability_cost/open_checks/billed-inference-volume.html">billed-inference-volume</a>).</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Anbieter stellen auf Pauschalpreise je Nutzer um; dann entkoppelt sich ihr Umsatz vom Verbrauch.</li>
+<li>Messbar sinkende Zahl der Modellaufrufe je erledigter Aufgabe bei gleichem Ergebnis.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Preismodelle der Anbieter, oeffentlich. Aufrufe je Aufgabe: eigene Beobachtung, blind. Eine belastbare Messung fehlt.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../ai_demand_drivers/axioms/open-search-space.html">open-search-space</a></li>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="findings/anthropic-revenue-runrate.html">anthropic-revenue-runrate</a></li>
+<li><a href="../model_capability_cost/findings/iso-capability-cost-halving.html">iso-capability-cost-halving</a></li>
+<li><a href="../model_capability_cost/mechanisms/model-cost-falls-faster-than-hardware.html">model-cost-falls-faster-than-hardware</a></li>
+<li><a href="../model_capability_cost/open_checks/billed-inference-volume.html">billed-inference-volume</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(2)</span></h2><details class="entry" id="anthropic-compute-commitments"><summary><span class="type">Befund</span><span class="t"><a href="findings/anthropic-compute-commitments.html">Anthropic: Rechenzusagen</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-20 · <a href="findings/anthropic-compute-commitments.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_buyers/findings/anthropic-compute-commitments.md">Markdown</a></p><h2>Aussage</h2>
+<p>Angekuendigte Abnahmeverpflichtungen eines einzelnen Modellanbieters, je Zeile mit Herkunft:
+- AWS, 20.04.2026: Anthropic verpflichtet sich zu ueber 100 Mrd. USD fuer AWS-Technik ueber zehn Jahre, bis zu 5 GW neue Kapazitaet; ueber 1 Mio. Trainium2-Chips bereits im Einsatz; Amazon investiert 5 Mrd. USD sofort und bis zu 20 Mrd. USD weitere, nach 8 Mrd. USD zuvor. Mitteilung von Anthropic.
+- Google, Oktober 2025, erweitert April 2026: Zugang zu bis zu 1 Mio. TPUs, ueber 1 GW im Jahr 2026, spaeter mehrere GW zusammen mit Broadcom. Mitteilungen der beteiligten Firmen und Presse.
+- Microsoft Azure, November 2025: 30 Mrd. USD Rechenkapazitaet, bis zu 1 GW auf NVIDIA-Technik; Microsoft und NVIDIA investieren zusammen bis zu 15 Mrd. USD. Presse.
+- AMD, Juli 2026: 2 GW MI450; AMD investiert bis zu 5 Mrd. USD. Presse.
+- Nscale, August 2026: rund 45 Mrd. USD, 460 MW in West Virginia, betriebsbereit Ende 2027. Presse.
+- Summe aller berichteten Vertraege: rund 517 Mrd. USD und mindestens 14,8 GW. Presse, Aggregat, nicht nachgerechnet.</p>
+<p>Zum Vergleich die Umsatzseite: siehe <a href="findings/anthropic-revenue-runrate.html">anthropic-revenue-runrate</a>.</p>
+<h2>Traegt</h2>
+<p>Die Groessenordnung der vertraglich gebundenen Nachfrage eines einzelnen Kaeufers, und dass diese Bindung ueber Jahre laeuft, nicht ueber Quartale. Stuetzt <a href="../ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.html">lead-times-datacenter-vs-fab</a>: Kapazitaet wird Jahre vor der Nutzung bestellt.</p>
+<h2>Traegt nicht</h2>
+<p>Keine Umrechnung in Speicherbedarf. Gigawatt sind nicht GB; dafuer fehlt der Schritt in <a href="../ai_demand_drivers/open_checks/hbm-gb-per-mw.html">hbm-gb-per-mw</a>.</p>
+<p>Zusagen sind keine Zahlungen. Mehrere Vertraege sind an Ausbaustufen und Meilensteine gebunden und koennen gestreckt werden. Die Summe von 517 Mrd. USD addiert Vertraege mit unterschiedlichen Laufzeiten und ist deshalb keine Jahresgroesse.</p>
+<p>Ein einzelner Kaeufer ist nicht der Markt.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Eine Zusage wird oeffentlich gestreckt, verkleinert oder umgewidmet.</li>
+<li>Der oeffentliche Boersenprospekt weist andere Verpflichtungen aus als die Mitteilungen, siehe <a href="open_checks/anthropic-s1-figures.html">anthropic-s1-figures</a>.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Mitteilungen von Anthropic und der Partner, IR-Kommunikation ohne geprueften Abschluss. Summen und Einzelposten zu Azure, AMD und Nscale aus Presse, also Warnsignal.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="risks/circular-financing.html">circular-financing</a></li>
+<li><a href="findings/anthropic-revenue-runrate.html">anthropic-revenue-runrate</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/financing-limit.html">financing-limit</a></li>
+</ul></div></details><details class="entry" id="anthropic-revenue-runrate"><summary><span class="type">Befund</span><span class="t"><a href="findings/anthropic-revenue-runrate.html">Anthropic: Umsatz-Laufrate 2025 bis 2026</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-20 · <a href="findings/anthropic-revenue-runrate.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_buyers/findings/anthropic-revenue-runrate.md">Markdown</a></p><h2>Aussage</h2>
+<p>Annualisierte Laufrate, also zuletzt erreichter Monatsumsatz mal zwoelf, je Zeile mit Herkunft:
+- Ende 2025: rund 9 Mrd. USD. Firmenangabe.
+- Februar 2026: 14 Mrd. USD, genannt zur Series G (30 Mrd. USD bei 380 Mrd. USD Bewertung). Firmenangabe.
+- April 2026: ueber 30 Mrd. USD. Firmenangabe.
+- Mai 2026: rund 47 Mrd. USD. Presse.
+- Juli 2026: rund 65 Mrd. USD. Presse.</p>
+<p>Weitere Angaben aus derselben Mitteilung (Februar 2026, Firmenangabe): Claude Code mit 2,5 Mrd. USD Laufrate; ueber 500 Kunden mit mehr als 1 Mio. USD im Jahr, zwei Jahre zuvor zwoelf; acht der zehn groessten US-Konzerne als Kunden; ueber 300.000 Geschaeftskunden.</p>
+<p>Kostenseite: Bruttomarge im Bereich von 40 Prozent, Erwartung laut Bericht Anfang 2026 gesenkt, obwohl der Umsatz stieg. Presse (The Information).</p>
+<h2>Traegt</h2>
+<p>Die Richtung und die Groessenordnung des Wachstums, und dass das Geschaeft ueberwiegend aus Abrechnung je Token kommt, nicht aus Abonnements.</p>
+<h2>Traegt nicht</h2>
+<p>Laufrate ist kein Jahresumsatz. Bei diesem Tempo liegt der gebuchte Jahresumsatz deutlich darunter; die Zahlen sind nicht vergleichbar mit gemeldeten Jahresumsaetzen der Hersteller.</p>
+<p>Die Aufteilung nach Produkten (oft genannt: rund 80 Prozent API) ist Presse und von der Firma nicht veroeffentlicht. Die Bruttomarge ebenfalls.</p>
+<p>Kein geprueftes Zahlenwerk. Solange kein oeffentlicher Prospekt vorliegt, ist jede Aussage zu Gewinn oder Verlust unbestaetigt.</p>
+<h2>Bruchindikator</h2>
+<p>Oeffentlicher S-1 mit geprueften Zahlen, siehe <a href="open_checks/anthropic-s1-figures.html">anthropic-s1-figures</a>. Oder eine Firmenangabe, die eine der Pressezahlen deutlich unterschreitet.</p>
+<h2>Ablesung</h2>
+<p>Firmenmitteilungen von Anthropic (Series G 12.02.2026, AWS-Ausbau 20.04.2026), IR-Kommunikation. Laufraten Mai und Juli 2026 sowie Marge aus Presse (Bloomberg, The Information), also Warnsignal.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anthropic-compute-commitments.html">anthropic-compute-commitments</a></li>
+<li><a href="mechanisms/token-billing-scales-with-tasks.html">token-billing-scales-with-tasks</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="circular-financing"><summary><span class="type">Risiko</span><span class="t"><a href="risks/circular-financing.html">Zirkulaere Finanzierung zwischen Kaeufer und Lieferant</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-20 · <a href="risks/circular-financing.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_buyers/risks/circular-financing.md">Markdown</a></p><h2>Aussage</h2>
+<p>Bei den grossen Modellanbietern sind die Geldgeber zugleich die Lieferanten der Rechenleistung. Bei Anthropic investieren Amazon, Google, Microsoft, NVIDIA und AMD, und dieselben Firmen verkaufen Chips oder Rechenzeit. Ein Teil des investierten Geldes kommt als Miete oder Kaufpreis zurueck.</p>
+<p>Wirkung: Beide Seiten weisen Groessen aus, die ohne die Verflechtung kleiner waeren. Eine Bestellung ist dann nicht ohne Weiteres ein Beleg fuer unabhaengige Endnachfrage.</p>
+<h2>Wirkt gegen</h2>
+<p>Jede Lesart, die Rechenzusagen oder Umsatzsprünge von Modellanbietern als unabhaengigen Nachfragebeleg nimmt. Auch gegen die Annahme, dass der Hardwareumsatz dieser Kunden bei einer Finanzierungsklemme bestehen bleibt.</p>
+<h2>Nicht lesen als</h2>
+<p>Kein Beleg dafuer, dass die Nachfrage unecht ist. Endkunden zahlen real, und ein Teil der Zusagen ist durch laufenden Umsatz gedeckt. Das Risiko betrifft die Beweiskraft der Zahlen, nicht ihre Existenz.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>Anteil der Umsaetze eines Lieferanten, der an Firmen geht, an denen er beteiligt ist, wird offengelegt und ist klein.</li>
+<li>Ein Modellanbieter finanziert eine grosse Zusage ohne Beteiligung des Lieferanten.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Beteiligungen und Vertraege aus Firmenmitteilungen, IR-Kommunikation. Eine saubere Quantifizierung gibt es nicht; Abschluesse der Modellanbieter sind nicht oeffentlich.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anthropic-compute-commitments.html">anthropic-compute-commitments</a></li>
+<li><a href="../ai_demand_drivers/mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="../ai_demand_drivers/risks/gold-rush-demand.html">gold-rush-demand</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="anthropic-s1-figures"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/anthropic-s1-figures.html">Anthropic S-1: Zahlen gegenpruefen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespraech Projekt NVIDIA-Roadmap, 2026-09-20 · <a href="open_checks/anthropic-s1-figures.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_buyers/open_checks/anthropic-s1-figures.md">Markdown</a></p><h2>Aussage</h2>
+<p>Anthropic hat am 01.06.2026 einen vertraulichen Entwurf einer Registrierung (Form S-1) bei der SEC eingereicht (Firmenmitteilung). Am 20.09.2026 war oeffentlich noch kein S-1 abrufbar. Sobald der oeffentliche Prospekt erscheint, wechselt dieses Thema von Presse auf Tier 1a.</p>
+<h2>Zu pruefen</h2>
+<ol>
+<li>Umsatz je Geschaeftsjahr und Quartal gegen die Laufraten in <a href="findings/anthropic-revenue-runrate.html">anthropic-revenue-runrate</a> halten. Erwartung: gebuchter Umsatz deutlich unter der Laufrate.</li>
+<li>Bruttomarge und Rechenkosten. Bestaetigt der Prospekt die berichteten rund 40 Prozent?</li>
+<li>Aufteilung nach API, Abonnements und Grosskunden, gegen die berichteten rund 80 Prozent API.</li>
+<li>Vertragliche Mindestabnahmen (purchase obligations, oft in den Anhangangaben) gegen die berichteten Zusagen in <a href="findings/anthropic-compute-commitments.html">anthropic-compute-commitments</a>, inklusive Faelligkeiten je Jahr.</li>
+<li>Kundenkonzentration und Einnahmen aus Firmen, die zugleich investiert sind, siehe <a href="risks/circular-financing.html">circular-financing</a>.</li>
+<li>Verlustvortrag und Liquiditaet.</li>
+</ol>
+<h2>Bruchindikator</h2>
+<p>Erscheint der Prospekt und weichen die geprueften Zahlen wesentlich von den Pressezahlen ab, sind alle Eintraege dieses Themas auf gebrochen zu setzen und neu zu schreiben.</p>
+<h2>Ablesung</h2>
+<p>Firmenmitteilung vom 01.06.2026 zur vertraulichen Einreichung, IR. EDGAR-Pruefung am 20.09.2026 ohne oeffentliches S-1.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/anthropic-revenue-runrate.html">anthropic-revenue-runrate</a></li>
+<li><a href="findings/anthropic-compute-commitments.html">anthropic-compute-commitments</a></li>
+<li><a href="risks/circular-financing.html">circular-financing</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

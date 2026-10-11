@@ -1,0 +1,208 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>mri_qc_viewers</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
+<div class="stripe"><i class="ok" style="width:66.7%" title="getragen: 2"></i><i class="info" style="width:33.3%" title="offen: 1"></i></div><div class="counts"><span class="ok">2 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
+wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
+Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
+<p>Stand 2026-10-08. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Wie eine QC-Seite fuer Laesionsdetektion gebaut wird, damit Mendel sie benutzt: Einzeldatei-HTML,
+links die Referenz, rechts dieselbe Schicht mit schaltbaren Modell-Umrissen; Referenz <strong>blau</strong>,
+Modellfarben meiden das Blau; Pfeil hoch/runter = Proband, links/rechts = Schicht; Klick auf eine
+Komponente zeigt Groesse, Schichten, Wahrscheinlichkeit, Status und die zugeordnete Referenz, die
+Angeklickte wechselt die Farbe; alles Englisch; Datei heisst <code>quality_control.html</code>.
+Offen: den Generator als Tool mit Test einstellen.</p>
+<p><strong>Lesen bei:</strong> QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme ansehen, Laesionen zaehlen.</p>
+<p><strong>Regel, neu 2026-10-08:</strong> Qualitaetskontrolle fuer eine neue Laesionsart wird in fester Reihenfolge gebaut, nie von null: Lader statt neuer Seite; ohne Referenz heisst die Maske Vergleich und die Zaehler Uebereinstimmung, gepoolt gleich dem Messskript; ein Modell in Urteilsfarben, mehrere in Modellfarben; jede anatomische Regel als eigene Ebenen vor der Kette; je Fund das Warum mit Nachbarschichten; Rating als eigene verblindete Seite mit sofortigem Speichern; Patientendaten nur auf 127.0.0.1; Pruefung headless und gegen das Messskript; Vorlesung als eigenes Artefakt. Der PVS-Betrachter fuer 73 Faelle entstand so in einer Stunde.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="qc-build-order-for-a-new-lesion-type"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-build-order-for-a-new-lesion-type.html">Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">Zehn Setzungen in Reihenfolge: Generator statt neue Seite, Vergleich heisst Vergleich, Urteils- oder Modellfarben, Regel-Ebenen vor der Kette, Warum je Fund, Rating getrennt und verblindet, nur 127.0.0.1, Pruefung vor Abgabe, Vorlesung eigenes Artefakt, drei Zeilen danach</span></summary><div class="body"><p class="small muted">Herkunft: Projekte valdo-t2s (CMB), mb-arena (eigene CMB-Kohorten), pvs-arena (BELOVE-QC, Rating-Seite wp8), Liquor-Regel-Ebenen und Vorlesungsanimation 2026-10-08; Nutzer 08.10.: &quot;Regeln aufstellen, damit wir nicht immer von 0 anfangen&quot; · <a href="rules/qc-build-order-for-a-new-lesion-type.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.md">Markdown</a></p><h2>Aussage</h2>
+<p>Die CMB-Qualitaetskontrolle ist die Vorlage. Fuer jede neue Laesionsart (PVS, WMH,
+Infarkt, Lakunen) gilt dieselbe Reihenfolge; nur die Lader und die Wortwahl wechseln.</p>
+<ol>
+<li><strong>Erst der Generator, nie eine neue Seite.</strong> Die Seite (PAGE) bleibt, es kommt ein
+   Lader je Datenlage dazu: Manifest mit <code>id</code> und Pfaden, Bild, Referenz oder
+   Vergleichsmaske, je Lauf eine Wahrscheinlichkeits- oder Maskendatei mit Schwelle.
+   Gemessen: der PVS-Betrachter fuer 73 Faelle war mit einem Lader von 150 Zeilen in
+   einer Stunde fertig, weil PAGE, Umriss, Farben und Tasten aus dem CMB-Generator kamen.</li>
+<li><strong>Ohne Handreferenz: die Vergleichsmaske heisst Vergleich.</strong> Links blau steht dann
+   die Pipeline- oder Fremdmaske, auf der Seite ausdruecklich "not a reference";
+   alle Zaehler heissen Uebereinstimmung ("both / only method / only pipeline"), nie
+   TP/FP/FN. Die gepoolten Zahlen der Seite muessen den Zahlen des Messskripts
+   gleichen (BELOVE: behalten 9.591 / 2.120 / 33.237 = F6.2), sonst ist ein Lader falsch.</li>
+<li><strong>Ein Modell: Urteilsfarben. Mehrere Modelle: Modellfarben.</strong> Gruen erkannt, gelb
+   Fehlalarm, rot verpasst (<code>--verdict</code>); beim Vergleich mehrerer Laeufe die
+   Goldener-Schnitt-Farben ohne das blaue Band.</li>
+<li><strong>Jede Regel bekommt eigene Ebenen, bevor sie in die Kette kommt.</strong> Die Karte, auf
+   der die Regel beruht (SynthSeg-Liquor als Fuellung), die Komponenten, die sie als
+   Fehlalarm entfernt, und die, die sie entfernt, obwohl sie eine Referenz beruehren;
+   Zaehler je Schicht, je Fall, gepoolt. Die Liquor-Regel loeschte so sichtbar 62 von
+   426 Treffern auf SWI, was die Summenzahl verdeckt hatte.</li>
+<li><strong>Jeder Fund braucht sein Warum.</strong> Je Komponente: Groesse in Voxeln und mm3, Zahl
+   der Schichten, Form, Lage nach Gewebekarte, p max, Zuordnung zur Referenz, und die
+   Nachbarschichten als Stapel. Ein Gefaess laeuft durch die Schichten, eine
+   Mikroblutung nicht; das sieht man nur im Stapel, nicht in der Schicht.</li>
+<li><strong>Rating ist eine eigene Seite, nicht die QC-Seite.</strong> Verblindet (p und
+   Pipeline-Treffer erst nach dem Urteil), Reihenfolge zufaellig mit festem Seed je
+   Fall, jedes Urteil sofort per POST in eine Datei je Fall, Definition der Laesion
+   (STRIVE-2) in der LIESMICH, Zusatzfunde per Klick fuer den Recall der Decke,
+   Auswerteskript liefert nur Summen je Verfahren und Groessenklasse.</li>
+<li><strong>Patientendaten nur auf 127.0.0.1.</strong> Live-Server im Projektordner, kein
+   LAN, kein GitHub, keine Fallnummern auf der Tafel oder im Wiki. Oeffentlich nur
+   oeffentliche Daten mit Lizenzzeile (VALDO: CC BY-NC-SA 4.0).</li>
+<li><strong>Pruefung vor der Abgabe:</strong> headless rendern bei 1400 und 1918 px, Zaehler gegen
+   das Messskript, Rauchtest (Dateien laden, Konsole leer, bei Rating zwei Urteile
+   schreiben und lesen), Rauchtest-Urteile danach beiseitelegen.</li>
+<li><strong>Vorlesung ist ein eigenes Artefakt.</strong> Animation oder Deck zeigen die Kette mit
+   echten Schichten und echten Funden, aber sie ersetzen die QC-Seite nicht und
+   kommen nicht in den QC-Ordner.</li>
+<li><strong>Nach jeder Seite drei Zeilen hier:</strong> was neu war, welche Setzung der Nutzer
+    geaendert hat, welche Zahl die Seite bestaetigt oder widerlegt hat.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Detektion und Segmentierung kleiner Laesionen auf MRT, mit oder ohne Referenz, eigene
+und oeffentliche Kohorten, NiiVue- wie Bildstapel-Seiten.</p>
+<h2>Traegt nicht</h2>
+<p>Volumetrie ohne Komponenten; Seiten, die Patientendaten verlassen muessten (dann nur
+Summen und synthetische Beispiele).</p>
+<h2>Bruchindikator</h2>
+<p>Eine neue Laesionsart braucht mehr als einen Tag bis zur ersten QC-Seite, oder die
+gepoolten Zahlen der Seite weichen vom Messskript ab.</p>
+<h2>Ablesung</h2>
+<p>Setzungen aus den Projekten valdo-t2s, mb-arena und pvs-arena bis 2026-10-08; Zahlen
+aus den jeweiligen ARBEIT.md. Der gemeinsame Generator als Tool ist der offene
+Pruefpunkt [slice-viewer-as-shared-tool].</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
+<li><a href="open_checks/slice-viewer-as-shared-tool.html">slice-viewer-as-shared-tool</a></li>
+<li><a href="../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">show-what-a-rule-removes-before-trusting-it</a></li>
+<li><a href="../lesion_detection_method/rules/reference-first-then-metric-then-model.html">reference-first-then-metric-then-model</a></li>
+</ul></div></details><details class="entry" id="qc-slice-viewer-conventions"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-slice-viewer-conventions.html">Setzungen fuer eine QC-Seite: Referenz blau, Proband links/rechts, F1 je Fall, Klick zeigt die Werte</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Zwei Bilder je Schicht, Referenz blau, Pfeile links/rechts = Proband, flache Leisten, F1 je Fall, Klick auf Komponente zeigt Werte, Englisch, Dateiname quality_control.html; Pruefpunkt headless rendern</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerrueckmeldungen an den CMB-Schichtbetrachter (Projekte valdo-t2s, mb-arena), 2026-09-29 bis 2026-10-07 · <a href="rules/qc-slice-viewer-conventions.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-slice-viewer-conventions.md">Markdown</a></p><h2>Aussage</h2>
+<p>Eine Qualitaetskontroll-Seite fuer Laesionsdetektion (hier Mikroblutungen) ist so gebaut:
+1. <strong>Zwei grosse axiale Bilder je Schicht</strong>: links das Bild mit der Referenz (Ground Truth),
+   rechts dieselbe Schicht mit den Umrissen der Modelle, einzeln schaltbar. Mausrad/Pinch zoomt,
+   Ziehen verschiebt.
+2. <strong>Farben:</strong> die Referenz ist <strong>blau</strong> (RGB 66, 150, 255); Modellfarben kommen aus einer
+   Goldener-Schnitt-Farbtonreihe, die das blaue Band (Farbton 0,50 bis 0,74) auslaesst, damit
+   nichts mit der Referenz verwechselt wird. Fruehere Fassung (Referenz gelb) vom Nutzer verworfen.
+3. <strong>Tasten:</strong> Pfeil <strong>links/rechts = voriger/naechster Proband</strong>, Pfeil <strong>hoch/runter = Schicht</strong>
+   (Nutzer 07.10. 10:45, kehrt die Vormittagsfassung um), Bild hoch/runter ebenfalls Proband,
+   R = Referenz aus/an, L = Fallliste. Umgesetzt 07.10. 10:55.
+3a. <strong>Flaeche fuer das Bild:</strong> Kopf- und Fusszeile je EINE Zeile (ca. 26 px), Modellschalter inline,
+   Erklaertexte und Tastenhilfe als "?"-Popover ueber dem Bild, nicht als aufklappender Block. Die
+   Bildfelder bekommen die ganze restliche Hoehe und Breite ("moeglichst viel Gehirn", Nutzer 07.10.).
+3b. <strong>F1 je Fall</strong> = 2TP/(2TP+FP+FN) steht in der Fallliste und in der Kopfzeile; der Listenkopf
+   nennt je Modell das Mittel ueber die Faelle und den gepoolten Wert. Das Mittel liegt deutlich
+   unter dem gepoolten Wert (Faelle mit 1-4 Referenzen fallen bei einem FN auf 0), beide zeigen.
+4. <strong>Klick auf eine Komponente</strong> (Vorhersage oder Referenz) zeigt ihre Werte: Volumen in mm3 und
+   Voxel, Zahl der Schichten, Lage (Gewebeklasse), maximale und mittlere Wahrscheinlichkeit,
+   Status TP/FP/FN und <strong>mit welcher Referenz-Komponente sie zusammengebracht wurde</strong>
+   (Beruehrungsregel, Abstand der Schwerpunkte). Die angeklickte Komponente wechselt die Farbe. (Umbau offen.)
+5. <strong>Englisch</strong> in Oberflaeche, Laufnamen (<code>our-U-Net</code>, <code>MicrobleedNet-finetuned</code>) und
+   Erklaertexten; je Lauf ein Satz unter "What do the models mean?" mit F1 und Trainingsstand.
+6. <strong>Dateiname <code>quality_control.html</code></strong> (nicht <code>betrachter.html</code>), daneben <code>data.json</code> und <code>img/</code>;
+   eine Einzeldatei-Variante mit den N laesionsreichsten Faellen fuer den Versand (&lt; 50 MB).</p>
+<h2>Traegt</h2>
+<p>Jede neue QC-Seite fuer Detektion oder Segmentierung kleiner Laesionen (CMB, WMH, PVS, Infarkt),
+auch mit anderen Werkzeugen (NiiVue-Seiten).</p>
+<h2>Traegt nicht</h2>
+<p>Seiten fuer Volumetrie oder Oberflaechen, wo es keine Komponenten zum Anklicken gibt.</p>
+<h2>Bruchindikator</h2>
+<p>Der Nutzer aendert eine der Setzungen an einer fertigen Seite; dann diesen Eintrag fortschreiben.</p>
+<h2>Pruefpunkt vor der Abgabe (Lehre 07.10.)</h2>
+<p>Die Seite einmal headless rendern (<code>firefox --headless --screenshot</code>, Profil unter <code>~/snap/firefox/common/</code>)
+und die Breite von <code>#main</code> messen. Ein Selektor ohne Praefix (<code>#split{display:none}</code> statt
+<code>body.nolist #split{...}</code>) hatte den Spaltentrenner immer versteckt; <code>#main</code> rutschte in die 6-px-Spalte,
+war nur so breit wie sein Text (485 px bei 1918 px Fenster) und der Bildstapel wurde nach der Hoehe
+skaliert und vom Flex-Layout gestaucht (zwei Schichten im Fenster). Schutz: <code>minmax(0,1fr)</code>,
+<code>min-width:0</code>, Stapel <code>flex:0 0 auto</code>, EIN Massstab fuer Einpassen und Versatz. Zweiter Fall gleicher Art: ein Grid ohne
+<code>grid-template-columns</code> bekommt eine implizite <code>auto</code>-Spalte, die mit einer <code>nowrap</code>-Zeile ueber den Rand
+waechst (1484 px in 1082 px); auch dort <code>minmax(0,1fr)</code> setzen. Bei zwei Fenstergroessen messen (1400 und 1918 px).</p>
+<h2>Ablesung</h2>
+<p>Nutzeraussagen 29.09. (Gefaesse ueber viele Schichten als Fehlalarm erkannt), 07.10. ("diese Seite
+ist ziemlich gut", Tasten, Klick-Werte, Blau, Dateiname). Setzung, kein Messwert.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="open_checks/slice-viewer-as-shared-tool.html">slice-viewer-as-shared-tool</a></li>
+</ul>
+<p><strong>Nachtrag 2026-10-07 (Nutzerwunsch): Urteilsmodus fuer EIN Modell.</strong> Wenn nur das eigene
+Modell gezeigt wird, tragen die Umrisse rechts nicht mehr die Modellfarbe, sondern das Urteil:
+gruen = erkannt (vorhergesagte Komponente beruehrt eine Referenz), gelb = Fehlalarm, rot =
+verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our model, by verdict";
+links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).
+Modellname kurz (<code>our-3D-U-Net</code>), keine Leerzeichen (Dateinamen der Ebenen).
+Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, <code>slices/</code> und Startseite) zeigt seit
+2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>cmb/review/build_slice_viewer.py</code> (Projekt valdo-t2s, englischer Code, keine Daten) erzeugt die
+QC-Seite aus Manifest, Wahrscheinlichkeitskarten und optionaler Gewebekarte. Fuer die Wiki fehlt
+ein Tool-Ordner nach <code>templates/tool/</code> mit README, INSTALL, einem Test auf synthetischen Volumen
+und den Setzungen aus <a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a>.</p>
+<ul>
+<li>[x] Umbau Tasten (Proband links/rechts, Schicht hoch/runter), flache Leisten, F1 je Fall (07.10.).</li>
+<li>[ ] Klick-Werte je Komponente (Geometrie und Zuordnung in data.json, Hervorhebung) im Generator.</li>
+<li>[x] Test (08.10.): zwei synthetische Volumen mit je drei Kugeln, Referenz und eine "Vorhersage" mit einem
+      Fehlalarm; pruefen, dass data.json TP/FP/FN richtig zaehlt und die Seite baut.</li>
+<li>[x] Ordner <code>tools/mri/mri_segmentation/qc_slice_viewer/</code> angelegt (08.10.), README, INSTALL, CHANGELOG, PAPERS; manifestgesteuert, Vergleichsmaske und Liquor-Ebenen inklusive; Gegenprobe an drei VALDO-Faellen identisch mit dem CMB-Generator.</li>
+<li>[x] Live-Modus (07.10.): <code>live_server.py</code> serviert den Ordner auf 127.0.0.1, beobachtet die mtime des
+      Generators, baut per <code>--refresh-html</code> aus <code>build_args.json</code> neu; die Seite pollt Last-Modified per HEAD
+      (1,5 s) und laedt sich selbst, Fall und Schicht bleiben (Hash, sessionStorage). Gehoert mit ins Tool.</li>
+<li>[x] Generator-Option <code>--cohort NAME</code> (Anzeigename der Kohorte ohne Aenderung der Manifeste) und
+      Live-Server fuer einen Elternordner mit mehreren Betrachtern (07.10.).</li>
+</ul>
+<h2>Traegt</h2>
+<p>Wiederverwendung fuer WMH- und PVS-QC ohne Neubau.</p>
+<h2>Traegt nicht</h2>
+<p>--</p>
+<h2>Bruchindikator</h2>
+<p>--</p>
+<h2>Ablesung</h2>
+<p>blind</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

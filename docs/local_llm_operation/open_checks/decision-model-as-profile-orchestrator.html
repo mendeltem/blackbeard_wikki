@@ -1,0 +1,159 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge info">offen</span></span><span>Stand</span><span>2026-10-08</span><span>Herkunft</span><span>Alita, Webrecherche 2026-10-08 zu Laya 0.4.0, Jev, Arch-Router, Routing-Benchmarks; eigene Profilmessungen</span><span>Zuletzt geändert</span><span>2026-10-08 decision models: Jev is hosted only; local reproductions (decider) and the path for a 24 GB workstation</span><span>Verweist auf</span><span><a href="../findings/laya-router-before-agent.html">Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/flash-next-177b-moe-on-24gb-card.html">Ein 177B-MoE (Qwen3.8-Flash-Next GSQ-RCO) laeuft auf einer 24-GB-Karte: Experten im RAM, n-Gramm-Tabelle auf der Platte</a> <span class="muted small">(local_llm_operation)</span><br><a href="local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="../findings/decider-4b-matches-knn-on-60-routing-cases.html">decider-4b trifft auf 60 Routing-Faellen so oft wie kNN auf dem vorhandenen Embedding-Server, aber mit brauchbarer Konfidenz</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/guarded-outbound-research-local-first.html">Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md">knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md</a></span></div><h2>Aussage</h2>
+<p>Ein Entscheidungsmodell (Jev von TypeSafe, offen: Laya von Convai) liefert in
+30 bis 100 ms eine Wahl mit Wahrscheinlichkeit statt Text. Als Orchestrator
+taugt es nur dort, wo beide Ziele gleichzeitig antworten koennen. Auf einer
+24-GB-Karte sind die grossen Profile (27B dicht, 177B-MoE) exklusiv: ein
+Wechsel kostet 20 bis 40 s Laden plus Verdraengung des Vorgaengers. Eine
+Weiche je Anfrage zwischen diesen Profilen ist darum ein Fehlentwurf; die
+Weiche gehoert zwischen das grosse residente Modell, ein kleines residentes
+Nebenmodell und das Cloud-Modell.</p>
+<p>Stand der Recherche (alles Fremdzahlen, siehe Ablesung):</p>
+<table>
+<thead>
+<tr>
+<th>Modell</th>
+<th>Groesse, Lizenz</th>
+<th>Latenz</th>
+<th>Treffer (fremd gemessen)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Laya 0.4.0 (Convai, 18.09.2026)</td>
+<td>322-421 Mio., Apache 2.0, CPU-faehig, 0,8-2,5 GB</td>
+<td>33 ms T4, ~60 ms CPU (Victus)</td>
+<td>typed decisions 0,77 feinjustiert, <strong>0,36 zero-shot</strong> (Zufall 0,32); AG News 0,95; Banking77 0,43</td>
+</tr>
+<tr>
+<td>Jev (TypeSafe, API)</td>
+<td>geschlossen, $0,042/M Token</td>
+<td>70-500 ms, Median 0,65 s</td>
+<td>typed decisions 0,73; Banking77 0,87; Routing-Bench 67,8 % gegen 74,1 % der Konkurrenz; 40/40 in einem Vier-Stufen-Test</td>
+</tr>
+<tr>
+<td>Arch-Router-1.5B (Katanemo)</td>
+<td>1,5B, generativ, HF</td>
+<td>~1 s</td>
+<td>+7,7 % gegen proprietaere Modelle laut eigener Arbeit</td>
+</tr>
+<tr>
+<td>Qwen2.5-3B als Klassifikator (arXiv 2604.02367)</td>
+<td>3B</td>
+<td>988 ms Median</td>
+<td>0,78-0,79; Luecke 6-8 Punkte zur Produktionsschwelle 0,85</td>
+</tr>
+</tbody>
+</table>
+<p>LLMRouterBench (400k Faelle, 33 Modelle) und RouterArena (ICLR 2026) finden,
+dass viele Router, auch kommerzielle, eine einfache kNN-Baseline nicht
+zuverlaessig schlagen. Laya ist rund 8-mal schneller als Jev und besser
+kalibriert (ECE 0,08 gegen 0,25), aber ohne Feinjustierung fast Zufall auf
+typisierten Entscheidungen; die 24/30 auf Victus kamen mit nur drei Zielen.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Weiche VOR dem Agenten (nicht als Tool im Agenten, siehe Victus-Befund)
+  mit hoechstens drei Zielen, die ALLE sofort antworten koennen:
+  <code>klein</code> (residentes Nebenmodell &lt;= 9B), <code>gross</code> (laufendes Hauptprofil),
+  <code>schwer</code> (Cloud). Schwelle p &gt;= 0,8, darunter an <code>gross</code>.</li>
+<li>Das Profil <code>flash</code> (Flash-Next IQ2_XS, 6 GB VRAM) laesst neben sich ein
+  kleines dichtes Modell auf der Karte zu; erst damit gibt es zwei lokale
+  Ziele fuer eine Weiche. Mit dem 27B (21 GB) bleibt nur klein-CPU oder Cloud.</li>
+<li>Laya als Dienst (<code>laya-serve</code>, CPU, ~1,6 GB RAM): 0,1 s je Entscheidung.
+  Ohne Dienst 6-7 s Modellladen je Aufruf.</li>
+<li>Vor jeder Einfuehrung: 60 Faelle mit Soll-Label (local_models
+  <code>tools/laya/faelle/route.jsonl</code>) gegen Embedding+kNN auf demselben
+  Embedding-Server (Port 8001) messen. Gewinnt kNN, braucht es kein Laya.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Profilwechsel je Anfrage (q4 gegen flash gegen flash-s): Ladezeit und
+  Exklusivitaet der Karte machen die Weiche hier sinnlos.</li>
+<li>Zero-shot-Einsatz von Laya fuer feine Kategorien (Banking77 0,43). Mehr
+  als drei bis vier Ziele.</li>
+<li>Die Konfidenz als Garantie (Victus: zwei Fehler bei 0,96/0,97).</li>
+<li>Dass Laya 0.4.0 auf Alita ohne weiteres laeuft: es verlangt PyTorch 2.14
+  und transformers 5.x, die Umgebung <code>dl</code> hat 2.6. Eigene CPU-Umgebung noetig
+  (Wheel plus 2,5 GB Gewichte ueber die Telefonleitung).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Auf den 60 Routing-Faellen liegt Laya nicht mindestens 5 Punkte vor
+Embedding+kNN, oder schwere Anfragen landen bei p &gt;= 0,8 regelmaessig beim
+kleinen Modell.</p>
+<h2>Ablesung</h2>
+<p>Webrecherche 2026-10-08: PyPI laya 0.4.0; flowtivity.ai Laya-gegen-Jev-
+Benchmark (T4, eigene Testsaetze des Autors); dev.classmethod.jp Jev-
+Routing-Test (40 Faelle, nicht produktiv); arXiv 2604.02367 (SLM-Front-Door-
+Routing), 2601.07206 (LLMRouterBench), 2510.00202 (RouterArena), 2506.16655
+(Arch-Router). Keine der Zahlen auf Alita gemessen. Eigene Zahl: Profilwechsel
+flash ueber start.sh 20 s Ladezeit, 6,1 GB VRAM bei 32k Kontext.</p>
+<h2>Nachtrag 2026-10-08: Jev auf der eigenen Maschine</h2>
+<p>Jev gibt es nur als gehosteten Dienst (api.typesafe.ai, <code>POST /v1/systemone</code>,
+SDK <code>pip install typesafe-sdk</code>, auch ueber OpenRouter: 0,042 $/M Eingabetoken,
+32k Kontext). Keine Gewichte, kein On-Prem; Zero-Data-Retention nur fuer
+Enterprise-Kunden auf Anfrage. Fuer eine Workstation mit Patientendaten heisst
+das: Jev darf nur Entscheidungen ueber Text sehen, der keine Daten enthaelt
+(Routing von Nutzeranfragen, nicht Shell-Befehle mit Pfaden, nicht Berichte).
+Lokal laufen stattdessen die Nachbauten mit demselben Draht-Format: Mapika
+<code>decider</code> (Qwen3.5-Feinjustierung, Apache 2.0, 2B = 4 GB VRAM, 4B = 8,4 GB,
+35B-A3B = 20-65 GB; serviert <code>/v1/systemone</code>, TypeSafes SDK laeuft gegen eine
+andere Basis-URL), JevBench v1.3: Jev 74,4 / Kalibrierung 83, decider-4b v2
+64,1 (bestes offenes), decider-35b-a3b 67,6 / 72, decider-2b 61,7 / 47
+(schlecht kalibriert). GGUF-Varianten (Q4_K_M, 2,7 GB) existieren fuer
+llama.cpp. Laya bleibt der kleinste Weg (322-421 Mio., CPU, 60 ms).</p>
+<p>Folge fuer Alita: decider-4b als GGUF passt neben das Profil <code>flash</code> (6 GB)
+oder als CPU-Dienst neben das 27B; ein zweiter llama-server auf 8003 mit
+<code>--n-gpu-layers 0</code> kostet nur RAM. Messung wie oben: 60 Faelle, drei Ziele,
+gegen Embedding+kNN und Laya.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="../findings/flash-next-177b-moe-on-24gb-card.html">flash-next-177b-moe-on-24gb-card</a></li>
+<li><a href="local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a></li>
+<li><a href="../findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

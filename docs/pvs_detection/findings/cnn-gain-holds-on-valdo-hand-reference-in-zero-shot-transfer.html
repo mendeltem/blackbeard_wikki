@@ -1,0 +1,69 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Der CNN-Gewinn der zweiten Stufe hält auf VALDO-Handreferenzen (+0,061 gepaart), der Zero-Shot-Uebertrag selbst ist unbrauchbar</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">pvs_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Der CNN-Gewinn der zweiten Stufe hält auf VALDO-Handreferenzen (+0,061 gepaart), der Zero-Shot-Uebertrag selbst ist unbrauchbar</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-11</span><span>Herkunft</span><span>PVS-Arena Alita, Versuche G3a/G3b (skripte/zweite_stufe_cnn.py, Uebertragsmodus), VALDO Task 1 12 Handfaelle referenz_v2, 2026-10-11 12:51</span><span>Zuletzt geändert</span><span>2026-10-11 pvs: G3 -- CNN-Gewinn haelt auf VALDO-Handreferenz, Zero-Shot-Uebertrag unbrauchbar</span><span>Verweist auf</span><span><a href="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">Auf HCP-Aging hebt ein Patch-CNN als zweite Stufe den Trenner von 0,660 auf 0,695 -- fast ganz ueber die Praezision</a> <span class="muted small">(pvs_detection)</span><br><a href="patch-cnn-second-stage-adds-nothing-on-valdo.html">Ein Patch-CNN als zweite Stufe bringt bei PVS auf VALDO nichts -- der CMB-Hebel uebertraegt sich nicht</a> <span class="muted small">(pvs_detection)</span><br><a href="hcp-aging-labels-are-mostly-unet-silver.html">HCP-Aging-PVS: 160 von 200 Masken sind U-Net-Vorhersagen, die 40 Handfaelle sind nicht gekennzeichnet; VALDO-Rater stimmen nur zu F1 0,20 ueberein</a> <span class="muted small">(pvs_detection)</span></span><span>Verwiesen von</span><span><a href="hcp-pretraining-plus-valdo-finetuning-small-but-real-gain.html">Vortraining auf HCP + Feintuning auf VALDO hebt das Patch-CNN um +0,02 -- klein, aber mit Intervall ohne Null</a> <span class="muted small">(pvs_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/pvs_detection/findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.md">knowledge/pvs_detection/findings/cnn-gain-holds-on-valdo-hand-reference-in-zero-shot-transfer.md</a></span></div><h2>Aussage</h2>
+<p>Auf denselben VALDO-Kandidaten (DRIPS-T2 &gt;= 0,1, nur T2) und gleicher Schwellenlogik: VALDO-intern (LOO, 11 Trainingsfaelle) GBM 0,412,
+CNN 0,417, Mischung 0,425 (gepaart +0,014 [-0,019; +0,038], SABRE +0,038 / RSS -0,011). Zero-Shot von HCP (200 Faelle, nur WM-Silber)
+auf VALDO: GBM 0,256, CNN 0,321, Mischung 0,317 -- alle unter DRIPS allein (0,354), weil der HCP-Trenner auf VALDO zu viel wegwirft
+(GBM-Recall 0,19). Aber gepaart Mischung - GBM +0,061 [+0,019; +0,111], CNN - GBM +0,065 [+0,008; +0,131], besser in 9/12, auch auf RSS.
+Der relative CNN-Gewinn aus HCP (+0,035) ist damit auf Handreferenzen belegt; der absolute Zero-Shot-Uebertrag nicht.</p>
+<h2>Traegt</h2>
+<p>Die zweite Stufe fuer PVS soll ein CNN enthalten, aber auf der Zielkohorte feingetunt werden: Vortraining HCP + Feintuning VALDO (G5)
+ist der naechste Hebel, nicht Zero-Shot. Auf VALDO tragen T1+FLAIR und der Dreier-Pool weit mehr (0,591) als jede T2-only-Stufe (0,425).</p>
+<h2>Traegt nicht</h2>
+<p>Ob das CNN kleine PVS (Klasse 1-2) findet: in allen Varianten Recall 0,11-0,32, die Decke liegt beim Kandidatengeber (F7.8/G4).
+BELOVE (kein T2) ist von diesem Befund nicht abgedeckt.</p>
+<h2>Bruchindikator</h2>
+<p>Feintuning auf VALDO (G5) hebt die T2-only-Mischung nicht ueber 0,425 oder den Dreier-Pool-Trenner nicht ueber 0,591.</p>
+<h2>Ablesung</h2>
+<p>pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-drips-t2only-loo (G3a) und stufe2-cnn-uebertrag-hcp (G3b), gepaarte Rechnung in ARBEIT.md
+11.10. 12:17/12:51. Fehlerlehre: ID-Kollision sub-101..106 zwischen HCP und VALDO (Regel case-ids-are-dataset-local-prefix-when-pooling).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.html">patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision</a></li>
+<li><a href="patch-cnn-second-stage-adds-nothing-on-valdo.html">patch-cnn-second-stage-adds-nothing-on-valdo</a></li>
+<li><a href="hcp-aging-labels-are-mostly-unet-silver.html">hcp-aging-labels-are-mostly-unet-silver</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-11 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

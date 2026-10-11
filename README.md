@@ -20,6 +20,12 @@ Hast du keinen Schreibzugriff, gib die Dateien als Text oder Zip an Mendel zurü
 
 **Nur `main` gilt.** Lies immer `main`. Musst du auf einem eigenen Branch arbeiten (z. B. ein zugewiesener `claude/...`-Branch), führe deinen Beitrag nach Mendels Ja sofort nach `main` zusammen und lösche den Branch. Ein Branch ist nie eine Ablage.
 
+## Lesen und Schreiben
+
+- **Menschen lesen HTML.** Die Lesefassung liegt unter [docs/index.html](docs/index.html): Einstieg mit Suche, Kennzahlen, "Zuletzt geändert", je Bereich eine Seite mit Kurzstand und aufklappbaren Einträgen, je Eintrag eine Seite mit Verweisen und Rückverweisen. Im Clone per Doppelklick öffnen oder `python -m http.server -d docs 8769`.
+- **Agenten schreiben Markdown.** Quelle bleiben die Markdown-Dateien mit Frontmatter (eine Datei je Aussage). Nie HTML von Hand in die Wiki schreiben, nie `docs/` von Hand ändern. Warum: Tokens im Prefill, Zuverlässigkeit kleiner Modelle, lesbare Diffs, Frontmatter-Prüfung. Regel: [humans-read-html-agents-write-markdown](knowledge/agent_coordination/rules/humans-read-html-agents-write-markdown.md).
+- **Bauen.** Nach jedem Beitrag `python tools/general/wiki_html/src/wiki_html.py --root . --out docs` und `docs/` mit einchecken. Einmal je Clone den Haken setzen: `cp tools/general/wiki_html/src/pre-commit.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`, dann passiert es bei jedem Commit mit Markdown-Änderung von selbst. Maschinen können `docs/index.json` lesen.
+
 ## Nutzung in Chats und Agenten
 
 - **Prefill:** `knowledge/INDEX.md` hat eine Spalte Stichwörter. Zum Gesprächsthema passende Bereiche wählen, deren `SUMMARY.md` lesen (Kurzstand, 10 bis 20 Zeilen), Einzeleinträge erst bei Bedarf.
@@ -29,13 +35,14 @@ Hast du keinen Schreibzugriff, gib die Dateien als Text oder Zip an Mendel zurü
   - claude.ai: `plugins/blackbeard-wiki/skills/blackbeard-wiki.zip` unter Einstellungen → Features hochladen (Code-Ausführung muss an sein).
 - **Chat-Projekt:** In claude.ai ein Projekt anlegen und dieses Repo über die GitHub-Integration als Projektwissen einbinden. Nach Agenten-Pushes dort "Sync" klicken.
 - **Agenten-Umgebung:** Im Setup-Skript der Cloud-Umgebung `git clone https://github.com/mendeltem/blackbeard_wikki /home/user/blackbeard_wikki` eintragen.
-- **Nach jedem Beitrag:** `python tools/general/wiki_maintenance/src/wiki_maintenance.py --root . --check` (muss 0 ergeben), dann `--todo TODO.md`. Bei neuem Bereich auch `SUMMARY.md` anlegen und die Stichwortspalte in `knowledge/INDEX.md` füllen. Ändert ein Beitrag den Stand eines Bereichs, dessen `SUMMARY.md` mitziehen.
+- **Nach jedem Beitrag:** `python tools/general/wiki_maintenance/src/wiki_maintenance.py --root . --check` (muss 0 ergeben), dann `--todo TODO.md`, dann `docs/` neu bauen (siehe Lesen und Schreiben). Bei neuem Bereich auch `SUMMARY.md` anlegen und die Stichwortspalte in `knowledge/INDEX.md` füllen. Ändert ein Beitrag den Stand eines Bereichs, dessen `SUMMARY.md` mitziehen.
 
 ## Aufbau
 
 ```
 INDEX.md                  Liste aller Bereiche
 TODO.md                   offene Punkte aller Bereiche, erzeugt
+docs/                     HTML-Lesefassung, erzeugt von tools/general/wiki_html, nie von Hand
 knowledge/<topic>/SUMMARY.md  Kurzstand je Thema für Prefill
 plugins/blackbeard-wiki/  Skill und Plugin für Claude Code und claude.ai
 knowledge/<topic>/        Wissen, ein Unterordner je Thema
