@@ -47,3 +47,4 @@
 - 11.10. 15:25: G5b: Vortraining im Pool hebt das CNN allein (0,607), die 0,5-Mischung nicht (0,632 < 0,650) -> Kombinationsregel ist der naechste Hebel (Stapelung); VALDO-Stand bleibt 0,650.
 - 11.10. 16:05: G4b: Schwellen 0,01/0,3/0,3 -> VALDO-Stand 0,658 (GBM allein, Praezision und Recall steigen beide, Klasse-1-2-Recall 0,66); Tausch noch nicht am Ende, G4d (0,005/0,2) laeuft.
 - 11.10. 16:35: Versuch H: EPVS-2024-Sieger BIG_AEHRC auf VALDO nur 0,28 (OOF), unter jedem Einzelverfahren; nur als vierter Kandidatengeber noch offen (G6). EPVS-Daten: Registrierungsmail vom Nutzer raus, Team-Antrag offen, Waechter als systemd-Dienst.
+- 11.10. 16:55: Wiederholung von G4: Mischung 0,632 statt 0,650 (GBM identisch) -> CNN-Anteil auf VALDO ist +-0,02 Rauschen, Stapelung traegt nicht. Belastbarer VALDO-Stand: GBM-Trenner 0,658 (G4b). HCP-CNN-Gewinn (+0,035, 191/200) bleibt.

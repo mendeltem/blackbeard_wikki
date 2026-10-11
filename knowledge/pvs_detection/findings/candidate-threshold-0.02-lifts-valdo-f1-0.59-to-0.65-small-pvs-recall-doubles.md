@@ -41,6 +41,13 @@ DRIPS 0,01, MedNet-T1 0,3, PINGU 0,3 (12.356 Kandidaten, 3,4x): GBM 0,658 [0,610
 gepoolt Praezision 0,744 -> 0,779 UND Recall 0,693 -> 0,766, Klasse 1-2 Recall 0,66. Die 0,5-Mischung mit dem CNN liegt hier gleichauf (0,657, -0,001):
 bei sehr vielen schwachen Kandidaten traegt das GBM die Posterior-Merkmale allein. Neuer VALDO-Stand 0,658; 0,005/0,2 wird geprueft (G4d).
 
+## Nachtrag 2026-10-11 16:55: Wiederholung -- der Mischungsgewinn war Rauschen, die Schwellengewinne nicht
+Exakte Wiederholung von G4 (gleicher Cache, gleiche Parameter, Schwellenfaelle jetzt deterministisch): GBM wieder 0,631, Mischung aber 0,632 statt
+0,650 (gepaart -0,019 [-0,041; -0,000]). Der CNN-Anteil schwankt auf 12 Faellen zwischen Laeufen um ~0,02; mit vortrainierter Initialisierung ist
+er dagegen reproduzierbar (G5b/G5c +0,001). Stapelung statt Mittel traegt nicht (+0,005 n.s. / -0,012). Belastbar bleibt der GBM-Trenner:
+0,591 (0,10) -> 0,631 (0,02) -> 0,658 (0,01/0,3), alle gepaart mit KI ohne Null. Regel fuer VALDO: Gewinne unter 0,02 aus dem CNN-Anteil
+nicht berichten, bevor sie nicht in Wiederholungen stehen; GBM-Vergleiche sind bei festen Schwellenfaellen deterministisch.
+
 ## Verknuepft
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)
 - [patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision](patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision.md)
