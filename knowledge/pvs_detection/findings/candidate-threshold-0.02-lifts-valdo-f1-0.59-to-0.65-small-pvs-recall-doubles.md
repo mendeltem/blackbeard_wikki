@@ -1,7 +1,7 @@
 ---
 id: candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles
 typ: befund
-status: getragen
+status: widerlegt
 thema: knowledge/pvs_detection
 stand: 2026-10-11
 herkunft: PVS-Arena Alita, F7.8 (skripte/kandidatendecke.py) und Versuch G4 (skripte/zweite_stufe_cnn.py --ta 0.02), VALDO Task 1 12 Handfaelle referenz_v2, LOO, 2026-10-11 14:40
@@ -47,6 +47,13 @@ Exakte Wiederholung von G4 (gleicher Cache, gleiche Parameter, Schwellenfaelle j
 er dagegen reproduzierbar (G5b/G5c +0,001). Stapelung statt Mittel traegt nicht (+0,005 n.s. / -0,012). Belastbar bleibt der GBM-Trenner:
 0,591 (0,10) -> 0,631 (0,02) -> 0,658 (0,01/0,3), alle gepaart mit KI ohne Null. Regel fuer VALDO: Gewinne unter 0,02 aus dem CNN-Anteil
 nicht berichten, bevor sie nicht in Wiederholungen stehen; GBM-Vergleiche sind bei festen Schwellenfaellen deterministisch.
+
+## Nachtrag 2026-10-11 17:40: WIDERLEGT als Detektionsgewinn -- Blob-Verschmelzung, die Beruehrungsmetrik belohnt sie
+Nachpruefung (GBM, VALDO 12): Vol_pred/Vol_ref 1,4x (0,10) -> 3,7x (0,02) -> 7,4x (0,01) -> 17x (0,005); Dice 0,365 -> 0,307 -> 0,241 -> 0,156;
+die groesste Vorhersagekomponente beruehrt 8 -> 38 -> 86 -> 243 Referenzen. Die Instanz-F1-Steigerung entsteht, weil ein verschmolzener Blob
+als EINE Vorhersage und viele Treffer zaehlt (unsere Regel = offizielle EPVS-Regel). Die Decke-Aussage (F7.8) bleibt wahr, der Gewinn 0,631/0,658
+ist gestrichen; belastbar bleibt 0,591 (0,10/0,5). Regel ab jetzt: Instanz-Ranglisten tragen Dice, Vol-Verhaeltnis (< 2x) und Mehrfachtreffer
+(< 20 %) mit. Weg: Kandidaten per Wasserscheide trennen (je lokales Maximum einer), Ausgabe bis Halbmaximum (G7).
 
 ## Verknuepft
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)

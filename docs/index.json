@@ -2072,9 +2072,9 @@
 "p": "pvs_detection/findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.html",
 "a": "pvs_detection",
 "y": "Befund",
-"s": "getragen",
+"s": "widerlegt",
 "d": "2026-10-11",
-"x": "Decke: bei DRIPS 0,10 nur 45 % der 1-2-Voxel-PVS Kandidaten, bei 0,02 75 %; G4: 0,591 -> 0,650 (gepaart +0,070, 11/12), Klasse-1-2-Recall 0,31 -> 0,53; G4b 0,01/0,3: 0,658",
+"x": "Decke: bei DRIPS 0,10 nur 45 % der 1-2-Voxel-PVS Kandidaten, bei 0,02 75 %; G4/G4b 0,631/0,658 WIDERLEGT: Blob-Verschmelzung (Vol 3,7x/7,4x, ein Blob beruehrt 86 Referenzen); Decke-Aussage bleibt; belastbar 0,591",
 "id": "candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles",
 "src": "knowledge/pvs_detection/findings/candidate-threshold-0.02-lifts-valdo-f1-0.59-to-0.65-small-pvs-recall-doubles.md"
 },

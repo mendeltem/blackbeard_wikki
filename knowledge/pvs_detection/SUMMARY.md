@@ -48,3 +48,4 @@
 - 11.10. 16:05: G4b: Schwellen 0,01/0,3/0,3 -> VALDO-Stand 0,658 (GBM allein, Praezision und Recall steigen beide, Klasse-1-2-Recall 0,66); Tausch noch nicht am Ende, G4d (0,005/0,2) laeuft.
 - 11.10. 16:35: Versuch H: EPVS-2024-Sieger BIG_AEHRC auf VALDO nur 0,28 (OOF), unter jedem Einzelverfahren; nur als vierter Kandidatengeber noch offen (G6). EPVS-Daten: Registrierungsmail vom Nutzer raus, Team-Antrag offen, Waechter als systemd-Dienst.
 - 11.10. 16:55: Wiederholung von G4: Mischung 0,632 statt 0,650 (GBM identisch) -> CNN-Anteil auf VALDO ist +-0,02 Rauschen, Stapelung traegt nicht. Belastbarer VALDO-Stand: GBM-Trenner 0,658 (G4b). HCP-CNN-Gewinn (+0,035, 191/200) bleibt.
+- 11.10. 17:40 KORREKTUR: die Schwellen-Gewinne 0,631/0,658 waren Blob-Verschmelzung (Beruehrungsmetrik belohnt sie; Dice 0,365 -> 0,241, Vol 7x). VALDO-Stand zurueck auf 0,591. Regel: Ranglisten mit Dice/Vol/Mehrfachtreffer. Naechstes: Wasserscheiden-Kandidaten (G7).
