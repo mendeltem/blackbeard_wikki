@@ -5,7 +5,7 @@ Eigene Kohorte BELOVE (103 Faelle, Patientendaten, nur Summen), Arena unter `~/d
 Methode: [lesion_detection_method](../lesion_detection_method/INDEX.md), Pruefpunkt
 [pvs-apply-the-lesion-method](../lesion_detection_method/open_checks/pvs-apply-the-lesion-method.md).
 
-Stand 2026-10-07. Ein Eintrag je Datei.
+Stand 2026-10-11. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt | Status |
 |---|---|---|---|
@@ -20,3 +20,4 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | befund | [mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs](findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.md) | VALDO 12: MedNet-T1 0,44 (Prec 0,45, Klasse 1-2 nur 0,12), MedNet-T2 0,39, DRIPS 0,35 (Klasse 1-2 0,45), Rater 0,33; Kurven flach -> Pool + Trenner | vorschlag |
 | befund | [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](findings/candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md) | Pool DRIPS ∪ MedNet-T1 (+ PINGU) + GBM-Trenner, LOO: F1 0,57-0,58, Precision 0,70, Klasse 1-2 0,30; Ablation: Intensitaeten tragen (-0,06), Lage/Posteriors nichts; HCP n=200 (nur DRIPS, nur T2): 0,58 -> 0,67 | vorschlag |
 | befund | [pvs-chain-as-built-2026-10](findings/pvs-chain-as-built-2026-10.md) | Die Kette Schritt fuer Schritt: DRIPS >= 0,10 und MedNet >= 0,50 auf T1, Pool, 29 Merkmale, VALDO-Trenner 0,4; VALDO 0,57, HCP 0,668, eigene Kohorte nur Uebereinstimmung 0,35; QC-Betrachter lokal | vorschlag |
+| befund | [dora-baseline-is-plain-unet-and-field-evaluates-on-t2w](findings/dora-baseline-is-plain-unet-and-field-evaluates-on-t2w.md) | DoRA-Baseline = einfaches U-Net + Randomisierung, nicht DRIPS, gesperrt; Testkohorten 4/5 T2w 0,5-1 mm; EPVS-2024: 7 Methoden-PDFs (TheGPU fehlt), gesperrt | getragen |
