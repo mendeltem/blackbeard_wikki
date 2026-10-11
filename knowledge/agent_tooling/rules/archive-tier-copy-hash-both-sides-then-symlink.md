@@ -55,5 +55,5 @@ USB-Traeger sind eine Entscheidung des Nutzers, nicht des Werkzeugs; das Werkzeu
 
 ## Stand
 `archivieren QUELLE UNTERPFAD | --pruefen | --rueckgaengig | --index`; Protokoll `ARCHIV/PROTOKOLL.tsv`,
-Index `~/ARCHIV.md` und `ARCHIV/README.md`, README je Archivordner. Erster Lauf 11.10.2026: 15 Ordner, ~245 GB,
-/home von 97 % auf unter 75 %.
+Index `~/ARCHIV.md` und `ARCHIV/README.md`, README je Archivordner. Erster Lauf 11.10.2026: 16 Ordner, 223 GiB (gemessen, PROTOKOLL.tsv),
+/home von 97 % auf 71 % (27 -> 259 GB frei).
