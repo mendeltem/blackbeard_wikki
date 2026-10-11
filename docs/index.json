@@ -55,6 +55,17 @@
 "src": "knowledge/agent_tooling/rules/agent-tools-by-task-shape.md"
 },
 {
+"t": "Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken",
+"p": "agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-11",
+"x": "Wenn Daten die interne Platte **verlassen** (anderes Dateisystem, externer Traeger), reicht Umbenennen nicht mehr (siehe [[data-move-by-rename-symlink-and-protocol]]). Dann gilt: **kopieren, auf beiden Seiten SHA-256 ueber jede Datei bilden",
+"id": "archive-tier-copy-hash-both-sides-then-symlink",
+"src": "knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md"
+},
+{
 "t": "Vor der ersten Aenderung an einer fremden Datei eine Sicherung mit Stempel",
 "p": "agent_tooling/rules/back-up-before-first-edit-of-a-foreign-file.html",
 "a": "agent_tooling",
@@ -2458,7 +2469,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "",
+"d": "2026-10-11",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"

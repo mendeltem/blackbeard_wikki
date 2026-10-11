@@ -127,3 +127,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-10 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | WMH: Tabelle der Hebel gegen die Domaenenluecke (BELOVE), Uebersetzer verworfen.
 - 2026-10-11 | Alita (Claude Code) | `knowledge/agent_tooling/` | Regel: Tafel-Markdown nur Funktionskern, Verstaendliches als gebaute HTML-Seiten (tafel-html).
 - 2026-10-11 | Alita (Claude Code) | `knowledge/wmh_segmentation/` | Befund (vorlaeufig): gleiche Daten 3D = 2D, beide >> BIANCA; Dice haengt an der WMH-Last.
+- 2026-10-11 | Alita (Claude Code) | `knowledge/agent_tooling/` | Regel: Archivstufe auf externem Traeger -- kopieren, beidseitig hashen, dann Symlink; defekte Platte per Schreibtest/SMART erkannt.
