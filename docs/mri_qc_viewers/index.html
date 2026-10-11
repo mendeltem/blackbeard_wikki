@@ -43,12 +43,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
-<div class="stripe"><i class="ok" style="width:66.7%" title="getragen: 2"></i><i class="info" style="width:33.3%" title="offen: 1"></i></div><div class="counts"><span class="ok">2 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+<div class="stripe"><i class="ok" style="width:75.0%" title="getragen: 3"></i><i class="info" style="width:25.0%" title="offen: 1"></i></div><div class="counts"><span class="ok">3 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
 die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
 wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
 Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
-<p>Stand 2026-10-08. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Stand 2026-10-11. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-11. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Wie eine QC-Seite fuer Laesionsdetektion gebaut wird, damit Mendel sie benutzt: Einzeldatei-HTML,
 links die Referenz, rechts dieselbe Schicht mit schaltbaren Modell-Umrissen; Referenz <strong>blau</strong>,
 Modellfarben meiden das Blau; Pfeil hoch/runter = Proband, links/rechts = Schicht; Klick auf eine
@@ -56,9 +56,45 @@ Komponente zeigt Groesse, Schichten, Wahrscheinlichkeit, Status und die zugeordn
 Angeklickte wechselt die Farbe; alles Englisch; Datei heisst <code>quality_control.html</code>.
 Offen: den Generator als Tool mit Test einstellen.</p>
 <p><strong>Lesen bei:</strong> QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme ansehen, Laesionen zaehlen.</p>
-<p><strong>Regel, neu 2026-10-08:</strong> Qualitaetskontrolle fuer eine neue Laesionsart wird in fester Reihenfolge gebaut, nie von null: Lader statt neuer Seite; ohne Referenz heisst die Maske Vergleich und die Zaehler Uebereinstimmung, gepoolt gleich dem Messskript; ein Modell in Urteilsfarben, mehrere in Modellfarben; jede anatomische Regel als eigene Ebenen vor der Kette; je Fund das Warum mit Nachbarschichten; Rating als eigene verblindete Seite mit sofortigem Speichern; Patientendaten nur auf 127.0.0.1; Pruefung headless und gegen das Messskript; Vorlesung als eigenes Artefakt. Der PVS-Betrachter fuer 73 Faelle entstand so in einer Stunde.</p></div>
+<p><strong>Regel, neu 2026-10-08:</strong> Qualitaetskontrolle fuer eine neue Laesionsart wird in fester Reihenfolge gebaut, nie von null: Lader statt neuer Seite; ohne Referenz heisst die Maske Vergleich und die Zaehler Uebereinstimmung, gepoolt gleich dem Messskript; ein Modell in Urteilsfarben, mehrere in Modellfarben; jede anatomische Regel als eigene Ebenen vor der Kette; je Fund das Warum mit Nachbarschichten; Rating als eigene verblindete Seite mit sofortigem Speichern; Patientendaten nur auf 127.0.0.1; Pruefung headless und gegen das Messskript; Vorlesung als eigenes Artefakt. Der PVS-Betrachter fuer 73 Faelle entstand so in einer Stunde.</p>
+<p><strong>Regel, neu 2026-10-11:</strong> Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Offen: Excel-Spalten des GM-Beispiels noch deutsch.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="qc-build-order-for-a-new-lesion-type"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-build-order-for-a-new-lesion-type.html">Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">Zehn Setzungen in Reihenfolge: Generator statt neue Seite, Vergleich heisst Vergleich, Urteils- oder Modellfarben, Regel-Ebenen vor der Kette, Warum je Fund, Rating getrennt und verblindet, nur 127.0.0.1, Pruefung vor Abgabe, Vorlesung eigenes Artefakt, drei Zeilen danach</span></summary><div class="body"><p class="small muted">Herkunft: Projekte valdo-t2s (CMB), mb-arena (eigene CMB-Kohorten), pvs-arena (BELOVE-QC, Rating-Seite wp8), Liquor-Regel-Ebenen und Vorlesungsanimation 2026-10-08; Nutzer 08.10.: &quot;Regeln aufstellen, damit wir nicht immer von 0 anfangen&quot; · <a href="rules/qc-build-order-for-a-new-lesion-type.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="qc-pages-english-sessions-in-one-window"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-pages-english-sessions-in-one-window.html">Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerentscheidung 11.10.2026 zum QC-Stick (QUALITY_CONTROLL/): &quot;alles auf Englisch, jede Qualitaetskontrolle&quot;; Wunsch zum DEMDAS-GM-Betrachter &quot;M0, M6 ... in einem Fenster wechseln&quot; · <a href="rules/qc-pages-english-sessions-in-one-window.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li><strong>Alle QC-Seiten sind Englisch</strong>, nicht nur die Schichtbetrachter: auch der Stick-Index,
+   Volumetrie-Verlaufsseiten mit ihren Plots (Achsen, Legenden, Titel), NiiVue-Seiten, Rating-Hinweise
+   (README.txt neben LIESMICH.txt) und die Titel der Manifeste (<code>dataset</code>, <code>info</code>), die in den
+   Seitentitel wandern. Deutsche Reste kamen 11.10. aus genau diesen Nebenwegen: Manifest-Titel
+   ("Trenner", "Gewebesegmentierung"), Plot-Beschriftungen im Statistik-Skript, Index-Prosa.
+   Die Uebersetzung gehoert in den <strong>Generator</strong> (gm_qc_axial.py, verlauf_statistik.py, qc_vorlage.html,
+   qc_hcp_manifest.py, abc_qc_bauen.py), nicht nur in die gebaute Datei, sonst kommt das Deutsche beim
+   naechsten Bau zurueck. Eingabespalten (Excel) bleiben als Schluessel unangetastet; uebersetzt wird nur
+   die Anzeige (Display-Map im Skript).</li>
+<li><strong>Laengsschnitt (ein Proband, mehrere Sitzungen) wird im selben Fenster umgeschaltet</strong>:
+   Knopfreihe <code>Session: M0 M6 M36 M60</code> ueber dem Bild, Pfeil hoch/runter laeuft nur durch die Sitzungen
+   DESSELBEN Probanden, Bild hoch/runter (und Pfeilknoepfe neben dem Titel) wechseln den Probanden,
+   die Fallliste gruppiert nach Proband. <strong>Die Schicht bleibt beim Sitzungswechsel stehen</strong> (geklemmt auf n-1),
+   beim Probandenwechsel springt sie auf die Startschicht. Daneben eine Tabelle "Across sessions" mit den
+   Kernvolumina (Brain, GM, WM, CSF, WMH) ueber alle Sitzungen, aktive Spalte hervorgehoben.
+   Sortierung nach Monat (M0, M6, M10, M36, M60), nicht alphabetisch (M0, M10, M36, M6).</li>
+<li><strong>Pruefung</strong>: Suche nach deutschen Woertern ueber alle Seiten (Textknoten und String-Literale,
+   DATA-Arrays und Base64 vorher entfernt), danach jede geaenderte Seite headless rendern
+   (<code>chrome-headless-shell --screenshot --dump-dom</code>, liegt unter <code>~/.cache/ms-playwright/</code>) und im DOM
+   nachsehen, dass die Knopfreihe gebaut wurde.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jede QC-Seite, die auf den Stick oder an Dritte geht; jeden Betrachter mit mehr als einer Sitzung je Proband.</p>
+<h2>Traegt nicht</h2>
+<p>Eingabedaten (Excel-Spalten, JSON-Schluessel wie <code>standort</code>, <code>schichten</code>), Dateinamen (<code>verlauf.html</code>,
+<code>DEMDAS_GM_Beispiel.xlsx</code>), deutsche Notizen (.md) auf dem Stick, die der Index als solche kennzeichnet.</p>
+<h2>Bruchindikator</h2>
+<p>Eine neu gebaute Seite auf dem Stick zeigt wieder deutsche Oberflaechentexte, oder ein Laengsschnitt-Betrachter
+listet Sitzungen flach als eigene Faelle.</p>
+<h2>Ablesung</h2>
+<p>Nutzer 11.10.2026 (zwei Nachrichten im selben Lauf); umgesetzt und gerendert 11.10. 18:28-18:40 auf Alita.
+Offen: <code>DEMDAS_GM_Beispiel.xlsx</code> hat noch deutsche Blatt- und Spaltennamen (zwei Leser haengen daran).</p>
+<h2>Verknuepft</h2>
+<p><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a>, <a href="rules/qc-build-order-for-a-new-lesion-type.html">qc-build-order-for-a-new-lesion-type</a></p></div></details><details class="entry" id="qc-build-order-for-a-new-lesion-type"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-build-order-for-a-new-lesion-type.html">Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-08</span><span class="i">Zehn Setzungen in Reihenfolge: Generator statt neue Seite, Vergleich heisst Vergleich, Urteils- oder Modellfarben, Regel-Ebenen vor der Kette, Warum je Fund, Rating getrennt und verblindet, nur 127.0.0.1, Pruefung vor Abgabe, Vorlesung eigenes Artefakt, drei Zeilen danach</span></summary><div class="body"><p class="small muted">Herkunft: Projekte valdo-t2s (CMB), mb-arena (eigene CMB-Kohorten), pvs-arena (BELOVE-QC, Rating-Seite wp8), Liquor-Regel-Ebenen und Vorlesungsanimation 2026-10-08; Nutzer 08.10.: &quot;Regeln aufstellen, damit wir nicht immer von 0 anfangen&quot; · <a href="rules/qc-build-order-for-a-new-lesion-type.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.md">Markdown</a></p><h2>Aussage</h2>
 <p>Die CMB-Qualitaetskontrolle ist die Vorlage. Fuer jede neue Laesionsart (PVS, WMH,
 Infarkt, Lakunen) gilt dieselbe Reihenfolge; nur die Lader und die Wortwahl wechseln.</p>
 <ol>

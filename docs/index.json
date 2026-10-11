@@ -2057,6 +2057,17 @@
 "src": "knowledge/mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.md"
 },
 {
+"t": "Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten",
+"p": "mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-11",
+"x": "Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen",
+"id": "qc-pages-english-sessions-in-one-window",
+"src": "knowledge/mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.md"
+},
+{
 "t": "Setzungen fuer eine QC-Seite: Referenz blau, Proband links/rechts, F1 je Fall, Klick zeigt die Werte",
 "p": "mri_qc_viewers/rules/qc-slice-viewer-conventions.html",
 "a": "mri_qc_viewers",

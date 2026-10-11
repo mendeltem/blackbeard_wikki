@@ -1,6 +1,6 @@
 # mri_qc_viewers: Kurzstand
 
-Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
+Stand 2026-10-11. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
 
 Wie eine QC-Seite fuer Laesionsdetektion gebaut wird, damit Mendel sie benutzt: Einzeldatei-HTML,
 links die Referenz, rechts dieselbe Schicht mit schaltbaren Modell-Umrissen; Referenz **blau**,
@@ -12,3 +12,5 @@ Offen: den Generator als Tool mit Test einstellen.
 **Lesen bei:** QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme ansehen, Laesionen zaehlen.
 
 **Regel, neu 2026-10-08:** Qualitaetskontrolle fuer eine neue Laesionsart wird in fester Reihenfolge gebaut, nie von null: Lader statt neuer Seite; ohne Referenz heisst die Maske Vergleich und die Zaehler Uebereinstimmung, gepoolt gleich dem Messskript; ein Modell in Urteilsfarben, mehrere in Modellfarben; jede anatomische Regel als eigene Ebenen vor der Kette; je Fund das Warum mit Nachbarschichten; Rating als eigene verblindete Seite mit sofortigem Speichern; Patientendaten nur auf 127.0.0.1; Pruefung headless und gegen das Messskript; Vorlesung als eigenes Artefakt. Der PVS-Betrachter fuer 73 Faelle entstand so in einer Stunde.
+
+**Regel, neu 2026-10-11:** Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Offen: Excel-Spalten des GM-Beispiels noch deutsch.
