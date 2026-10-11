@@ -19,6 +19,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | befund | [unseen-scanners-are-not-the-weak-spot](findings/unseen-scanners-are-not-the-weak-spot.md) | Testsatz hat fuenf Geraete, nicht drei Standorte; alle Ausfaelle auf bekannten Scannern | getragen |
 | befund | [literature-dice-levers-for-wmh](findings/literature-dice-levers-for-wmh.md) | Ensemble +1,98 %, Augmentierung +1,38 %, TTA +0,8-1,4; Instanzverluste und T1 bringen nichts; Testsatz-Zahlen sind Eigenmessungen | getragen |
 | befund | [architecture-package-brought-no-gain](findings/architecture-package-brought-no-gain.md) | Neues Netz als Paket: Dice unentschieden, Laesions-Recall -0,038; Bausteine einzeln aendern | getragen |
+| befund | [same-data-3d-equals-2d-load-drives-dice](findings/same-data-3d-equals-2d-load-drives-dice.md) | Pool 311, gleiche Falten: 3D = 2D beim Dice (+0,004), beide >> BIANCA (+0,111); Dice haengt an der WMH-Last (<5 ml 0,57, >15 ml 0,82) | vorlaeufig |
 | regel | [measure-tails-paired-not-by-percentile](rules/measure-tails-paired-not-by-percentile.md) | 5. Perzentil bei n = 30 ist Rauschen, Vorzeichen haengt an der Interpolation; gepaart und mit Intervall messen | getragen |
 | risiko | [empty-target-looks-like-a-low-loss](risks/empty-target-looks-like-a-low-loss.md) | Ziel nicht mitgedreht: 0 Zielvoxel im Training, geglaetteter Dice meldet perfekten Verlust | getragen |
 

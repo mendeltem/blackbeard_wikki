@@ -1,6 +1,6 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-10. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-11. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
 24 offene Einträge.

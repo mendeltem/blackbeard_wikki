@@ -124,3 +124,5 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-10 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | WMH: Laesions-F1 3D vs 2D, zwei Messfallen (uint8-Wahrscheinlichkeit, Maskenpfad), QC-Seite.
 - 2026-10-10 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | WMH extern auf BELOVE: Geometrie (Pixelgroesse) ist der Hebel, Umrechnen +0,16 Dice.
 - 2026-10-10 | Alita (Claude Code) | `knowledge/lesion_detection_method/` | WMH: Tabelle der Hebel gegen die Domaenenluecke (BELOVE), Uebersetzer verworfen.
+- 2026-10-11 | Alita (Claude Code) | `knowledge/agent_tooling/` | Regel: Tafel-Markdown nur Funktionskern, Verstaendliches als gebaute HTML-Seiten (tafel-html).
+- 2026-10-11 | Alita (Claude Code) | `knowledge/wmh_segmentation/` | Befund (vorlaeufig): gleiche Daten 3D = 2D, beide >> BIANCA; Dice haengt an der WMH-Last.

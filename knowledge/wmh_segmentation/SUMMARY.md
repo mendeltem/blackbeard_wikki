@@ -29,3 +29,4 @@ Vorhersagevolumen zuerst pruefen.
 
 **Lesen bei:** WMH, FLAIR, Hirnmaske, HD-BET, Bias-Korrektur, 2D-U-Net, gemischte Kohorten,
 Challenge-Metrik, Scanner-Robustheit, Perzentile, Dice-Verlust.
+- 11.10.: Pool 311 (5 identische Falten): mit gleichen Trainingsdaten sind 3D- und 2D-U-Net beim Dice gleich (+0,004 [-0,011; +0,020]), beide deutlich vor BIANCA (+0,111); der Dice haengt vor allem an der WMH-Last, deshalb geschichtet berichten (vorlaeufig, 2D 1/5 Falten).
