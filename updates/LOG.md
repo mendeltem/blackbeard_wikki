@@ -129,3 +129,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-11 | Alita (Claude Code) | `knowledge/wmh_segmentation/` | Befund (vorlaeufig): gleiche Daten 3D = 2D, beide >> BIANCA; Dice haengt an der WMH-Last.
 - 2026-10-11 | Alita (Claude Code) | `knowledge/agent_tooling/` | Regel: Archivstufe auf externem Traeger -- kopieren, beidseitig hashen, dann Symlink; defekte Platte per Schreibtest/SMART erkannt.
 - 2026-10-11 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel: jede QC-Seite Englisch (im Generator), Laengsschnitt-Sitzungen im selben Fenster umschalten; 13 Stick-Seiten + Index umgestellt.
+- 2026-10-11 | Claude Code | `knowledge/memory_supply/` | Regel: eigene Darstellung ist keine Quelle (Supply_Atlas3D-Waferzahlen sind Modellschaetzung); Pruefpunkt dram-wafer-capacity-by-fab um fehlende Werke und Warnung ergaenzt.

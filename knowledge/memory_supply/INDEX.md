@@ -18,3 +18,4 @@ Stand 2026-10-03. Ein Eintrag je Datei.
 | [Mehr Speicher je GPU frisst den Fab-Zubau](mechanisms/gpu-memory-absorbs-fab-additions.md) | mechanismus | vorschlag |
 | [HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030](open_checks/rubin-hbm4-wafer-demand-2028-2030.md) | pruefpunkt | offen |
 | [Kein Standardzyklus ohne Absorptionsprüfung](rules/no-standard-cycle-without-absorption-check.md) | regel | getragen |
+| [Die eigene Darstellung ist keine Quelle](rules/own-visualisation-is-not-a-source.md) | regel | vorschlag |
