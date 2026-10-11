@@ -1,7 +1,7 @@
 ---
 id: patch-cnn-second-stage-adds-nothing-on-valdo
 typ: befund
-status: getragen
+status: eingeschraenkt
 thema: knowledge/pvs_detection
 stand: 2026-10-11
 herkunft: PVS-Arena Alita, Versuch G (skripte/zweite_stufe_cnn.py), VALDO Task 1, 12 Faelle mit Handmasken, referenz_v2, LOO, 2026-10-11 04:29
@@ -32,6 +32,10 @@ Auf HCP (5-fach, nur T2, DRIPS-Kandidaten) hebt die Mischung den Trenner um mehr
 
 ## Ablesung
 pvs-arena/ergebnisse/valdo-task1/stufe2-cnn-pool3/{cnn,gbm,mix}/zusammenfassung.json; gepaarte Rechnung in ARBEIT.md 11.10. 04:30.
+
+## Nachtrag 2026-10-11 11:55: Bruchindikator eingetreten
+Auf HCP (200 Faelle, eine Geometrie) hebt dasselbe CNN den Trenner um +0,035 (siehe patch-cnn-second-stage-lifts-hcp-f1-0.66-to-0.70-via-precision).
+Der VALDO-Befund gilt damit als Fallzahl-/Geometrie-Befund, nicht als Aussage ueber PVS allgemein.
 
 ## Verknuepft
 - [candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57](candidate-pool-plus-classifier-lifts-valdo-f1-from-0.44-to-0.57.md)
