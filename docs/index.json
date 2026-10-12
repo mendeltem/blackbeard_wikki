@@ -1496,6 +1496,17 @@
 "src": "knowledge/local_llm_operation/findings/opencode-against-llama-server-one-slot.md"
 },
 {
+"t": "Die Registry zeigte auf ein halbes Modell: der Dienst starb beim Laden, der Agent beendete sich, Claras Fenster war tot",
+"p": "local_llm_operation/findings/registry-pointed-at-half-a-model-agent-window-died.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "flash-Profil zeigte auf 1/2 GGUF-Teile -> Dienst starb -> agent exit -> totes tmux-Fenster; modellstart prueft jetzt alle Teile, agent.sh wartet bei Fehlstart",
+"id": "registry-pointed-at-half-a-model-agent-window-died",
+"src": "knowledge/local_llm_operation/findings/registry-pointed-at-half-a-model-agent-window-died.md"
+},
+{
 "t": "Eine Liste von Abbruchgruenden im System-Prompt laesst kleine Modelle abmustern",
 "p": "local_llm_operation/findings/rule-lists-make-small-models-refuse.html",
 "a": "local_llm_operation",
@@ -1670,6 +1681,17 @@
 "x": "Nous-Repo: `dspy.GEPA` scheitert, stummer Rueckfall auf MIPROv2",
 "id": "self-evolution-gepa-silently-falls-back",
 "src": "knowledge/local_llm_operation/risks/self-evolution-gepa-silently-falls-back.md"
+},
+{
+"t": "Jeder Absturz des lokalen Agenten wird zu einem Befund mit Ursache, Abhilfe im Code und Bruchindikator",
+"p": "local_llm_operation/rules/every-agent-crash-becomes-a-lesson.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Jeder Absturz: Kette aus Logs, jeden Fehler benennen, Abhilfe im Code mit Test, Befund im Wiki; Agent wartet statt Fenster zu schliessen",
+"id": "every-agent-crash-becomes-a-lesson",
+"src": "knowledge/local_llm_operation/rules/every-agent-crash-becomes-a-lesson.md"
 },
 {
 "t": "Vor jeder Messung pruefen, wer sonst auf der GPU und im RAM sitzt",
