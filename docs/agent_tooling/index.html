@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests</p>
-<div class="stripe"><i class="warn" style="width:58.6%" title="vorschlag: 17"></i><i class="ok" style="width:41.4%" title="getragen: 12"></i></div><div class="counts"><span class="warn">17 vorschlag</span> <span class="ok">12 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<div class="stripe"><i class="warn" style="width:60.0%" title="vorschlag: 18"></i><i class="ok" style="width:40.0%" title="getragen: 12"></i></div><div class="counts"><span class="warn">18 vorschlag</span> <span class="ok">12 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
@@ -62,7 +62,8 @@ geglaubt, weil es wie eine Messung aussieht.</p>
 - 07.10.: Laufende Bash-Skripte nie editieren (bash liest weiter am Byte-Offset); Aenderungen in neue Datei oder auf Prozessende warten.
 - 08.10.: GPU-Auftrag erst nach cuda-Check, vollem Import und Mini-Lauf in derselben Umgebung einreihen (CPU-Build-torch kostete 80 min Sperre).
 - 11.10.: Tafel trennen: Markdown nur Funktionskern (kurz, ueber das Werkzeug, Nummern stabil), alles Verstaendliche als automatisch gebaute HTML-Seiten mit Plots und Datenschutzfilter (vorher 42 unsichtbare Eintraege, 6 doppelte Nummern).
-- 11.10.: Verlaesst ein Ordner die interne Platte, dann kopieren, beide Seiten SHA-256-hashen, erst bei Gleichstand loeschen und Symlink setzen; exFAT speichert keine Symlinks (Notiz in .SYMLINKS.txt); eine leere Platte kann defekt sein (Schreibtest + SMART vor dem ersten Lauf). Werkzeug <code>archivieren</code>.</p></div>
+- 11.10.: Verlaesst ein Ordner die interne Platte, dann kopieren, beide Seiten SHA-256-hashen, erst bei Gleichstand loeschen und Symlink setzen; exFAT speichert keine Symlinks (Notiz in .SYMLINKS.txt); eine leere Platte kann defekt sein (Schreibtest + SMART vor dem ersten Lauf). Werkzeug <code>archivieren</code>.</p>
+<p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(29)</span></h2><details class="entry" id="archive-tier-copy-hash-both-sides-then-symlink"><summary><span class="type">Regel</span><span class="t"><a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Alita, /home zu 97 % voll; Werkzeug system/werkzeuge/archivieren, Archivstufe auf externer SSD (exFAT) · <a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md">Markdown</a></p><h2>Aussage</h2>
 <p>Wenn Daten die interne Platte <strong>verlassen</strong> (anderes Dateisystem, externer Traeger), reicht Umbenennen nicht mehr
@@ -1071,6 +1072,45 @@ Quelle.</p>
 <ul>
 <li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
 <li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+</ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="queue-jobs-inherit-the-supervisors-cgroup-limit"><summary><span class="type">Risiko</span><span class="t"><a href="risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html">Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span><span class="i">Trainings in der cgroup des Aufsehers: MemoryHigh drosselt, oomd toetet Aufseher samt Schlange, Restart=always wiederholt es alle 3 min; 30 Kills in 15 h</span></summary><div class="body"><p class="small muted">Herkunft: Alita, journalctl dauerlauf.service und systemd-oomd 2026-10-11 18:48 bis 2026-10-12 09:21, cgroup memory.pressure 09:50 · <a href="risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md">Markdown</a></p><h2>Aussage</h2>
+<p>Startet ein Dienst mit <code>MemoryHigh</code> (hier der Dauerlauf, 32 GiB) die
+Rechen-Warteschlange als Kindprozess, laufen alle Trainings in derselben
+cgroup. Braucht ein Training mehr (angemeldet 34 GiB, RSS 33 GiB), passiert
+nicht ein sauberer Abbruch, sondern eine Kette:</p>
+<ol>
+<li>Die cgroup haengt an <code>MemoryHigh</code>, der Kernel drosselt und raeumt
+   (memory.events <code>high</code> 444 665 mal).</li>
+<li>Das erzeugt Speicherdruck (memory.pressure 30-38 % im Leerlauf des Agenten).</li>
+<li><code>systemd-oomd</code> (Ubuntu-Vorgabe fuer <code>user@.service</code>: kill bei &gt; 50 % fuer
+   20 s) toetet die ganze Einheit, mit <code>KillMode=control-group</code> also auch
+   Schlange und Training: "Killed dauerlauf.service due to memory pressure
+   for user@1000.service being 74.52% &gt; 50.00%".</li>
+<li><code>Restart=always</code> startet den Aufseher nach 30 s neu, die Schlange nimmt das
+   Training von vorn: 25 Neustarts im 3-4-Minuten-Takt am 11.10. 18:48 bis
+   21:49, fuenf weitere am 12.10. 08:01 bis 09:21. Kein Lauf kam durch.</li>
+</ol>
+<p>Die Warteschlange hatte den Bedarf (34 GiB) gekannt und gegen den freien
+System-RAM geprueft (62 GiB) -- nicht gegen die Grenze der cgroup, in der
+sie selbst sitzt.</p>
+<h2>Traegt</h2>
+<p>Jede Aufseher-Dienst-Konstruktion mit cgroup-Grenzen, aus der heraus schwere
+Laeufe gestartet werden. Abhilfen, in dieser Reihenfolge: schwere Laeufe in
+eine eigene cgroup (<code>systemd-run --user --scope</code>), Bedarfspruefung gegen
+<code>memory.high</code> der eigenen cgroup, Grenze des Aufsehers nur fuer den
+Aufseher selbst.</p>
+<h2>Traegt nicht</h2>
+<p>Den kernel-OOM bei wirklich vollem RAM; der schlaegt unabhaengig von cgroup-
+Grenzen zu.</p>
+<h2>Bruchindikator</h2>
+<p><code>journalctl --user -u &lt;aufseher&gt;</code>: "systemd-oomd killed N process(es)",
+Restart-Zaehler steigt im Minutentakt; Staffelstab-Uebergaben ohne
+"zurueck"-Zeile (41 Uebergaben, 9 Rueckmeldungen in 7 Tagen).</p>
+<h2>Ablesung</h2>
+<p>Journal mit Datum, dauerlauf.log nur mit Uhrzeit; Druckwerte aus
+<code>/sys/fs/cgroup/.../dauerlauf.service/memory.pressure</code>.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/conditions-need-an-expiry-event.html">conditions-need-an-expiry-event</a></li>
 </ul></div></details></div></main>
 <footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

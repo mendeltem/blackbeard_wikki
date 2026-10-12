@@ -44,6 +44,17 @@
 "src": "knowledge/agent_coordination/rules/parallel-sessions-same-working-tree.md"
 },
 {
+"t": "Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide",
+"p": "agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html",
+"a": "agent_tooling",
+"y": "Risiko",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "Trainings in der cgroup des Aufsehers: MemoryHigh drosselt, oomd toetet Aufseher samt Schlange, Restart=always wiederholt es alle 3 min; 30 Kills in 15 h",
+"id": "queue-jobs-inherit-the-supervisors-cgroup-limit",
+"src": "knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md"
+},
+{
 "t": "Agenten-Werkzeuge nach Aufgabenform schneiden, nicht nach der API dahinter",
 "p": "agent_tooling/rules/agent-tools-by-task-shape.html",
 "a": "agent_tooling",
