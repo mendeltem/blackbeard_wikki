@@ -1,0 +1,132 @@
+{
+  "id": "synth_a.nii",
+  "cohort": "synth",
+  "shape": [
+    64,
+    72,
+    40
+  ],
+  "vox_mm3": 0.25,
+  "iou_threshold": 0.5,
+  "n_ref": 3,
+  "n_pred": 3,
+  "stats": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 1,
+    "n": 3,
+    "dice": 0.6667,
+    "ref_ml": 0.025,
+    "pred_ml": 0.025
+  },
+  "findings": [
+    {
+      "bounding_box": [
+        18,
+        28,
+        13,
+        22,
+        32,
+        17
+      ],
+      "centroid_voxel_image": [
+        20.0,
+        30.0,
+        15.0
+      ],
+      "centroid_voxel_patient": [
+        10.0,
+        15.0,
+        15.0
+      ],
+      "volume_voxels": 33,
+      "n_slices": 5,
+      "id": "pred-1",
+      "source": "prediction",
+      "label": "TP",
+      "iou_with_ref": 1.0,
+      "paired_ref_id": "ref-1"
+    },
+    {
+      "bounding_box": [
+        38,
+        38,
+        20,
+        42,
+        42,
+        24
+      ],
+      "centroid_voxel_image": [
+        40.0,
+        40.0,
+        22.0
+      ],
+      "centroid_voxel_patient": [
+        20.0,
+        20.0,
+        22.0
+      ],
+      "volume_voxels": 33,
+      "n_slices": 5,
+      "id": "pred-2",
+      "source": "prediction",
+      "label": "TP",
+      "iou_with_ref": 1.0,
+      "paired_ref_id": "ref-3"
+    },
+    {
+      "bounding_box": [
+        42,
+        18,
+        10,
+        46,
+        22,
+        14
+      ],
+      "centroid_voxel_image": [
+        44.0,
+        20.0,
+        12.0
+      ],
+      "centroid_voxel_patient": [
+        22.0,
+        10.0,
+        12.0
+      ],
+      "volume_voxels": 33,
+      "n_slices": 5,
+      "id": "pred-3",
+      "source": "prediction",
+      "label": "FP",
+      "iou_with_ref": 0.0,
+      "paired_ref_id": null
+    },
+    {
+      "bounding_box": [
+        28,
+        48,
+        26,
+        32,
+        52,
+        30
+      ],
+      "centroid_voxel_image": [
+        30.0,
+        50.0,
+        28.0
+      ],
+      "centroid_voxel_patient": [
+        15.0,
+        25.0,
+        28.0
+      ],
+      "volume_voxels": 33,
+      "n_slices": 5,
+      "id": "ref-2",
+      "source": "reference",
+      "label": "FN",
+      "iou_with_ref": 0.0,
+      "paired_pred_id": null
+    }
+  ]
+}

@@ -18,3 +18,5 @@ Offen: den Generator als Tool mit Test einstellen.
 **Regel, neu 2026-10-12:** Jede Zahl auf einer QC-Seite erklaert sich beim Hovern (title= mit Software, Version, Rechenweg, Label-Menge), dazu ein Knopf "? Methods" (Taste M) mit Overlay aller Texte, Bauzeitpunkt und Wiki-Link; fehlende Werte nennen Grund und Stand ("recon-all not finished, 31 of 63 sessions"), die Zahlen setzt der Generator ein. Langfassung fuer DEMDAS-GM als englischer Befund.
 
 **Regeln, neu 2026-10-12 (nachmittags):** Striche unter dem Schichtregler zeigen, wo Funde liegen (N/P springen); der lokale Spiegel ~/QUALITY_CONTROLL ist die Quelle des Sticks (sync, cmp, lsof vor dem Abziehen).
+
+**Pruefpunkt, neu 2026-10-12 (16 Uhr):** Index und Sprites einer Seite nur gemeinsam kopieren (rsync des ganzen Ordners); bunter Streifen am Bildrand = Kachelraster passt nicht zur Sprite-Groesse, nicht die Segmentierung. Pruefung: qc_mirror_check.py (Bau, Spiegel, Stick).

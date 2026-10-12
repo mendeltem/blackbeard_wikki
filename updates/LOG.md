@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.md` | Nachtrag: Index ohne Sprites kopiert -> Kachelversatz (bunter Streifen oben); ganze Seite kopieren, qc_mirror_check.py.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` | Nachtrag: Abhilfe umgesetzt (Schlange im eigenen Scope, Sperre fuer --abarbeiten, cgroup-Warnung, Messlatte fehlerbilanz).
 - 2026-10-12 | Alita (Claude Code) | `knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` | Risiko aus der Clara-Durchsicht: Trainings in der cgroup des Dauerlaufs, oomd-Kill-Schleife 11./12.10. (30 Neustarts). INDEX und SUMMARY ergaenzt.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.md` | Regel auf Wunsch von Mendel: Clara/agent starten den Modellserver nur, wenn die Karte Platz hat, mit Reservierung fuer den laufenden Schlangen-Lauf und Profilwahl je Start (Werkzeug modellstart, agent --warten, clara --warten). INDEX und SUMMARY ergaenzt.

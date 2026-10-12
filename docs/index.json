@@ -2206,7 +2206,7 @@
 "y": "Regel",
 "s": "getragen",
 "d": "2026-10-12",
-"x": "~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; vor dem Abziehen sync, cmp, lsof",
+"x": "~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; ganze Seite kopieren (Index + Sprites), qc_mirror_check.py, vor dem Abziehen sync, cmp, lsof",
 "id": "the-local-mirror-is-the-source-of-the-qc-stick",
 "src": "knowledge/mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.md"
 },
