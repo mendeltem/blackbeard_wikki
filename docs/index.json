@@ -2057,6 +2057,17 @@
 "src": "knowledge/model_capability_cost/rules/benchmarks-from-one-hand.md"
 },
 {
+"t": "DEMDAS GM QC page: how every number is computed (English, link target of the page's \"? Methods\" overlay)",
+"p": "mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.html",
+"a": "mri_qc_viewers",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0",
+"id": "demdas-gm-qc-page-how-every-number-is-computed",
+"src": "knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.md"
+},
+{
 "t": "Den Schichtbetrachter als Tool unter tools/mri/ einstellen",
 "p": "mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.html",
 "a": "mri_qc_viewers",
@@ -2088,6 +2099,17 @@
 "x": "Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen",
 "id": "qc-pages-english-sessions-in-one-window",
 "src": "knowledge/mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.md"
+},
+{
+"t": "Jede Zahl auf einer QC-Seite erklaert sich beim Hovern: Software, Rechenweg, Label-Menge",
+"p": "mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Jede Zahl erklaert sich beim Hovern (Software, Rechenweg, Label-Menge); Knopf \"? Methods\" mit Overlay und Wiki-Link; fehlende Werte nennen Grund und Stand; Texte im Generator",
+"id": "qc-pages-explain-every-number-on-hover",
+"src": "knowledge/mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.md"
 },
 {
 "t": "Setzungen fuer eine QC-Seite: Referenz blau, Proband links/rechts, F1 je Fall, Klick zeigt die Werte",

@@ -43,12 +43,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
-<div class="stripe"><i class="ok" style="width:75.0%" title="getragen: 3"></i><i class="info" style="width:25.0%" title="offen: 1"></i></div><div class="counts"><span class="ok">3 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+<div class="stripe"><i class="ok" style="width:83.3%" title="getragen: 5"></i><i class="info" style="width:16.7%" title="offen: 1"></i></div><div class="counts"><span class="ok">5 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
 die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
 wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
 Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
-<p>Stand 2026-10-11. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-11. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-12. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Wie eine QC-Seite fuer Laesionsdetektion gebaut wird, damit Mendel sie benutzt: Einzeldatei-HTML,
 links die Referenz, rechts dieselbe Schicht mit schaltbaren Modell-Umrissen; Referenz <strong>blau</strong>,
 Modellfarben meiden das Blau; Pfeil hoch/runter = Proband, links/rechts = Schicht; Klick auf eine
@@ -57,9 +57,43 @@ Angeklickte wechselt die Farbe; alles Englisch; Datei heisst <code>quality_contr
 Offen: den Generator als Tool mit Test einstellen.</p>
 <p><strong>Lesen bei:</strong> QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme ansehen, Laesionen zaehlen.</p>
 <p><strong>Regel, neu 2026-10-08:</strong> Qualitaetskontrolle fuer eine neue Laesionsart wird in fester Reihenfolge gebaut, nie von null: Lader statt neuer Seite; ohne Referenz heisst die Maske Vergleich und die Zaehler Uebereinstimmung, gepoolt gleich dem Messskript; ein Modell in Urteilsfarben, mehrere in Modellfarben; jede anatomische Regel als eigene Ebenen vor der Kette; je Fund das Warum mit Nachbarschichten; Rating als eigene verblindete Seite mit sofortigem Speichern; Patientendaten nur auf 127.0.0.1; Pruefung headless und gegen das Messskript; Vorlesung als eigenes Artefakt. Der PVS-Betrachter fuer 73 Faelle entstand so in einer Stunde.</p>
-<p><strong>Regel, neu 2026-10-11:</strong> Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Offen: Excel-Spalten des GM-Beispiels noch deutsch.</p></div>
+<p><strong>Regel, neu 2026-10-11:</strong> Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Offen: Excel-Spalten des GM-Beispiels noch deutsch.</p>
+<p><strong>Regel, neu 2026-10-12:</strong> Jede Zahl auf einer QC-Seite erklaert sich beim Hovern (title= mit Software, Version, Rechenweg, Label-Menge), dazu ein Knopf "? Methods" (Taste M) mit Overlay aller Texte, Bauzeitpunkt und Wiki-Link; fehlende Werte nennen Grund und Stand ("recon-all not finished, 31 of 63 sessions"), die Zahlen setzt der Generator ein. Langfassung fuer DEMDAS-GM als englischer Befund.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="qc-pages-english-sessions-in-one-window"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-pages-english-sessions-in-one-window.html">Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerentscheidung 11.10.2026 zum QC-Stick (QUALITY_CONTROLL/): &quot;alles auf Englisch, jede Qualitaetskontrolle&quot;; Wunsch zum DEMDAS-GM-Betrachter &quot;M0, M6 ... in einem Fenster wechseln&quot; · <a href="rules/qc-pages-english-sessions-in-one-window.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(4)</span></h2><details class="entry" id="qc-pages-explain-every-number-on-hover"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-pages-explain-every-number-on-hover.html">Jede Zahl auf einer QC-Seite erklaert sich beim Hovern: Software, Rechenweg, Label-Menge</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Jede Zahl erklaert sich beim Hovern (Software, Rechenweg, Label-Menge); Knopf &quot;? Methods&quot; mit Overlay und Wiki-Link; fehlende Werte nennen Grund und Stand; Texte im Generator</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 zum DEMDAS-GM-Betrachter: &quot;kannst du die Software alle sagen, wie das alles berechnet worden ist, in der Wiki, wenn man darueber hovert?&quot; · <a href="rules/qc-pages-explain-every-number-on-hover.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li><strong>Jede Zeilenbeschriftung</strong> mit einer Zahl traegt ein <code>title=</code> (Hover) mit Software und Version, Eingabe,
+   Rechenweg und, bei Aggregaten, der genauen Label-Menge. Sichtbar durch gepunktete Unterstreichung
+   (<code>.hilf{border-bottom:1px dotted;cursor:help}</code>).</li>
+<li><strong>Ein Knopf "? Methods"</strong> (Taste M, Esc schliesst) oeffnet ein Overlay mit allen Texten in fester
+   Reihenfolge, dem Bauzeitpunkt, dem Generator und einem Link auf die Langfassung im Wiki (Hinweis
+   "internal wiki, needs access", denn das Repo ist privat). Die Seite muss ohne den Link vollstaendig sein.</li>
+<li><strong>Fehlende Werte nennen den Grund und den Stand</strong>, nicht nur "not computed yet": z. B.
+   "FreeSurfer recon-all has not finished for this session (31 of 63 sessions finished when this page was built,
+   about 1 h per session; the rest are queued and the page is rebuilt automatically)". Die Zahlen setzt der
+   Generator beim Bau ein, nie von Hand.</li>
+<li><strong>Die Texte leben im Generator</strong> (<code>methoden()</code>-Woerterbuch in gm_qc_axial.py, neben dem Code, der die
+   Zahlen rechnet), werden als JSON in die Seite eingesetzt und beim Rendern HTML-escaped. Englisch wie die Seite.</li>
+<li>Was die Anzeige veraendert, ohne die Zahlen zu veraendern (Ausrichtung der Folgesitzungen auf M0), steht
+   als eigene Zeile im Sitzungs-Panel ("Aligned to M0, overlap 0.99") mit Hover-Erklaerung.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jede QC-Seite mit Zahlen (Volumina, Dicken, F1, Zaehler), die an Dritte geht; jeden Generator unter
+mri_qc_viewers. Pruefung: headless rendern, im DOM <code>class=hilf</code> und die <code>&lt;dt&gt;</code>-Liste des Overlays nachsehen.</p>
+<h2>Traegt nicht</h2>
+<p>Reine Bildbetrachter ohne Zahlen; Eingabetabellen (Excel) -- dort steht die Methode im Blatt Lies_mich.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Zahl auf einer Stick-Seite, deren Beschriftung keinen Hover-Text hat, oder ein Generator, dessen
+Rechenweg sich geaendert hat, waehrend der Hover-Text den alten beschreibt.</p>
+<h2>Ablesung</h2>
+<p>Umgesetzt 12.10.2026 09:10-09:15 auf Alita (gm_qc_axial.py, Stick aktualisiert, headless geprueft:
+19 Overlay-Eintraege, Hover an allen Zeilen des linken Panels).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">demdas-gm-qc-page-how-every-number-is-computed</a></li>
+<li><a href="rules/qc-pages-english-sessions-in-one-window.html">qc-pages-english-sessions-in-one-window</a></li>
+<li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
+</ul></div></details><details class="entry" id="qc-pages-english-sessions-in-one-window"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-pages-english-sessions-in-one-window.html">Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerentscheidung 11.10.2026 zum QC-Stick (QUALITY_CONTROLL/): &quot;alles auf Englisch, jede Qualitaetskontrolle&quot;; Wunsch zum DEMDAS-GM-Betrachter &quot;M0, M6 ... in einem Fenster wechseln&quot; · <a href="rules/qc-pages-english-sessions-in-one-window.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-pages-english-sessions-in-one-window.md">Markdown</a></p><h2>Aussage</h2>
 <ol>
 <li><strong>Alle QC-Seiten sind Englisch</strong>, nicht nur die Schichtbetrachter: auch der Stick-Index,
    Volumetrie-Verlaufsseiten mit ihren Plots (Achsen, Legenden, Titel), NiiVue-Seiten, Rating-Hinweise
@@ -211,7 +245,69 @@ verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our mode
 links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).
 Modellname kurz (<code>our-3D-U-Net</code>), keine Leerzeichen (Dateinamen der Ebenen).
 Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, <code>slices/</code> und Startseite) zeigt seit
-2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
+2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="demdas-gm-qc-page-how-every-number-is-computed"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">DEMDAS GM QC page: how every number is computed (English, link target of the page&#x27;s &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM example (Alita, demdas-gm/gm_beispiel.py, gm_qc_axial.py, recon_alle.sh), user request 12.10.2026 &quot;say for every number which software computed it and how&quot; · <a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.md">Markdown</a></p><h2>Aussage</h2>
+<p>This is the long form of the texts that the DEMDAS GM viewer (<code>QUALITY_CONTROLL/DEMDAS/gm_beispiel_qc/index.html</code>)
+shows on hover and in its Methods overlay. Written in English on purpose: the page goes to third parties.
+No patient data here, only methods. Software versions as installed on Alita on 2026-10-12.</p>
+<p><strong>Input image.</strong> 3D T1-weighted MPRAGE, about 1 mm isotropic, one per session. <code>run-2</code> (distortion-corrected)
+is used when present, otherwise the ND image. No bias correction and no skull stripping before segmentation.</p>
+<p><strong>Segmentation.</strong> FreeSurfer 8.2.0 (<code>freesurfer-linux-ubuntu24_x86_64-8.2.0-20260314-d932c45</code>)
+<code>mri_synthseg --parc --robust --vol --qc --cpu</code>, every session on its own (no longitudinal coupling).
+Output: aseg structures plus Desikan-Killiany cortical parcellation on a 1 mm isotropic grid.
+Volumes = label voxel count x voxel volume, in ml.</p>
+<p><strong>RAW / INFARCT EXCLUDED.</strong> RAW = every voxel carrying the label, as SynthSeg produced it.
+INFARCT EXCLUDED = the same after removing every voxel inside the infarct mask.</p>
+<p><strong>Infarct.</strong> DeepISLES (<code>isles22_ensemble</code>) on DWI + ADC + FLAIR of the same session, computed in DWI space.
+DWI rigidly registered to the T1 (FSL FLIRT, 6 dof, normalised mutual information); the mask is resampled
+trilinearly to the SynthSeg grid and thresholded at 0.5. In follow-up sessions the DWI is usually negative, so
+the chronic infarct is often absent there (a chronic-infarct model on T1/FLAIR is to follow).
+Infarct side (from M0): infarct voxels inside left- vs right-hemisphere labels; left if left &gt; 2 x right and</p>
+<blockquote>
+<p>0.1 ml, right analogously, both otherwise, none below 0.1 ml in total.</p>
+</blockquote>
+<p><strong>SynthSeg QC.</strong> Minimum over the per-structure quality scores predicted by <code>mri_synthseg --qc</code> (0 to 1).
+Below about 0.65: inspect.</p>
+<p><strong>Aggregates (label sets).</strong>
+- Grey matter total = cortex (1000-1035, 2000-2035, plus 3 and 42) + subcortical GM (10-13, 17, 18, 26, 28,
+  49-54, 58, 60) + cerebellar cortex (8, 47).
+- White matter = 2, 41 (cerebral) + 7, 46 (cerebellar) + 16 (brain stem).
+- CSF / ventricles = 4, 43, 5, 44, 14, 15, 24.
+- Whole brain (GM+WM) = grey matter total + white matter; ventricles not included.
+- ICV = "total intracranial" from the <code>--vol</code> table (SynthSeg's own estimate), identical in RAW and EXCLUDED.
+- Brain / ICV (%) = 100 x whole brain / ICV.</p>
+<p><strong>WMH (3D U-Net).</strong> In-house 3D U-Net (architecture a12), ensemble of the five cross-validation fold models
+trained on 311 manually labelled cases (CV Dice 0.71), probability threshold 0.5, native space, FLAIR (+T1).
+Not part of SynthSeg. "-" = not computed for that session.</p>
+<p><strong>Cortical thickness.</strong> FreeSurfer 8.2.0 <code>recon-all -all -openmp 4</code>, cross-sectional (each session alone), on
+the same T1. Thickness = distance between white and pial surface at every vertex, averaged per Desikan-Killiany
+region (<code>ThickAvg</code> in <code>lh/rh.aparc.stats</code>); "Mean thickness" is FreeSurfer's cortex-wide mean. Displayed value
+= (left + right) / 2, unweighted. "not computed yet" = recon-all has not finished for that session; the page
+states how many sessions were finished at build time (31 of 63 on 2026-10-12; about 1 h per session, 17-28 GB
+RAM peak, 30 runs were OOM-killed on 11.10. and are queued again; <code>dicke_nachbau.sh</code> rebuilds the page and
+copies it to the stick whenever new sessions finish).</p>
+<p><strong>Structures (right panel).</strong> Volume of every single SynthSeg label, RAW and EXCLUDED; colour = FreeSurferColorLUT.</p>
+<p><strong>Image alignment between sessions (display only).</strong> Follow-up sessions are rigidly aligned (FLIRT, 6 dof,
+normalised mutual information, brain-masked T1) to the participant's first segmented session; labels and infarct
+nearest-neighbour. The panel shows the Dice overlap of the two brain masks (0.982-0.990 for all 40 follow-ups).
+Volumes are not affected: they come from each session's native segmentation.</p>
+<h2>Traegt</h2>
+<p>Reading the DEMDAS GM page and the Excel table <code>DEMDAS_GM_Beispiel.xlsx</code> (sheets Fokus, Volumen_ROH,
+Volumen_OHNE_INFARKT, QC, WMH_3D_UNet). Any question "which software produced this number".</p>
+<h2>Traegt nicht</h2>
+<p>Validity of the numbers (no reference segmentation on DEMDAS); the chronic infarct in follow-ups is missing
+by construction; thickness hemispheric mean is unweighted.</p>
+<h2>Bruchindikator</h2>
+<p>A generator change (gm_beispiel.py, gm_qc_axial.py, recon_alle.sh) that is not mirrored here and in the
+page's <code>methoden()</code> dictionary; a FreeSurfer or DeepISLES update.</p>
+<h2>Ablesung</h2>
+<p>Code read 2026-10-12: <code>demdas-gm/gm_beispiel.py</code> (segmentieren, infarkt, volumen, icv, qcwert, wmh_tabelle),
+<code>gm_qc_axial.py</code> (auf_referenz, dicke, methoden), <code>recon_alle.sh</code>; <code>freesurfer/8.2.0/build-stamp.txt</code>;
+<code>derivatives/demdas/infarkt/*/lauf.json</code> (werkzeug = DeepISLES isles22_ensemble).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
+<li><a href="rules/qc-pages-english-sessions-in-one-window.html">qc-pages-english-sessions-in-one-window</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
 <p><code>cmb/review/build_slice_viewer.py</code> (Projekt valdo-t2s, englischer Code, keine Daten) erzeugt die
 QC-Seite aus Manifest, Wahrscheinlichkeitskarten und optionaler Gewebekarte. Fuer die Wiki fehlt
 ein Tool-Ordner nach <code>templates/tool/</code> mit README, INSTALL, einem Test auf synthetischen Volumen
