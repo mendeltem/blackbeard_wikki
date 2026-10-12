@@ -1056,6 +1056,17 @@
 "src": "knowledge/cmb_detection/rules/patches-not-whole-images-for-small-lesions.md"
 },
 {
+"t": "Faelle ohne Referenzlaesion (Gesunde) werden getrennt berichtet: Fehlalarme je Fall und Fall-Spezifitaet, kein F1",
+"p": "cmb_detection/rules/report-healthy-controls-separately.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Faelle ohne Referenzlaesion getrennt: FP je Fall und Fall-Spezifitaet statt F1; Fallmittel nur ueber Laesionsfaelle; eigene Gruppe in der Fallliste",
+"id": "report-healthy-controls-separately",
+"src": "knowledge/cmb_detection/rules/report-healthy-controls-separately.md"
+},
+{
 "t": "Effekte unter dem Startwert-Rauschen gelten nur mit zweitem Startwert",
 "p": "cmb_detection/rules/two-seeds-per-decision-below-0.08.html",
 "a": "cmb_detection",

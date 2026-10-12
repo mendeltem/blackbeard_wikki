@@ -9,7 +9,7 @@ Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
 Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html
 
-Stand 2026-10-07. Ein Eintrag je Datei.
+Stand 2026-10-12. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
@@ -23,6 +23,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | befund | [training-loss-does-not-rank-networks-or-schedules](findings/training-loss-does-not-rank-networks-or-schedules.md) | Verlustkurven von 16 Turnierlaeufen: gleicher Verlust bei F1 0,176 gegen 0,404; 90/120 Epochen senken den Verlust, nicht den Out-of-fold-Wert; Fruehstopp feuert auf Rauschen |
 | befund | [full-data-last-state-models-run-hotter](findings/full-data-last-state-models-run-hotter.md) | Vollmodell ohne inneren Checkpoint: Wahrscheinlichkeiten verschoben, feste Schwelle 0,3 auf fremdem Scanner 0,415 statt 0,622; kreuzgewaehlt gleichauf; zweite Stufe faengt es ab (0,604) |
 | befund | [training-geometry-must-cover-target-geometry](findings/training-geometry-must-cover-target-geometry.md) | Leave-one-cohort-out T2*: 4-mm-Kohorte ersetzbar (gleich), 0,8-mm-Kohorte nicht (0,295 gegen 0,641), 5 mm ohne sich selbst 0,336; Fallzahl anderer Geometrie ersetzt die Zielgeometrie nicht |
+| regel | [report-healthy-controls-separately](rules/report-healthy-controls-separately.md) | Faelle ohne Referenzlaesion getrennt: FP je Fall und Fall-Spezifitaet statt F1; Fallmittel nur ueber Laesionsfaelle; eigene Gruppe in der Fallliste |
 | regel | [patches-not-whole-images-for-small-lesions](rules/patches-not-whole-images-for-small-lesions.md) | Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept |
 | regel | [two-seeds-per-decision-below-0.08](rules/two-seeds-per-decision-below-0.08.md) | Startwert-Rauschen eines U-Net-Trainings ~0,08 F1; kleinere Effekte brauchen zweiten Startwert |
 

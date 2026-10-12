@@ -135,3 +135,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-11 | Claude Code | `knowledge/memory_supply/` | Regel: eigene Darstellung ist keine Quelle (Supply_Atlas3D-Waferzahlen sind Modellschaetzung); Pruefpunkt dram-wafer-capacity-by-fab um fehlende Werke und Warnung ergaenzt.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel: jede Zahl einer QC-Seite erklaert sich beim Hovern + Methods-Overlay; Befund (Englisch): Rechenweg jeder Zahl des DEMDAS-GM-Betrachters.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/brain_volumetry/` | Neuer Bereich; Regel: jede Verlaufs-Volumetrie bekommt eine Fehlerseite (Test-Retest SDC95/ICC, Residuen, Nachweisbarkeit, Ausfall/QC); Laesionsausschluss nur mit Maske in allen Sitzungen.
+- 2026-10-12 | Alita (Claude Code) | `knowledge/cmb_detection/` | Regel: Gesunde getrennt berichten (FP je Fall, Fall-Spezifitaet, kein F1); Betrachter-Generator und vier Stick-Seiten umgestellt.

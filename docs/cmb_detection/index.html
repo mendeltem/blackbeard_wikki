@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT</p>
-<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 12"></i></div><div class="counts"><span class="ok">12 getragen</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 13"></i></div><div class="counts"><span class="ok">13 getragen</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
 Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
 Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
 gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
@@ -51,7 +51,7 @@ Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
 (Sundaresan et al. 2023, doi:10.3389/fninf.2023.1204186). Keine Zahlen eigener
 Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
-<p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
+<p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Mikroblutungen auf T2*/SWI automatisch zaehlen. Oeffentliche Messlatte VALDO 2021 Task 2
 (72 Faelle, drei Kohorten, 0,8 bis 4 mm Schichten), Mass Laesions-F1 gepaart mit Bootstrap.</p>
@@ -93,9 +93,35 @@ Randschale; SynthSeg liefert dafuer lautlos ein leeres Bild bei Rueckgabewert 0.
 Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p>
 <p><strong>Uebertragbar:</strong> die projektfreie Fassung dieser Lektionen steht in
 <a href="../lesion_detection_method/index.html#kurzstand">lesion_detection_method</a>.</p>
-<p><strong>Nachtrag 2026-10-08 zur Liquor-Regel:</strong> im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.</p></div>
+<p><strong>Nachtrag 2026-10-08 zur Liquor-Regel:</strong> im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.</p>
+<p><strong>Regel, neu 2026-10-12:</strong> Gesunde (keine Referenzlaesion) getrennt berichten: FP je Fall und Fall-Spezifitaet, kein F1; das F1-Fallmittel nur ueber Laesionsfaelle (Betrachter-Generator umgestellt, Stick-Seiten neu).</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="patches-not-whole-images-for-small-lesions"><summary><span class="type">Regel</span><span class="t"><a href="rules/patches-not-whole-images-for-small-lesions.html">Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), Dosisreihe Patchgroesse (ARBEIT.md 5t) und Messungen 2026-10-07 · <a href="rules/patches-not-whole-images-for-small-lesions.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/patches-not-whole-images-for-small-lesions.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="report-healthy-controls-separately"><summary><span class="type">Regel</span><span class="t"><a href="rules/report-healthy-controls-separately.html">Faelle ohne Referenzlaesion (Gesunde) werden getrennt berichtet: Fehlalarme je Fall und Fall-Spezifitaet, kein F1</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Faelle ohne Referenzlaesion getrennt: FP je Fall und Fall-Spezifitaet statt F1; Fallmittel nur ueber Laesionsfaelle; eigene Gruppe in der Fallliste</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 am T2*-Betrachter (Stick CMB_qc): &quot;man muss die Gesunden getrennt rechnen&quot; · <a href="rules/report-healthy-controls-separately.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/report-healthy-controls-separately.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Fall ohne Referenzlaesion hat kein F1: mit einem Fehlalarm ist es 0, ohne Fehlalarm undefiniert. Wer Gesunde
+in ein "F1 je Fall, Mittel" mischt, zieht die Zahl nach unten und sagt nichts ueber die Erkennung. Deshalb:
+1. <strong>Zwei Gruppen</strong> in jeder Zusammenfassung und Fallliste: Faelle mit Referenzlaesionen (F1 je Fall, Mittel;
+   gepooltes F1; FP je Fall) und Gesunde (FP je Fall; Anteil mit &gt;= 1 Fehlalarm; Fall-Spezifitaet = Anteil ohne Fehlalarm).
+2. Das <strong>gepoolte F1 ueber alle Faelle</strong> darf zusaetzlich stehen (die Fehlalarme der Gesunden sind echte Fehlalarme),
+   aber mit Angabe, dass es beide Gruppen enthaelt.
+3. In der Fallliste bekommen Gesunde eine eigene Ueberschrift und zeigen nur "FP n" oder "clean"; die Kopfzeile sagt
+   "healthy control", nicht "F1 0.00".
+4. Fuer Berichte und Paper: F1-Mittel je Fall nur ueber Laesionsfaelle; Gesunde als Spezifitaetszahl daneben.</p>
+<p>Umgesetzt im Generator <code>cmb/review/build_slice_viewer.py</code> (summary(), buildList(), Kopfzeile), 12.10.2026; alle vier
+Stick-Seiten per <code>--refresh-html</code> neu gebaut. Beispielhafte Wirkung (eigene Kohorten, nur Richtung): das Fallmittel
+stieg von 0,37 bzw. 0,47 (mit Gesunden) auf 0,63 bzw. 0,64 (nur Laesionsfaelle); das gepoolte F1 aenderte sich kaum.</p>
+<h2>Traegt</h2>
+<p>Jede Laesionsdetektion mit Kontrollfaellen (CMB, PVS, WMH-Null-Faelle); jede QC-Seite und jede Tabelle mit "F1 je Fall".</p>
+<h2>Traegt nicht</h2>
+<p>Datensaetze ohne Kontrollfaelle (VALDO Task 2 hat in jedem Fall Blutungen); voxelweise Dice-Masse.</p>
+<h2>Bruchindikator</h2>
+<p>Eine Seite oder Tabelle, in der ein Fall mit "Ref 0" ein F1 traegt oder in ein Fallmittel eingeht.</p>
+<h2>Ablesung</h2>
+<p>Nutzer am Stick-Betrachter 12.10.2026 09:48 (Screenshot), Generator-Aenderung und Neubau 12.10. 10:40-10:50.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
+<li><a href="../mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.html">qc-build-order-for-a-new-lesion-type</a></li>
+</ul></div></details><details class="entry" id="patches-not-whole-images-for-small-lesions"><summary><span class="type">Regel</span><span class="t"><a href="rules/patches-not-whole-images-for-small-lesions.html">Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), Dosisreihe Patchgroesse (ARBEIT.md 5t) und Messungen 2026-10-07 · <a href="rules/patches-not-whole-images-for-small-lesions.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/patches-not-whole-images-for-small-lesions.md">Markdown</a></p><h2>Aussage</h2>
 <p>Beide Netze der CMB-Kette sehen nur Ausschnitte. U-Net: Patches 38 x 62 x 94 Voxel auf dem
 0,5 x 0,5 x 1-mm-Gitter (38 x 31 x 47 mm), 800 je Epoche, 60 % um eine Laesion an zufaelliger
 Stelle; Vorhersage mit Schiebefenster derselben Groesse, halber Versatz, Ueberlappung gemittelt
