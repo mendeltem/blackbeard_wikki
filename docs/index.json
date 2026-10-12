@@ -1639,6 +1639,17 @@
 "src": "knowledge/local_llm_operation/rules/foreign-gpu-process-before-measuring.md"
 },
 {
+"t": "Der Modellserver startet nur, wenn die Karte Platz hat, und mit dem Profil, das jetzt passt",
+"p": "local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "Modellserver nur starten, wenn die Karte Platz hat: Sperre, freier VRAM minus angemeldeter Bedarf des laufenden Laufs, Profil fuer diesen Start; passt nichts, rc 3 statt wartender Dienst",
+"id": "model-server-start-checks-card-and-picks-profile",
+"src": "knowledge/local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.md"
+},
+{
 "t": "Prefill und Decode getrennt messen, nie ueber die Wanduhr",
 "p": "local_llm_operation/rules/separate-prefill-from-decode.html",
 "a": "local_llm_operation",
@@ -2557,7 +2568,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -2568,7 +2579,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -2579,7 +2590,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -2601,7 +2612,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -2612,7 +2623,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -2623,7 +2634,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -2634,7 +2645,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-06",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -2645,7 +2656,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -2656,7 +2667,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -2667,7 +2678,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -2678,7 +2689,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -2689,7 +2700,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -2700,7 +2711,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -2711,7 +2722,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

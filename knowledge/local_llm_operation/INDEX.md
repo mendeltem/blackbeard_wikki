@@ -40,6 +40,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | pruefpunkt | [local-stack-landscape-2026-10](open_checks/local-stack-landscape-2026-10.md) | Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen |
 | befund | [decider-4b-matches-knn-on-60-routing-cases](findings/decider-4b-matches-knn-on-60-routing-cases.md) | decider-4b Q4 auf CPU 50/60 gegen kNN 49/60 auf dem Embedding-Server; ab p 0,8 21/21; deutsch besser als englisch; Vorsprung ist Rauschen, Konfidenz ist der Gewinn |
 | pruefpunkt | [decision-model-as-profile-orchestrator](open_checks/decision-model-as-profile-orchestrator.md) | Laya/Jev/Arch-Router als Weiche: nur zwischen residenten Zielen (klein/gross/Cloud), nie je Anfrage zwischen exklusiven Profilen; Laya zero-shot 0,36, erst gegen kNN messen |
+| regel | [model-server-start-checks-card-and-picks-profile](rules/model-server-start-checks-card-and-picks-profile.md) | Modellserver nur starten, wenn die Karte Platz hat: Sperre, freier VRAM minus angemeldeter Bedarf des laufenden Laufs, Profil fuer diesen Start; passt nichts, rc 3 statt wartender Dienst |
 
 ## Werkzeuge dazu
 

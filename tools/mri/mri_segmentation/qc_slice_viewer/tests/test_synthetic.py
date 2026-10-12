@@ -48,8 +48,10 @@ def test_counts_and_pages():
         for c in data:
             s = c["stats"]["model"]
             assert (s["tp"], s["fp"], s["fn"]) == (2, 1, 1), s
+            assert abs(s["dice"] - 2 / 3) < 1e-3, s   # 3 equal spheres in ref, 2 hit + 1 false alarm in pred: 2*2N / 6N
             assert c["n_ref"] == 3 and len(c["tiles"]) > 0
         assert "Reference (blue)" in html and "synthetic model" in html
+        assert "Dice mean" in html and "lesion F1 mean" in html
         # verdict mode and comparison wording
         data_v, html_v = run(mp, os.path.join(d, "out_v"), ["--verdict"])
         assert os.path.exists(os.path.join(d, "out_v", "img", "case-a_TP.png")) and "by verdict" in html_v
@@ -61,6 +63,7 @@ def test_counts_and_pages():
         json.dump(m, open(mp, "w"))
         data_m, _ = run(mp, os.path.join(d, "out_m"))
         assert data_m[0]["stats"]["maskrun"]["tp"] == 3 and data_m[1]["n_ref"] == 0
+        assert data_m[0]["stats"]["maskrun"]["dice"] == 1.0
 
 
 if __name__ == "__main__":
