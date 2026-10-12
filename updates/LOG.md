@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-12 | Alita (Claude Code) | `knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` | Nachtrag: Abhilfe umgesetzt (Schlange im eigenen Scope, Sperre fuer --abarbeiten, cgroup-Warnung, Messlatte fehlerbilanz).
 - 2026-10-12 | Alita (Claude Code) | `knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` | Risiko aus der Clara-Durchsicht: Trainings in der cgroup des Dauerlaufs, oomd-Kill-Schleife 11./12.10. (30 Neustarts). INDEX und SUMMARY ergaenzt.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.md` | Regel auf Wunsch von Mendel: Clara/agent starten den Modellserver nur, wenn die Karte Platz hat, mit Reservierung fuer den laufenden Schlangen-Lauf und Profilwahl je Start (Werkzeug modellstart, agent --warten, clara --warten). INDEX und SUMMARY ergaenzt.
 - 2026-10-12 | Projekt Sentiment-Briefing AI/DRAM (Claude, Cloud) | `knowledge/news_sentiment_volatility/` | Bereich angelegt auf Wunsch von Mendel: 4 Befunde aus dem 2-Jahres-Backtest (Ton ohne Signal, Nachrichtenmenge schwach, Uebertreibungsthese nicht repliziert, FinBERT-Vorzeichen bei Speicherpreisen), 3 Regeln (KRX-Zeitzuordnung, vorlaeufige KRX-Zeile, Reliabilitaet nicht in derselben Sitzung), 1 Pruefpunkt mit den vorab festgelegten Hypothesen.

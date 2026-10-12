@@ -38,6 +38,15 @@ eine eigene cgroup (`systemd-run --user --scope`), Bedarfspruefung gegen
 `memory.high` der eigenen cgroup, Grenze des Aufsehers nur fuer den
 Aufseher selbst.
 
+## Umgesetzt (2026-10-12, Alita)
+Der Dauerlauf startet die Schlange per `systemd-run --user --scope -p
+MemoryMax=56G` (kein MemoryHigh) ausserhalb seiner cgroup; `--abarbeiten`
+haelt eine eigene flock-Sperre, damit ein neu gestarteter Aufseher nicht
+parallel rechnet; die Schlange warnt, wenn der angemeldete RAM ueber
+`memory.high`/`memory.max` der eigenen cgroup liegt; die Unit traegt kein
+MemoryHigh mehr. Messlatte: `fehlerbilanz --seit 7`, Spalte Kills (25 am
+11.10., 9 am 12.10. vor der Aenderung).
+
 ## Traegt nicht
 Den kernel-OOM bei wirklich vollem RAM; der schlaegt unabhaengig von cgroup-
 Grenzen zu.

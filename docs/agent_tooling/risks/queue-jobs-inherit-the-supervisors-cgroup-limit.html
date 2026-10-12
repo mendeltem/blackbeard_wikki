@@ -68,6 +68,14 @@ Laeufe gestartet werden. Abhilfen, in dieser Reihenfolge: schwere Laeufe in
 eine eigene cgroup (<code>systemd-run --user --scope</code>), Bedarfspruefung gegen
 <code>memory.high</code> der eigenen cgroup, Grenze des Aufsehers nur fuer den
 Aufseher selbst.</p>
+<h2>Umgesetzt (2026-10-12, Alita)</h2>
+<p>Der Dauerlauf startet die Schlange per <code>systemd-run --user --scope -p
+MemoryMax=56G</code> (kein MemoryHigh) ausserhalb seiner cgroup; <code>--abarbeiten</code>
+haelt eine eigene flock-Sperre, damit ein neu gestarteter Aufseher nicht
+parallel rechnet; die Schlange warnt, wenn der angemeldete RAM ueber
+<code>memory.high</code>/<code>memory.max</code> der eigenen cgroup liegt; die Unit traegt kein
+MemoryHigh mehr. Messlatte: <code>fehlerbilanz --seit 7</code>, Spalte Kills (25 am
+11.10., 9 am 12.10. vor der Aenderung).</p>
 <h2>Traegt nicht</h2>
 <p>Den kernel-OOM bei wirklich vollem RAM; der schlaegt unabhaengig von cgroup-
 Grenzen zu.</p>
