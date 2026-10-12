@@ -858,6 +858,17 @@
 "src": "knowledge/ai_labor_market/findings/young-workers-exposed-occupations-gap.md"
 },
 {
+"t": "Jede Verlaufs-Volumetrie bekommt eine Fehlerstatistik neben der Trendstatistik",
+"p": "brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.html",
+"a": "brain_volumetry",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen",
+"id": "longitudinal-volumetry-needs-error-statistics",
+"src": "knowledge/brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.md"
+},
+{
 "t": "„KI+\": Breitenziel 70 Prozent bis 2027",
 "p": "china_industrial_strategy/findings/ai-plus-policy-breadth-target.html",
 "a": "china_industrial_strategy",
