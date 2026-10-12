@@ -62,3 +62,5 @@ Journal mit Datum, dauerlauf.log nur mit Uhrzeit; Druckwerte aus
 
 ## Verknuepft
 - [conditions-need-an-expiry-event](../rules/conditions-need-an-expiry-event.md)
+
+**Nachtrag 2026-10-12 (nachmittags):** Zweites Loch im selben Werkzeug: `grossauftrag --abarbeiten` hielt nie die Haupt-flock der direkten Laeufe. Ein direkter `grossauftrag --gib 30` (recon-all, 3 x 26 GB) und ein eingereihter Lauf waeren nachts gleichzeitig gestartet (OOM, zwei recon-all auf derselben Sitzung). Jetzt prueft --abarbeiten je Lauf die flock nicht blockierend: ist sie gehalten, bleibt der Eintrag offen (rc 6) und kommt am naechsten Rundenende dran, damit der dauerlauf nicht stundenlang steht. Sicherung grossauftrag.vor-20261012-abarbeiten-flock.

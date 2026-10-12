@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 1"></i></div><div class="counts"><span class="ok">1 getragen</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 3"></i></div><div class="counts"><span class="ok">3 getragen</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-12. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
@@ -52,9 +52,27 @@ und die Fehlerseite. Die Fehlerseite hat vier Bausteine: Test-Retest je Struktur
 Sitzung (SDw, CV, ICC(2,1), SDC95 = 1,96 * sqrt 2 * SDw, Bland-Altman), Laengsschnitt-Residuen und kuerzestes Intervall,
 Nachweisbarkeit (Jahre bis eine Person die SDC ueberschreitet, KI in denselben Einheiten), Ausfall/QC je Zeitpunkt.
 Laesionsausschluss nur, wenn die Maske in allen Sitzungen existiert, sonst entstehen Maskeneffekte von +1400 %.</p>
-<p><strong>Lesen bei:</strong> Volumetrie, SynthSeg, FreeSurfer, Atrophie, Verlauf, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus.</p></div>
+<p><strong>Lesen bei:</strong> Volumetrie, SynthSeg, FreeSurfer, Atrophie, Verlauf, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus.</p>
+<p><strong>Neu 2026-10-12:</strong> SynthSeg in FreeSurfer 8.2 rechnet nur auf CPU (85 s je Sitzung mit --robust); Vollkohorten in Ordner-Batches, 3 parallel. Nach jeder Kohortenkopie gzip -t ueber alle NIfTI (eine abgeschnittene T1 lag 5 Wochen unbemerkt). Rechenplan-Literatur: FreeSurfer longitudinal stream (Reuter 2012) und Euler-Zahl als QC-Gate (Rosen 2018) sind die belegten Hebel; FastSurfer-Dicke ICC 0,92 vs 0,87.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="longitudinal-volumetry-needs-error-statistics"><summary><span class="type">Regel</span><span class="t"><a href="rules/longitudinal-volumetry-needs-error-statistics.html">Jede Verlaufs-Volumetrie bekommt eine Fehlerstatistik neben der Trendstatistik</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 zum DEMDAS-GM-Beispiel: &quot;bei DEMDAS muss man auch die Fehlerstatistiken rechnen&quot;; umgesetzt in demdas-gm/fehler_statistik.py · <a href="rules/longitudinal-volumetry-needs-error-statistics.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="cohort-copies-need-a-gzip-sweep"><summary><span class="type">Regel</span><span class="t"><a href="rules/cohort-copies-need-a-gzip-sweep.html">After copying a cohort, run `gzip -t` over every NIfTI and compare file counts and byte totals with the source</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS pilot, 12.10.2026: one T1w was a truncated copy (508 KB of 5.2 MB) since 03.09. · <a href="rules/cohort-copies-need-a-gzip-sweep.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/cohort-copies-need-a-gzip-sweep.md">Markdown</a></p><h2>Aussage</h2>
+<p>A truncated <code>.nii.gz</code> is silent until a tool reads past the cut: in the DEMDAS pilot one T1w (508 KB instead of 5.2 MB) sat in
+the BIDS tree for five weeks; SynthSeg failed with <code>zlib.error: invalid distance code</code> deep in a log, the session simply
+vanished from the QC page ("31 of 63"), and recon-all would have failed the same way. The sweep is cheap: 886 NIfTI (12 GB)
+in under two minutes. For a cohort copy, also compare file count and summed bytes of source and target, and run an <code>rsync -c</code>
+dry run; <code>du -sh</code> is useless on exFAT (cluster inflation: 67 GB shown for 43.7 GB of data).</p>
+<h2>Traegt</h2>
+<p>Every copy of imaging data from USB drives, network shares or sticks; the inventory step of a new cohort.</p>
+<h2>Traegt nicht</h2>
+<p>Uncompressed files; corruption inside a valid gzip stream (that needs a hash from the source).</p>
+<h2>Bruchindikator</h2>
+<p>A session missing from a QC page without a stated reason; a <code>.nii.gz</code> far smaller than its siblings.</p>
+<h2>Ablesung</h2>
+<p>12.10.2026 16:16-16:25 (gzip sweep, inventory size 5.221 MB vs local 508 KB, replacement from the external SSD).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a></li>
+</ul></div></details><details class="entry" id="longitudinal-volumetry-needs-error-statistics"><summary><span class="type">Regel</span><span class="t"><a href="rules/longitudinal-volumetry-needs-error-statistics.html">Jede Verlaufs-Volumetrie bekommt eine Fehlerstatistik neben der Trendstatistik</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 zum DEMDAS-GM-Beispiel: &quot;bei DEMDAS muss man auch die Fehlerstatistiken rechnen&quot;; umgesetzt in demdas-gm/fehler_statistik.py · <a href="rules/longitudinal-volumetry-needs-error-statistics.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.md">Markdown</a></p><h2>Aussage</h2>
 <p>Eine Seite mit jaehrlichen Aenderungen (gemischtes Modell, Steigungen je Proband) ist ohne Messfehler nicht lesbar:
 niemand kann sehen, ob -0,8 %/Jahr Amygdala mehr ist als das Rauschen. Deshalb gehoert zu jeder Verlaufs-Volumetrie
 eine zweite Seite <code>error_statistics.html</code> mit vier Bausteinen, alle ohne neue Bildrechnung, wenn die Daten da sind:</p>
@@ -89,6 +107,28 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="synthseg-in-freesurfer-8-runs-on-cpu-only"><summary><span class="type">Befund</span><span class="t"><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">fspython TF 2.13 ohne GPU; 85 s je Sitzung mit --robust, Ordner-Batches laden das Modell einmal; recon-all 8.2 40-48 min</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS full cohort compute planning, 12.10.2026 (Alita) · <a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>mri_synthseg</code> in FreeSurfer 8.2.0 uses the bundled fspython with TensorFlow 2.13.1 built WITHOUT GPU support
+(<code>tf.config.list_physical_devices('GPU')</code> returns <code>[]</code> on a machine with a working CUDA 12.4 torch). Measured on a 24-core
+workstation: <code>--parc --robust --cpu --threads 6</code> takes about 85 s per 1 mm MPRAGE, plus about 20 s model load per call. Running
+batches of 40 images as a folder (<code>--i &lt;folder&gt; --o &lt;folder&gt;</code>) loads the model once per batch. Three batches in parallel (about
+10 GB RAM each) give about 1652 sessions in 13-15 h on one workstation, with no GPU needed, so a local LLM can keep the GPU.
+FreeSurfer 8.2 <code>recon-all -all</code> measured 40-48 min per session with <code>-openmp 4</code>, 3 in parallel, peak RAM 17-28 GB per run
+(mri_synthseg / mri_synthmorph stages); the literature figure of 4-7 h per recon-all is for FreeSurfer 6/7.</p>
+<h2>Traegt</h2>
+<p>Compute plans for cohorts of 1000+ sessions on single workstations; the choice between SynthSeg-in-FreeSurfer and a standalone
+SynthSeg/FastSurfer with GPU; the decision not to stop a local LLM server for a SynthSeg batch.</p>
+<h2>Traegt nicht</h2>
+<p>Standalone SynthSeg (own TensorFlow with CUDA) and FastSurfer (PyTorch) -- both use the GPU; FreeSurfer versions other than 8.2.0.</p>
+<h2>Bruchindikator</h2>
+<p>A FreeSurfer release whose fspython lists a GPU, or a measured --robust time far from 85 s on comparable hardware.</p>
+<h2>Ablesung</h2>
+<p>12.10.2026 16:36 fspython TF check; 16:29 Clara's 2-session ND test (85 s each); 16:40 one-image smoke test of the batch script
+(71 s incl. load); recon-all times from alle.log 12.10. (5 sessions, 40-48 min).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/longitudinal-volumetry-needs-error-statistics.html">longitudinal-volumetry-needs-error-statistics</a></li>
+<li><a href="rules/cohort-copies-need-a-gzip-sweep.html">cohort-copies-need-a-gzip-sweep</a></li>
 </ul></div></details></div></main>
 <footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

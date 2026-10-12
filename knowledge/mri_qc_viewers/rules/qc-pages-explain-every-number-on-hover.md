@@ -45,3 +45,5 @@ Umgesetzt 12.10.2026 09:10-09:15 auf Alita (gm_qc_axial.py, Stick aktualisiert, 
 - [demdas-gm-qc-page-how-every-number-is-computed](../findings/demdas-gm-qc-page-how-every-number-is-computed.md)
 - [qc-pages-english-sessions-in-one-window](qc-pages-english-sessions-in-one-window.md)
 - [qc-slice-viewer-conventions](qc-slice-viewer-conventions.md)
+
+**Nachtrag 2026-10-12 (Nutzerregel, 16:45): Software-Block ist Pflicht.** Jede QC-Seite nennt alle Programme mit Version, die ihre Zahlen und Bilder erzeugt haben (z.B. FreeSurfer 8.2.0 build-stamp, SynthSeg-Flags, FSL-Version, Infarkt- und WMH-Netze mit Gewichtsdatei, dcm2niix aus dem JSON, Python-Pakete, Bauzeitpunkt, Rechner), eingesammelt zur Bauzeit im Generator, als Abschnitt "Software" im Methods-Overlay und als Fusszeile "Built <date> with ...". Fehlt eine Angabe, steht "not recorded <date>", nie nichts.

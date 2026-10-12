@@ -11,3 +11,5 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 
 ## Herkunft
 DEMDAS-GM-Beispiel auf Alita (demdas-gm/verlauf_statistik.py, fehler_statistik.py), Nutzerauftrag 12.10.2026.
+| befund | [synthseg-in-freesurfer-8-runs-on-cpu-only](findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md) | fspython TF 2.13 ohne GPU; 85 s je Sitzung mit --robust, Ordner-Batches laden das Modell einmal; recon-all 8.2 40-48 min |
+| regel | [cohort-copies-need-a-gzip-sweep](rules/cohort-copies-need-a-gzip-sweep.md) | nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt |
