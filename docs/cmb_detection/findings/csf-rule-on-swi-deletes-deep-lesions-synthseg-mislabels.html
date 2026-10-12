@@ -1,0 +1,76 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label &quot;freier Liquor&quot; falsch; FreeSurfer ist keine Option (kein T1)</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">cmb_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label &quot;freier Liquor&quot; falsch; FreeSurfer ist keine Option (kein T1)</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-12</span><span>Herkunft</span><span>mb-arena/csf_regel_analyse.py auf den eigenen SWI- und T2*-Kohorten (ergebnisse/csf_regel/), Nutzerfrage 12.10.2026 &quot;die CSF-Segmentation ist wohl fehlerhaft, bessere Segmentation ueber FreeSurfer?&quot;</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/report-healthy-controls-separately.html">Faelle ohne Referenzlaesion (Gesunde) werden getrennt berichtet: Fehlalarme je Fall und Fall-Spezifitaet, kein F1</a> <span class="muted small">(cmb_detection)</span><br><a href="../../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">Eine anatomische Regel wird erst sichtbar gemacht, dann geglaubt: zeigen, was sie entfernt, getrennt nach Treffer und Fehlalarm</a> <span class="muted small">(lesion_detection_method)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.md">knowledge/cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.md</a></span></div><h2>Aussage</h2>
+<p>Gemessen 12.10.2026 an allen Rohkomponenten unseres 3D-U-Nets (vor der Regel), je Komponente Mehrheitslabel aus
+SynthSeg (--robust, auf dem SWI- bzw. T2<em>-Magnitudenbild selbst gerechnet), Abstand des Schwerpunkts zum Hirnmaskenrand und Treffer/Fehlalarm:
+1. </em><em>Die geloeschten echten Blutungen liegen nicht am Rand.</em><em> Auf SWI loescht die Regel jede siebte echte Blutung; deren Abstand
+   zum Hirnrand liegt im Median bei ~10 mm, nur ein Sechstel innerhalb von 3 mm. Mehrheitslabel fast immer 24 (freier Liquor),
+   nicht Ventrikel. Das ist kein kortikal-subarachnoidaler Grenzfall, sondern </em><em>SynthSeg vergibt auf SWI das Label 24 im
+   Hirninneren</em><em> (dunkle Gefaesse, Suszeptibilitaetsraender, Sulci-Saum werden "Liquor").
+2. </em><em>Wirkung auf die Kette:</em><em> SWI gepoolt ~-0,04 F1 durch die Regel (Treffer sinken staerker als Fehlalarme), T2</em> ~+0,006.
+   Varianten: nur Ventrikel = neutral; "tiefer Liquor" (nur Komponenten &gt; 2/3/5 mm vom Rand loeschen) hilft NICHT (die
+   geloeschten Treffer sind ja tief); <strong>Liquor-Maske um ein Voxel erodiert, dann Mehrheitslabel</strong> = beste Variante auf beiden
+   Kohorten (SWI +0,002 gegen keine Regel, T2<em> +0,010; behaelt 57 von 62 bzw. 13 von 15 geloeschten Treffern und nimmt noch
+   einen Teil der Fehlalarme weg). Zahlen je Variante in <code>mb-arena/ergebnisse/csf_regel/*_varianten.csv</code>.
+3. </em><em>FreeSurfer (recon-all) ist keine Abhilfe:</em><em> die eigenen Kohorten haben KEIN T1 (nur SWI bzw. T2</em>, bei einem Teil FLAIR,
+   dazu HD-BET-Hirnmaske und ROI). SynthSeg auf dem SWI/T2* ist die einzige Gewebekarte; eine bessere braeuchte ein T1
+   derselben Sitzung oder eine SWI-trainierte Segmentierung.</p>
+<h2>Traegt</h2>
+<p>Die Entscheidung ueber die Liquor-Regel auf eigenen Kohorten: auf SWI streichen oder durch die erodierte Fassung ersetzen;
+auf T2* erodierte Fassung. Jede Regel, die ein Mehrheitslabel aus einer Gewebekarte benutzt, die nicht auf dieser Sequenz validiert ist.</p>
+<h2>Traegt nicht</h2>
+<p>VALDO (dort loescht die Regel 1 Treffer, andere Bildqualitaet); den Klassifikator der zweiten Stufe (unabhaengig von der Regel).</p>
+<h2>Bruchindikator</h2>
+<p>Ein Lauf mit erodierter Liquor-Maske, der auf SWI mehr Treffer verliert als die alte Regel; ein T1 fuer die Kohorten (dann neu messen).</p>
+<h2>Ablesung</h2>
+<p><code>mb-arena/csf_regel_analyse.py swi|t2star</code> (12.10.2026), Komponententabellen <code>ergebnisse/csf_regel/&lt;kohorte&gt;_komponenten.csv</code>.
+Vereinfachung: FN wurde als Referenzzahl minus Treffer-Komponenten genaehert (zwei Komponenten auf einer Blutung zaehlen hoechstens n_cmb).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="../rules/report-healthy-controls-separately.html">report-healthy-controls-separately</a></li>
+<li><a href="../../lesion_detection_method/rules/show-what-a-rule-removes-before-trusting-it.html">show-what-a-rule-removes-before-trusting-it</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

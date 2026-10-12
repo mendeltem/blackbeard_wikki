@@ -946,6 +946,17 @@
 "src": "knowledge/cmb_detection/findings/anisotropic-first-level-beats-isotropic-3d-nets.md"
 },
 {
+"t": "Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label \"freier Liquor\" falsch; FreeSurfer ist keine Option (kein T1)",
+"p": "cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Geloeschte Treffer liegen tief (Median ~10 mm vom Rand), Label 24 von SynthSeg auf SWI falsch; erodierte Liquor-Maske beste Variante; kein T1 -> kein FreeSurfer",
+"id": "csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels",
+"src": "knowledge/cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.md"
+},
+{
 "t": "Eine Liquor-Regel aus der Gewebekarte entfernt die Haelfte der Fehlalarme, ohne eine Blutung zu verlieren",
 "p": "cmb_detection/findings/csf-rule-removes-false-alarms-without-loss.html",
 "a": "cmb_detection",
@@ -2156,6 +2167,28 @@
 "src": "knowledge/mri_qc_viewers/rules/qc-slice-viewer-conventions.md"
 },
 {
+"t": "Der Schichtregler zeigt, in welchen Schichten Funde liegen; N/P springen zum naechsten Fund",
+"p": "mri_qc_viewers/rules/slice-slider-marks-where-the-findings-are.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Farbige Striche unter dem Schichtregler (gruen/gelb/rot je Schicht), Klick springt, N/P naechster/voriger Fund",
+"id": "slice-slider-marks-where-the-findings-are",
+"src": "knowledge/mri_qc_viewers/rules/slice-slider-marks-where-the-findings-are.md"
+},
+{
+"t": "Der Stick ist eine Kopie: Quelle jeder Stick-Seite ist der lokale Spiegel ~/QUALITY_CONTROLL",
+"p": "mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; vor dem Abziehen sync, cmp, lsof",
+"id": "the-local-mirror-is-the-source-of-the-qc-stick",
+"src": "knowledge/mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.md"
+},
+{
 "t": "FinBERT wertet steigende Speicherpreise negativ, eine Herstellersicht-Bewertung positiv",
 "p": "news_sentiment_volatility/findings/finbert-reads-memory-prices-negative.html",
 "a": "news_sentiment_volatility",
@@ -2374,6 +2407,17 @@
 "x": "VALDO 12: MedNet-T1 0,44 (Prec 0,45, Klasse 1-2 nur 0,12), MedNet-T2 0,39, DRIPS 0,35 (Klasse 1-2 0,45), Rater 0,33; Kurven flach -> Pool + Trenner",
 "id": "mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs",
 "src": "knowledge/pvs_detection/findings/mednet-t1-clinical-trainer-leads-valdo-but-misses-small-pvs.md"
+},
+{
+"t": "Die Edinburgh-PVS-Pipeline laeuft ohne Docker-MATLAB, wenn fuenf Dinge stimmen",
+"p": "pvs_detection/findings/native-run-of-the-edinburgh-pipeline-what-it-takes.html",
+"a": "pvs_detection",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Nativ auf Alita: MATLAB + 2 Toolboxen, RORPO (C11, cmake-Policy, conda-ITK), TractoR (conda-R, liblzma, Launcher weg), FreeSurfer 7.4.1 per Docker (FS 8.2 SamSeg kaputt), Symlink/Leerzeichen-Pfade",
+"id": "native-run-of-the-edinburgh-pipeline-what-it-takes",
+"src": "knowledge/pvs_detection/findings/native-run-of-the-edinburgh-pipeline-what-it-takes.md"
 },
 {
 "t": "30 von 103 Pipeline-Fehlschlaegen waren ein Typfehler: Zahl wurde zum Zeichen im Dateinamen",

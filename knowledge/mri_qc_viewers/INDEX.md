@@ -14,6 +14,8 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 | regel | [qc-pages-english-sessions-in-one-window](rules/qc-pages-english-sessions-in-one-window.md) | Jede QC-Seite Englisch (auch Index, Plots, Manifest-Titel, Rating-Hinweis; im Generator, nicht nur in der Datei); Laengsschnitt: Sitzungsknoepfe M0..M60 im selben Fenster, Schicht bleibt, Tabelle ueber Sitzungen |
 | regel | [qc-pages-explain-every-number-on-hover](rules/qc-pages-explain-every-number-on-hover.md) | Jede Zahl erklaert sich beim Hovern (Software, Rechenweg, Label-Menge); Knopf "? Methods" mit Overlay und Wiki-Link; fehlende Werte nennen Grund und Stand; Texte im Generator |
 | befund | [demdas-gm-qc-page-how-every-number-is-computed](findings/demdas-gm-qc-page-how-every-number-is-computed.md) | Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0 |
+| regel | [slice-slider-marks-where-the-findings-are](rules/slice-slider-marks-where-the-findings-are.md) | Farbige Striche unter dem Schichtregler (gruen/gelb/rot je Schicht), Klick springt, N/P naechster/voriger Fund |
+| regel | [the-local-mirror-is-the-source-of-the-qc-stick](rules/the-local-mirror-is-the-source-of-the-qc-stick.md) | ~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; vor dem Abziehen sync, cmp, lsof |
 | pruefpunkt | [slice-viewer-as-shared-tool](open_checks/slice-viewer-as-shared-tool.md) | Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt) |
 
 ## Herkunft

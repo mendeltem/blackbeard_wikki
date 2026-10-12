@@ -56,3 +56,5 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.
 **Nachtrag 2026-10-08 zur Liquor-Regel:** im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.
 
 **Regel, neu 2026-10-12:** Gesunde (keine Referenzlaesion) getrennt berichten: FP je Fall und Fall-Spezifitaet, kein F1; das F1-Fallmittel nur ueber Laesionsfaelle (Betrachter-Generator umgestellt, Stick-Seiten neu).
+
+**Befund, neu 2026-10-12:** die Liquor-Regel loescht auf SWI echte Blutungen tief im Hirn (SynthSeg vergibt auf SWI Label 24 falsch); Varianten gemessen: erodierte Liquor-Maske ist auf beiden Kohorten die beste, 'nur Ventrikel' neutral, 'tiefer Liquor' hilft nicht; FreeSurfer keine Option, die Kohorten haben kein T1.

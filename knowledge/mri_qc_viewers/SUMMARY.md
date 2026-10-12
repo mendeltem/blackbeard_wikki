@@ -16,3 +16,5 @@ Offen: den Generator als Tool mit Test einstellen.
 **Regel, neu 2026-10-11:** Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Offen: Excel-Spalten des GM-Beispiels noch deutsch.
 
 **Regel, neu 2026-10-12:** Jede Zahl auf einer QC-Seite erklaert sich beim Hovern (title= mit Software, Version, Rechenweg, Label-Menge), dazu ein Knopf "? Methods" (Taste M) mit Overlay aller Texte, Bauzeitpunkt und Wiki-Link; fehlende Werte nennen Grund und Stand ("recon-all not finished, 31 of 63 sessions"), die Zahlen setzt der Generator ein. Langfassung fuer DEMDAS-GM als englischer Befund.
+
+**Regeln, neu 2026-10-12 (nachmittags):** Striche unter dem Schichtregler zeigen, wo Funde liegen (N/P springen); der lokale Spiegel ~/QUALITY_CONTROLL ist die Quelle des Sticks (sync, cmp, lsof vor dem Abziehen).

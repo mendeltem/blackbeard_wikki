@@ -136,3 +136,6 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel: jede Zahl einer QC-Seite erklaert sich beim Hovern + Methods-Overlay; Befund (Englisch): Rechenweg jeder Zahl des DEMDAS-GM-Betrachters.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/brain_volumetry/` | Neuer Bereich; Regel: jede Verlaufs-Volumetrie bekommt eine Fehlerseite (Test-Retest SDC95/ICC, Residuen, Nachweisbarkeit, Ausfall/QC); Laesionsausschluss nur mit Maske in allen Sitzungen.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/cmb_detection/` | Regel: Gesunde getrennt berichten (FP je Fall, Fall-Spezifitaet, kein F1); Betrachter-Generator und vier Stick-Seiten umgestellt.
+- 2026-10-12 | Alita (Claude Code) | `knowledge/cmb_detection/` | Befund: Liquor-Regel loescht auf SWI tiefe Treffer (SynthSeg-Label 24 falsch), erodierte Maske beste Variante, kein T1 -> kein FreeSurfer; Regel Gesunde um mean/pooled ergaenzt.
+- 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regeln: Fund-Striche unter dem Schichtregler (N/P); Spiegel ~/QUALITY_CONTROLL ist Quelle des Sticks.
+- 2026-10-12 | Alita (Claude Code) | `knowledge/pvs_detection/` | Befund: nativer Lauf der Edinburgh-Pipeline -- was er braucht (RORPO, TractoR, FreeSurfer 7.4.1 Docker, Pfade).

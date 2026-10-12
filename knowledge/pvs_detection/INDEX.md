@@ -9,6 +9,7 @@ Stand 2026-10-11. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt | Status |
 |---|---|---|---|
+| befund | [native-run-of-the-edinburgh-pipeline-what-it-takes](findings/native-run-of-the-edinburgh-pipeline-what-it-takes.md) | Nativ auf Alita: MATLAB + 2 Toolboxen, RORPO (C11, cmake-Policy, conda-ITK), TractoR (conda-R, liblzma, Launcher weg), FreeSurfer 7.4.1 per Docker (FS 8.2 SamSeg kaputt), Symlink/Leerzeichen-Pfade |
 | befund | [numeric-ids-became-char-codes-in-filenames](findings/numeric-ids-became-char-codes-in-filenames.md) | 30/103 Fehlschlaege der uebernommenen MATLAB-Pipeline sind char(Fallnummer) im Dateinamen; 73 Faelle haben Masken | getragen |
 | befund | [public-pvs-reference-data-and-models-2026-10](findings/public-pvs-reference-data-and-models-2026-10.md) | VALDO T1, EPVS-2024 (Antrag), HCP-Aging (40 Hand); MedNet-PVS, SHIVA v4, PINGU, Frangi/RORPO | vorschlag |
 | befund | [small-pvs-only-in-hcp-t2-reference](findings/small-pvs-only-in-hcp-t2-reference.md) | Edinburgh/Challenge-Referenzen beschneiden unter 3 mm; nur HCP-Aging-T2 (0,8 mm) traegt 1-Voxel-PVS; kein Werkzeugvergleich mit gemeinsamer Metrik | vorschlag |

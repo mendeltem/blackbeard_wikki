@@ -25,6 +25,11 @@ Umgesetzt im Generator `cmb/review/build_slice_viewer.py` (summary(), buildList(
 Stick-Seiten per `--refresh-html` neu gebaut. Beispielhafte Wirkung (eigene Kohorten, nur Richtung): das Fallmittel
 stieg von 0,37 bzw. 0,47 (mit Gesunden) auf 0,63 bzw. 0,64 (nur Laesionsfaelle); das gepoolte F1 aenderte sich kaum.
 
+**Mittel gegen gepoolt (Nutzerfrage 12.10.):** *F1 mean* = F1 je Fall, dann Mittel ueber die Faelle -- jeder Fall zaehlt gleich,
+ein Fall mit 2 Blutungen so viel wie einer mit 100; empfindlich fuer kleine Faelle. *Pooled* = TP, FP, FN ueber alle Faelle
+summiert, daraus ein F1 -- jede Blutung zaehlt gleich, grosse Faelle dominieren. Liegt pooled ueber mean, laufen die kleinen
+Faelle schlechter. Beide nennen, nie eins fuer das andere ausgeben.
+
 ## Traegt
 Jede Laesionsdetektion mit Kontrollfaellen (CMB, PVS, WMH-Null-Faelle); jede QC-Seite und jede Tabelle mit "F1 je Fall".
 
