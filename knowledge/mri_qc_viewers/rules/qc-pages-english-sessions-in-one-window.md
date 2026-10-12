@@ -36,8 +36,8 @@ verweist_auf: [qc-slice-viewer-conventions, qc-build-order-for-a-new-lesion-type
 Jede QC-Seite, die auf den Stick oder an Dritte geht; jeden Betrachter mit mehr als einer Sitzung je Proband.
 
 ## Traegt nicht
-Eingabedaten (Excel-Spalten, JSON-Schluessel wie `standort`, `schichten`), Dateinamen (`verlauf.html`,
-`DEMDAS_GM_Beispiel.xlsx`), deutsche Notizen (.md) auf dem Stick, die der Index als solche kennzeichnet.
+Alte Dateinamen (`verlauf.html`, `DEMDAS_GM_Beispiel.xlsx`) bleiben als Links stabil; interne Variablennamen im Code. Seit 12.10. gilt die Regel
+auch fuer Eingabe-Schluessel (Excel-Spalten, JSON-Felder neuer Tabellen) und Notizen auf dem Stick.
 
 ## Bruchindikator
 Eine neu gebaute Seite auf dem Stick zeigt wieder deutsche Oberflaechentexte, oder ein Laengsschnitt-Betrachter
@@ -45,7 +45,8 @@ listet Sitzungen flach als eigene Faelle.
 
 ## Ablesung
 Nutzer 11.10.2026 (zwei Nachrichten im selben Lauf); umgesetzt und gerendert 11.10. 18:28-18:40 auf Alita.
-Offen: `DEMDAS_GM_Beispiel.xlsx` hat noch deutsche Blatt- und Spaltennamen (zwei Leser haengen daran).
+Erledigt 12.10.2026: Blatt- und Spaltennamen der `DEMDAS_GM_Beispiel.xlsx` englisch (Umsteller `demdas-gm/excel_keys_english.py`, Generator und drei Leser
+zusammen umgestellt, Zahlen vorher/nachher identisch). Nutzerregel 12.10.: ALLES, was ausgegeben wird, ist Englisch, auch Schluessel; nur der Chat ist Deutsch; CSF statt Liquor.
 
 ## Verknuepft
 [qc-slice-viewer-conventions](qc-slice-viewer-conventions.md), [qc-build-order-for-a-new-lesion-type](qc-build-order-for-a-new-lesion-type.md)

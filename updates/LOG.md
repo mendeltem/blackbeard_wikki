@@ -139,3 +139,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-12 | Alita (Claude Code) | `knowledge/cmb_detection/` | Befund: Liquor-Regel loescht auf SWI tiefe Treffer (SynthSeg-Label 24 falsch), erodierte Maske beste Variante, kein T1 -> kein FreeSurfer; Regel Gesunde um mean/pooled ergaenzt.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regeln: Fund-Striche unter dem Schichtregler (N/P); Spiegel ~/QUALITY_CONTROLL ist Quelle des Sticks.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/pvs_detection/` | Befund: nativer Lauf der Edinburgh-Pipeline -- was er braucht (RORPO, TractoR, FreeSurfer 7.4.1 Docker, Pfade).
+- 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel Englisch erweitert: auch Schluessel (Excel umgestellt, Zahlen identisch); Nutzerregel 'alles Englisch, Chat Deutsch, CSF statt Liquor'.
