@@ -1,0 +1,170 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>news_sentiment_volatility</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › news_sentiment_volatility</div><h1>news_sentiment_volatility</h1><p>Ob Nachrichtenton oder -menge die Groesse kuenftiger Kursbewegungen vorhersagt: Backtest, Messfallen, Hypothesen</p><p class="muted small">Sentiment, Nachrichten, Kursvorhersage, Volatilitaet, Backtest, FinBERT, Techmeme, SK Hynix, NVDA, Investieren</p>
+<div class="stripe"><i class="warn" style="width:50.0%" title="vorschlag: 4"></i><i class="ok" style="width:37.5%" title="getragen: 3"></i><i class="info" style="width:12.5%" title="offen: 1"></i></div><div class="counts"><span class="warn">4 vorschlag</span> <span class="ok">3 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Ob Nachrichtenton oder Nachrichtenmenge zu KI und Speicher die Groesse kuenftiger Kursbewegungen (NVDA, SK Hynix, Samsung) vorhersagt: Backtest, Messfallen, vorab festgelegte Hypothesen. Gemeldete Firmenzahlen stehen in <a href="../memory_earnings/index.html">memory_earnings</a>.</p>
+<p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-12. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Ob Ton oder Menge von KI- und Speicher-Nachrichten die Groesse der naechsten Kursbewegung vorhersagt.</p>
+<p><strong>Befunde (vorschlag, eigene Rechnung):</strong> Backtest 2 Jahre, 14.940 Techmeme-Schlagzeilen mit FinBERT: der Ton sagt die NVDA-Schwankung nicht voraus (R2-Zuwachs 0,005, n 463). Ungewoehnlich viele Speicher-Schlagzeilen gehen groesseren Bewegungen bei Samsung (p 0,016) und SK Hynix (p 0,064) voraus, aber instabil zwischen den Zeitteilen. Die These "extrem positive Nachrichten vor starkem Fall" fand sich im juengeren Teil nicht wieder. FinBERT wertet Speicherpreisanstiege negativ.</p>
+<p><strong>Regeln:</strong> Morgenlauf in Europa: fuer KRX-Aktien uebernaechster Schluss als Ziel. Neueste KRX-Verlaufszeile ist vorlaeufig. Neubewertung in derselben Sitzung ist kein Reliabilitaetstest.</p>
+<p><strong>Offen:</strong> Vorab festgelegte Hypothesen H1 bis H3, Entscheidung nach 146 bzw. 500 Handelstagen.</p>
+<p><strong>Lesen bei:</strong> Sentiment, Nachrichtenanalyse, Kursvorhersage, Volatilitaet, Backtest, FinBERT, SK Hynix, NVDA.</p></div>
+<p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
+<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="krx-latest-row-provisional"><summary><span class="type">Regel</span><span class="t"><a href="rules/krx-latest-row-provisional.html">Neueste KRX-Kurszeile auf Verlaufsseiten ist vorlaeufig, Vortag immer nachpruefen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="rules/krx-latest-row-provisional.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/rules/krx-latest-row-provisional.md">Markdown</a></p><h2>Aussage</h2>
+<p>Beobachtet 2026-10-01 bis 2026-10-10 an SK Hynix: stockanalysis.com zeigte in der neuesten Zeile einen Stand vor der Schlussauktion (08.10.: 1.697.000 statt endgueltig 1.681.000 KRW, -1,51 % statt -2,44 %; 30.09.: +1,02 % statt +0,62 %). investing.com war ebenfalls einmal vorlaeufig (06.10.: 1.776.000 statt 1.773.000). Auch eine Index-Verlaufsseite (KOSPI) zeigte einen Intraday-Wert als Tagesschluss (07.10.: -0,20 % statt -1,98 %).
+Regel: neueste KRX-Zeile als vorlaeufig kennzeichnen, am Folgetag gegen beide Quellen pruefen, Abweichungen korrigieren und protokollieren.</p>
+<h2>Trägt</h2>
+<p>Vier Korrekturen in zehn Tagen, Groesse bis 0,9 Prozentpunkte Tagesrendite und 1,8 Punkte beim Index. Fuer Volatilitaetsziele erheblich.</p>
+<h2>Trägt nicht</h2>
+<p>Keine Aussage ueber US-Werte auf denselben Seiten; dort keine Abweichung beobachtet.</p>
+<h2>Bruchindikator</h2>
+<p>Quellen liefern ueber laengere Zeit keine Abweichung mehr.</p>
+<h2>Ablesung</h2>
+<p>Eigene Beobachtung, Korrekturprotokoll im Projekt (korrekturen.csv).</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/krx-run-timing.html">krx-run-timing</a></li>
+</ul></div></details><details class="entry" id="krx-run-timing"><summary><span class="type">Regel</span><span class="t"><a href="rules/krx-run-timing.html">Morgenlauf in Europa: Ziel fuer koreanische Aktien ist der uebernaechste Schluss</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="rules/krx-run-timing.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/rules/krx-run-timing.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Lauf um 07:30 Berlin liegt in der laufenden KRX-Sitzung (Eroeffnung 02:00, Schluss 08:30 Berlin, Sommerzeit). Artikel bis 07:30 koennen ueber diese Sitzung berichten. Fuer Vorhersagetests gilt:
+- Ziel fuer KRX-Aktien = Schluss der ersten Sitzung, die nach dem Lauf beginnt = uebernaechster Schluss; fuer US-Aktien der naechste.
+- Basislinie (Vortagesvolatilitaet usw.) nur aus abgeschlossenen Handelstagen.
+- Lauftage zwischen zwei neuen Schlusskursen (Wochenende, Feiertag) zu einem Block zusammenfassen, nach Artikelzahl gewichtet.</p>
+<h2>Trägt</h2>
+<p>Ohne diese Zuordnung zaehlen Berichte ueber die Bewegung selbst als Vorhersage. Gefunden beim Backtest, vor den ersten prospektiven Daten korrigiert.</p>
+<h2>Trägt nicht</h2>
+<p>Andere Laufzeiten: Zuordnung je Boerse aus Eroeffnungszeit und Laufzeit neu bestimmen.</p>
+<h2>Bruchindikator</h2>
+<p>Keiner, Rechenregel.</p>
+<h2>Ablesung</h2>
+<p>Handelszeiten KRX und Nasdaq, allgemein bekannt.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="rules/krx-latest-row-provisional.html">krx-latest-row-provisional</a></li>
+</ul></div></details><details class="entry" id="same-session-rescoring-is-not-reliability"><summary><span class="type">Regel</span><span class="t"><a href="rules/same-session-rescoring-is-not-reliability.html">Neubewertung in derselben Sitzung misst keine Reliabilitaet</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="rules/same-session-rescoring-is-not-reliability.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/rules/same-session-rescoring-is-not-reliability.md">Markdown</a></p><h2>Aussage</h2>
+<p>Zweimal 10 Ueberschriften in derselben Agenten-Sitzung "blind" neu bewertet: 20 von 20 identisch. Die alten Werte stehen im Kontext der Sitzung, die Uebereinstimmung ist damit nicht unabhaengig. Fuer einen Reliabilitaetstest (ICC) braucht es einen Bewerter ohne diesen Verlauf: frische Sitzung, Subagent ohne Kontext oder eingefrorenes Modell.</p>
+<h2>Trägt</h2>
+<p>20/20 ist als Obergrenze zu lesen, nicht als Messung.</p>
+<h2>Trägt nicht</h2>
+<p>Keine Aussage ueber die echte Reliabilitaet der LLM-Bewertung.</p>
+<h2>Bruchindikator</h2>
+<p>Keiner, Verfahrensregel.</p>
+<h2>Ablesung</h2>
+<p>Eigene Beobachtung.</p>
+<h2>Verknüpft</h2></div></details><h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="finbert-reads-memory-prices-negative"><summary><span class="type">Befund</span><span class="t"><a href="findings/finbert-reads-memory-prices-negative.html">FinBERT wertet steigende Speicherpreise negativ, eine Herstellersicht-Bewertung positiv</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="findings/finbert-reads-memory-prices-negative.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/findings/finbert-reads-memory-prices-negative.md">Markdown</a></p><h2>Aussage</h2>
+<p>78 Schlagzeilen vom 2026-09-30, je einmal von einem LLM nach fester Skala {-1, -0,5, 0, 0,5, 1} aus Sicht des Ausblicks und von FinBERT bewertet: Pearson 0,51, Spearman 0,52. Groesste Abweichungen bei Speicherpreis-Meldungen, z. B. "AMD's 192 GB Gorgon Halo prices might leave you petrified": LLM +0,5, FinBERT -0,82.</p>
+<h2>Trägt</h2>
+<p>FinBERT liest Preisanstiege aus Kaeufersicht. Fuer Speicherhersteller als Zielaktie kehrt sich das Vorzeichen um. DRAM-Sentiment mit FinBERT nicht ohne Pruefung als Herstellersignal verwenden.</p>
+<h2>Trägt nicht</h2>
+<p>Keine Aussage, welche Bewertung besser vorhersagt. Stichprobe ein Tag.</p>
+<h2>Bruchindikator</h2>
+<p>Auf groesserer Stichprobe keine systematische Abweichung bei Preis-Meldungen.</p>
+<h2>Ablesung</h2>
+<p>Eigene Rechnung. FinBERT: Araci 2019, arXiv 1908.10063 (Preprint).</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/news-tone-no-volatility-signal.html">news-tone-no-volatility-signal</a></li>
+</ul></div></details><details class="entry" id="news-tone-no-volatility-signal"><summary><span class="type">Befund</span><span class="t"><a href="findings/news-tone-no-volatility-signal.html">Ton der Tech-Schlagzeilen sagt die Schwankung am Folgetag nicht voraus (Backtest 2 Jahre)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="findings/news-tone-no-volatility-signal.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/findings/news-tone-no-volatility-signal.md">Markdown</a></p><h2>Aussage</h2>
+<p>Backtest 2024-10-01 bis 2026-09-29: 14.940 Techmeme-Schlagzeilen (Suche mit Datumsfilter), bewertet mit FinBERT (ProsusAI/finbert, Wert = P(pos) - P(neg)), Thema per Stichwortregel (AI 11.686, DRAM 411). Ziel: |Log-Rendite| am naechsten Handelstag nach dem Lauf, Basislinie Volatilitaetsballung (|ret| Vortag, 5-Tage-Mittel), Berichtstage als Kontrolle, Newey-West (5 Lags).
+NVDA: R2 nur Ballung 0,052, mit |z-Sentiment|, Quellenstreuung, ln(1+n) 0,057 (Zuwachs 0,005), Wald p = 0,38, n = 463.</p>
+<h2>Trägt</h2>
+<p>Bei n = 463 waere ein R2-Zuwachs ab etwa 0,022 mit Power 0,8 sichtbar gewesen (F-Test, 3 Variablen). Der Ton der allgemeinen KI-Nachrichten taugt fuer NVDA nicht als Volatilitaetsvorhersage in dieser Groessenordnung.</p>
+<h2>Trägt nicht</h2>
+<p>Kein Urteil ueber Richtung, ueber andere Bewertungsmodelle (LLM-Bewertung je Quelle laeuft prospektiv seit 2026-09-30) oder ueber Fachquellen; die Historie kommt fast nur aus Reichweitenquellen ueber Techmeme. Bewertung nur nach Ueberschrift.</p>
+<h2>Bruchindikator</h2>
+<p>Prospektive Hypothese H2 (LLM-Sentiment, Parkinson-Volatilitaet) nach 146 NVDA-Handelstagen signifikant.</p>
+<h2>Ablesung</h2>
+<p>Eigene Rechnung; Kurse aus github.com/mendeltem/AI_Companys, Schlagzeilen Techmeme. Keine Fremdquelle.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/news-volume-memory-volatility.html">news-volume-memory-volatility</a></li>
+<li><a href="rules/krx-run-timing.html">krx-run-timing</a></li>
+</ul></div></details><details class="entry" id="news-volume-memory-volatility"><summary><span class="type">Befund</span><span class="t"><a href="findings/news-volume-memory-volatility.html">Ungewoehnlich viele Speicher-Schlagzeilen gehen groesseren Bewegungen von Samsung und SK Hynix voraus (schwach, instabil)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="findings/news-volume-memory-volatility.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/findings/news-volume-memory-volatility.md">Markdown</a></p><h2>Aussage</h2>
+<p>Gleicher Backtest wie <a href="findings/news-tone-no-volatility-signal.html">news-tone-no-volatility-signal</a>. Variable: ln(1+n) der DRAM-Schlagzeilen im Block minus Mittel der vorherigen 60 Bloecke; Kontrollen |ret| Vortag, 5- und 60-Tage-Mittel, Berichtstag.
+Koeffizient in Prozentpunkten |Rendite| je ln-Einheit, ganze Reihe: Samsung +0,70 (p 0,016), SK Hynix +0,68 (p 0,064), NVDA +0,47 (p 0,15), Micron +0,42 (p 0,23). Teil A (erste 60 %) gegen Teil B: Samsung -0,12 / +1,14, SK Hynix +0,20 / +0,93.</p>
+<h2>Trägt</h2>
+<p>Alle vier Vorzeichen positiv. Als Hypothese H3 vorab festgelegt (siehe <a href="open_checks/preregistered-hypotheses.html">preregistered-hypotheses</a>).</p>
+<h2>Trägt nicht</h2>
+<p>Keinen stabilen Effekt: der Effekt sitzt fast nur im juengeren Teil. DRAM ist auf Techmeme duenn (53 % der Bloecke ohne Artikel). Keine Kausalitaet: viele Meldungen koennen Folge von Bewegungen in anderen Maerkten sein.</p>
+<h2>Bruchindikator</h2>
+<p>H3 nach 500 Handelstagen ab 2026-10-01 nicht signifikant (Holm, einseitig).</p>
+<h2>Ablesung</h2>
+<p>Eigene Rechnung, Tier: keine Fremdquelle.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="open_checks/preregistered-hypotheses.html">preregistered-hypotheses</a></li>
+</ul></div></details><details class="entry" id="overreaction-thesis-not-replicated"><summary><span class="type">Befund</span><span class="t"><a href="findings/overreaction-thesis-not-replicated.html">Extrem positive Nachrichtenlage vor starkem Fall: Hinweis im aelteren Teil, im juengeren nicht wiedergefunden</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="findings/overreaction-thesis-not-replicated.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/findings/overreaction-thesis-not-replicated.md">Markdown</a></p><h2>Aussage</h2>
+<p>These: uebermaessig gute Nachrichten aus bestimmten Quellgruppen gehen starken Kursfaellen voraus. Festes Raster vor der Rechnung: Gruppe (alle, Reichweite, Rest) x Schwelle z &gt; 1,0 / 1,5 / 2,0 (gegen gleitendes 60-Block-Normal), starker Fall = Rendite &lt; -2 SD der vorherigen 60 Tage; Fisher-Test einseitig.
+Beste Variante auf Teil A: NVDA, Reichweitenquellen, z &gt; 1,0: 7,7 % starke Faelle gegen 2,7 % (3 von 39), p 0,13, Benjamini-Hochberg q 0,76. Auf Teil B: 0 von 31.</p>
+<h2>Trägt</h2>
+<p>Bei diesen Daten kein Beleg fuer die These. Bleibt explorativ, keine Variante festgelegt.</p>
+<h2>Trägt nicht</h2>
+<p>Kein Gegenbeweis: bei 3 bis 5 % Grundrate braucht ein Dreifach-Effekt rund 1.300 Handelstage, ein Sechsfach-Effekt rund 310 (Zwei-Proportionen-Test, Power 0,8, Verhaeltnis 1:9).</p>
+<h2>Bruchindikator</h2>
+<p>Im prospektiven Datensatz eine Variante des festen Rasters mit BH-q &lt; 0,1.</p>
+<h2>Ablesung</h2>
+<p>Eigene Rechnung.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/news-tone-no-volatility-signal.html">news-tone-no-volatility-signal</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="preregistered-hypotheses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/preregistered-hypotheses.html">Vorab festgelegte Hypothesen Sentiment gegen Kursschwankung, Entscheidungstermine</a></span><span class="badge info">offen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Sentiment-Briefing AI/DRAM (Cloud-Sitzung), 2026-09-30 bis 2026-10-12 · <a href="open_checks/preregistered-hypotheses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/news_sentiment_volatility/open_checks/preregistered-hypotheses.md">Markdown</a></p><h2>Aussage</h2>
+<p>Festgelegt 2026-09-30 vor den ersten prospektiven Daten (Mendel hat den gemeinsamen Test aller drei Sentimentvariablen gewaehlt).
+- H1: Parkinson-Volatilitaet SK Hynix am Zielschluss ~ Ballung (Vortag, 5 Tage) + |DRAM-Sentiment kalibriert| + Quellenstreuung + ln(1+Artikelzahl). Wald-Test der drei Sentimentterme, Newey-West, Holm ueber H1/H2. Entscheidung nach 146 Handelstagen (Power 0,8 fuer R2-Zuwachs 0,05 bei Basis-R2 0,30).
+- H2: dasselbe fuer NVDA mit AI-Sentiment.
+- H3: |Rendite| SK Hynix und Samsung ~ Ballung + 60-Tage-Niveau + Berichtstag + DRAM-Schlagzeilenmenge ueber Normal (Techmeme, gleiche Methode wie Backtest). Einseitig, Holm. Entscheidung nach 500 Handelstagen ab 2026-10-01.
+Messung H1/H2: taegliche LLM-Bewertung von 12 Quellen, Bayes-kalibriert gegen ein 5-Monats-Normal je Quelle.</p>
+<h2>Trägt</h2>
+<p>Entscheidungsregeln, die nach den Daten nicht mehr geaendert werden.</p>
+<h2>Trägt nicht</h2>
+<p>Bis zu den Terminen keine Aussage; Zwischenstaende entscheiden nichts.</p>
+<h2>Bruchindikator</h2>
+<p>Siehe Entscheidungsregeln.</p>
+<h2>Ablesung</h2>
+<p>Projektdatei FESTLEGUNG_2026-09-30.md (nicht in der Wiki).</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/news-volume-memory-volatility.html">news-volume-memory-volatility</a></li>
+</ul></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../search.js"></script></body></html>

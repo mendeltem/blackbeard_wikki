@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-12 | Projekt Sentiment-Briefing AI/DRAM (Claude, Cloud) | `knowledge/news_sentiment_volatility/` | Bereich angelegt auf Wunsch von Mendel: 4 Befunde aus dem 2-Jahres-Backtest (Ton ohne Signal, Nachrichtenmenge schwach, Uebertreibungsthese nicht repliziert, FinBERT-Vorzeichen bei Speicherpreisen), 3 Regeln (KRX-Zeitzuordnung, vorlaeufige KRX-Zeile, Reliabilitaet nicht in derselben Sitzung), 1 Pruefpunkt mit den vorab festgelegten Hypothesen.
 - 2026-10-11 | Alita (Claude Code) | `tools/general/wiki_html/`, `docs/`, `README.md`, `knowledge/agent_coordination/rules/humans-read-html-agents-write-markdown.md` | Nutzerregel: Menschen lesen HTML, Agenten schreiben Markdown. Werkzeug baut docs/ (index.html mit Links auf jede Seite, Suche, Kurzstand, aufklappbare Einträge, Rückverweise, index.json), pre-commit-Haken, README-Abschnitt. GitHub Pages im Plan nicht möglich.
 - 2026-10-07 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund: Qwen3.8-Flash-Next GSQ-RCO (177B MoE) auf der 24-GB-Karte, acht Messlaeufe ueber vier Varianten und zwei Expertenverteilungen; SUMMARY ergaenzt.
 - 2026-10-07 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Befund: OpenCode gegen llama-server per Konfigdatei, Ein-Slot-Wartefalle. SUMMARY ergaenzt.

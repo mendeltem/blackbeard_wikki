@@ -1958,6 +1958,17 @@
 "src": "knowledge/memory_supply/rules/no-standard-cycle-without-absorption-check.md"
 },
 {
+"t": "Die eigene Darstellung ist keine Quelle",
+"p": "memory_supply/rules/own-visualisation-is-not-a-source.html",
+"a": "memory_supply",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-02",
+"x": "Eine Karte, Seite oder Datendatei, die in einem von Mendels eigenen Projekten entstanden ist, darf später nicht als Quelle für die Zahlen gelesen werden, die sie anzeigt. Veröffentlichen hebt kein Tier. Was als Schätzung oder als Wert aus e",
+"id": "own-visualisation-is-not-a-source",
+"src": "knowledge/memory_supply/rules/own-visualisation-is-not-a-source.md"
+},
+{
 "t": "2026 fiel der Preis für bereits erreichte Niveaus kaum noch",
 "p": "model_capability_cost/findings/fixed-levels-stopped-falling-2026.html",
 "a": "model_capability_cost",
@@ -2077,6 +2088,94 @@
 "x": "Zwei Bilder je Schicht, Referenz blau, Pfeile links/rechts = Proband, flache Leisten, F1 je Fall, Klick auf Komponente zeigt Werte, Englisch, Dateiname quality_control.html; Pruefpunkt headless rendern",
 "id": "qc-slice-viewer-conventions",
 "src": "knowledge/mri_qc_viewers/rules/qc-slice-viewer-conventions.md"
+},
+{
+"t": "FinBERT wertet steigende Speicherpreise negativ, eine Herstellersicht-Bewertung positiv",
+"p": "news_sentiment_volatility/findings/finbert-reads-memory-prices-negative.html",
+"a": "news_sentiment_volatility",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "78 Schlagzeilen vom 2026-09-30, je einmal von einem LLM nach fester Skala {-1, -0,5, 0, 0,5, 1} aus Sicht des Ausblicks und von FinBERT bewertet: Pearson 0,51, Spearman 0,52. Groesste Abweichungen bei Speicherpreis-Meldungen, z. B. \"AMD's 1",
+"id": "finbert-reads-memory-prices-negative",
+"src": "knowledge/news_sentiment_volatility/findings/finbert-reads-memory-prices-negative.md"
+},
+{
+"t": "Ton der Tech-Schlagzeilen sagt die Schwankung am Folgetag nicht voraus (Backtest 2 Jahre)",
+"p": "news_sentiment_volatility/findings/news-tone-no-volatility-signal.html",
+"a": "news_sentiment_volatility",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "Backtest 2024-10-01 bis 2026-09-29: 14.940 Techmeme-Schlagzeilen (Suche mit Datumsfilter), bewertet mit FinBERT (ProsusAI/finbert, Wert = P(pos) - P(neg)), Thema per Stichwortregel (AI 11.686, DRAM 411). Ziel: |Log-Rendite| am naechsten Han",
+"id": "news-tone-no-volatility-signal",
+"src": "knowledge/news_sentiment_volatility/findings/news-tone-no-volatility-signal.md"
+},
+{
+"t": "Ungewoehnlich viele Speicher-Schlagzeilen gehen groesseren Bewegungen von Samsung und SK Hynix voraus (schwach, instabil)",
+"p": "news_sentiment_volatility/findings/news-volume-memory-volatility.html",
+"a": "news_sentiment_volatility",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "Gleicher Backtest wie [news-tone-no-volatility-signal](news-tone-no-volatility-signal.md). Variable: ln(1+n) der DRAM-Schlagzeilen im Block minus Mittel der vorherigen 60 Bloecke; Kontrollen |ret| Vortag, 5- und 60-Tage-Mittel, Berichtstag.",
+"id": "news-volume-memory-volatility",
+"src": "knowledge/news_sentiment_volatility/findings/news-volume-memory-volatility.md"
+},
+{
+"t": "Extrem positive Nachrichtenlage vor starkem Fall: Hinweis im aelteren Teil, im juengeren nicht wiedergefunden",
+"p": "news_sentiment_volatility/findings/overreaction-thesis-not-replicated.html",
+"a": "news_sentiment_volatility",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-12",
+"x": "These: uebermaessig gute Nachrichten aus bestimmten Quellgruppen gehen starken Kursfaellen voraus. Festes Raster vor der Rechnung: Gruppe (alle, Reichweite, Rest) x Schwelle z > 1,0 / 1,5 / 2,0 (gegen gleitendes 60-Block-Normal), starker Fa",
+"id": "overreaction-thesis-not-replicated",
+"src": "knowledge/news_sentiment_volatility/findings/overreaction-thesis-not-replicated.md"
+},
+{
+"t": "Vorab festgelegte Hypothesen Sentiment gegen Kursschwankung, Entscheidungstermine",
+"p": "news_sentiment_volatility/open_checks/preregistered-hypotheses.html",
+"a": "news_sentiment_volatility",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-12",
+"x": "Festgelegt 2026-09-30 vor den ersten prospektiven Daten (Mendel hat den gemeinsamen Test aller drei Sentimentvariablen gewaehlt). - H1: Parkinson-Volatilitaet SK Hynix am Zielschluss ~ Ballung (Vortag, 5 Tage) + |DRAM-Sentiment kalibriert| ",
+"id": "preregistered-hypotheses",
+"src": "knowledge/news_sentiment_volatility/open_checks/preregistered-hypotheses.md"
+},
+{
+"t": "Neueste KRX-Kurszeile auf Verlaufsseiten ist vorlaeufig, Vortag immer nachpruefen",
+"p": "news_sentiment_volatility/rules/krx-latest-row-provisional.html",
+"a": "news_sentiment_volatility",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Beobachtet 2026-10-01 bis 2026-10-10 an SK Hynix: stockanalysis.com zeigte in der neuesten Zeile einen Stand vor der Schlussauktion (08.10.: 1.697.000 statt endgueltig 1.681.000 KRW, -1,51 % statt -2,44 %; 30.09.: +1,02 % statt +0,62 %). in",
+"id": "krx-latest-row-provisional",
+"src": "knowledge/news_sentiment_volatility/rules/krx-latest-row-provisional.md"
+},
+{
+"t": "Morgenlauf in Europa: Ziel fuer koreanische Aktien ist der uebernaechste Schluss",
+"p": "news_sentiment_volatility/rules/krx-run-timing.html",
+"a": "news_sentiment_volatility",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Ein Lauf um 07:30 Berlin liegt in der laufenden KRX-Sitzung (Eroeffnung 02:00, Schluss 08:30 Berlin, Sommerzeit). Artikel bis 07:30 koennen ueber diese Sitzung berichten. Fuer Vorhersagetests gilt: - Ziel fuer KRX-Aktien = Schluss der erste",
+"id": "krx-run-timing",
+"src": "knowledge/news_sentiment_volatility/rules/krx-run-timing.md"
+},
+{
+"t": "Neubewertung in derselben Sitzung misst keine Reliabilitaet",
+"p": "news_sentiment_volatility/rules/same-session-rescoring-is-not-reliability.html",
+"a": "news_sentiment_volatility",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Zweimal 10 Ueberschriften in derselben Agenten-Sitzung \"blind\" neu bewertet: 20 von 20 identisch. Die alten Werte stehen im Kontext der Sitzung, die Uebereinstimmung ist damit nicht unabhaengig. Fuer einen Reliabilitaetstest (ICC) braucht e",
+"id": "same-session-rescoring-is-not-reliability",
+"src": "knowledge/news_sentiment_volatility/rules/same-session-rescoring-is-not-reliability.md"
 },
 {
 "t": "Ein kleiner Trenner auf dem Kandidaten-Pool zweier Detektoren hebt den PVS-F1 auf VALDO von 0,44 auf 0,57 -- die CMB-Lektion wiederholt sich",
@@ -2458,7 +2557,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -2469,7 +2568,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -2480,7 +2579,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -2502,7 +2601,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-11",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -2513,7 +2612,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-11",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -2524,7 +2623,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -2535,7 +2634,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-11",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -2546,7 +2645,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-11",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -2557,7 +2656,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-11",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -2568,7 +2667,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -2579,7 +2678,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -2590,7 +2689,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-11",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -2601,7 +2700,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-11",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -2612,7 +2711,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-11",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"
