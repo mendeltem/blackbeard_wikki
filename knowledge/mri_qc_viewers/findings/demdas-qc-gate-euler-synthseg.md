@@ -85,3 +85,14 @@ identifiers are published on the QC pages.
 **References.**
 - Rosen B.R. et al. (2018). Automated QC of FreeSurfer surface reconstruction. NeuroImage 172:292-299.
 - SynthSeg: Maffei et al. (2018), and the `mri_synthseg --qc` documentation (threshold to be confirmed against the README).
+
+## Nachtrag 2026-10-13: the SynthSeg flag was a threshold artefact
+Measured on 124 DEMDAS sessions with `mri_synthseg --qc` (example set + full-cohort sample): the per-session
+minimum is **always** `general grey matter` (124/124). Its median is 0.653, i.e. the working threshold 0.65 sits
+in the middle of the distribution, so 62/124 sessions (28/64 in the pilot gate table) were "FLAGGED: SynthSeg QC"
+while no session was flagged by the Euler number. All other structures have medians 0.78-0.89 and never fall below
+0.65. One genuine outlier exists: sub-PDDISDKALEZOQ5 ses-M0 (grey matter 0.478, the known problem case).
+Consequence: a flag from this gate does not mean a bad segmentation; the PASS/FLAGGED row was removed from both GM
+pages on 2026-10-13 and the numbers stay. If a gate is wanted again, set the cut per structure (e.g. grey matter
+below the 5th cohort percentile, ~0.58) or by Euler number, not by a single 0.65 over all structures.
+Source: Billot B. et al., PNAS 2023, doi:10.1073/pnas.2216399120 (QC score = predicted Dice per structure).

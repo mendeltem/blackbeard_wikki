@@ -464,7 +464,17 @@ exists). The gate is a triage aid, not a replacement for a visual check: a PASS 
 identifiers are published on the QC pages.</p>
 <p><strong>References.</strong>
 - Rosen B.R. et al. (2018). Automated QC of FreeSurfer surface reconstruction. NeuroImage 172:292-299.
-- SynthSeg: Maffei et al. (2018), and the <code>mri_synthseg --qc</code> documentation (threshold to be confirmed against the README).</p></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
+- SynthSeg: Maffei et al. (2018), and the <code>mri_synthseg --qc</code> documentation (threshold to be confirmed against the README).</p>
+<h2>Nachtrag 2026-10-13: the SynthSeg flag was a threshold artefact</h2>
+<p>Measured on 124 DEMDAS sessions with <code>mri_synthseg --qc</code> (example set + full-cohort sample): the per-session
+minimum is <strong>always</strong> <code>general grey matter</code> (124/124). Its median is 0.653, i.e. the working threshold 0.65 sits
+in the middle of the distribution, so 62/124 sessions (28/64 in the pilot gate table) were "FLAGGED: SynthSeg QC"
+while no session was flagged by the Euler number. All other structures have medians 0.78-0.89 and never fall below
+0.65. One genuine outlier exists: sub-PDDISDKALEZOQ5 ses-M0 (grey matter 0.478, the known problem case).
+Consequence: a flag from this gate does not mean a bad segmentation; the PASS/FLAGGED row was removed from both GM
+pages on 2026-10-13 and the numbers stay. If a gate is wanted again, set the cut per structure (e.g. grey matter
+below the 5th cohort percentile, ~0.58) or by Euler number, not by a single 0.65 over all structures.
+Source: Billot B. et al., PNAS 2023, doi:10.1073/pnas.2216399120 (QC score = predicted Dice per structure).</p></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
 <p><code>cmb/review/build_slice_viewer.py</code> (Projekt valdo-t2s, englischer Code, keine Daten) erzeugt die
 QC-Seite aus Manifest, Wahrscheinlichkeitskarten und optionaler Gewebekarte. Fuer die Wiki fehlt
 ein Tool-Ordner nach <code>templates/tool/</code> mit README, INSTALL, einem Test auf synthetischen Volumen
