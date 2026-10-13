@@ -869,6 +869,28 @@
 "src": "knowledge/ai_labor_market/findings/young-workers-exposed-occupations-gap.md"
 },
 {
+"t": "Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask",
+"p": "brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99",
+"id": "chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg",
+"src": "knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md"
+},
+{
+"t": "DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)",
+"p": "brain_volumetry/findings/demdas-pipeline-protocol-v1.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "eingefrorenes Protokoll v1: Eingaenge, exakte Einstellungen, Regeln, offene Punkte fuer v2",
+"id": "demdas-pipeline-protocol-v1",
+"src": "knowledge/brain_volumetry/findings/demdas-pipeline-protocol-v1.md"
+},
+{
 "t": "DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods",
 "p": "brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.html",
 "a": "brain_volumetry",
@@ -933,6 +955,17 @@
 "x": "nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt",
 "id": "cohort-copies-need-a-gzip-sweep",
 "src": "knowledge/brain_volumetry/rules/cohort-copies-need-a-gzip-sweep.md"
+},
+{
+"t": "Take the Euler number from `mris_euler_number` on `?h.orig.nofix`; a log fallback can return the post-fix value 2",
+"p": "brain_volumetry/rules/euler-number-needs-the-binary-not-the-log.html",
+"a": "brain_volumetry",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "mris_euler_number auf orig.nofix mit LD_LIBRARY_PATH; Log-Fallback liefert Nach-Fix-Wert 2",
+"id": "euler-number-needs-the-binary-not-the-log",
+"src": "knowledge/brain_volumetry/rules/euler-number-needs-the-binary-not-the-log.md"
 },
 {
 "t": "Jede Verlaufs-Volumetrie bekommt eine Fehlerstatistik neben der Trendstatistik",

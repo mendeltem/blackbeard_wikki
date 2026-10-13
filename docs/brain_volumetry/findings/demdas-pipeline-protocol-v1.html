@@ -1,0 +1,132 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-13</span><span>Herkunft</span><span>frozen pipeline protocol for the DEMDAS pilot and first full-cohort run, 13.10.2026 (Alita); PDF in the QC mirror</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">FreeSurfer as the main tool for a longitudinal stroke cohort: what the evidence says to do, in order</a> <span class="muted small">(brain_volumetry)</span><br><a href="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-pipeline-protocol-v1.md">knowledge/brain_volumetry/findings/demdas-pipeline-protocol-v1.md</a></span></div><p>Status: FROZEN for the pilot and the first full-cohort run. Every later change is protocol v2 and is compared against v1 on the pilot before it is used. Author: Mendel Temuulen with Claude (Alita). Internal; cohort-level numbers only.</p>
+<h2>1. Scope</h2>
+<p>586 participants of the DEMDAS BIDS export of 2026-10-11 (1616 sessions, visits M0/M6/M36/M60; 1652 T1w). First runs: participants with at least two sessions (464 participants, 1494 sessions), most sessions first; the 40 sessions with two T1 acquisitions first of all (same-session test-retest). Baseline-only participants (121 + 1 with a single non-baseline visit) are added later with the same protocol.</p>
+<h2>2. Inputs per session</h2>
+<ul>
+<li>T1w MPRAGE 1 mm, distortion-corrected series (ImageType DIS3D; <code>run-2</code> where two runs exist, else the plain T1w). The same series type for ALL sessions of a participant; never mix with the ND series.</li>
+<li>FLAIR (<code>run-2</code> if present, else plain), DWI trace and ADC (scanner derivatives) for lesion masks and QC display.</li>
+<li>Integrity: <code>gzip -t</code> on every NIfTI after every copy; file count and byte sum against the source.</li>
+</ul>
+<h2>3. Processing steps and exact settings</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Tool, version</th>
+<th>Command / settings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Tissue and structure volumes</td>
+<td>FreeSurfer 8.2.0 <code>mri_synthseg</code> (SynthSeg 2)</td>
+<td><code>--parc --robust --vol --qc --cpu --threads 8</code>; no bias correction, no skull strip, no lesion filling before SynthSeg</td>
+</tr>
+<tr>
+<td>S2 Acute infarct mask</td>
+<td>DeepISLES isles22_ensemble</td>
+<td>DWI + ADC + FLAIR of the session, mask in DWI space, FLIRT 6 dof normmi to T1, trilinear to the SynthSeg grid, threshold 0.5</td>
+</tr>
+<tr>
+<td>S3 Chronic infarct mask (v1.1, pending wd7)</td>
+<td>union of earlier DeepISLES masks moved forward (dilated 1 voxel) + MAPPING (ATLAS R2.0 nnU-Net) on T1</td>
+<td>per session; "new infarct" flag when an own mask &gt; 1 ml appears at a follow-up</td>
+</tr>
+<tr>
+<td>S4 Volumes</td>
+<td>gm_beispiel.py</td>
+<td>RAW = SynthSeg labels; INFARCT EXCLUDED = RAW minus infarct voxels (acute now, chronic from v1.1); counting groups: cortex 1000-1035/2000-2035/3/42; subcortical 10-13,17,18,26,28,49-54,58,60; cerebellum GM 8,47; WM 2,41,7,46,16; CSF 4,5,14,15,24,43,44; ICV = SynthSeg total intracranial</td>
+</tr>
+<tr>
+<td>S5 Cortical thickness</td>
+<td>FreeSurfer 8.2.0 <code>recon-all -all -openmp 8</code> (cross-sectional)</td>
+<td>T1 only in v1; mean thickness = vertex-weighted MeanThickness of lh/rh.aparc.stats; Desikan-Killiany regions ThickAvg</td>
+</tr>
+<tr>
+<td>S6 QC gate</td>
+<td>qc_gate.py</td>
+<td>Euler number of lh/rh.orig.nofix via mris_euler_number (LD_LIBRARY_PATH systemlibs); cutoff = cohort Q1 - 1.5 IQR of the mean (pilot: -109.5); SynthSeg QC minimum, working threshold 0.65 until calibrated by ratings (wd8)</td>
+</tr>
+<tr>
+<td>S7 Error statistics</td>
+<td>fehler_statistik.py</td>
+<td>within-SD, CV, ICC(2,1), SDC95 per structure from test-retest pairs; detectability = annual slope / SDC</td>
+</tr>
+<tr>
+<td>S8 Display</td>
+<td>gm_qc_axial.py v3</td>
+<td>follow-ups aligned to the first complete session (FLIRT 6 dof normmi, cached); series FLAIR/DWI/ADC/T1ND registered to the T1 grid with <code>-nosearch</code>; display only, volumes always native</td>
+</tr>
+<tr>
+<td>S9 Tables</td>
+<td>cohort_statistics.py</td>
+<td>analysis_table.csv one row per session + codebook</td>
+</tr>
+</tbody>
+</table>
+<h2>4. Rules</h2>
+<ol>
+<li>One FreeSurfer version for all sessions of the cohort (8.2.0; the HPC module is 8.1.0, so 8.2.0 is installed in the project before the full run).</li>
+<li>Never interpret a single between-session difference; slopes from mixed models; a within-person change counts only beyond SDC95.</li>
+<li>Exclude single bad time points, not participants; document every exclusion with reason (QC gate, rating).</li>
+<li>Lesions: never masked-and-left-empty for FreeSurfer surfaces; filling of WM lesions before recon-all is a v2 candidate (pilot variants: baseline, filled, filled + FLAIRpial, SAMSEG) and enters v2 only if Euler number and SDC95 improve on the pilot.</li>
+<li>Every QC page lists software with versions, atlases, build time, and links its methods page locally.</li>
+<li>Output files, sheet and column names in English.</li>
+</ol>
+<h2>5. Open items that define v2</h2>
+<ul>
+<li>Chronic infarct masks (wd7), rating-calibrated QC thresholds (wd8), lesion filling / FLAIRpial / SAMSEG decision from the HPC pilot, FreeSurfer longitudinal stream (wd5), longComBat across sites (wd9), segmentation benchmark (wd6).</li>
+</ul>
+<h2>6. References</h2>
+<p>Billot 2023 PNAS (SynthSeg) PMID 36802420; Fischl 2012 NeuroImage (FreeSurfer) PMID 22248573; Reuter 2012 (longitudinal) PMID 22430496; Vidal-Pineiro 2025 Imaging Neurosci DOI 10.1162/imag_a_00547; Rosen 2018 (Euler) PMID 29278774; Monereo-Sanchez 2021 PMID 34000406; Chard 2010 PMID 20575080; Battaglini 2012 PMID 21882300; Magon 2014 PMID 25200127; Ozzoude 2020 PMID 33381009; Beer 2020 (longComBat) PMID 32640273.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort</a></li>
+<li><a href="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

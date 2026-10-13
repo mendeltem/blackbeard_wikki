@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:87.5%" title="getragen: 7"></i><i class="warn" style="width:12.5%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">7 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:90.9%" title="getragen: 10"></i><i class="warn" style="width:9.1%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">10 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
@@ -55,9 +55,32 @@ Laesionsausschluss nur, wenn die Maske in allen Sitzungen existiert, sonst entst
 <p><strong>Lesen bei:</strong> Volumetrie, SynthSeg, FreeSurfer, Atrophie, Verlauf, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus.</p>
 <p><strong>Neu 2026-10-12:</strong> SynthSeg in FreeSurfer 8.2 rechnet nur auf CPU (85 s je Sitzung mit --robust); Vollkohorten in Ordner-Batches, 3 parallel. Nach jeder Kohortenkopie gzip -t ueber alle NIfTI (eine abgeschnittene T1 lag 5 Wochen unbemerkt). Rechenplan-Literatur: FreeSurfer longitudinal stream (Reuter 2012) und Euler-Zahl als QC-Gate (Rosen 2018) sind die belegten Hebel; FastSurfer-Dicke ICC 0,92 vs 0,87.</p>
 <p><strong>Neu 2026-10-13:</strong> recon-all 8.2 braucht seine 26 GB nur in den ersten ~15 Minuten (SynthSeg/SynthMorph), danach 2-4 GB; wer ganze Laeufe statt dieser Phase begrenzt, laesst die halbe CPU brach (gemessen: 3,4 Sitzungen je Stunde bei MAX_P=2, 174 OOM-Kills bei MAX_P=5). Vorschlag: Schleuse nur um autorecon1 (~7,5 je Stunde, DEMDAS-Vollkohorte ~9 statt ~20 Tage); auf Slurm je Sitzung 36 GB, 4 CPU, 6 h. Example-Set: 61/65 Sitzungen mit Thickness fertig (13.10. 00:01).</p>
-<p><strong>Neu 2026-10-13 (mit Quellen):</strong> FreeSurfer-Plan fuer Schlaganfall-Laengsschnitte: Long-Stream statt Einzelsitzungen (Vidal-Pineiro 2025: +0,25 ICC; 0-6 Monate ist Rauschen, Raten aus 0/36/60), Laesionen vor recon-all fuellen (Chard 2010, Battaglini 2012, Magon 2014; ONDRI Ozzoude 2020: Fehlrate 62 % -&gt; 8 %), Euler-Zahl als QC-Gate (Rosen 2018, Monereo-Sanchez 2021), eigene SDC95 aus 40 Doppelaufnahmen, longComBat (Beer 2020). Jeder Wiki-Eintrag nennt ab jetzt seine Quellen (Nutzerregel 13.10.).</p></div>
+<p><strong>Neu 2026-10-13 (mit Quellen):</strong> FreeSurfer-Plan fuer Schlaganfall-Laengsschnitte: Long-Stream statt Einzelsitzungen (Vidal-Pineiro 2025: +0,25 ICC; 0-6 Monate ist Rauschen, Raten aus 0/36/60), Laesionen vor recon-all fuellen (Chard 2010, Battaglini 2012, Magon 2014; ONDRI Ozzoude 2020: Fehlrate 62 % -&gt; 8 %), Euler-Zahl als QC-Gate (Rosen 2018, Monereo-Sanchez 2021), eigene SDC95 aus 40 Doppelaufnahmen, longComBat (Beer 2020). Jeder Wiki-Eintrag nennt ab jetzt seine Quellen (Nutzerregel 13.10.).</p>
+<p><strong>Neu 2026-10-13 (nachmittags, mit Quellen):</strong> Durchsicht aller 17 Mehrfach-Sitzungs-Probanden: Ausrichtung und Serienregistrierung ueberall gut; chronische Infarkte bei Folgesitzungen ohne Maske (DWI-Modell nur akut), SynthSeg gibt Hoehlen Label 0 -&gt; vorwaerts getragene Maske noetig. Euler-Zahl nur aus dem Binary (LD_LIBRARY_PATH), nie aus dem Log-Ende. Protokoll v1 eingefroren. HPC-Messung: SynthSeg robust 50 s / 19,9 GB je Sitzung, SAMSEG 7 min / 11 GB.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="schedule-recon-all-8-by-phase-not-by-run"><summary><span class="type">Regel</span><span class="t"><a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-13</span><span class="i">Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -&gt; ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch</span></summary><div class="body"><p class="small muted">Herkunft: derived from the recon-all 8.2 phase profile on Alita, 13.10.2026; not yet run as a batch · <a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(4)</span></h2><details class="entry" id="euler-number-needs-the-binary-not-the-log"><summary><span class="type">Regel</span><span class="t"><a href="rules/euler-number-needs-the-binary-not-the-log.html">Take the Euler number from `mris_euler_number` on `?h.orig.nofix`; a log fallback can return the post-fix value 2</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">mris_euler_number auf orig.nofix mit LD_LIBRARY_PATH; Log-Fallback liefert Nach-Fix-Wert 2</span></summary><div class="body"><p class="small muted">Herkunft: QC gate of the DEMDAS pilot, 13.10.2026: 6 of 61 finished sessions reported Euler = 2 · <a href="rules/euler-number-needs-the-binary-not-the-log.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/euler-number-needs-the-binary-not-the-log.md">Markdown</a></p><h2>Aussage</h2>
+<p>The QC-relevant Euler number is that of the UNCORRECTED surface (<code>surf/lh.orig.nofix</code>, <code>rh.orig.nofix</code>), read with
+<code>mris_euler_number</code>. In FreeSurfer 8.2 the binary needs the ITK libraries (<code>libitkvnl_algo-5.3.so.1</code>) on LD_LIBRARY_PATH; without
+them it fails silently in a subprocess and a fallback that greps <code>recon-all.log</code> can pick the LAST "euler #" line, which is the
+topology-fixed surface (always 2). In the pilot this produced 6 sessions with Euler 2 and a wrong "recon-all pending" state; with the
+library path set, all 61 sessions had values between -142 and -15, cohort cutoff Q1 - 1.5 IQR = -109.5, no session flagged.</p>
+<h2>Traegt</h2>
+<p>Every QC gate built on the Euler number (Rosen 2018); every tool that wraps FreeSurfer 8 binaries from a conda Python.</p>
+<h2>Traegt nicht</h2>
+<p>FreeSurfer installations whose binaries find their libraries on the default path.</p>
+<h2>Bruchindikator</h2>
+<p>An Euler number of exactly 2 or an empty value for a finished session.</p>
+<h2>Ablesung</h2>
+<p>13.10.2026 14:20-14:35, qc_gate.py before/after the LD_LIBRARY_PATH fix (61 sessions).</p>
+<h2>Quellen</h2>
+<ul>
+<li>Rosen AFG et al. 2018. Quantitative assessment of structural image quality. NeuroImage 169:407-418. DOI 10.1016/j.neuroimage.2017.12.059. PMID 29278774.</li>
+<li>Monereo-Sanchez J et al. 2021. Quality control strategies for brain MRI segmentation and parcellation: insights from the Maastricht Study. NeuroImage 237:118174. DOI 10.1016/j.neuroimage.2021.118174. PMID 34000406.</li>
+</ul>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort</a></li>
+</ul></div></details><details class="entry" id="schedule-recon-all-8-by-phase-not-by-run"><summary><span class="type">Regel</span><span class="t"><a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-13</span><span class="i">Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -&gt; ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch</span></summary><div class="body"><p class="small muted">Herkunft: derived from the recon-all 8.2 phase profile on Alita, 13.10.2026; not yet run as a batch · <a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md">Markdown</a></p><h2>Aussage</h2>
 <p>On a single machine, gate recon-all 8.x on the memory-heavy Synth phase (first ~15 min, 26 GB resident),
 not on the number of whole runs. Pattern: <code>recon-all -autorecon1</code> behind a semaphore of floor((RAM - 10 GB) / 28 GB)
 slots, then <code>-autorecon2 -autorecon3</code> unrestricted up to cores / threads. Expected gain on a 24-core, 62 GB box:
@@ -134,7 +157,120 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(5)</span></h2><details class="entry" id="demdas-segmentation-method-benchmark-wd6"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight</span></summary><div class="body"><p class="small muted">Herkunft: wd6 DEMDAS segmentation benchmark, 13.10.2026 (Alita) · <a href="findings/demdas-segmentation-method-benchmark-wd6.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(7)</span></h2><details class="entry" id="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99</span></summary><div class="body"><p class="small muted">Herkunft: visual review of all 17 multi-session pilot participants of a stroke cohort (55 sessions, review sheets per participant), 13.10.2026 · <a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md">Markdown</a></p><h2>Aussage</h2>
+<p>In a longitudinal stroke cohort the acute infarct mask (DeepISLES on DWI/ADC/FLAIR) exists at baseline but is empty at 6, 36 and
+60 months in 12 of 17 reviewed participants, because the chronic scar no longer restricts diffusion. SynthSeg (--robust) then
+assigns the encephalomalacic cavity label 0 (it drops out of every tissue total AND of the intracranial volume) and labels the
+gliotic rim as white matter or cortex. The "infarct excluded" variant is therefore complete only at baseline. A new infarct between
+visits (one participant, 7 ml at an unscheduled 10-month visit) is caught by the DWI mask at that visit only. Rigid alignment of
+follow-ups to baseline (FLIRT 6 dof, brain-masked T1) reached Dice 0.982-0.990 in all 55 sessions; FLAIR, DWI and ADC registered with
+<code>flirt -nosearch</code> onto the T1 grid matched in every session; within-participant ICV drift stayed below 1.7 %.</p>
+<h2>Traegt</h2>
+<p>Any longitudinal volumetry with acute-phase lesion masks; the decision to build chronic masks (union of earlier masks moved forward
++ a T1-based chronic-infarct model such as MAPPING/ATLAS) before interpreting follow-up GM/WM/CSF; a "new infarct" flag per session.</p>
+<h2>Traegt nicht</h2>
+<p>Cohorts with lesion masks drawn on every visit; small lacunar infarcts that SynthSeg absorbs into CSF labels.</p>
+<h2>Bruchindikator</h2>
+<p>A SynthSeg version that labels cavities as CSF; a DWI-based model that detects chronic lesions.</p>
+<h2>Ablesung</h2>
+<p>13.10.2026, per-participant review sheets (T1+labels, FLAIR+mask, DWI+mask, counted groups, same slice across sessions); mask volumes
+per session from the QC page data; label 0 verified by counting labels outside the counting groups (0 ml in all 55 sessions).</p>
+<h2>Quellen</h2>
+<ul>
+<li>Ozzoude M et al. 2020. Cortical thickness estimation in individuals with cerebral small vessel disease, focal atrophy, and chronic stroke lesions. Front Neurosci 14:598868. DOI 10.3389/fnins.2020.598868. PMID 33381009.</li>
+<li>Billot B et al. 2023. Robust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets. PNAS 120:e2216399120. DOI 10.1073/pnas.2216399120. PMID 36802420.</li>
+<li>Liew SL et al. 2022. A large, curated, open-source stroke neuroimaging dataset to improve lesion segmentation algorithms (ATLAS v2.0). Sci Data 9:320. DOI 10.1038/s41597-022-01401-7 (unverified this session).</li>
+</ul>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort</a></li>
+<li><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a></li>
+</ul></div></details><details class="entry" id="demdas-pipeline-protocol-v1"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-pipeline-protocol-v1.html">DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">eingefrorenes Protokoll v1: Eingaenge, exakte Einstellungen, Regeln, offene Punkte fuer v2</span></summary><div class="body"><p class="small muted">Herkunft: frozen pipeline protocol for the DEMDAS pilot and first full-cohort run, 13.10.2026 (Alita); PDF in the QC mirror · <a href="findings/demdas-pipeline-protocol-v1.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-pipeline-protocol-v1.md">Markdown</a></p><p>Status: FROZEN for the pilot and the first full-cohort run. Every later change is protocol v2 and is compared against v1 on the pilot before it is used. Author: Mendel Temuulen with Claude (Alita). Internal; cohort-level numbers only.</p>
+<h2>1. Scope</h2>
+<p>586 participants of the DEMDAS BIDS export of 2026-10-11 (1616 sessions, visits M0/M6/M36/M60; 1652 T1w). First runs: participants with at least two sessions (464 participants, 1494 sessions), most sessions first; the 40 sessions with two T1 acquisitions first of all (same-session test-retest). Baseline-only participants (121 + 1 with a single non-baseline visit) are added later with the same protocol.</p>
+<h2>2. Inputs per session</h2>
+<ul>
+<li>T1w MPRAGE 1 mm, distortion-corrected series (ImageType DIS3D; <code>run-2</code> where two runs exist, else the plain T1w). The same series type for ALL sessions of a participant; never mix with the ND series.</li>
+<li>FLAIR (<code>run-2</code> if present, else plain), DWI trace and ADC (scanner derivatives) for lesion masks and QC display.</li>
+<li>Integrity: <code>gzip -t</code> on every NIfTI after every copy; file count and byte sum against the source.</li>
+</ul>
+<h2>3. Processing steps and exact settings</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Tool, version</th>
+<th>Command / settings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 Tissue and structure volumes</td>
+<td>FreeSurfer 8.2.0 <code>mri_synthseg</code> (SynthSeg 2)</td>
+<td><code>--parc --robust --vol --qc --cpu --threads 8</code>; no bias correction, no skull strip, no lesion filling before SynthSeg</td>
+</tr>
+<tr>
+<td>S2 Acute infarct mask</td>
+<td>DeepISLES isles22_ensemble</td>
+<td>DWI + ADC + FLAIR of the session, mask in DWI space, FLIRT 6 dof normmi to T1, trilinear to the SynthSeg grid, threshold 0.5</td>
+</tr>
+<tr>
+<td>S3 Chronic infarct mask (v1.1, pending wd7)</td>
+<td>union of earlier DeepISLES masks moved forward (dilated 1 voxel) + MAPPING (ATLAS R2.0 nnU-Net) on T1</td>
+<td>per session; "new infarct" flag when an own mask &gt; 1 ml appears at a follow-up</td>
+</tr>
+<tr>
+<td>S4 Volumes</td>
+<td>gm_beispiel.py</td>
+<td>RAW = SynthSeg labels; INFARCT EXCLUDED = RAW minus infarct voxels (acute now, chronic from v1.1); counting groups: cortex 1000-1035/2000-2035/3/42; subcortical 10-13,17,18,26,28,49-54,58,60; cerebellum GM 8,47; WM 2,41,7,46,16; CSF 4,5,14,15,24,43,44; ICV = SynthSeg total intracranial</td>
+</tr>
+<tr>
+<td>S5 Cortical thickness</td>
+<td>FreeSurfer 8.2.0 <code>recon-all -all -openmp 8</code> (cross-sectional)</td>
+<td>T1 only in v1; mean thickness = vertex-weighted MeanThickness of lh/rh.aparc.stats; Desikan-Killiany regions ThickAvg</td>
+</tr>
+<tr>
+<td>S6 QC gate</td>
+<td>qc_gate.py</td>
+<td>Euler number of lh/rh.orig.nofix via mris_euler_number (LD_LIBRARY_PATH systemlibs); cutoff = cohort Q1 - 1.5 IQR of the mean (pilot: -109.5); SynthSeg QC minimum, working threshold 0.65 until calibrated by ratings (wd8)</td>
+</tr>
+<tr>
+<td>S7 Error statistics</td>
+<td>fehler_statistik.py</td>
+<td>within-SD, CV, ICC(2,1), SDC95 per structure from test-retest pairs; detectability = annual slope / SDC</td>
+</tr>
+<tr>
+<td>S8 Display</td>
+<td>gm_qc_axial.py v3</td>
+<td>follow-ups aligned to the first complete session (FLIRT 6 dof normmi, cached); series FLAIR/DWI/ADC/T1ND registered to the T1 grid with <code>-nosearch</code>; display only, volumes always native</td>
+</tr>
+<tr>
+<td>S9 Tables</td>
+<td>cohort_statistics.py</td>
+<td>analysis_table.csv one row per session + codebook</td>
+</tr>
+</tbody>
+</table>
+<h2>4. Rules</h2>
+<ol>
+<li>One FreeSurfer version for all sessions of the cohort (8.2.0; the HPC module is 8.1.0, so 8.2.0 is installed in the project before the full run).</li>
+<li>Never interpret a single between-session difference; slopes from mixed models; a within-person change counts only beyond SDC95.</li>
+<li>Exclude single bad time points, not participants; document every exclusion with reason (QC gate, rating).</li>
+<li>Lesions: never masked-and-left-empty for FreeSurfer surfaces; filling of WM lesions before recon-all is a v2 candidate (pilot variants: baseline, filled, filled + FLAIRpial, SAMSEG) and enters v2 only if Euler number and SDC95 improve on the pilot.</li>
+<li>Every QC page lists software with versions, atlases, build time, and links its methods page locally.</li>
+<li>Output files, sheet and column names in English.</li>
+</ol>
+<h2>5. Open items that define v2</h2>
+<ul>
+<li>Chronic infarct masks (wd7), rating-calibrated QC thresholds (wd8), lesion filling / FLAIRpial / SAMSEG decision from the HPC pilot, FreeSurfer longitudinal stream (wd5), longComBat across sites (wd9), segmentation benchmark (wd6).</li>
+</ul>
+<h2>6. References</h2>
+<p>Billot 2023 PNAS (SynthSeg) PMID 36802420; Fischl 2012 NeuroImage (FreeSurfer) PMID 22248573; Reuter 2012 (longitudinal) PMID 22430496; Vidal-Pineiro 2025 Imaging Neurosci DOI 10.1162/imag_a_00547; Rosen 2018 (Euler) PMID 29278774; Monereo-Sanchez 2021 PMID 34000406; Chard 2010 PMID 20575080; Battaglini 2012 PMID 21882300; Magon 2014 PMID 25200127; Ozzoude 2020 PMID 33381009; Beer 2020 (longComBat) PMID 32640273.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort</a></li>
+<li><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg</a></li>
+</ul></div></details><details class="entry" id="demdas-segmentation-method-benchmark-wd6"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight</span></summary><div class="body"><p class="small muted">Herkunft: wd6 DEMDAS segmentation benchmark, 13.10.2026 (Alita) · <a href="findings/demdas-segmentation-method-benchmark-wd6.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md">Markdown</a></p><h2>Aussage</h2>
 <p>Fünf Segmentationsmethoden werden auf dem DEMDAS-Benchmark-Set mit gemessenen
 Werten verglichen (keine Empfehlung in der Tabelle; die Methodenauswahl für die
 ganze Kohorte trifft der Gutachter/Nutzer). Set A = 64 Sessions (bids/demdas,
