@@ -50,5 +50,17 @@ mask (Khlif 2022 doi:10.1016/j.nicl.2022.103200; Li 2015 doi:10.1016/j.nicl.2014
 lesion out of the cost function (Brett 2001 doi:10.1006/nimg.2001.0845; Nachev 2008 doi:10.1016/j.neuroimage.2007.10.002).
 Conclusion unchanged: SynthSeg on the unfilled T1, infarct removed after; the reviewer note carries the reference list.
 
+## Nachtrag 2026-10-13 (evening): 4-participant variant, e-mail copy, key subcortical structures, case page
+- User: send by e-mail, not stick. Second page `gm_pia4_qc` with 4 participants / 17 visits (J1V39UH6 new infarct mid-series,
+  KOP7N936 110 ml territorial, L2F7N926 51 ml cerebellar, LHBB7W5R 6 ml medial temporal next to the hippocampus); full copy
+  94 MB with all series; e-mail copy T1 only, JPEG quality 62, overlays as 128/32/8-colour palette PNG (alpha preserved,
+  checked): 18 MB zip. Mail package in `~/ablage/mail_pia_20261013/` (zip, two xlsx, README without WMH, mail text DE/EN).
+- Compact view now shows the key subcortical structures (hippocampus, amygdala, thalamus, caudate, putamen, pallidum,
+  accumbens; left/right/sum) and an across-session table coloured by the structure's own SDC95 from the test-retest sheet
+  (hippocampus 2.5 %, amygdala 1.6 %, thalamus 4.5 %, caudate 3.9 %, putamen 2.0 %, pallidum 3.8 %; accumbens 3 % assumed).
+- The case page `pia_cases` (formerly three cases incl. a WMH case) is rebuilt by `pia_cases.py` from the QC sprites with the
+  SAME four participants, captions without PASS/FLAGGED, no WMH mention (user: do not mention WMH to the reviewer).
+- Corrected claim: infarct filling before segmentation was never computed; "removed before" exists only as WMH variant B.
+
 ## Verknüpft
 - [demdas-qc-gate-euler-synthseg](demdas-qc-gate-euler-synthseg.md)
