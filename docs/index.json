@@ -880,6 +880,17 @@
 "src": "knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md"
 },
 {
+"t": "Primer: DEMDAS brain volumetry and cortical thickness: a primer for presenting the work",
+"p": "brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "Lehrtext zum Vortragen (12 Seiten, PDF daneben): Kohorte, Pipeline mit Versionen, Messfehler, Verlaeufe, QC, Fehler ueber Zeitpunkte, FreeSurfer-Plan, Rechenbudget, Fragen und Antworten, 24 Quellen",
+"id": "demdas-volumetry-primer-2026-10-13",
+"src": "knowledge/brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.md"
+},
+{
 "t": "FreeSurfer as the main tool for a longitudinal stroke cohort: what the evidence says to do, in order",
 "p": "brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html",
 "a": "brain_volumetry",
