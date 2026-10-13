@@ -17,6 +17,8 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 | regel | [slice-slider-marks-where-the-findings-are](rules/slice-slider-marks-where-the-findings-are.md) | Farbige Striche unter dem Schichtregler (gruen/gelb/rot je Schicht), Klick springt, N/P naechster/voriger Fund |
 | regel | [the-local-mirror-is-the-source-of-the-qc-stick](rules/the-local-mirror-is-the-source-of-the-qc-stick.md) | ~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; ganze Seite kopieren (Index + Sprites), qc_mirror_check.py, vor dem Abziehen sync, cmp, lsof |
 | pruefpunkt | [slice-viewer-as-shared-tool](open_checks/slice-viewer-as-shared-tool.md) | Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt) |
+| befund | [demdas-cortical-thickness-qc-page](findings/demdas-cortical-thickness-qc-page.md) | Langform der Hover-/Methods-Texte der DEMDAS-Rindendicke-QC-Seite (recon-all 8.2, Euler, Versionen vom 12.10.), Englisch fuer Dritte |
+| befund | [demdas-qc-gate-euler-synthseg](findings/demdas-qc-gate-euler-synthseg.md) | Automatisches QC-Gate je DEMDAS-Sitzung: Euler-Zahl + SynthSeg-QC-Score (qc_gate.py -> qc_gate.csv), eine Zeile je Sitzung mit T1w |
 
 ## Herkunft
 Projekte valdo-t2s und mb-arena (Alita), `cmb/review/build_slice_viewer.py`, Nutzerrueckmeldungen 29.09. bis 07.10.2026.

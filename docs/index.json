@@ -2184,7 +2184,7 @@
 "y": "Befund",
 "s": "getragen",
 "d": "2026-10-12",
-"x": "Long form of the texts shown on hover and in the Methods overlay of `QUALITY_CONTROLL/DEMDAS/cortical_thickness/index.html`. English on purpose: the page may go to third parties. No patient data here, only methods. Software versions as inst",
+"x": "Langform der Hover-/Methods-Texte der DEMDAS-Rindendicke-QC-Seite (recon-all 8.2, Euler, Versionen vom 12.10.), Englisch fuer Dritte",
 "id": "demdas-cortical-thickness-qc-page",
 "src": "knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md"
 },
@@ -2206,7 +2206,7 @@
 "y": "Befund",
 "s": "getragen",
 "d": "2026-10-12",
-"x": "Every DEMDAS session is now scored automatically by a two-part quality gate (`demdas-gm/qc_gate.py` -> `derivatives/demdas/gm_beispiel/qc_gate.csv`, one row per BIDS session with a T1w). The gate combines 1. the **Euler number** of the Free",
+"x": "Automatisches QC-Gate je DEMDAS-Sitzung: Euler-Zahl + SynthSeg-QC-Score (qc_gate.py -> qc_gate.csv), eine Zeile je Sitzung mit T1w",
 "id": "demdas-qc-gate-euler-synthseg",
 "src": "knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md"
 },
