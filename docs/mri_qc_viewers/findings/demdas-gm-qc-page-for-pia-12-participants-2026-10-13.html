@@ -96,6 +96,18 @@ Conclusion unchanged: SynthSeg on the unfilled T1, infarct removed after; the re
   SAME four participants, captions without PASS/FLAGGED, no WMH mention (user: do not mention WMH to the reviewer).</li>
 <li>Corrected claim: infarct filling before segmentation was never computed; "removed before" exists only as WMH variant B.</li>
 </ul>
+<h2>Nachtrag 2026-10-13 (late): no "removed" on the QC pages, removal explained on the case page</h2>
+<p>User decisions in sequence: "also füllen vor der Segmentierung" (reads the MS literature as favouring filling before), then
+"removed rausnehmen, auch aus der Tabelle" for the QC page, then "die Fallseite kümmert sich um die removal: zeigen, welche
+Läsionen unser Netz gefunden hat, ohne viele Zahlen". Implemented: compact view hides the NOT REMOVED / REMOVED AFTER
+toggle, the R key, the mode suffix on every unit label and the "mode" entry of "? Methods"; volumes shown are RAW only.
+<code>pia_excel.py --raw-only</code> writes the tables without INFARCT_EXCLUDED columns (sheet "Structures" only). The case page
+<code>pia_cases</code> now shows per visit what DeepISLES (nnU-Net based ensemble on DWI/ADC/FLAIR) found (magenta) and that the
+magenta tissue is taken out of the counted groups; plain language, no volumes in the text. Mail texts and README copies
+are neutral: "raw segmentation, infarct handling (fill before or exclude after) still open".
+Fact check kept: the masks on the pages are DeepISLES per visit; no MAPPING/T1 masks exist for the example set
+(derivatives/demdas/infarkt-t1 absent), which is why follow-up masks are empty. Infarct filling before segmentation has
+not been computed; if the user wants it, variant "fill infarct in T1 then SynthSeg" for 17 or 41 sessions is 1-2 h CPU.</p>
 <h2>Verknüpft</h2>
 <ul>
 <li><a href="demdas-qc-gate-euler-synthseg.html">demdas-qc-gate-euler-synthseg</a></li>
