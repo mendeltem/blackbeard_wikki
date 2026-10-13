@@ -1,0 +1,88 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Filling the infarct in the T1 before SynthSeg does not take it out of the grey-matter count</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Filling the infarct in the T1 before SynthSeg does not take it out of the grey-matter count</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-13</span><span>Herkunft</span><span>DEMDAS pilot, 4 participants / 17 sessions, infarct_fill.py (FSL lesion_filling and enantiomorphic fill), SynthSeg 8.2.0 --parc --robust, 2026-10-13 evening</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="demdas-pipeline-protocol-v1.html">DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)</a> <span class="muted small">(brain_volumetry)</span><br><a href="../../mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.html">Compact GM QC page for the clinical reviewer: 12 participants, 41 sessions, complete data only</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.md">knowledge/brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.md</a></span></div><h2>Aussage</h2>
+<p>User decision 13.10.2026 evening: "filling before segmentation, implement everywhere". Measured first on the pilot before any
+rollout: 17 sessions of the 4 reviewer participants, two filling methods, SynthSeg (FreeSurfer 8.2.0, <code>--parc --robust</code>, CPU)
+on the filled T1, volumes compared with the RAW run:
+- <code>wm</code>: FSL <code>lesion_filling</code>, WM mask = SynthSeg labels 2/41 minus the infarct, only components touching cerebral WM are filled
+  (the tool refuses others). Cerebellar infarcts are never filled (labels 7/46 are not "WM" for lesion_filling).
+- <code>mirror</code>: enantiomorphic fill (Nachev 2008): T1 flipped left-right, FLIRT 6 dof onto itself, infarct voxels replaced by the
+  mirrored contralateral intensities scaled to the local level, 1-voxel feathered rim.</p>
+<p>Result: the filled region is still labelled as grey matter by SynthSeg, because SynthSeg follows anatomy (shape prior), not
+intensity. 110 ml territorial infarct (KOP7N936 M0): inside the mask RAW 68.6 ml GM / 36.2 ml WM; after <code>wm</code> fill 63.7 / 43.8;
+after <code>mirror</code> 57.5 / 43.3. GM total changes by -0.6 % (<code>wm</code>) and -1.1 % (<code>mirror</code>), versus -8.0 % when the infarct is excluded
+after segmentation. 51 ml cerebellar infarct (L2F7N926 M0): <code>wm</code> changes nothing (no component touches cerebral WM), <code>mirror</code>
+-1.5 % GM with 39.5 of 46.7 ml still GM inside the mask. 7 ml and 6 ml infarcts: -0.1 to -0.3 %. Sessions without a mask:
+identical to RAW (the run was a no-op there, 12 of 17 sessions; the <code>--min-ml</code> skip had a bug, fixed afterwards).</p>
+<p>Consequence: "fill before" and "exclude after" are not alternatives for infarcts under SynthSeg. Filling changes the image but
+the count stays; only the mask-based exclusion changes the count. The MS lesion-filling literature (Battaglini 2012, Chard
+2010) concerns intensity-driven segmenters (FAST, SPM) and WM lesions; it does not transfer to cortical/cerebellar infarcts
+under SynthSeg. If filling is wanted for FreeSurfer recon-all surfaces (a different question: surface placement, not counting),
+that remains a v2 candidate on the HPC pilot. Cost: <code>wm</code> ~90 s, <code>mirror</code> ~220 s per session on the loaded CPU, 4 threads.</p>
+<h2>Trägt</h2>
+<ul>
+<li><code>derivatives/demdas/fill_v2/{wm,mirror}/&lt;id&gt;_synthseg_parc.nii.gz</code>, <code>_T1w_filled.nii.gz</code>, <code>summary.csv</code>, <code>lauf.log</code> (34 runs, 0 failed).</li>
+<li>Check image of the 110 ml case (raw / wm / mirror T1 and the labels inside the mask) viewed 13.10. ~20:10.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Only 5 sessions carry a mask above 0.5 ml; no test-retest of the filled variant; no recon-all on the filled T1 yet.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A segmenter whose GM-in-mask drops below ~20 % after filling would make filling a real alternative; SynthSeg does not.</li>
+</ul>
+<h2>Ablesung</h2>
+<ul>
+<li>Battaglini M et al. Hum Brain Mapp 2012;33:2062-2071, doi:10.1002/hbm.21344; Chard DT et al. JMRI 2010;32:223-228,
+  doi:10.1002/jmri.22214; Nachev P et al. Neuroimage 2008;39:1215-1226, doi:10.1016/j.neuroimage.2007.10.002;
+  Billot B et al. PNAS 2023, doi:10.1073/pnas.2216399120. Own data: Tier own.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="demdas-pipeline-protocol-v1.html">demdas-pipeline-protocol-v1</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

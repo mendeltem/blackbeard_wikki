@@ -935,6 +935,17 @@
 "src": "knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md"
 },
 {
+"t": "Filling the infarct in the T1 before SynthSeg does not take it out of the grey-matter count",
+"p": "brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "Fuellen vor SynthSeg (WM-Fill, Spiegel-Fill) nimmt den Infarkt NICHT aus der GM-Zaehlung: -0,6/-1,1 % statt -8 % beim Ausschluss danach; SynthSeg folgt der Anatomie",
+"id": "infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13",
+"src": "knowledge/brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.md"
+},
+{
 "t": "recon-all 8.2: the memory peak is a 15-minute phase, not the whole run",
 "p": "brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.html",
 "a": "brain_volumetry",

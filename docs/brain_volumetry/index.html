@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:92.3%" title="getragen: 12"></i><i class="warn" style="width:7.7%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">12 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:92.9%" title="getragen: 13"></i><i class="warn" style="width:7.1%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">13 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
@@ -185,7 +185,7 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(8)</span></h2><details class="entry" id="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99</span></summary><div class="body"><p class="small muted">Herkunft: visual review of all 17 multi-session pilot participants of a stroke cohort (55 sessions, review sheets per participant), 13.10.2026 · <a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(9)</span></h2><details class="entry" id="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99</span></summary><div class="body"><p class="small muted">Herkunft: visual review of all 17 multi-session pilot participants of a stroke cohort (55 sessions, review sheets per participant), 13.10.2026 · <a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md">Markdown</a></p><h2>Aussage</h2>
 <p>In a longitudinal stroke cohort the acute infarct mask (DeepISLES on DWI/ADC/FLAIR) exists at baseline but is empty at 6, 36 and
 60 months in 12 of 17 reviewed participants, because the chronic scar no longer restricts diffusion. SynthSeg (--robust) then
 assigns the encephalomalacic cavity label 0 (it drops out of every tissue total AND of the intracranial volume) and labels the
@@ -817,6 +817,47 @@ FastSurfer v2.4.2 software record, Backhausen 2016 title/DOI). Pilot numbers fro
 <li><a href="rules/longitudinal-volumetry-needs-error-statistics.html">longitudinal-volumetry-needs-error-statistics</a></li>
 <li><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a></li>
 <li><a href="rules/cohort-copies-need-a-gzip-sweep.html">cohort-copies-need-a-gzip-sweep</a></li>
+</ul></div></details><details class="entry" id="infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13"><summary><span class="type">Befund</span><span class="t"><a href="findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.html">Filling the infarct in the T1 before SynthSeg does not take it out of the grey-matter count</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">Fuellen vor SynthSeg (WM-Fill, Spiegel-Fill) nimmt den Infarkt NICHT aus der GM-Zaehlung: -0,6/-1,1 % statt -8 % beim Ausschluss danach; SynthSeg folgt der Anatomie</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS pilot, 4 participants / 17 sessions, infarct_fill.py (FSL lesion_filling and enantiomorphic fill), SynthSeg 8.2.0 --parc --robust, 2026-10-13 evening · <a href="findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.md">Markdown</a></p><h2>Aussage</h2>
+<p>User decision 13.10.2026 evening: "filling before segmentation, implement everywhere". Measured first on the pilot before any
+rollout: 17 sessions of the 4 reviewer participants, two filling methods, SynthSeg (FreeSurfer 8.2.0, <code>--parc --robust</code>, CPU)
+on the filled T1, volumes compared with the RAW run:
+- <code>wm</code>: FSL <code>lesion_filling</code>, WM mask = SynthSeg labels 2/41 minus the infarct, only components touching cerebral WM are filled
+  (the tool refuses others). Cerebellar infarcts are never filled (labels 7/46 are not "WM" for lesion_filling).
+- <code>mirror</code>: enantiomorphic fill (Nachev 2008): T1 flipped left-right, FLIRT 6 dof onto itself, infarct voxels replaced by the
+  mirrored contralateral intensities scaled to the local level, 1-voxel feathered rim.</p>
+<p>Result: the filled region is still labelled as grey matter by SynthSeg, because SynthSeg follows anatomy (shape prior), not
+intensity. 110 ml territorial infarct (KOP7N936 M0): inside the mask RAW 68.6 ml GM / 36.2 ml WM; after <code>wm</code> fill 63.7 / 43.8;
+after <code>mirror</code> 57.5 / 43.3. GM total changes by -0.6 % (<code>wm</code>) and -1.1 % (<code>mirror</code>), versus -8.0 % when the infarct is excluded
+after segmentation. 51 ml cerebellar infarct (L2F7N926 M0): <code>wm</code> changes nothing (no component touches cerebral WM), <code>mirror</code>
+-1.5 % GM with 39.5 of 46.7 ml still GM inside the mask. 7 ml and 6 ml infarcts: -0.1 to -0.3 %. Sessions without a mask:
+identical to RAW (the run was a no-op there, 12 of 17 sessions; the <code>--min-ml</code> skip had a bug, fixed afterwards).</p>
+<p>Consequence: "fill before" and "exclude after" are not alternatives for infarcts under SynthSeg. Filling changes the image but
+the count stays; only the mask-based exclusion changes the count. The MS lesion-filling literature (Battaglini 2012, Chard
+2010) concerns intensity-driven segmenters (FAST, SPM) and WM lesions; it does not transfer to cortical/cerebellar infarcts
+under SynthSeg. If filling is wanted for FreeSurfer recon-all surfaces (a different question: surface placement, not counting),
+that remains a v2 candidate on the HPC pilot. Cost: <code>wm</code> ~90 s, <code>mirror</code> ~220 s per session on the loaded CPU, 4 threads.</p>
+<h2>Trägt</h2>
+<ul>
+<li><code>derivatives/demdas/fill_v2/{wm,mirror}/&lt;id&gt;_synthseg_parc.nii.gz</code>, <code>_T1w_filled.nii.gz</code>, <code>summary.csv</code>, <code>lauf.log</code> (34 runs, 0 failed).</li>
+<li>Check image of the 110 ml case (raw / wm / mirror T1 and the labels inside the mask) viewed 13.10. ~20:10.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Only 5 sessions carry a mask above 0.5 ml; no test-retest of the filled variant; no recon-all on the filled T1 yet.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A segmenter whose GM-in-mask drops below ~20 % after filling would make filling a real alternative; SynthSeg does not.</li>
+</ul>
+<h2>Ablesung</h2>
+<ul>
+<li>Battaglini M et al. Hum Brain Mapp 2012;33:2062-2071, doi:10.1002/hbm.21344; Chard DT et al. JMRI 2010;32:223-228,
+  doi:10.1002/jmri.22214; Nachev P et al. Neuroimage 2008;39:1215-1226, doi:10.1016/j.neuroimage.2007.10.002;
+  Billot B et al. PNAS 2023, doi:10.1073/pnas.2216399120. Own data: Tier own.</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/demdas-pipeline-protocol-v1.html">demdas-pipeline-protocol-v1</a></li>
 </ul></div></details><details class="entry" id="recon-all-8-memory-peak-is-a-15-minute-phase"><summary><span class="type">Befund</span><span class="t"><a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM line on Alita, recon-all logs of 89 finished sessions (bids/demdas, FreeSurfer 8.2.0), 13.10.2026 · <a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md">Markdown</a></p><h2>Aussage</h2>
 <p>A FreeSurfer 8.2.0 <code>recon-all -all</code> run on a DEMDAS T1w needs its memory only at the start.
 Measured in <code>scripts/recon-all.log</code> of finished sessions (sub-PDDISDJ1V39UH6_ses-M0 as the profiled case):</p>
