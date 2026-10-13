@@ -880,6 +880,17 @@
 "src": "knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md"
 },
 {
+"t": "Full-cohort sample GM page: 12 participants x 4 sessions, SynthSeg only",
+"p": "brain_volumetry/findings/demdas-full-cohort-sample-gm-page-2026-10-13.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "erste Seite aus der Vollkohorte: 12 Probanden x 4 Sitzungen, nur SynthSeg, QC-Werte 15/48, PASS/FLAGGED-Zeile auf beiden GM-Seiten entfernt",
+"id": "demdas-full-cohort-sample-gm-page-2026-10-13",
+"src": "knowledge/brain_volumetry/findings/demdas-full-cohort-sample-gm-page-2026-10-13.md"
+},
+{
 "t": "DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)",
 "p": "brain_volumetry/findings/demdas-pipeline-protocol-v1.html",
 "a": "brain_volumetry",
@@ -977,6 +988,17 @@
 "x": "Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen",
 "id": "longitudinal-volumetry-needs-error-statistics",
 "src": "knowledge/brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.md"
+},
+{
+"t": "One T1 per visit, and TSV columns by `cut`, never by `read`",
+"p": "brain_volumetry/rules/one-t1-per-visit-and-tab-columns-by-cut.html",
+"a": "brain_volumetry",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "HPC-Pilot: `read` verschluckt leere TSV-Spalten, zwei T1 je Besuch unter einer id; 5 von 14 \"FAILED\" waren Listenfehler, FLAIRpial-Abbruch 3/65 ist Befund",
+"id": "one-t1-per-visit-and-tab-columns-by-cut",
+"src": "knowledge/brain_volumetry/rules/one-t1-per-visit-and-tab-columns-by-cut.md"
 },
 {
 "t": "Schedule recon-all 8 by phase, not by run",
