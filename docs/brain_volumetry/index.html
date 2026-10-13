@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:83.3%" title="getragen: 5"></i><i class="warn" style="width:16.7%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">5 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:85.7%" title="getragen: 6"></i><i class="warn" style="width:14.3%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">6 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
@@ -54,7 +54,8 @@ Nachweisbarkeit (Jahre bis eine Person die SDC ueberschreitet, KI in denselben E
 Laesionsausschluss nur, wenn die Maske in allen Sitzungen existiert, sonst entstehen Maskeneffekte von +1400 %.</p>
 <p><strong>Lesen bei:</strong> Volumetrie, SynthSeg, FreeSurfer, Atrophie, Verlauf, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus.</p>
 <p><strong>Neu 2026-10-12:</strong> SynthSeg in FreeSurfer 8.2 rechnet nur auf CPU (85 s je Sitzung mit --robust); Vollkohorten in Ordner-Batches, 3 parallel. Nach jeder Kohortenkopie gzip -t ueber alle NIfTI (eine abgeschnittene T1 lag 5 Wochen unbemerkt). Rechenplan-Literatur: FreeSurfer longitudinal stream (Reuter 2012) und Euler-Zahl als QC-Gate (Rosen 2018) sind die belegten Hebel; FastSurfer-Dicke ICC 0,92 vs 0,87.</p>
-<p><strong>Neu 2026-10-13:</strong> recon-all 8.2 braucht seine 26 GB nur in den ersten ~15 Minuten (SynthSeg/SynthMorph), danach 2-4 GB; wer ganze Laeufe statt dieser Phase begrenzt, laesst die halbe CPU brach (gemessen: 3,4 Sitzungen je Stunde bei MAX_P=2, 174 OOM-Kills bei MAX_P=5). Vorschlag: Schleuse nur um autorecon1 (~7,5 je Stunde, DEMDAS-Vollkohorte ~9 statt ~20 Tage); auf Slurm je Sitzung 36 GB, 4 CPU, 6 h. Example-Set: 61/65 Sitzungen mit Thickness fertig (13.10. 00:01).</p></div>
+<p><strong>Neu 2026-10-13:</strong> recon-all 8.2 braucht seine 26 GB nur in den ersten ~15 Minuten (SynthSeg/SynthMorph), danach 2-4 GB; wer ganze Laeufe statt dieser Phase begrenzt, laesst die halbe CPU brach (gemessen: 3,4 Sitzungen je Stunde bei MAX_P=2, 174 OOM-Kills bei MAX_P=5). Vorschlag: Schleuse nur um autorecon1 (~7,5 je Stunde, DEMDAS-Vollkohorte ~9 statt ~20 Tage); auf Slurm je Sitzung 36 GB, 4 CPU, 6 h. Example-Set: 61/65 Sitzungen mit Thickness fertig (13.10. 00:01).</p>
+<p><strong>Neu 2026-10-13 (mit Quellen):</strong> FreeSurfer-Plan fuer Schlaganfall-Laengsschnitte: Long-Stream statt Einzelsitzungen (Vidal-Pineiro 2025: +0,25 ICC; 0-6 Monate ist Rauschen, Raten aus 0/36/60), Laesionen vor recon-all fuellen (Chard 2010, Battaglini 2012, Magon 2014; ONDRI Ozzoude 2020: Fehlrate 62 % -&gt; 8 %), Euler-Zahl als QC-Gate (Rosen 2018, Monereo-Sanchez 2021), eigene SDC95 aus 40 Doppelaufnahmen, longComBat (Beer 2020). Jeder Wiki-Eintrag nennt ab jetzt seine Quellen (Nutzerregel 13.10.).</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="schedule-recon-all-8-by-phase-not-by-run"><summary><span class="type">Regel</span><span class="t"><a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-13</span><span class="i">Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -&gt; ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch</span></summary><div class="body"><p class="small muted">Herkunft: derived from the recon-all 8.2 phase profile on Alita, 13.10.2026; not yet run as a batch · <a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md">Markdown</a></p><h2>Aussage</h2>
 <p>On a single machine, gate recon-all 8.x on the memory-heavy Synth phase (first ~15 min, 26 GB resident),
@@ -133,7 +134,7 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(3)</span></h2><details class="entry" id="demdas-segmentation-method-benchmark-wd6"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight</span></summary><div class="body"><p class="small muted">Herkunft: wd6 DEMDAS segmentation benchmark, 13.10.2026 (Alita) · <a href="findings/demdas-segmentation-method-benchmark-wd6.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="demdas-segmentation-method-benchmark-wd6"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight</span></summary><div class="body"><p class="small muted">Herkunft: wd6 DEMDAS segmentation benchmark, 13.10.2026 (Alita) · <a href="findings/demdas-segmentation-method-benchmark-wd6.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md">Markdown</a></p><h2>Aussage</h2>
 <p>Fünf Segmentationsmethoden werden auf dem DEMDAS-Benchmark-Set mit gemessenen
 Werten verglichen (keine Empfehlung in der Tabelle; die Methodenauswahl für die
 ganze Kohorte trifft der Gutachter/Nutzer). Set A = 64 Sessions (bids/demdas,
@@ -153,7 +154,90 @@ mit run-1 UND run-2 T1w (echter Test-Retest, Primärkriterium).</p>
 <p>Die Wahl der Segmentationsmethode für die DEMDAS-Gesamtkohorte: die Tabelle
 mit Rängen 1..N und Mittelrank (benchmark.csv / benchmark.html) ist die
 messbasierte Grundlage; ICC/SDC95 (Primärkriterium) ist der entscheidende
-Satz, sobald Set B vollständig ist.</p></div></details><details class="entry" id="recon-all-8-memory-peak-is-a-15-minute-phase"><summary><span class="type">Befund</span><span class="t"><a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM line on Alita, recon-all logs of 89 finished sessions (bids/demdas, FreeSurfer 8.2.0), 13.10.2026 · <a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md">Markdown</a></p><h2>Aussage</h2>
+Satz, sobald Set B vollständig ist.</p></div></details><details class="entry" id="freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort"><summary><span class="type">Befund</span><span class="t"><a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">FreeSurfer as the main tool for a longitudinal stroke cohort: what the evidence says to do, in order</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">FreeSurfer als Hauptwerkzeug: Long-Stream (+0,25 ICC), Laesionen fuellen (ONDRI 62 % -&gt; 8 % Fehler), FLAIRpial testen, Euler-QC, lokaler Test-Retest, longComBat; Fehler in M0/M10/M60 erkennen und behandeln; 24 Quellen mit PMID</span></summary><div class="body"><p class="small muted">Herkunft: literature research 13.10.2026 (PubMed-verified), for the DEMDAS-like stroke cohort (586 participants, 1616 sessions, 7 sites); full report demdas-gm/literatur/segmentation_best_practice_2026-10-13.md · <a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md">Markdown</a></p><h2>Aussage</h2>
+<p>With FreeSurfer 8.2 as the main tool, the evidence-backed levers for volumes and cortical thickness in a stroke / small-vessel
+cohort with visits at 0, 6, 36 and 60 months are, in order of expected gain:</p>
+<ol>
+<li><strong>Longitudinal stream instead of per-session runs.</strong> In 11 datasets (n = 3,611, FS 7.1) the cross-sectional stream was about
+   0.25 ICC lower for change than the long stream; ICC of change for 3 visits was 0.24 at 2 years, 0.54 at 4, 0.72 at 6 [7]. The
+   0 to 6-month contrast is therefore mostly noise; atrophy rates should come from 0/36/60 months. Baseline-only participants
+   (121 of 586 here) are run as one-time-point bases and enter mixed models for intercept and covariate effects.</li>
+<li><strong>Lesion handling before recon-all.</strong> Unfilled WM lesions bias GM up and WM down (+2.3 % / -3.6 % for 15 ml, cut to 0.1 % by
+   filling) [10]; masking alone does not remove the bias, refilling does [11]; 72 % of MS lesion volume was labelled GM and unfilled
+   cortex came out thinner [12]. In chronic stroke / SVD (ONDRI, n = 155) a lesion- and atrophy-aware FreeSurfer procedure raised
+   acceptable ratings from 18 % to 76 % (ribbon) and cut tissue-segmentation failures from 62 % to 8 % [13]. Fill WM lesions
+   (WMH + WM infarct) with FSL lesion_filling; cortical or cavitary infarcts via inpainting (FastSurfer-LIT, validated on tumours
+   and cavities, not yet on infarcts [14]) or masking; ALWAYS exclude lesion-overlapping vertices and voxels from ROI statistics.</li>
+<li><strong>FLAIR for the pial surface (-FLAIRpial).</strong> Plausible for WMH-rich brains, but no quantitative study was found: test it on
+   30-40 sessions against Euler number, edit need and the local SDC95 before using it cohort-wide.</li>
+<li><strong>QC gate per session.</strong> Euler number is the best automated correlate of manual quality (AUC 0.98-0.99, n = 1,840) [15]; in the
+   Maastricht Study Euler number and MRIQC were the best strategies and excluding global-morphology outliers made things worse [16];
+   Qoala-T (AUC 0.98) needs recalibration [17]. Head motion lowers GM volume and thickness by about 0.7 % per mm/min even after
+   visual QC [20], the same order as yearly atrophy, so keep a motion proxy as covariate.</li>
+<li><strong>Local test-retest.</strong> The 40 sessions with two T1 acquisitions in the same session give the cohort's own SDC95 per ROI;
+   use it as the threshold for implausible within-subject jumps (section "errors" below) and to decide which small structures
+   (amygdala, thalamus) are interpretable.</li>
+<li><strong>Harmonisation on the tables.</strong> ComBat removed scanner effects in cortical thickness across 11 scanners [21]; longComBat
+   (ADNI, n = 663) is more powerful for change and controls type I error better than scanner-as-covariate [23]. Apply after QC,
+   protecting age, sex, group and lesion load.</li>
+<li><strong>SynthSeg only as comparator / fallback</strong> for large tissue volumes: traveling-subject variation 3.1 % on average, up to
+   15-20 %, amygdala and ventral DC 7-8 %, hippocampi systematically larger than FastSurfer's [8]; no independent evidence of
+   better site robustness than FreeSurfer on 1 mm MPRAGE. SynthSeg inside FreeSurfer 8.2 is CPU-only here (see linked finding).</li>
+</ol>
+<p><strong>Segmentation errors across time points (M0, M10, M60): detect and handle.</strong> Detect per time point with Euler number (per-site
+threshold), MRIQC, recalibrated Qoala-T; within participant flag residuals from a robust line above the local SDC95, non-monotonic
+jumps in structures that only shrink, sudden asymmetry changes, and TIV drift (skull-strip or registration error). Handle in this
+order: rerun with lesion-filled T1 (and -FLAIRpial where the FLAIR is good); manual edits only on flagged cases, one editor,
+documented, on the cross-sectional run BEFORE building the base so the template inherits the fix (edits had large effects on
+subcortical volumes in the Maastricht Study [16]); the long stream reduces time-point-specific errors but cannot repair an error in
+the template [3,7]; exclude single time points, not participants; mixed models with a per-time-point QC covariate and a
+sensitivity analysis, because failures concentrate in the sickest [13]. Expect a first-pass failure rate above 10 % in this
+population (ONDRI unmodified: 11 % ribbon, 62 % tissue fails [13]).</p>
+<h2>Traegt</h2>
+<p>Pipeline decisions for DEMDAS-like cohorts (Siemens 3T MPRAGE + FLAIR, infarcts, WMH, 7 sites); the ordering of Clara tasks
+wd4 (QC gate), wd5 (long stream), wd6 (benchmark) and the pilot variants (baseline, lesion-filled, lesion-filled + FLAIRpial, LIT).</p>
+<h2>Traegt nicht</h2>
+<p>Cohorts without FLAIR or without lesion masks; FastSurfer-longitudinal (no published reliability found); any claim about
+-FLAIRpial effect sizes (none found); infarct-cavity filling (no study found).</p>
+<h2>Bruchindikator</h2>
+<p>A published stroke-cohort comparison that ranks the tools differently; a quantitative -FLAIRpial study; FastSurfer-long reliability
+data; a local pilot in which lesion filling does not lower the Euler number or SDC95.</p>
+<h2>Ablesung</h2>
+<p>PubMed lookups 13.10.2026 (24 references, 20 PMID-verified, 4 marked unverified: Kondrateva 2025 and Uhr 2025 preprints, the
+FastSurfer v2.4.2 software record, Backhausen 2016 title/DOI). Pilot numbers from demdas-gm (23 participants, 63 sessions).</p>
+<h2>Quellen</h2>
+<ol>
+<li>Fischl B et al. 2002. Whole brain segmentation: automated labeling of neuroanatomical structures in the human brain. Neuron 33:341-355. DOI 10.1016/S0896-6273(02)00569-X. PMID 11832223.</li>
+<li>Fischl B. 2012. FreeSurfer. NeuroImage 62:774-781. DOI 10.1016/j.neuroimage.2012.01.021. PMID 22248573.</li>
+<li>Reuter M et al. 2012. Within-subject template estimation for unbiased longitudinal image analysis. NeuroImage 61:1402-1418. DOI 10.1016/j.neuroimage.2012.02.084. PMID 22430496.</li>
+<li>Henschel L et al. 2020. FastSurfer: a fast and accurate deep learning based neuroimaging pipeline. NeuroImage 219:117012. DOI 10.1016/j.neuroimage.2020.117012. PMID 32526386.</li>
+<li>Billot B et al. 2023. Robust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets (SynthSeg). PNAS 120:e2216399120. DOI 10.1073/pnas.2216399120. PMID 36802420.</li>
+<li>Cerri S et al. 2021. A contrast-adaptive method for simultaneous whole-brain and lesion segmentation in multiple sclerosis (SAMSEG). NeuroImage 225:117471. DOI 10.1016/j.neuroimage.2020.117471. PMID 33099007.</li>
+<li>Vidal-Pineiro D et al. 2025. Reliability of structural brain change in cognitively healthy adult samples. Imaging Neuroscience 3:imag_a_00547. DOI 10.1162/imag_a_00547. PMCID PMC12319936.</li>
+<li>Kondrateva E et al. 2025. Benchmarking the reproducibility of brain MRI segmentation across scanners and time. arXiv:2504.15931 (preprint, unverified).</li>
+<li>DZNE software record: FastSurfer v2.4.2 release, https://pub.dzne.de/record/277720 (unverified).</li>
+<li>Chard DT et al. 2010. Reducing the impact of white matter lesions on automated measures of brain gray and white matter volumes. J Magn Reson Imaging 32:223-228. DOI 10.1002/jmri.22214. PMID 20575080.</li>
+<li>Battaglini M et al. 2012. Evaluating and reducing the impact of white matter lesions on brain volume measurements. Hum Brain Mapp 33:2062-2071. DOI 10.1002/hbm.21344. PMID 21882300.</li>
+<li>Magon S et al. 2014. White matter lesion filling improves the accuracy of cortical thickness measurements in multiple sclerosis patients: a longitudinal study. BMC Neurosci 15:106. DOI 10.1186/1471-2202-15-106. PMID 25200127.</li>
+<li>Ozzoude M et al. 2020. Cortical thickness estimation in individuals with cerebral small vessel disease, focal atrophy, and chronic stroke lesions. Front Neurosci 14:598868. DOI 10.3389/fnins.2020.598868. PMID 33381009.</li>
+<li>Pollak C et al. 2025. FastSurfer-LIT: lesion inpainting tool for whole-brain MRI segmentation with tumors, cavities, and abnormalities. Imaging Neuroscience 3. DOI 10.1162/imag_a_00446. PMID 40109899.</li>
+<li>Rosen AFG et al. 2018. Quantitative assessment of structural image quality. NeuroImage 169:407-418. DOI 10.1016/j.neuroimage.2017.12.059. PMID 29278774.</li>
+<li>Monereo-Sanchez J et al. 2021. Quality control strategies for brain MRI segmentation and parcellation: practical approaches and recommendations - insights from the Maastricht Study. NeuroImage 237:118174. DOI 10.1016/j.neuroimage.2021.118174. PMID 34000406.</li>
+<li>Klapwijk ET et al. 2019. Qoala-T: a supervised-learning tool for quality control of FreeSurfer segmented MRI data. NeuroImage 189:116-129. DOI 10.1016/j.neuroimage.2019.01.014. PMID 30633965.</li>
+<li>Esteban O et al. 2017. MRIQC: advancing the automatic prediction of image quality in MRI from unseen sites. PLoS One 12:e0184661. DOI 10.1371/journal.pone.0184661. PMID 28945803.</li>
+<li>Backhausen LL et al. 2016. Quality control of structural MRI images applied using FreeSurfer: a hands-on workflow to rate motion artifacts. Front Neurosci 10:558 (title/DOI unverified). PMID 27570508.</li>
+<li>Reuter M et al. 2015. Head motion during MRI acquisition reduces gray matter volume and thickness estimates. NeuroImage 107:107-115. DOI 10.1016/j.neuroimage.2014.12.006. PMID 25498430.</li>
+<li>Fortin JP et al. 2018. Harmonization of cortical thickness measurements across scanners and sites. NeuroImage 167:104-120. DOI 10.1016/j.neuroimage.2017.11.024. PMID 29155184.</li>
+<li>Fortin JP et al. 2017. Harmonization of multi-site diffusion tensor imaging data. NeuroImage 161:149-170. DOI 10.1016/j.neuroimage.2017.08.047. PMID 28826946.</li>
+<li>Beer JC et al. 2020. Longitudinal ComBat: a method for harmonizing longitudinal multi-scanner imaging data. NeuroImage 220:117129. DOI 10.1016/j.neuroimage.2020.117129. PMID 32640273.</li>
+<li>Uhr V et al. 2025. Deep-learning versus classical pipelines and white-matter hypointensities. arXiv:2503.20571 (preprint, unverified).</li>
+</ol>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/longitudinal-volumetry-needs-error-statistics.html">longitudinal-volumetry-needs-error-statistics</a></li>
+<li><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a></li>
+<li><a href="rules/cohort-copies-need-a-gzip-sweep.html">cohort-copies-need-a-gzip-sweep</a></li>
+</ul></div></details><details class="entry" id="recon-all-8-memory-peak-is-a-15-minute-phase"><summary><span class="type">Befund</span><span class="t"><a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM line on Alita, recon-all logs of 89 finished sessions (bids/demdas, FreeSurfer 8.2.0), 13.10.2026 · <a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md">Markdown</a></p><h2>Aussage</h2>
 <p>A FreeSurfer 8.2.0 <code>recon-all -all</code> run on a DEMDAS T1w needs its memory only at the start.
 Measured in <code>scripts/recon-all.log</code> of finished sessions (sub-PDDISDJ1V39UH6_ses-M0 as the profiled case):</p>
 <table>

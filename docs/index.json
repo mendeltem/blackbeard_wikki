@@ -880,6 +880,17 @@
 "src": "knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md"
 },
 {
+"t": "FreeSurfer as the main tool for a longitudinal stroke cohort: what the evidence says to do, in order",
+"p": "brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "FreeSurfer als Hauptwerkzeug: Long-Stream (+0,25 ICC), Laesionen fuellen (ONDRI 62 % -> 8 % Fehler), FLAIRpial testen, Euler-QC, lokaler Test-Retest, longComBat; Fehler in M0/M10/M60 erkennen und behandeln; 24 Quellen mit PMID",
+"id": "freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort",
+"src": "knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md"
+},
+{
 "t": "recon-all 8.2: the memory peak is a 15-minute phase, not the whole run",
 "p": "brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.html",
 "a": "brain_volumetry",

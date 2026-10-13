@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md` | Recherche mit 24 PMID-geprueften Quellen: FreeSurfer-Verbesserungsplan fuer DEMDAS, Umgang mit Segmentierungsfehlern ueber Zeitpunkte; Nutzerregel: Wiki immer mit Quellen.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md`, `rules/cohort-copies-need-a-gzip-sweep.md`, Nachtraege in `mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.md` (Software-Block Pflicht) und `agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` (abarbeiten-flock) | DEMDAS-Vollkohorte: CPU-SynthSeg-Plan, abgeschnittene T1, Nutzerregel Versionen.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.md` | Nachtrag: Index ohne Sprites kopiert -> Kachelversatz (bunter Streifen oben); ganze Seite kopieren, qc_mirror_check.py.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md` | Nachtrag: Abhilfe umgesetzt (Schlange im eigenen Scope, Sperre fuer --abarbeiten, cgroup-Warnung, Messlatte fehlerbilanz).
