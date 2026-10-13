@@ -4,13 +4,13 @@ typ: befund
 status: getragen
 thema: knowledge/brain_volumetry
 stand: 2026-10-13
-herkunft: primer written for the presentation of the DEMDAS volumetry work (Alita, 13.10.2026); PDF next to this file
+herkunft: primer v3 (15:45) for the presentation of the DEMDAS volumetry work (Alita, 13.10.2026); PDF next to this file
 verweist_auf: [freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort, synthseg-in-freesurfer-8-runs-on-cpu-only, cohort-copies-need-a-gzip-sweep, longitudinal-volumetry-needs-error-statistics]
 ---
 
-# Primer: DEMDAS brain volumetry and cortical thickness: a primer for presenting the work
+# Primer: DEMDAS brain volumetry and cortical thickness: a primer for presenting the work (v3)
 
-Built 2026-10-13 on workstation Alita (Ubuntu 24.04, FreeSurfer 8.2.0). Author: Mendel Temuulen with Claude (Alita session). Internal document: the cohort contains patient data; this primer reports cohort-level numbers only, no identifiers.
+Version 3, built 2026-10-13 15:45 on workstation Alita (v1 11:10, v2 14:00) (Ubuntu 24.04, FreeSurfer 8.2.0). Author: Mendel Temuulen with Claude (Alita session). Internal document: the cohort contains patient data; this primer reports cohort-level numbers only, no identifiers.
 
 **How to use it.** Sections 1 to 4 are what you must be able to explain without notes (data, pipeline, measures, why FreeSurfer). Sections 5 to 7 are the numbers from the pilot and how to read them. Sections 8 to 10 are the plan for the full cohort and the answers to the questions you will be asked. Every claim from the literature carries a reference number; the list at the end has DOI and PMID. Everything measured here names the script and date.
 
@@ -28,6 +28,8 @@ Built 2026-10-13 on workstation Alita (Ubuntu 24.04, FreeSurfer 8.2.0). Author: 
 | T1-weighted MPRAGE, 1 mm isotropic, Siemens 3T | 1652 files; all distortion-corrected (DIS3D in ImageType); 40 sessions have two T1 acquisitions (run-1, run-2) |
 | Other series | FLAIR (most sessions), DWI with ADC and trace maps (scanner derivatives), T2w / T2*w in some sites |
 | Participants with 1 / 2 / 3 / 4 sessions | 122 / 129 / 104 / 231 (121 have baseline only) |
+
+**Rule since 2026-10-13:** participants with only one session (122, of which 121 baseline-only) are excluded from the first full-cohort runs and from the QC viewer; participants with the most sessions are processed first. They can be added later with one switch.
 
 A **pilot subset** of 24 participants (65 sessions, 23 with usable SynthSeg output, 61 with finished recon-all as of 2026-10-13 10:00) carries all methods development. Its BIDS copy also holds the uncorrected ("ND") MPRAGE next to the distortion-corrected series for 62 sessions; this pair is used for the test-retest in section 5.
 
@@ -118,18 +120,23 @@ Mixed model (volume in % ICV ~ years + random intercept per participant, 23 part
 
 Side comparison (14 participants with a lateralised M0 infarct): thalamus ipsilateral to the infarct loses 2.2 % per year versus 0.6 % contralateral (Wilcoxon p = 0.009), robust to infarct exclusion (p = 0.011); hippocampus and amygdala show no significant side difference. Caveats to state: cross-sectional segmentation per session, small n per time point, no multiple-testing correction, follow-up infarct masks pending.
 
-**Cortical thickness** (FreeSurfer 8.2 cross-sectional, 61 sessions, 23 participants, thickness_table.py 2026-10-13): median mean thickness 2.38 mm (IQR 2.34-2.43, range 2.19-2.60), typical for age 60-80; per-participant slopes (17 participants with ≥ 2 sessions ≥ 6 months apart) median -0.17 % per year (IQR -0.51 to +0.32), i.e. within noise, as expected without the longitudinal stream [7].
+**Cortical thickness** (FreeSurfer 8.2 cross-sectional, 61 sessions, 23 participants, thickness_table.py 2026-10-13, corrected 11:40: the hemisphere mean is FreeSurfer's vertex-weighted MeanThickness, the first build had used the unweighted mean of the 34 regions, 0.04 mm too high): median mean thickness 2.34 mm (range about 2.15-2.56), typical for age 60-80; per-participant slopes (17 participants with ≥ 2 sessions ≥ 6 months apart) median -0.17 % per year (IQR -0.51 to +0.32), i.e. within noise, as expected without the longitudinal stream [7].
 
 ---
 
 ## 7. Quality control: pages, gate and known artefacts
 
 **Pages** (mirror ~/QUALITY_CONTROLL/DEMDAS, copied to the stick; every page English, every number with a hover explanation, a "? Methods" overlay and a software block):
-- `gm_beispiel_qc/index.html`: one axial image per session, sessions of a participant switched in the same window (M0, M6, ...), RAW / INFARCT EXCLUDED toggle, infarct outline in magenta, totals and across-session table, cortical thickness per session. Being rebuilt (task wd0) with series switch (T1, T1 ND, FLAIR, DWI, ADC), a COUNTED overlay that colours each voxel by its counting group with a legend of FreeSurfer label IDs, a lesion panel and slider marks at infarct slices, and without WMH.
+- `gm_beispiel_qc/index.html` (v3, rebuilt 2026-10-13): only participants with at least two COMPLETE sessions (SynthSeg + recon-all thickness + infarct mask), most sessions first (16 participants, 53 sessions; excluded ones listed with reason). One axial image per session, sessions switched in the same window. Image series switch (keys 1-5): T1 corrected, T1 ND, FLAIR, DWI, ADC, all rigidly registered onto one display grid. Lesion handling: NOT REMOVED / REMOVED BEFORE (filled T1, pending) / REMOVED AFTER. Overlays: none, segmentation, COUNTED (each voxel coloured by the counting group it was summed into, legend with the FreeSurfer label IDs), infarct. Lesion panel (volume, side, components, slice range, 'go to lesion') and magenta marks under the slider at every infarct slice. Across-session table with ICV, coloured only where a change exceeds the structure's SDC95. Counting panel (key C) with ml per group. No WMH anywhere on the page. Methods overlay with atlases, software versions, local methods HTML + PDF, primer.
+- `cohort_statistics/index.html` (new 2026-10-13): 586 participants, sessions per participant and visit, single-session participants per site, intervals between visits, series availability, scanners, processing status, infarct size classes (small < 5 ml, medium 5-30 ml, large > 30 ml, plus tertiles) and side, WMH distribution, volumes and thickness per visit, and `analysis_table.csv` (one row per session, 1616 rows) with a codebook.
 - `volumenverlauf/verlauf.html` and `error_statistics.html`: trajectories, test-retest, detectability, failures, QC gate.
 - `cortical_thickness/index.html`: thickness per region and session with the cohort band.
 
 **QC gate** (qc_gate.py, 2026-10-13): Euler number per hemisphere from `mris_euler_number`, mean per session; cohort cutoff Q1 - 1.5 × IQR = -107.75; pilot median -51 (range -108 to -15); 1 of 55 finished sessions flagged. SynthSeg QC minimum over structures: median 0.674, 5th percentile 0.555; a 0.65 threshold flags 28 of 64 sessions, so 0.65 is too strict for this cohort and must be recalibrated (proposal: cohort 5th percentile, or visual grading of the 10 lowest).
+
+**Visual review of all 17 multi-session participants (13.10., review sheets in `gm_beispiel_qc/review/`):** alignment between sessions Dice 0.982-0.990 in all 55 sessions; FLAIR, DWI and ADC registered correctly everywhere; ICV drift within participants at most 1.7 %; SynthSeg plausible across visits, also with confluent WMH and enlarged ventricles; acute infarcts at M0 sit exactly under the DWI mask (0.4 ml pons to 110 ml MCA territory). Systematic finding: the acute (DWI) mask is empty at follow-ups in 12 of 17 participants, SynthSeg gives the chronic cavity label 0 (dropped from all totals and from ICV) and counts gliosis as WM or cortex, so INFARCT EXCLUDED is complete only at M0 until the chronic mask (task wd7) exists. One participant has a new 7 ml infarct at an unscheduled 10-month visit. Minor: one 0.02 ml mask speck outside the brain; one noisy single-file DWI without mask.
+
+**Euler-number error, fixed 13.10.:** six finished sessions had reported Euler 2 because `mris_euler_number` failed on a missing ITK library and the log fallback read the post-fix value; with the library path set, all 61 sessions have proper values (cohort cutoff -109.5, no Euler flag, 23 of 55 SynthSeg-QC flags at the uncalibrated 0.65).
 
 **Known artefact, fixed 2026-10-12**: a page showed a coloured strip at the top of every image; it was not a segmentation error but a tile offset, because index.html had been copied after a rebuild while the JPEG mosaics were from an older build with a different tile height. Rule: copy whole page folders, and run qc_mirror_check.py (sprite size against tile layout, build vs mirror vs stick).
 
@@ -163,9 +170,11 @@ A **benchmark** on the pilot plus the 40 repeat pairs (task wd6, running) compar
 
 Measured on Alita (24 cores, 62 GB RAM, RTX 24 GB): recon-all 8.2 cross-sectional 40-48 min per session with 3 in parallel (RAM-limited, 17-28 GB each); SynthSeg robust 85-99 s per image and 19.2 GB per process (2 in parallel at most; 3 caused seven out-of-memory kills in the night of 12/13 October).
 
+**HPC inventory (Charité sc-projects, measured 2026-10-13; scripts in `demdas-gm/hpc/` and on the stick `HPC_SCRIPTS/`):** compute partition 43 nodes with 64-192 EPYC cores and 0.5-1 TB RAM, 2-day walltime, user limit 900 CPUs, arrays up to 10000 jobs; gpu partition 27 A100 (40/80 GB) and L40S, pgpu with H100/H200; modules FreeSurfer 7.4.1 and 8.1.0, FSL 6.0.7.18, Apptainer; conda env GM_SEGMENTATION (Python 3.11, torch cu126) in the project; project storage 16 TB with 6.6 TB free. Measured on one DEMDAS session in a job: SynthSeg robust 50 s and 19.9 GB with 8 threads; SAMSEG T1+FLAIR with lesion model 7 min and 11.1 GB. Open point: the HPC has FreeSurfer 8.1.0, the pilot used 8.2.0; one version must be used for all sessions (install 8.2.0 in the project, README_HPC.md step 0). GPU nodes: A100 40 GB, driver CUDA 12.7, so torch must be a cu126 build (env GM_SEGMENTATION). Job preamble that works: source miniforge conda, activate GM_SEGMENTATION, module load freesurfer fsl. Ready: session-list builder (repeat pairs first, single-session participants excluded), SLURM arrays for SynthSeg (8 CPU, 24 GB, 15 min), recon-all in four variants (base, FLAIRpial, filled, filled + FLAIRpial; 8 CPU, 32 GB, 4 h), SAMSEG (8 CPU, 16 GB, 30 min), lesion filling, and a collector for the result tables. Pilot plan: 24 participants in the four recon-all variants plus SAMSEG, judged on Euler number, SDC95 from the repeat pairs and visual rating, then the full run.
+
 | Step | Sessions | Alita alone | With the HPC (SLURM, GPU nodes; project path SEGMENTATION_PROJECT) |
 |---|---|---|---|
-| SynthSeg robust, all T1 | 1652 | about 23-45 h (2 or 1 processes), running since 2026-10-13 10:36, multi-session participants first | hours as an array job |
+| SynthSeg robust, multi-session participants (1528 T1) | 1528 | about 40 h with 1 process, running since 2026-10-13 10:36 | about 1 h as an array job (50 s per session measured) |
 | recon-all cross-sectional | 1616 | about 23 days | 1-2 days with 50 parallel jobs |
 | base + long | 465 participants, 1495 time points | not feasible locally | a few days |
 | FastSurfer CNN (GPU) comparator | 1652 | about 1 day | hours |
@@ -173,6 +182,14 @@ Measured on Alita (24 cores, 62 GB RAM, RTX 24 GB): recon-all 8.2 cross-sectiona
 Decision rules: (1) the full-cohort SynthSeg run gives all volumes and QC scores first; (2) recon-all and the longitudinal stream go to the HPC; Alita keeps pilot, benchmark and QC; (3) the pilot variants (baseline, lesion-filled, lesion-filled + FLAIRpial, LIT for cavities) are judged on Euler number, edit need, SDC95 on the repeat pairs and a visual grade before the full run; (4) nothing is mixed across tools within one model.
 
 ---
+
+## 10b. Status on 2026-10-13 evening and the next steps (v3)
+
+Frozen: pipeline protocol v1 (`primer/DEMDAS_pipeline_protocol_v1.pdf`). Running: SynthSeg over the multi-session participants of the full cohort (repeat-acquisition sessions first). Delivered today: GM viewer v3 (17 participants, 55 sessions, series switch, counted groups, lesion panel, no WMH), cohort statistics page with analysis table and codebook, corrected thickness page, review sheets, three-case page for the discussion (`pia_cases/`), HPC environment and scripts, derivatives backup on the SSD.
+
+Queued for Clara, each with acceptance test: wd7 chronic infarct masks and the "new infarct" flag; wd8 rating widget and rating-calibrated QC thresholds; wd9 mixed-model analysis script (five variants, ipsi/contra, detectability, optional longComBat) that runs unchanged on the full cohort; wd6 segmentation benchmark (SynthSeg robust/fast, FastSurfer, FreeSurfer aseg, FSL) in progress; wd5 longitudinal stream after the cross-sectional runs.
+
+Decisions still open, in this order: (1) FreeSurfer 8.2.0 in the HPC project; (2) lesion-handling variant from the HPC pilot; (3) QC thresholds from the ratings; (4) longitudinal stream yes/no from the pilot comparison; (5) longComBat across the seven sites.
 
 ## 11. Presenting it: storyline and expected questions
 
@@ -185,6 +202,7 @@ Questions you will get, with the answer in one or two sentences:
 - *Is 0 to 6 months useful?* For atrophy no: at 2 years the ICC of change is 0.24 in healthy adults [7]; 6 months is a reliability estimate and a check on acute-phase effects.
 - *What about seven scanners?* Same vendor and sequence family; longComBat on the tables after QC, with site as random effect in a sensitivity analysis [21,23].
 - *How many will fail?* Expect over 10 % first-pass failures; the gate, lesion filling and reruns are planned for that [13,16].
+- *Your follow-up volumes ignore the old infarct?* Yes, today: the DWI mask is acute-only; the chronic mask (carried forward + MAPPING on T1) is being built, and SynthSeg already drops cavities from the totals, so the remaining bias is the gliotic rim counted as tissue.
 - *Why these reliability numbers if the segmentation is "deep learning"?* Deep learning changes the error pattern, not the need to measure it; our test-retest is an upper bound and the exact rerun is queued.
 
 ---
@@ -224,9 +242,10 @@ Software: FreeSurfer 8.2.0 (build 20260314-d932c45); SynthSeg 2 as shipped in Fr
 23. Beer JC et al. 2020. Longitudinal ComBat: a method for harmonizing longitudinal multi-scanner imaging data. NeuroImage 220:117129. DOI 10.1016/j.neuroimage.2020.117129. PMID 32640273.
 24. Uhr V et al. 2025. Deep-learning versus classical pipelines and white-matter hypointensities. arXiv:2503.20571 (preprint, unverified).
 
-Internal sources: demdas-gm/literatur/quality_levers_2026-10-12.md, compute_plan_full_cohort_2026-10-12.md, segmentation_best_practice_2026-10-13.md; wiki blackbeard_wikki/knowledge/brain_volumetry (findings freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort, synthseg-in-freesurfer-8-runs-on-cpu-only; rules cohort-copies-need-a-gzip-sweep, longitudinal-volumetry-needs-error-statistics) and knowledge/mri_qc_viewers/rules.
+Internal sources: demdas-gm/doku/DEMDAS_pipeline_protocol_v1.md, demdas-gm/hpc/README_HPC.md, demdas-gm/literatur/quality_levers_2026-10-12.md, compute_plan_full_cohort_2026-10-12.md, segmentation_best_practice_2026-10-13.md; wiki blackbeard_wikki/knowledge/brain_volumetry (findings freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort, synthseg-in-freesurfer-8-runs-on-cpu-only; rules cohort-copies-need-a-gzip-sweep, longitudinal-volumetry-needs-error-statistics) and knowledge/mri_qc_viewers/rules.
 
 ## Verknuepft
 - [freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort](freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md)
-- [synthseg-in-freesurfer-8-runs-on-cpu-only](synthseg-in-freesurfer-8-runs-on-cpu-only.md)
+- [chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg](chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md)
+- [demdas-pipeline-protocol-v1](demdas-pipeline-protocol-v1.md)
 - PDF: [demdas-volumetry-primer-2026-10-13.pdf](demdas-volumetry-primer-2026-10-13.pdf)

@@ -2,6 +2,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.md` (+ PDF) | Primer v3: Durchsicht, Euler-Fix, HPC-Skripte, Protokoll v1, Status und naechste Schritte.
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md`, `rules/euler-number-needs-the-binary-not-the-log.md`, `findings/demdas-pipeline-protocol-v1.md` | Durchsicht aller Pilot-Probanden, Euler-Fehler behoben, Protokoll v1 eingefroren; alle mit Quellen.
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.md` (+ PDF) | Primer fuer den Vortrag: alles Wissenswerte zur DEMDAS-Volumetrie mit Quellen; Kopien lokal (demdas-gm/doku), Spiegel und Stick.
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md` | Recherche mit 24 PMID-geprueften Quellen: FreeSurfer-Verbesserungsplan fuer DEMDAS, Umgang mit Segmentierungsfehlern ueber Zeitpunkte; Nutzerregel: Wiki immer mit Quellen.
