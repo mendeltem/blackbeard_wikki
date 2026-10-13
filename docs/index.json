@@ -2266,6 +2266,17 @@
 "src": "knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md"
 },
 {
+"t": "Compact GM QC page for the clinical reviewer: 12 participants, 41 sessions, complete data only",
+"p": "mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.html",
+"a": "mri_qc_viewers",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "Kompakte GM-QC-Seite fuer die klinische Durchsicht: 12 Probanden, 41 Sitzungen, nur vollstaendige Daten; Generator-Option --kompakt, Sprites aus dem Cache",
+"id": "demdas-gm-qc-page-for-pia-12-participants-2026-10-13",
+"src": "knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.md"
+},
+{
 "t": "DEMDAS GM QC page: how every number is computed (English, link target of the page's \"? Methods\" overlay)",
 "p": "mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.html",
 "a": "mri_qc_viewers",

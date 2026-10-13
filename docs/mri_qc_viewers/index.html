@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
-<div class="stripe"><i class="ok" style="width:90.0%" title="getragen: 9"></i><i class="info" style="width:10.0%" title="offen: 1"></i></div><div class="counts"><span class="ok">9 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+<div class="stripe"><i class="ok" style="width:90.9%" title="getragen: 10"></i><i class="info" style="width:9.1%" title="offen: 1"></i></div><div class="counts"><span class="ok">10 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
 die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
 wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
 Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
@@ -296,7 +296,39 @@ verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our mode
 links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).
 Modellname kurz (<code>our-3D-U-Net</code>), keine Leerzeichen (Dateinamen der Ebenen).
 Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, <code>slices/</code> und Startseite) zeigt seit
-2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(3)</span></h2><details class="entry" id="demdas-cortical-thickness-qc-page"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-cortical-thickness-qc-page.html">DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Langform der Hover-/Methods-Texte der DEMDAS-Rindendicke-QC-Seite (recon-all 8.2, Euler, Versionen vom 12.10.), Englisch fuer Dritte</span></summary><div class="body"><p class="small muted">Herkunft: wd3 DEMDAS cortical thickness (Alita, demdas-gm/thickness_table.py, thickness_qc.py, recon-all 8.2 cross-sectional), user request 12.10.2026 &quot;cortical thickness as a QC page and table, DEMDAS priority one&quot; · <a href="findings/demdas-cortical-thickness-qc-page.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md">Markdown</a></p><h2>Aussage</h2>
+2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="demdas-gm-qc-page-for-pia-12-participants-2026-10-13"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.html">Compact GM QC page for the clinical reviewer: 12 participants, 41 sessions, complete data only</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">Kompakte GM-QC-Seite fuer die klinische Durchsicht: 12 Probanden, 41 Sitzungen, nur vollstaendige Daten; Generator-Option --kompakt, Sprites aus dem Cache</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS example set (24 participants), compact GM QC page built 2026-10-13 18:46 · <a href="findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.md">Markdown</a></p><h2>Aussage</h2>
+<p>User request 2026-10-13: a QC page for the clinical reviewer (Pia) with 12 participants, as complete as possible, many
+sessions (4 where they exist, also participants with 2), and not too much information. Built from the example set, because
+only there every session has SynthSeg + recon-all thickness (FreeSurfer 8.2.0) + infarct mask + all five series:
+8 participants with 4 to 5 visits and 4 participants with 2 visits = 41 sessions (40 of 41 with all four extra series).</p>
+<p>The generator <code>gm_qc_axial.py</code> got two options: <code>--kompakt</code> (no per-structure table of ~100 SynthSeg labels, no disabled
+"REMOVED BEFORE" button, narrower right column with the five counted groups only) and <code>--titel</code>. The page keeps: one axial
+image per session with series switch, overlays (segmentation / counted / infarct), session buttons M0..M60, totals, the
+across-session table coloured by SDC95, cortical thickness, SynthSeg QC and Euler numbers as plain numbers (no verdict),
+hover definitions and "? Methods". Sprites were hard-linked from the example-page cache (<code>--nur-seite</code>), so the build took
+seconds instead of a 40-minute render; page 238 MB.</p>
+<h2>Trägt</h2>
+<ul>
+<li><code>qc_mirror_check.py</code> OK for build, local mirror and stick (41 sessions); <code>node --check</code> of the page script OK.</li>
+<li>Index entry at the top of the DEMDAS section in <code>QUALITY_CONTROLL/index.html</code> (local and stick).</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Not reviewed by the reader yet; what "too much information" means for her is still to be learned from feedback.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A rebuild without <code>--kompakt</code> silently brings the structure table back; the index text would then be wrong.</li>
+</ul>
+<h2>Ablesung</h2>
+<ul>
+<li><code>~/QUALITY_CONTROLL/DEMDAS/gm_pia_qc/index.html</code>, stick QWEN/QUALITY_CONTROLL/DEMDAS/gm_pia_qc (own data).</li>
+<li>Build dir <code>~/data/derivatives/demdas/gm_beispiel/qc_pia</code>; generator <code>~/data/work/demdas-gm/gm_qc_axial.py</code> (backup <code>.vor-1013-pia</code>).</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/demdas-qc-gate-euler-synthseg.html">demdas-qc-gate-euler-synthseg</a></li>
+</ul></div></details><details class="entry" id="demdas-cortical-thickness-qc-page"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-cortical-thickness-qc-page.html">DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Langform der Hover-/Methods-Texte der DEMDAS-Rindendicke-QC-Seite (recon-all 8.2, Euler, Versionen vom 12.10.), Englisch fuer Dritte</span></summary><div class="body"><p class="small muted">Herkunft: wd3 DEMDAS cortical thickness (Alita, demdas-gm/thickness_table.py, thickness_qc.py, recon-all 8.2 cross-sectional), user request 12.10.2026 &quot;cortical thickness as a QC page and table, DEMDAS priority one&quot; · <a href="findings/demdas-cortical-thickness-qc-page.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md">Markdown</a></p><h2>Aussage</h2>
 <p>Long form of the texts shown on hover and in the Methods overlay of
 <code>QUALITY_CONTROLL/DEMDAS/cortical_thickness/index.html</code>. English on purpose: the page
 may go to third parties. No patient data here, only methods. Software versions as

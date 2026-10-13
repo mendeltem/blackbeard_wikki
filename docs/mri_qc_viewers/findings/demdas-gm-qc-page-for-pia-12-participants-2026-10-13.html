@@ -1,0 +1,79 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Compact GM QC page for the clinical reviewer: 12 participants, 41 sessions, complete data only</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">mri_qc_viewers</a> › <a href="../index.html#findings">Befund</a></div><h1>Compact GM QC page for the clinical reviewer: 12 participants, 41 sessions, complete data only</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-13</span><span>Herkunft</span><span>DEMDAS example set (24 participants), compact GM QC page built 2026-10-13 18:46</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../../brain_volumetry/findings/demdas-full-cohort-sample-gm-page-2026-10-13.html">Full-cohort sample GM page: 12 participants x 4 sessions, SynthSeg only</a> <span class="muted small">(brain_volumetry)</span><br><a href="demdas-qc-gate-euler-synthseg.html">DEMDAS automated QC gate: Euler number + SynthSeg QC score per session</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.md">knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.md</a></span></div><h2>Aussage</h2>
+<p>User request 2026-10-13: a QC page for the clinical reviewer (Pia) with 12 participants, as complete as possible, many
+sessions (4 where they exist, also participants with 2), and not too much information. Built from the example set, because
+only there every session has SynthSeg + recon-all thickness (FreeSurfer 8.2.0) + infarct mask + all five series:
+8 participants with 4 to 5 visits and 4 participants with 2 visits = 41 sessions (40 of 41 with all four extra series).</p>
+<p>The generator <code>gm_qc_axial.py</code> got two options: <code>--kompakt</code> (no per-structure table of ~100 SynthSeg labels, no disabled
+"REMOVED BEFORE" button, narrower right column with the five counted groups only) and <code>--titel</code>. The page keeps: one axial
+image per session with series switch, overlays (segmentation / counted / infarct), session buttons M0..M60, totals, the
+across-session table coloured by SDC95, cortical thickness, SynthSeg QC and Euler numbers as plain numbers (no verdict),
+hover definitions and "? Methods". Sprites were hard-linked from the example-page cache (<code>--nur-seite</code>), so the build took
+seconds instead of a 40-minute render; page 238 MB.</p>
+<h2>Trägt</h2>
+<ul>
+<li><code>qc_mirror_check.py</code> OK for build, local mirror and stick (41 sessions); <code>node --check</code> of the page script OK.</li>
+<li>Index entry at the top of the DEMDAS section in <code>QUALITY_CONTROLL/index.html</code> (local and stick).</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>Not reviewed by the reader yet; what "too much information" means for her is still to be learned from feedback.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A rebuild without <code>--kompakt</code> silently brings the structure table back; the index text would then be wrong.</li>
+</ul>
+<h2>Ablesung</h2>
+<ul>
+<li><code>~/QUALITY_CONTROLL/DEMDAS/gm_pia_qc/index.html</code>, stick QWEN/QUALITY_CONTROLL/DEMDAS/gm_pia_qc (own data).</li>
+<li>Build dir <code>~/data/derivatives/demdas/gm_beispiel/qc_pia</code>; generator <code>~/data/work/demdas-gm/gm_qc_axial.py</code> (backup <code>.vor-1013-pia</code>).</li>
+</ul>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="demdas-qc-gate-euler-synthseg.html">demdas-qc-gate-euler-synthseg</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

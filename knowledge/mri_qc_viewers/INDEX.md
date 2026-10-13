@@ -22,3 +22,4 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 
 ## Herkunft
 Projekte valdo-t2s und mb-arena (Alita), `cmb/review/build_slice_viewer.py`, Nutzerrueckmeldungen 29.09. bis 07.10.2026.
+| befund | [demdas-gm-qc-page-for-pia-12-participants-2026-10-13](findings/demdas-gm-qc-page-for-pia-12-participants-2026-10-13.md) | Kompakte GM-QC-Seite fuer die klinische Durchsicht: 12 Probanden, 41 Sitzungen, nur vollstaendige Daten; Generator-Option --kompakt, Sprites aus dem Cache |
