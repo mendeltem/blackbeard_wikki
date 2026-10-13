@@ -1,0 +1,138 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-13</span><span>Herkunft</span><span>DEMDAS GM line on Alita, recon-all logs of 89 finished sessions (bids/demdas, FreeSurfer 8.2.0), 13.10.2026</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="synthseg-in-freesurfer-8-runs-on-cpu-only.html">SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust</a> <span class="muted small">(brain_volumetry)</span><br><a href="../rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a> <span class="muted small">(brain_volumetry)</span><br><a href="demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a> <span class="muted small">(brain_volumetry)</span></span><span>Verwiesen von</span><span><a href="../rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md">knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md</a></span></div><h2>Aussage</h2>
+<p>A FreeSurfer 8.2.0 <code>recon-all -all</code> run on a DEMDAS T1w needs its memory only at the start.
+Measured in <code>scripts/recon-all.log</code> of finished sessions (sub-PDDISDJ1V39UH6_ses-M0 as the profiled case):</p>
+<table>
+<thead>
+<tr>
+<th>phase</th>
+<th>wall time</th>
+<th>memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MotionCor + SynthStrip + SynthSeg + SynthMorph (affine x2, deform)</td>
+<td>first ~15 min (16:14 to 16:30)</td>
+<td>SynthSeg VmPeak 43 GB virtual, 26 GB resident; SynthMorph deform VmPeak 20 GB</td>
+</tr>
+<tr>
+<td>Nu correction to surfaces, registration, parcellation</td>
+<td>remaining ~50 min</td>
+<td>2 to 4 GB</td>
+</tr>
+</tbody>
+</table>
+<p>Whole-run wall time per session (89 finished runs, 24-core box, 62 GB RAM):</p>
+<table>
+<thead>
+<tr>
+<th>parallel runs (MAX_P)</th>
+<th>threads</th>
+<th>mean per session</th>
+<th>throughput</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>29 min</td>
+<td>~10 per h</td>
+<td>174 OOM kills (signal 9), 31 of 61 aborted</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+<td>48 min</td>
+<td>3.75 per h</td>
+<td>ran, RAM-bound</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>~36 min (resume run)</td>
+<td>~3.4 per h</td>
+<td>stable, half of the 24 cores idle</td>
+</tr>
+</tbody>
+</table>
+<p>Consequence for the full cohort (586 subjects, 1616 sessions, 1652 T1w incl. 40 run-1/run-2 pairs):
+sequential on the workstation at MAX_P=2 ~20 days; gating only the 15-minute Synth phase (2 at a time) and
+letting 6 to 8 surface phases run beside it gives ~7.5 sessions per hour, ~9 days; stopping the local
+LLM server (18 GB RAM) at night allows 3 in the Synth phase, ~6 to 7 days. On a Slurm cluster each
+session is an independent task: 36 GB, 4 CPUs, 6 h limit is a safe request; 100 concurrent tasks finish
+the cohort in 12 to 15 h wall time.</p>
+<p>Also measured: the 24-case example set finished 61 of 65 sessions (4 without usable input progress);
+the recon_alle_v2 night run ended 13.10. 00:01 "ENDE: 61/61 fertig".</p>
+<h2>Trägt</h2>
+<ul>
+<li>recon-all 8.2.0 with the bundled fspython (TensorFlow 2.13 CPU, see linked finding); T1w 1 mm DEMDAS data.</li>
+<li>Per-run memory gates (MIN_GB) measured on this box; numbers transfer to other hosts as a ratio, not as constants.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>recon-all 7.x: no Synth phase, peak 2 to 3 GB, run-count gating is the right model there.</li>
+<li>FastSurfer: the segmentation runs on the GPU in about a minute, the surface part is CPU-bound for 60 to 90 min;
+  the thickness is a different method and must be validated against recon-all before mixing.</li>
+<li>Runs with <code>-no-isrunning</code> resume: a stale <code>recon-all.done</code> makes recon-all skip everything; delete it first
+  (handled in recon_alle_v2.sh).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A profiled run whose VmPeak after the SynthMorph deform step still exceeds 10 GB.</li>
+<li>A FreeSurfer release that moves SynthSeg to the GPU or drops it from recon-all (then the phase disappears).</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Tier 1 (own logs): <code>derivatives/demdas/freesurfer/alle.log</code>, <code>*/scripts/recon-all.log</code> ("#@# mri_synthseg vmpeak",
+"#@# mri_synthmorph ... VmPeak"), <code>demdas-gm/recon_alle_v2.sh</code> header (OOM count, MAX_P history).</p>
+<h2>Verknüpft</h2>
+<p><a href="synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a>,
+<a href="../rules/schedule-recon-all-8-by-phase-not-by-run.html">schedule-recon-all-8-by-phase-not-by-run</a>,
+<a href="demdas-segmentation-method-benchmark-wd6.html">demdas-segmentation-method-benchmark-wd6</a></p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

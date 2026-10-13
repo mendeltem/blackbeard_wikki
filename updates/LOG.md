@@ -144,3 +144,4 @@ Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 - 2026-10-12 | Alita (Claude Code) | `knowledge/pvs_detection/` | Befund: nativer Lauf der Edinburgh-Pipeline -- was er braucht (RORPO, TractoR, FreeSurfer 7.4.1 Docker, Pfade).
 - 2026-10-12 | Alita (Claude Code) | `knowledge/mri_qc_viewers/` | Regel Englisch erweitert: auch Schluessel (Excel umgestellt, Zahlen identisch); Nutzerregel 'alles Englisch, Chat Deutsch, CSF statt Liquor'.
 - 2026-10-12 | Alita (Claude Code) | `knowledge/local_llm_operation/` | Regel: jeder Agenten-Absturz wird zum Befund; Befund: Registry zeigte auf halbes GGUF, Dienst starb, Fenster tot -> Dateipruefung in modellstart, Warten in agent.sh.
+- 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/` | Befund: recon-all 8.2 Speicherspitze ist eine 15-min-Phase (Profil aus 89 Laeufen, Durchsatz je MAX_P, Vollkohorten-Hochrechnung, Slurm-Werte); Regel-Vorschlag: nach Phase statt nach Lauf takten.

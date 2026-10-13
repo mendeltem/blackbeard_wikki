@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
-<div class="stripe"><i class="ok" style="width:87.5%" title="getragen: 7"></i><i class="info" style="width:12.5%" title="offen: 1"></i></div><div class="counts"><span class="ok">7 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+<div class="stripe"><i class="ok" style="width:90.0%" title="getragen: 9"></i><i class="info" style="width:10.0%" title="offen: 1"></i></div><div class="counts"><span class="ok">9 getragen</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
 die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
 wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
 Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
@@ -96,7 +96,9 @@ Rechenweg sich geaendert hat, waehrend der Hover-Text den alten beschreibt.</p>
 <li><a href="rules/qc-pages-english-sessions-in-one-window.html">qc-pages-english-sessions-in-one-window</a></li>
 <li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
 </ul>
-<p><strong>Nachtrag 2026-10-12 (Nutzerregel, 16:45): Software-Block ist Pflicht.</strong> Jede QC-Seite nennt alle Programme mit Version, die ihre Zahlen und Bilder erzeugt haben (z.B. FreeSurfer 8.2.0 build-stamp, SynthSeg-Flags, FSL-Version, Infarkt- und WMH-Netze mit Gewichtsdatei, dcm2niix aus dem JSON, Python-Pakete, Bauzeitpunkt, Rechner), eingesammelt zur Bauzeit im Generator, als Abschnitt "Software" im Methods-Overlay und als Fusszeile "Built <date> with ...". Fehlt eine Angabe, steht "not recorded <date>", nie nichts.</p></div></details><details class="entry" id="slice-slider-marks-where-the-findings-are"><summary><span class="type">Regel</span><span class="t"><a href="rules/slice-slider-marks-where-the-findings-are.html">Der Schichtregler zeigt, in welchen Schichten Funde liegen; N/P springen zum naechsten Fund</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Farbige Striche unter dem Schichtregler (gruen/gelb/rot je Schicht), Klick springt, N/P naechster/voriger Fund</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 am SWI-Betrachter: &quot;die FP zu suchen ist schwer, ich will Hinweis auf dem horizontalen Bar gezeigt bekommen, wo das ist&quot; · <a href="rules/slice-slider-marks-where-the-findings-are.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/slice-slider-marks-where-the-findings-are.md">Markdown</a></p><h2>Aussage</h2>
+<p><strong>Nachtrag 2026-10-12 (Nutzerregel, 16:45): Software-Block ist Pflicht.</strong> Jede QC-Seite nennt alle Programme mit Version, die ihre Zahlen und Bilder erzeugt haben (z.B. FreeSurfer 8.2.0 build-stamp, SynthSeg-Flags, FSL-Version, Infarkt- und WMH-Netze mit Gewichtsdatei, dcm2niix aus dem JSON, Python-Pakete, Bauzeitpunkt, Rechner), eingesammelt zur Bauzeit im Generator, als Abschnitt "Software" im Methods-Overlay und als Fusszeile "Built <date> with ...". Fehlt eine Angabe, steht "not recorded <date>", nie nichts.</p>
+<h2>Software block mandatory (English, for external readers)</h2>
+<p>Every quality-control page of every viewer must carry a mandatory "Software" block, in English, listing every program and version that produced the numbers and images on that page: the MRI package with its build stamp and the exact segmentation flags, the atlas/registration tools, all deep-learning models with their weights file and training set, the DICOM converter version as recorded in the BIDS sidecars, the Python interpreter and package versions, the operating system and host, and the build date and time. Versions are collected automatically at build time from the tools themselves (build stamps, version files, git commits, sidecar JSON); anything a tool cannot report is printed as "not recorded <date>", never omitted. The block appears as a "Software" section in the page (Methods overlay or dedicated section) and as a one-line footer "Built <date> with FreeSurfer x.y, SynthSeg (flags), FSL x.y, ...". It contains no patient data. DEMDAS implements this in <code>qc_software.py</code> (demdas-gm), shared by gm_qc_axial.py, verlauf_statistik.py, fehler_statistik.py and abc_qc_bauen.py, plus an English "Software" sheet in DEMDAS_GM_Beispiel.xlsx.</p></div></details><details class="entry" id="slice-slider-marks-where-the-findings-are"><summary><span class="type">Regel</span><span class="t"><a href="rules/slice-slider-marks-where-the-findings-are.html">Der Schichtregler zeigt, in welchen Schichten Funde liegen; N/P springen zum naechsten Fund</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Farbige Striche unter dem Schichtregler (gruen/gelb/rot je Schicht), Klick springt, N/P naechster/voriger Fund</span></summary><div class="body"><p class="small muted">Herkunft: Nutzer 12.10.2026 am SWI-Betrachter: &quot;die FP zu suchen ist schwer, ich will Hinweis auf dem horizontalen Bar gezeigt bekommen, wo das ist&quot; · <a href="rules/slice-slider-marks-where-the-findings-are.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/slice-slider-marks-where-the-findings-are.md">Markdown</a></p><h2>Aussage</h2>
 <p>Unter dem Schichtregler liegt eine Leiste mit farbigen Strichen je Schicht: gruen = erkannte Laesion, gelb = Fehlalarm,
 rot = verpasste Referenz (drei Reihen, damit alle drei gleichzeitig sichtbar sind); im Modellvergleich (ohne Urteil) gruen =
 irgendeine Vorhersage, rot = Referenz. Klick auf einen Strich springt zur Schicht. Tasten <strong>N / P</strong> springen zur naechsten /
@@ -294,7 +296,47 @@ verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our mode
 links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).
 Modellname kurz (<code>our-3D-U-Net</code>), keine Leerzeichen (Dateinamen der Ebenen).
 Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, <code>slices/</code> und Startseite) zeigt seit
-2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="demdas-gm-qc-page-how-every-number-is-computed"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">DEMDAS GM QC page: how every number is computed (English, link target of the page&#x27;s &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM example (Alita, demdas-gm/gm_beispiel.py, gm_qc_axial.py, recon_alle.sh), user request 12.10.2026 &quot;say for every number which software computed it and how&quot; · <a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.md">Markdown</a></p><h2>Aussage</h2>
+2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(3)</span></h2><details class="entry" id="demdas-cortical-thickness-qc-page"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-cortical-thickness-qc-page.html">DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: wd3 DEMDAS cortical thickness (Alita, demdas-gm/thickness_table.py, thickness_qc.py, recon-all 8.2 cross-sectional), user request 12.10.2026 &quot;cortical thickness as a QC page and table, DEMDAS priority one&quot; · <a href="findings/demdas-cortical-thickness-qc-page.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md">Markdown</a></p><h2>Aussage</h2>
+<p>Long form of the texts shown on hover and in the Methods overlay of
+<code>QUALITY_CONTROLL/DEMDAS/cortical_thickness/index.html</code>. English on purpose: the page
+may go to third parties. No patient data here, only methods. Software versions as
+installed on Alita on 2026-10-12.</p>
+<p><strong>Pipeline.</strong> FreeSurfer 8.2.0 <code>recon-all -all</code>, run <strong>independently on every session</strong>
+(cross-sectional, one recon-all per session; <code>SUBJECTS_DIR=
+/home/uchralt/data/derivatives/demdas/freesurfer</code>, log <code>alle.log</code>). There is <strong>no
+longitudinal stream, no group-average template, no <code>-ctk</code></strong> — surfaces and thicknesses
+of different sessions of one participant are therefore NOT registered to each other.
+The slope is a simple linear trend of per-session cross-sectional thickness, not a
+longitudinal measurement (stated explicitly on the page).</p>
+<p><strong>Numbers.</strong>
+- Mean thickness lh / rh (mm): <code>ThickAvg</code> of each of the 34 Desikan-Killiany regions in
+  <code>stats/lh.aparc.stats</code> / <code>rh.aparc.stats</code> (distance between the white and pial surface
+  at every vertex, averaged over the vertices of the region), then the unweighted mean
+  over all 34 regions. <code>ThickAvg</code> is what <code>mris_anatomical_stats</code> writes.
+- Mean thickness (both hemispheres): <code>(lh + rh) / 2</code>, unweighted (region surface areas
+  differ slightly, so this is not the surface-area-weighted cortex-wide mean).
+- eTIV (ml): <code>EstimatedTotalIntraCranialVol</code> from <code>stats/aseg.stats</code>.
+- Slope (mm/year): least-squares slope of the line through (months, mean thickness) of
+  all finished sessions of that participant, x 12; shown only with &gt;= 2 sessions.
+- Plot: one line per hemisphere plus the mean over session months; dotted = least-squares
+  fit of the mean; green band = cohort median of the mean thickness at the M0 sessions
+  (25th-75th percentile band).</p>
+<p><strong>Image.</strong> ONE axial image per session: <code>T1.mgz</code> in grayscale with <code>aparc+aseg.mgz</code>
+labels coloured by the FreeSurfer colour LUT (60/40 blend), all axial slices tiled in a
+square grid (same mosaic style as the GM page). Left/right keys = slice, up/down =
+session of the same participant, PgUp/PgDn = participant.</p>
+<p><strong>Missing sessions.</strong> Listed with the reason "recon-all not finished as of <date>"; the
+page is rebuilt (thickness_table.py + thickness_qc.py) when <code>status_check.sh</code> reports
+<code>fehlend=0</code>.</p>
+<p><strong>Finished definition.</strong> A session is finished when recon-all has written both
+<code>surf/lh.thickness</code> and <code>surf/rh.thickness</code> (same definition as <code>status_check.sh</code> and the
+acceptance test). If aparc.stats lags the thickness surface by a few minutes, the summary
+row falls back to the mean of the decoded <code>.thickness</code> surface so the finished set always
+matches the disk.</p>
+<h2>Software (versions)</h2>
+<p>FreeSurfer 8.2.0; Python 3.12 (conda env <code>dl</code>); nibabel; numpy; Pillow; openpyxl (xlsx
+sheet "Cortical thickness"); Chromium (headless) for the acceptance screenshot. CPU only,
+GPU untouched.</p></div></details><details class="entry" id="demdas-gm-qc-page-how-every-number-is-computed"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">DEMDAS GM QC page: how every number is computed (English, link target of the page&#x27;s &quot;? Methods&quot; overlay)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM example (Alita, demdas-gm/gm_beispiel.py, gm_qc_axial.py, recon_alle.sh), user request 12.10.2026 &quot;say for every number which software computed it and how&quot; · <a href="findings/demdas-gm-qc-page-how-every-number-is-computed.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.md">Markdown</a></p><h2>Aussage</h2>
 <p>This is the long form of the texts that the DEMDAS GM viewer (<code>QUALITY_CONTROLL/DEMDAS/gm_beispiel_qc/index.html</code>)
 shows on hover and in its Methods overlay. Written in English on purpose: the page goes to third parties.
 No patient data here, only methods. Software versions as installed on Alita on 2026-10-12.</p>
@@ -356,7 +398,73 @@ page's <code>methoden()</code> dictionary; a FreeSurfer or DeepISLES update.</p>
 <ul>
 <li><a href="rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
 <li><a href="rules/qc-pages-english-sessions-in-one-window.html">qc-pages-english-sessions-in-one-window</a></li>
-</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><details class="entry" id="demdas-qc-gate-euler-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-qc-gate-euler-synthseg.html">DEMDAS automated QC gate: Euler number + SynthSeg QC score per session</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span></summary><div class="body"><p class="small muted">Herkunft: wd4 DEMDAS automated QC gate (Alita, demdas-gm/qc_gate.py, fehler_statistik.py, gm_qc_axial.py, FreeSurfer 8.2.0 mris_euler_number, mri_synthseg --qc), user request 12.10.2026 &quot;automated QC gate per session, DEMDAS priority one&quot; · <a href="findings/demdas-qc-gate-euler-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md">Markdown</a></p><h2>Aussage</h2>
+<p>Every DEMDAS session is now scored automatically by a two-part quality gate
+(<code>demdas-gm/qc_gate.py</code> -&gt; <code>derivatives/demdas/gm_beispiel/qc_gate.csv</code>, one row per
+BIDS session with a T1w). The gate combines</p>
+<ol>
+<li>the <strong>Euler number</strong> of the FreeSurfer cortical surface reconstruction, and</li>
+<li>the <strong>SynthSeg segmentation QC score</strong>.</li>
+</ol>
+<p>A session is <strong>FLAGGED</strong> when either part fails; otherwise it is <strong>PASS</strong>. Flagged
+sessions are excluded from a second, parallel set of error statistics
+(columns <code>*_qc</code> on the volume-trend error page) so that the <em>effect of the gate</em> on
+SDC95/ICC and longitudinal noise is directly visible.</p>
+<p><strong>Why the Euler number.</strong> The Euler number of a surface counts its topological holes:
+<code>holes = (2 - Euler)/2</code> per hemisphere. A clean, fully closed cortical surface has
+Euler = 2 and 0 holes; any defect, artefact or failed reconstruction step leaves a
+hole, so a <em>more negative</em> Euler number means a more defective surface. Rosen et al.
+(2018, <em>NeuroImage</em> 172:292-299, "Automated QC of FreeSurfer surface reconstruction")
+showed that the Euler number is the <strong>best automated correlate of a visual QC
+judgement</strong> of cortical surfaces, and that the cutoff is <strong>study-internal</strong> rather than
+a universal constant. We therefore do not hard-code a cutoff: it is derived from the
+cohort itself (below).</p>
+<p><strong>Cohort cutoff (derived, not fixed).</strong> Over the finished recon-all sessions the
+cutoff is the lower Tukey fence of <code>euler_mean</code> (the mean of the left and right
+hemisphere Euler numbers): <code>Q1 - 1.5 * IQR</code>. With the current cohort (55 finished
+recon-all sessions of 64) the cutoff is <strong>-107.75</strong> (snapshot); a session is flagged on
+Euler when
+its <code>euler_mean</code> falls below it. In this cohort the fence sits at −107.75 (snapshot
+2026-10-12) and one session (euler_mean −108) fell below it; that session also fails the
+SynthSeg arm. The Euler arm is in place and will fire as defective reconstructions
+appear.</p>
+<p><strong>SynthSeg QC score.</strong> <code>mri_synthseg --qc</code> predicts, for each tissue/structure, a
+quality score in [0, 1] (how well the segmentation matches what the network expects;
+higher = better). <code>synthseg_qc_min</code> is the <strong>minimum over all structure columns</strong> of
+<code>seg/&lt;id&gt;_qc.csv</code> (the weakest tissue for that session). The gate flags a session when
+<code>synthseg_qc_min &lt; 0.65</code>. <strong>0.65 is a working threshold</strong> chosen to match the existing
+manual QC practice on this dataset; it is to be <strong>confirmed against the SynthSeg
+README / the published <code>--qc</code> semantics</strong> before it is treated as a fixed standard.</p>
+<p><strong>Cohort result (2026-10-12, snapshot).</strong> 64 sessions; 55 with a finished reconstruction
+(Euler available), 9 still in recon-all (Euler empty, <code>recon_all_finished = 0</code>).
+<strong>28 of 64 sessions are FLAGGED</strong> (27 by <code>synthseg_qc_min &lt; 0.65</code> alone, 1 by both
+<code>synthseg_qc_min &lt; 0.65</code> and <code>euler_mean</code> below the fence); <strong>36 PASS</strong>. The flagged set
+is dominated by low-SynthSeg-QC sessions; these are exactly the sessions a reviewer would
+want to inspect first. The cutoff moves slightly as recon-all finishes more sessions
+(cohort-internal statistic), so the exact number of Euler flags can change between runs.</p>
+<p><strong>Where it is shown.</strong>
+- <code>demdas-gm/qc_gate.py</code> writes <code>derivatives/demdas/gm_beispiel/qc_gate.csv</code>
+  (columns: subject, session, months, euler_lh, euler_rh, euler_mean, holes_mean,
+  synthseg_qc_min, synthseg_qc_gm, synthseg_qc_wm, synthseg_qc_csf, recon_all_finished,
+  flag_euler, flag_synthseg, flag_any). Idempotent; Euler results are cached so reruns
+  are fast and recon-all progress is picked up on the next run.
+- Error statistics page (<code>QUALITY_CONTROLL/DEMDAS/volumenverlauf/error_statistics.html</code>),
+  section 4 "QC gate": histogram of <code>euler_mean</code> with the cutoff line, scatter
+  <code>euler_mean</code> vs <code>synthseg_qc_min</code>, and the table of flagged sessions; test-retest and
+  longitudinal sections carry the QC-passed subset as extra <code>*_qc</code> columns.
+- GM axial QC page (<code>QUALITY_CONTROLL/DEMDAS/gm_beispiel_qc/index.html</code>): two new rows
+  in the Session box, "Euler number (lh/rh)" and "QC gate" (PASS / FLAGGED: reason).
+- Excel: sheet <code>QC_gate</code> in <code>DEMDAS_GM_Beispiel.xlsx</code> (and <code>error_statistics.xlsx</code>).</p>
+<p><strong>Limits.</strong> The Euler number is only defined once recon-all has finished the surface
+steps; early sessions therefore carry an empty Euler and <code>recon_all_finished = 0</code> and
+are <strong>not</strong> flagged on Euler (they are judged by SynthSeg alone when a segmentation
+exists). The gate is a triage aid, not a replacement for a visual check: a PASS means
+"nothing automated objected", a FLAG means "look at this one". The SynthSeg threshold
+0.65 is provisional (see above). All numbers are cohort-level; no participant
+identifiers are published on the QC pages.</p>
+<p><strong>References.</strong>
+- Rosen B.R. et al. (2018). Automated QC of FreeSurfer surface reconstruction. NeuroImage 172:292-299.
+- SynthSeg: Maffei et al. (2018), and the <code>mri_synthseg --qc</code> documentation (threshold to be confirmed against the README).</p></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="slice-viewer-as-shared-tool"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/slice-viewer-as-shared-tool.html">Den Schichtbetrachter als Tool unter tools/mri/ einstellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Den CMB-Schichtbetrachter als Tool unter tools/mri/ einstellen (Test auf synthetischen Daten fehlt)</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, 2026-10-07 · <a href="open_checks/slice-viewer-as-shared-tool.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md">Markdown</a></p><h2>Aussage</h2>
 <p><code>cmb/review/build_slice_viewer.py</code> (Projekt valdo-t2s, englischer Code, keine Daten) erzeugt die
 QC-Seite aus Manifest, Wahrscheinlichkeitskarten und optionaler Gewebekarte. Fuer die Wiki fehlt
 ein Tool-Ordner nach <code>templates/tool/</code> mit README, INSTALL, einem Test auf synthetischen Volumen
@@ -385,5 +493,5 @@ und den Setzungen aus <a href="rules/qc-slice-viewer-conventions.html">qc-slice-
 <ul>
 <li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

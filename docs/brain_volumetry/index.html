@@ -43,19 +43,45 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 3"></i></div><div class="counts"><span class="ok">3 getragen</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:83.3%" title="getragen: 5"></i><i class="warn" style="width:16.7%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">5 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
-<p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-12. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Verlaufs-Volumetrie liefert zwei Seiten: die Trendseite (gemischtes Modell, Steigung je Proband, Seitenvergleich)
 und die Fehlerseite. Die Fehlerseite hat vier Bausteine: Test-Retest je Struktur aus zwei Segmentierungen derselben
 Sitzung (SDw, CV, ICC(2,1), SDC95 = 1,96 * sqrt 2 * SDw, Bland-Altman), Laengsschnitt-Residuen und kuerzestes Intervall,
 Nachweisbarkeit (Jahre bis eine Person die SDC ueberschreitet, KI in denselben Einheiten), Ausfall/QC je Zeitpunkt.
 Laesionsausschluss nur, wenn die Maske in allen Sitzungen existiert, sonst entstehen Maskeneffekte von +1400 %.</p>
 <p><strong>Lesen bei:</strong> Volumetrie, SynthSeg, FreeSurfer, Atrophie, Verlauf, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus.</p>
-<p><strong>Neu 2026-10-12:</strong> SynthSeg in FreeSurfer 8.2 rechnet nur auf CPU (85 s je Sitzung mit --robust); Vollkohorten in Ordner-Batches, 3 parallel. Nach jeder Kohortenkopie gzip -t ueber alle NIfTI (eine abgeschnittene T1 lag 5 Wochen unbemerkt). Rechenplan-Literatur: FreeSurfer longitudinal stream (Reuter 2012) und Euler-Zahl als QC-Gate (Rosen 2018) sind die belegten Hebel; FastSurfer-Dicke ICC 0,92 vs 0,87.</p></div>
+<p><strong>Neu 2026-10-12:</strong> SynthSeg in FreeSurfer 8.2 rechnet nur auf CPU (85 s je Sitzung mit --robust); Vollkohorten in Ordner-Batches, 3 parallel. Nach jeder Kohortenkopie gzip -t ueber alle NIfTI (eine abgeschnittene T1 lag 5 Wochen unbemerkt). Rechenplan-Literatur: FreeSurfer longitudinal stream (Reuter 2012) und Euler-Zahl als QC-Gate (Rosen 2018) sind die belegten Hebel; FastSurfer-Dicke ICC 0,92 vs 0,87.</p>
+<p><strong>Neu 2026-10-13:</strong> recon-all 8.2 braucht seine 26 GB nur in den ersten ~15 Minuten (SynthSeg/SynthMorph), danach 2-4 GB; wer ganze Laeufe statt dieser Phase begrenzt, laesst die halbe CPU brach (gemessen: 3,4 Sitzungen je Stunde bei MAX_P=2, 174 OOM-Kills bei MAX_P=5). Vorschlag: Schleuse nur um autorecon1 (~7,5 je Stunde, DEMDAS-Vollkohorte ~9 statt ~20 Tage); auf Slurm je Sitzung 36 GB, 4 CPU, 6 h. Example-Set: 61/65 Sitzungen mit Thickness fertig (13.10. 00:01).</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="cohort-copies-need-a-gzip-sweep"><summary><span class="type">Regel</span><span class="t"><a href="rules/cohort-copies-need-a-gzip-sweep.html">After copying a cohort, run `gzip -t` over every NIfTI and compare file counts and byte totals with the source</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS pilot, 12.10.2026: one T1w was a truncated copy (508 KB of 5.2 MB) since 03.09. · <a href="rules/cohort-copies-need-a-gzip-sweep.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/cohort-copies-need-a-gzip-sweep.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(3)</span></h2><details class="entry" id="schedule-recon-all-8-by-phase-not-by-run"><summary><span class="type">Regel</span><span class="t"><a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">Schedule recon-all 8 by phase, not by run</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-13</span><span class="i">Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -&gt; ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch</span></summary><div class="body"><p class="small muted">Herkunft: derived from the recon-all 8.2 phase profile on Alita, 13.10.2026; not yet run as a batch · <a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md">Markdown</a></p><h2>Aussage</h2>
+<p>On a single machine, gate recon-all 8.x on the memory-heavy Synth phase (first ~15 min, 26 GB resident),
+not on the number of whole runs. Pattern: <code>recon-all -autorecon1</code> behind a semaphore of floor((RAM - 10 GB) / 28 GB)
+slots, then <code>-autorecon2 -autorecon3</code> unrestricted up to cores / threads. Expected gain on a 24-core, 62 GB box:
+3.4 to ~7.5 sessions per hour (20 to ~9 days for 1616 DEMDAS sessions), same software, same numbers.
+On a cluster, submit one session per array task with the Synth-phase memory as the request (36 GB) and let the
+scheduler pack.</p>
+<h2>Trägt</h2>
+<ul>
+<li>FreeSurfer 8.0 to 8.2 recon-all on CPU; any T1w cohort large enough that days matter.</li>
+<li>Resume semantics stay the same (lh/rh.thickness as the done criterion, stale done-marker removed).</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>recon-all 7.x (no heavy phase), FastSurfer (GPU segmentation), machines with RAM &gt;= runs x 28 GB (gate is moot).</li>
+<li>Longitudinal stream (<code>-long</code>): base and long steps have their own profile, measure first.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A batch with the phase gate that still produces OOM kills or no throughput gain over MAX_P=2 on the same box.</li>
+<li>Status moves to "getragen" after the first full batch with measured throughput; to "gebrochen" if the gain is &lt; 1.5x.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>blind until the first phase-gated batch runs; profile in the linked finding.</p>
+<h2>Verknüpft</h2>
+<p><a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">recon-all-8-memory-peak-is-a-15-minute-phase</a></p></div></details><details class="entry" id="cohort-copies-need-a-gzip-sweep"><summary><span class="type">Regel</span><span class="t"><a href="rules/cohort-copies-need-a-gzip-sweep.html">After copying a cohort, run `gzip -t` over every NIfTI and compare file counts and byte totals with the source</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS pilot, 12.10.2026: one T1w was a truncated copy (508 KB of 5.2 MB) since 03.09. · <a href="rules/cohort-copies-need-a-gzip-sweep.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/cohort-copies-need-a-gzip-sweep.md">Markdown</a></p><h2>Aussage</h2>
 <p>A truncated <code>.nii.gz</code> is silent until a tool reads past the cut: in the DEMDAS pilot one T1w (508 KB instead of 5.2 MB) sat in
 the BIDS tree for five weeks; SynthSeg failed with <code>zlib.error: invalid distance code</code> deep in a log, the session simply
 vanished from the QC page ("31 of 63"), and recon-all would have failed the same way. The sweep is cheap: 886 NIfTI (12 GB)
@@ -107,7 +133,118 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="synthseg-in-freesurfer-8-runs-on-cpu-only"><summary><span class="type">Befund</span><span class="t"><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">fspython TF 2.13 ohne GPU; 85 s je Sitzung mit --robust, Ordner-Batches laden das Modell einmal; recon-all 8.2 40-48 min</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS full cohort compute planning, 12.10.2026 (Alita) · <a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(3)</span></h2><details class="entry" id="demdas-segmentation-method-benchmark-wd6"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-segmentation-method-benchmark-wd6.html">DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight</span></summary><div class="body"><p class="small muted">Herkunft: wd6 DEMDAS segmentation benchmark, 13.10.2026 (Alita) · <a href="findings/demdas-segmentation-method-benchmark-wd6.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md">Markdown</a></p><h2>Aussage</h2>
+<p>Fünf Segmentationsmethoden werden auf dem DEMDAS-Benchmark-Set mit gemessenen
+Werten verglichen (keine Empfehlung in der Tabelle; die Methodenauswahl für die
+ganze Kohorte trifft der Gutachter/Nutzer). Set A = 64 Sessions (bids/demdas,
+GM-Beispiel, FreeSurfer 8.2 recon-all als Referenz), Set B = 40 gleiche Sessions
+mit run-1 UND run-2 T1w (echter Test-Retest, Primärkriterium).</p>
+<p>Stand dieser Auswertung (nur Kohorten-/Aggregatzahlen, keine Patientendaten):
+- Übereinstimmung mit FreeSurfer 8.2 aseg auf Set A (synthseg_robust, Dice,
+  n=61): cortex GM 0.78, GM total 0.80, WM 0.89, CSF/Ventrikel 0.78,
+  Hippocampus 0.88, Amygdala 0.89, Thalamus 0.91.
+- Laufzeit pro Fall (Median): synthseg_robust 22 s, synthseg_fast 145 s,
+  fastsurfer_cnn 378 s (CPU, 6 Threads).
+- Test-Retest (ICC(2,1) / SDC95) auf Set B wird erst auswertbar, wenn die
+  overnight-CPU-Läufe (synthseg_fast, fastsurfer_cnn) run-1 und run-2 für
+  mindestens eine ausreichende Zahl von Paaren fertig haben; danach ein
+  erneutes Ausführen von benchmark.py füllt die Zeilen.</p>
+<h2>Traegt</h2>
+<p>Die Wahl der Segmentationsmethode für die DEMDAS-Gesamtkohorte: die Tabelle
+mit Rängen 1..N und Mittelrank (benchmark.csv / benchmark.html) ist die
+messbasierte Grundlage; ICC/SDC95 (Primärkriterium) ist der entscheidende
+Satz, sobald Set B vollständig ist.</p></div></details><details class="entry" id="recon-all-8-memory-peak-is-a-15-minute-phase"><summary><span class="type">Befund</span><span class="t"><a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">recon-all 8.2: the memory peak is a 15-minute phase, not the whole run</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS GM line on Alita, recon-all logs of 89 finished sessions (bids/demdas, FreeSurfer 8.2.0), 13.10.2026 · <a href="findings/recon-all-8-memory-peak-is-a-15-minute-phase.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md">Markdown</a></p><h2>Aussage</h2>
+<p>A FreeSurfer 8.2.0 <code>recon-all -all</code> run on a DEMDAS T1w needs its memory only at the start.
+Measured in <code>scripts/recon-all.log</code> of finished sessions (sub-PDDISDJ1V39UH6_ses-M0 as the profiled case):</p>
+<table>
+<thead>
+<tr>
+<th>phase</th>
+<th>wall time</th>
+<th>memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MotionCor + SynthStrip + SynthSeg + SynthMorph (affine x2, deform)</td>
+<td>first ~15 min (16:14 to 16:30)</td>
+<td>SynthSeg VmPeak 43 GB virtual, 26 GB resident; SynthMorph deform VmPeak 20 GB</td>
+</tr>
+<tr>
+<td>Nu correction to surfaces, registration, parcellation</td>
+<td>remaining ~50 min</td>
+<td>2 to 4 GB</td>
+</tr>
+</tbody>
+</table>
+<p>Whole-run wall time per session (89 finished runs, 24-core box, 62 GB RAM):</p>
+<table>
+<thead>
+<tr>
+<th>parallel runs (MAX_P)</th>
+<th>threads</th>
+<th>mean per session</th>
+<th>throughput</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>29 min</td>
+<td>~10 per h</td>
+<td>174 OOM kills (signal 9), 31 of 61 aborted</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+<td>48 min</td>
+<td>3.75 per h</td>
+<td>ran, RAM-bound</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>~36 min (resume run)</td>
+<td>~3.4 per h</td>
+<td>stable, half of the 24 cores idle</td>
+</tr>
+</tbody>
+</table>
+<p>Consequence for the full cohort (586 subjects, 1616 sessions, 1652 T1w incl. 40 run-1/run-2 pairs):
+sequential on the workstation at MAX_P=2 ~20 days; gating only the 15-minute Synth phase (2 at a time) and
+letting 6 to 8 surface phases run beside it gives ~7.5 sessions per hour, ~9 days; stopping the local
+LLM server (18 GB RAM) at night allows 3 in the Synth phase, ~6 to 7 days. On a Slurm cluster each
+session is an independent task: 36 GB, 4 CPUs, 6 h limit is a safe request; 100 concurrent tasks finish
+the cohort in 12 to 15 h wall time.</p>
+<p>Also measured: the 24-case example set finished 61 of 65 sessions (4 without usable input progress);
+the recon_alle_v2 night run ended 13.10. 00:01 "ENDE: 61/61 fertig".</p>
+<h2>Trägt</h2>
+<ul>
+<li>recon-all 8.2.0 with the bundled fspython (TensorFlow 2.13 CPU, see linked finding); T1w 1 mm DEMDAS data.</li>
+<li>Per-run memory gates (MIN_GB) measured on this box; numbers transfer to other hosts as a ratio, not as constants.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>recon-all 7.x: no Synth phase, peak 2 to 3 GB, run-count gating is the right model there.</li>
+<li>FastSurfer: the segmentation runs on the GPU in about a minute, the surface part is CPU-bound for 60 to 90 min;
+  the thickness is a different method and must be validated against recon-all before mixing.</li>
+<li>Runs with <code>-no-isrunning</code> resume: a stale <code>recon-all.done</code> makes recon-all skip everything; delete it first
+  (handled in recon_alle_v2.sh).</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A profiled run whose VmPeak after the SynthMorph deform step still exceeds 10 GB.</li>
+<li>A FreeSurfer release that moves SynthSeg to the GPU or drops it from recon-all (then the phase disappears).</li>
+</ul>
+<h2>Ablesung</h2>
+<p>Tier 1 (own logs): <code>derivatives/demdas/freesurfer/alle.log</code>, <code>*/scripts/recon-all.log</code> ("#@# mri_synthseg vmpeak",
+"#@# mri_synthmorph ... VmPeak"), <code>demdas-gm/recon_alle_v2.sh</code> header (OOM count, MAX_P history).</p>
+<h2>Verknüpft</h2>
+<p><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">synthseg-in-freesurfer-8-runs-on-cpu-only</a>,
+<a href="rules/schedule-recon-all-8-by-phase-not-by-run.html">schedule-recon-all-8-by-phase-not-by-run</a>,
+<a href="findings/demdas-segmentation-method-benchmark-wd6.html">demdas-segmentation-method-benchmark-wd6</a></p></div></details><details class="entry" id="synthseg-in-freesurfer-8-runs-on-cpu-only"><summary><span class="type">Befund</span><span class="t"><a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">fspython TF 2.13 ohne GPU; 85 s je Sitzung mit --robust, Ordner-Batches laden das Modell einmal; recon-all 8.2 40-48 min</span></summary><div class="body"><p class="small muted">Herkunft: DEMDAS full cohort compute planning, 12.10.2026 (Alita) · <a href="findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md">Markdown</a></p><h2>Aussage</h2>
 <p><code>mri_synthseg</code> in FreeSurfer 8.2.0 uses the bundled fspython with TensorFlow 2.13.1 built WITHOUT GPU support
 (<code>tf.config.list_physical_devices('GPU')</code> returns <code>[]</code> on a machine with a working CUDA 12.4 torch). Measured on a 24-core
 workstation: <code>--parc --robust --cpu --threads 6</code> takes about 85 s per 1 mm MPRAGE, plus about 20 s model load per call. Running
@@ -130,5 +267,5 @@ SynthSeg/FastSurfer with GPU; the decision not to stop a local LLM server for a 
 <li><a href="rules/longitudinal-volumetry-needs-error-statistics.html">longitudinal-volumetry-needs-error-statistics</a></li>
 <li><a href="rules/cohort-copies-need-a-gzip-sweep.html">cohort-copies-need-a-gzip-sweep</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-12 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

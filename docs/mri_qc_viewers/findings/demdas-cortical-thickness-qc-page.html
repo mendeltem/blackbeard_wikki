@@ -1,0 +1,87 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">mri_qc_viewers</a> › <a href="../index.html#findings">Befund</a></div><h1>DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-12</span><span>Herkunft</span><span>wd3 DEMDAS cortical thickness (Alita, demdas-gm/thickness_table.py, thickness_qc.py, recon-all 8.2 cross-sectional), user request 12.10.2026 &quot;cortical thickness as a QC page and table, DEMDAS priority one&quot;</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/qc-pages-explain-every-number-on-hover.html">Jede Zahl auf einer QC-Seite erklaert sich beim Hovern: Software, Rechenweg, Label-Menge</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="../rules/qc-pages-english-sessions-in-one-window.html">Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Verwiesen von</span><span><a href="demdas-qc-gate-euler-synthseg.html">DEMDAS automated QC gate: Euler number + SynthSeg QC score per session</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md">knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md</a></span></div><h2>Aussage</h2>
+<p>Long form of the texts shown on hover and in the Methods overlay of
+<code>QUALITY_CONTROLL/DEMDAS/cortical_thickness/index.html</code>. English on purpose: the page
+may go to third parties. No patient data here, only methods. Software versions as
+installed on Alita on 2026-10-12.</p>
+<p><strong>Pipeline.</strong> FreeSurfer 8.2.0 <code>recon-all -all</code>, run <strong>independently on every session</strong>
+(cross-sectional, one recon-all per session; <code>SUBJECTS_DIR=
+/home/uchralt/data/derivatives/demdas/freesurfer</code>, log <code>alle.log</code>). There is <strong>no
+longitudinal stream, no group-average template, no <code>-ctk</code></strong> — surfaces and thicknesses
+of different sessions of one participant are therefore NOT registered to each other.
+The slope is a simple linear trend of per-session cross-sectional thickness, not a
+longitudinal measurement (stated explicitly on the page).</p>
+<p><strong>Numbers.</strong>
+- Mean thickness lh / rh (mm): <code>ThickAvg</code> of each of the 34 Desikan-Killiany regions in
+  <code>stats/lh.aparc.stats</code> / <code>rh.aparc.stats</code> (distance between the white and pial surface
+  at every vertex, averaged over the vertices of the region), then the unweighted mean
+  over all 34 regions. <code>ThickAvg</code> is what <code>mris_anatomical_stats</code> writes.
+- Mean thickness (both hemispheres): <code>(lh + rh) / 2</code>, unweighted (region surface areas
+  differ slightly, so this is not the surface-area-weighted cortex-wide mean).
+- eTIV (ml): <code>EstimatedTotalIntraCranialVol</code> from <code>stats/aseg.stats</code>.
+- Slope (mm/year): least-squares slope of the line through (months, mean thickness) of
+  all finished sessions of that participant, x 12; shown only with &gt;= 2 sessions.
+- Plot: one line per hemisphere plus the mean over session months; dotted = least-squares
+  fit of the mean; green band = cohort median of the mean thickness at the M0 sessions
+  (25th-75th percentile band).</p>
+<p><strong>Image.</strong> ONE axial image per session: <code>T1.mgz</code> in grayscale with <code>aparc+aseg.mgz</code>
+labels coloured by the FreeSurfer colour LUT (60/40 blend), all axial slices tiled in a
+square grid (same mosaic style as the GM page). Left/right keys = slice, up/down =
+session of the same participant, PgUp/PgDn = participant.</p>
+<p><strong>Missing sessions.</strong> Listed with the reason "recon-all not finished as of <date>"; the
+page is rebuilt (thickness_table.py + thickness_qc.py) when <code>status_check.sh</code> reports
+<code>fehlend=0</code>.</p>
+<p><strong>Finished definition.</strong> A session is finished when recon-all has written both
+<code>surf/lh.thickness</code> and <code>surf/rh.thickness</code> (same definition as <code>status_check.sh</code> and the
+acceptance test). If aparc.stats lags the thickness surface by a few minutes, the summary
+row falls back to the mean of the decoded <code>.thickness</code> surface so the finished set always
+matches the disk.</p>
+<h2>Software (versions)</h2>
+<p>FreeSurfer 8.2.0; Python 3.12 (conda env <code>dl</code>); nibabel; numpy; Pillow; openpyxl (xlsx
+sheet "Cortical thickness"); Chromium (headless) for the acceptance screenshot. CPU only,
+GPU untouched.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

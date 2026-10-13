@@ -1,0 +1,113 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>DEMDAS automated QC gate: Euler number + SynthSeg QC score per session</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">mri_qc_viewers</a> › <a href="../index.html#findings">Befund</a></div><h1>DEMDAS automated QC gate: Euler number + SynthSeg QC score per session</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-12</span><span>Herkunft</span><span>wd4 DEMDAS automated QC gate (Alita, demdas-gm/qc_gate.py, fehler_statistik.py, gm_qc_axial.py, FreeSurfer 8.2.0 mris_euler_number, mri_synthseg --qc), user request 12.10.2026 &quot;automated QC gate per session, DEMDAS priority one&quot;</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/qc-pages-explain-every-number-on-hover.html">Jede Zahl auf einer QC-Seite erklaert sich beim Hovern: Software, Rechenweg, Label-Menge</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="../rules/qc-pages-english-sessions-in-one-window.html">Jede QC-Seite auf Englisch; Laengsschnitt-Sitzungen im selben Fenster umschalten</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="demdas-cortical-thickness-qc-page.html">DEMDAS cortical thickness QC page: how every number is computed (long form of the &quot;? Methods&quot; overlay)</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md">knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md</a></span></div><h2>Aussage</h2>
+<p>Every DEMDAS session is now scored automatically by a two-part quality gate
+(<code>demdas-gm/qc_gate.py</code> -&gt; <code>derivatives/demdas/gm_beispiel/qc_gate.csv</code>, one row per
+BIDS session with a T1w). The gate combines</p>
+<ol>
+<li>the <strong>Euler number</strong> of the FreeSurfer cortical surface reconstruction, and</li>
+<li>the <strong>SynthSeg segmentation QC score</strong>.</li>
+</ol>
+<p>A session is <strong>FLAGGED</strong> when either part fails; otherwise it is <strong>PASS</strong>. Flagged
+sessions are excluded from a second, parallel set of error statistics
+(columns <code>*_qc</code> on the volume-trend error page) so that the <em>effect of the gate</em> on
+SDC95/ICC and longitudinal noise is directly visible.</p>
+<p><strong>Why the Euler number.</strong> The Euler number of a surface counts its topological holes:
+<code>holes = (2 - Euler)/2</code> per hemisphere. A clean, fully closed cortical surface has
+Euler = 2 and 0 holes; any defect, artefact or failed reconstruction step leaves a
+hole, so a <em>more negative</em> Euler number means a more defective surface. Rosen et al.
+(2018, <em>NeuroImage</em> 172:292-299, "Automated QC of FreeSurfer surface reconstruction")
+showed that the Euler number is the <strong>best automated correlate of a visual QC
+judgement</strong> of cortical surfaces, and that the cutoff is <strong>study-internal</strong> rather than
+a universal constant. We therefore do not hard-code a cutoff: it is derived from the
+cohort itself (below).</p>
+<p><strong>Cohort cutoff (derived, not fixed).</strong> Over the finished recon-all sessions the
+cutoff is the lower Tukey fence of <code>euler_mean</code> (the mean of the left and right
+hemisphere Euler numbers): <code>Q1 - 1.5 * IQR</code>. With the current cohort (55 finished
+recon-all sessions of 64) the cutoff is <strong>-107.75</strong> (snapshot); a session is flagged on
+Euler when
+its <code>euler_mean</code> falls below it. In this cohort the fence sits at −107.75 (snapshot
+2026-10-12) and one session (euler_mean −108) fell below it; that session also fails the
+SynthSeg arm. The Euler arm is in place and will fire as defective reconstructions
+appear.</p>
+<p><strong>SynthSeg QC score.</strong> <code>mri_synthseg --qc</code> predicts, for each tissue/structure, a
+quality score in [0, 1] (how well the segmentation matches what the network expects;
+higher = better). <code>synthseg_qc_min</code> is the <strong>minimum over all structure columns</strong> of
+<code>seg/&lt;id&gt;_qc.csv</code> (the weakest tissue for that session). The gate flags a session when
+<code>synthseg_qc_min &lt; 0.65</code>. <strong>0.65 is a working threshold</strong> chosen to match the existing
+manual QC practice on this dataset; it is to be <strong>confirmed against the SynthSeg
+README / the published <code>--qc</code> semantics</strong> before it is treated as a fixed standard.</p>
+<p><strong>Cohort result (2026-10-12, snapshot).</strong> 64 sessions; 55 with a finished reconstruction
+(Euler available), 9 still in recon-all (Euler empty, <code>recon_all_finished = 0</code>).
+<strong>28 of 64 sessions are FLAGGED</strong> (27 by <code>synthseg_qc_min &lt; 0.65</code> alone, 1 by both
+<code>synthseg_qc_min &lt; 0.65</code> and <code>euler_mean</code> below the fence); <strong>36 PASS</strong>. The flagged set
+is dominated by low-SynthSeg-QC sessions; these are exactly the sessions a reviewer would
+want to inspect first. The cutoff moves slightly as recon-all finishes more sessions
+(cohort-internal statistic), so the exact number of Euler flags can change between runs.</p>
+<p><strong>Where it is shown.</strong>
+- <code>demdas-gm/qc_gate.py</code> writes <code>derivatives/demdas/gm_beispiel/qc_gate.csv</code>
+  (columns: subject, session, months, euler_lh, euler_rh, euler_mean, holes_mean,
+  synthseg_qc_min, synthseg_qc_gm, synthseg_qc_wm, synthseg_qc_csf, recon_all_finished,
+  flag_euler, flag_synthseg, flag_any). Idempotent; Euler results are cached so reruns
+  are fast and recon-all progress is picked up on the next run.
+- Error statistics page (<code>QUALITY_CONTROLL/DEMDAS/volumenverlauf/error_statistics.html</code>),
+  section 4 "QC gate": histogram of <code>euler_mean</code> with the cutoff line, scatter
+  <code>euler_mean</code> vs <code>synthseg_qc_min</code>, and the table of flagged sessions; test-retest and
+  longitudinal sections carry the QC-passed subset as extra <code>*_qc</code> columns.
+- GM axial QC page (<code>QUALITY_CONTROLL/DEMDAS/gm_beispiel_qc/index.html</code>): two new rows
+  in the Session box, "Euler number (lh/rh)" and "QC gate" (PASS / FLAGGED: reason).
+- Excel: sheet <code>QC_gate</code> in <code>DEMDAS_GM_Beispiel.xlsx</code> (and <code>error_statistics.xlsx</code>).</p>
+<p><strong>Limits.</strong> The Euler number is only defined once recon-all has finished the surface
+steps; early sessions therefore carry an empty Euler and <code>recon_all_finished = 0</code> and
+are <strong>not</strong> flagged on Euler (they are judged by SynthSeg alone when a segmentation
+exists). The gate is a triage aid, not a replacement for a visual check: a PASS means
+"nothing automated objected", a FLAG means "look at this one". The SynthSeg threshold
+0.65 is provisional (see above). All numbers are cohort-level; no participant
+identifiers are published on the QC pages.</p>
+<p><strong>References.</strong>
+- Rosen B.R. et al. (2018). Automated QC of FreeSurfer surface reconstruction. NeuroImage 172:292-299.
+- SynthSeg: Maffei et al. (2018), and the <code>mri_synthseg --qc</code> documentation (threshold to be confirmed against the README).</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

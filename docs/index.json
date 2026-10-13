@@ -869,6 +869,28 @@
 "src": "knowledge/ai_labor_market/findings/young-workers-exposed-occupations-gap.md"
 },
 {
+"t": "DEMDAS segmentation-method benchmark (wd6): measured-evidence table, 5 methods",
+"p": "brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight",
+"id": "demdas-segmentation-method-benchmark-wd6",
+"src": "knowledge/brain_volumetry/findings/demdas-segmentation-method-benchmark-wd6.md"
+},
+{
+"t": "recon-all 8.2: the memory peak is a 15-minute phase, not the whole run",
+"p": "brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-13",
+"x": "recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task",
+"id": "recon-all-8-memory-peak-is-a-15-minute-phase",
+"src": "knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md"
+},
+{
 "t": "SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust",
 "p": "brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html",
 "a": "brain_volumetry",
@@ -900,6 +922,17 @@
 "x": "Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen",
 "id": "longitudinal-volumetry-needs-error-statistics",
 "src": "knowledge/brain_volumetry/rules/longitudinal-volumetry-needs-error-statistics.md"
+},
+{
+"t": "Schedule recon-all 8 by phase, not by run",
+"p": "brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.html",
+"a": "brain_volumetry",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-13",
+"x": "Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -> ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch",
+"id": "schedule-recon-all-8-by-phase-not-by-run",
+"src": "knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md"
 },
 {
 "t": "„KI+\": Breitenziel 70 Prozent bis 2027",
@@ -2145,6 +2178,17 @@
 "src": "knowledge/model_capability_cost/rules/benchmarks-from-one-hand.md"
 },
 {
+"t": "DEMDAS cortical thickness QC page: how every number is computed (long form of the \"? Methods\" overlay)",
+"p": "mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.html",
+"a": "mri_qc_viewers",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Long form of the texts shown on hover and in the Methods overlay of `QUALITY_CONTROLL/DEMDAS/cortical_thickness/index.html`. English on purpose: the page may go to third parties. No patient data here, only methods. Software versions as inst",
+"id": "demdas-cortical-thickness-qc-page",
+"src": "knowledge/mri_qc_viewers/findings/demdas-cortical-thickness-qc-page.md"
+},
+{
 "t": "DEMDAS GM QC page: how every number is computed (English, link target of the page's \"? Methods\" overlay)",
 "p": "mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.html",
 "a": "mri_qc_viewers",
@@ -2154,6 +2198,17 @@
 "x": "Langfassung (Englisch) fuer den DEMDAS-GM-Betrachter: SynthSeg 8.2.0, DeepISLES, Label-Mengen der Aggregate, WMH-3D-U-Net, recon-all-Dicke, Ausrichtung auf M0",
 "id": "demdas-gm-qc-page-how-every-number-is-computed",
 "src": "knowledge/mri_qc_viewers/findings/demdas-gm-qc-page-how-every-number-is-computed.md"
+},
+{
+"t": "DEMDAS automated QC gate: Euler number + SynthSeg QC score per session",
+"p": "mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.html",
+"a": "mri_qc_viewers",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-12",
+"x": "Every DEMDAS session is now scored automatically by a two-part quality gate (`demdas-gm/qc_gate.py` -> `derivatives/demdas/gm_beispiel/qc_gate.csv`, one row per BIDS session with a T1w). The gate combines 1. the **Euler number** of the Free",
+"id": "demdas-qc-gate-euler-synthseg",
+"src": "knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md"
 },
 {
 "t": "Den Schichtbetrachter als Tool unter tools/mri/ einstellen",

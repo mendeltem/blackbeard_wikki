@@ -3,7 +3,7 @@
 Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.
 
-Stand 2026-10-12. Ein Eintrag je Datei.
+Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
@@ -12,4 +12,7 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 ## Herkunft
 DEMDAS-GM-Beispiel auf Alita (demdas-gm/verlauf_statistik.py, fehler_statistik.py), Nutzerauftrag 12.10.2026.
 | befund | [synthseg-in-freesurfer-8-runs-on-cpu-only](findings/synthseg-in-freesurfer-8-runs-on-cpu-only.md) | fspython TF 2.13 ohne GPU; 85 s je Sitzung mit --robust, Ordner-Batches laden das Modell einmal; recon-all 8.2 40-48 min |
+| befund | [demdas-segmentation-method-benchmark-wd6](findings/demdas-segmentation-method-benchmark-wd6.md) | 5 Methoden, Ränge 1..N + Mittelrank; Dice vs FreeSurfer 8.2 aseg (GM 0.80, WM 0.89, Hippo 0.88); Test-Retest ICC/SDC95 waechst mit Set B overnight |
 | regel | [cohort-copies-need-a-gzip-sweep](rules/cohort-copies-need-a-gzip-sweep.md) | nach jeder Kohortenkopie gzip -t ueber alle NIfTI, Dateizahl und Bytes gegen die Quelle; du auf exFAT luegt |
+| befund | [recon-all-8-memory-peak-is-a-15-minute-phase](findings/recon-all-8-memory-peak-is-a-15-minute-phase.md) | recon-all 8.2: 26 GB nur in den ersten ~15 min (SynthSeg/SynthMorph), danach 2-4 GB; 89 Laeufe gemessen: MAX_P 5/3/2 = 29/48/36 min, 174 OOM bei 5; Vollkohorte 1616 Sitzungen ~20 Tage lokal, Slurm 36 GB/4 CPU/6 h je Task |
+| regel | [schedule-recon-all-8-by-phase-not-by-run](rules/schedule-recon-all-8-by-phase-not-by-run.md) | Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -> ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch |
