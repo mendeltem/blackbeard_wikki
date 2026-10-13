@@ -325,6 +325,18 @@ seconds instead of a 40-minute render; page 238 MB.</p>
 <li><code>~/QUALITY_CONTROLL/DEMDAS/gm_pia_qc/index.html</code>, stick QWEN/QUALITY_CONTROLL/DEMDAS/gm_pia_qc (own data).</li>
 <li>Build dir <code>~/data/derivatives/demdas/gm_beispiel/qc_pia</code>; generator <code>~/data/work/demdas-gm/gm_qc_axial.py</code> (backup <code>.vor-1013-pia</code>).</li>
 </ul>
+<h2>Nachtrag 2026-10-13: "removed before" and the literature behind before/after</h2>
+<p>"Removed before" exists only as variant B of the A/B/C comparison (WMH filled with FSL lesion_filling before SynthSeg,
+22 baseline sessions, <code>derivatives/demdas/abc</code>): GM changes by &lt;= 0.5 % (max 3.1 ml at 63 ml WMH, sub-PDDISDLFN51T12).
+Infarct filling before segmentation was never computed; the page button "REMOVED BEFORE" is hidden in the compact view.
+Literature (PubMed, 13.10.2026): for MS white-matter lesions, filling BEFORE intensity-based segmentation is recommended
+and masking afterwards does not remove the border misclassification (Chard 2010 doi:10.1002/jmri.22214; Battaglini 2012
+doi:10.1002/hbm.21344; Gelineau-Morel 2012 doi:10.1002/hbm.21402; Popescu 2014 doi:10.1016/j.nicl.2014.01.004; Valverde
+2014 doi:10.1016/j.nicl.2014.08.016; Magon 2014 doi:10.1186/1471-2202-15-106 for cortical thickness). For infarcts no
+filling literature exists; stroke cortical-thickness work excludes infarcted vertices AFTER reconstruction with a lesion
+mask (Khlif 2022 doi:10.1016/j.nicl.2022.103200; Li 2015 doi:10.1016/j.nicl.2014.08.017), registration work masks the
+lesion out of the cost function (Brett 2001 doi:10.1006/nimg.2001.0845; Nachev 2008 doi:10.1016/j.neuroimage.2007.10.002).
+Conclusion unchanged: SynthSeg on the unfilled T1, infarct removed after; the reviewer note carries the reference list.</p>
 <h2>Verknüpft</h2>
 <ul>
 <li><a href="findings/demdas-qc-gate-euler-synthseg.html">demdas-qc-gate-euler-synthseg</a></li>
