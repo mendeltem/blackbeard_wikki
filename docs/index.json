@@ -1265,6 +1265,17 @@
 "src": "knowledge/cmb_detection/rules/two-seeds-per-decision-below-0.08.md"
 },
 {
+"t": "ASML: geplante Lithografie-Kapazität reicht 2027 und 2028 nicht",
+"p": "compute_bottlenecks/findings/asml-litho-supply-short-2027-2028.html",
+"a": "compute_bottlenecks",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-14",
+"x": "ASML erwartet nach eigener Aussage vom 14.10.2026, dass die geplante Lieferfähigkeit für 2027 und 2028 die Kundennachfrage nicht voll deckt. Das gilt trotz der im Q2 angekündigten Erhöhung der Low-NA-EUV- und DUV-Immersionskapazität um 30 %",
+"id": "asml-litho-supply-short-2027-2028",
+"src": "knowledge/compute_bottlenecks/findings/asml-litho-supply-short-2027-2028.md"
+},
+{
 "t": "Gasturbinen: Auftragsbestand der drei Hersteller",
 "p": "compute_bottlenecks/findings/gas-turbine-order-backlog.html",
 "a": "compute_bottlenecks",
@@ -1351,6 +1362,17 @@
 "x": "Große Leistungstransformatoren haben laut einer Umfrage von Wood Mackenzie (Q2 2025) im Schnitt 128 Wochen Lieferzeit (2,5 Jahre), Maschinentransformatoren 144 Wochen (2,8 Jahre). Vor der Pandemie waren es 7 bis 14 Monate. Neue Werke gehen ",
 "id": "transformer-lead-times",
 "src": "knowledge/compute_bottlenecks/mechanisms/transformer-lead-times.md"
+},
+{
+"t": "ASML Q3 2026: offene Punkte aus Call und Abschluss",
+"p": "compute_bottlenecks/open_checks/asml-q3-2026-call-items.html",
+"a": "compute_bottlenecks",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-14",
+"x": "Aus der Pressemitteilung allein nicht ablesbar, im Call vom 14.10.2026 oder im Abschluss zu prüfen: 1. Speicher-/Logik-Split der Systemumsätze Q3 (Q2: 49/51). 2. Anzahl EUV-Auslieferungen Q3, Stand gegen das Jahresziel von rund 65 Low-NA. 3",
+"id": "asml-q3-2026-call-items",
+"src": "knowledge/compute_bottlenecks/open_checks/asml-q3-2026-call-items.md"
 },
 {
 "t": "Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA",
@@ -2110,6 +2132,17 @@
 "x": "Bei Speicherherstellern trat ein niedriges KGV historisch oft genau am Gewinngipfel auf, weil der Markt das Ende des Gewinnwachstums vorwegnimmt. Zwei mechanische Effekte verstärken das Bild: - Trailing-KGV fällt allein, weil schwache Vorja",
 "id": "low-pe-at-earnings-peak",
 "src": "knowledge/memory_earnings/risks/low-pe-at-earnings-peak.md"
+},
+{
+"t": "ASML: Speicher fast die Hälfte der Systemumsätze, +75 % im Jahr 2026",
+"p": "memory_supply/findings/asml-memory-share-of-litho-2026.html",
+"a": "memory_supply",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-14",
+"x": "Im Q2 2026 entfielen 49 % von ASMLs Systemumsatz (6,6 Mrd. €) auf Speicher, 51 % auf Logik. ASML erwartet für 2026 über 75 % Wachstum der speicherbezogenen Systemumsätze, gegen über 25 % bei Advanced Logic/Foundry. Rund 65 Low-NA-EUV-System",
+"id": "asml-memory-share-of-litho-2026",
+"src": "knowledge/memory_supply/findings/asml-memory-share-of-litho-2026.md"
 },
 {
 "t": "Fab-Vorlaufzeiten: zwei Beispiele mit 4 bis 5 Jahren",
@@ -2909,7 +2942,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -2920,7 +2953,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -2931,7 +2964,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -2942,7 +2975,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -2953,7 +2986,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -2964,7 +2997,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -2975,7 +3008,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -2986,7 +3019,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -2997,7 +3030,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -3008,7 +3041,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -3019,7 +3052,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -3030,7 +3063,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -3041,7 +3074,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -3052,7 +3085,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -3063,7 +3096,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-13",
+"d": "2026-10-14",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

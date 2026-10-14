@@ -2,7 +2,7 @@
 
 Engpässe beim Ausbau von KI-Rechenleistung außerhalb des Speichers: Packaging, Strom im Rack, Optik, Turbinen, Transformatoren, dazu Sensorik als Frühindikator für Physical AI. Berührt [ai_demand_drivers](../ai_demand_drivers/INDEX.md) über Vorlaufzeiten und Refresh.
 
-Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis Juli 2026 (Sekundärsynthesen), gegen Primärquellen nicht nachgeprüft, deshalb alles `vorschlag`.
+Stand 2026-10-14. Ein Eintrag je Datei. Quelle sind überwiegend Projekt-Reports von Mai bis Juli 2026 (Sekundärsynthesen), gegen Primärquellen nicht nachgeprüft, deshalb `vorschlag`. Ausnahme: ASML-Befund aus der IR-Mitteilung (Tier 1a, getragen).
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -12,7 +12,9 @@ Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis 
 | [Rackstrom erzwingt 800 V Gleichspannung](mechanisms/rack-current-forces-800vdc.md) | mechanismus | vorschlag |
 | [Optik im Package: erst zwischen Racks, dann im Rack](mechanisms/cpo-scale-out-before-scale-up.md) | mechanismus | vorschlag |
 | [Transformatoren: Lieferzeit über zwei Jahre](mechanisms/transformer-lead-times.md) | mechanismus | vorschlag |
+| [ASML: geplante Lithografie-Kapazität reicht 2027 und 2028 nicht](findings/asml-litho-supply-short-2027-2028.md) | befund | getragen |
 | [Gasturbinen: Auftragsbestand der drei Hersteller](findings/gas-turbine-order-backlog.md) | befund | vorschlag |
 | [LiDAR: Robotik überholt Auto nach Stückzahl bei RoboSense](findings/lidar-robotics-unit-crossover.md) | befund | vorschlag |
 | [Angekündigt ist nicht gebaut](rules/announced-is-not-built.md) | regel | vorschlag |
 | [Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA](open_checks/datacenter-gw-and-twh-to-2030.md) | pruefpunkt | offen |
+| [ASML Q3 2026: offene Punkte aus Call und Abschluss](open_checks/asml-q3-2026-call-items.md) | pruefpunkt | offen |

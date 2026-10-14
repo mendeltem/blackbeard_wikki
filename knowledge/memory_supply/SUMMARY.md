@@ -1,6 +1,6 @@
 # memory_supply: Kurzstand
 
-Stand 2026-10-03. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
@@ -9,6 +9,8 @@ Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 **Mechanismen (vorschlag):** HBM frisst Waferfläche (HBM3E ~3×, HBM4 ~4× je Bit). Opportunitätskosten je Wafer DDR5 gegen HBM. Capex-Disziplin nach 2023.
 
 **Zahlen (Annahmen/Branchendienste):** HBM 22 % der DRAM-Wafer 2026; Rubin = Blackwell-Menge bis 2028 → ~30 % (nur 288 GB) bis 52 % (mit Ultra 1 TB); konv. DRAM −10 % Fläche gegen 2026. Fab-Vorlauf 4–5 Jahre.
+
+**Werkzeugseite (getragen, ASML Tier 1a):** Speicher 49 % von ASMLs Systemumsatz Q2 2026, +75 % erwartet für 2026, großteils Knotenwechsel (EUV statt Multi-Patterning), nicht proportional mehr Wafer. ASML sieht 2027/28 Lieferlücke: fertige Fab-Hüllen nicht zwingend voll bestückbar.
 
 **Risiko:** CXMT entlastet konventionelles DRAM, nicht HBM.
 

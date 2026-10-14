@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-14. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-27 offene Einträge.
+28 offene Einträge.
 
 ## ai_application_layer
 
@@ -44,6 +44,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-14. Nicht vo
   - [ ] AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).
   - [ ] Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.
   - [ ] Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.
+- [ASML Q3 2026: offene Punkte aus Call und Abschluss](knowledge/compute_bottlenecks/open_checks/asml-q3-2026-call-items.md) (pruefpunkt, offen, Stand 2026-10-14)
 - [Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA](knowledge/compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.md) (pruefpunkt, offen, Stand 2026-10-14)
   - [ ] Eine primäre GW-Quelle finden: IEA-Datentabellen zum Report, Behördendaten (EIA, ERCOT-Anschlussliste, EirGrid) oder Zählungen von Betreibern. Analystenhäuser nur als Hinweis.
   - [ ] Klären, ob „Kapazität“ IT-Last oder Netzanschluss meint. Der Faktor PUE (rund 1,1 bis 1,5) verschiebt die GW-Zahl.

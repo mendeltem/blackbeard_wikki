@@ -2,15 +2,17 @@
 
 Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
-Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.
+Engpässe außerhalb des Speichers. Quelle überwiegend Projekt-Reports (vorschlag), ASML-Befund Tier 1a (getragen).
 
 **Kernstand:** Der bindende Engpass wandert: GPU-Zuteilung → CoWoS → Netzanschluss → Turbinen/Transformatoren. CoWoS 70–80k auf 120–130k Wafer/Monat Ende 2026, Rubin braucht ~33 % mehr Fläche je Package. 800 V DC ab Rubin Ultra Kyber (~600 kW). Transformatoren 128–144 Wochen Lieferzeit. Gasturbinen-Book-to-Bill um 2. CPO erst zwischen Racks.
+
+**Lithografie ab 2027 (getragen, ASML IR 14.10.2026):** ASML erwartet, dass die geplante Kapazität 2027 und 2028 die Nachfrage nicht voll deckt, trotz +30 % für 2027; 2028 über +30 % hinaus in Prüfung. Korrigiert die Reports (EUV erst ab 2028 bindend, ~50 EUV/Jahr; 2026 sind ~65 Low-NA geplant). Lücke unbeziffert, Interesse an Orders 2029/30 ist keine Buchung.
 
 **Zuteilung schlägt Datenblatt (These Mendel):** Strom knapp → alle wollen die neueste Generation → Absatz folgt der CoWoS- und HBM4-Zuteilung (Nvidia >50 %, AMD ~11 %), nicht dem Datenblatt. AMD MI455X auf dem Papier gleichauf mit Rubin, Menge rund ein Siebtel. Für Speicher gleichgültig, alle verbauen HBM.
 
 **Regel:** Angekündigt ist nicht gebaut (Stufe nennen).
 
-**Offen (2026-10-14):** Rechenzentrums-GW bis 2030. IEA-Basisfall 415 TWh (2024) auf ~945 TWh (2030), rückgerechnet ~120 bis 135 GW installiert; eine primäre GW-Quelle fehlt.
+**Offen (2026-10-14):** ASML Q3: Speicher-Split, EUV-Stückzahl, Nettogewinn-Sprung (EBIT ~5,1 bei Netto 4,96 Mrd. €). Rechenzentrums-GW bis 2030. IEA-Basisfall 415 TWh (2024) auf ~945 TWh (2030), rückgerechnet ~120 bis 135 GW installiert; eine primäre GW-Quelle fehlt.
 
 **Lesen bei:** Rechenzentrumsausbau, Strom, Packaging, Investieren in Infrastruktur.
 
