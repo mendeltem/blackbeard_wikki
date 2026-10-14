@@ -2,6 +2,9 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-14 | Projekt Artificial Intelligence (Claude, claude.ai) | `knowledge/ai_application_layer/findings/pharma-share-of-ai-compute.md`, `findings/pharma-runs-closed-frontier-llms.md`, `open_checks/compute-allocation-by-sector.md`, `knowledge/compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.md`, beide SUMMARY und INDEX | Prüfung zweier vorgelegter Texte (LLM-Zusammenfassung Pharma, Strategie-Dossier Compute bis 2030): Pharma-Anteil nachgerechnet und korrigiert, Gefion-Zuordnung, Frontier-LLM-Nutzung in der Pharma; Branchentabelle und GW-Zahlen ohne Quelle als Prüfpunkte, Stromverbrauch gegen IEA gehalten. Übriges Dossier (HBM-Waferbedarf, Transformatoren, MR-MUF) steht schon in memory_supply und compute_bottlenecks.
+- 2026-10-14 | Projekt Artificial Intelligence (Claude, claude.ai) | Seiten ai_use_cases_overview und AI_Companys (kein Wiki-Pfad) | Neue Karte regulatorische Dokumente in der Pharma, MASAI in Radiologie, Gefion-Zuordnung; Brückenzahlen auf AI_Companys auf 144 Karten nachgezogen.
+
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.md` (+ PDF) | Primer v3: Durchsicht, Euler-Fix, HPC-Skripte, Protokoll v1, Status und naechste Schritte.
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md`, `rules/euler-number-needs-the-binary-not-the-log.md`, `findings/demdas-pipeline-protocol-v1.md` | Durchsicht aller Pilot-Probanden, Euler-Fehler behoben, Protokoll v1 eingefroren; alle mit Quellen.
 - 2026-10-13 | Alita (Claude Code) | `knowledge/brain_volumetry/findings/demdas-volumetry-primer-2026-10-13.md` (+ PDF) | Primer fuer den Vortrag: alles Wissenswerte zur DEMDAS-Volumetrie mit Quellen; Kopien lokal (demdas-gm/doku), Spiegel und Stick.

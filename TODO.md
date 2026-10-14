@@ -1,13 +1,18 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-13. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-14. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-25 offene Einträge.
+27 offene Einträge.
 
 ## ai_application_layer
 
 - [Mengenbilanz der Beschleuniger](knowledge/ai_application_layer/open_checks/accelerator-mass-balance.md) (pruefpunkt, offen, Stand 2026-10-02)
+- [Compute-Aufteilung nach Anwendungsbereich: Dossier-Zahlen ohne Quelle](knowledge/ai_application_layer/open_checks/compute-allocation-by-sector.md) (pruefpunkt, offen, Stand 2026-10-14)
+  - [ ] Nenner festlegen: Token, Inferenz-Ausgaben in Dollar oder installierte Beschleuniger-Leistung. Nur eine Größe je Tabelle.
+  - [ ] Belegbare Ankerpunkte sammeln: Anthropic Economic Index (Aufgabenanteile nach Berufsgruppe), OpenRouter-Tokenstatistik nach Kategorie, Menlo-Ventures-Spend-Erhebungen. Für jede Quelle die Grenze nennen: Ein Plattformausschnitt ist nicht der Weltmarkt.
+  - [ ] Coding-Anteil gegen Token-Statistiken halten (der Projekt-Report „AI Use Case Landscape Juli 2026“ nennt ~54 % des Coding-LLM-Spends bei Anthropic, Menlo Ventures, Sekundärquelle).
+  - [ ] Ergebnis als Spannweite je Bereich mit Quelle eintragen, Lücken offen lassen (Regel [absence-of-measurement-is-not-measurement-of-absence](knowledge/ai_application_layer/rules/absence-of-measurement-is-not-measurement-of-absence.md)).
 - [KI-Prüfung im Supply Atlas fortsetzen](knowledge/ai_application_layer/open_checks/supply-atlas-ai-use-level4.md) (pruefpunkt, offen, Stand 2026-10-06)
 - [Lücken in ai_use_cases_overview: Kandidatenliste](knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md) (pruefpunkt, offen, Stand 2026-10-05)
   - [ ] Samstag (viel Token-Budget): je Kandidat Webrecherche nach dem Muster des Flughafen-Falls, also Produktion ja/nein, Kennzahl mit Herkunft, Behörde gegen Firmenangabe, Einstufung Reife/Beleg/Wachstum.
@@ -39,6 +44,11 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-13. Nicht vo
   - [ ] AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).
   - [ ] Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.
   - [ ] Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.
+- [Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA](knowledge/compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.md) (pruefpunkt, offen, Stand 2026-10-14)
+  - [ ] Eine primäre GW-Quelle finden: IEA-Datentabellen zum Report, Behördendaten (EIA, ERCOT-Anschlussliste, EirGrid) oder Zählungen von Betreibern. Analystenhäuser nur als Hinweis.
+  - [ ] Klären, ob „Kapazität“ IT-Last oder Netzanschluss meint. Der Faktor PUE (rund 1,1 bis 1,5) verschiebt die GW-Zahl.
+  - [ ] Die Regel [announced-is-not-built](knowledge/compute_bottlenecks/rules/announced-is-not-built.md) anwenden: angekündigte Gigawatt-Campusse nicht als installiert zählen.
+  - [ ] Bei Beleg: als Befund eintragen und den Mechanismus [bottleneck-migration](knowledge/compute_bottlenecks/mechanisms/bottleneck-migration.md) um die Jahreszubau-Zahl ergänzen.
 
 ## lesion_detection_method
 

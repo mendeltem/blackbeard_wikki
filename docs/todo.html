@@ -43,12 +43,17 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="index.html">blackbeard_wikki</a><a href="index.html">Start</a><a href="rules.html">Regeln</a><a href="todo.html">Offen</a><a href="log.html">Protokoll</a><a href="tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="index.html">Start</a> › Offene Punkte</div><h1>TODO</h1>
-<p>Automatisch erzeugt von <code>tools/general/wiki_maintenance</code> am 2026-10-13. Nicht von Hand bearbeiten:
+<p>Automatisch erzeugt von <code>tools/general/wiki_maintenance</code> am 2026-10-14. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.</p>
-<p>25 offene Einträge.</p>
+<p>27 offene Einträge.</p>
 <h2>ai_application_layer</h2>
 <ul>
 <li><a href="ai_application_layer/open_checks/accelerator-mass-balance.html">Mengenbilanz der Beschleuniger</a> (pruefpunkt, offen, Stand 2026-10-02)</li>
+<li><a href="ai_application_layer/open_checks/compute-allocation-by-sector.html">Compute-Aufteilung nach Anwendungsbereich: Dossier-Zahlen ohne Quelle</a> (pruefpunkt, offen, Stand 2026-10-14)</li>
+<li>[ ] Nenner festlegen: Token, Inferenz-Ausgaben in Dollar oder installierte Beschleuniger-Leistung. Nur eine Größe je Tabelle.</li>
+<li>[ ] Belegbare Ankerpunkte sammeln: Anthropic Economic Index (Aufgabenanteile nach Berufsgruppe), OpenRouter-Tokenstatistik nach Kategorie, Menlo-Ventures-Spend-Erhebungen. Für jede Quelle die Grenze nennen: Ein Plattformausschnitt ist nicht der Weltmarkt.</li>
+<li>[ ] Coding-Anteil gegen Token-Statistiken halten (der Projekt-Report „AI Use Case Landscape Juli 2026“ nennt ~54 % des Coding-LLM-Spends bei Anthropic, Menlo Ventures, Sekundärquelle).</li>
+<li>[ ] Ergebnis als Spannweite je Bereich mit Quelle eintragen, Lücken offen lassen (Regel <a href="ai_application_layer/rules/absence-of-measurement-is-not-measurement-of-absence.html">absence-of-measurement-is-not-measurement-of-absence</a>).</li>
 <li><a href="ai_application_layer/open_checks/supply-atlas-ai-use-level4.html">KI-Prüfung im Supply Atlas fortsetzen</a> (pruefpunkt, offen, Stand 2026-10-06)</li>
 <li><a href="ai_application_layer/open_checks/use-case-overview-gaps.html">Lücken in ai_use_cases_overview: Kandidatenliste</a> (pruefpunkt, offen, Stand 2026-10-05)</li>
 <li>[ ] Samstag (viel Token-Budget): je Kandidat Webrecherche nach dem Muster des Flughafen-Falls, also Produktion ja/nein, Kennzahl mit Herkunft, Behörde gegen Firmenangabe, Einstufung Reife/Beleg/Wachstum.</li>
@@ -80,6 +85,11 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li>[ ] AMD-Data-Center-Umsatz in GPU und CPU aufteilen (Segmentangaben, Calls).</li>
 <li>[ ] Samsung-HBM4-Freigabe für MI455X und tatsächliche Auslieferung.</li>
 <li>[ ] Erste unabhängige Messung von MI455X (MLPerf) gegen Rubin je GPU.</li>
+<li><a href="compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.html">Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA</a> (pruefpunkt, offen, Stand 2026-10-14)</li>
+<li>[ ] Eine primäre GW-Quelle finden: IEA-Datentabellen zum Report, Behördendaten (EIA, ERCOT-Anschlussliste, EirGrid) oder Zählungen von Betreibern. Analystenhäuser nur als Hinweis.</li>
+<li>[ ] Klären, ob „Kapazität“ IT-Last oder Netzanschluss meint. Der Faktor PUE (rund 1,1 bis 1,5) verschiebt die GW-Zahl.</li>
+<li>[ ] Die Regel <a href="compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a> anwenden: angekündigte Gigawatt-Campusse nicht als installiert zählen.</li>
+<li>[ ] Bei Beleg: als Befund eintragen und den Mechanismus <a href="compute_bottlenecks/mechanisms/bottleneck-migration.html">bottleneck-migration</a> um die Jahreszubau-Zahl ergänzen.</li>
 </ul>
 <h2>lesion_detection_method</h2>
 <ul>
@@ -136,5 +146,5 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <ul>
 <li><a href="news_sentiment_volatility/open_checks/preregistered-hypotheses.html">Vorab festgelegte Hypothesen Sentiment gegen Kursschwankung, Entscheidungstermine</a> (pruefpunkt, offen, Stand 2026-10-12)</li>
 </ul></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-14 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="search.js"></script></body></html>

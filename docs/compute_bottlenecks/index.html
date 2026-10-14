@@ -43,13 +43,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › compute_bottlenecks</div><h1>compute_bottlenecks</h1><p>Engpässe außerhalb des Speichers: Packaging, Rackstrom, Optik, Turbinen, Transformatoren, Sensorik</p><p class="muted small">Investieren, Rechenzentrum, Strom, CoWoS, Zuteilung, AMD, Broadcom, Turbinen, Transformatoren, 800 V</p>
-<div class="stripe"><i class="warn" style="width:100.0%" title="vorschlag: 9"></i></div><div class="counts"><span class="warn">9 vorschlag</span></div><div class="small"><p>Engpässe beim Ausbau von KI-Rechenleistung außerhalb des Speichers: Packaging, Strom im Rack, Optik, Turbinen, Transformatoren, dazu Sensorik als Frühindikator für Physical AI. Berührt <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a> über Vorlaufzeiten und Refresh.</p>
+<div class="stripe"><i class="warn" style="width:90.0%" title="vorschlag: 9"></i><i class="info" style="width:10.0%" title="offen: 1"></i></div><div class="counts"><span class="warn">9 vorschlag</span> <span class="info">1 offen</span></div><div class="small"><p>Engpässe beim Ausbau von KI-Rechenleistung außerhalb des Speichers: Packaging, Strom im Rack, Optik, Turbinen, Transformatoren, dazu Sensorik als Frühindikator für Physical AI. Berührt <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a> über Vorlaufzeiten und Refresh.</p>
 <p>Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis Juli 2026 (Sekundärsynthesen), gegen Primärquellen nicht nachgeprüft, deshalb alles <code>vorschlag</code>.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-03. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-14. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.</p>
 <p><strong>Kernstand:</strong> Der bindende Engpass wandert: GPU-Zuteilung → CoWoS → Netzanschluss → Turbinen/Transformatoren. CoWoS 70–80k auf 120–130k Wafer/Monat Ende 2026, Rubin braucht ~33 % mehr Fläche je Package. 800 V DC ab Rubin Ultra Kyber (~600 kW). Transformatoren 128–144 Wochen Lieferzeit. Gasturbinen-Book-to-Bill um 2. CPO erst zwischen Racks.</p>
 <p><strong>Zuteilung schlägt Datenblatt (These Mendel):</strong> Strom knapp → alle wollen die neueste Generation → Absatz folgt der CoWoS- und HBM4-Zuteilung (Nvidia &gt;50 %, AMD ~11 %), nicht dem Datenblatt. AMD MI455X auf dem Papier gleichauf mit Rubin, Menge rund ein Siebtel. Für Speicher gleichgültig, alle verbauen HBM.</p>
 <p><strong>Regel:</strong> Angekündigt ist nicht gebaut (Stufe nennen).</p>
+<p><strong>Offen (2026-10-14):</strong> Rechenzentrums-GW bis 2030. IEA-Basisfall 415 TWh (2024) auf ~945 TWh (2030), rückgerechnet ~120 bis 135 GW installiert; eine primäre GW-Quelle fehlt.</p>
 <p><strong>Lesen bei:</strong> Rechenzentrumsausbau, Strom, Packaging, Investieren in Infrastruktur.</p>
 <p><strong>Auf den Seiten:</strong> Karten <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=cowos-advanced-packaging">CoWoS</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=co-packaged-optics-cpo">CPO</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=800-vdc-rack-power">800 V DC</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=data-center-power-the-grid">Rechenzentrumsstrom</a>; Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?uc=data-center-power-the-grid">KI-Campus</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/TSM">TSMC</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/GEV">GE Vernova</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/VRT">Vertiv</a>.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
@@ -227,6 +228,28 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <ul>
 <li><a href="../ai_demand_drivers/mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
 <li><a href="../manufacturing_costs/open_checks/physical-ai-material-handling.html">physical-ai-material-handling</a></li>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(1)</span></h2><details class="entry" id="datacenter-gw-and-twh-to-2030"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/datacenter-gw-and-twh-to-2030.html">Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA</a></span><span class="badge info">offen</span><span class="muted small">2026-10-14</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (claude.ai), Gespräch 2026-10-14 · <a href="open_checks/datacenter-gw-and-twh-to-2030.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.md">Markdown</a></p><h2>Aussage</h2>
+<p>Das „Strategie-Dossier“ vom 2026-10-14 nennt ohne Quelle:
+- installierte Rechenzentrumsleistung 50 bis 55 GW (2025) auf 120 bis 135 GW (2030), also +70 bis 80 GW;
+- Zubau von 7 bis 10 GW pro Jahr (2025) auf 18 bis 25 GW pro Jahr (2030);
+- Stromverbrauch von ~450 auf knapp 1.000 TWh.</p>
+<p>Die Verbrauchszahl deckt sich in der Größenordnung mit dem Basisfall der IEA: 415 TWh im Jahr 2024 (rund 1,5 % des Weltstroms), etwa 945 TWh im Jahr 2030 (IEA, Energy and AI, 2025). Die GW-Zahlen sind nicht belegt.</p>
+<p>Plausibilitätsrechnung (Annahme): 945 TWh entsprechen im Jahresmittel 945.000 GWh / 8.760 h ≈ 108 GW Durchschnittslast. Bei 80 % Auslastung der Anschlussleistung wären das ~135 GW installiert, bei 90 % ~120 GW. Die Dossier-Spanne für 2030 ist damit mit dem IEA-Verbrauch vereinbar, aber nicht unabhängig belegt. Sie lässt sich aus ihm zurückrechnen.</p>
+<h2>Zu prüfen</h2>
+<ol>
+<li>Eine primäre GW-Quelle finden: IEA-Datentabellen zum Report, Behördendaten (EIA, ERCOT-Anschlussliste, EirGrid) oder Zählungen von Betreibern. Analystenhäuser nur als Hinweis.</li>
+<li>Klären, ob „Kapazität“ IT-Last oder Netzanschluss meint. Der Faktor PUE (rund 1,1 bis 1,5) verschiebt die GW-Zahl.</li>
+<li>Die Regel <a href="rules/announced-is-not-built.html">announced-is-not-built</a> anwenden: angekündigte Gigawatt-Campusse nicht als installiert zählen.</li>
+<li>Bei Beleg: als Befund eintragen und den Mechanismus <a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a> um die Jahreszubau-Zahl ergänzen.</li>
+</ol>
+<h2>Ablesung</h2>
+<p>IEA, Energy and AI (2025), Executive Summary (zwischenstaatlicher Bericht, kein Filing, behandelt wie Tier 1b): https://www.iea.org/reports/energy-and-ai/executive-summary
+GW-Zahlen des Dossiers: blind.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/bottleneck-migration.html">bottleneck-migration</a></li>
+<li><a href="mechanisms/transformer-lead-times.html">transformer-lead-times</a></li>
+<li><a href="rules/announced-is-not-built.html">announced-is-not-built</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-14 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

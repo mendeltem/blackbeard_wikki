@@ -1,6 +1,6 @@
 # compute_bottlenecks: Kurzstand
 
-Stand 2026-10-03. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.
 
@@ -9,6 +9,8 @@ Engpässe außerhalb des Speichers. Quelle Projekt-Reports, alles vorschlag.
 **Zuteilung schlägt Datenblatt (These Mendel):** Strom knapp → alle wollen die neueste Generation → Absatz folgt der CoWoS- und HBM4-Zuteilung (Nvidia >50 %, AMD ~11 %), nicht dem Datenblatt. AMD MI455X auf dem Papier gleichauf mit Rubin, Menge rund ein Siebtel. Für Speicher gleichgültig, alle verbauen HBM.
 
 **Regel:** Angekündigt ist nicht gebaut (Stufe nennen).
+
+**Offen (2026-10-14):** Rechenzentrums-GW bis 2030. IEA-Basisfall 415 TWh (2024) auf ~945 TWh (2030), rückgerechnet ~120 bis 135 GW installiert; eine primäre GW-Quelle fehlt.
 
 **Lesen bei:** Rechenzentrumsausbau, Strom, Packaging, Investieren in Infrastruktur.
 

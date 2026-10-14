@@ -1,6 +1,6 @@
 # ai_application_layer: Kurzstand
 
-Stand 2026-10-06. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbuchung zu ai_demand_drivers.
 
@@ -15,6 +15,10 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 **KI an Standorten (vorschlag, 2026-10-06):** Von 128 lv-5-Standorten im Supply Atlas ist KI an 42 am Standort belegt, an 39 nur beim Betreiber, an 27 nicht belegt, 13 sind selbst KI-Infrastruktur, 3 offen. Konzernbelege nie auf Werke übertragen (operator-evidence-is-not-site-evidence). Offen: Stufe 4 (221), drei Kraftwerke, Betreiber Tuoketuo.
 
 **Use-Case-Katalog aktuell:** 143 Karten in 18 Clustern (neu u. a. Instandhaltung, lokale Workstation, KI in Containerterminals, Kommunikation), jede Karte mit Bild; mit Supply Atlas, AI_Companys und dieser Wiki verlinkt. 113 Karten zeigen ihre Einsatzorte auf dem Globus (489 Orte mit Quelle, Stand 2026-10-07); 30 Karten noch ohne Orte (Prüfpunkt use-case-places-second-pass). 20 Kartentexte, die neuere Quellen überholt oder widerlegt hatten, sind korrigiert (Prüfpunkt use-case-card-corrections-2026-10, u. a. EHang ohne Ticketflüge, Yara Birkeland mit Besatzung, Unitree-IPO ~6,1 Mrd. Yuan statt 14,7 Mrd. $).
+
+**Pharma (vorschlag, 2026-10-14):** Anteil am KI-Compute eher 0,2 bis 1 %, nicht die oft genannten 3 bis 8 %: größte belegte Flotte Roche >3.500 GPUs, Lilly >1.000 B300; Gefion gehört der DCAI, nicht Novo Nordisk. Pharma nutzt geschlossene Frontier-LLMs produktiv (Novo NovoScribe auf Claude, Herstellerzahlen). Branchentabellen zur Compute-Aufteilung ohne Quelle sind kein Befund (Prüfpunkt compute-allocation-by-sector).
+
+**Use-Case-Katalog 2026-10-14:** 144 Karten (neu: regulatorische Dokumente in der Pharma; MASAI-Endergebnisse in der Radiologie-Karte; Gefion-Zuordnung in der Pharma-Factory-Karte). Brückenblock auf AI_Companys auf 144 / 18 Cluster / 41-89-14 / 88 in Produktion nachgezogen.
 
 **Lesen bei:** Investieren, KI-Blase, ROI von KI, wer bezahlt den Ausbau.
 

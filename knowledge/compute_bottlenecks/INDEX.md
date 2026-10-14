@@ -15,3 +15,4 @@ Stand 2026-10-02. Ein Eintrag je Datei. Quelle sind Projekt-Reports von Mai bis 
 | [Gasturbinen: Auftragsbestand der drei Hersteller](findings/gas-turbine-order-backlog.md) | befund | vorschlag |
 | [LiDAR: Robotik überholt Auto nach Stückzahl bei RoboSense](findings/lidar-robotics-unit-crossover.md) | befund | vorschlag |
 | [Angekündigt ist nicht gebaut](rules/announced-is-not-built.md) | regel | vorschlag |
+| [Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA](open_checks/datacenter-gw-and-twh-to-2030.md) | pruefpunkt | offen |

@@ -385,6 +385,28 @@
 "src": "knowledge/ai_application_layer/findings/coverage-ratio-2024.md"
 },
 {
+"t": "Pharma betreibt geschlossene Frontier-LLMs, nicht nur offene Modelle hinter der Firewall",
+"p": "ai_application_layer/findings/pharma-runs-closed-frontier-llms.html",
+"a": "ai_application_layer",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-14",
+"x": "Die verbreitete Behauptung, Pharma nutze Text-LLMs wegen Patentschutz ausschließlich als selbst gehostete Open-Source-Modelle oder in isolierten VPCs, ist falsch. - Novo Nordisk betreibt NovoScribe auf Basis von Claude produktiv. Laut Anthr",
+"id": "pharma-runs-closed-frontier-llms",
+"src": "knowledge/ai_application_layer/findings/pharma-runs-closed-frontier-llms.md"
+},
+{
+"t": "Pharma-Anteil am KI-Compute: eher 0,2 bis 1 Prozent, nicht 3 bis 8",
+"p": "ai_application_layer/findings/pharma-share-of-ai-compute.html",
+"a": "ai_application_layer",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-14",
+"x": "Zwei Texte, die Mendel am 2026-10-14 vorlegte (eine LLM-Zusammenfassung und ein „Strategie-Dossier“), setzen Pharma und Life Sciences bei 3 bis 6 bzw. 5 bis 8 Prozent des weltweiten Enterprise- und Inferenz-Compute an. Keiner der beiden nen",
+"id": "pharma-share-of-ai-compute",
+"src": "knowledge/ai_application_layer/findings/pharma-share-of-ai-compute.md"
+},
+{
 "t": "KI-Einsatz an den 128 wichtigsten Standorten des Supply Atlas",
 "p": "ai_application_layer/findings/supply-atlas-ai-use-level5.html",
 "a": "ai_application_layer",
@@ -460,6 +482,17 @@
 "x": "Die Übersichtsseite [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/) (Repo mendeltem/ai_use_cases_overview, 97 Use Cases in 15 Clustern, Stand September 2026, je Karte Reifegrad, Belegqualität, Wachstum und Quelle",
 "id": "airport-biometric-checkin-use-case",
 "src": "knowledge/ai_application_layer/open_checks/airport-biometric-checkin-use-case.md"
+},
+{
+"t": "Compute-Aufteilung nach Anwendungsbereich: Dossier-Zahlen ohne Quelle",
+"p": "ai_application_layer/open_checks/compute-allocation-by-sector.html",
+"a": "ai_application_layer",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-14",
+"x": "Ein „Strategie-Dossier“, das Mendel am 2026-10-14 vorlegte, verteilt den globalen Enterprise- und Inferenz-Compute so: | Bereich | Anteil laut Dossier | |---|---| | Software-Engineering und Coding-Agenten | 25 bis 30 % | | Wissensabfragen, ",
+"id": "compute-allocation-by-sector",
+"src": "knowledge/ai_application_layer/open_checks/compute-allocation-by-sector.md"
 },
 {
 "t": "KI-Prüfung im Supply Atlas fortsetzen",
@@ -1318,6 +1351,17 @@
 "x": "Große Leistungstransformatoren haben laut einer Umfrage von Wood Mackenzie (Q2 2025) im Schnitt 128 Wochen Lieferzeit (2,5 Jahre), Maschinentransformatoren 144 Wochen (2,8 Jahre). Vor der Pandemie waren es 7 bis 14 Monate. Neue Werke gehen ",
 "id": "transformer-lead-times",
 "src": "knowledge/compute_bottlenecks/mechanisms/transformer-lead-times.md"
+},
+{
+"t": "Rechenzentrumsleistung und Stromverbrauch bis 2030: Dossier-Zahlen gegen IEA",
+"p": "compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.html",
+"a": "compute_bottlenecks",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-14",
+"x": "Das „Strategie-Dossier“ vom 2026-10-14 nennt ohne Quelle: - installierte Rechenzentrumsleistung 50 bis 55 GW (2025) auf 120 bis 135 GW (2030), also +70 bis 80 GW; - Zubau von 7 bis 10 GW pro Jahr (2025) auf 18 bis 25 GW pro Jahr (2030); - S",
+"id": "datacenter-gw-and-twh-to-2030",
+"src": "knowledge/compute_bottlenecks/open_checks/datacenter-gw-and-twh-to-2030.md"
 },
 {
 "t": "Angekündigt ist nicht gebaut",
@@ -2865,7 +2909,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -2876,7 +2920,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -2887,7 +2931,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -2898,7 +2942,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-13",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -2909,7 +2953,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-13",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -2920,7 +2964,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-13",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -2931,7 +2975,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -2942,7 +2986,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-13",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -2953,7 +2997,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-13",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -2964,7 +3008,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-13",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -2975,7 +3019,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -2986,7 +3030,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -2997,7 +3041,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-13",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -3008,7 +3052,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-13",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -3019,7 +3063,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-13",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"
