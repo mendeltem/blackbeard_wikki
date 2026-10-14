@@ -47,7 +47,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Stand 2026-10-02. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-14. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbuchung zu ai_demand_drivers.</p>
-<p><strong>Kernstand (vorschlag):</strong> Deckungsquote 2024 nur 1,6 % (3,69 Mrd. ausgewiesener KI-Umsatz gegen ~228 Mrd. Capex). Tokenmenge ×2,7, aber Menge mal Preis steht still (Schere). Rentendissipation macht niedrige Deckung zur Vorhersage, nicht zur Anomalie. Destillation ersetzt Rechenzeit.</p>
+<p><strong>Kernstand (vorschlag):</strong> Deckungsquote 2024 nur 1,6 % (3,69 Mrd. ausgewiesener KI-Umsatz gegen ~228 Mrd. Capex). Tokenmenge ×2,7, aber Menge mal Preis steht still (Schere, Daten 2025; 2026 fielen Preise für erreichte Niveaus kaum noch, Schere 2026 ungeprüft). Rentendissipation macht niedrige Deckung zur Vorhersage, nicht zur Anomalie. Destillation ersetzt Rechenzeit.</p>
 <p><strong>Regeln (vorschlag):</strong> Wertschöpfung ≠ Abschöpfung ≠ Rückfluss. Fehlende Messung ist keine gemessene Abwesenheit.</p>
 <p><strong>Offen:</strong> Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten). Flughafen-Check-in als Use Case erfassen.</p>
 <p><strong>Use-Case-Katalog:</strong> <a href="https://mendeltem.github.io/ai_use_cases_overview/">ai_use_cases_overview</a>, 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Flughafen-Check-in seit 2026-10-05 als Karte drin (98 Karten). Weitere Lücken: 11 Kandidaten zur Prüfung am Samstag (Prüfpunkt use-case-overview-gaps).</p>
@@ -172,6 +172,8 @@ Speicher- und Logikfabs. Oft nennt die Quelle ausdrücklich ein <em>anderes</em>
 <p>Preisregel: Preis zu einem Stichtag ist der niedrigste an diesem Tag geltende Listenpreis der Reihe über alle Anbieter, je Anbieter sein jüngster. Den zuletzt angekündigten Preis irgendeines Anbieters zu nehmen, ließe die Reihenfolge der Ankündigungen über das Ergebnis entscheiden.</p>
 <h2>Trägt</h2>
 <p>Dass Mengenwachstum allein die Umsatzthese der Angebotsseite nicht trägt. Ergänzt den Jevons-Falsifikator in <a href="../ai_demand_drivers/axioms/open-search-space.html">Offener Suchraum</a>: Dort Tokenwachstum gegen Effizienzrate, hier Tokenwachstum gegen Preisverfall. Mengen verschiedener Einheiten (je Tag, je Monat, je Quartal, je Minute) werden nie ineinander umgerechnet und nie in einer Linie gezeichnet.</p>
+<h2>Nachtrag 2026-10-14</h2>
+<p>Die Rechnung beruht auf Mengen und Preisen von 2025. Für 2026 relativiert der Befund fixed-levels-stopped-falling-2026: Für bereits erreichte Fähigkeitsniveaus fielen die Preise 2026 kaum noch (Faktor ×1,0 bis ×1,5), der Preisverfall lief an der Front. Die Schere war 2025 offen, ob sie 2026 offen bleibt, ist ungeprüft.</p>
 <h2>Trägt nicht</h2>
 <p>Erzielte Preise. Listenpreis ist nicht Erlös (Mengenrabatte, Zwischenspeicherung, Jahresverträge, nicht veröffentlicht). Das Produkt ist ein Rechenwert, keine Umsatzgröße; der weit überwiegende Teil der Google-Token wird kostenlos verbraucht. Agentenläufe sind die Gegenthese: Wächst die Menge je zahlendem Nutzer schneller, als der Preis fällt, steigt das Produkt trotzdem. Wird die Agentenlast aber überwiegend von kleinen Modellen auf gewöhnlicher Hardware bedient, verschärft sie die Schere statt sie zu schließen.</p>
 <h2>Bruchindikator</h2>
@@ -184,6 +186,7 @@ Speicher- und Logikfabs. Oft nennt die Quelle ausdrücklich ein <em>anderes</em>
 <li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
 <li><a href="mechanisms/distillation-substitutes-compute.html">distillation-substitutes-compute</a></li>
 <li><a href="../china_industrial_strategy/mechanisms/concentration-decides-margin.html">concentration-decides-margin</a></li>
+<li><a href="../model_capability_cost/findings/fixed-levels-stopped-falling-2026.html">fixed-levels-stopped-falling-2026</a></li>
 </ul></div></details><h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="pharma-runs-closed-frontier-llms"><summary><span class="type">Befund</span><span class="t"><a href="findings/pharma-runs-closed-frontier-llms.html">Pharma betreibt geschlossene Frontier-LLMs, nicht nur offene Modelle hinter der Firewall</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-14</span></summary><div class="body"><p class="small muted">Herkunft: Projekt Artificial Intelligence (claude.ai), Gespräch 2026-10-14 · <a href="findings/pharma-runs-closed-frontier-llms.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_application_layer/findings/pharma-runs-closed-frontier-llms.md">Markdown</a></p><h2>Aussage</h2>
 <p>Die verbreitete Behauptung, Pharma nutze Text-LLMs wegen Patentschutz ausschließlich als selbst gehostete Open-Source-Modelle oder in isolierten VPCs, ist falsch.</p>
 <ul>

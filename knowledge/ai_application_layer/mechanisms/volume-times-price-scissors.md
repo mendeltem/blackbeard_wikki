@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/ai_application_layer
 stand: 2026-10-02
 herkunft: Projekt ki-anwendungsschicht, Gespräch 2026-09-05 bis 2026-10-02
-verweist_auf: [open-search-space, demand-is-not-earnings, distillation-substitutes-compute, concentration-decides-margin]
+verweist_auf: [fixed-levels-stopped-falling-2026, open-search-space, demand-is-not-earnings, distillation-substitutes-compute, concentration-decides-margin]
 ---
 
 # Schere aus Menge und Preis
@@ -17,6 +17,9 @@ Preisregel: Preis zu einem Stichtag ist der niedrigste an diesem Tag geltende Li
 
 ## Trägt
 Dass Mengenwachstum allein die Umsatzthese der Angebotsseite nicht trägt. Ergänzt den Jevons-Falsifikator in [Offener Suchraum](../../ai_demand_drivers/axioms/open-search-space.md): Dort Tokenwachstum gegen Effizienzrate, hier Tokenwachstum gegen Preisverfall. Mengen verschiedener Einheiten (je Tag, je Monat, je Quartal, je Minute) werden nie ineinander umgerechnet und nie in einer Linie gezeichnet.
+
+## Nachtrag 2026-10-14
+Die Rechnung beruht auf Mengen und Preisen von 2025. Für 2026 relativiert der Befund fixed-levels-stopped-falling-2026: Für bereits erreichte Fähigkeitsniveaus fielen die Preise 2026 kaum noch (Faktor ×1,0 bis ×1,5), der Preisverfall lief an der Front. Die Schere war 2025 offen, ob sie 2026 offen bleibt, ist ungeprüft.
 
 ## Trägt nicht
 Erzielte Preise. Listenpreis ist nicht Erlös (Mengenrabatte, Zwischenspeicherung, Jahresverträge, nicht veröffentlicht). Das Produkt ist ein Rechenwert, keine Umsatzgröße; der weit überwiegende Teil der Google-Token wird kostenlos verbraucht. Agentenläufe sind die Gegenthese: Wächst die Menge je zahlendem Nutzer schneller, als der Preis fällt, steigt das Produkt trotzdem. Wird die Agentenlast aber überwiegend von kleinen Modellen auf gewöhnlicher Hardware bedient, verschärft sie die Schere statt sie zu schließen.
@@ -32,3 +35,4 @@ Mengen: Unternehmensangaben (Google I/O, Alphabet-Quartalsgespräch; Tier 1a nur
 - [demand-is-not-earnings](../../ai_demand_drivers/rules/demand-is-not-earnings.md)
 - [distillation-substitutes-compute](distillation-substitutes-compute.md)
 - [concentration-decides-margin](../../china_industrial_strategy/mechanisms/concentration-decides-margin.md)
+- [fixed-levels-stopped-falling-2026](../../model_capability_cost/findings/fixed-levels-stopped-falling-2026.md)

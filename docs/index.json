@@ -671,6 +671,17 @@
 "src": "knowledge/ai_demand_drivers/findings/custom-asics-use-hbm.md"
 },
 {
+"t": "Verschuldungsspielraum der großen Vier reicht rechnerisch 8 bis 10 Jahre",
+"p": "ai_demand_drivers/findings/debt-headroom-big-four-2026.html",
+"a": "ai_demand_drivers",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-14",
+"x": "Frage Mendel: Wenn nur Geld begrenzt, ist nichts begrenzt, denn Geld lässt sich leihen. Wie viel geht maximal? Rechnung für Microsoft, Alphabet, Amazon, Meta (Annahmen, nicht gegen 10-Qs geprüft): EBITDA 2026 zusammen ~700 Mrd. $ (eigene Sc",
+"id": "debt-headroom-big-four-2026",
+"src": "knowledge/ai_demand_drivers/findings/debt-headroom-big-four-2026.md"
+},
+{
 "t": "GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang",
 "p": "ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.html",
 "a": "ai_demand_drivers",
@@ -713,6 +724,28 @@
 "x": "Schnellerer Chipentwurf (rekursive Verbesserung, interne Modelle) verkürzt den Generationsabstand der Beschleuniger. Die Nachfrage springt öfter auf eine neue HBM-Generation, die Lieferkette sitzt öfter im Yield-Tal mit weniger kumulierter ",
 "id": "cadence-and-yield-trough",
 "src": "knowledge/ai_demand_drivers/mechanisms/cadence-and-yield-trough.md"
+},
+{
+"t": "Rechenzentrum schlägt Workstation pro Token um eine Größenordnung",
+"p": "ai_demand_drivers/mechanisms/datacenter-beats-workstation-per-token.html",
+"a": "ai_demand_drivers",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-10-14",
+"x": "Beim Erzeugen von Tokens wird je Schritt das ganze Modell aus dem Speicher gelesen. Eine Workstation tut das für eine Anfrage, ein Rechenzentrum bündelt viele Anfragen in einem Schritt. Überschlag (Speicherbandbreite geteilt durch Modellgrö",
+"id": "datacenter-beats-workstation-per-token",
+"src": "knowledge/ai_demand_drivers/mechanisms/datacenter-beats-workstation-per-token.md"
+},
+{
+"t": "Jeder Sektor wächst, die Summe zählt",
+"p": "ai_demand_drivers/mechanisms/every-sector-grows-sum-counts.html",
+"a": "ai_demand_drivers",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-10-14",
+"x": "These Mendel: Für die Compute-Nachfrage bis 2030 kommt es nicht darauf an, welcher Sektor der größte Abnehmer ist. Agenten, Industrie, Wissenschaft, Simulation und Robotik wachsen gleichzeitig, und alle landen im Rechenzentrum, weil dort gr",
+"id": "every-sector-grows-sum-counts",
+"src": "knowledge/ai_demand_drivers/mechanisms/every-sector-grows-sum-counts.md"
 },
 {
 "t": "Finanzierungsgrenze",
@@ -841,7 +874,7 @@
 "a": "ai_demand_drivers",
 "y": "Risiko",
 "s": "vorschlag",
-"d": "2026-10-02",
+"d": "2026-10-14",
 "x": "Einige Inferenz-Beschleuniger umgehen HBM: Groq (nur SRAM auf dem Chip, 230 MB), Cerebras WSE-3 (44 GB SRAM auf dem Wafer), d-Matrix Corsair (SRAM plus 256 GB LPDDR5X), Tenstorrent (GDDR6). Dazu kommt die Aufteilung der Inferenz: AWS lässt ",
 "id": "hbm-bypass-architectures",
 "src": "knowledge/ai_demand_drivers/risks/hbm-bypass-architectures.md"

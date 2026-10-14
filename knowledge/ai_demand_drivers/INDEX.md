@@ -2,7 +2,7 @@
 
 Warum die Nachfrage nach DRAM und HBM durch KI hoch bleibt: Setzungen, Mechanismen, Risiken, offene Prüfpunkte, Befunde. Die Gegenbuchung, ob diese Nachfrage bezahlt wird, steht in [ai_application_layer](../ai_application_layer/INDEX.md).
 
-Stand 2026-10-02. Ein Eintrag je Datei.
+Stand 2026-10-14. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -27,3 +27,6 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [Architekturen ohne HBM](risks/hbm-bypass-architectures.md) | risiko | vorschlag |
 | [Rubin: Auslieferung ab August 2026, rund 20 % des DC-Umsatzes im Q3 GJ2027](findings/rubin-shipments-start-q3-fy27.md) | befund | vorschlag |
 | [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](open_checks/rubin-share-of-blackwell-base.md) | pruefpunkt | offen |
+| [Jeder Sektor wächst, die Summe zählt](mechanisms/every-sector-grows-sum-counts.md) | mechanismus | vorschlag |
+| [Rechenzentrum schlägt Workstation pro Token um eine Größenordnung](mechanisms/datacenter-beats-workstation-per-token.md) | mechanismus | vorschlag |
+| [Verschuldungsspielraum der großen Vier reicht rechnerisch 8 bis 10 Jahre](findings/debt-headroom-big-four-2026.md) | befund | vorschlag |

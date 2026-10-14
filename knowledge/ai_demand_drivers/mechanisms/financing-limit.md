@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/ai_demand_drivers
 stand: 2026-10-02
 herkunft: Gespräch Projekt SK Hynix, 2026-10-02
-verweist_auf: [unverifiable-rival-position]
+verweist_auf: [debt-headroom-big-four-2026, unverifiable-rival-position]
 ---
 
 # Finanzierungsgrenze
@@ -27,3 +27,4 @@ Kapitalflussrechnung, Tier 1a.
 
 ## Verknüpft
 - [unverifiable-rival-position](../axioms/unverifiable-rival-position.md)
+- [debt-headroom-big-four-2026](../findings/debt-headroom-big-four-2026.md)
