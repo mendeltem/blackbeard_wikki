@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_coordination</div><h1>agent_coordination</h1><p>Mehrere Sitzungen in denselben Repos: fremde Arbeitsbaeume, doppelt belegte Dateinamen</p><p class="muted small">Agenten, parallele Sitzungen, Repos, Branches, Datenaustausch, Seitenverbund, deployments.json, Verlinkung</p>
-<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 4"></i></div><div class="counts"><span class="ok">4 getragen</span></div><div class="small"><p>Mehrere Agenten und Chats arbeiten gleichzeitig an denselben Repos, ohne
+<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 5"></i></div><div class="counts"><span class="ok">5 getragen</span></div><div class="small"><p>Mehrere Agenten und Chats arbeiten gleichzeitig an denselben Repos, ohne
 voneinander zu wissen. Hier steht, was dabei schiefgeht und was dagegen hilft.</p>
 <p>Abgrenzung zu <a href="../agent_tooling/index.html">agent_tooling</a>: dort geht es um ein
 Werkzeug und seine Ausgabe, hier um zwei Sitzungen und ein gemeinsames Repo.</p>
@@ -59,7 +59,26 @@ sichtbar geworden wäre.</p>
 <p><strong>Wiki-Lesefassung (2026-10-11, getragen):</strong> Menschen lesen die erzeugte HTML-Seite <code>docs/index.html</code> (Suche, Kurzstand, aufklappbare Einträge, Rückverweise), Agenten schreiben weiter Markdown mit Frontmatter; <code>docs/</code> wird mit <code>tools/general/wiki_html</code> nach jedem Beitrag neu gebaut (pre-commit-Haken), nie von Hand (humans-read-html-agents-write-markdown).</p>
 <p><strong>Lesen bei:</strong> mehreren Agenten, geteilten Repos, Datenaustausch zwischen Projekten.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(4)</span></h2><details class="entry" id="humans-read-html-agents-write-markdown"><summary><span class="type">Regel</span><span class="t"><a href="rules/humans-read-html-agents-write-markdown.html">Menschen lesen HTML, Agenten schreiben Markdown: die Wiki hat eine Quelle und eine erzeugte Lesefassung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerregel Mendel 2026-10-11 (Wiki und Tafel), Bau von tools/general/wiki_html · <a href="rules/humans-read-html-agents-write-markdown.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/humans-read-html-agents-write-markdown.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(5)</span></h2><details class="entry" id="everything-in-english"><summary><span class="type">Regel</span><span class="t"><a href="rules/everything-in-english.html">Main rule: all work is in English</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-15</span></summary><div class="body"><p class="small muted">Herkunft: Mendel, chat on workstation Alita, 2026-10-15 (&quot;ein Hauptregel in wiki sollte alle Arbeiten sollten auf Englisch sein&quot;) · <a href="rules/everything-in-english.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/everything-in-english.md">Markdown</a></p><h2>Statement</h2>
+<p>Everything an agent produces is written in English: wiki entries (title, body, section headings), code, comments,
+commit messages, file and folder names, QC pages, tables and their column/sheet names, reports, primers and figures.
+The chat with Mendel may stay in German; the artefacts do not. Existing German entries are translated when they are
+next touched (no big-bang rewrite); a new entry is never written in German.
+Exception: the frontmatter keys and their fixed values (<code>typ: regel</code>, <code>status: getragen</code>, <code>stand</code>, <code>herkunft</code>, ...)
+stay as defined in templates/knowledge-entry.md, because wiki_maintenance --check validates them.</p>
+<h2>Applies to</h2>
+<p>All agents and chats that write to this wiki or produce files for Mendel's projects.</p>
+<h2>Does not apply to</h2>
+<p>Quotes of what a person said (keep the original wording, add an English gloss if needed); data that arrives in
+another language (e.g. German DICOM series names) is kept as it is.</p>
+<h2>Break indicator</h2>
+<p>A new entry, page or table in German, or a translated entry whose numbers no longer match the original.</p>
+<h2>Source</h2>
+<p>Mendel's instruction 2026-10-15; earlier the same rule for outputs (QC pages, Excel, GitHub) since 2026-09-29/10-12.</p>
+<h2>Linked</h2>
+<ul>
+<li><a href="rules/humans-read-html-agents-write-markdown.html">humans-read-html-agents-write-markdown</a></li>
+</ul></div></details><details class="entry" id="humans-read-html-agents-write-markdown"><summary><span class="type">Regel</span><span class="t"><a href="rules/humans-read-html-agents-write-markdown.html">Menschen lesen HTML, Agenten schreiben Markdown: die Wiki hat eine Quelle und eine erzeugte Lesefassung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Nutzerregel Mendel 2026-10-11 (Wiki und Tafel), Bau von tools/general/wiki_html · <a href="rules/humans-read-html-agents-write-markdown.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/humans-read-html-agents-write-markdown.md">Markdown</a></p><h2>Aussage</h2>
 <p>Alle Information der Wiki wird für Menschen über die erzeugte HTML-Seite gelesen (<code>docs/index.html</code>, mit Links auf jede andere Seite, Suche, Kurzstand je Bereich, Einträge aufklappbar, Verweise und Rückverweise, Plots). Die Quelle bleibt Markdown mit Frontmatter, eine Datei je Aussage, wie im README beschrieben; nur die <code>README.md</code> ist zugleich Quelle und Lesetext. Agenten schreiben nie HTML von Hand in die Wiki. Nach jedem Beitrag wird <code>docs/</code> mit <code>tools/general/wiki_html</code> neu gebaut und mit eingecheckt (lokal übernimmt das der pre-commit-Haken). <code>docs/</code> wird nie von Hand bearbeitet; was dort fehlt, fehlt in der Quelle.</p>
 <h2>Trägt</h2>
 <p>Gilt für diese Wiki und sinngemäß für die Tafel (<code>BLACKBOARD.md</code> als Funktionskern, Tafel-HTML als Lesefassung). Gründe für Markdown als Quelle: dieselbe Information kostet in HTML etwa das Zwei- bis Dreifache an Tokens, und <code>SUMMARY.md</code> geht als Prefill in lokale Modelle mit knappem Kontext; kleine lokale Modelle schreiben Markdown zuverlässig und lassen in HTML Tags offen; Markdown-Diffs lassen sich bei parallelen Sitzungen lesen und zusammenführen; Prüfwerkzeug, Vorlagen, Skill und claude.ai-Projekt hängen am Frontmatter. Maschinen bekommen zusätzlich <code>docs/index.json</code> (Titel, Pfad, Bereich, Typ, Status, Stand, Kurztext je Eintrag).</p>
@@ -206,5 +225,5 @@ vollständig veraltet.</p>
 <ul>
 <li><a href="rules/one-filename-two-contracts.html">one-filename-two-contracts</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-14 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-15 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

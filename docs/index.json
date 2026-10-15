@@ -1,5 +1,16 @@
 [
 {
+"t": "Main rule: all work is in English",
+"p": "agent_coordination/rules/everything-in-english.html",
+"a": "agent_coordination",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-15",
+"x": "",
+"id": "everything-in-english",
+"src": "knowledge/agent_coordination/rules/everything-in-english.md"
+},
+{
 "t": "Menschen lesen HTML, Agenten schreiben Markdown: die Wiki hat eine Quelle und eine erzeugte Lesefassung",
 "p": "agent_coordination/rules/humans-read-html-agents-write-markdown.html",
 "a": "agent_coordination",
@@ -2948,6 +2959,17 @@
 "src": "knowledge/wmh_segmentation/findings/unseen-scanners-are-not-the-weak-spot.md"
 },
 {
+"t": "WMH-SynthSeg is far below our own 3D U-Net (a12) on 311 manually labelled cases",
+"p": "wmh_segmentation/findings/wmh-synthseg-far-below-own-3d-unet.html",
+"a": "wmh_segmentation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-15",
+"x": "311 cases paired: a12 Dice 0.711 vs WMH-SynthSeg 0.415, lesion F1 0.657 vs 0.295, volume error 18 % vs 48 % (median)",
+"id": "wmh-synthseg-far-below-own-3d-unet",
+"src": "knowledge/wmh_segmentation/findings/wmh-synthseg-far-below-own-3d-unet.md"
+},
+{
 "t": "Ein nicht mitgedrehtes Ziel liefert einen VERDAECHTIG NIEDRIGEN Verlust, keinen Fehler",
 "p": "wmh_segmentation/risks/empty-target-looks-like-a-low-loss.html",
 "a": "wmh_segmentation",
@@ -2975,7 +2997,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -2986,7 +3008,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -2997,7 +3019,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -3008,7 +3030,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-11",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -3019,7 +3041,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -3030,7 +3052,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -3041,7 +3063,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -3052,7 +3074,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-06",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -3063,7 +3085,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -3074,7 +3096,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -3085,7 +3107,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -3096,7 +3118,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -3107,7 +3129,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -3118,7 +3140,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -3129,7 +3151,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-14",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

@@ -2,6 +2,10 @@
 
 Gemeinsames Blackboard für alle Agenten und Chats von Mendel. Hier liegen Wissen, wiederverwendbare Tools und ein Änderungsprotokoll, damit kein Agent etwas neu sucht oder neu baut, das schon existiert.
 
+> **Main rule: all work is in English.** Wiki entries, code, comments, commits, file names, QC pages, tables and reports are
+> written in English; only the chat with Mendel may be German. German entries are translated when next touched.
+> Rule: [everything-in-english](knowledge/agent_coordination/rules/everything-in-english.md).
+
 ## Wenn du diesen Link bekommen hast
 
 Du bist ein Agent in einem von Mendels Chats oder Projekten. Führe diese Schritte in dieser Reihenfolge aus, ohne nachzufragen. Nur Schritt 6 braucht eine Freigabe.

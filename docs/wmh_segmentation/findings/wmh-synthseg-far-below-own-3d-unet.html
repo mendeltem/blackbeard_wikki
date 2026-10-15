@@ -1,0 +1,105 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>WMH-SynthSeg is far below our own 3D U-Net (a12) on 311 manually labelled cases</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">wmh_segmentation</a> › <a href="../index.html#findings">Befund</a></div><h1>WMH-SynthSeg is far below our own 3D U-Net (a12) on 311 manually labelled cases</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-15</span><span>Herkunft</span><span>wmh-modell201/pool311 on Alita, 2026-10-15 (question: is a public tool better than our a12 for filling WMH before segmentation?)</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="official-label-2-rule-deletes-the-prediction.html">Die offizielle Challenge-Metrik loescht Vorhersagen auf Label 2, sie zaehlt sie nicht als Fehlalarm</a> <span class="muted small">(wmh_segmentation)</span><br><a href="brain-mask-is-part-of-the-model.html">Die Hirnmaske ist Teil des Modells, nicht Vorverarbeitung</a> <span class="muted small">(wmh_segmentation)</span><br><a href="../rules/measure-tails-paired-not-by-percentile.html">Randverhalten gepaart messen, nicht ueber Perzentile aus kleinen Gruppen</a> <span class="muted small">(wmh_segmentation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/wmh-synthseg-far-below-own-3d-unet.md">knowledge/wmh_segmentation/findings/wmh-synthseg-far-below-own-3d-unet.md</a></span></div><h2>Statement</h2>
+<p>Paired on the same 311 cases (WMH Challenge train 60 + test 110, BELOVE 56, WMH_SHAE 65, maastricht 20), same references,
+same brain mask, official label-2 rule, threshold 0.5:</p>
+<table>
+<thead>
+<tr>
+<th>metric</th>
+<th>a12 (5-fold out-of-fold)</th>
+<th>WMH-SynthSeg (FreeSurfer 8.2.0, v10)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dice</td>
+<td><strong>0.711</strong></td>
+<td>0.415 (difference +0.296, 95 % bootstrap CI +0.280 to +0.312; a12 better in 307/311)</td>
+</tr>
+<tr>
+<td>voxel sensitivity / precision</td>
+<td>0.736 / 0.721</td>
+<td>0.466 / 0.463</td>
+</tr>
+<tr>
+<td>lesion recall / lesion F1</td>
+<td>0.633 / 0.657</td>
+<td>0.228 / 0.295</td>
+</tr>
+<tr>
+<td>absolute volume difference, median</td>
+<td>18 %</td>
+<td>48 % (mean 39 % vs 135 %)</td>
+</tr>
+<tr>
+<td>Spearman predicted vs reference volume</td>
+<td>0.963</td>
+<td>0.784</td>
+</tr>
+</tbody>
+</table>
+<p>By WMH load: below 5 ml Dice 0.573 vs 0.228 (WMH-SynthSeg over-calls, median +2.7 ml); above 15 ml 0.824 vs 0.576
+(WMH-SynthSeg under-calls, median -8.1 ml). a12 wins in every cohort, including the external-style cohorts.</p>
+<h2>Applies to</h2>
+<p>Choosing a WMH mask for lesion filling or WMH volume on FLAIR with T1 available, cohorts like these (3 T, clinical FLAIR).</p>
+<h2>Does not apply to</h2>
+<p>WMH-SynthSeg's own use case: T1-only or low-field/portable scans without FLAIR. Here it received the same preprocessed
+(skull-stripped, normalised, partly 3-mm-slice) FLAIR as a12, not the raw image; its probabilities were resampled
+linearly from 1 mm to the evaluation grid. That may cost it some Dice, but not 0.30.</p>
+<h2>Break indicator</h2>
+<p>WMH-SynthSeg on raw FLAIR reaching within 0.05 Dice of a12 on the same cases.</p>
+<h2>Source</h2>
+<p>Scripts pool311/wmhsynthseg/auswerten.py (paired bootstrap, 5000 draws, seed 2026) and methode/wmh_auswerten.py; QC page
+QUALITY_CONTROLL/WMH/WMH_SEGMENTATION (20 cases, built with the shared qc_slice_viewer; page Dice equals script Dice within 0.004).
+WMH-SynthSeg: Laso et al., ISBI 2024, doi:10.1109/isbi56570.2024.10635502. Note: FreeSurfer's bundled torch has no CUDA;
+the unchanged inference.py runs on GPU from a CUDA environment (11 s instead of 109 s per case), needs up to 20 GB VRAM alone.</p>
+<h2>Linked</h2>
+<ul>
+<li><a href="official-label-2-rule-deletes-the-prediction.html">official-label-2-rule-deletes-the-prediction</a></li>
+<li><a href="brain-mask-is-part-of-the-model.html">brain-mask-is-part-of-the-model</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-15 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -12,6 +12,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt | Status |
 |---|---|---|---|
+| befund | [wmh-synthseg-far-below-own-3d-unet](findings/wmh-synthseg-far-below-own-3d-unet.md) | 311 cases paired: a12 Dice 0.711 vs WMH-SynthSeg 0.415, lesion F1 0.657 vs 0.295, volume error 18 % vs 48 % (median) | getragen |
 | befund | [brain-mask-is-part-of-the-model](findings/brain-mask-is-part-of-the-model.md) | 3 % Maskenunterschied = 0,030 Dice ueber die z-Normierung in der Maske; so gross wie der ganze Architekturgewinn | getragen |
 | befund | [second-bias-correction-helps-on-mixed-scanners](findings/second-bias-correction-helps-on-mixed-scanners.md) | `fast -B` auf schon korrigierten Daten: ohne ihn Dice -0,011 und Laesions-Recall -0,037, Startwert-Streuung dreifach | getragen |
 | befund | [official-label-2-rule-deletes-the-prediction](findings/official-label-2-rule-deletes-the-prediction.md) | Challenge-Code loescht die Vorhersage auf Label 2; strengere Konvention ist ~0,006 Dice zu tief | getragen |

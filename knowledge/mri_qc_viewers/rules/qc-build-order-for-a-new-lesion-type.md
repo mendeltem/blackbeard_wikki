@@ -70,6 +70,11 @@ Setzungen aus den Projekten valdo-t2s, mb-arena und pvs-arena bis 2026-10-08; Za
 aus den jeweiligen ARBEIT.md. Der gemeinsame Generator als Tool ist der offene
 Pruefpunkt [slice-viewer-as-shared-tool].
 
+## Log (rule 10)
+- 2026-10-15 WMH segmentation, a12 vs WMH-SynthSeg (20 of 311 pool cases): new was pre-masking the predictions exactly like the
+  measurement script (brain mask, label-2 region removed) before handing them to qc_slice_viewer, so page Dice equals script Dice
+  (max difference 0.004). No setting changed by the user. Confirmed: a12 0.711 vs WMH-SynthSeg 0.415 Dice on the pool.
+
 ## Verknuepft
 - [qc-slice-viewer-conventions](qc-slice-viewer-conventions.md)
 - [slice-viewer-as-shared-tool](../open_checks/slice-viewer-as-shared-tool.md)
