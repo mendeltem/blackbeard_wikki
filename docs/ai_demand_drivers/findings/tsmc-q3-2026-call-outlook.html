@@ -1,0 +1,76 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>TSMC 3Q26 call: management says AI demand exceeds supply, 2026 growth raised to about 44%</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_demand_drivers</a> › <a href="../index.html#findings">Befund</a></div><h1>TSMC 3Q26 call: management says AI demand exceeds supply, 2026 growth raised to about 44%</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-15</span><span>Herkunft</span><span>Chat with Mendel (claude.ai), 2026-10-15, TSMC 3Q26 earnings call</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="tsmc-q3-2026-results.html">TSMC 3Q26: revenue above guidance, growth comes from price and mix, not volume</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../../compute_bottlenecks/mechanisms/cowos-capacity-and-package-area.html">CoWoS: Kapazität gegen Fläche je Package</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../../compute_bottlenecks/findings/asml-litho-supply-short-2027-2028.html">ASML: geplante Lithografie-Kapazität reicht 2027 und 2028 nicht</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../../compute_bottlenecks/rules/announced-is-not-built.html">Angekündigt ist nicht gebaut</a> <span class="muted small">(compute_bottlenecks)</span></span><span>Verwiesen von</span><span><a href="tsmc-q3-2026-results.html">TSMC 3Q26: revenue above guidance, growth comes from price and mix, not volume</a> <span class="muted small">(ai_demand_drivers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/tsmc-q3-2026-call-outlook.md">knowledge/ai_demand_drivers/findings/tsmc-q3-2026-call-outlook.md</a></span></div><h2>Statement</h2>
+<p>Guidance and statements from TSMC's 3Q26 earnings call, 2026-10-15:</p>
+<ul>
+<li>4Q26 guidance: revenue US$52.3 to 54.3bn (midpoint +14% QoQ, calculated 53.3 / 46.72 = 1.141; TSMC: +58% YoY at midpoint), gross margin 65 to 67%, operating margin 56.5 to 58.5%, exchange rate US$1 = NT$31.8.</li>
+<li>Full-year 2026 revenue growth in US$ now around 44%. Earlier guidance during 2026: close to 30% (January), above 30% (April), slightly above 40% (July).</li>
+<li>2026 capex reiterated at US$60 to 64bn. Capex 2026 to 2028 expected significantly higher than the prior three years.</li>
+<li>Margin dilution from overseas fabs closer to 2% for 2026, widening to 3 to 4% in later years. 4Q gross margin decline attributed to the N2 ramp and overseas fabs.</li>
+<li>C.C. Wei: demand is higher than supply and the gap is still big; customers continue to increase demand; no sign of slowdown. The AI accelerator revenue CAGR given earlier (mid-to-high 50s %, 2024 to 2029) "probably will be higher"; no new number. CPUs for agentic AI are not in that definition.</li>
+<li>Wei: consumer and price-sensitive end markets are challenged by rising prices and macro uncertainty; 2027 planning adjusted accordingly.</li>
+<li>Capacity: N2 family capacity to more than double by 2027. A14 risk production 2027, volume 2028. One additional N3 fab in Tainan (volume 1H28). Arizona fab 2 volume production 3Q27, slightly ahead of schedule. Texas under evaluation; talks with a customer about "Terafab", condition is that TSMC runs the fab.</li>
+<li>Packaging: CoWoS in volume production at 5x reticle size, 9x and 14x in development. Silicon interposers sourced from GlobalFoundries because of back-end shortage.</li>
+<li>Capacity resale between customers: TSMC does not allow subletting or auctioning; mask licensing cases exist, "very, very small".</li>
+</ul>
+<h2>Carries</h2>
+<p>The supplier's own statement, after a quarter above guidance, that leading-edge and advanced-packaging demand exceeds its capacity, and its fourth upward revision of 2026 growth in one year.</p>
+<h2>Does not carry</h2>
+<p>That demand exceeds supply as an independently measured fact: the gap is management's assessment and is not quantified. Announced fabs and capacity targets are plans, not built capacity (see announced-is-not-built). Statements apply to leading-edge nodes and AI; for consumer segments TSMC reports weakness.</p>
+<h2>Break indicator</h2>
+<p>TSMC withdraws or softens the demand-above-supply statement, lowers full-year growth, or cuts capex guidance in a later call.</p>
+<h2>Source</h2>
+<p>Earnings call 2026-10-15. Read via automated transcript (Benzinga, trade press, not Tier 1a):
+https://www.benzinga.com/news/26/10/62373492/taiwan-semiconductor-reports-q3-2026-results-full-earnings-call-transcript
+4Q26 revenue range cross-checked with DigiTimes, 2026-10-15. Status <code>vorschlag</code> until checked against the official TSMC transcript on https://investor.tsmc.com/english/quarterly-results/2026/q3 (published about 24 hours after the call). Earlier full-year guidance steps from Reuters/CNBC reports of the January, April and July calls, not checked against IR.</p>
+<h2>Linked</h2>
+<ul>
+<li><a href="tsmc-q3-2026-results.html">tsmc-q3-2026-results</a></li>
+<li><a href="../../compute_bottlenecks/mechanisms/cowos-capacity-and-package-area.html">cowos-capacity-and-package-area</a></li>
+<li><a href="../../compute_bottlenecks/findings/asml-litho-supply-short-2027-2028.html">asml-litho-supply-short-2027-2028</a></li>
+<li><a href="../../compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-15 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,6 +1,6 @@
 # ai_demand_drivers: Kurzstand
 
-Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-15. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.
 
@@ -9,6 +9,8 @@ Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels I
 **Mechanismen (getragen):** Refresh statt Neubau, Kadenz und Yield-Tal, Simulation braucht Compute, Mess- und Experimentierkreislauf, induzierte Innovation, Vorlaufzeiten RZ gegen Fab, Automatisierung wirkt beidseitig, Geheimhaltung stützt das Motiv. Gegenkraft (vorschlag): Finanzierungsgrenze.
 
 **Neu 2026-10-14 (vorschlag):** These Mendel: Jeder Sektor wächst, die Summe zählt, alles landet im Rechenzentrum (Industrie heute klein gemessen, muss nur zusätzlich wachsen). Rechenzentrum ~0,14 J/Token gegen Workstation ~2,5 J/Token, Bündelung braucht KV-Cache, also HBM. Verschuldungsspielraum der großen Vier ~1,7 bis 2,1 Bio. $ gegen Lücke ~220 Mrd. $/Jahr: Geld bindet für sie bis ~2028 nicht, für Oracle/Neoclouds/Labore schon. HBM-Umgehung im Rechenzentrum (Rubin CPX, SRAM) 10 bis 15 % bis 2030.
+
+**New 2026-10-15 (TSMC 3Q26):** Revenue US$46.7bn above guidance, HPC 68% (+22% QoQ), N3+N2 41% of wafer revenue, revenue per wafer +13.9% QoQ on +3.2% shipments (getragen, IR). Call (vorschlag until official transcript): 4Q26 guide US$52.3 to 54.3bn, 2026 growth ~44% (fourth raise this year), capex US$60 to 64bn; Wei: demand above supply, gap still big, AI accelerator CAGR probably above mid-to-high 50s; consumer segments weak.
 
 **Befunde (vorschlag):** GB HBM je MW seit 2020 nicht gestiegen, mit Rubin −17 %. ASICs verbauen HBM. Rubin seit August 2026 in Auslieferung, ~20 % des DC-Umsatzes Q3 GJ27, Ende Sep. 2026 erst 1–3 % der Blackwell-Stückzahl.
 
