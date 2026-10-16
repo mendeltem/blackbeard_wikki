@@ -3,28 +3,41 @@ id: unverifiable-rival-position
 typ: axiom
 status: getragen
 thema: knowledge/ai_demand_drivers
-stand: 2026-10-02
-herkunft: Gespräch Projekt SK Hynix, 2026-10-02
-verweist_auf: [financing-limit, secrecy-supports-motive-not-volume]
+stand: 2026-10-16
+herkunft: Gespräch Projekt SK Hynix, 2026-10-02; widened by Mendel to "a race for everything, on all levels", chats 2026-10-16
+verweist_auf: [bandwidth-bottleneck, open-search-space, financing-limit, secrecy-supports-motive-not-volume, allocation-beats-datasheet]
 ---
 
-# Unprüfbare Gegnerposition (Investitionszwang)
+# Race on all levels: unverifiable rival position (axiom 3 of 3)
 
-## Aussage
-Kein Spieler im KI-Rennen kann die Position des Gegners prüfen und muss deshalb den ungünstigen Fall annehmen. Investieren ist dominant, auch ohne Nachweis, dass Vorsprung kumuliert. Zwei Ebenen: Staaten (USA, China) ohne Verifikation und ohne durchsetzbare Abrede, sehr stabil. Firmen (Hyperscaler) mit quartalsweise beobachtbarem Capex und Mehrmarktkontakt, weniger stabil. Die Analogie Mittelalter gegen Dampfzeitalter ist Hypothese, nicht Begründung.
+## Statement
+Axiom 3 (Mendel, 2026-10-16: "there is a race for everything"; earlier the same day: "there is a race on all levels").
 
-## Trägt
-Vorzeichen: dass investiert wird und unter welcher Bedingung das kippt. Geltungsbereich Trainingscompute.
+No player in the AI race can verify the rival's position and must therefore assume the unfavourable case. Investing
+is dominant, even without proof that a lead compounds. The race runs on all levels: states (USA, China) without
+verification and without enforceable agreement, very stable; firms (hyperscalers, labs, neoclouds) with capex
+observable each quarter and multi-market contact, less stable; and down the supply chain, where everyone competes for
+the same scarce inputs (HBM allocation, CoWoS slots, grid connections, talent). The analogy Middle Ages versus steam
+age is a hypothesis, not a reason. Not provable, carried.
 
-## Trägt nicht
-Beträge, Dauer, Rentabilität. Inferenz (dort gilt die Stückrechnung). Ein Gefangenendilemma liegt nur vor, wenn beidseitiges Pausieren für beide besser wäre; welcher Fall vorliegt, ist nicht ablesbar.
+## Carries
+The sign: that investment happens, and under which condition it tips. Originally scoped to training compute; widened
+by Mendel to all levels, including securing inputs ahead (contracts, prepayments, allocation).
 
-## Bruchindikator
-Primär: erster Hyperscaler senkt Capex-Guidance und verliert über zwei Quartale weder Marktanteil noch Bewertung. Nachlaufend: aggregiertes Hyperscaler-Capex wächst zwei Quartale in Folge unter 10% J/J.
+## Does not carry
+Amounts, duration, profitability. Inference volume still follows unit economics (original limitation kept). A
+prisoner's dilemma exists only if mutual pausing would be better for both; which case applies cannot be read off.
 
-## Ablesung
-Filings und Calls der Hyperscaler, Tier 1a. Bei staatlichen Käufern blind.
+## Break indicator
+Primary: the first hyperscaler cuts capex guidance and loses neither market share nor valuation over two quarters.
+Lagging: aggregate hyperscaler capex grows below 10 % YoY for two quarters in a row.
 
-## Verknüpft
+## Source
+Hyperscaler filings and calls, Tier 1a. Blind for state buyers.
+
+## Linked
+- [bandwidth-bottleneck](bandwidth-bottleneck.md)
+- [open-search-space](open-search-space.md)
 - [financing-limit](../mechanisms/financing-limit.md)
 - [secrecy-supports-motive-not-volume](../mechanisms/secrecy-supports-motive-not-volume.md)
+- [allocation-beats-datasheet](../../compute_bottlenecks/mechanisms/allocation-beats-datasheet.md)

@@ -4,7 +4,7 @@ Stand 2026-10-16. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md
 
 Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.
 
-**Axiome (getragen, nicht angreifen):** 1. Offener Suchraum, Nachfrage nirgends gesättigt. 2. Unprüfbare Gegnerposition, Investieren ist dominant (Wettrüsten; Staaten stabil, Firmen weniger). 3. Bandbreiten-Engpass, Nachfrage auf neueste HBM-Generation.
+**Axioms (getragen, do not attack), ranked by Mendel 2026-10-16:** 1. Bandwidth bottleneck, widening: compute grows faster than the bandwidth feeding it (Gholami et al. 2024: FLOPS ×3.0 vs DRAM bandwidth ×1.6 per two years; Rubin 0.44 TB/s per PFLOPS vs B200 0.80); the only axiom that routes money specifically into memory, the scarcer input earns the rent. 2. Open search space: AI makes everything more productive, demand saturated nowhere. 3. Race on all levels: unverifiable rival position, investing is dominant (states stable, firms less so), extended to inputs (HBM, CoWoS, grid, talent).
 
 **Mechanismen (getragen):** Refresh statt Neubau, Kadenz und Yield-Tal, Simulation braucht Compute, Mess- und Experimentierkreislauf, induzierte Innovation, Vorlaufzeiten RZ gegen Fab, Automatisierung wirkt beidseitig, Geheimhaltung stützt das Motiv. Gegenkraft (vorschlag): Finanzierungsgrenze.
 

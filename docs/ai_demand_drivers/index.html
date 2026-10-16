@@ -47,7 +47,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Stand 2026-10-16. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-16. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.</p>
-<p><strong>Axiome (getragen, nicht angreifen):</strong> 1. Offener Suchraum, Nachfrage nirgends gesättigt. 2. Unprüfbare Gegnerposition, Investieren ist dominant (Wettrüsten; Staaten stabil, Firmen weniger). 3. Bandbreiten-Engpass, Nachfrage auf neueste HBM-Generation.</p>
+<p><strong>Axioms (getragen, do not attack), ranked by Mendel 2026-10-16:</strong> 1. Bandwidth bottleneck, widening: compute grows faster than the bandwidth feeding it (Gholami et al. 2024: FLOPS ×3.0 vs DRAM bandwidth ×1.6 per two years; Rubin 0.44 TB/s per PFLOPS vs B200 0.80); the only axiom that routes money specifically into memory, the scarcer input earns the rent. 2. Open search space: AI makes everything more productive, demand saturated nowhere. 3. Race on all levels: unverifiable rival position, investing is dominant (states stable, firms less so), extended to inputs (HBM, CoWoS, grid, talent).</p>
 <p><strong>Mechanismen (getragen):</strong> Refresh statt Neubau, Kadenz und Yield-Tal, Simulation braucht Compute, Mess- und Experimentierkreislauf, induzierte Innovation, Vorlaufzeiten RZ gegen Fab, Automatisierung wirkt beidseitig, Geheimhaltung stützt das Motiv. Gegenkraft (vorschlag): Finanzierungsgrenze.</p>
 <p><strong>Neu 2026-10-14 (vorschlag):</strong> These Mendel: Jeder Sektor wächst, die Summe zählt, alles landet im Rechenzentrum (Industrie heute klein gemessen, muss nur zusätzlich wachsen). Rechenzentrum ~0,14 J/Token gegen Workstation ~2,5 J/Token, Bündelung braucht KV-Cache, also HBM. Verschuldungsspielraum der großen Vier ~1,7 bis 2,1 Bio. $ gegen Lücke ~220 Mrd. $/Jahr: Geld bindet für sie bis ~2028 nicht, für Oracle/Neoclouds/Labore schon. HBM-Umgehung im Rechenzentrum (Rubin CPX, SRAM) 10 bis 15 % bis 2030.</p>
 <p><strong>New 2026-10-15 (TSMC 3Q26):</strong> Revenue US$46.7bn above guidance, HPC 68% (+22% QoQ), N3+N2 41% of wafer revenue, revenue per wafer +13.9% QoQ on +3.2% shipments (getragen, IR). Call (vorschlag until official transcript): 4Q26 guide US$52.3 to 54.3bn, 2026 growth ~44% (fourth raise this year), capex US$60 to 64bn; Wei: demand above supply, gap still big, AI accelerator CAGR probably above mid-to-high 50s; consumer segments weak.</p>
@@ -58,50 +58,99 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p><strong>Lesen bei:</strong> Investieren, Nvidia, HBM, Speichernachfrage, Capex, Wettrüsten.</p>
 <p><strong>Auf den Seiten:</strong> Karte <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=ai-accelerators-custom-silicon">KI-Beschleuniger</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/NVDA">Nvidia</a>; Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=NVDA">Nvidia: Fertigung, HBM, Montage, Rechenzentren</a>.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="axioms">Axiom <span class="muted small">(3)</span></h2><details class="entry" id="bandwidth-bottleneck"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/bandwidth-bottleneck.html">Bandbreiten-Engpass (Von-Neumann-Bottleneck)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/bandwidth-bottleneck.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/bandwidth-bottleneck.md">Markdown</a></p><h2>Aussage</h2>
-<p>Speicherbandbreite begrenzt den Durchsatz der Beschleuniger. Unter Strom- und Flächenknappheit kaufen Käufer das Teil mit dem höchsten Durchsatz, die Nachfrage konzentriert sich auf die neueste HBM-Generation.</p>
-<h2>Trägt</h2>
-<p>Nachfrage nach Bandbreitenspeicher (HBM), hergeleitet über das Roofline-Modell.</p>
-<h2>Trägt nicht</h2>
-<p>DRAM allgemein. Wandert Inferenz auf kapazitätsdominierten Speicher, bleibt die Bitnachfrage hoch, der Waferverbrauch je Bit sinkt aber.</p>
-<h2>Bruchindikator</h2>
-<p>Inferenzlast wandert messbar auf SOCAMM, LPDDR oder DDR5-RDIMM.</p>
-<h2>Ablesung</h2>
-<p>Produktkommentare SK Hynix und Micron, Tier 1a. Speicherkonfiguration in Herstellerspezifikationen, Tier 1b.</p>
-<h2>Verknüpft</h2>
+<h2 id="axioms">Axiom <span class="muted small">(3)</span></h2><details class="entry" id="bandwidth-bottleneck"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/bandwidth-bottleneck.html">Bandwidth bottleneck (von Neumann bottleneck), widening: axiom 1 of 3</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02; widened to the growing gap and ranked first by Mendel, chat 2026-10-16 · <a href="axioms/bandwidth-bottleneck.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/bandwidth-bottleneck.md">Markdown</a></p><h2>Statement</h2>
+<p>Axiom 1, the most important of the three (Mendel, 2026-10-16: "the most important axiom is that the von Neumann
+bottleneck keeps getting wider").</p>
+<p>Memory bandwidth limits accelerator throughput, and the gap between compute and the bandwidth that feeds it widens
+with every generation: compute grows faster (3D packaging, more cores, lower precision) than memory can deliver.
+Under power and floor-space scarcity buyers buy the part with the highest throughput; demand concentrates on the
+newest HBM generation, and every bandwidth improvement is absorbed at once. Not provable, carried.</p>
+<p>Why first: the other two axioms (open-search-space, unverifiable-rival-position) explain why money flows into
+compute at all; that would serve logic and foundry as much as memory. Only this axiom routes the money specifically
+into memory. The widening makes bandwidth the relatively scarcer of two inputs that only work together, and the
+scarcer input earns the rent.</p>
+<p>Readings in its direction (data, not part of the axiom):
+- Gholami et al., "AI and Memory Wall", IEEE Micro 2024 (peer-reviewed; arXiv 2403.14123; DOI not verified here): over 20 years peak server FLOPS grew ×3.0 per two years, DRAM bandwidth ×1.6, interconnect ×1.4; cumulative about 60,000× against 100× and 30×. Gap per two years 3.0 / 1.6 ≈ 1.9, over ten years 1.875^5 ≈ 23.
+- hbm-gb-per-mw-three-generations: B200 to Rubin, bandwidth per accelerator 8 to 22 TB/s, per dense PFLOPS 0.80 to 0.44 TB/s (−45 %).</p>
+<h2>Carries</h2>
+<p>Demand for bandwidth memory (HBM), derived via the roofline model. Pricing power of memory relative to compute
+while the gap widens.</p>
+<h2>Does not carry</h2>
+<p>DRAM in general. If inference moves to capacity-dominated memory, bit demand stays high but wafer use per bit falls.
+Also not more memory per unit of compute: the readings show bandwidth per PFLOPS falling. The axiom reaches memory
+makers through scarcity and price and through the growth of compute, not through more bytes per FLOP.</p>
+<h2>Break indicator</h2>
+<p>Inference load moves measurably to SOCAMM, LPDDR or DDR5-RDIMM. For the widening: bandwidth per dense PFLOPS of the
+newest Nvidia accelerator rises over two consecutive generations (the gap narrows).</p>
+<h2>Source</h2>
+<p>Product commentary SK Hynix and Micron, Tier 1a. Memory configuration in vendor specifications, Tier 1b. Long-run
+rates: Gholami et al. 2024, https://arxiv.org/abs/2403.14123</p>
+<h2>Linked</h2>
 <ul>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
+<li><a href="axioms/unverifiable-rival-position.html">unverifiable-rival-position</a></li>
 <li><a href="mechanisms/induced-innovation.html">induced-innovation</a></li>
 <li><a href="mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
 <li><a href="mechanisms/simulation-needs-compute.html">simulation-needs-compute</a></li>
-</ul></div></details><details class="entry" id="open-search-space"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/open-search-space.html">Offener Suchraum</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/open-search-space.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/open-search-space.md">Markdown</a></p><h2>Aussage</h2>
-<p>Der technologische Suchraum ist weitgehend unerschlossen. Zusätzliche Rechenleistung in Suche und Simulation bringt Ergebnisse, deren Ertrag die Kosten der Recheneinheit deckt. Das gilt in beiden Fällen: wenn die Werkzeuge schneller besser werden als die Suche schwieriger, und wenn jede Entdeckung mehr Compute braucht. Die Nachfrage ist deshalb in keiner Anwendungsklasse gesättigt, über alle Industrien. Nicht belegbar, wird getragen.</p>
-<h2>Trägt</h2>
-<p>Die Vorbedingung "Markt nicht gesättigt" für das Jevons-Werkzeug.</p>
-<h2>Trägt nicht</h2>
-<p>Tempo, Höhe, Zahlungsbereitschaft. Nicht die Breite der Käufer: Bestellungen laufen über wenige Hyperscaler. Geltungsbereich ist Erkenntnis, nicht gebauter Bestand.</p>
-<h2>Bruchindikator</h2>
-<p>Kern: Ertrag je Recheneinheit fällt unter ihre Kosten. Ersatz primär: Jevons-Falsifikator (Token-Wachstum fällt unter die Effizienzrate). Ersatz sekundär: Nachfrage außerhalb der Hyperscaler wächst zwei Quartale in Folge langsamer als die der Hyperscaler.</p>
-<h2>Ablesung</h2>
-<p>Kern blind. Ersatz primär Tier 1a, unregelmäßig. Ersatz sekundär: Kundenkommentar NVIDIA, Tier 1a, uneinheitlich abgegrenzt.</p>
-<h2>Verknüpft</h2>
+<li><a href="findings/hbm-gb-per-mw-three-generations.html">hbm-gb-per-mw-three-generations</a></li>
+<li><a href="risks/hbm-bypass-architectures.html">hbm-bypass-architectures</a> — counterforce</li>
+</ul></div></details><details class="entry" id="open-search-space"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/open-search-space.html">Open search space: AI makes everything more productive (axiom 2 of 3)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02; widened by Mendel to &quot;AI makes everything more productive&quot;, chat 2026-10-16 · <a href="axioms/open-search-space.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/open-search-space.md">Markdown</a></p><h2>Statement</h2>
+<p>Axiom 2 (Mendel, 2026-10-16: "AI makes everything more productive").</p>
+<p>AI raises productivity in every activity it touches, and the technological search space is largely unexplored.
+Additional compute in search and simulation yields results whose return covers the cost of the compute unit. This
+holds in both cases: when tools improve faster than search gets harder, and when each discovery needs more compute.
+Demand is therefore saturated in no application class, across all industries. Not provable, carried.</p>
+<h2>Carries</h2>
+<p>The precondition "market not saturated" for the Jevons tool. Breadth of drivers: no single sector has to carry
+demand (every-sector-grows-sum-counts).</p>
+<h2>Does not carry</h2>
+<p>Pace, height, willingness to pay. Not the breadth of buyers: orders run through a few hyperscalers. Measured
+productivity effects so far are small in places (ai_labor_market: adoption-broad-but-shallow,
+llm-adoption-null-effect-denmark); they are findings about the current state and stand beside the axiom, they do
+not test it. The break indicator below does.</p>
+<h2>Break indicator</h2>
+<p>Core: return per compute unit falls below its cost. Primary proxy: Jevons falsifier (token growth falls below the
+efficiency rate). Secondary proxy: demand outside the hyperscalers grows more slowly than hyperscaler demand for two
+quarters in a row.</p>
+<h2>Source</h2>
+<p>Core blind. Primary proxy Tier 1a, irregular. Secondary proxy: Nvidia customer commentary, Tier 1a, inconsistently
+delimited.</p>
+<h2>Linked</h2>
 <ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="axioms/unverifiable-rival-position.html">unverifiable-rival-position</a></li>
 <li><a href="mechanisms/sensing-and-experiment-loop.html">sensing-and-experiment-loop</a></li>
 <li><a href="mechanisms/simulation-needs-compute.html">simulation-needs-compute</a></li>
+<li><a href="mechanisms/every-sector-grows-sum-counts.html">every-sector-grows-sum-counts</a></li>
 <li><a href="risks/gold-rush-demand.html">gold-rush-demand</a></li>
-</ul></div></details><details class="entry" id="unverifiable-rival-position"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/unverifiable-rival-position.html">Unprüfbare Gegnerposition (Investitionszwang)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="axioms/unverifiable-rival-position.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/unverifiable-rival-position.md">Markdown</a></p><h2>Aussage</h2>
-<p>Kein Spieler im KI-Rennen kann die Position des Gegners prüfen und muss deshalb den ungünstigen Fall annehmen. Investieren ist dominant, auch ohne Nachweis, dass Vorsprung kumuliert. Zwei Ebenen: Staaten (USA, China) ohne Verifikation und ohne durchsetzbare Abrede, sehr stabil. Firmen (Hyperscaler) mit quartalsweise beobachtbarem Capex und Mehrmarktkontakt, weniger stabil. Die Analogie Mittelalter gegen Dampfzeitalter ist Hypothese, nicht Begründung.</p>
-<h2>Trägt</h2>
-<p>Vorzeichen: dass investiert wird und unter welcher Bedingung das kippt. Geltungsbereich Trainingscompute.</p>
-<h2>Trägt nicht</h2>
-<p>Beträge, Dauer, Rentabilität. Inferenz (dort gilt die Stückrechnung). Ein Gefangenendilemma liegt nur vor, wenn beidseitiges Pausieren für beide besser wäre; welcher Fall vorliegt, ist nicht ablesbar.</p>
-<h2>Bruchindikator</h2>
-<p>Primär: erster Hyperscaler senkt Capex-Guidance und verliert über zwei Quartale weder Marktanteil noch Bewertung. Nachlaufend: aggregiertes Hyperscaler-Capex wächst zwei Quartale in Folge unter 10% J/J.</p>
-<h2>Ablesung</h2>
-<p>Filings und Calls der Hyperscaler, Tier 1a. Bei staatlichen Käufern blind.</p>
-<h2>Verknüpft</h2>
+<li><a href="../ai_labor_market/findings/adoption-broad-but-shallow.html">adoption-broad-but-shallow</a></li>
+<li><a href="../ai_labor_market/findings/llm-adoption-null-effect-denmark.html">llm-adoption-null-effect-denmark</a></li>
+</ul></div></details><details class="entry" id="unverifiable-rival-position"><summary><span class="type">Axiom</span><span class="t"><a href="axioms/unverifiable-rival-position.html">Race on all levels: unverifiable rival position (axiom 3 of 3)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02; widened by Mendel to &quot;a race for everything, on all levels&quot;, chats 2026-10-16 · <a href="axioms/unverifiable-rival-position.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/axioms/unverifiable-rival-position.md">Markdown</a></p><h2>Statement</h2>
+<p>Axiom 3 (Mendel, 2026-10-16: "there is a race for everything"; earlier the same day: "there is a race on all levels").</p>
+<p>No player in the AI race can verify the rival's position and must therefore assume the unfavourable case. Investing
+is dominant, even without proof that a lead compounds. The race runs on all levels: states (USA, China) without
+verification and without enforceable agreement, very stable; firms (hyperscalers, labs, neoclouds) with capex
+observable each quarter and multi-market contact, less stable; and down the supply chain, where everyone competes for
+the same scarce inputs (HBM allocation, CoWoS slots, grid connections, talent). The analogy Middle Ages versus steam
+age is a hypothesis, not a reason. Not provable, carried.</p>
+<h2>Carries</h2>
+<p>The sign: that investment happens, and under which condition it tips. Originally scoped to training compute; widened
+by Mendel to all levels, including securing inputs ahead (contracts, prepayments, allocation).</p>
+<h2>Does not carry</h2>
+<p>Amounts, duration, profitability. Inference volume still follows unit economics (original limitation kept). A
+prisoner's dilemma exists only if mutual pausing would be better for both; which case applies cannot be read off.</p>
+<h2>Break indicator</h2>
+<p>Primary: the first hyperscaler cuts capex guidance and loses neither market share nor valuation over two quarters.
+Lagging: aggregate hyperscaler capex grows below 10 % YoY for two quarters in a row.</p>
+<h2>Source</h2>
+<p>Hyperscaler filings and calls, Tier 1a. Blind for state buyers.</p>
+<h2>Linked</h2>
 <ul>
+<li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+<li><a href="axioms/open-search-space.html">open-search-space</a></li>
 <li><a href="mechanisms/financing-limit.html">financing-limit</a></li>
 <li><a href="mechanisms/secrecy-supports-motive-not-volume.html">secrecy-supports-motive-not-volume</a></li>
+<li><a href="../compute_bottlenecks/mechanisms/allocation-beats-datasheet.html">allocation-beats-datasheet</a></li>
 </ul></div></details><h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="demand-is-not-earnings"><summary><span class="type">Regel</span><span class="t"><a href="rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="rules/demand-is-not-earnings.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/rules/demand-is-not-earnings.md">Markdown</a></p><h2>Aussage</h2>
 <p>Alle Einträge dieser Wiki betreffen zunächst die Nachfrage. Die DRAM-Bitnachfrage ist historisch fast jedes Jahr gewachsen, die Preise sind trotzdem periodisch eingebrochen. Für die Earnings entscheidet Bit-Angebotswachstum gegen Bit-Nachfragewachstum.</p>
 <h2>Trägt</h2>

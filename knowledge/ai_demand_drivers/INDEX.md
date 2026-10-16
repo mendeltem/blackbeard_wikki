@@ -6,9 +6,9 @@ Stand 2026-10-16. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
-| [Offener Suchraum](axioms/open-search-space.md) | axiom | getragen |
-| [Unprüfbare Gegnerposition (Investitionszwang)](axioms/unverifiable-rival-position.md) | axiom | getragen |
-| [Bandbreiten-Engpass (Von-Neumann-Bottleneck)](axioms/bandwidth-bottleneck.md) | axiom | getragen |
+| [Bandwidth bottleneck (von Neumann bottleneck), widening: axiom 1 of 3](axioms/bandwidth-bottleneck.md) | axiom | getragen |
+| [Open search space: AI makes everything more productive (axiom 2 of 3)](axioms/open-search-space.md) | axiom | getragen |
+| [Race on all levels: unverifiable rival position (axiom 3 of 3)](axioms/unverifiable-rival-position.md) | axiom | getragen |
 | [Finanzierungsgrenze](mechanisms/financing-limit.md) | mechanismus | vorschlag |
 | [Geheimhaltung stützt das Motiv, nicht die Menge](mechanisms/secrecy-supports-motive-not-volume.md) | mechanismus | getragen |
 | [Kadenz und Yield-Tal](mechanisms/cadence-and-yield-trough.md) | mechanismus | getragen |
