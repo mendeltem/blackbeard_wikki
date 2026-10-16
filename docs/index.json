@@ -814,6 +814,17 @@
 "src": "knowledge/ai_demand_drivers/mechanisms/lead-times-datacenter-vs-fab.md"
 },
 {
+"t": "Older HBM hardware holds its value: hyperscalers retire it, capex-limited buyers absorb it",
+"p": "ai_demand_drivers/mechanisms/older-hbm-hardware-holds-value.html",
+"a": "ai_demand_drivers",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "",
+"id": "older-hbm-hardware-holds-value",
+"src": "knowledge/ai_demand_drivers/mechanisms/older-hbm-hardware-holds-value.md"
+},
+{
 "t": "Refresh statt Neubau",
 "p": "ai_demand_drivers/mechanisms/refresh-instead-of-new-build.html",
 "a": "ai_demand_drivers",
@@ -889,6 +900,17 @@
 "x": "Offene Rechnung: Wie groß ist die ausgelieferte Rubin-Menge im Verhältnis zur kumulierten Blackwell-Menge? Erster Durchgang mit Stichtag 30.09.2026, jede Zahl mit Herkunft: | Größe | Wert | Herkunft | |---|---|---| | Rubin-Umsatz bis Sticht",
 "id": "rubin-share-of-blackwell-base",
 "src": "knowledge/ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.md"
+},
+{
+"t": "Used and rented accelerator prices, workstation VRAM prices: primary readings",
+"p": "ai_demand_drivers/open_checks/used-accelerator-and-workstation-prices.html",
+"a": "ai_demand_drivers",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-16",
+"x": "",
+"id": "used-accelerator-and-workstation-prices",
+"src": "knowledge/ai_demand_drivers/open_checks/used-accelerator-and-workstation-prices.md"
 },
 {
 "t": "Goldgräberstimmung (FOMO-Nachfrage)",
@@ -2123,6 +2145,17 @@
 "src": "knowledge/memory_earnings/findings/sk-hynix-kioxia-stake.md"
 },
 {
+"t": "SK Hynix figures from an LLM chat (Gemini, 2026-10-16): reported numbers hold, the derived ones mix units",
+"p": "memory_earnings/findings/sk-hynix-llm-chat-figures-checked-2026-10.html",
+"a": "memory_earnings",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "",
+"id": "sk-hynix-llm-chat-figures-checked-2026-10",
+"src": "knowledge/memory_earnings/findings/sk-hynix-llm-chat-figures-checked-2026-10.md"
+},
+{
 "t": "SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone",
 "p": "memory_earnings/findings/sk-hynix-nand-solidigm-turnaround.html",
 "a": "memory_earnings",
@@ -3019,7 +3052,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -3030,7 +3063,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -3041,7 +3074,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -3052,7 +3085,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-11",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -3063,7 +3096,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -3074,7 +3107,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -3085,7 +3118,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -3096,7 +3129,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-06",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -3107,7 +3140,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -3118,7 +3151,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -3129,7 +3162,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -3140,7 +3173,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -3151,7 +3184,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -3162,7 +3195,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -3173,7 +3206,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-15",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

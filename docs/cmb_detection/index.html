@@ -196,17 +196,17 @@ doi:10.1038/s41592-023-02151-z.</p>
 <li><a href="../agent_tooling/rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
 </ul></div></details><h2 id="findings">Befund <span class="muted small">(11)</span></h2><details class="entry" id="csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels"><summary><span class="type">Befund</span><span class="t"><a href="findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.html">Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label &quot;freier Liquor&quot; falsch; FreeSurfer ist keine Option (kein T1)</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-12</span><span class="i">Geloeschte Treffer liegen tief (Median ~10 mm vom Rand), Label 24 von SynthSeg auf SWI falsch; erodierte Liquor-Maske beste Variante; kein T1 -&gt; kein FreeSurfer</span></summary><div class="body"><p class="small muted">Herkunft: mb-arena/csf_regel_analyse.py auf den eigenen SWI- und T2*-Kohorten (ergebnisse/csf_regel/), Nutzerfrage 12.10.2026 &quot;die CSF-Segmentation ist wohl fehlerhaft, bessere Segmentation ueber FreeSurfer?&quot; · <a href="findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.md">Markdown</a></p><h2>Aussage</h2>
 <p>Gemessen 12.10.2026 an allen Rohkomponenten unseres 3D-U-Nets (vor der Regel), je Komponente Mehrheitslabel aus
-SynthSeg (--robust, auf dem SWI- bzw. T2<em>-Magnitudenbild selbst gerechnet), Abstand des Schwerpunkts zum Hirnmaskenrand und Treffer/Fehlalarm:
-1. </em><em>Die geloeschten echten Blutungen liegen nicht am Rand.</em><em> Auf SWI loescht die Regel jede siebte echte Blutung; deren Abstand
+SynthSeg (--robust, auf dem SWI- bzw. T2*-Magnitudenbild selbst gerechnet), Abstand des Schwerpunkts zum Hirnmaskenrand und Treffer/Fehlalarm:
+1. <strong>Die geloeschten echten Blutungen liegen nicht am Rand.</strong> Auf SWI loescht die Regel jede siebte echte Blutung; deren Abstand
    zum Hirnrand liegt im Median bei ~10 mm, nur ein Sechstel innerhalb von 3 mm. Mehrheitslabel fast immer 24 (freier Liquor),
-   nicht Ventrikel. Das ist kein kortikal-subarachnoidaler Grenzfall, sondern </em><em>SynthSeg vergibt auf SWI das Label 24 im
-   Hirninneren</em><em> (dunkle Gefaesse, Suszeptibilitaetsraender, Sulci-Saum werden "Liquor").
-2. </em><em>Wirkung auf die Kette:</em><em> SWI gepoolt ~-0,04 F1 durch die Regel (Treffer sinken staerker als Fehlalarme), T2</em> ~+0,006.
+   nicht Ventrikel. Das ist kein kortikal-subarachnoidaler Grenzfall, sondern <strong>SynthSeg vergibt auf SWI das Label 24 im
+   Hirninneren</strong> (dunkle Gefaesse, Suszeptibilitaetsraender, Sulci-Saum werden "Liquor").
+2. <strong>Wirkung auf die Kette:</strong> SWI gepoolt ~-0,04 F1 durch die Regel (Treffer sinken staerker als Fehlalarme), T2* ~+0,006.
    Varianten: nur Ventrikel = neutral; "tiefer Liquor" (nur Komponenten &gt; 2/3/5 mm vom Rand loeschen) hilft NICHT (die
    geloeschten Treffer sind ja tief); <strong>Liquor-Maske um ein Voxel erodiert, dann Mehrheitslabel</strong> = beste Variante auf beiden
-   Kohorten (SWI +0,002 gegen keine Regel, T2<em> +0,010; behaelt 57 von 62 bzw. 13 von 15 geloeschten Treffern und nimmt noch
+   Kohorten (SWI +0,002 gegen keine Regel, T2* +0,010; behaelt 57 von 62 bzw. 13 von 15 geloeschten Treffern und nimmt noch
    einen Teil der Fehlalarme weg). Zahlen je Variante in <code>mb-arena/ergebnisse/csf_regel/*_varianten.csv</code>.
-3. </em><em>FreeSurfer (recon-all) ist keine Abhilfe:</em><em> die eigenen Kohorten haben KEIN T1 (nur SWI bzw. T2</em>, bei einem Teil FLAIR,
+3. <strong>FreeSurfer (recon-all) ist keine Abhilfe:</strong> die eigenen Kohorten haben KEIN T1 (nur SWI bzw. T2*, bei einem Teil FLAIR,
    dazu HD-BET-Hirnmaske und ROI). SynthSeg auf dem SWI/T2* ist die einzige Gewebekarte; eine bessere braeuchte ein T1
    derselben Sitzung oder eine SWI-trainierte Segmentierung.</p>
 <h2>Traegt</h2>
@@ -295,9 +295,9 @@ Begruendung des anisotropen Poolens: Isensee et al., Nat Methods 2021, doi:10.10
 </ul></div></details><details class="entry" id="full-data-last-state-models-run-hotter"><summary><span class="type">Befund</span><span class="t"><a href="findings/full-data-last-state-models-run-hotter.html">Ein auf allen Faellen trainiertes Netz ohne inneren Checkpoint gibt hoehere Wahrscheinlichkeiten aus -- der feste Arbeitspunkt der Faltenmodelle passt dann nicht mehr</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Vollmodell ohne inneren Checkpoint: Wahrscheinlichkeiten verschoben, feste Schwelle 0,3 auf fremdem Scanner 0,415 statt 0,622; kreuzgewaehlt gleichauf; zweite Stufe faengt es ab (0,604)</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), scripts/final_models.sh und final_cross_scores.sh, Kreuztests 2026-10-07 · <a href="findings/full-data-last-state-models-run-hotter.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md">Markdown</a></p><h2>Aussage</h2>
 <p>Fuer ein Produkt wurden die U-Nets auf ALLEN Faellen je Kohorte trainiert (keine Falten,
 60 Epochen Cosinus, letzter Stand, zwei Startwerte gemittelt). In der eigenen Domaene sind sie
-so gut wie die Faltenmodelle (in-sample T2<em> 0,654 gegen out-of-fold 0,663: keine
+so gut wie die Faltenmodelle (in-sample T2* 0,654 gegen out-of-fold 0,663: keine
 Ueberanpassung). Auf einem fremden Scanner aber bricht der feste Arbeitspunkt ein:
-VALDO-Vollmodell auf einer klinischen T2</em>-Kohorte bei Schwelle 0,3 <strong>F1 0,415</strong>
+VALDO-Vollmodell auf einer klinischen T2*-Kohorte bei Schwelle 0,3 <strong>F1 0,415</strong>
 (P 0,28, S 0,77, 21 Fehlalarme je Fall) gegen 0,622 fuer das Fuenffalten-Ensemble in
 derselben Bewertung. Das F1-Gitter des Vollmodells hat sein Maximum bei Schwelle 0,6-0,7
 (0,637 mit Liquor-Regel), kreuzgewaehlt 0,629 = Faltenensemble. Es ist eine
@@ -572,5 +572,5 @@ Neuroinform. 2023, doi:10.3389/fninf.2023.1204186, Code-Stand 958f1cb. Tier 1a (
 <li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
 <li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-15 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-16 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

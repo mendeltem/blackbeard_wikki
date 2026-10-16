@@ -2,7 +2,7 @@
 
 Warum die Nachfrage nach DRAM und HBM durch KI hoch bleibt: Setzungen, Mechanismen, Risiken, offene Prüfpunkte, Befunde. Die Gegenbuchung, ob diese Nachfrage bezahlt wird, steht in [ai_application_layer](../ai_application_layer/INDEX.md).
 
-Stand 2026-10-15. Ein Eintrag je Datei.
+Stand 2026-10-16. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -29,6 +29,8 @@ Stand 2026-10-15. Ein Eintrag je Datei.
 | [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](open_checks/rubin-share-of-blackwell-base.md) | pruefpunkt | offen |
 | [Jeder Sektor wächst, die Summe zählt](mechanisms/every-sector-grows-sum-counts.md) | mechanismus | vorschlag |
 | [Rechenzentrum schlägt Workstation pro Token um eine Größenordnung](mechanisms/datacenter-beats-workstation-per-token.md) | mechanismus | vorschlag |
+| [Older HBM hardware holds its value: hyperscalers retire it, capex-limited buyers absorb it](mechanisms/older-hbm-hardware-holds-value.md) | mechanismus | vorschlag |
+| [Used and rented accelerator prices, workstation VRAM prices: primary readings](open_checks/used-accelerator-and-workstation-prices.md) | pruefpunkt | offen |
 | [Verschuldungsspielraum der großen Vier reicht rechnerisch 8 bis 10 Jahre](findings/debt-headroom-big-four-2026.md) | befund | vorschlag |
 | [TSMC 3Q26: revenue above guidance, growth from price and mix, not volume](findings/tsmc-q3-2026-results.md) | befund | getragen |
 | [TSMC 3Q26 call: management says AI demand exceeds supply, 2026 growth about 44%](findings/tsmc-q3-2026-call-outlook.md) | befund | vorschlag |

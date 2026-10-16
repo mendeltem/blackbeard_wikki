@@ -2,7 +2,7 @@
 
 Was aus gemeldeten Quartalszahlen der Speicherhersteller (SK Hynix, Micron, Samsung) für Gewinn, freien Cashflow, Ausschüttung und Bewertung folgt. Die Angebotsseite steht in [memory_supply](../memory_supply/INDEX.md), die Nachfrageseite in [ai_demand_drivers](../ai_demand_drivers/INDEX.md), dort gilt auch die Regel [Nachfrage ist nicht Earnings](../ai_demand_drivers/rules/demand-is-not-earnings.md).
 
-Stand 2026-10-02. Ein Eintrag je Datei.
+Stand 2026-10-16. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -15,6 +15,7 @@ Stand 2026-10-02. Ein Eintrag je Datei.
 | [SK Hynix freier Cashflow 2024 bis H1 2026](findings/sk-hynix-free-cash-flow-2024-h1-2026.md) | befund | vorschlag |
 | [SK Hynix NAND und Solidigm: zweite Säule aus der Verlustzone](findings/sk-hynix-nand-solidigm-turnaround.md) | befund | vorschlag |
 | [SK Hynix und Kioxia: Herkunft des Q2-Einmalertrags](findings/sk-hynix-kioxia-stake.md) | befund | vorschlag |
+| [SK Hynix figures from an LLM chat (Gemini, 2026-10-16): reported numbers hold, derived ones mix units](findings/sk-hynix-llm-chat-figures-checked-2026-10.md) | befund | vorschlag |
 | [Ein Peer-Beat überträgt sich schwach](mechanisms/peer-beat-transfers-weakly.md) | mechanismus | vorschlag |
 | [Rückkaufhebel bei niedrigem KGV](mechanisms/buyback-leverage-at-low-pe.md) | mechanismus | getragen |
 | [Niedriges KGV am Gewinngipfel](risks/low-pe-at-earnings-peak.md) | risiko | getragen |

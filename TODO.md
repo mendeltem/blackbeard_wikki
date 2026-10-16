@@ -1,9 +1,9 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-15. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-16. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-28 offene Einträge.
+29 offene Einträge.
 
 ## ai_application_layer
 
@@ -36,6 +36,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-15. Nicht vo
 - [Capex gegen operativen Cashflow je Hyperscaler, 2026](knowledge/ai_demand_drivers/open_checks/capex-vs-operating-cash-flow-2026.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [GB HBM je MW über drei Generationen](knowledge/ai_demand_drivers/open_checks/hbm-gb-per-mw.md) (pruefpunkt, offen, Stand 2026-10-02)
 - [Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS](knowledge/ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.md) (pruefpunkt, offen, Stand 2026-10-02)
+- [Used and rented accelerator prices, workstation VRAM prices: primary readings](knowledge/ai_demand_drivers/open_checks/used-accelerator-and-workstation-prices.md) (pruefpunkt, offen, Stand 2026-10-16)
 
 ## compute_bottlenecks
 
