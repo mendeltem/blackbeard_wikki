@@ -2156,6 +2156,17 @@
 "src": "knowledge/local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.md"
 },
 {
+"t": "A remote model gets only data-free skills and redacted text",
+"p": "local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "Shared skills split by data; OpenCode also reads ~/.claude/skills (OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1); Hermes skills.external_dirs; fallback reports redact ids",
+"id": "remote-model-gets-only-data-free-skills-and-redacted-text",
+"src": "knowledge/local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.md"
+},
+{
 "t": "Prefill und Decode getrennt messen, nie ueber die Wanduhr",
 "p": "local_llm_operation/rules/separate-prefill-from-decode.html",
 "a": "local_llm_operation",

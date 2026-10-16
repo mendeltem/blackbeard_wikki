@@ -1,5 +1,7 @@
 # local_llm_operation: Kurzstand
 
+**Neu 2026-10-16:** Entferntes Modell (Clé) bekommt nur datenfreie Skills und geschwaerzten Text: OpenCode liest auch ~/.claude/skills (Schalter OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1), Hermes per skills.external_dirs; Morgenkontrolle faellt nach 5 min auf Clé zurueck ([remote-model-gets-only-data-free-skills-and-redacted-text](rules/remote-model-gets-only-data-free-skills-and-redacted-text.md)).
+
 Stand 2026-10-06. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.
