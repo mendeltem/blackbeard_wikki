@@ -3,7 +3,7 @@
 Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-16. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
-29 offene Einträge.
+31 offene Einträge.
 
 ## ai_application_layer
 
@@ -88,11 +88,13 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-16. Nicht vo
   - [ ] Umruestung von Zubau trennen. Ein Knotenwechsel bringt Bits, aber keine zusaetzlichen Wafer. Fuer die Flaechenrechnung zaehlt nur neuer Reinraum.
   - [ ] Netto-Zuwachs an Waferflaeche je Jahr 2026 bis 2030 rechnen und gegen den HBM-Anteil aus [hbm-eats-wafer-area](knowledge/memory_supply/mechanisms/hbm-eats-wafer-area.md) stellen.
   - [ ] Rohstoffseite pruefen: Fuer blanke Siliziumwafer wird eine Angebotsluecke von 8 Prozent (2026) bis 24 Prozent (2028) berichtet. Quelle und Tier klaeren.
+- [HBM contract prices and volumes for 2027: company readings](knowledge/memory_supply/open_checks/hbm-contract-prices-2027.md) (pruefpunkt, offen, Stand 2026-10-16)
 - [HBM-Marktanteil und Nvidias HBM4-Allokation](knowledge/memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md) (pruefpunkt, offen, Stand 2026-10-02)
   - [ ] Für jede Anteilszeile eine primärnahe Quelle statt Analystenschätzung finden,
   - [ ] Die Nvidia-Allokationsanteile gegen gemeldete HBM-Umsätze der drei Hersteller
   - [ ] Prüfen, ob Samsungs HBM4-Zertifizierung in reale Auslieferung mündet; eine
   - [ ] Anteil gegen die Flächenrechnung aus
+- [Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?](knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md) (pruefpunkt, offen, Stand 2026-10-16)
 - [HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030](knowledge/memory_supply/open_checks/rubin-hbm4-wafer-demand-2028-2030.md) (pruefpunkt, offen, Stand 2026-10-03)
 
 ## model_capability_cost

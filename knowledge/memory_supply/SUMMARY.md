@@ -1,6 +1,6 @@
 # memory_supply: Kurzstand
 
-Stand 2026-10-14. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-16. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
@@ -12,9 +12,11 @@ Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
 **Werkzeugseite (getragen, ASML Tier 1a):** Speicher 49 % von ASMLs Systemumsatz Q2 2026, +75 % erwartet für 2026, großteils Knotenwechsel (EUV statt Multi-Patterning), nicht proportional mehr Wafer. ASML sieht 2027/28 Lieferlücke: fertige Fab-Hüllen nicht zwingend voll bestückbar.
 
+**New 2026-10-16 (vorschlag, theses Mendel):** Second-source HBM4 (Samsung, Micron) is limited by yield and qualification, not wafers, and what arrives is contracted ahead: no 2027 surplus. Trade press points to rising 2027 HBM prices (TrendForce up to +50 %; Samsung asking ~4 USD/Gb HBM4 vs ~1.50 HBM3E; Micron 2027 volume contracted). The question moves to 2028 contracts. Open: Rubin 288 GB set by stack technology (12-Hi, bandwidth priority, AMD gets 432 GB) or by scarcity (Nvidia >50 % of HBM, Rubin Ultra reportedly cut from 1 TB); judgment ~50/50.
+
 **Risiko:** CXMT entlastet konventionelles DRAM, nicht HBM.
 
-**Offen:** Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030.
+**Offen:** Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030, HBM contract prices 2027 (Q3 calls), Rubin capacity technology vs scarcity.
 
 **Lesen bei:** Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.
 

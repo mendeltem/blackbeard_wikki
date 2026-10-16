@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/memory_earnings
 stand: 2026-10-16
 herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16; check of a Gemini chat transcript on SK Hynix (sk_hynix_analyse.pdf, 23 pages, 2026-10-16) presented by Mendel
-verweist_auf: [sk-hynix-q2-2026-oneoff-and-tax, operating-margin-three-makers, low-pe-at-earnings-peak, hbm-gb-per-mw-three-generations, hbm-eats-wafer-area, rubin-shipments-start-q3-fy27, demand-is-not-earnings, older-hbm-hardware-holds-value]
+verweist_auf: [sk-hynix-q2-2026-oneoff-and-tax, operating-margin-three-makers, low-pe-at-earnings-peak, hbm-gb-per-mw-three-generations, hbm-eats-wafer-area, rubin-shipments-start-q3-fy27, demand-is-not-earnings, older-hbm-hardware-holds-value, second-source-hbm4-arrives-presold]
 ---
 
 # SK Hynix figures from an LLM chat (Gemini, 2026-10-16): reported numbers hold, the derived ones mix units
@@ -66,6 +66,17 @@ only press reports citing industry sources and the CEO's July 2026 remark that 2
 ×0.765 = 339 bn USD net. Every number follows from three assumptions: the Q3 consensus as start, a constant +15 %
 per quarter, a constant 76 % margin.
 
+**What the scenario requires (added 2026-10-16, same chat):** 110 bn USD per quarter at 1,334 KRW/USD is 146.7 T KRW,
+×2.42 on Q2 2026 OP. At 76 % margin, revenue must go from 79.3 to 193.1 T KRW per quarter, ×2.43 in six quarters.
+Bit growth is an assumption (SK Hynix does not guide it this way): at 20 % per year, six quarters give ×1.31, so
+price and mix per bit must rise ×1.85; at 30 % per year ×1.48 and ×1.64. For comparison, revenue rose ×3.6 from
+Q2 2025 to Q2 2026, so the step is not without precedent; it needs the 2026 price jump to repeat, not just hold.
+Part of it comes from HBM3E to HBM4 (reported asking price ~4 against ~1.50 USD/Gb, see
+second-source-hbm4-arrives-presold). Assuming HBM per bit ×2.2 and an HBM revenue share of 40 % (50 %), conventional
+DRAM price/mix must still rise ×1.62 (×1.50) at 20 % bit growth, or ×1.27 (×1.08) at 30 %. The HBM share of
+revenue is not reported; both shares are assumptions. If conventional DRAM prices stay flat in 2027 and bit growth
+stays near 20 %, the scenario fails even with HBM4 doubling.
+
 ## Carries
 Which numbers from that chat can be reused: the reported quarterly and annual figures (with the reported values
 above). Which cannot: the USD growth series, the "P/E below 6", the per-GPU memory step and the NVL576 comparison.
@@ -100,3 +111,4 @@ The Q3 2026 report (27/28 October 2026) restates Q1 or Q2 2026 figures, or the 6
 - [rubin-shipments-start-q3-fy27](../../ai_demand_drivers/findings/rubin-shipments-start-q3-fy27.md)
 - [demand-is-not-earnings](../../ai_demand_drivers/rules/demand-is-not-earnings.md)
 - [older-hbm-hardware-holds-value](../../ai_demand_drivers/mechanisms/older-hbm-hardware-holds-value.md)
+- [second-source-hbm4-arrives-presold](../../memory_supply/mechanisms/second-source-hbm4-arrives-presold.md)

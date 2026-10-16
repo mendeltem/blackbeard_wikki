@@ -1,0 +1,100 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">memory_supply</a> › <a href="../index.html#mechanisms">Mechanismus</a></div><h1>Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices</h1><div class="meta"><span>Typ</span><span>Mechanismus</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-16</span><span>Herkunft</span><span>Chat with Mendel (Claude Code, cloud session), 2026-10-16; thesis Mendel</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../findings/fab-lead-time-examples.html">Fab-Vorlaufzeiten: zwei Beispiele mit 4 bis 5 Jahren</a> <span class="muted small">(memory_supply)</span><br><a href="gpu-memory-absorbs-fab-additions.html">Mehr Speicher je GPU frisst den Fab-Zubau</a> <span class="muted small">(memory_supply)</span><br><a href="../open_checks/hbm-market-share-and-nvidia-allocation.html">HBM-Marktanteil und Nvidias HBM4-Allokation</a> <span class="muted small">(memory_supply)</span><br><a href="../rules/no-standard-cycle-without-absorption-check.html">Kein Standardzyklus ohne Absorptionsprüfung</a> <span class="muted small">(memory_supply)</span><br><a href="../findings/asml-memory-share-of-litho-2026.html">ASML: Speicher fast die Hälfte der Systemumsätze, +75 % im Jahr 2026</a> <span class="muted small">(memory_supply)</span><br><a href="../../memory_earnings/findings/sk-hynix-llm-chat-figures-checked-2026-10.html">SK Hynix figures from an LLM chat (Gemini, 2026-10-16): reported numbers hold, the derived ones mix units</a> <span class="muted small">(memory_earnings)</span><br><a href="../../memory_earnings/risks/low-pe-at-earnings-peak.html">Niedriges KGV am Gewinngipfel</a> <span class="muted small">(memory_earnings)</span><br><a href="../../ai_demand_drivers/rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../open_checks/hbm-contract-prices-2027.html">HBM contract prices and volumes for 2027: company readings</a> <span class="muted small">(memory_supply)</span><br><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a> <span class="muted small">(memory_supply)</span></span><span>Verwiesen von</span><span><a href="../../memory_earnings/findings/sk-hynix-llm-chat-figures-checked-2026-10.html">SK Hynix figures from an LLM chat (Gemini, 2026-10-16): reported numbers hold, the derived ones mix units</a> <span class="muted small">(memory_earnings)</span><br><a href="../open_checks/hbm-contract-prices-2027.html">HBM contract prices and volumes for 2027: company readings</a> <span class="muted small">(memory_supply)</span><br><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a> <span class="muted small">(memory_supply)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/second-source-hbm4-arrives-presold.md">knowledge/memory_supply/mechanisms/second-source-hbm4-arrives-presold.md</a></span></div><h2>Statement</h2>
+<p>Thesis Mendel (2026-10-16): "Samsung and Micron cannot suddenly conjure that much HBM4; it simply takes too long."</p>
+<p>Chain:</p>
+<pre><code>second-source HBM4 volume limited by yield and customer qualification, not by DRAM wafers
+back-end lines (TSV, stacking, test) take about 12 to 18 months, greenfield fabs 4 to 5 years
+what does arrive is contracted a year ahead -&gt; no uncommitted surplus in 2027
+-&gt; the "second source erodes SK Hynix's HBM margin" route does not work in 2027
+</code></pre>
+<p>Samsung's bottleneck is not wafers (largest DRAM capacity of the three) but HBM yield and Nvidia qualification.
+All three were certified for Rubin HBM4 in June 2026 (hbm-market-share-and-nvidia-allocation); certification is not
+volume.</p>
+<p>Indicators (trade press and local reports, not a finding):
+- TrendForce, 2026-08-25: HBM prices potentially up to +50 % in 2027; Nvidia reportedly plans server price increases of more than 15 % in early 2027, which strengthens the memory makers in negotiations.
+- Samsung reportedly asks about 4 USD per Gb for HBM4 against about 1.50 USD for HBM3E (×2.7 per bit) and has secured a large share of its 2027 orders; price talks reported as in the final stage (2026-10-06).
+- Micron reportedly contracted most of its 2027 HBM volume at higher prices; SK Hynix still negotiating (German trade press).
+- Nvidia HBM4 allocation (analysts): SK Hynix mid-50s to two thirds, Samsung mid-20s, Micron about 20 %.</p>
+<h2>Carries</h2>
+<p>For 2027: margin erosion at SK Hynix through second-source HBM4 is unlikely; while all three are sold out the
+pricing power stays with the suppliers. Judgment (Claude, 2026-10-16): probability that SK Hynix's operating margin
+falls below 60 % in at least one quarter of 2027 about 20 % (before this point ~30 %). The remaining route is
+conventional DRAM: the 2026 tool wave at ASML (asml-memory-share-of-litho-2026) turns into wafers in 2027/28.</p>
+<p>Second consequence: the HBM3E to HBM4 transition supplies part of the price/mix increase that the +15 %-per-quarter
+scenario needs (calculation in sk-hynix-llm-chat-figures-checked-2026-10). Judgment: probability of a 440 bn USD
+operating-profit run rate by Q4 2027 about 10 % (before ~5 %).</p>
+<h2>Does not carry</h2>
+<p>2028 and later. From mid-2027 the 2028 contracts are negotiated; by then Samsung's yields, convertible wafer
+capacity and new fabs (Yongin from 2027, Micron New York and Idaho) can shift the balance. Market share: with three
+certified suppliers, SK Hynix's share can fall even if the price does not. Asking prices are not contract prices.
+Earnings: price per bit is the variable that matters, see demand-is-not-earnings; volume statements alone do not
+carry it.</p>
+<h2>Break indicator</h2>
+<p>Reported 2027 HBM4 contract prices per bit at or below 2026 HBM3E levels; or Samsung's share of Nvidia HBM4 above
+about 35 % for 2027; or 2028 contract prices per Gb flat or falling against 2027.</p>
+<h2>Source</h2>
+<p>Thesis: Mendel, 2026-10-16 (chat). Indicators, trade press, not re-read at the original:
+- TrendForce, 2026-08-25: https://www.trendforce.com/news/2026/08/25/news-nvidias-reported-15-server-hike-boosts-samsung-sk-hynix-with-hbm-prices-potentially-up-50-in-2027/
+- Samsung HBM4 price talks, 2026-10-06 (local reports via SamMobile-fans): https://sammyfans.com/2026/10/06/samsung-hbm4-price-talks-enter-final-stage
+- Micron 2027 HBM volume contracted: https://www.it-daily.net/?p=189921
+- Korea Herald on 2027 HBM terms: https://www.koreaherald.com/article/10895833
+- Back-end lead time 12 to 18 months: general knowledge, no source; fab lead times: fab-lead-time-examples.
+Primary readings: hbm-contract-prices-2027.</p>
+<h2>Linked</h2>
+<ul>
+<li><a href="../findings/fab-lead-time-examples.html">fab-lead-time-examples</a></li>
+<li><a href="gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="../open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a></li>
+<li><a href="../rules/no-standard-cycle-without-absorption-check.html">no-standard-cycle-without-absorption-check</a></li>
+<li><a href="../findings/asml-memory-share-of-litho-2026.html">asml-memory-share-of-litho-2026</a></li>
+<li><a href="../../memory_earnings/findings/sk-hynix-llm-chat-figures-checked-2026-10.html">sk-hynix-llm-chat-figures-checked-2026-10</a></li>
+<li><a href="../../memory_earnings/risks/low-pe-at-earnings-peak.html">low-pe-at-earnings-peak</a></li>
+<li><a href="../../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
+<li><a href="../open_checks/hbm-contract-prices-2027.html">hbm-contract-prices-2027</a></li>
+<li><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">rubin-hbm-capacity-technology-or-scarcity</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-16 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

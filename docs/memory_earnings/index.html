@@ -49,7 +49,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Gemeldete Zahlen von SK Hynix, Micron, Samsung: Gewinn, FCF, Ausschüttung, Bewertung.</p>
 <p><strong>Befunde (getragen, Tier 1a):</strong> Micron FQ4 2026 Umsatz 54,2 Mrd. $ (+31 % Q/Q), Bruttomarge 87 %, Wachstum verlangsamt. Micron-Kundenanzahlungen 0,57 → 12,9 Mrd. $. SK Hynix: Ausschüttung mindestens 50 % des FCF 2025–27, Rückkauf 40 Bio. KRW; Q2 2026 Nettogewinn durch Kioxia-Einmaleffekt; ADR-Emission 26,5 Mrd. $. FCF 2025+H1 2026 ~99,6 Bio. KRW (vorschlag).</p>
 <p><strong>Mechanismen:</strong> Rückkaufhebel wirkt mit 1/KGV. Peer-Beat überträgt sich schwach. <strong>Risiko:</strong> Niedriges KGV am Gewinngipfel.</p>
-<p><strong>New 2026-10-16 (vorschlag):</strong> Gemini chat on SK Hynix checked. Reported figures hold (FY2025 revenue 97.15 T, net 42.95 T KRW; Q1 2026 OP 37.61 T, net 40.35 T; Q2 OP 60.54 T, 76 %). Derived ones do not: its USD growth series puts Q1 net next to Q2 OP at two FX rates (like for like OP +61 % QoQ); its "P/E below 6" is market cap / (Q2 OP × 4), recurring-net basis 7.7, adjusted trailing ~13; "Rubin +50 % memory per GPU" ignores B300 (288 GB, 0 %). Q3 report 27 Oct US time = 28 Oct Seoul.</p>
+<p><strong>New 2026-10-16 (vorschlag):</strong> Gemini chat on SK Hynix checked. Reported figures hold (FY2025 revenue 97.15 T, net 42.95 T KRW; Q1 2026 OP 37.61 T, net 40.35 T; Q2 OP 60.54 T, 76 %). Derived ones do not: its USD growth series puts Q1 net next to Q2 OP at two FX rates (like for like OP +61 % QoQ); its "P/E below 6" is market cap / (Q2 OP × 4), recurring-net basis 7.7, adjusted trailing ~13; "Rubin +50 % memory per GPU" ignores B300 (288 GB, 0 %). Q3 report 27 Oct US time = 28 Oct Seoul. The +15 %/quarter scenario (440 bn USD run rate Q4 2027) needs price/mix per bit ×1.85 in six quarters at 20 % bit growth; HBM4 pricing covers part, conventional DRAM would still need about +50 to +60 %.</p>
 <p><strong>Offen:</strong> Micron HBM gegen konventionelles DRAM.</p>
 <p><strong>Lesen bei:</strong> Investieren in Speicheraktien, SK Hynix, Micron, Samsung, Bewertung.</p>
 <p><strong>Auf den Seiten:</strong> Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU">Micron</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG">Samsung</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/KIOXIA">Kioxia</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SNDK">SanDisk</a>; Karten <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle">HBM</a>, <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=nand-flash-enterprise-ssd">NAND/SSD</a>.</p></div>
@@ -170,6 +170,16 @@ only press reports citing industry sources and the CEO's July 2026 remark that 2
 63.2 / 72.7 / 83.6 / 96.2 / 110.6 bn USD (Q4 2026 to Q4 2027), 363 bn USD for 2027, run-rate 442 bn USD,
 ×0.765 = 339 bn USD net. Every number follows from three assumptions: the Q3 consensus as start, a constant +15 %
 per quarter, a constant 76 % margin.</p>
+<p><strong>What the scenario requires (added 2026-10-16, same chat):</strong> 110 bn USD per quarter at 1,334 KRW/USD is 146.7 T KRW,
+×2.42 on Q2 2026 OP. At 76 % margin, revenue must go from 79.3 to 193.1 T KRW per quarter, ×2.43 in six quarters.
+Bit growth is an assumption (SK Hynix does not guide it this way): at 20 % per year, six quarters give ×1.31, so
+price and mix per bit must rise ×1.85; at 30 % per year ×1.48 and ×1.64. For comparison, revenue rose ×3.6 from
+Q2 2025 to Q2 2026, so the step is not without precedent; it needs the 2026 price jump to repeat, not just hold.
+Part of it comes from HBM3E to HBM4 (reported asking price ~4 against ~1.50 USD/Gb, see
+second-source-hbm4-arrives-presold). Assuming HBM per bit ×2.2 and an HBM revenue share of 40 % (50 %), conventional
+DRAM price/mix must still rise ×1.62 (×1.50) at 20 % bit growth, or ×1.27 (×1.08) at 30 %. The HBM share of
+revenue is not reported; both shares are assumptions. If conventional DRAM prices stay flat in 2027 and bit growth
+stays near 20 %, the scenario fails even with HBM4 doubling.</p>
 <h2>Carries</h2>
 <p>Which numbers from that chat can be reused: the reported quarterly and annual figures (with the reported values
 above). Which cannot: the USD growth series, the "P/E below 6", the per-GPU memory step and the NVL576 comparison.
@@ -203,6 +213,7 @@ workstation prices are handled in older-hbm-hardware-holds-value.</p>
 <li><a href="../ai_demand_drivers/findings/rubin-shipments-start-q3-fy27.html">rubin-shipments-start-q3-fy27</a></li>
 <li><a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand-is-not-earnings</a></li>
 <li><a href="../ai_demand_drivers/mechanisms/older-hbm-hardware-holds-value.html">older-hbm-hardware-holds-value</a></li>
+<li><a href="../memory_supply/mechanisms/second-source-hbm4-arrives-presold.html">second-source-hbm4-arrives-presold</a></li>
 </ul></div></details><details class="entry" id="micron-customer-deposits-jump"><summary><span class="type">Befund</span><span class="t"><a href="findings/micron-customer-deposits-jump.html">Micron: Sprung der Kundenanzahlungen</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="findings/micron-customer-deposits-jump.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/findings/micron-customer-deposits-jump.md">Markdown</a></p><h2>Aussage</h2>
 <p>Microns langfristige Vertragsverbindlichkeiten (Noncurrent customer contract liabilities) stiegen von 0,57 Mrd. USD (28.05.2026) auf 12,90 Mrd. USD (03.09.2026). In der Kapitalflussrechnung FY2026 stehen 12,75 Mrd. USD Zufluss aus Kundenanzahlungen (Proceeds from customer contract liability deposits), Vorjahr null. Micron nennt dazu Strategic Customer Agreements.</p>
 <h2>Trägt</h2>

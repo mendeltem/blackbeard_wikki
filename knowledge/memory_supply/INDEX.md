@@ -4,7 +4,7 @@ Angebotsseite des Speichers: Waferflaeche, Werke, Knoten und was die Flaechenauf
 
 Vor jedem Argument mit dem Standardzyklus (Knappheit, Capex, Überangebot) gilt die Regel [Kein Standardzyklus ohne Absorptionsprüfung](rules/no-standard-cycle-without-absorption-check.md): erst zeigen, dass der Zubau nicht von mehr Speicher je GPU aufgefressen wird ([Mechanismus](mechanisms/gpu-memory-absorbs-fab-additions.md)).
 
-Stand 2026-10-14. Ein Eintrag je Datei.
+Stand 2026-10-16. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -20,3 +20,6 @@ Stand 2026-10-14. Ein Eintrag je Datei.
 | [HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030](open_checks/rubin-hbm4-wafer-demand-2028-2030.md) | pruefpunkt | offen |
 | [Kein Standardzyklus ohne Absorptionsprüfung](rules/no-standard-cycle-without-absorption-check.md) | regel | getragen |
 | [Die eigene Darstellung ist keine Quelle](rules/own-visualisation-is-not-a-source.md) | regel | vorschlag |
+| [Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices](mechanisms/second-source-hbm4-arrives-presold.md) | mechanismus | vorschlag |
+| [HBM contract prices and volumes for 2027: company readings](open_checks/hbm-contract-prices-2027.md) | pruefpunkt | offen |
+| [Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?](open_checks/rubin-hbm-capacity-technology-or-scarcity.md) | pruefpunkt | offen |

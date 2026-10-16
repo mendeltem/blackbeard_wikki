@@ -2299,6 +2299,17 @@
 "src": "knowledge/memory_supply/mechanisms/hbm-eats-wafer-area.md"
 },
 {
+"t": "Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices",
+"p": "memory_supply/mechanisms/second-source-hbm4-arrives-presold.html",
+"a": "memory_supply",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "",
+"id": "second-source-hbm4-arrives-presold",
+"src": "knowledge/memory_supply/mechanisms/second-source-hbm4-arrives-presold.md"
+},
+{
 "t": "DRAM-Waferkapazitaet je Werk",
 "p": "memory_supply/open_checks/dram-wafer-capacity-by-fab.html",
 "a": "memory_supply",
@@ -2310,6 +2321,17 @@
 "src": "knowledge/memory_supply/open_checks/dram-wafer-capacity-by-fab.md"
 },
 {
+"t": "HBM contract prices and volumes for 2027: company readings",
+"p": "memory_supply/open_checks/hbm-contract-prices-2027.html",
+"a": "memory_supply",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-16",
+"x": "",
+"id": "hbm-contract-prices-2027",
+"src": "knowledge/memory_supply/open_checks/hbm-contract-prices-2027.md"
+},
+{
 "t": "HBM-Marktanteil und Nvidias HBM4-Allokation",
 "p": "memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.html",
 "a": "memory_supply",
@@ -2319,6 +2341,17 @@
 "x": "Offener Erhebungsschritt: SK Hynix' HBM-Marktanteil und die Aufteilung von Nvidias HBM4-Volumen sind marktbestimmend, aber bisher nur über Analysten belegt, nicht Tier 1a. Zusammengetragener Stand, jede Zeile mit Herkunft und Tier: **Markta",
 "id": "hbm-market-share-and-nvidia-allocation",
 "src": "knowledge/memory_supply/open_checks/hbm-market-share-and-nvidia-allocation.md"
+},
+{
+"t": "Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?",
+"p": "memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.html",
+"a": "memory_supply",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-10-16",
+"x": "",
+"id": "rubin-hbm-capacity-technology-or-scarcity",
+"src": "knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md"
 },
 {
 "t": "HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030",
