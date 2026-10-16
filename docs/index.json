@@ -330,6 +330,17 @@
 "src": "knowledge/agent_tooling/rules/python-env-isolation-on-shared-clusters.md"
 },
 {
+"t": "README of a research package: copy-paste blocks, one figure, details elsewhere, hardware last",
+"p": "agent_tooling/rules/readme-for-a-research-package.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "1. One line what the package does, then one figure of how it works (no second figure that repeats the first). 2. Every command in its own copy block; under it one line what happens and where the output lands. 3. Every block runs verbatim fr",
+"id": "readme-for-a-research-package",
+"src": "knowledge/agent_tooling/rules/readme-for-a-research-package.md"
+},
+{
 "t": "\"Installierbar\" heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal",
 "p": "agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.html",
 "a": "agent_tooling",
@@ -1298,6 +1309,17 @@
 "src": "knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md"
 },
 {
+"t": "MicrobleedNet's published code never trains the teacher of its second stage",
+"p": "cmb_detection/findings/microbleednet-never-trains-its-teacher.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "MicrobleedNet code (958f1cb): train / fine_tune / cross_validate load the teacher, never train it; a missing teacher passes silently (ValueError not raised) -> student distils from noise",
+"id": "microbleednet-never-trains-its-teacher",
+"src": "knowledge/cmb_detection/findings/microbleednet-never-trains-its-teacher.md"
+},
+{
 "t": "Ein einziger Kandidaten-Klassifikator ueber alle Kohorten ersetzt die Liquor-Regel und braucht keine Gewebekarte",
 "p": "cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.html",
 "a": "cmb_detection",
@@ -1307,6 +1329,17 @@
 "x": "Ein Klassifikator auf dem Kandidaten-Pool aller Kohorten, eine Schwelle 0,30: = Liquor-Regel auf VALDO/T2*, SWI +0,061; braucht keine Gewebekarte",
 "id": "one-shared-candidate-classifier-for-all-cohorts",
 "src": "knowledge/cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.md"
+},
+{
+"t": "The second-stage candidate classifier, ported into the training package, reproduces its gain",
+"p": "cmb_detection/findings/second-stage-classifier-ported-reproduced.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "Candidate CNN ported into the public package: +0.028 lesion F1 over stage 1 on a T2* run, nested CV (one run, vorschlag)",
+"id": "second-stage-classifier-ported-reproduced",
+"src": "knowledge/cmb_detection/findings/second-stage-classifier-ported-reproduced.md"
 },
 {
 "t": "Hebel, die das Netz empfindlicher machen, heben das Laesions-F1 nicht",

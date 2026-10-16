@@ -5,6 +5,8 @@ Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md
 Mikroblutungen auf T2*/SWI automatisch zaehlen. Oeffentliche Messlatte VALDO 2021 Task 2
 (72 Faelle, drei Kohorten, 0,8 bis 4 mm Schichten), Mass Laesions-F1 gepaart mit Bootstrap.
 
+**Neu 2026-10-16 (Quelltext gelesen):** MicrobleedNet (Commit 958f1cb) trainiert den Lehrer seiner zweiten Stufe nie; train/fine_tune/cross_validate laden ihn, ein fehlender Lehrer faellt still durch (ValueError ohne raise) -> der Schueler destilliert aus einem Zufallsnetz. Der Kandidaten-Klassifikator laeuft auch im oeffentlichen Paket (+0,028 auf einem T2*-Lauf, relativ). Siehe [microbleednet-never-trains-its-teacher](findings/microbleednet-never-trains-its-teacher.md).
+
 **Getragen (Befunde, alle auf VALDO):** Die Gefaess-Uebermalung des Referenzverfahrens
 MicrobleedNet loescht auf dicken Schichten die Blutungen selbst; ohne sie +0,136 F1, der
 groesste Einzelgewinn. Ein 3D-U-Net, dessen erste Ebene nur in der Schicht faltet und poolt,
