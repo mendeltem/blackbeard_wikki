@@ -1793,6 +1793,17 @@
 "src": "knowledge/lesion_detection_method/rules/touch-based-instance-metrics-need-a-volume-side-condition.md"
 },
 {
+"t": "Agents on the institutional model hub solve bounded code tasks correctly, 6-18 times slower; long reviews time out",
+"p": "local_llm_operation/findings/clara-cle-agents-solve-bounded-code-tasks-slower.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Claude Code vs Hermes/OpenCode on the hub: bounded code tasks all correct, 6-18x slower; open review: Claude 6 extra real bugs, OpenCode 1, Hermes timeout",
+"id": "clara-cle-agents-solve-bounded-code-tasks-slower",
+"src": "knowledge/local_llm_operation/findings/clara-cle-agents-solve-bounded-code-tasks-slower.md"
+},
+{
 "t": "Zaehlen braucht Thinking, und kostet das Zwanzigfache",
 "p": "local_llm_operation/findings/counting-needs-thinking.html",
 "a": "local_llm_operation",
