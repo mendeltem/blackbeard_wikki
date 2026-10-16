@@ -58,3 +58,5 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.
 **Regel, neu 2026-10-12:** Gesunde (keine Referenzlaesion) getrennt berichten: FP je Fall und Fall-Spezifitaet, kein F1; das F1-Fallmittel nur ueber Laesionsfaelle (Betrachter-Generator umgestellt, Stick-Seiten neu).
 
 **Befund, neu 2026-10-12:** die Liquor-Regel loescht auf SWI echte Blutungen tief im Hirn (SynthSeg vergibt auf SWI Label 24 falsch); Varianten gemessen: erodierte Liquor-Maske ist auf beiden Kohorten die beste, 'nur Ventrikel' neutral, 'tiefer Liquor' hilft nicht; FreeSurfer keine Option, die Kohorten haben kein T1.
+
+**Rule, new 2026-10-16:** count microbleeds on the model grid and deliver a label map on the scan grid: on 5 mm slices two detections merged in the binary mask (37 -> 36).

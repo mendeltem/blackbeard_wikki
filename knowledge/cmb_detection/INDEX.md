@@ -13,6 +13,7 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| regel | [count-lesions-on-the-fine-grid-deliver-a-label-map](rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md) | On 5 mm slices two microbleeds merge in the binary mask (37 -> 36); count on the model grid, deliver a label map (2026-10-16) |
 | befund | [vessel-inpainting-removes-microbleeds-on-thick-slices](findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md) | Gefaess-Uebermalung des Originals loescht 109 von 236 Blutungen; ohne sie +0,136 F1 |
 | befund | [anisotropic-first-level-beats-isotropic-3d-nets](findings/anisotropic-first-level-beats-isotropic-3d-nets.md) | Erste Ebene nur in der Schicht falten: +0,159 gegen Attention-U-Net, zwei Turniere |
 | befund | [csf-rule-removes-false-alarms-without-loss](findings/csf-rule-removes-false-alarms-without-loss.md) |  98 von 176 Fehlalarmen liegen im Liquor; SynthSeg-Regel 0,585 -> 0,646 ohne Verlust auf VALDO; Nachtrag 08.10.: auf SWI 62/426 und T2* 15/545 Blutungen geloescht |

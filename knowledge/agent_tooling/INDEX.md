@@ -12,6 +12,8 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| [Public code knows no dataset; dataset rules live next to the data](rules/public-code-knows-no-dataset.md) | regel | getragen |
+| [Python environment on a shared machine: isolate it (user site, login node, venv, stale editable, $?)](rules/python-env-isolation-on-shared-clusters.md) | regel | getragen |
 | regel | [release-test-means-fresh-machine-with-release-assets](rules/release-test-means-fresh-machine-with-release-assets.md) | Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR | getragen |
 | regel | [pip-freeze-is-not-an-install-file](rules/pip-freeze-is-not-an-install-file.md) | pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo | getragen |
 | [Datenumzug: umbenennen, Symlink zurueck, Protokoll](rules/data-move-by-rename-symlink-and-protocol.md) | regel | vorschlag |

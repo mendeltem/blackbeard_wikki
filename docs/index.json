@@ -308,6 +308,28 @@
 "src": "knowledge/agent_tooling/rules/pip-freeze-is-not-an-install-file.md"
 },
 {
+"t": "Public code knows no dataset; the rules of a dataset live next to the data",
+"p": "agent_tooling/rules/public-code-knows-no-dataset.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-16",
+"x": "A public repository gets no file names it looks for by itself (`excluded.tsv`), no folder layouts, modality spellings, cohort or drive names, and no configs of in-house data. It takes path patterns (`{id}` + glob) and files passed explicitl",
+"id": "public-code-knows-no-dataset",
+"src": "knowledge/agent_tooling/rules/public-code-knows-no-dataset.md"
+},
+{
+"t": "A Python environment on a shared machine is only isolated if you make it so",
+"p": "agent_tooling/rules/python-env-isolation-on-shared-clusters.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-16",
+"x": "Six failures, each seen once on 2026-10-16, each silent or misleading, and the fix that now sits in the install script: 1. **User site leaks into every environment.** Packages in `~/.local/lib/python3.X/site-packages` are on `sys.path` of e",
+"id": "python-env-isolation-on-shared-clusters",
+"src": "knowledge/agent_tooling/rules/python-env-isolation-on-shared-clusters.md"
+},
+{
 "t": "\"Installierbar\" heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal",
 "p": "agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.html",
 "a": "agent_tooling",
@@ -1331,6 +1353,17 @@
 "src": "knowledge/cmb_detection/findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md"
 },
 {
+"t": "Count microbleeds on the model grid; deliver a label map on the input grid",
+"p": "cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-16",
+"x": "On 5 mm slices two microbleeds merge in the binary mask (37 -> 36); count on the model grid, deliver a label map (2026-10-16)",
+"id": "count-lesions-on-the-fine-grid-deliver-a-label-map",
+"src": "knowledge/cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md"
+},
+{
 "t": "Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar",
 "p": "cmb_detection/rules/patches-not-whole-images-for-small-lesions.html",
 "a": "cmb_detection",
@@ -1747,6 +1780,17 @@
 "x": "Hermes gibt Aufgaben an OpenCode ab, lokal, 160 s; kein zweiter Slot fuer qwen35moe",
 "id": "hermes-delegates-to-opencode-locally",
 "src": "knowledge/local_llm_operation/findings/hermes-delegates-to-opencode-locally.md"
+},
+{
+"t": "Cluster nodes answer only on SSH from the intranet; a GPU share starts at once, a whole GPU waits",
+"p": "local_llm_operation/findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-16",
+"x": "Cluster nodes: only port 22 from the intranet (an API needs a tunnel or gateway); GPU shard starts at once, a whole A100 waited ~9 h; 7 x 80 GB, 20 x 40 GB (2026-10-16)",
+"id": "hpc-nodes-answer-only-ssh-and-shards-start-at-once",
+"src": "knowledge/local_llm_operation/findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.md"
 },
 {
 "t": "Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s",

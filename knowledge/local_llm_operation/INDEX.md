@@ -10,6 +10,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [hpc-nodes-answer-only-ssh-and-shards-start-at-once](findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.md) | Cluster nodes: only port 22 from the intranet (an API needs a tunnel or gateway); GPU shard starts at once, a whole A100 waited ~9 h; 7 x 80 GB, 20 x 40 GB (2026-10-16) |
 | mechanismus | [moe-expert-offloading](mechanisms/moe-expert-offloading.md) | `-ngl` plus `-ncmoe`: ein 35-B-Modell auf 8 GB VRAM, 19,4 t/s |
 | mechanismus | [prefix-cache-single-slot](mechanisms/prefix-cache-single-slot.md) | `-np 1`, und warum Prompt-Kompaktierung den Cache zerstoert |
 | befund | [rule-lists-make-small-models-refuse](findings/rule-lists-make-small-models-refuse.md) | Eskalationsliste im System-Prompt: 0 auf 100 Prozent nach dem Entfernen |

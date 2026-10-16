@@ -42,8 +42,8 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests</p>
-<div class="stripe"><i class="warn" style="width:60.0%" title="vorschlag: 18"></i><i class="ok" style="width:40.0%" title="getragen: 12"></i></div><div class="counts"><span class="warn">18 vorschlag</span> <span class="ok">12 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests, conda, venv, PYTHONNOUSERSITE, Installation, Cluster, datenagnostisch, BIDS</p>
+<div class="stripe"><i class="warn" style="width:56.2%" title="vorschlag: 18"></i><i class="ok" style="width:43.8%" title="getragen: 14"></i></div><div class="counts"><span class="warn">18 vorschlag</span> <span class="ok">14 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
@@ -63,9 +63,66 @@ geglaubt, weil es wie eine Messung aussieht.</p>
 - 08.10.: GPU-Auftrag erst nach cuda-Check, vollem Import und Mini-Lauf in derselben Umgebung einreihen (CPU-Build-torch kostete 80 min Sperre).
 - 11.10.: Tafel trennen: Markdown nur Funktionskern (kurz, ueber das Werkzeug, Nummern stabil), alles Verstaendliche als automatisch gebaute HTML-Seiten mit Plots und Datenschutzfilter (vorher 42 unsichtbare Eintraege, 6 doppelte Nummern).
 - 11.10.: Verlaesst ein Ordner die interne Platte, dann kopieren, beide Seiten SHA-256-hashen, erst bei Gleichstand loeschen und Symlink setzen; exFAT speichert keine Symlinks (Notiz in .SYMLINKS.txt); eine leere Platte kann defekt sein (Schreibtest + SMART vor dem ersten Lauf). Werkzeug <code>archivieren</code>.</p>
-<p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p></div>
+<p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p>
+<p><strong>Rules, new 2026-10-16:</strong> (1) A Python environment on a shared machine is only isolated if you make it so: <code>PYTHONNOUSERSITE=1</code> (a user-site package shadowed the environment's), install on a compute node or as venv (conda died twice on the login node at <code>repodata.json</code>), venv fallback without <code>python3-venv</code>, check <code>pkg.__file__</code> before testing (an editable install pointed to an old clone), <code>rc=$?</code> before <code>$(date)</code>. (2) Public code knows no dataset: patterns and explicit files, BIDS as preset; dataset rules in a private script next to the data, after proving old and new give identical case lists.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(29)</span></h2><details class="entry" id="archive-tier-copy-hash-both-sides-then-symlink"><summary><span class="type">Regel</span><span class="t"><a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Alita, /home zu 97 % voll; Werkzeug system/werkzeuge/archivieren, Archivstufe auf externer SSD (exFAT) · <a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(31)</span></h2><details class="entry" id="public-code-knows-no-dataset"><summary><span class="type">Regel</span><span class="t"><a href="rules/public-code-knows-no-dataset.html">Public code knows no dataset; the rules of a dataset live next to the data</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: user rule for a public research repository, 2026-10-16 (&quot;das muss data agnostisch sein&quot;) · <a href="rules/public-code-knows-no-dataset.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/public-code-knows-no-dataset.md">Markdown</a></p><h2>Aussage</h2>
+<p>A public repository gets no file names it looks for by itself (<code>excluded.tsv</code>), no folder layouts, modality spellings,
+cohort or drive names, and no configs of in-house data. It takes path patterns (<code>{id}</code> + glob) and files passed
+explicitly (<code>--ids</code>, <code>--exclude</code>); a standard layout (BIDS) may be offered as a preset. Everything specific to one
+dataset (which list excludes whom, which mask wins) is a small private script stored with the data.
+Before moving logic out, prove that old and new give the same result: here the generic case-list builder reproduced
+the layout-specific one row by row (ids, paths, folds, lesion counts) on two cohorts.</p>
+<h2>Trägt</h2>
+<p>The same move fixed a real error: the layout-specific builder found the exclusion list only in one folder, a copy of
+the data had it one level up, and a case with a misfitting reference mask entered the case list unnoticed.
+Generic code with explicit files plus a loud warning for quality-flagged cases makes that visible.</p>
+<h2>Trägt nicht</h2>
+<p>Aggregate validation numbers may still be reported (no patient data); it is the code that must not encode a dataset.</p>
+<h2>Bruchindikator</h2>
+<p><code>grep</code> of the public diff finds cohort, drive or layout names; a function opens a file it was not given.</p>
+<h2>Ablesung</h2>
+<p>BIDS specification 1.9 (derivatives, <code>desc-</code> entities): https://bids-specification.readthedocs.io/ ; Gorgolewski et al.,
+Sci Data 2016, doi:10.1038/sdata.2016.44, PMID 27326542. Equality check: own run 2026-10-16 (75 and 61 cases identical).</p>
+<h2>Verknüpft</h2>
+<p><a href="rules/python-env-isolation-on-shared-clusters.html">python-env-isolation-on-shared-clusters</a></p></div></details><details class="entry" id="python-env-isolation-on-shared-clusters"><summary><span class="type">Regel</span><span class="t"><a href="rules/python-env-isolation-on-shared-clusters.html">A Python environment on a shared machine is only isolated if you make it so</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: install tests of a public research package (cmb_3d_unet_experiments) on a workstation and an institute SLURM cluster, 2026-10-16 · <a href="rules/python-env-isolation-on-shared-clusters.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/python-env-isolation-on-shared-clusters.md">Markdown</a></p><h2>Aussage</h2>
+<p>Six failures, each seen once on 2026-10-16, each silent or misleading, and the fix that now sits in the install script:</p>
+<ol>
+<li><strong>User site leaks into every environment.</strong> Packages in <code>~/.local/lib/python3.X/site-packages</code> are on <code>sys.path</code> of
+   every interpreter of that version, conda env or venv. On the cluster pip reported requirements as "already satisfied"
+   from <code>~/.local</code> and printed pages of resolver errors for unrelated packages there. Reproduced: a fake <code>yaml</code> in a user
+   site shadowed the environment's PyYAML 6.0.3. Fix: <code>export PYTHONNOUSERSITE=1</code> during the install AND in the
+   activation script; the self-test reports any module loaded from the user site.</li>
+<li><strong>conda on a login node.</strong> Twice the SSH session died at exactly <code>Collecting package metadata (repodata.json)</code>
+   (conda-forge index, several GB RAM while parsing); the same command on a compute node (srun, 128 GB) ran through.
+   Fix: install on a compute node or in tmux; <code>--venv</code> (Python of the active conda base + pip, no conda download);
+   the script falls back to a venv by itself when <code>conda create</code> fails.</li>
+<li><strong>Ubuntu Python without <code>python3-venv</code>.</strong> <code>python3 -m venv</code> fails (ensurepip missing), no sudo. Fix: <code>uv venv</code> if
+   present, else <code>venv --without-pip</code> + <code>get-pip.py</code>.</li>
+<li><strong>An editable install points to an old clone.</strong> <code>python -m pkg</code> in a test loaded the package from a clone made the
+   day before, so a whole option matrix first tested stale code. Fix: before any test print
+   <code>python -c "import pkg; print(pkg.__file__)"</code>.</li>
+<li><strong><code>conda env remove</code> of the active environment is refused.</strong> Fix: <code>env -u CONDA_PREFIX -u CONDA_DEFAULT_ENV conda env remove</code>
+   inside the script (<code>--recreate</code>).</li>
+<li><strong><code>echo "$(date) rc=$?"</code> always logs rc 0</strong> -- the command substitution runs first and resets <code>$?</code>. Fix:
+   <code>rc=$?; echo "$(date) rc=$rc"</code>.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Every item reproduced and fixed with a test (fresh clone, empty environment, simulated failure).</p>
+<h2>Trägt nicht</h2>
+<p>Says nothing about which Python versions or CUDA builds work; that is the job of the install matrix.</p>
+<h2>Bruchindikator</h2>
+<p>A user reports resolver errors or "already satisfied" lines pointing outside the environment; a test log whose
+module paths are not inside the environment.</p>
+<h2>Ablesung</h2>
+<p>Python docs, <code>PYTHONNOUSERSITE</code> and the user site: https://docs.python.org/3/using/cmdline.html#envvar-PYTHONNOUSERSITE
+and https://docs.python.org/3/library/site.html (Python 3.12). GNU Bash manual, Special Parameters (<code>$?</code>) and Command
+Substitution: https://www.gnu.org/software/bash/manual/bash.html. conda docs, managing environments:
+https://docs.conda.io/projects/conda/en/stable/user-guide/tasks/manage-environments.html. Measurements: install logs of
+2026-10-16 (cluster login node vs compute node; workstation fresh-clone tests).</p>
+<h2>Verknüpft</h2>
+<p><a href="rules/release-test-means-fresh-machine-with-release-assets.html">release-test-means-fresh-machine-with-release-assets</a>,
+<a href="rules/pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></p></div></details><details class="entry" id="archive-tier-copy-hash-both-sides-then-symlink"><summary><span class="type">Regel</span><span class="t"><a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Alita, /home zu 97 % voll; Werkzeug system/werkzeuge/archivieren, Archivstufe auf externer SSD (exFAT) · <a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md">Markdown</a></p><h2>Aussage</h2>
 <p>Wenn Daten die interne Platte <strong>verlassen</strong> (anderes Dateisystem, externer Traeger), reicht Umbenennen nicht mehr
 (siehe [[data-move-by-rename-symlink-and-protocol]]). Dann gilt: <strong>kopieren, auf beiden Seiten SHA-256 ueber jede
 Datei bilden, die Listen byteweise vergleichen, und nur bei Gleichstand das Original loeschen und am alten Ort
