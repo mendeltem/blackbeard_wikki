@@ -47,7 +47,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Stand 2026-10-16. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-16. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.</p>
-<p><strong>Axioms (getragen, do not attack), ranked by Mendel 2026-10-16:</strong> 1. Bandwidth bottleneck, widening: compute grows faster than the bandwidth feeding it (Gholami et al. 2024: FLOPS ×3.0 vs DRAM bandwidth ×1.6 per two years; Rubin 0.44 TB/s per PFLOPS vs B200 0.80); the only axiom that routes money specifically into memory, the scarcer input earns the rent. 2. Open search space: AI makes everything more productive, demand saturated nowhere. 3. Race on all levels: unverifiable rival position, investing is dominant (states stable, firms less so), extended to inputs (HBM, CoWoS, grid, talent).</p>
+<p><strong>Axioms (getragen, do not attack), ranked by Mendel 2026-10-16:</strong> 1. Bandwidth bottleneck, widening: compute grows faster than the bandwidth feeding it (Gholami et al. 2024: FLOPS ×3.0 vs DRAM bandwidth ×1.6 per two years; Rubin 0.44 TB/s per PFLOPS vs B200 0.80); the only axiom that routes money specifically into memory, the scarcer input earns the rent. 2. Open search space: AI makes everything more productive, demand saturated nowhere. 3. Race on all levels: unverifiable rival position, investing is dominant (states stable, firms less so), extended to inputs (HBM, CoWoS, grid, talent). Saving money loses weight when winning is at stake; money binds for single firms (Oracle, neoclouds, labs), not for states and the big four, so the race does not hinge on the weakest buyer (example Tencent to Oracle, reported).</p>
 <p><strong>Mechanismen (getragen):</strong> Refresh statt Neubau, Kadenz und Yield-Tal, Simulation braucht Compute, Mess- und Experimentierkreislauf, induzierte Innovation, Vorlaufzeiten RZ gegen Fab, Automatisierung wirkt beidseitig, Geheimhaltung stützt das Motiv. Gegenkraft (vorschlag): Finanzierungsgrenze.</p>
 <p><strong>Neu 2026-10-14 (vorschlag):</strong> These Mendel: Jeder Sektor wächst, die Summe zählt, alles landet im Rechenzentrum (Industrie heute klein gemessen, muss nur zusätzlich wachsen). Rechenzentrum ~0,14 J/Token gegen Workstation ~2,5 J/Token, Bündelung braucht KV-Cache, also HBM. Verschuldungsspielraum der großen Vier ~1,7 bis 2,1 Bio. $ gegen Lücke ~220 Mrd. $/Jahr: Geld bindet für sie bis ~2028 nicht, für Oracle/Neoclouds/Labore schon. HBM-Umgehung im Rechenzentrum (Rubin CPX, SRAM) 10 bis 15 % bis 2030.</p>
 <p><strong>New 2026-10-15 (TSMC 3Q26):</strong> Revenue US$46.7bn above guidance, HPC 68% (+22% QoQ), N3+N2 41% of wafer revenue, revenue per wafer +13.9% QoQ on +3.2% shipments (getragen, IR). Call (vorschlag until official transcript): 4Q26 guide US$52.3 to 54.3bn, 2026 growth ~44% (fourth raise this year), capex US$60 to 64bn; Wei: demand above supply, gap still big, AI accelerator CAGR probably above mid-to-high 50s; consumer segments weak.</p>
@@ -133,11 +133,24 @@ verification and without enforceable agreement, very stable; firms (hyperscalers
 observable each quarter and multi-market contact, less stable; and down the supply chain, where everyone competes for
 the same scarce inputs (HBM allocation, CoWoS slots, grid connections, talent). The analogy Middle Ages versus steam
 age is a hypothesis, not a reason. Not provable, carried.</p>
+<p>Saving money loses weight when winning is at stake (Mendel, 2026-10-16): racers pay for position and speed, not
+for the lowest cost per unit. They still buy energy efficiency, because power is the binding constraint, not to
+save money. How far this goes depends on who pays (Mendel: "Oracle as a single firm has limited money, whole
+countries look different, and then come the huge hyperscalers"):
+- States: nominally unlimited through the central bank, the limit is inflation.
+- The big four hyperscalers: debt headroom about 1.7 to 2.1 tn USD, money not binding until about 2028 (debt-headroom-big-four-2026).
+- Single firms such as Oracle, neoclouds and private labs: financing binds already in 2026 (financing-limit).</p>
+<p>The race does not hinge on the weakest buyer: if one runs out of money, its demand moves up the tiers. Weak buyers
+get around their limit with customer prepayments (Tencent to Oracle, reported ~30 % upfront, tencent-oracle-lease-2026).</p>
 <h2>Carries</h2>
 <p>The sign: that investment happens, and under which condition it tips. Originally scoped to training compute; widened
-by Mendel to all levels, including securing inputs ahead (contracts, prepayments, allocation).</p>
+by Mendel to all levels, including securing inputs ahead (contracts, prepayments, allocation). Racers' demand for
+the newest generation reacts little to price, which gives suppliers of the scarce inputs (memory, packaging)
+pricing power.</p>
 <h2>Does not carry</h2>
-<p>Amounts, duration, profitability. Inference volume still follows unit economics (original limitation kept). A
+<p>Amounts, duration, profitability. Inference volume still follows unit economics (original limitation kept).
+Buyers outside the race still count money (older-hbm-hardware-holds-value). For a single firm the money limit
+binds; the axiom only says the race as a whole does not stop there. A
 prisoner's dilemma exists only if mutual pausing would be better for both; which case applies cannot be read off.</p>
 <h2>Break indicator</h2>
 <p>Primary: the first hyperscaler cuts capex guidance and loses neither market share nor valuation over two quarters.
@@ -149,6 +162,9 @@ Lagging: aggregate hyperscaler capex grows below 10 % YoY for two quarters in a 
 <li><a href="axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
 <li><a href="axioms/open-search-space.html">open-search-space</a></li>
 <li><a href="mechanisms/financing-limit.html">financing-limit</a></li>
+<li><a href="findings/debt-headroom-big-four-2026.html">debt-headroom-big-four-2026</a></li>
+<li><a href="mechanisms/older-hbm-hardware-holds-value.html">older-hbm-hardware-holds-value</a></li>
+<li><a href="../ai_buyers/findings/tencent-oracle-lease-2026.html">tencent-oracle-lease-2026</a></li>
 <li><a href="mechanisms/secrecy-supports-motive-not-volume.html">secrecy-supports-motive-not-volume</a></li>
 <li><a href="../compute_bottlenecks/mechanisms/allocation-beats-datasheet.html">allocation-beats-datasheet</a></li>
 </ul></div></details><h2 id="rules">Regel <span class="muted small">(1)</span></h2><details class="entry" id="demand-is-not-earnings"><summary><span class="type">Regel</span><span class="t"><a href="rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-02</span></summary><div class="body"><p class="small muted">Herkunft: Gespräch Projekt SK Hynix, 2026-10-02 · <a href="rules/demand-is-not-earnings.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/rules/demand-is-not-earnings.md">Markdown</a></p><h2>Aussage</h2>

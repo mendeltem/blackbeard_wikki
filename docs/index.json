@@ -605,6 +605,17 @@
 "src": "knowledge/ai_buyers/findings/anthropic-revenue-runrate.md"
 },
 {
+"t": "Tencent leases ~100,000 AI chips from Oracle in Southeast Asia (reported, October 2026)",
+"p": "ai_buyers/findings/tencent-oracle-lease-2026.html",
+"a": "ai_buyers",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "",
+"id": "tencent-oracle-lease-2026",
+"src": "knowledge/ai_buyers/findings/tencent-oracle-lease-2026.md"
+},
+{
 "t": "Abrechnung je Token bindet Umsatz an Aufgaben",
 "p": "ai_buyers/mechanisms/token-billing-scales-with-tasks.html",
 "a": "ai_buyers",
