@@ -1,5 +1,7 @@
 # brain_volumetry: Kurzstand
 
+**Neu 2026-10-16:** Sequenzen derselben Sitzung (FLAIR auf T2*/SWI) per Header-Weltkoordinaten zusammenbringen; ein FLIRT-Start im Voxelraum drehte LPS- gegen RAS-Dateien falsch. SynthSeg aus FLAIR nur, wo es die Hirnmaske abdeckt ([same-session-sequences-align-by-header-not-voxel-flirt](findings/same-session-sequences-align-by-header-not-voxel-flirt.md)).
+
 Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
 
 Verlaufs-Volumetrie liefert zwei Seiten: die Trendseite (gemischtes Modell, Steigung je Proband, Seitenvergleich)

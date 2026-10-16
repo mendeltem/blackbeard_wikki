@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests, conda, venv, PYTHONNOUSERSITE, Installation, Cluster, datenagnostisch, BIDS</p>
-<div class="stripe"><i class="warn" style="width:57.6%" title="vorschlag: 19"></i><i class="ok" style="width:42.4%" title="getragen: 14"></i></div><div class="counts"><span class="warn">19 vorschlag</span> <span class="ok">14 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<div class="stripe"><i class="warn" style="width:58.8%" title="vorschlag: 20"></i><i class="ok" style="width:41.2%" title="getragen: 14"></i></div><div class="counts"><span class="warn">20 vorschlag</span> <span class="ok">14 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
@@ -54,6 +54,7 @@ geglaubt, weil es wie eine Messung aussieht.</p>
 <p>Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkzeug, dessen eigener Fehler wie ein Befund aussieht, ist das gefährlichste.</p>
 <p><strong>Getragen (alles Regeln):</strong> Kein stiller Rückfallwert. Leer ist nicht fehlend. Unbekannt ist kein Wert in Vergleichen (<code>null &lt;= 0</code> ist wahr). Erstmessung ist keine Veränderung. Gerechnetes und Gedeutetes getrennt halten (zwei Schichten).</p>
 <p><strong>Vorschlag (aus dem Projekt rea übernommen):</strong> Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.</p>
+<p><strong>Vorschlag, neu 2026-10-16 (Alita):</strong> Datensatz-Uebergabe: ein Ordner je Fall unter derivatives/preprocessed, sprechende Dateinamen, alles auf der Scan-Matrix, Layout des Fremdwerkzeugs als Geschwisterordner mit dessen Namen, keine Kopien (fehlende Ordner baut ein Skript), files.xlsx mit Spaltenerklaerung, QC-Seite, Pruefsummen (<a href="rules/dataset-handover-one-folder-per-case-no-copies.html">dataset-handover-one-folder-per-case-no-copies</a>). Regel 'installierbar' erweitert: JEDER Bau von 0 in neuer Umgebung mit neuem Namen.</p>
 <p><strong>Vorschlag, neu 2026-10-16 (Alita):</strong> README eines Forschungspakets: eine Zeile, eine Abbildung (keine zweite, die sie wiederholt), jeder Befehl in eigenem Kopierblock mit einer Zeile Wirkung, jeder Block laeuft woertlich aus frischem Clone, Details in docs/DETAILS.md, Hardware/Software klein ganz unten; nutzt eine Kollegin schon ein anderes Werkzeug, dessen Befehle, Optionen und Ordner spiegeln (<a href="rules/readme-for-a-research-package.html">readme-for-a-research-package</a>).</p>
 <p><strong>Lesen bei:</strong> Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.</p>
 <p><strong>Vorschlag, neu 2026-10-07 (Alita):</strong> Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".</p>
@@ -67,7 +68,32 @@ geglaubt, weil es wie eine Messung aussieht.</p>
 <p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p>
 <p><strong>Rules, new 2026-10-16:</strong> (1) A Python environment on a shared machine is only isolated if you make it so: <code>PYTHONNOUSERSITE=1</code> (a user-site package shadowed the environment's), install on a compute node or as venv (conda died twice on the login node at <code>repodata.json</code>), venv fallback without <code>python3-venv</code>, check <code>pkg.__file__</code> before testing (an editable install pointed to an old clone), <code>rc=$?</code> before <code>$(date)</code>. (2) Public code knows no dataset: patterns and explicit files, BIDS as preset; dataset rules in a private script next to the data, after proving old and new give identical case lists.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(32)</span></h2><details class="entry" id="public-code-knows-no-dataset"><summary><span class="type">Regel</span><span class="t"><a href="rules/public-code-knows-no-dataset.html">Public code knows no dataset; the rules of a dataset live next to the data</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: user rule for a public research repository, 2026-10-16 (&quot;das muss data agnostisch sein&quot;) · <a href="rules/public-code-knows-no-dataset.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/public-code-knows-no-dataset.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(33)</span></h2><details class="entry" id="dataset-handover-one-folder-per-case-no-copies"><summary><span class="type">Regel</span><span class="t"><a href="rules/dataset-handover-one-folder-per-case-no-copies.html">Handing over a data set: one folder per case, the other tool&#x27;s layout as siblings, no copies, a file table, a QC page</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: user requests on Alita 2026-10-16 while preparing an in-house microbleed data set for a master student who works with MicrobleedNet · <a href="rules/dataset-handover-one-folder-per-case-no-copies.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/dataset-handover-one-folder-per-case-no-copies.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li>Raw scans stay in BIDS (<code>sub-X/anat/</code>); everything derived goes under <code>derivatives/</code>, with ONE folder per case
+   (<code>derivatives/preprocessed/sub-X/</code>) and file names that say what they are (<code>_t2star</code> / <code>_swi</code>, <code>_brainmask</code>,
+   <code>_cmb</code>, <code>_synthseg</code>, <code>_csf</code>, <code>_flair</code>), not <code>_image</code> / <code>_label</code>.</li>
+<li>Every derived map lies on the matrix of the scan (SynthSeg, CSF mask, FLAIR), so any viewer overlays it directly.</li>
+<li>If the recipient's tool expects its own layout, add it as sibling folders with that tool's names
+   (<code>images/</code>, <code>frsts/</code>, variants as <code>images_inpainted/</code>), made with the tool's own code.</li>
+<li>No duplicates: a folder that would only repeat another file (e.g. <code>labels/</code> = the manual masks) is not stored;
+   a small script builds it where the recipient works.</li>
+<li><code>files.xlsx</code> with one row per case, one column per file, a second sheet that explains every column, and the
+   source of each derived map (e.g. SynthSeg from FLAIR or from the scan).</li>
+<li>A QC page over several axial slices per case with an overlay switch, built before the handover, and every
+   transfer verified by checksums.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Each point came from a user correction on the same day ("ich will keine Redundanzen", "image should be t2_star",
+"flair ist nicht preprocessed", "in derivatives drei Ordner"); the result was accepted.</p>
+<h2>Trägt nicht</h2>
+<p>Data sets for public release follow the BIDS derivatives specification in full (dataset_description per pipeline).</p>
+<h2>Bruchindikator</h2>
+<p>A recipient who needs a file that is only reachable through a second copy.</p>
+<h2>Ablesung</h2>
+<p>BIDS: Gorgolewski KJ et al. Sci Data 2016;3:160044, doi:10.1038/sdata.2016.44, PMID 27326542; BIDS derivatives:
+https://bids-specification.readthedocs.io/en/stable/derivatives/introduction.html. MicrobleedNet layout:
+https://github.com/v-sundaresan/microbleed-detection (commit 958f1cb, <code>commands.py</code>).</p></div></details><details class="entry" id="public-code-knows-no-dataset"><summary><span class="type">Regel</span><span class="t"><a href="rules/public-code-knows-no-dataset.html">Public code knows no dataset; the rules of a dataset live next to the data</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: user rule for a public research repository, 2026-10-16 (&quot;das muss data agnostisch sein&quot;) · <a href="rules/public-code-knows-no-dataset.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/public-code-knows-no-dataset.md">Markdown</a></p><h2>Aussage</h2>
 <p>A public repository gets no file names it looks for by itself (<code>excluded.tsv</code>), no folder layouts, modality spellings,
 cohort or drive names, and no configs of in-house data. It takes path patterns (<code>{id}</code> + glob) and files passed
 explicitly (<code>--ids</code>, <code>--exclude</code>); a standard layout (BIDS) may be offered as a preset. Everything specific to one
@@ -147,7 +173,48 @@ does, why it is useful and how to start, and move longer documentation elsewhere
 <h2>Ablesung</h2>
 <p>jehna, readme-best-practices, https://github.com/jehna/readme-best-practices (README-default.md). GitHub Docs, About
 READMEs, https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes.
-Applied in https://github.com/mendeltem/cmb_3d_unet_experiments (2026-10-16).</p></div></details><details class="entry" id="archive-tier-copy-hash-both-sides-then-symlink"><summary><span class="type">Regel</span><span class="t"><a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Alita, /home zu 97 % voll; Werkzeug system/werkzeuge/archivieren, Archivstufe auf externer SSD (exFAT) · <a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md">Markdown</a></p><h2>Aussage</h2>
+Applied in https://github.com/mendeltem/cmb_3d_unet_experiments (2026-10-16).</p></div></details><details class="entry" id="release-test-means-fresh-machine-with-release-assets"><summary><span class="type">Regel</span><span class="t"><a href="rules/release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR</span></summary><div class="body"><p class="small muted">Herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07 · <a href="rules/release-test-means-fresh-machine-with-release-assets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md">Markdown</a></p><h2>Aussage</h2>
+<p>Ein Paket mit vortrainierten Gewichten gilt erst als installierbar, wenn drei Dinge
+unabhaengig voneinander durchlaufen:</p>
+<ol>
+<li><strong>Frische Umgebung, nur README:</strong> <code>pip install torch</code> (CPU-Index), <code>pip install git+https://...</code>,
+   <code>--list-models</code>, <code>--selftest</code> (synthetisches Phantom, keine Downloads), dann ein echter Lauf,
+   bei dem die Gewichte vom oeffentlichen Release geladen und per SHA-256 geprueft werden.
+   Erst dieser Lauf fand den Fehler, den alle lokalen Tests uebersahen: der FSL-Wrapper
+   <code>fast</code> blockiert OHNE <code>FSLDIR</code> stumm (0 % CPU, kein Fehler) -- lokal war die Variable
+   immer gesetzt. Abhilfe: das Paket setzt <code>FSLDIR</code>/<code>FSLOUTPUTTYPE</code> aus dem gefundenen
+   Installationspfad selbst und gibt jedem Fremdaufruf eine Zeitgrenze.</li>
+<li><strong>Anderer Rechner:</strong> ein CI-Job auf einem frischen Runner, der dasselbe tut (Installation von
+   GitHub, Download vom Release, Segmentierung eines Phantoms) -- das ist der einzige "andere
+   Rechner", den ein Agent ohne zweite Maschine hat.</li>
+<li><strong>Jede Option einmal:</strong> eine Testmatrix ueber jeden CLI-Schalter mit echten Gewichten auf dem
+   Phantom (Sekunden je Fall) plus ein Fall mit echtem Bild, Maske, Gewebekarte und externem
+   Werkzeug; Schalter, die nur mit Zusatzsoftware gehen (HD-BET, SimpleITK, FSL, CUDA), werden
+   uebersprungen statt gefaelscht.</li>
+</ol>
+<h2>Traegt</h2>
+<p>Jedes Werkzeug, das "einfach installieren und sofort ausfuehren" verspricht; besonders
+Pipelines mit externen Programmen (FSL, FreeSurfer, HD-BET), deren Umgebungsvariablen auf der
+Entwicklungsmaschine immer gesetzt sind.</p>
+<h2>Traegt nicht</h2>
+<p>Bibliotheken ohne externe Programme und ohne Gewichtsdateien -- dort reicht der CI-Lauf.</p>
+<h2>Bruchindikator</h2>
+<p>Ein Nutzer auf einer anderen Maschine, der mit den README-Befehlen scheitert, obwohl alle drei
+Pruefungen gruen waren.</p>
+<h2>Ablesung</h2>
+<p>Eigener Lauf 2026-10-07: erster Neuer-Server-Test haengt 10 min in <code>fast</code>; nach der Abhilfe
+Lauf 2 mit Download 1150 s (FSL 620 s, Fenster 475 s auf CPU), CI-Job fresh-machine gruen,
+Optionsmatrix 14/14. Tier 1a.</p>
+<h2>Ergaenzung 2026-10-16 (Nutzerregel: "immer testen, wenn wir was bauen: ist es von 0 installierbar")</h2>
+<p>Gilt fuer JEDEN Bau, nicht nur fuer Releases: vor dem Push frischer Klon, NEUE Umgebung mit neuem Namen (ein
+Installer, der eine vorhandene Umgebung gleichen Namens wiederverwendet, testet sonst nichts -- <code>install.sh</code> von
+cmb_3d_unet_experiments tut genau das, also <code>--name &lt;neu&gt;</code>), dann der Selbsttest und jeder README-Block woertlich.
+Die eigene Entwicklungsumgebung ist kein Beleg: dort ist das Paket editierbar installiert, Hilfspakete
+(z. B. openpyxl fuer die Dateitabelle) sind von frueher da, Umgebungsvariablen gesetzt.</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></li>
+</ul></div></details><details class="entry" id="archive-tier-copy-hash-both-sides-then-symlink"><summary><span class="type">Regel</span><span class="t"><a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">Archivstufe: kopieren, beide Seiten hashen, erst dann loeschen und verlinken</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-11</span></summary><div class="body"><p class="small muted">Herkunft: Alita, /home zu 97 % voll; Werkzeug system/werkzeuge/archivieren, Archivstufe auf externer SSD (exFAT) · <a href="rules/archive-tier-copy-hash-both-sides-then-symlink.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md">Markdown</a></p><h2>Aussage</h2>
 <p>Wenn Daten die interne Platte <strong>verlassen</strong> (anderes Dateisystem, externer Traeger), reicht Umbenennen nicht mehr
 (siehe [[data-move-by-rename-symlink-and-protocol]]). Dann gilt: <strong>kopieren, auf beiden Seiten SHA-256 ueber jede
 Datei bilden, die Listen byteweise vergleichen, und nur bei Gleichstand das Original loeschen und am alten Ort
@@ -617,41 +684,6 @@ SELFTEST PASSED in neuer Umgebung. Tier 1a.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="rules/traceability-map-for-a-results-repo.html">traceability-map-for-a-results-repo</a></li>
-</ul></div></details><details class="entry" id="release-test-means-fresh-machine-with-release-assets"><summary><span class="type">Regel</span><span class="t"><a href="rules/release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-07</span><span class="i">Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR</span></summary><div class="body"><p class="small muted">Herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07 · <a href="rules/release-test-means-fresh-machine-with-release-assets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md">Markdown</a></p><h2>Aussage</h2>
-<p>Ein Paket mit vortrainierten Gewichten gilt erst als installierbar, wenn drei Dinge
-unabhaengig voneinander durchlaufen:</p>
-<ol>
-<li><strong>Frische Umgebung, nur README:</strong> <code>pip install torch</code> (CPU-Index), <code>pip install git+https://...</code>,
-   <code>--list-models</code>, <code>--selftest</code> (synthetisches Phantom, keine Downloads), dann ein echter Lauf,
-   bei dem die Gewichte vom oeffentlichen Release geladen und per SHA-256 geprueft werden.
-   Erst dieser Lauf fand den Fehler, den alle lokalen Tests uebersahen: der FSL-Wrapper
-   <code>fast</code> blockiert OHNE <code>FSLDIR</code> stumm (0 % CPU, kein Fehler) -- lokal war die Variable
-   immer gesetzt. Abhilfe: das Paket setzt <code>FSLDIR</code>/<code>FSLOUTPUTTYPE</code> aus dem gefundenen
-   Installationspfad selbst und gibt jedem Fremdaufruf eine Zeitgrenze.</li>
-<li><strong>Anderer Rechner:</strong> ein CI-Job auf einem frischen Runner, der dasselbe tut (Installation von
-   GitHub, Download vom Release, Segmentierung eines Phantoms) -- das ist der einzige "andere
-   Rechner", den ein Agent ohne zweite Maschine hat.</li>
-<li><strong>Jede Option einmal:</strong> eine Testmatrix ueber jeden CLI-Schalter mit echten Gewichten auf dem
-   Phantom (Sekunden je Fall) plus ein Fall mit echtem Bild, Maske, Gewebekarte und externem
-   Werkzeug; Schalter, die nur mit Zusatzsoftware gehen (HD-BET, SimpleITK, FSL, CUDA), werden
-   uebersprungen statt gefaelscht.</li>
-</ol>
-<h2>Traegt</h2>
-<p>Jedes Werkzeug, das "einfach installieren und sofort ausfuehren" verspricht; besonders
-Pipelines mit externen Programmen (FSL, FreeSurfer, HD-BET), deren Umgebungsvariablen auf der
-Entwicklungsmaschine immer gesetzt sind.</p>
-<h2>Traegt nicht</h2>
-<p>Bibliotheken ohne externe Programme und ohne Gewichtsdateien -- dort reicht der CI-Lauf.</p>
-<h2>Bruchindikator</h2>
-<p>Ein Nutzer auf einer anderen Maschine, der mit den README-Befehlen scheitert, obwohl alle drei
-Pruefungen gruen waren.</p>
-<h2>Ablesung</h2>
-<p>Eigener Lauf 2026-10-07: erster Neuer-Server-Test haengt 10 min in <code>fast</code>; nach der Abhilfe
-Lauf 2 mit Download 1150 s (FSL 620 s, Fenster 475 s auf CPU), CI-Job fresh-machine gruen,
-Optionsmatrix 14/14. Tier 1a.</p>
-<h2>Verknuepft</h2>
-<ul>
-<li><a href="rules/pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></li>
 </ul></div></details><details class="entry" id="restart-loop-is-an-alarm-not-a-repair"><summary><span class="type">Regel</span><span class="t"><a href="rules/restart-loop-is-an-alarm-not-a-repair.html">Eine Neustartschleife ist ein Alarm, keine Reparatur</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-07</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Alita, Modellwache des llama-servers, 2026-10-02 bis 2026-10-07 · <a href="rules/restart-loop-is-an-alarm-not-a-repair.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.md">Markdown</a></p><h2>Aussage</h2>
 <p>Ein Waechter, der einen Dienst neu startet, muss vorher die <strong>Vorbedingung</strong> des
 Dienstes pruefen (Treiber geladen, Karte sichtbar, Platz frei, Netz da). Scheitert

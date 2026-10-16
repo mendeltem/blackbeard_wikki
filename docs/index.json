@@ -176,6 +176,17 @@
 "src": "knowledge/agent_tooling/rules/data-move-by-rename-symlink-and-protocol.md"
 },
 {
+"t": "Handing over a data set: one folder per case, the other tool's layout as siblings, no copies, a file table, a QC page",
+"p": "agent_tooling/rules/dataset-handover-one-folder-per-case-no-copies.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "1. Raw scans stay in BIDS (`sub-X/anat/`); everything derived goes under `derivatives/`, with ONE folder per case (`derivatives/preprocessed/sub-X/`) and file names that say what they are (`_t2star` / `_swi`, `_brainmask`, `_cmb`, `_synthse",
+"id": "dataset-handover-one-folder-per-case-no-copies",
+"src": "knowledge/agent_tooling/rules/dataset-handover-one-folder-per-case-no-copies.md"
+},
+{
 "t": "Leer ist nicht fehlend",
 "p": "agent_tooling/rules/empty-is-not-missing.html",
 "a": "agent_tooling",
@@ -346,7 +357,7 @@
 "a": "agent_tooling",
 "y": "Regel",
 "s": "getragen",
-"d": "2026-10-07",
+"d": "2026-10-16",
 "x": "Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR",
 "id": "release-test-means-fresh-machine-with-release-assets",
 "src": "knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md"
@@ -1133,6 +1144,17 @@
 "src": "knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md"
 },
 {
+"t": "Sequences of one session align by their headers; a voxel-space FLIRT start can rotate them by 90-180 degrees",
+"p": "brain_volumetry/findings/same-session-sequences-align-by-header-not-voxel-flirt.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "FLAIR onto T2*/SWI of one session: header coordinates align exactly (Dice 0.98); a voxel-space FLIRT start rotated LPS vs RAS files; SynthSeg from FLAIR only where it covers the brain (>= 0.85)",
+"id": "same-session-sequences-align-by-header-not-voxel-flirt",
+"src": "knowledge/brain_volumetry/findings/same-session-sequences-align-by-header-not-voxel-flirt.md"
+},
+{
 "t": "SynthSeg inside FreeSurfer 8.2 runs on the CPU only; plan 85 s per session with --robust",
 "p": "brain_volumetry/findings/synthseg-in-freesurfer-8-runs-on-cpu-only.html",
 "a": "brain_volumetry",
@@ -1351,6 +1373,17 @@
 "x": "blob loss, Zentrumskarten, Neugewichtung, Synthese: Sensitivitaet rauf, F1 runter",
 "id": "sensitivity-levers-do-not-raise-lesion-f1",
 "src": "knowledge/cmb_detection/findings/sensitivity-levers-do-not-raise-lesion-f1.md"
+},
+{
+"t": "With a trained teacher, MicrobleedNet's teacher-student step 2 is on par with a small CNN",
+"p": "cmb_detection/findings/teacher-student-step-two-on-par-with-small-cnn.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "MicrobleedNet's teacher-student step 2 with a TRAINED teacher: +0.030 over stage 1, small CNN +0.028 (one run, vorschlag)",
+"id": "teacher-student-step-two-on-par-with-small-cnn",
+"src": "knowledge/cmb_detection/findings/teacher-student-step-two-on-par-with-small-cnn.md"
 },
 {
 "t": "Die Schichtgeometrie der Trainingsdaten muss die Zielgeometrie abdecken -- mehr Faelle anderer Geometrie ersetzen das nicht",

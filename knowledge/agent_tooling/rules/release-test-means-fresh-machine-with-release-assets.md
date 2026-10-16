@@ -3,7 +3,7 @@ id: release-test-means-fresh-machine-with-release-assets
 typ: regel
 status: getragen
 thema: knowledge/agent_tooling
-stand: 2026-10-07
+stand: 2026-10-16
 herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07
 verweist_auf: [pip-freeze-is-not-an-install-file]
 ---
@@ -45,6 +45,13 @@ Pruefungen gruen waren.
 Eigener Lauf 2026-10-07: erster Neuer-Server-Test haengt 10 min in `fast`; nach der Abhilfe
 Lauf 2 mit Download 1150 s (FSL 620 s, Fenster 475 s auf CPU), CI-Job fresh-machine gruen,
 Optionsmatrix 14/14. Tier 1a.
+
+## Ergaenzung 2026-10-16 (Nutzerregel: "immer testen, wenn wir was bauen: ist es von 0 installierbar")
+Gilt fuer JEDEN Bau, nicht nur fuer Releases: vor dem Push frischer Klon, NEUE Umgebung mit neuem Namen (ein
+Installer, der eine vorhandene Umgebung gleichen Namens wiederverwendet, testet sonst nichts -- `install.sh` von
+cmb_3d_unet_experiments tut genau das, also `--name <neu>`), dann der Selbsttest und jeder README-Block woertlich.
+Die eigene Entwicklungsumgebung ist kein Beleg: dort ist das Paket editierbar installiert, Hilfspakete
+(z. B. openpyxl fuer die Dateitabelle) sind von frueher da, Umgebungsvariablen gesetzt.
 
 ## Verknuepft
 - [pip-freeze-is-not-an-install-file](pip-freeze-is-not-an-install-file.md)

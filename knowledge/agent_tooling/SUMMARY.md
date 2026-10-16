@@ -8,6 +8,8 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 
 **Vorschlag (aus dem Projekt rea übernommen):** Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.
 
+**Vorschlag, neu 2026-10-16 (Alita):** Datensatz-Uebergabe: ein Ordner je Fall unter derivatives/preprocessed, sprechende Dateinamen, alles auf der Scan-Matrix, Layout des Fremdwerkzeugs als Geschwisterordner mit dessen Namen, keine Kopien (fehlende Ordner baut ein Skript), files.xlsx mit Spaltenerklaerung, QC-Seite, Pruefsummen ([dataset-handover-one-folder-per-case-no-copies](rules/dataset-handover-one-folder-per-case-no-copies.md)). Regel 'installierbar' erweitert: JEDER Bau von 0 in neuer Umgebung mit neuem Namen.
+
 **Vorschlag, neu 2026-10-16 (Alita):** README eines Forschungspakets: eine Zeile, eine Abbildung (keine zweite, die sie wiederholt), jeder Befehl in eigenem Kopierblock mit einer Zeile Wirkung, jeder Block laeuft woertlich aus frischem Clone, Details in docs/DETAILS.md, Hardware/Software klein ganz unten; nutzt eine Kollegin schon ein anderes Werkzeug, dessen Befehle, Optionen und Ordner spiegeln ([readme-for-a-research-package](rules/readme-for-a-research-package.md)).
 
 **Lesen bei:** Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.

@@ -29,6 +29,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | [Skill routet zuerst und schließt mit seiner Checkliste](rules/skill-routes-first-and-closes-its-checklist.md) | regel | vorschlag |
 | [Tests belegen Aussagen, nicht Verkabelung](rules/tests-prove-claims-not-plumbing.md) | regel | vorschlag |
 | [README of a research package: copy-paste blocks, one figure, hardware last](rules/readme-for-a-research-package.md) | regel | vorschlag |
+| [Data set handover: one folder per case, the other tool's layout as siblings, no copies](rules/dataset-handover-one-folder-per-case-no-copies.md) | regel | vorschlag |
 | [Eine Neustartschleife ist ein Alarm, keine Reparatur](rules/restart-loop-is-an-alarm-not-a-repair.md) | regel | vorschlag |
 | [Jede Sperre und zustandsabhaengige Anweisung braucht ein Verfallsereignis](rules/conditions-need-an-expiry-event.md) | regel | vorschlag |
 | [Die ersten N einer sortierten Liste sind ein Block](rules/first-n-of-a-sorted-list-is-a-block.md) | regel | vorschlag |

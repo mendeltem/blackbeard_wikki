@@ -7,6 +7,7 @@ Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [same-session-sequences-align-by-header-not-voxel-flirt](findings/same-session-sequences-align-by-header-not-voxel-flirt.md) | FLAIR onto T2*/SWI of one session: header coordinates align exactly (Dice 0.98); a voxel-space FLIRT start rotated LPS vs RAS files; SynthSeg from FLAIR only where it covers the brain (>= 0.85) |
 | regel | [longitudinal-volumetry-needs-error-statistics](rules/longitudinal-volumetry-needs-error-statistics.md) | Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen |
 
 ## Herkunft
