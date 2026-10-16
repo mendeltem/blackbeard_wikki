@@ -1045,6 +1045,17 @@
 "src": "knowledge/brain_volumetry/findings/demdas-full-cohort-sample-gm-page-2026-10-13.md"
 },
 {
+"t": "Study guide: DEMDAS, brain MRI and autoimmune encephalitis imaging, for a data scientist",
+"p": "brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-16",
+"x": "Study guide (11 pages, PDF next to it, for audio/notebook learning): DEDEMAS study (real name of DEMDAS), our pipeline step by step, small vessel disease terms, autoimmune encephalitis and Finke's methods (fractal dimensionality, DTI/FA/MD/",
+"id": "demdas-meeting-primer-finke-2026-10-16",
+"src": "knowledge/brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.md"
+},
+{
 "t": "DEMDAS structural pipeline, protocol v1 (frozen 2026-10-13)",
 "p": "brain_volumetry/findings/demdas-pipeline-protocol-v1.html",
 "a": "brain_volumetry",

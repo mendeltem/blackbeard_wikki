@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:92.9%" title="getragen: 13"></i><i class="warn" style="width:7.1%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">13 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:93.3%" title="getragen: 14"></i><i class="warn" style="width:6.7%" title="vorschlag: 1"></i></div><div class="counts"><span class="ok">14 getragen</span> <span class="warn">1 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
@@ -185,7 +185,197 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(9)</span></h2><details class="entry" id="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99</span></summary><div class="body"><p class="small muted">Herkunft: visual review of all 17 multi-session pilot participants of a stroke cohort (55 sessions, review sheets per participant), 13.10.2026 · <a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(10)</span></h2><details class="entry" id="demdas-meeting-primer-finke-2026-10-16"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-meeting-primer-finke-2026-10-16.html">Study guide: DEMDAS, brain MRI and autoimmune encephalitis imaging, for a data scientist</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Study guide (11 pages, PDF next to it, for audio/notebook learning): DEDEMAS study (real name of DEMDAS), our pipeline step by step, small vessel disease terms, autoimmune encephalitis and Finke&#x27;s methods (fractal dimensionality, DTI/FA/MD/NODDI, rs-fMRI, animal MRI), overlaps, meeting questions, glossary, statistics; 29 PubMed-checked sources</span></summary><div class="body"><p class="small muted">Herkunft: study guide written for Mendel before the meeting with Carsten Finke (Charité neurology) on 28.10.2026 or later; Alita session 16.10.2026; PDF next to this file; all references checked in PubMed on 16.10.2026 · <a href="findings/demdas-meeting-primer-finke-2026-10-16.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.md">Markdown</a></p><p>Version 1, 16 October 2026. Written for Mendel Temuulen (data scientist) to prepare a meeting with Carsten Finke (Department of Neurology and Experimental Neurology, Charité). It is meant to be read, and also to be loaded into a notebook tool and turned into an audio overview, so it is written in full sentences and spells out every abbreviation the first time it appears. No patient data, no identifiers. Numbers from the literature carry a reference number in square brackets; the list is at the end.</p>
+<p><strong>How to use it.</strong> Part A explains the study and our processing pipeline, so that you can describe your own work in clinical words. Part B explains the imaging methods Carsten Finke uses. Part C connects the two and lists questions for the meeting. Part D is a glossary of all technical terms, and Part E explains the statistics that appear in his papers.</p>
+<hr />
+<h1>Part A: the study and our pipeline</h1>
+<h2>1. What DEMDAS is</h2>
+<p>The cohort we call DEMDAS is the German multicentre stroke cohort published as <strong>DEDEMAS</strong>, the <strong>Determinants of Dementia After Stroke</strong> study. The protocol paper by Wollenweber and colleagues describes a prospective observational study of 600 patients with an acute stroke and no dementia before the stroke [1]. The patients receive multimodal imaging (magnetic resonance imaging, and in part positron emission tomography of glucose metabolism and of amyloid, plus imaging of the retina), blood and cerebrospinal fluid biomarkers, and detailed cognitive testing. Follow-up lasts five years, and the main outcome is dementia after stroke. The study is registered as NCT01334749 [1].</p>
+<p>Note on the name: in our folders and in earlier documents the study is written DEMDAS, and one earlier primer expanded it as "DZNE Mechanisms of Dementia After Stroke". The published name is DEDEMAS, Determinants of Dementia After Stroke [1]. In the meeting, say "the DEDEMAS stroke cohort".</p>
+<p>Two later papers from the same cohort help you explain the clinical side. Among stroke survivors with mild cognitive impairment after stroke, positivity on amyloid positron emission tomography was rare (about 5 percent), which suggests that the cognitive problems after stroke are mostly not caused by Alzheimer pathology [2]. Telephone versions of cognitive screening tests were validated against detailed testing in the same cohort [3].</p>
+<p><strong>Why the study matters.</strong> About one in ten patients already has dementia before a first stroke, about one in ten develops new dementia soon after a first stroke, and more than one in three after a recurrent stroke [4]. Imaging is used to find out which brain changes predict this decline.</p>
+<h2>2. The imaging data we hold</h2>
+<p>The imaging set is organised in BIDS (Brain Imaging Data Structure), a standard folder and file naming scheme. Each participant has up to four sessions, named by months after the stroke: M0 (baseline, the acute phase), M6, M36 and M60. The scans are three tesla Siemens examinations from several sites. The series that matter:</p>
+<ul>
+<li><strong>T1-weighted MPRAGE</strong> (magnetisation prepared rapid gradient echo), 1 millimetre isotropic. This is the anatomical image: grey matter is darker than white matter, cerebrospinal fluid is black. All volumetry and cortical thickness come from it.</li>
+<li><strong>FLAIR</strong> (fluid attenuated inversion recovery). A T2-weighted image in which the water signal of the cerebrospinal fluid is suppressed, so lesions in the white matter appear bright. Used for white matter hyperintensities and old infarcts.</li>
+<li><strong>DWI</strong> (diffusion weighted imaging) with the trace image and the <strong>ADC</strong> (apparent diffusion coefficient) map. Acute infarcts are bright on DWI and dark on ADC, because water movement is restricted in dying cells. In this cohort the diffusion sequence was acquired with several gradient directions (about 30 directions at one b-value in the series we checked), so in principle a diffusion tensor could be fitted, if the raw diffusion data are available and not only the scanner-derived maps. This needs checking.</li>
+<li><strong>T2* or SWI-like</strong> gradient echo images at some sites, which show microbleeds and iron.</li>
+</ul>
+<p>The earlier primer lists the counts of participants and sessions in our copy [see demdas-volumetry-primer-2026-10-13].</p>
+<h2>3. Our processing pipeline, step by step</h2>
+<p>Think of the pipeline as turning each T1 image into numbers per brain structure, while making sure that stroke lesions do not distort those numbers.</p>
+<p><strong>Step 1: lesion masks.</strong> Acute infarcts at baseline are segmented automatically from DWI, ADC and FLAIR with DeepISLES, an ensemble of the best methods of the ISLES 2022 challenge (Ischemic Stroke Lesion Segmentation; reference not yet checked, marked unverified). White matter hyperintensities get their own masks. Infarct masks are carried over to later sessions.</p>
+<p><strong>Step 2: lesion filling.</strong> A lesion inside the white matter has a grey-matter-like intensity on T1. Segmentation software then mistakes it for grey matter or cerebrospinal fluid, and volumes become wrong. Simply masking the lesion out does not fix this; replacing the lesion voxels with intensities of the surrounding normal-appearing white matter does [5]. We fill white matter hyperintensities this way (FSL lesion_filling). For infarcts we use a mirror fill: the lesion is replaced by the mirrored tissue of the healthy hemisphere. Filling is applied only where the lesion load is high enough to matter (infarct at least 1 millilitre, white matter hyperintensities outside the infarct at least 10 millilitres), because small loads had no measurable effect in our tests.</p>
+<p><strong>Step 3: SynthSeg.</strong> SynthSeg is a deep learning segmentation tool from the FreeSurfer team that was trained only on synthetic images with randomised contrast and resolution. It therefore works on scans of any contrast and resolution without retraining [6]. The robust version adds cortical parcellation, intracranial volume and automatic quality control, and reproduced known ageing atrophy patterns in 14,000 clinical scans [7]. It gives volumes of about 30 structures per session in minutes.</p>
+<p><strong>Step 4: FreeSurfer recon-all.</strong> FreeSurfer reconstructs the cortical surface from the T1 image and models most brain structures [8]. From the surfaces it computes cortical thickness, surface area and folding per region. One session takes about an hour. We run it on the Charité high performance computing cluster as a job array.</p>
+<p><strong>Step 5: the longitudinal stream.</strong> Instead of analysing each session on its own, FreeSurfer builds an unbiased within-subject template from all sessions of a person and initialises every session from it. This treats all time points identically and makes changes over time more precise [9]. This is what you want for atrophy rates after stroke.</p>
+<p><strong>Step 6: quality control and statistics.</strong> Every session is checked visually in our viewers (overlay switch, lesion panel), and the Euler number of the surfaces is used as an automatic quality measure. For every trend we also report measurement error: test-retest agreement, intraclass correlation coefficient and the smallest detectable change (see Part E).</p>
+<p><strong>One sentence to say in the meeting:</strong> "We take the T1 images of the DEDEMAS stroke cohort, segment and fill the stroke lesions, and then run SynthSeg and the FreeSurfer longitudinal stream on the cluster, with quality control and measurement error for every structure."</p>
+<h2>4. Small vessel disease: the vocabulary of the stroke side</h2>
+<p>Small vessel disease means damage to the small arteries, arterioles, capillaries and venules of the brain. Its imaging markers were standardised in the STRIVE recommendations (Standards for Reporting Vascular changes on nEuroimaging) [10] and updated in STRIVE-2 [11]:</p>
+<ul>
+<li><strong>Recent small subcortical infarct</strong>: a small fresh infarct in the territory of one perforating artery.</li>
+<li><strong>Lacune</strong>: a small fluid-filled cavity, the late stage of a small infarct or bleed.</li>
+<li><strong>White matter hyperintensities</strong>: bright areas on FLAIR and T2 in the white matter, of presumed vascular origin. Their severity is often graded with the Fazekas scale, which goes back to Fazekas and colleagues in 1987 [12].</li>
+<li><strong>Cerebral microbleeds</strong>: small round dark dots on T2* or SWI (susceptibility weighted imaging), caused by old blood (haemosiderin) [13, 14]. They can be rated with the Microbleed Anatomical Rating Scale [13].</li>
+<li><strong>Perivascular spaces</strong>: fluid-filled spaces around vessels, bright on T2 like cerebrospinal fluid.</li>
+<li><strong>Brain atrophy</strong>: loss of brain tissue, visible as larger ventricles and sulci, measured as volumes.</li>
+</ul>
+<hr />
+<h1>Part B: what Carsten Finke works on</h1>
+<h2>5. Autoimmune encephalitis in plain words</h2>
+<p>Autoimmune encephalitis is an inflammation of the brain in which the immune system makes antibodies against proteins of the nerve cells, often against receptors or channels at the synapse. The patients develop memory problems, psychiatric symptoms, seizures, movement disorders or sleep disorders. A clinical approach to diagnosis defines possible, probable and definite autoimmune encephalitis, so that treatment can start before the antibody result is known [15]. The most important antibody types in his papers:</p>
+<ul>
+<li><strong>NMDA receptor encephalitis</strong> (N-methyl-D-aspartate receptor). Mostly young women; psychiatric symptoms, memory loss, seizures. Routine MRI is often normal.</li>
+<li><strong>LGI1 encephalitis</strong> (leucine-rich glioma-inactivated 1). Mostly older men; limbic encephalitis with memory loss and characteristic brief seizures; the hippocampus is affected.</li>
+<li><strong>CASPR2 encephalitis</strong> (contactin-associated protein-like 2). Variable: cognitive decline, seizures, nerve hyperexcitability, pain.</li>
+<li><strong>IgLON5 disease</strong>. Sleep disorder, movement problems and swallowing problems, with a tau pathology in the brainstem.</li>
+<li><strong>GABA-A and GABA-B receptor encephalitis</strong>, <strong>MOG antibody disease</strong> (myelin oligodendrocyte glycoprotein) and <strong>NMOSD</strong> (neuromyelitis optica spectrum disorder with aquaporin-4 antibodies) appear as related neuroimmunological diseases.</li>
+</ul>
+<p>Treatment is immunotherapy (steroids, plasma exchange, immunoglobulins, rituximab). Many patients recover in their daily function, but memory and psychiatric problems often remain. Finding the brain changes behind these remaining symptoms is the main theme of his imaging work.</p>
+<h2>6. His imaging methods</h2>
+<p><strong>a) Volumetry and fractal dimensionality from T1.</strong> Volumes come from FreeSurfer, as in our pipeline. <strong>Fractal dimensionality</strong> (abbreviated FD) is a single number that describes how complex the folded cortical surface is. A smooth surface has a fractal dimension close to 2, a strongly folded one is higher. It was shown to be more sensitive to ageing than cortical thickness or gyrification [16], and the choice of the spatial scale range matters for reliable values [17]. In LGI1 encephalitis (34 patients, up to three visits), fractal dimensionality was reduced in fronto-temporo-parietal cortex and subcortical regions, was more often the more important measure than volume, and was related to clinical and cognitive outcome [18]. In NMDA receptor encephalitis (70 patients and 70 matched controls), fractal dimensionality from T1 was combined with normative modelling and with outcomes; two thirds of the patients still had symptoms, mostly memory and psychiatric [19]. <strong>Important for you: when Matthias wrote "FD", this most likely means fractal dimensionality, not a diffusion measure.</strong></p>
+<p><strong>b) Diffusion tensor imaging.</strong> Diffusion tensor imaging fits a small 3 by 3 matrix (the tensor) to the diffusion signal in every voxel. Its main directions give the direction of nerve fibres, and its values give how freely water moves [20]. From it come <strong>fractional anisotropy</strong> (FA, how strongly diffusion prefers one direction, high in intact fibre bundles) and <strong>mean diffusivity</strong> (MD, overall water mobility, rises when tissue is damaged). <strong>NODDI</strong> (neurite orientation dispersion and density imaging) uses two diffusion shells to separate neurite density from fibre dispersion, the two things that FA mixes [21]. In NMDA receptor encephalitis, Finke found widespread white matter changes on diffusion tensor imaging, strongest in the cingulum and related to disease severity, while routine MRI and grey matter were normal [22]. In LGI1 encephalitis he found hippocampal atrophy and abnormal hippocampal microstructure (mean diffusivity and FA) with persistent memory deficits [23], and later, with probabilistic tractography and network analysis, a reduced and reorganised white matter network linked to memory, attention and executive deficits despite immunotherapy [24].</p>
+<p><strong>c) Resting-state functional MRI and connectivity.</strong> Functional connectivity is the correlation over time of the BOLD signal (blood oxygen level dependent) between brain regions while the person rests in the scanner. In NMDA receptor encephalitis, hippocampal functional connectivity was reduced and predicted memory performance [22].</p>
+<p><strong>d) Animal models.</strong> Patient-derived monoclonal antibodies are injected into mice or rats, and the animals are scanned on the experimental 7 tesla MRI of the Charité. Mice with human NMDA receptor antibodies showed reduced hippocampal functional connectivity, similar to patients [25]. Human CASPR2 antibodies caused reduced resting-state connectivity in mice without short-term structural change [26]. He is also co-author of a mouse connectome pipeline in a model with vascular dementia features, which showed lacunar infarcts, microbleeds and progressive white matter change over six months [27].</p>
+<p><strong>e) His own summary of the field.</strong> In a 2026 review he writes that conventional MRI is indispensable for diagnosis, that atrophy over time reflects cumulative damage and outcome better than acute lesions, that volumetry and simple quantitative measures are closest to clinical use, and that advanced methods such as quantitative MRI, diffusion tensor imaging and resting-state functional MRI still need standardisation and validation [28].</p>
+<hr />
+<h1>Part C: where your work and his work meet</h1>
+<h2>7. Concrete overlaps</h2>
+<ol>
+<li><strong>Fractal dimensionality on our existing FreeSurfer output.</strong> We already run recon-all and the longitudinal stream on the stroke cohort. Fractal dimensionality is computed from the cortical surfaces or ribbon that FreeSurfer produces [16, 17]. Adding it is a small extra step on data we already process, and it would let both groups compare a stroke cohort and an encephalitis cohort with the same measure.</li>
+<li><strong>A shared, automated pipeline on the cluster.</strong> His studies use FreeSurfer, fractal analysis, diffusion and normative models on cohorts of 25 to 70 patients. Our strength is running such steps reproducibly on more than a thousand sessions, with quality control and measurement error. A pipeline for volume plus fractal dimensionality, on the Charité cluster, would serve both.</li>
+<li><strong>Longitudinal design.</strong> His recent LGI1 work is longitudinal [18]. The FreeSurfer longitudinal stream [9] and our error statistics (smallest detectable change, intraclass correlation) are exactly the tools for that.</li>
+<li><strong>Lesions.</strong> Encephalitis patients can have lesions too. Our lesion filling experience [5] transfers.</li>
+<li><strong>Diffusion.</strong> Our pipeline has no diffusion tensor analysis yet. Whether DEDEMAS has usable raw diffusion data is an open question. This is an area where he has experience and we would learn.</li>
+<li><strong>Normative modelling.</strong> He uses normative models to compare each patient with a healthy reference [19]; the idea goes back to Marquand and colleagues [29]. For a stroke cohort the same idea could show which patients deviate most.</li>
+</ol>
+<h2>8. Questions to ask him</h2>
+<ul>
+<li>Which software and settings do you use for fractal dimensionality (for example calcFD in MATLAB or a Python port, on the FreeSurfer surfaces or the ribbon)?</li>
+<li>Which sequences do your cohorts have: T1 only, or also multi-direction diffusion, FLAIR, SWI, resting-state functional MRI? Which field strength?</li>
+<li>How many patients and sessions, and are the data in BIDS?</li>
+<li>Where do you need help most: running FreeSurfer at scale, quality control, longitudinal processing, statistics, or something else?</li>
+<li>Is the goal a joint paper, a shared pipeline, or applying your measures to the stroke cohort?</li>
+<li>Who in your group does the image processing, so that we can talk technical details?</li>
+<li>Data protection: can the data be processed on the Charité cluster, and who must approve it?</li>
+</ul>
+<h2>9. Things to be careful about</h2>
+<ul>
+<li>Do not promise that fractal dimensionality or diffusion "fit into the pipeline" before you have seen his data and methods.</li>
+<li>DEDEMAS is a stroke cohort, not an encephalitis cohort. The overlap is in methods, not in patients.</li>
+<li>Say clearly what you are: a data scientist who builds and runs the processing, not a neurologist. Ask him to explain clinical points; that is normal and welcome.</li>
+</ul>
+<hr />
+<h1>Part D: glossary</h1>
+<ul>
+<li><strong>ADC (apparent diffusion coefficient)</strong>: map of water mobility from DWI; dark in acute infarcts.</li>
+<li><strong>Amyloid PET</strong>: positron emission tomography that shows amyloid plaques, a sign of Alzheimer pathology.</li>
+<li><strong>Atrophy</strong>: loss of brain tissue over time.</li>
+<li><strong>b-value</strong>: strength of the diffusion weighting in a diffusion scan.</li>
+<li><strong>BIDS (Brain Imaging Data Structure)</strong>: standard for naming and organising imaging files.</li>
+<li><strong>BOLD (blood oxygen level dependent) signal</strong>: the signal measured in functional MRI.</li>
+<li><strong>CASE (Clinical Assessment Scale in Autoimmune Encephalitis)</strong>: severity score for encephalitis patients.</li>
+<li><strong>Cerebrospinal fluid (CSF)</strong>: the clear fluid around and inside the brain.</li>
+<li><strong>Cingulum</strong>: a white matter bundle along the medial surface of the brain, part of the memory network.</li>
+<li><strong>Cortex, cortical ribbon</strong>: the outer layer of grey matter; the ribbon is its 3D band between white matter and the pial surface.</li>
+<li><strong>Cortical thickness</strong>: distance between the white matter surface and the pial surface, in millimetres.</li>
+<li><strong>DeepISLES</strong>: ensemble of deep learning models from the ISLES 2022 challenge for acute infarct segmentation (reference unverified here).</li>
+<li><strong>DEDEMAS</strong>: Determinants of Dementia After Stroke study; our "DEMDAS" cohort [1].</li>
+<li><strong>Dice coefficient</strong>: overlap between two segmentations, from 0 (none) to 1 (identical).</li>
+<li><strong>DTI (diffusion tensor imaging)</strong>: model of water diffusion per voxel; gives FA and MD [20].</li>
+<li><strong>DWI (diffusion weighted imaging)</strong>: MRI sensitive to water movement; bright in acute infarcts.</li>
+<li><strong>Euler number</strong>: topological measure of a reconstructed surface; many defects mean poor quality.</li>
+<li><strong>FA (fractional anisotropy)</strong>: 0 to 1, how directional water diffusion is; lower when fibres are damaged.</li>
+<li><strong>Fazekas scale</strong>: grading of white matter hyperintensity severity [12].</li>
+<li><strong>FD (fractal dimensionality)</strong>: complexity of the cortical folding; in Finke's recent papers this is what FD means [18, 19].</li>
+<li><strong>FLAIR</strong>: T2-weighted MRI with suppressed fluid signal; lesions appear bright.</li>
+<li><strong>FreeSurfer</strong>: software suite for cortical surface reconstruction, thickness and volumes [8].</li>
+<li><strong>Functional connectivity</strong>: correlation of BOLD signals between regions over time.</li>
+<li><strong>Grey matter, white matter</strong>: grey matter holds the nerve cell bodies (cortex and deep nuclei); white matter holds the connecting fibres.</li>
+<li><strong>Haemosiderin</strong>: iron-containing breakdown product of blood; makes microbleeds dark on SWI.</li>
+<li><strong>Hippocampus</strong>: structure in the medial temporal lobe essential for memory; often affected in LGI1 encephalitis.</li>
+<li><strong>Immunotherapy</strong>: treatments that suppress or modulate the immune system.</li>
+<li><strong>Infarct</strong>: area of dead tissue after loss of blood supply (ischaemic stroke).</li>
+<li><strong>Intracranial volume (ICV)</strong>: volume inside the skull; used to correct brain volumes for head size.</li>
+<li><strong>Lacune</strong>: small fluid-filled cavity after a small infarct.</li>
+<li><strong>Lesion filling</strong>: replacing lesion voxels with normal-appearing tissue intensities before segmentation [5].</li>
+<li><strong>LGI1, NMDAR, CASPR2, IgLON5, GABA-A/B, MOG, AQP4</strong>: target proteins of the antibodies in different autoimmune diseases (see section 5).</li>
+<li><strong>Limbic encephalitis</strong>: encephalitis focused on the limbic system (hippocampus, amygdala).</li>
+<li><strong>Longitudinal stream</strong>: FreeSurfer processing that uses a within-subject template for several sessions [9].</li>
+<li><strong>MD (mean diffusivity)</strong>: average water mobility; higher when tissue is damaged.</li>
+<li><strong>Microbleed</strong>: small chronic bleed, dark dot on T2* or SWI [13].</li>
+<li><strong>MPRAGE</strong>: the standard T1-weighted 3D sequence on Siemens scanners.</li>
+<li><strong>mRS (modified Rankin Scale)</strong>: 0 (no symptoms) to 6 (dead), disability after stroke or encephalitis.</li>
+<li><strong>NODDI</strong>: diffusion model for neurite density and orientation dispersion [21].</li>
+<li><strong>Normative modelling</strong>: modelling the healthy range of a measure, then scoring each patient as a deviation from it [29].</li>
+<li><strong>Parcellation</strong>: dividing the cortex into named regions (atlas).</li>
+<li><strong>Perivascular space</strong>: fluid-filled space around a small vessel.</li>
+<li><strong>Probabilistic tractography</strong>: reconstruction of likely fibre pathways from diffusion data.</li>
+<li><strong>Resting-state fMRI</strong>: functional MRI without a task.</li>
+<li><strong>Small vessel disease</strong>: disease of the small brain vessels; markers in STRIVE [10, 11].</li>
+<li><strong>STRIVE, STRIVE-2</strong>: standards for imaging research in small vessel disease [10, 11].</li>
+<li><strong>SWI (susceptibility weighted imaging)</strong>: MRI sensitive to iron, blood and veins [14].</li>
+<li><strong>SynthSeg</strong>: contrast-agnostic deep learning segmentation [6, 7].</li>
+<li><strong>T1, T2, T2</strong><em>: basic MRI contrasts; T1 for anatomy, T2 and FLAIR for lesions, T2</em> and SWI for blood and iron.</li>
+<li><strong>Tesla (T)</strong>: field strength of the scanner; clinical 1.5 or 3 T, research 7 T.</li>
+<li><strong>Voxel</strong>: the 3D pixel of an MRI image, for example 1 by 1 by 1 millimetre.</li>
+<li><strong>White matter hyperintensity (WMH)</strong>: bright white matter area on FLAIR, mostly from small vessel disease.</li>
+</ul>
+<hr />
+<h1>Part E: statistics you will meet in his papers</h1>
+<ul>
+<li><strong>Propensity score matching</strong>: each patient gets a healthy control with a similar probability of being a patient given age and sex; makes groups comparable [19, 24].</li>
+<li><strong>Linear mixed-effects model</strong>: regression for repeated measures; each person gets their own intercept (and slope), so several visits per person can be analysed together [18].</li>
+<li><strong>Dominance analysis</strong>: decides which of several correlated predictors (here volume or fractal dimensionality) explains more of an outcome [18].</li>
+<li><strong>Normative model and z-score</strong>: a patient's value expressed as standard deviations from the healthy expectation for their age and sex [19, 29].</li>
+<li><strong>Effect size (Cohen's d)</strong>: difference between groups in units of standard deviation; 0.2 small, 0.5 medium, 0.8 large.</li>
+<li><strong>Intraclass correlation coefficient (ICC)</strong>: agreement of repeated measurements, 0 to 1; above 0.9 is excellent.</li>
+<li><strong>Smallest detectable change (SDC95)</strong>: the change that exceeds measurement error with 95 percent confidence; 1.96 times the square root of 2 times the within-subject standard deviation.</li>
+<li><strong>Multiple comparison correction</strong>: when testing many brain regions, p-values are corrected (for example false discovery rate) to avoid false positives.</li>
+</ul>
+<hr />
+<h2>Quellen</h2>
+<p>All checked in PubMed on 16.10.2026.</p>
+<ol>
+<li>Wollenweber FA et al. The Determinants of Dementia After Stroke (DEDEMAS) Study: protocol and pilot data. Int J Stroke 2014;9(3):387-92 (online 2013). DOI 10.1111/ijs.12092. PMID 23834337.</li>
+<li>Wollenweber FA et al. Prevalence of amyloid positron emission tomographic positivity in poststroke mild cognitive impairment. Stroke 2016;47(10):2645-8. DOI 10.1161/STROKEAHA.116.013778. PMID 27539301.</li>
+<li>Zietemann V et al. Validation of the Telephone Interview of Cognitive Status and Telephone Montreal Cognitive Assessment against detailed cognitive testing and clinical diagnosis of mild cognitive impairment after stroke. Stroke 2017;48(11):2952-7. DOI 10.1161/STROKEAHA.117.017519. PMID 29042492.</li>
+<li>Pendlebury ST, Rothwell PM. Prevalence, incidence, and factors associated with pre-stroke and post-stroke dementia: a systematic review and meta-analysis. Lancet Neurol 2009;8(11):1006-18. DOI 10.1016/S1474-4422(09)70236-4. PMID 19782001.</li>
+<li>Battaglini M, Jenkinson M, De Stefano N. Evaluating and reducing the impact of white matter lesions on brain volume measurements. Hum Brain Mapp 2012;33(9):2062-71. DOI 10.1002/hbm.21344. PMID 21882300.</li>
+<li>Billot B et al. SynthSeg: segmentation of brain MRI scans of any contrast and resolution without retraining. Med Image Anal 2023;86:102789. DOI 10.1016/j.media.2023.102789. PMID 36857946.</li>
+<li>Billot B et al. Robust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets. PNAS 2023;120(9):e2216399120. DOI 10.1073/pnas.2216399120. PMID 36802420.</li>
+<li>Fischl B. FreeSurfer. NeuroImage 2012;62(2):774-81. DOI 10.1016/j.neuroimage.2012.01.021. PMID 22248573.</li>
+<li>Reuter M et al. Within-subject template estimation for unbiased longitudinal image analysis. NeuroImage 2012;61(4):1402-18. DOI 10.1016/j.neuroimage.2012.02.084. PMID 22430496.</li>
+<li>Wardlaw JM et al. Neuroimaging standards for research into small vessel disease and its contribution to ageing and neurodegeneration (STRIVE). Lancet Neurol 2013;12(8):822-38. DOI 10.1016/S1474-4422(13)70124-8. PMID 23867200.</li>
+<li>Duering M et al. Neuroimaging standards for research into small vessel disease: advances since 2013 (STRIVE-2). Lancet Neurol 2023;22(7):602-18. DOI 10.1016/S1474-4422(23)00131-X. PMID 37236211.</li>
+<li>Fazekas F et al. MR signal abnormalities at 1.5 T in Alzheimer's dementia and normal aging. AJR Am J Roentgenol 1987;149(2):351-6. DOI 10.2214/ajr.149.2.351. PMID 3496763. (Origin of the rating approach; the 0 to 3 grading is not described in the abstract.)</li>
+<li>Gregoire SM et al. The Microbleed Anatomical Rating Scale (MARS): reliability of a tool to map brain microbleeds. Neurology 2009;73(21):1759-66. DOI 10.1212/WNL.0b013e3181c34a7d. PMID 19933977.</li>
+<li>Haacke EM et al. Susceptibility weighted imaging (SWI). Magn Reson Med 2004;52(3):612-8. DOI 10.1002/mrm.20198. PMID 15334582.</li>
+<li>Graus F et al. A clinical approach to diagnosis of autoimmune encephalitis. Lancet Neurol 2016;15(4):391-404. DOI 10.1016/S1474-4422(15)00401-9. PMID 26906964.</li>
+<li>Madan CR, Kensinger EA. Cortical complexity as a measure of age-related brain atrophy. NeuroImage 2016;134:617-29. DOI 10.1016/j.neuroimage.2016.04.029. PMID 27103141.</li>
+<li>Marzi C et al. Toward a more reliable characterization of fractal properties of the cerebral cortex of healthy subjects during the lifespan. Sci Rep 2020;10:16957. DOI 10.1038/s41598-020-73961-w. PMID 33046812.</li>
+<li>Zhao W et al. (last author Finke C). Structural brain changes are linked to clinical and cognitive outcomes in anti-LGI1 encephalitis. Neurol Neuroimmunol Neuroinflamm 2026;13(6):e200649. DOI 10.1212/NXI.0000000000200649. PMID 42753224.</li>
+<li>Krohn S et al. (last author Finke C). Structural brain changes and clinical outcomes of patients with NMDA receptor encephalitis in Germany: a cross-sectional study. Lancet Psychiatry 2026;13(9):734-46. DOI 10.1016/S2215-0366(26)00191-4. PMID 42586080.</li>
+<li>Basser PJ, Mattiello J, LeBihan D. MR diffusion tensor spectroscopy and imaging. Biophys J 1994;66(1):259-67. DOI 10.1016/S0006-3495(94)80775-1. PMID 8130344.</li>
+<li>Zhang H et al. NODDI: practical in vivo neurite orientation dispersion and density imaging of the human brain. NeuroImage 2012;61(4):1000-16. DOI 10.1016/j.neuroimage.2012.03.072. PMID 22484410.</li>
+<li>Finke C et al. Functional and structural brain changes in anti-N-methyl-D-aspartate receptor encephalitis. Ann Neurol 2013;74(2):284-96. DOI 10.1002/ana.23932. PMID 23686722.</li>
+<li>Finke C et al. Evaluation of cognitive deficits and structural hippocampal damage in encephalitis with leucine-rich, glioma-inactivated 1 antibodies. JAMA Neurol 2017;74(1):50-9. DOI 10.1001/jamaneurol.2016.4226. PMID 27893017.</li>
+<li>Krohn S et al. (last author Finke C). Cognitive deficits in anti-LGI1 encephalitis are linked to immunotherapy-resistant white matter network changes. Neurol Neuroimmunol Neuroinflamm 2025;12(2):e200360. DOI 10.1212/NXI.0000000000200360. PMID 39879565.</li>
+<li>Kuchling J et al. (last author Finke C). Impaired functional connectivity of the hippocampus in translational murine models of NMDA-receptor antibody associated neuropsychiatric pathology. Mol Psychiatry 2024;29(1):85-96. DOI 10.1038/s41380-023-02303-9. PMID 37875549.</li>
+<li>van Hoof S et al. Human cerebrospinal fluid monoclonal CASPR2 autoantibodies induce changes in electrophysiology, functional MRI, and behavior in rodent models. Brain Behav Immun 2024;122:266-78. DOI 10.1016/j.bbi.2024.08.027. PMID 39142424.</li>
+<li>Hall GR et al. Long-term connectome analysis reveals reshaping of visual, spatial networks in a model with vascular dementia features. Stroke 2022;53(5):1735-45. DOI 10.1161/STROKEAHA.121.036997. PMID 35105183.</li>
+<li>Hartung TJ et al. (last author Finke C). The role of brain MRI in autoimmune encephalitis. Curr Opin Neurol 2026;39(3):332-40. DOI 10.1097/WCO.0000000000001484. PMID 41947644.</li>
+<li>Marquand AF et al. Understanding heterogeneity in clinical cohorts using normative models: beyond case-control studies. Biol Psychiatry 2016;80(7):552-61. DOI 10.1016/j.biopsych.2015.12.023. PMID 26927419.</li>
+</ol>
+<p>Unverified: DeepISLES reference (ISLES 2022 ensemble), named in step 1 and the glossary.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/demdas-volumetry-primer-2026-10-13.html">demdas-volumetry-primer-2026-10-13</a></li>
+<li><a href="findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort</a></li>
+<li>PDF: <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.pdf">demdas-meeting-primer-finke-2026-10-16.pdf</a></li>
+</ul></div></details><details class="entry" id="chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg"><summary><span class="type">Befund</span><span class="t"><a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">Chronic infarcts are invisible to DWI-based masks and get label 0 from SynthSeg; follow-up volumes need a carried-forward mask</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">DWI-Maske nur akut; SynthSeg gibt Hoehlen Label 0; Folgesitzungen brauchen vorwaerts getragene Maske; Ausrichtung Dice 0,98-0,99</span></summary><div class="body"><p class="small muted">Herkunft: visual review of all 17 multi-session pilot participants of a stroke cohort (55 sessions, review sheets per participant), 13.10.2026 · <a href="findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/chronic-infarcts-are-invisible-to-dwi-masks-and-unlabelled-by-synthseg.md">Markdown</a></p><h2>Aussage</h2>
 <p>In a longitudinal stroke cohort the acute infarct mask (DeepISLES on DWI/ADC/FLAIR) exists at baseline but is empty at 6, 36 and
 60 months in 12 of 17 reviewed participants, because the chronic scar no longer restricts diffusion. SynthSeg (--robust) then
 assigns the encephalomalacic cavity label 0 (it drops out of every tissue total AND of the intracranial volume) and labels the
