@@ -1276,6 +1276,17 @@
 "src": "knowledge/cmb_detection/findings/csf-rule-removes-false-alarms-without-loss.md"
 },
 {
+"t": "Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect",
+"p": "cmb_detection/findings/fine-tune-from-public-valdo-weights.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-16",
+"x": "Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)",
+"id": "fine-tune-from-public-valdo-weights",
+"src": "knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md"
+},
+{
 "t": "Ein auf allen Faellen trainiertes Netz ohne inneren Checkpoint gibt hoehere Wahrscheinlichkeiten aus -- der feste Arbeitspunkt der Faltenmodelle passt dann nicht mehr",
 "p": "cmb_detection/findings/full-data-last-state-models-run-hotter.html",
 "a": "cmb_detection",

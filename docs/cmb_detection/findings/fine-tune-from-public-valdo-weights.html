@@ -1,0 +1,73 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">cmb_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-16</span><span>Herkunft</span><span>cmb_3d_unet_experiments (cmbx get-model valdo_t2, train.init_from), check on one fold of an in-house T2* cohort, 2026-10-16</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/two-seeds-per-decision-below-0.08.html">Effekte unter dem Startwert-Rauschen gelten nur mit zweitem Startwert</a> <span class="muted small">(cmb_detection)</span><br><a href="../rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">Count microbleeds on the model grid; deliver a label map on the input grid</a> <span class="muted small">(cmb_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md">knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md</a></span></div><h2>Aussage</h2>
+<p>The anisotropic U-Net trained on all 72 public VALDO cases (released weights, CC BY-NC-SA 4.0):
+1. <strong>Unadapted on another T2* cohort</strong> it over-detects at the released stage-1 cell (threshold 0.6, 2 mm3): lesion F1
+   rose monotonically with the threshold up to 0.9 (+0.09 F1 from 0.6 to 0.9, the best cell chosen on the target
+   cases, so optimistic); it stays clearly below a model trained in the target domain. Full-data models give higher
+   probabilities than cross-validation models (also noted in the release documentation).
+2. <strong>Fine-tuned</strong> (all weights initialised from VALDO, <code>train.lr</code> 1e-4, 6 epochs, same recipe otherwise, ~7 min on one
+   GPU): +0.11 F1 against 6 epochs from scratch and +0.03 against the 60-epoch from-scratch training on the same fold.
+   With the default learning rate 3e-4 the gain was smaller (+0.04): a large learning rate destroys part of the start.
+3. Channel changes are possible: input channels are matched by name; a new channel starts at zero weight, so the
+   network first reproduces the pretrained output exactly (unit test) and learns the new channel during training.</p>
+<h2>Trägt</h2>
+<p>Weights load bit-identically in the training package and in the release package (max |difference| 0.0).
+Fine-tuning gain 0.11 is above the seed noise of this recipe (0.03-0.08).</p>
+<h2>Trägt nicht</h2>
+<p>One fold, one seed: the +0.03 against 60 epochs from scratch is inside the noise; needs 5 folds x 2 seeds before it
+becomes a rule. Numbers of the in-house cohort are kept private (relative differences only here).</p>
+<h2>Bruchindikator</h2>
+<p>A 5-fold, 2-seed repetition where fine-tuning (lr 1e-4) does not beat short scratch training by more than the noise.</p>
+<h2>Ablesung</h2>
+<p>VALDO: Sudre et al., Med Image Anal 2024;91:103029, doi:10.1016/j.media.2023.103029, PMID 37988921. Released weights:
+https://github.com/mendeltem/microbleed_detection_3D_UNET/releases/tag/v0.1.0 (SHA-256 checked). Transfer learning in
+medical imaging, background: Raghu et al., NeurIPS 2019, "Transfusion: Understanding Transfer Learning for Medical
+Imaging" (arXiv:1902.07208). Own runs 2026-10-16 (cmbx, fold 0, seed 42).</p>
+<h2>Verknüpft</h2>
+<p><a href="../rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a>,
+<a href="../rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">count-lesions-on-the-fine-grid-deliver-a-label-map</a></p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-16 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

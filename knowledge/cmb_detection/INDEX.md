@@ -13,6 +13,7 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [fine-tune-from-public-valdo-weights](findings/fine-tune-from-public-valdo-weights.md) | Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag) |
 | regel | [count-lesions-on-the-fine-grid-deliver-a-label-map](rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md) | On 5 mm slices two microbleeds merge in the binary mask (37 -> 36); count on the model grid, deliver a label map (2026-10-16) |
 | befund | [vessel-inpainting-removes-microbleeds-on-thick-slices](findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md) | Gefaess-Uebermalung des Originals loescht 109 von 236 Blutungen; ohne sie +0,136 F1 |
 | befund | [anisotropic-first-level-beats-isotropic-3d-nets](findings/anisotropic-first-level-beats-isotropic-3d-nets.md) | Erste Ebene nur in der Schicht falten: +0,159 gegen Attention-U-Net, zwei Turniere |
