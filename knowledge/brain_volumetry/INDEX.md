@@ -7,6 +7,7 @@ Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [synthseg-cortex-qc-depends-on-site-not-protocol](findings/synthseg-cortex-qc-depends-on-site-not-protocol.md) | Full cohort: subcortical QC >= 0.65 in 99.8-100 %, cortex 57 %; cortex 18-88 % by site with identical protocol (scanner explains part); empty volume table and 237 sessions without QC found; growth flag ~4 % |
 | befund | [research-fractal-dimensionality-from-freesurfer-2026-10](findings/research-fractal-dimensionality-from-freesurfer-2026-10.md) | Literature (22 refs, checked): FD by box counting on FreeSurfer masks; ICC ~0.9-0.95; sensitive to registration/sequence/site; more sensitive than volume; usable longitudinally |
 | befund | [research-lesion-filling-before-segmentation-2026-10](findings/research-lesion-filling-before-segmentation-2026-10.md) | Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling |
 | befund | [research-subcortical-segmentation-longitudinal-stroke-2026-10](findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md) | Literature (32 refs, checked): longitudinal template + longComBat decisive; between-scanner SDC 4.8-29 %; packages overestimate basal ganglia/thalamus; SynthSeg hippocampal underestimation unverified |
