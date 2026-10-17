@@ -1,5 +1,6 @@
 # agent_tooling: Kurzstand
 
+**Neu 2026-10-17:** Verschieben = kopieren + SHA-256 beidseitig + erst dann loeschen; grep -q unter pipefail meldet einen Treffer als Fehler; stuendlicher Platzwaechter haelt Dienste unter 20 GB per SIGSTOP an; kompakte Literatursuche ueber freie APIs spart Tokens ([disk-guard-verified-move-and-compact-literature-search](findings/disk-guard-verified-move-and-compact-literature-search.md)).
 Stand 2026-10-07. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkzeug, dessen eigener Fehler wie ein Befund aussieht, ist das gefährlichste.

@@ -43,14 +43,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests, conda, venv, PYTHONNOUSERSITE, Installation, Cluster, datenagnostisch, BIDS</p>
-<div class="stripe"><i class="warn" style="width:58.8%" title="vorschlag: 20"></i><i class="ok" style="width:41.2%" title="getragen: 14"></i></div><div class="counts"><span class="warn">20 vorschlag</span> <span class="ok">14 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<div class="stripe"><i class="warn" style="width:60.0%" title="vorschlag: 21"></i><i class="ok" style="width:40.0%" title="getragen: 14"></i></div><div class="counts"><span class="warn">21 vorschlag</span> <span class="ok">14 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.</strong> Es wird
 geglaubt, weil es wie eine Messung aussieht.</p>
 <p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-17:</strong> Verschieben = kopieren + SHA-256 beidseitig + erst dann loeschen; grep -q unter pipefail meldet einen Treffer als Fehler; stuendlicher Platzwaechter haelt Dienste unter 20 GB per SIGSTOP an; kompakte Literatursuche ueber freie APIs spart Tokens (<a href="findings/disk-guard-verified-move-and-compact-literature-search.html">disk-guard-verified-move-and-compact-literature-search</a>).
+Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkzeug, dessen eigener Fehler wie ein Befund aussieht, ist das gefährlichste.</p>
 <p><strong>Getragen (alles Regeln):</strong> Kein stiller Rückfallwert. Leer ist nicht fehlend. Unbekannt ist kein Wert in Vergleichen (<code>null &lt;= 0</code> ist wahr). Erstmessung ist keine Veränderung. Gerechnetes und Gedeutetes getrennt halten (zwei Schichten).</p>
 <p><strong>Vorschlag (aus dem Projekt rea übernommen):</strong> Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.</p>
@@ -1253,6 +1254,35 @@ Quelle.</p>
 <ul>
 <li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
 <li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="disk-guard-verified-move-and-compact-literature-search"><summary><span class="type">Befund</span><span class="t"><a href="findings/disk-guard-verified-move-and-compact-literature-search.html">Three small tools: verified move to the group drive, an hourly disk guard, and compact literature search for token-priced agents</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Move = copy + SHA-256 both sides + delete; grep -q under pipefail reports a match as failure; hourly disk guard pauses (SIGSTOP) below 20 GB; compact literature search over free APIs (3 KB instead of 50 KB)</span></summary><div class="body"><p class="small muted">Herkunft: workstation housekeeping and research tooling, Alita session 2026-10-17 · <a href="findings/disk-guard-verified-move-and-compact-literature-search.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li>Copy is not move: the existing group-drive copy tool frees no space. A move tool must copy, compare SHA-256 on BOTH sides
+   (the remote host computes its own sums), delete locally only on full equality and leave a note file with target and
+   restore command. Refuse raw data folders, folders named by a running process, symlinks.</li>
+<li>Bug found in its own test: <code>ps ... | grep -qF path</code> under <code>set -o pipefail</code> reports a MATCH as failure (grep -q closes the
+   pipe early, the writer gets SIGPIPE). Use <code>grep -c</code> and compare the count.</li>
+<li>An hourly disk guard (systemd user timer) warns below 50 GB (board + phone, at most every 6 h) and PAUSES (SIGSTOP, not
+   stop) long processing services below 20 GB, so the disk cannot hit 0 B; a <code>--weiter</code> switch sends SIGCONT. A dry-run
+   mode tests both thresholds without side effects.</li>
+<li>Agents billed per token waste most tokens on raw API answers (50 KB JSON/XML per search). A search tool over free APIs
+   (PubMed E-utilities, Europe PMC, OpenAlex, arXiv; Semantic Scholar rate-limits without key, HTTP 429) that prints one
+   short block per work (title, authors, year, journal, DOI/PMID, citations, first 300 characters of the abstract) gives
+   the same choice at about 3 KB. arXiv answers "Rate exceeded" unless spaced to one request per 5 s.</li>
+<li>Rules given to one agent do not reach the other: a user rule stored only in the coordinator's memory was unknown to the
+   local agent. Each rule that concerns the local agent goes into its own memory file as well.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Tool tests 2026-10-17 (refusals, copy-only, move, restore with checksum check, busy-folder refusal after the fix; guard dry
+runs; search runs against all five sources).</p>
+<h2>Trägt nicht</h2>
+<p>Token savings of the search tool are not measured yet (compare the hub's monthly counter per research task).</p>
+<h2>Bruchindikator</h2>
+<p>A move whose remote checksum list differs but the local folder is gone; a guard that pauses services above the threshold.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>NCBI E-utilities: https://www.ncbi.nlm.nih.gov/books/NBK25501/ ; Europe PMC REST: https://europepmc.org/RestfulWebService ;
+  OpenAlex API: https://docs.openalex.org ; arXiv API: https://info.arxiv.org/help/api/ (all checked 2026-10-17)</li>
+<li>own tools werkzeuge/auslagern-alita, platz-waechter, literatur (2026-10-17)</li>
 </ul></div></details><h2 id="risks">Risiko <span class="muted small">(1)</span></h2><details class="entry" id="queue-jobs-inherit-the-supervisors-cgroup-limit"><summary><span class="type">Risiko</span><span class="t"><a href="risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html">Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-12</span><span class="i">Trainings in der cgroup des Aufsehers: MemoryHigh drosselt, oomd toetet Aufseher samt Schlange, Restart=always wiederholt es alle 3 min; 30 Kills in 15 h</span></summary><div class="body"><p class="small muted">Herkunft: Alita, journalctl dauerlauf.service und systemd-oomd 2026-10-11 18:48 bis 2026-10-12 09:21, cgroup memory.pressure 09:50 · <a href="risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.md">Markdown</a></p><h2>Aussage</h2>
 <p>Startet ein Dienst mit <code>MemoryHigh</code> (hier der Dauerlauf, 32 GiB) die
 Rechen-Warteschlange als Kindprozess, laufen alle Trainings in derselben

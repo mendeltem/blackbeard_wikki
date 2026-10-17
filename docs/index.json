@@ -55,6 +55,17 @@
 "src": "knowledge/agent_coordination/rules/parallel-sessions-same-working-tree.md"
 },
 {
+"t": "Three small tools: verified move to the group drive, an hourly disk guard, and compact literature search for token-priced agents",
+"p": "agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Move = copy + SHA-256 both sides + delete; grep -q under pipefail reports a match as failure; hourly disk guard pauses (SIGSTOP) below 20 GB; compact literature search over free APIs (3 KB instead of 50 KB)",
+"id": "disk-guard-verified-move-and-compact-literature-search",
+"src": "knowledge/agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.md"
+},
+{
 "t": "Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide",
 "p": "agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html",
 "a": "agent_tooling",
@@ -1881,6 +1892,17 @@
 "src": "knowledge/local_llm_operation/findings/hermes-delegates-to-opencode-locally.md"
 },
 {
+"t": "The hospital model hub API: OpenAI-compatible, five aliases, tool calls work, reasoning needs a large max_tokens",
+"p": "local_llm_operation/findings/hospital-model-hub-api-aliases-and-small-benchmark.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-17",
+"x": "Hub API OpenAI-compatible, 5 aliases, tool calls ok; 13-task bench clea 100 %, frontier 96 %, fast 92 % (180 tok/s), eu 84 %; reasoning needs max_tokens >= 6000; Bonsai-27B local 92 % in 6.8 GB",
+"id": "hospital-model-hub-api-aliases-and-small-benchmark",
+"src": "knowledge/local_llm_operation/findings/hospital-model-hub-api-aliases-and-small-benchmark.md"
+},
+{
 "t": "Cluster nodes answer only on SSH from the intranet; a GPU share starts at once, a whole GPU waits",
 "p": "local_llm_operation/findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.html",
 "a": "local_llm_operation",
@@ -1947,6 +1969,17 @@
 "src": "knowledge/local_llm_operation/findings/opencode-against-llama-server-one-slot.md"
 },
 {
+"t": "A pre-tool-call plugin is the hard barrier for a remote-model agent; a system-prompt rule alone is a request",
+"p": "local_llm_operation/findings/pre-tool-hook-blocks-data-paths-for-remote-model.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Hermes pre_tool_call plugin = hard barrier for a remote-model agent (prompt rule = request); enable via plugins.enabled; .nii/sub- redaction too broad for code repos",
+"id": "pre-tool-hook-blocks-data-paths-for-remote-model",
+"src": "knowledge/local_llm_operation/findings/pre-tool-hook-blocks-data-paths-for-remote-model.md"
+},
+{
 "t": "Die Registry zeigte auf ein halbes Modell: der Dienst starb beim Laden, der Agent beendete sich, Claras Fenster war tot",
 "p": "local_llm_operation/findings/registry-pointed-at-half-a-model-agent-window-died.html",
 "a": "local_llm_operation",
@@ -1989,6 +2022,17 @@
 "x": "Sampling-Empfehlung der Modellkarte: 15/15 gegen 15/15",
 "id": "vendor-sampling-params-no-gain",
 "src": "knowledge/local_llm_operation/findings/vendor-sampling-params-no-gain.md"
+},
+{
+"t": "vLLM from PyPI fails on a CUDA 12.7 cluster driver; the cu129 release wheel plus a CPU torchcodec works",
+"p": "local_llm_operation/findings/vllm-on-a-cuda-12-7-cluster-driver.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-17",
+"x": "PyPI vLLM (cu130) dies on driver 565; cu129 release wheel + torch cu129 + torchcodec cpu works; start 4.5 min; sbatch --test-only estimates useless",
+"id": "vllm-on-a-cuda-12-7-cluster-driver",
+"src": "knowledge/local_llm_operation/findings/vllm-on-a-cuda-12-7-cluster-driver.md"
 },
 {
 "t": "Ein MoE-Modell laeuft auf einer GPU, auf die es nicht passt",

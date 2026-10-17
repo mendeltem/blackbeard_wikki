@@ -10,6 +10,9 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [vllm-on-a-cuda-12-7-cluster-driver](findings/vllm-on-a-cuda-12-7-cluster-driver.md) | PyPI vLLM (cu130) dies on driver 565; cu129 release wheel + torch cu129 + torchcodec cpu works; start 4.5 min; sbatch --test-only estimates useless |
+| befund | [hospital-model-hub-api-aliases-and-small-benchmark](findings/hospital-model-hub-api-aliases-and-small-benchmark.md) | Hub API OpenAI-compatible, 5 aliases, tool calls ok; 13-task bench clea 100 %, frontier 96 %, fast 92 % (180 tok/s), eu 84 %; reasoning needs max_tokens >= 6000; Bonsai-27B local 92 % in 6.8 GB |
+| befund | [pre-tool-hook-blocks-data-paths-for-remote-model](findings/pre-tool-hook-blocks-data-paths-for-remote-model.md) | Hermes pre_tool_call plugin = hard barrier for a remote-model agent (prompt rule = request); enable via plugins.enabled; .nii/sub- redaction too broad for code repos |
 | regel | [group-drive-move-ask-what-alita-means](rules/group-drive-move-ask-what-alita-means.md) | "ALITA" is the group drive on the wiki hub, not a folder on the workstation (which is Alita); copy+checksum, 84 % full |
 | befund | [clara-cle-agents-solve-bounded-code-tasks-slower](findings/clara-cle-agents-solve-bounded-code-tasks-slower.md) | Claude Code vs Hermes/OpenCode on the hub: bounded code tasks all correct, 6-18x slower; open review: Claude 6 extra real bugs, OpenCode 1, Hermes timeout |
 | regel | [remote-model-gets-only-data-free-skills-and-redacted-text](rules/remote-model-gets-only-data-free-skills-and-redacted-text.md) | Shared skills split by data; OpenCode also reads ~/.claude/skills (OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1); Hermes skills.external_dirs; fallback reports redact ids |
