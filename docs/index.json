@@ -1353,6 +1353,17 @@
 "src": "knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md"
 },
 {
+"t": "CMB detection 2023-2026: SHIVA-CMB is the public comparable, mimics drive precision, foundation models are not CMB-ready",
+"p": "cmb_detection/findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Review 2023-2026 (37 records): SHIVA-CMB (public 3D U-Net, 6 cohorts, T2*+SWI, F1 0.74, 0.6 FP/scan, weights released) is the comparable to run; precision not sensitivity separates methods; mimic handling via phase/QSM channels; no CMB-spec",
+"id": "literature-2023-2026-shiva-cmb-is-the-public-comparable",
+"src": "knowledge/cmb_detection/findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.md"
+},
+{
 "t": "MicrobleedNet's published code never trains the teacher of its second stage",
 "p": "cmb_detection/findings/microbleednet-never-trains-its-teacher.html",
 "a": "cmb_detection",

@@ -1,6 +1,18 @@
 # cmb_detection: Kurzstand
 
-Stand 2026-10-07. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
+Stand 2026-10-17. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
+
+## Neu 2026-10-17 (Literatur 2023-2026)
+
+Literatursichtung (PubMed + Europe PMC, 37 Treffer; arXiv im Proxy nicht erreichbar, HTTP 429). Der naechste
+oeffentliche Vergleich zu unserer Kette ist **SHIVA-CMB**: ein 3D-U-Net, einmal auf 450 Scans aus 7 Akquisitionen und
+6 Kohorten trainiert (T2* und SWI gemischt), Test Sensitivitaet 0,67, Praezision 0,82, F1 (Dice) 0,74, 0,6 Fehlalarme
+je Scan; auf fremden Akquisitionen 0,67/0,91/0,77/0,5; Korrelation mit Expertenzaehlung ueber 1.992 Scans R 0,89 --
+Pipeline UND Gewichte oeffentlich (Tsuchida 2024, PMID 39730628). Lesart der Sichtung: Praezision, nicht
+Sensitivitaet, trennt die Verfahren (Morphologie-Filterbank 95,0 % bei 4,37 FP/Patient gegen 97,5 % bei 25,87 FP);
+Mimik-Handhabung ist ein Kontrastproblem (Phase/QSM), kein Architekturproblem; kein CMB-spezifisches Transformer-
+oder Foundation-Modell auffindbar. Ganze Belegliste in `recherche/d_cmb_detection/REPORT.md`
+([literature-2023-2026-shiva-cmb-is-the-public-comparable](findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.md)).
 
 Mikroblutungen auf T2*/SWI automatisch zaehlen. Oeffentliche Messlatte VALDO 2021 Task 2
 (72 Faelle, drei Kohorten, 0,8 bis 4 mm Schichten), Mass Laesions-F1 gepaart mit Bootstrap.

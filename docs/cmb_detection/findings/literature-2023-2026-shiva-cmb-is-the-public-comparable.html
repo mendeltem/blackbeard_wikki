@@ -1,0 +1,104 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CMB detection 2023-2026: SHIVA-CMB is the public comparable, mimics drive precision, foundation models are not CMB-ready</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">cmb_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>CMB detection 2023-2026: SHIVA-CMB is the public comparable, mimics drive precision, foundation models are not CMB-ready</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-17</span><span>Herkunft</span><span>Literature review d_cmb_detection (PubMed E-utilities + Europe PMC, 37 retrieved records), report /home/uchralt/cle-arbeit/recherche/d_cmb_detection/REPORT.md, 2026-10-17</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a> <span class="muted small">(cmb_detection)</span><br><a href="second-stage-classifier-ported-reproduced.html">The second-stage candidate classifier, ported into the training package, reproduces its gain</a> <span class="muted small">(cmb_detection)</span><br><a href="sensitivity-levers-do-not-raise-lesion-f1.html">Hebel, die das Netz empfindlicher machen, heben das Laesions-F1 nicht</a> <span class="muted small">(cmb_detection)</span><br><a href="csf-rule-removes-false-alarms-without-loss.html">Eine Liquor-Regel aus der Gewebekarte entfernt die Haelfte der Fehlalarme, ohne eine Blutung zu verlieren</a> <span class="muted small">(cmb_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.md">knowledge/cmb_detection/findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.md</a></span></div><h2>Aussage</h2>
+<p>A literature review of automatic CMB detection on SWI/T2* (PubMed + Europe PMC, 37 retrieved records; arXiv not
+reachable, HTTP 429 through the proxy) gives three actionable results for this project:</p>
+<ol>
+<li><strong>The closest published analogue of our chain is SHIVA-CMB.</strong> One 3D U-Net trained once on 450 scans from 7
+   acquisitions and 6 cohorts, T2<em> and SWI mixed (Tsuchida 2024, PMID 39730628): held-out test sensitivity 0.67,
+   precision 0.82, F1 (Dice) 0.74, 0.6 false positives per scan; on an evaluation-only set with acquisitions never
+   seen in training 0.67 / 0.91 / 0.77 / 0.5 FP; correlation with expert visual counts in 1,992 T2</em>-weighted scans
+   Pearson R 0.89. <strong>Both the pipeline (SHiVAi) and the pretrained weights (SHIVA-CMB) are public</strong> -- a free
+   external baseline we should run on our data.</li>
+<li><strong>Precision, not sensitivity, separates the methods.</strong> The best lesion-level numbers reported 2023-2026 come from
+   pipelines whose candidate stage is deliberately constrained: morphology filter bank + CNN, 95.0 % sensitivity at
+   4.37 FP/patient versus 97.5 % at 25.87 FP without the filter bank (Nishioka 2025, PMID 38494702); a
+   geometric-to-neural cascade (GMM candidate generation + two 3D ResNets on QA labels) removing 76.8 % of stage-A
+   false positives, F1 0.693, AUC 0.9587 (Bogdanov 2026 preprint, DOI 10.64898/2026.07.24.740624); U-Net with CBAM
+   attention, large kernels and anatomy localisation, F1 0.887 at 0.83 FP/scan on 506 multi-site scans (Cho 2026,
+   PMID 41859233). This matches our own negative finding that sensitivity levers do not raise lesion F1.</li>
+<li><strong>Mimic handling is a contrast problem, not an architecture problem.</strong> QSM separates CMB from calcification
+   better than SWI/phase on accuracy, confidence and inter-rater agreement (Kang 2025, PMID 39690177); adding a
+   high-pass filtered phase channel to SWI gave 95.8 % sensitivity, 70.9 % precision, 1.6 FP/case (Liu 2019, PMID
+   31121296); multi-modal T2w/SWI/QSM input improved CMB-versus-iron separation, QSM being the most informative
+   channel (Rashid 2021, PMID 34238951). Anatomical masking (ventricles/CSF/choroid plexus/cerebellum/edges) is a
+   free false-positive filter present in the top pipelines -- consistent with our CSF rule.</li>
+</ol>
+<p>Secondary results: synthetic CMBs are now a first-class training strategy (analytic model, 37,000 lesions released,
+~9 FP/scan when trained on synthetic only, Momeni 2021, PMID 34051412; 3D lesion GAN transferring to unseen MRI
+parameters, PMID 34975381; self-supervised pseudo-labels giving +46 % average precision on ex-vivo T2<em>, Nikseresht
+2026, PMID 42107619). The SWI/T2</em> domain gap is measurable: synthesising SWI from T2<em> magnitude recovers 19/28 CMBs
+seen on real SWI versus 10/28 on magnitude images (Genc 2023, PMID 36733222). Meta-analytic pooled DL accuracy is
+high (lesion-level sensitivity 0.96 / specificity 0.98, patient-level 0.89 / 0.86, Feng 2026, PMID 42767630), but the
+authors themselves warn the study count is small. SWI detects about 1.6x more CMBs than T2</em>-GRE (13-study
+meta-analysis, Yang 2026, PMID 41775374), so sequence mix dominates any single F1 number.</p>
+<h2>Trägt</h2>
+<p>SHIVA-CMB publishes pipeline and weights, so it is a reproducible external baseline (claim 1). Claims 2 and 3 rest
+on peer-reviewed abstracts retrieved in this task and are consistent with our own measured results (vessel
+inpainting, CSF rule, sensitivity levers).</p>
+<h2>Trägt nicht</h2>
+<ul>
+<li><strong>No CMB-specific transformer or foundation model was retrieved.</strong> The only retrieved foundation-model work is a
+  universal brain-MRI lesion segmentation model with Mixture-of-Modality-Experts (9 datasets, 8 lesion types, CMB
+  not among them, Zhang 2025, PMID 40031588); the foundation-model and diffusion reviews report no CMB numbers.</li>
+<li><strong>No post-2021 successor benchmark to VALDO was retrieved</strong>, so the VALDO weak-label and case-level-inconsistency
+  findings stand unresolved.</li>
+<li>arXiv was not retrievable in this task (HTTP 429 / "Rate exceeded." through the proxy across many retries), so
+  computer-science preprints are entirely missing from this picture; treat the transformer/foundation-model blank as
+  "not retrieved", not as "does not exist".</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>A peer-reviewed work reporting CMB detection with a transformer or foundation model, or a new multi-centre CMB
+benchmark superseding VALDO, or a paper showing a per-dataset-trained 3D U-Net beating a single multi-cohort model
+(SHIVA-CMB) on unseen acquisitions.</p>
+<h2>Ablesung</h2>
+<p>SHIVA-CMB: Tsuchida et al., Sci Rep 2024, doi:10.1038/s41598-024-81870-5, PMID 39730628. VALDO: Sudre et al., Med
+Image Anal 2024, doi:10.1016/j.media.2023.103029, PMID 37988921. MicrobleedNet: Sundaresan et al., Front Neuroinform
+2023, doi:10.3389/fninf.2023.1204186, PMID 37492242. Full reference list (37 records) and evidence tables:
+/home/uchralt/cle-arbeit/recherche/d_cmb_detection/REPORT.md; PMIDs and DOIs checked with
+local_agentic_system/system/werkzeuge/quellen-pruefen (36/36 PMIDs correct, 0 wrong). Own literature retrieval
+2026-10-17.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-17 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
