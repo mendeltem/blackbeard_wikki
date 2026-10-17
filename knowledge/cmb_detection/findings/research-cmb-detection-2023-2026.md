@@ -1,0 +1,262 @@
+---
+id: research-cmb-detection-2023-2026
+typ: befund
+status: vorschlag
+thema: knowledge/cmb_detection
+stand: 2026-10-17
+herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 'Shows' spot checks against abstracts)
+verweist_auf: [check-every-cited-source-and-summarise-it]
+---
+
+# Literature: automatic cerebral microbleed detection 2023-2026 compared with MicrobleedNet and VALDO
+
+## Aussage
+- MicrobleedNet (knowledge distillation, 3-step) reported cluster-wise TPR >90% with <2 false positives per subject
+  and TPR >80% across datasets [1]; VALDO 2021 found 9 microbleed teams but large inter-team and inter-case
+  variability and no practically useful result for lacunes [2]. These two anchors still define the field's
+  reference numbers.
+- The dominant 2023–2026 architecture is unchanged in spirit: a 3D U-Net or 3D CNN detector, often with a second
+  stage (classifier / refinement) for false-positive reduction [3,4,5,6,7,8]. What is new is the *detail*:
+  attention-gated skip connections, region-proposal heads, hard-sample/prototype learning, triplanar ensembling,
+  morphology filter banks, and geometric cascade candidate generation.
+- Lesion-level scores have crept up: e.g. precision 0.891 / recall 0.887 / **F1 0.887** with 0.83 FP/scan on 506
+  multi-site scans [3]; a geometric-to-neural cascade reached F1 0.693 while removing 76.8% of stage-A false
+  positives [8]; sensitivity ~96% at low FP for a single-stage triplanar ensemble [4] (unverified); ~95% at 4.37
+  FP/patient for a morphology-filter-bank + CNN on 2D T2* [6].
+- The most directly comparable public tool to our setup is **SHIVA-CMB**: one 3D U-Net trained once on 450 scans
+  from 7 acquisitions / 6 cohorts (T2* and SWI mixed), test sensitivity 0.67, precision 0.82, **F1(Dice) 0.74**,
+  0.6 FP/scan; on an unseen-acquisition set 0.67 / 0.91 / 0.77 / 0.5 FP — and it is publicly released
+  (pipeline + weights) [9].
+- Domain shift SWI ↔ T2* is now addressed explicitly rather than ignored: cross-modality generalisation is reported
+  as a headline result [3], synthetic-SWI-from-T2* synthesis recovers CMBs that are invisible on magnitude images
+  (19/28 vs 10/28) [10], and zero-shot super-resolution of thick-slice SWI improves downstream CMB segmentation [11].
+- Synthetic data has become a first-class strategy: an analytic synthetic-CMB model with 37,000 generated lesions
+  trains a detector to near state of the art (~9 FP/scan) using synthetic data only [12]; a 3D lesion GAN
+  conditioned on volume/location transfers to unseen datasets with different MRI parameters [13]; self-supervised
+  pretraining on ex-vivo T2* with fuzzy-segmentation pseudo-labels reached 90% of definite CMBs at 15 FP/scan [14].
+- Mimics remain the central problem and are handled mainly with extra contrast (high-pass filtered phase, QSM) and
+  anatomical constraints rather than with new network families: QSM separates CMB from calcification better than
+  SWI/phase [15]; a two-channel SWI + phase model reached sensitivity 95.8%, precision 70.9%, 1.6 FP/case [16];
+  QSM improved CMB-vs-iron separation (sensitivity 0.84–0.88, precision 0.40–0.59) [17].
+- Transformers and foundation models exist but are **not yet CMB-specific in the retrieved literature**: the
+  retrieved foundation-model work is a universal brain-MRI lesion-segmentation model with a Mixture-of-Modality-
+  Experts design evaluated on 8 lesion types (not CMB) [18], plus reviews of vision-language foundation models [19]
+  and diffusion models [20] that list open problems (prompt dependence, mask hallucination, slow volumetric
+  inference, limited annotation, domain-shift sensitivity) but report no CMB detection results.
+- External/cross-cohort validation is better than in 2021 but still the exception: SHIVA-CMB validates on
+  unseen acquisitions and correlates with expert counts in 1,992 scans (R=0.89) [9]; nnU-Net was validated on
+  independent internal *and* external sets [21]; other papers validate within one or two cohorts only [3,4,5].
+- Pooled meta-analytic DL accuracy looks high (lesion level sensitivity 0.96 / specificity 0.98; patient level
+  0.89 / 0.86) but the authors themselves flag the small number of studies and call for multicentre work [22];
+  SWI detects ~1.6× more CMBs than T2*-GRE, so sequence choice dominates any model comparison [23].
+
+### Practical recommendation (as written for our setup)
+Setup: 3D U-Net **per dataset** plus an optional second-stage classifier; pooled lesion F1 (own number kept outside the wiki) on in-house
+T2*/SWI. The retrieved evidence maps onto this as follows.
+
+1. **Our pooled F1 is in the expected band, but the comparison that matters is not published.** SHIVA-CMB — one
+   3D U-Net across seven acquisitions and two modalities, i.e. the closest published analogue of "train once, apply
+   to our data" — reports F1/Dice 0.74 (0.77 on unseen acquisitions) [9]. A per-dataset U-Net pooling below that
+   is plausible but sits at the lower edge; the gap is most likely in false positives (mimics) rather than in
+   sensitivity [3,6,8,16]. Report **precision, recall and FP per scan separately**, never F1 alone, because F1 hides
+   exactly the trade-off that differs between datasets.
+2. **Keep the two-stage design; invest in stage two.** The retrieved false-positive wins come from the second
+   stage: a 3D CNN discriminator on top of a 3D U-Net [7], a geometric cascade's second ResNet removing 76.8% of
+   stage-A FPs [8], a morphology filter bank cutting 25.87→4.37 FP/patient [6], and knowledge distillation lifting
+   cluster-wise TPR by 15% [1]. For our pipeline, an explicit stage-2 classifier trained on *hard negatives*
+   (vessel cross-sections, calcification, iron, choroid plexus, image edges) is the single highest-value change —
+   exactly the "optional second-stage classifier" we already have, but it should be trained deliberately on mimics.
+3. **Add phase and/or QSM channels where available.** The retrieved mimic literature is unambiguous: QSM separates
+   CMB from calcification better than SWI/phase [15], and multi-modal T2w/SWI/QSM input improves CMB-vs-iron
+   separation [17]. Adding a high-pass filtered phase channel is the cheapest step (sensitivity 95.8%, precision
+   70.9%, 1.6 FP/case reported with SWI+phase [16]). This attacks precision, our likely weak point.
+4. **Use anatomical masking.** Masking ventricles/CSF/choroid plexus/cerebellum/edges is cheap and was part of the
+   top-performing pipelines [1,4,8]. It costs nothing at inference and requires no labels.
+5. **Attack the T2*/SWI domain gap explicitly, since we train per dataset.** Options in increasing effort: (a) train
+   one model on both modalities and evaluate cross-modality as a first-class metric, as RLK-UNet [3] and
+   SHIVA-CMB [9] do; (b) synthesise SWI from T2* magnitude with a DeepSWI-style network to normalise contrast [10];
+   (c) zero-shot super-resolution for thick-slice SWI before detection [11,30]. If per-dataset training is kept,
+   at minimum report cross-dataset (SWI-model on T2* and vice versa) numbers so the domain gap is quantified.
+6. **Use synthetic CMBs for augmentation and pre-training.** The analytic 37,000-lesion synthetic set is released
+   and reached ~9 FP/scan when training on synthetic only [12]; a 3D lesion GAN transfers to unseen datasets and
+   different MRI parameters [13]; self-supervised pretraining with pseudo-labels lifted average precision by 46%
+   over a real-data-only baseline in a low-prevalence, mimic-rich setting [14]. The GAN/synthetic route is
+   particularly attractive for our per-dataset setup, where each dataset has few labelled lesions.
+7. **Benchmark against SHIVA-CMB before building anything new.** It is a public 3D U-Net trained across T2*/SWI
+   cohorts with released weights [9]. Running it on our data gives a free, published external baseline and
+   immediately shows whether our per-dataset F1 is a data problem or a pipeline problem.
+8. **Do not expect transformers/foundation models to help yet.** The retrieved foundation-model work targets
+   generic brain lesion segmentation, not CMB [18], and the reviews list open problems (prompt dependence, mask
+   hallucination, slow volumetric inference, domain-shift sensitivity, limited annotation) without CMB numbers
+   [19,20]. Transformers are a research direction here, not a practical upgrade.
+9. **Reporting discipline.** Given VALDO's "performance inconsistency across cases" [2] and the meta-analysis's
+   call for multicentre validation [22], report at minimum: lesion-level precision/recall/F1, FP per scan, cluster-
+   wise detection at a fixed FP budget, and a subject-level count correlation — the last one is what SHIVA-CMB used
+   to validate against expert reads in 1,992 scans (R=0.89) [9], and it is what clinical users actually need.
+
+## Trägt
+Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). 
+## Trägt nicht
+Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:
+
+- **No CMB-specific transformer or foundation model was retrieved.** Whether vision-language or MoME-style
+  foundation models transfer to 3–10 mm sparse lesions like CMBs is unverified [18,19].
+- **Standardisation of metrics.** "Cluster-wise TPR", Dice, lesion-level F1 and per-patient sensitivity are used
+  interchangeably across the retrieved literature; no retrieved work provides a head-to-head comparison of the same
+  models on the same data under one metric [1,3,9,22].
+- **How much of the SWI-vs-T2* gap is contrast vs resolution?** Super-resolution [11,30] and synthesis [10] both
+  help, but no retrieved study decomposes the two effects.
+- **Synthetic-data fidelity.** Both the analytic model [12] and the GAN [13] claim transfer to unseen datasets, but
+  neither reports an external lesion-level precision on a fully unseen modality (the GAN reports unseen MRI
+  parameters, not unseen modality).
+- **Post-2021 VALDO follow-up.** No retrieved work is a successor benchmark to VALDO; the challenge's weak-label
+  and case-level-inconsistency findings [2] have not been resolved by a new consensus evaluation.
+- **ARIA-H / anti-amyloid context.** RLK-UNet targets ARIA-H severity categories [3] and accelerated SWI is being
+  evaluated for ARIA monitoring [36]; whether current detectors meet the regulatory bar for therapy monitoring is
+  unaddressed.
+- **arXiv gap in this report.** Foundation-model and transformer preprints were not retrievable (proxy returned
+  `HTTP 429 / Rate exceeded.` throughout); the foundation-model picture here is therefore limited to the
+  peer-reviewed work that was retrieved [18,19,20].
+
+## Bruchindikator
+A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.
+
+## Ablesung
+All references were retrieved via PubMed/Europe PMC in this task. Format: [n] Authors. Year. Title. Journal. DOI.
+PMID.
+
+[1] Sundaresan V, Arthofer C, Zamboni G, Murchison AG, Dineen RA, et al. 2023. Automated detection of cerebral microbleeds on MR images using knowledge distillation framework. Frontiers in Neuroinformatics. DOI 10.3389/fninf.2023.1204186. PMID 37492242.
+   Shows: A 3-step pipeline (candidate detection, knowledge distillation discrimination, morphological clean-up) reaches cluster-wise TPR >90% at <2 false positives per subject, with cross-dataset TPR >80%.
+
+[2] Sudre CH, Van Wijnen K, Dubost F, Adams H, Atkinson D, Barkhof F, et al. 2024. Where is VALDO? VAscular Lesions Detection and segmentatiOn challenge at MICCAI 2021. Medical Image Analysis. DOI 10.1016/j.media.2023.103029. PMID 37988921.
+   Shows: Across 9 microbleed teams on multi-cohort weak labels, performance varied widely between teams and cases, useful at population level but inconsistent at the individual level.
+
+[3] Cho KH, Jeon J, Kim S, Kim YS, Kim YM, Kim MK, Shin MH, Chun M, et al. 2026. Attention-enhanced segmentation network for automated cerebral microbleed detection and burden assessment. Frontiers in Neuroscience. DOI 10.3389/fnins.2026.1743039. PMID 41859233.
+   Shows: A single-stage U-Net with CBAM attention and large-kernel convolutions reaches lesion-level precision 0.891, recall 0.887, F1 0.887 at 0.83 FP/scan on 506 multi-site scans and generalises across T2*-GRE and SWI.
+
+[4] Kim JH, Noh Y, Lee H, Lee S, Kim WR, Kang KM, Kim EY, Al-Masni MA, et al. 2025. Toward automated detection of microbleeds with anatomical scale localization using deep learning. Medical Image Analysis. DOI 10.1016/j.media.2024.103415. PMID 39642804.
+   Shows: A single end-to-end 3D U-Net + Region Proposal Network with feature fusion and hard-sample prototype learning raises sensitivity to 94.66% (vs 93.33%) while segmenting anatomical regions for localisation.
+
+[5] Al-Masni MA, Kim WR, Kim EY, Noh Y, Kim DH. 2020. Automated detection of cerebral microbleeds in MR images: A two-stage deep learning approach. NeuroImage: Clinical. DOI 10.1016/j.nicl.2020.102464. PMID 33395960.
+   Shows: Regional YOLO candidate detection plus a 3D-CNN false-positive stage on SWI and phase reaches 93.62% / 78.85% sensitivity in high- and low-resolution data.
+
+[6] Nishioka N, Shimizu Y, Shirai T, Ochi H, Bito Y, Watanabe K, et al. 2025. Automated Detection of Cerebral Microbleeds on Two-dimensional Gradient-recalled Echo T2* Weighted Images Using a Morphology Filter Bank and Convolutional Neural Network. Magnetic Resonance in Medical Sciences. DOI 10.2463/mrms.mp.2023-0146. PMID 38494702.
+   Shows: A morphology filter bank plus CNN reaches 95.0% sensitivity at 4.37 FP/patient versus 97.5% sensitivity at 25.87 FP/patient without it.
+
+[7] Rau L, Granert O, Margraf NG, Schneider S, Jensen-Kondering U. 2026. A Two-Stage Localization and Refinement Neural Network Structure for Data-Efficient Microbleed Detection. Brain Sciences. DOI 10.3390/brainsci16020207. PMID 41750207.
+   Shows: A 3D U-Net candidate stage plus a 3D CNN discriminator reaches 97.5% sensitivity when trained on only 15 scans with 40 CMBs.
+
+[8] Bogdanov S, Rudravaram G, Saunders AM, Kim ME, LeFevre J, Charles J, Jain S, Schrag MS, Landman BA. 2026. A geometric-to-neural cascade for cerebral microbleed detection in susceptibility-weighted MRI. bioRxiv (preprint). DOI 10.64898/2026.07.24.740624. PMID (none).
+   Shows: GMM-based adaptive candidate generation plus two 3D ResNets trained on QA yes/no labels (no dense masks) reaches AUC 0.9587, sensitivity 0.712, F1 0.693 and removes 76.8% of stage-A false positives.
+
+[9] Tsuchida A, Goubet M, Boutinaud P, Astafeva I, Nozais V, Hervé D, et al. 2024. SHIVA-CMB: a deep-learning-based robust cerebral microbleed segmentation tool trained on multi-source T2*GRE- and susceptibility-weighted MRI. Scientific Reports. DOI 10.1038/s41598-024-81870-5. PMID 39730628.
+   Shows: One 3D U-Net trained on 450 scans from 7 acquisitions and 6 cohorts reaches sensitivity 0.67, precision 0.82, F1 0.74 and 0.6 FP/scan (0.77 F1 on unseen acquisitions) and releases pipeline and weights.
+
+[10] Genc O, Morrison MA, Villanueva-Meyer JE, Burns B, Hess CP, et al. 2023. DeepSWI: Using Deep Learning to Enhance Susceptibility Contrast on T2*-Weighted MRI. Journal of Magnetic Resonance Imaging. DOI 10.1002/jmri.28622. PMID 36733222.
+   Shows: synthesising SWI from T2* magnitude recovers 19/28 CMBs visible on original SWI versus only 10/28 on magnitude images, quantifying the SWI/T2* detection gap.
+
+[11] Liu F, Zhang R, Lv Z, Zhao J, Wu X, Xie G, Guo L. 2026. Zero-shot arbitrary-scale super resolution in susceptibility-weighted imaging for cerebral microbleed analysis. Computer Methods and Programs in Biomedicine. DOI 10.1016/j.cmpb.2026.109433. PMID 42155350.
+   Shows: a zero-shot single-subject super-resolution framework (MagNeRF) preserves diagnostically relevant structures and brings downstream CMB segmentation on reconstructed SWI close to original high-resolution performance.
+
+[12] Momeni S, Fazlollahi A, Yates P, Rowe C, Gao Y, Liew AW, Salvado O. 2021. Synthetic microbleeds generation for classifier training without ground truth. Computer Methods and Programs in Biomedicine. DOI 10.1016/j.cmpb.2021.106127. PMID 34051412.
+   Shows: a random-Gaussian analytic synthetic-CMB model (released with 37,000 synthetic lesions) trains a detector to ~9 false positives per scan using synthetic data only.
+
+[13] Momeni S, Fazlollahi A, Lebrat L, Yates P, Rowe C, Gao Y, Liew AW, et al. 2021. Generative Model of Brain Microbleeds for MRI Detection of Vascular Marker of Neurodegenerative Diseases. Frontiers in Neuroscience. DOI 10.3389/fnins.2021.778767. PMID 34975381.
+   Shows: a 3D lesion GAN conditioned on volume and location trains a CNN to state-of-the-art real-CMB detection and transfers to an unseen dataset with different MRI parameters.
+
+[14] Nikseresht G, Evia AM, Agam G, Bennett DA, Schneider JA, Arfanakis K. 2026. Automated detection of cerebral microbleeds on ex-vivo MRI scans of community-based older adults. NeuroImage. DOI 10.1016/j.neuroimage.2026.121986. PMID 42107619.
+   Shows: multi-echo synthesis with self-supervised pretraining and confidence-aware learning captures 90% of definite CMBs (83% of all) at 15 FP/scan, a 46% average-precision gain over a real-data-only baseline.
+
+[15] Kang C, Mehta P, Chang YS, Bhadelia RA, Rojas R, Wintermark M, et al. 2025. Enhanced Reader Confidence and Differentiation of Calcification from Cerebral Microbleed Diagnosis Using QSM Relative to SWI. Clinical Neuroradiology. DOI 10.1007/s00062-024-01478-0. PMID 39690177.
+   Shows: in a reader study that QSM outperforms SWI/phase on accuracy, confidence and inter-rater agreement for differentiating CMB from calcification.
+
+[16] Liu S, Utriainen D, Chai C, Chen Y, Wang L, Sethi SK, Xia S, Haacke EM. 2019. Cerebral microbleed detection using Susceptibility Weighted Imaging and deep learning. NeuroImage. DOI 10.1016/j.neuroimage.2019.05.046. PMID 31121296.
+   Shows: combining SWI with high-pass filtered phase (to separate diamagnetic calcification from paramagnetic CMB) reaches sensitivity 95.8%, precision 70.9% and 1.6 FP/case.
+
+[17] Rashid T, Abdulkadir A, Nasrallah IM, Ware JB, Liu H, Spincemaille P, et al. 2021. DEEPMIR: a deep neural network for differential detection of cerebral microbleeds and iron deposits in MRI. Scientific Reports. DOI 10.1038/s41598-021-93427-x. PMID 34238951.
+   Shows: a multi-resolution U-Net using T2w, SWI and QSM distinguishes CMBs from non-haemorrhage iron deposits (CMB sensitivity 0.84–0.88, precision 0.40–0.59) and that QSM is the most informative input.
+
+[18] Zhang X, Ou N, Doga Basaran B, Visentin M, Qiao M, Gu R, Matthews PM, et al. 2025. A Foundation Model for Lesion Segmentation on Brain MRI With Mixture of Modality Experts. IEEE Transactions on Medical Imaging. DOI 10.1109/tmi.2025.3540809. PMID 40031588.
+   Shows: a universal brain-MRI lesion foundation model with a Mixture-of-Modality-Experts design handles 8 lesion types across 5 modalities and generalises to unseen datasets (CMB is not among the evaluated lesions).
+
+[19] Qamar S. 2026. Language-Guided Segmentation of Medical Images: A Review of Foundation Models. Bioengineering. DOI 10.3390/bioengineering13070803. PMID 42510469.
+   Shows: Reviews vision-language foundation models for medical segmentation and identifies prompt dependence, mask hallucination, slow volumetric inference and limited annotated data as open challenges.
+
+[20] Osman YBM, Elsanosi AHM, Jing C, Shen Y, Kuai H, Wang S, Ng W, et al. 2026. Diffusion models for brain imaging computing: a survey of frameworks and applications. Brain Informatics. DOI 10.1186/s40708-026-00301-5. PMID 42143201.
+   Shows: Surveys diffusion models across eight brain-imaging tasks and lists computational scalability, sampling inefficiency and limited generalisation under domain shift as deployment obstacles.
+
+[21] Ko JS, Choi Y, Jeong ES, Kim HJ, Lee GY, Park JE, Kim N, Kim HS, et al. 2025. Automated Quantification of Cerebral Microbleeds in SWI: Association with Vascular Risk Factors, White Matter Hyperintensity Burden, and Cognitive Function. AJNR American Journal of Neuroradiology. DOI 10.3174/ajnr.a8552. PMID 39443150.
+   Shows: an unmodified nnU-Net trained on SWI performed robustly on independent internal and external validation sets and that CMB counts associate with WMH burden and cognition.
+
+[22] Feng Y, Zheng L, Zhang B, Zou W. 2026. Accuracy of Deep Learning in Detecting Cerebral Microbleeds: Systematic Review and Meta-Analysis. Journal of Medical Internet Research. DOI 10.2196/95041. PMID 42767630.
+   Shows: pooled DL sensitivity/specificity of 0.96/0.98 at lesion level and 0.89/0.86 at patient level, and explicitly concludes that the small number of studies requires multicentre work for generalisable tools.
+
+[23] Yang SJ, Lim JS, Choi Y, Kim HS, Kim SJ, Lee JH, Suh CH. 2026. Comparing Susceptibility-Weighted Imaging and T2* Gradient-Recalled Echo for Cerebral Microbleeds Detection: A Systematic Review and Meta-Analysis. Journal of Clinical Neurology. DOI 10.3988/jcn.2025.0324. PMID 41775374.
+   Shows: in 13 studies that SWI detects ~1.6× more CMBs than T2*-GRE (1.9× for <2 mm slices) and recommends sequence-specific thresholds.
+
+[24] Sundaresan V, Arthofer C, Zamboni G, Dineen RA, Rothwell PM, et al. 2021. Automated Detection of Candidate Subjects With Cerebral Microbleeds Using Machine Learning. Frontiers in Neuroinformatics. DOI 10.3389/fninf.2021.777828. PMID 35126079.
+   Shows: machine learning can pre-select subjects with CMBs, the subject-level companion to MicrobleedNet's lesion-level detection.
+
+[25] Chen Y, Villanueva-Meyer JE, Morrison MA, Lupo JM. 2019. Toward Automatic Detection of Radiation-Induced Cerebral Microbleeds Using a 3D Deep Residual Network. Journal of Digital Imaging. DOI 10.1007/s10278-018-0146-z. PMID 30511280.
+   Shows: a 3D residual network keeps 95% of true microbleeds and reduces false positives by 89% (precision 71.9%) on 7 T SWI in radiation-induced CMBs.
+
+[26] Dadar M, Zhernovaia M, Mahmoud S, Camicioli R, Maranzano J, Duchesne S, et al. 2022. Using transfer learning for automated microbleed segmentation. Frontiers in Neuroimaging. DOI 10.3389/fnimg.2022.940849. PMID 37555147.
+   Shows: high patch-level accuracy (99.6% sensitivity) but low per-lesion precision (Dice 0.28 in cortical GM), the classic patch-versus-lesion gap.
+
+[27] Lee H, Kim JH, Lee S, Jung KJ, Kim WR, Noh Y, Kim EY, Kang KM, et al. 2023. Detection of Cerebral Microbleeds in MR Images Using a Single-Stage Triplanar Ensemble Detection Network (TPE-Det). Journal of Magnetic Resonance Imaging. DOI 10.1002/jmri.28487. PMID 36285604.
+   Shows: ensembling 2D CNN detectors on axial, sagittal and coronal planes reaches 96.05% sensitivity in a single stage without a 3D network.
+
+[28] Khaffafi B, Khoshakhalgh H, Keyhanazar M, Mostafapour E. 2025. Automatic cerebral microbleeds detection from MR images via multi-channel and multi-scale CNNs. Computers in Biology and Medicine. DOI 10.1016/j.compbiomed.2025.109938. PMID 40056835.
+   Shows: Reports multi-channel and multi-scale CNN variants with sensitivity up to 99.6% and a "significant" false-positive reduction versus traditional methods (patch-level figures).
+
+[29] Akkaya HE, Polat Ö, Çolakoğlu H, İnanç Akpınar D, Kaya E. 2026. Deep Learning-Based Detection, Classification, and Segmentation of Cerebral Microbleeds. Eurasian Journal of Medicine. DOI 10.5152/eurasianjmed.2026.261414. PMID 42528054.
+   Shows: a custom DenseNet classifier (AUC 80%, specificity 68%) plus nnU-Net segmentation (sensitivity 89.4%, Dice 62.05%) on 108 cases and 108 controls.
+
+[30] Asari Y, Yasaka K, Endo K, Kanzawa J, Okimoto N, Watanabe Y, et al. 2026. Super-Resolution Deep Learning Reconstruction for T2*-Weighted Images: Improvement in Microbleed Lesion Detection and Image Quality. Journal of Imaging Informatics in Medicine. DOI 10.1007/s10278-025-01522-6. PMID 40301290.
+   Shows: in a 69-patient reader study that super-resolution DL reconstruction improves microbleed detection over conventional DL reconstruction (figure of merit 0.690 vs 0.645, p<0.001).
+
+[31] Kiani Kalejahi B, et al. 2026. GAN-Based Cross-Modality Brain MRI Synthesis: Paired Versus Unpaired Training and Comparison with Diffusion and Transformer Models. Biomimetics. DOI 10.3390/biomimetics11030175. PMID 41892098.
+   Shows: Compares paired/unpaired CycleGAN, DDPM and transformer-enhanced GAN for cross-modality MRI synthesis and quantifies the fidelity-versus-compute trade-off (not CMB-specific).
+
+[32] Hassanzadeh T, Sachdev S, Wen W, Sachdev PS, Sowmya A. 2025. A robust deep learning framework for cerebral microbleeds recognition in GRE and SWI MRI. NeuroImage: Clinical. DOI 10.1016/j.nicl.2025.103873. PMID 40886589.
+   Shows: a 3D CNN plus YOLO false-positive stage across public (ADNI, AIBL) and private (OATS, MAS) datasets, with F1 0.930/0.946/0.851/0.900 respectively.
+
+[33] Koschmieder K, Paul MM, van den Heuvel TLA, van der Eerden AW, van Ginneken B, Manniesing R. 2022. Automated detection of cerebral microbleeds via segmentation in susceptibility-weighted images of patients with traumatic brain injury. NeuroImage: Clinical. DOI 10.1016/j.nicl.2022.103027. PMID 35597029.
+   Shows: Compares patch-CNN and U-Net for traumatic CMBs; the U-Net reaches 90% detection at 17.1 FP in TBI patients and 3.4 FP in controls.
+
+[34] Won SY, Kim JH, Woo C, Kim DH, Park KY, Kim EY, Baek SY, Han K, et al. 2024. Real-world application of a 3D deep learning model for detecting and localizing cerebral microbleeds. Acta Neurochirurgica. DOI 10.1007/s00701-024-06267-9. PMID 39325068.
+   Shows: AI assistance raised a radiology resident's per-lesion sensitivity from 0.621 to 0.922 (p=0.017) with no significant change in false positives per patient, while accurately assigning lobar/deep/infratentorial location.
+
+[35] Matsoukas S, Scaggiante J, Schuldt BR, Smith CJ, Chennareddy S, et al. 2022. Accuracy of artificial intelligence for the detection of intracranial hemorrhage and chronic cerebral microbleeds: a systematic review and pooled analysis. La Radiologia Medica. DOI 10.1007/s11547-022-01530-4. PMID 35962888.
+   Shows: Pools 19 CMB studies to sensitivity 91.6%, specificity 93.9%, accuracy 92.7%, and names labelled-data scarcity and false-positive reduction as the main challenges.
+
+[36] Rosa-Grilo M, et al. 2026. Accelerated 3D MRI for ARIA monitoring in Alzheimer's disease. Alzheimer's & Dementia. DOI 10.1002/alz.71297. PMID 41876395.
+   Shows: accelerated Wave-CAIPI 3D SWI cuts acquisition time up to 56% and gave higher microbleed severity gradings than standard 2D T2*-GRE for ARIA-H interpretation.
+
+[37] Phelps J, Singh M, McCreary CR, Dallaire-Théroux C, Stein RG, Potvin-Jutras Z, et al. 2025. Cerebral small vessel disease lesion segmentation methods: A systematic review. Cerebral Circulation - Cognition and Behavior. DOI 10.1016/j.cccb.2025.100396. PMID 41080650.
+   Shows: Systematically reviews 10 years of automated CSVD lesion segmentation (WMH, CMB, PVS, lacunes, RSSI) in populations with or at risk for CSVD.
+
+### Notes on verification
+
+- Every PMID and DOI above is checked with the local tool
+  (local research folder) (see the run reported with this task);
+  metadata (authors, year, journal, DOI) comes from the Europe PMC core records saved in `refs_meta.json`.
+- [8] is a bioRxiv preprint with no PMID; it is included because it is the only retrieved fully-automated
+  cascade using QA labels instead of dense masks, and it is marked as a preprint in the text.
+- arXiv was unavailable in this task; no arXiv identifier is cited. Claims about foundation models therefore rest
+  only on [18], [19], [20].
+- Unverified / not covered by retrieved abstracts: no retrieved work reports CMB-specific transformer or
+  foundation-model performance; no retrieved successor benchmark to VALDO exists.
+### Claims not supported by the abstracts
+The following claim in sections 2–4 is marked "(unverified)" in place because the abstract of the reference it
+cites does not support it (the substance may be supported by another reference's abstract, but the citation as
+written is not):
+
+- Section 2 (lesion-level scores): "sensitivity ~96% at low FP for a single-stage triplanar ensemble [4]
+  (unverified)". The abstract of [4] (Kim et al. 2025) describes a single end-to-end 3D U-Net with a Region
+  Proposal Network on SWI + phase and reports a sensitivity of 94.66% (vs 93.33% for the baseline RPN) — it is not
+  a *triplanar ensemble* and does not report ~96%. The "triplanar ensemble" with 96.05% sensitivity is reference
+  [27] (TPE-Det). The number itself is therefore supported by [27]'s abstract, but not by [4]'s, so the claim as
+  cited by [4] is marked unverified.

@@ -1,0 +1,294 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-17</span><span>Herkunft</span><span>research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 &#x27;Shows&#x27; spot checks against abstracts)</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../../agent_tooling/rules/check-every-cited-source-and-summarise-it.html">Every cited source is checked against the original and carries a one-sentence summary</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.md">knowledge/brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.md</a></span></div><h2>Aussage</h2>
+<ul>
+<li>FD is computed by applying a box-counting / fractal estimator to a <strong>binary 3D mask of a segmented
+  structure</strong> (cortical ribbon, WM volume, GM/WM boundary, pial surface, or an individual subcortical /
+  parcellated region), typically after FreeSurfer segmentation and 3D reconstruction [1][6][16][22].</li>
+<li>The natural analysis unit is a per-structure or per-parcellation binary volume; whole-brain,
+  whole-cortex, lobar and single-subcortical-nucleus variants are all in use [1][3][19][20][22].</li>
+<li><strong>Scale / box-size range and estimator choice matter and must be fixed and reported</strong>: spatial-scale
+  optimisation improves FD accuracy, and different estimators (e.g. correlation dimension vs others)
+  differ substantially in reproducibility [6][16].</li>
+<li>Reliability is generally <strong>good</strong>: intersession ICCs around 0.9–0.95 for the best-performing estimators,
+  with FD and gyrification typically more reliable than cortical thickness [2][16].</li>
+<li>FD is <strong>sensitive to image characteristics</strong>, not just to structure: image registration scheme,
+  sequence weighting and spatial resolution significantly shift absolute FD values [6]; scanning protocol
+  choice changes reliability [2].</li>
+<li>FD frequently shows <strong>greater age- and disease-related sensitivity than volume</strong> for subcortical
+  structures (notably caudate and thalamus) and greater sensitivity than cortical thickness or gyrification
+  for age-related cortical differences [1][3][4].</li>
+<li>In clinical work FD adds information beyond volumetry: in anti-LGI1 encephalitis (a Charité cohort) FD was
+  reduced in fronto-temporo-parietal and subcortical regions and was often the <em>more important</em> measure in
+  affected areas [8].</li>
+<li>FD is usable <strong>longitudinally</strong>: linear mixed-effects models over up to 3 visits in anti-LGI1 encephalitis
+  detected regional FD change [8], and a multi-site age-prediction study shows cross-site structural
+  measures are systematic enough for individual-level modelling [5].</li>
+<li>For our 600-patient multi-centre cohort the main threats are <strong>site/scanner and registration effects on
+  absolute FD</strong>; a fixed processing pipeline plus site harmonisation and reliability checks are mandatory [6][2].</li>
+</ul>
+<hr />
+<h3>Practical recommendation (as written for our setup)</h3>
+<p>FreeSurfer 8 <code>recon-all</code> + longitudinal stream, multi-centre 3T stroke cohort, ~600 patients, up to 4 sessions
+over 5 years.</p>
+<ol>
+<li><strong>Compute FD on FreeSurfer output with a fixed, reported estimator.</strong> Segment with the longitudinal stream,
+   build binary masks per cortical parcellation and per subcortical structure, and run a box-counting /
+   fractal estimator on those masks. Follow the retrieved practice of FreeSurfer segmentation plus an FD
+   toolbox (calcFD is the one named in the literature) [1][19][20]; a whole-brain/skeleton 3DFD box-counting
+   alternative exists [17].</li>
+<li><strong>Fix the scale range and the estimator, and state them in the methods.</strong> Do not use defaults: optimise the
+   spatial scale in simulations/phantoms first [6], and prefer the estimator with the highest within-subject
+   reproducibility (correlation dimension performed best, ICC 0.9–0.95) [16]. Report box sizes and estimator
+   explicitly — heterogeneity in these choices is the main reason the systematic review cannot pool results [7].</li>
+<li><strong>Treat registration as a first-class confound.</strong> Unbalanced registration shifts absolute FD and produces
+   spurious associations; re-register consistently and verify no deviation clusters around the registration
+   target [6]. Keep the FreeSurfer longitudinal template-based processing uniform across sessions and sites.</li>
+<li><strong>Run an in-study reliability/QC check.</strong> You have repeated sessions (up to 4 over 5 years) — use them to
+   compute intersession ICCs for FD per structure, mirroring the test-retest literature [2][16], and drop
+   structures with poor reproducibility.</li>
+<li><strong>Harmonise across sites and model site explicitly.</strong> Multi-centre FD is affected by image characteristics
+   [6]; a cross-site design is feasible (1056-adult multi-site age prediction worked) but site must enter the
+   statistical model [5]. Harmonisation of FD itself (e.g. ComBat) is <strong>unverified</strong> in the retrieved
+   literature and should be validated internally before use.</li>
+<li><strong>Always report FD alongside volume and thickness.</strong> FD adds independent information and is often more
+   sensitive, but they index distinct structure aspects [1][3][4]; reviewers expect all three [7].</li>
+<li><strong>Use longitudinal mixed-effects models</strong> with age (FD is non-linearly age-dependent [15]) and disease
+   duration as predictors, as done in the Charité anti-LGI1 study [8].</li>
+<li><strong>Expect region-specific effects, not a global FD drop.</strong> Clinical FD differences are regional
+   [8][11][12][21][22]; plan a parcellated/hierarchical analysis with multiple-comparison control rather than
+   one whole-cortex number.</li>
+</ol>
+<hr />
+<h2>Trägt</h2>
+<p>Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). Spot check: reference with PMID 39347569 is a COMMENTARY on Wang et al.; its 'Shows' line describes the original study's results.</p>
+<h2>Trägt nicht</h2>
+<p>Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:</p>
+<ul>
+<li><strong>Small vessel disease:</strong> no retrieved study reports FD in SVD or against WMH burden — a clear gap for this
+  stroke cohort.</li>
+<li><strong>FD in acute and post-stroke outcome prediction:</strong> only one stroke study (dysarthria) was retrieved [13];
+  FD as a stroke-outcome biomarker is not established here.</li>
+<li><strong>Field strength:</strong> no retrieved abstract isolates 1.5T vs 3T vs 7T effects on FD; relevant if any site in the
+  consortium differs.</li>
+<li><strong>Harmonisation:</strong> whether ComBat-style or other harmonisation preserves FD signal across sites is
+  <strong>unverified</strong>.</li>
+<li><strong>Python tooling:</strong> no retrieved abstract documents a maintained Python implementation; the literature is
+  MATLAB-centric (calcFD, Madan toolbox) [1][19][20].</li>
+<li><strong>Acquisition protocol for maximum reliability:</strong> the test-retest work shows protocol matters but does not
+  give a single recommended 3T protocol for FD [2][6].</li>
+<li><strong>Stroke-specific FD reference values</strong> across the 5-year trajectory, and whether FD change is monotonic or
+  state-dependent (as in anorexia nervosa [19][20]), are unknown.</li>
+</ul>
+<hr />
+<h2>Bruchindikator</h2>
+<p>A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.</p>
+<h2>Ablesung</h2>
+<p>All references were retrieved and verified via PubMed E-utilities in this task; author/year/title/journal/DOI
+were extracted from the efetch XML (<code>refs/verified_refs_out.txt</code>).</p>
+<p>[1] Madan CR, Kensinger EA (2016). Cortical complexity as a measure of age-related brain atrophy. <em>NeuroImage</em>.
+    DOI 10.1016/j.neuroimage.2016.04.029. PMID 27103141.
+   Shows: in over 400 adults across the lifespan, whole-cortex fractal dimensionality was more sensitive to
+   age-related differences than either cortical thickness or gyrification index, with regional differences
+   suggesting the measures index distinct aspects of cortical structure, and the authors provide a freely
+   available MATLAB toolbox.
+[2] Madan CR, Kensinger EA (2017). Test-retest reliability of brain morphology estimates. <em>Brain Informatics</em>.
+    DOI 10.1007/s40708-016-0060-4. PMID 28054317.
+   Shows: across two open-access test-retest datasets, intersession reliability of cortical thickness,
+   gyrification and fractal dimensionality and of subcortical volume and fractal dimensionality was generally
+   good - best for gyrification and FD - and highest for the dataset whose sequence was optimised for
+   brain-morphology analyses.
+[3] Madan CR, Kensinger EA (2017). Age-related differences in the structural complexity of subcortical and
+    ventricular structures. <em>Neurobiology of Aging</em>. DOI 10.1016/j.neurobiolaging.2016.10.023. PMID 27939959.
+   Shows: in nearly 900 adults (18-94 years) across three datasets, age-related differences in structural
+   complexity exceeded those in volume for subcortical structures, particularly caudate and thalamus, while
+   ventricular complexity was not more strongly related to age than volume.
+[4] Madan CR (2021). Beyond volumetry: Considering age-related changes in brain shape complexity using fractal
+    dimensionality. <em>Aging Brain</em>. DOI 10.1016/j.nbas.2021.100016. PMID 36911503.
+   Shows: fractal dimensionality captures both volumetric and shape-related age differences and is more
+   sensitive to age-related subcortical differences than volume, and the standard normalisation methods are
+   not robust enough to adjust for these inter-individual shape differences.
+[5] Madan CR, Kensinger EA (2018). Predicting age from cortical structure across the lifespan. <em>European
+    Journal of Neuroscience</em>. DOI 10.1111/ejn.13835. PMID 29359873.
+   Shows: using T1-weighted MRI from multiple sites (training set 1056 healthy adults, 18-97 years), age was
+   predicted in two independent held-out samples with a median error of 6-7 years, best when combining
+   cortical thickness and fractal dimensionality - evidence that cross-site structural measures are systematic
+   enough for individual-level modelling.
+[6] Krohn S, et al. (2019). Evaluation of the 3D fractal dimension as a marker of structural brain complexity
+    in multiple-acquisition MRI. <em>Human Brain Mapping</em>. DOI 10.1002/hbm.24599. PMID 31090254.
+   Shows: spatial-scale optimisation significantly improved FD estimation accuracy in simulations, FD
+   estimates were highly stable across repeated acquisitions in the MASSIVE and Midnight Scan Club datasets but
+   sensitive to image characteristics, and unbalanced registration had a significant impact on absolute FD,
+   inducing deviation clusters, bidirectional correlations and spurious associations that disappeared after
+   re-registration.
+[7] Meregalli V, et al. (2022). Cortical complexity estimation using fractal dimension: A systematic review of
+    the literature on clinical and nonclinical samples. <em>European Journal of Neuroscience</em>.
+    DOI 10.1111/ejn.15631. PMID 35229388.
+   Shows: a systematic review of 62 studies found cortical complexity appears to decrease with ageing and in
+   various pathological processes, but the high heterogeneity between studies prevents firm conclusions - cited
+   as the reason estimator and scale settings must be reported.
+[8] Zhao W, Wurdack K, et al. (2026). Structural Brain Changes Are Linked to Clinical and Cognitive Outcomes
+    in Anti-LGI1 Encephalitis. <em>Neurology: Neuroimmunology &amp; Neuroinflammation</em>.
+    DOI 10.1212/NXI.0000000000200649. PMID 42753224. (Charité–Universitätsmedizin Berlin)
+   Shows: in 34 patients with anti-LGI1 encephalitis and 34 matched controls (Charité, 3T T1-weighted MRI
+   processed with FreeSurfer plus fractal analysis, up to 3 visits), FD was reduced in fronto-temporo-parietal
+   cortices and FD and volume were reduced subcortically, with FD more frequently the more important measure;
+   reduced pallidal FD related to less mRS improvement and fronto-temporal/subcortical reductions to impaired
+   cognition, and longitudinal change was modelled with linear mixed-effects models.
+[9] Krohn S, Romanello A, et al. (2026). Fractal analysis of brain shape formation predicts age and genetic
+    similarity in human newborns. <em>Nature Neuroscience</em>. DOI 10.1038/s41593-025-02107-w. PMID 41461933.
+   Shows: fractal dimensionality of neonatal brain shape predicted age at scan (mean error about 4 days),
+   detected premature-birth signatures not captured by brain size, and captured age and genetic information
+   significantly better than cortical thickness, curvature, gyrification, sulcation, surface area and the
+   T1/T2 ratio.
+[10] Wang S, et al. (2024). Neuro-evolutionary evidence for a universal fractal primate brain shape. <em>eLife</em>.
+    DOI 10.7554/eLife.92080. PMID 39347569.
+   Shows: cortices of 11 primate species (overlapping 70 further mammals) follow a common scale-free
+   morphometric trajectory approximating one archetypal fractal shape with df = 2.5, and the effect size of
+   ageing on morphology rose more than fourfold at a spatial scale of about 2 mm compared with standard
+   morphological analyses.
+[11] Tibon R, et al. (2026). Structural complexity of brain regions in mild cognitive impairment and
+    Alzheimer's disease. <em>Brain and Cognition</em>. DOI 10.1016/j.bandc.2026.106443. PMID 42166829.
+   Shows: FD measures were consistent across the ADNI and BioFIND datasets, separated MCI/AD patients from
+   controls including at the individual level, and the regional contributions matched the brain's memory
+   network.
+[12] Schoen S, et al. (2025). Boundary complexity of cortical and subcortical areas predicts deep brain
+    stimulation outcomes in Parkinson's disease. <em>Nature Communications</em>. DOI 10.1038/s41467-025-60695-4.
+    PMID 40595525.
+   Shows: in 231 Parkinson's disease patients, FD differed from controls in nine cortical and subcortical
+   regions, and adding regional FD improved prediction of post-DBS medication change (R2 0.252 -&gt; 0.388;
+   classification AUC 0.64 -&gt; 0.76).
+[13] Zhou Y, et al. (2026). Cortical morphological changes in stroke-associated dysarthria patients.
+    <em>Frontiers in Neurology</em>. DOI 10.3389/fneur.2026.1766268. PMID 41940291.
+   Shows: in 48 patients with stroke-associated dysarthria and 72 matched controls (surface-based
+   morphometry), fractal dimension was significantly increased in the left insula and gyrification was elevated
+   in bilateral insula, superior temporal and precentral gyri, with no difference between supratentorial and
+   infratentorial lesions.
+[14] Schwichtenberg K, et al. (2026). Association of structural brain changes with cognitive deficits and
+    fatigue in patients with post-COVID-19 condition. <em>Brain Communications</em>. DOI 10.1093/braincomms/fcag099.
+    PMID 41940188.
+   Shows: in 49 patients with post-COVID-19 condition versus 48 matched controls, thalamic volumes were
+   reduced and fractal dimensionality showed increased complexity in the occipital lobes and hippocampal
+   fimbriae with reduced complexity in the thalamus bilaterally.
+[15] Farahibozorg S, et al. (2015). Age- and sex-related variations in the brain white matter fractal dimension
+    throughout adulthood: an MRI study. <em>Clinical Neuroradiology</em>. DOI 10.1007/s00062-013-0273-3. PMID 24413801.
+   Shows: box-counting FD of white matter in 209 healthy adults followed an inverse-U trajectory over adulthood
+   (general and skeleton FD, boundary FD less affected), with sex differences and sharper age-related change in
+   men, and FD correlated positively with volume.
+[16] Goñi J, et al. (2013). Robust estimation of fractal measures for characterizing the structural complexity
+    of the human brain: optimization and reproducibility. <em>NeuroImage</em>. DOI 10.1016/j.neuroimage.2013.06.072.
+    PMID 23831414.
+   Shows: analysing the box-counting parameters of three fractal methods for the pial surface, cortical ribbon
+   volume, white-matter volume and GM/WM boundary in two datasets from different centres (50 subjects x 3 and
+   24 subjects x 4 sessions), the correlation dimension gave the highest within-subject reproducibility
+   (ICC 0.9-0.95) and several parameters were identified as critical, with region-specific individual
+   variability in parcellated cortical and subcortical grey matter.
+[17] Jiménez J, et al. (2014). A Web platform for the interactive visualization and analysis of the 3D fractal
+    dimension of MRI data. <em>Journal of Biomedical Informatics</em>. DOI 10.1016/j.jbi.2014.05.011. PMID 24909817.
+   Shows: a public web platform (3dfd.ujaen.es) computes the 3D box-counting fractal dimension of the entire
+   brain volume and of its 3D skeleton from MR images, demonstrated on multiple sclerosis, intrauterine growth
+   restriction and Alzheimer's disease data.
+[18] Collantoni E, et al. (2026). Cortical complexity in eating disorders: a systematic review and qualitative
+    synthesis. <em>European Archives of Psychiatry and Clinical Neuroscience</em>.
+    DOI 10.1007/s00406-025-02001-3. PMID 40307480.
+   Shows: a systematic review of 13 studies (525 AN, 69 BN, 478 controls) found consistent local gyrification
+   reductions in frontal, temporal and parietal regions in acute anorexia nervosa with partial normalisation
+   after weight restoration, and notes that emerging metrics such as fractal dimension lack methodological
+   consistency across studies.
+[19] Collantoni E, et al. (2020). Cortical Complexity in Anorexia Nervosa: A Fractal Dimension Analysis.
+    <em>Journal of Clinical Medicine</em>. DOI 10.3390/jcm9030833. PMID 32204343.
+   Shows: in 58 women with anorexia nervosa (38 acutely underweight, 20 recovered) and 38 controls, FreeSurfer
+   surface extraction plus the calcFD toolbox showed lower whole-cortex mean FD in acute AN (recovered patients
+   did not differ from controls) and FD correlating with age, BMI and illness duration.
+[20] Collantoni E, et al. (2023). Volume and complexity of the thalamus in Anorexia Nervosa: An exploratory
+    evaluation. <em>European Eating Disorders Review</em>. DOI 10.1002/erv.2965. PMID 36573401.
+   Shows: in 38 acute AN patients, 20 recovered AN patients and 38 controls, thalamic volume and calcFD
+   complexity were reduced at the whole-thalamus and nucleus level in acute AN and these alterations
+   normalised almost completely after weight restoration.
+[21] Chen JH, et al. (2020). Brain Cortical Complexity Alteration in Amyotrophic Lateral Sclerosis: A
+    Preliminary Fractal Dimensionality Study. <em>BioMed Research International</em>. DOI 10.1155/2020/1521679.
+    PMID 32280675.
+   Shows: in 22 ALS patients versus 20 healthy controls, regional FD computed with a computational anatomy
+   toolbox was decreased in motor and insular/cingulate regions, with FD in the right precentral gyrus
+   correlating with ALSFRS-R and disease-progression rate.
+[22] Zhao W, et al. (2018). Reduced structural complexity of the right cerebellar cortex in male children with
+    autism spectrum disorder. <em>PLoS ONE</em>. DOI 10.1371/journal.pone.0196964. PMID 29995885.
+   Shows: the first high-resolution 3D fractal analysis of the cerebellum (FreeSurfer-segmented) in 20 boys
+   with autism spectrum disorder versus 18 matched typically developing boys found a significant reduction of
+   FD in the right cerebellar cortex.</p>
+<hr />
+<h3>Note on source discipline</h3>
+<ul>
+<li>22 references, all retrieved live in this task (PubMed E-utilities and Europe PMC); journal, year, DOI and
+  PMID were read from the efetch XML, not from memory.</li>
+<li>Claims marked <strong>unverified</strong>: Python FD ports; field-strength-specific FD effects; FD harmonisation across
+  sites; FD in small vessel disease.</li>
+<li>Every reference carries a one-line <strong>Shows:</strong> summary taken from the retrieved abstract (17.10.2026 rule).</li>
+</ul>
+<hr />
+<h3>Claims not supported by the abstracts</h3>
+<p>Each claim below is attributed in the text to a reference whose retrieved abstract does not contain the
+statement; those spots are now marked <code>(unverified)</code> in the body.</p>
+<ul>
+<li><strong>Section 3.2 (Tools):</strong> "FreeSurfer is used for surface extraction and FD is then computed with <code>calcFD</code> on
+   cortical regions [19] and on the thalamus and its nuclei [20]." The abstracts of [19] and [20] do not name
+   <code>calcFD</code> (they describe FreeSurfer surface extraction and fractal-dimension estimation of the thalamus and
+   25 nuclei). The toolbox name is plausible but not in the abstracts.</li>
+<li><strong>Section 3.2 (Tools):</strong> "A FreeSurfer→FD chain exists and is used in Charité cohorts [8][19][20]." The
+   retrieved abstracts of [8], [19] and [20] do not show any use of FD in a Charité cohort other than [8]
+   itself (which is Charité); [19] and [20] are Milan cohorts and nothing in their abstracts links them to
+   Charité.</li>
+<li><strong>Section 3.8 (Longitudinal use):</strong> "Grey-matter FD in the white matter followed an inverted-U trajectory
+   across adulthood in a large sample (209 adults) [15]." The abstract of [15] reports FD of <strong>white matter</strong>
+   (general and skeleton FD, inverse-U over adulthood) — not "grey-matter FD in the white matter".</li>
+<li><strong>Section 3.8 (Longitudinal use):</strong> "Age-related FD trajectories are described as systematic enough to be
+   captured in individual-level models [4][5]." This is supported for [5] (multi-site age prediction, median
+   error 6–7 years). The abstract of [4] states that FD is more sensitive to age-related differences and that
+   standard normalisation is not robust enough; it does not describe individual-level modelling.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-17 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,0 +1,474 @@
+---
+id: research-subcortical-segmentation-longitudinal-stroke-2026-10
+typ: befund
+status: vorschlag
+thema: knowledge/brain_volumetry
+stand: 2026-10-17
+herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 'Shows' spot checks against abstracts)
+verweist_auf: [check-every-cited-source-and-summarise-it]
+---
+
+# Literature: subcortical segmentation for a multi-centre longitudinal stroke cohort
+
+## Aussage
+- FreeSurfer `aseg`, SynthSeg/SynthSeg+, FastSurfer, SAMSEG and FSL FIRST are all usable
+  for the large structures (whole hippocampus, striatum, thalamus, brainstem); the choice
+  is decided less by peak accuracy than by longitudinal use, lesion handling and
+  site harmonisation [1,2,3,4,5,6,7,8,10].
+- For a longitudinal cohort the decisive step is processing all sessions through one
+  unbiased within-subject template (FreeSurfer longitudinal stream) or an equivalent
+  longitudinal registration; treating sessions independently injects processing variance
+  into the change signal [7,27].
+- Lesion filling of T1 is sensible before any T1-based segmentation, but in the one
+  retrieved head-to-head test lesion filling did **not** change between-scanner and
+  within-scanner agreement for the six tested tools; the residual scanner effect was the
+  larger problem [6].
+- Reported smallest detectable change (SDC) is small within a scanner (1.0% for SAMSEG
+  whole brain) but much larger between scanners (4.8% for SynthSeg thalamus up to 29.3%
+  for CAT12 thalamus), which is the real limit on detecting atrophy [6].
+- Accuracy checks against manual tracing show automated packages systematically
+  *overestimate* basal-ganglia and thalamic volumes; the pallidum and thalamus are the
+  weakest structures, and errors are worst for the smallest volumes [4].
+- Hippocampal subfields and amygdalar nuclei are only reliable above roughly 200–300 mm3
+  per structure (unverified); small nuclei such as fimbria and hippocampal fissure have ~15%
+  reproducibility error [11,12].
+- Thalamic nuclei need a dedicated atlas (optionally with diffusion MRI); they are not a
+  standard output of the general packages [13,14].
+- Harmonisation is not optional: all retrieved harmonisation studies show large site or
+  scanner effects in volumetric and cortical measures, and ComBat/longComBat remove them
+  while preserving biological variance; longComBat is more powerful for longitudinal
+  change than cross-sectional ComBat [15,16,17,18].
+- Automatic QC flags exist (SynthSeg+ faulty-segmentation detection, MRIQC/Qoala-T
+  style outlier metrics), but manual inspection of a sample remains necessary; manual
+  editing of surfaces changes subcortical volumes substantially [3,10,19].
+- The specific claim that SynthSeg underestimates hippocampal atrophy is **unverified**
+  in the retrieved literature; plausible mechanisms below, but it must be tested in-house
+  against the FreeSurfer longitudinal stream before it is accepted as fact [6,11,12].
+
+---
+
+### Practical recommendation (as written for our setup)
+Given the retrieved evidence and the existing SynthSeg + FreeSurfer 8.x local setup, I
+recommend a two-track pipeline with a single primary analysis track and a cross-check.
+
+Primary track (volumetric readout for group statistics over time):
+1. Build one unbiased within-subject template per patient from all available sessions and
+   process every session against it (FreeSurfer longitudinal stream, or an equivalent
+   unbiased longitudinal registration). This is the step that most directly reduces the
+   processing variance that currently mixes into the change signal [7,30].
+2. Use lesion-filled T1 for segmentation, but do not expect lesion filling to remove
+   scanner effects; it addresses lesion-driven, not site-driven, variance [6,23]. Keep the
+   FLAIR-based lesion masks under a validated segmenter for the lesion maps themselves
+   [32].
+3. Keep SAMSEG (lesion-aware variant) as the primary T1 segmenter for the basal ganglia,
+   thalamus and brainstem. Justification: it was the most repeatable within scanner in the
+   3 T multicentre test (whole brain SDC 1.02%), is sequence-adaptive and protocol-robust,
+   and has a lesion-aware mode (unverified); it also delivered among the best
+   between-scanner SDC for thalamus with SynthSeg [6,8,9].
+4. Keep the FreeSurfer longitudinal stream (or FastSurfer-long) in parallel as the
+   reference segmentation for the same structures, because it is the best-validated
+   longitudinal framework and enables the hippocampal-subfield branch [7,12,27].
+5. Derive harmonisation from the raw volumes: apply longitudinal ComBat with scanner/ site
+   as batch and age/interval as covariates, and fit it on a training split. Cross-sectional
+   ComBat is an acceptable fallback, but expect lower power for change; and if ComBat is
+   fitted without training data it may fail to recover atrophy, so always check that
+   harmonisation preserves the expected atrophy contrast [17,18].
+6. Report structures only where the retrieved reliability evidence supports them:
+   whole hippocampus, striatum, thalamus, brainstem and larger amygdala volumes are the
+   robust core; hippocampal subfields above ~300 mm3 and amygdalar nuclei above ~200 mm3
+   only if the cohort-specific test-retest supports them; fimbria and hippocampal fissure
+   should not be primary endpoints [4,11,12,27].
+7. Do not use thalamic nuclei as a primary endpoint in this cohort unless diffusion MRI is
+   available and a nuclei-specific atlas is deployed; they are not a standard output of the
+   general tools and their reliability thresholds are stricter still [13,14].
+
+Cross-check track (this directly addresses the observed underestimation):
+8. On 20–30 patients, run FreeSurfer-long, SAMSEG and SynthSeg side by side on the same
+   lesion-filled, template-registered T1s and compare the *annualised percentage change*
+   of hippocampal volume, not the cross-sectional volumes. Report the tool-specific SDC
+   and compute whether each tool can separate patients with expected decline from stable
+   patients. Use the within-scanner versus between-scanner SDC decomposition from [6] as
+   the template for this analysis.
+9. Treat the "SynthSeg underestimates hippocampal atrophy" statement as a hypothesis to
+   test, because no retrieved abstract states it. The retrieved facts that make it
+   plausible are: SynthSeg has no learned spatial prior (unverified), so it cannot
+   regularise a partly lesioned or low-contrast anterior hippocampus [2]; most hippocampus
+   methods
+   over-segment at the anterior border and degrade on clinical data [11]; and
+   hippocampal-subfield reliability is strongly volume-dependent, so small structures
+   carry the largest error [12,27].
+10. Regardless of the chosen segmenter, run automatic QC (SynthSeg+ faulty-segmentation
+    flag plus an MRIQC/Qoala-T-style outlier pass on global measures, Euler number and
+    CNR) and manually review the flagged scans; a semi-automated strategy was the
+    best-performing one in the retrieved QC comparison (unverified), and manual editing
+    moves subcortical volumes substantially [3,19].
+
+If the group is willing to invest in task-specific training, a fine-tuned nnU-Net (or an
+ensemble) on locally traced stroke data is the most promising route to a single
+lesion-robust segmenter, based on the nnU-Net benchmark and the successful task-specific
+brainstem and single-contrast MS models [21,23,24]; a local training set of even a few
+dozen traced cases is a realistic starting point.
+
+---
+
+## Trägt
+Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). 
+## Trägt nicht
+Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:
+
+- No retrieved study measured hippocampal *atrophy rate* with SynthSeg against the
+  FreeSurfer longitudinal stream in a *stroke* cohort; the head-to-head evidence is from
+  MS and from cross-sectional accuracy benchmarks. This gap is the core of the local
+  observation and should be closed with the cross-check track in section 4.
+- The retrieved multicentre test found no clear effect of lesion filling on agreement
+  [6], which conflicts with the intuitive expectation and with the lesion-aware brainstem
+  result [23]; a stroke-specific replication is missing.
+- WMH effects on segmentation are documented but the best correction method is explicitly
+  left open by the retrieved paper [22].
+- Ventricle enlargement is not separately quantified in the retrieved abstracts; its
+  interaction with basal-ganglia and thalamic segmentation in stroke is **unverified**
+  from this evidence base.
+- Between-scanner SDC (4.8–29.3%) [6] and the harmonisation results [17,18] together imply
+  that a 5-year, 4-session, multi-site design may need within-site-only change estimates
+  or a very carefully fitted longitudinal ComBat; the required sample size for a given
+  effect size was not retrieved and is **unverified**.
+- Thalamic nuclei and hippocampal subfield reliability in the presence of basal-ganglia
+  infarcts specifically was not found in the retrieved literature.
+
+---
+
+## Bruchindikator
+A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.
+
+## Ablesung
+All entries were retrieved in this task via PubMed E-utilities / Europe PMC REST; DOIs and
+PMIDs are the ones the API returned for each record. Authors, year, title, journal and DOI
+were re-extracted programmatically from the stored XML (`REFS_VERIFIED.txt` in this
+folder). No arXiv source was used. No reference here was written from memory.
+
+
+
+[1] Fischl B, Salat DH, Busa E, et al. (2002). Whole brain segmentation: automated
+labeling of neuroanatomical structures in the human brain. Neuron.
+doi:10.1016/s0896-6273(02)00569-x. PMID:11832223.
+   Shows: In this FreeSurfer aseg method, voxels are labelled with one of 37 classes (including caudate, putamen, pallidum, thalamus, hippocampus and amygdala) from probabilistic information of a manually labelled training set, with accuracy comparable to manual labelling and robustness to anatomical variability such as ventricular enlargement - it is the baseline segmentation of our FreeSurfer branch.
+
+
+
+
+[2] Billot B, Greve DN, Puonti O, et al. (2023). SynthSeg: Segmentation of brain MRI scans
+of any contrast and resolution without retraining. Med Image Anal.
+doi:10.1016/j.media.2023.102789. PMID:36857946.
+   Shows: A CNN trained only on synthetic scans with fully randomised contrast and resolution segments real scans of six modalities and ten resolutions without retraining or fine-tuning, which is the cross-contrast robustness claimed for the local SynthSeg setup.
+
+
+
+
+[3] Billot B, Magdamo C, Cheng Y, et al. (2023). Robust machine learning segmentation for
+large-scale analysis of heterogeneous clinical brain MRI datasets. Proc Natl Acad Sci U S A.
+doi:10.1073/pnas.2216399120. PMID:36802420.
+   Shows: SynthSeg+ adds cortical parcellation, intracranial volume estimation and automated detection of faulty segmentations to whole-brain segmentation and replicated atrophy patterns in an ageing study of 14,000 scans - cited as an automatic QC flag for a large cohort.
+
+
+
+
+[4] Makowski C, Beland S, Kostopoulos P, et al. (2018). Evaluating accuracy of striatal,
+pallidal, and thalamic segmentation methods: Comparing automated approaches to manual
+delineation. Neuroimage. doi:10.1016/j.neuroimage.2017.02.069. PMID:28259781.
+   Shows: Against manual delineation of striatum, globus pallidus and thalamus in 30 subjects all three automated packages (FreeSurfer, FSL, MAGeT-Brain) overestimated volumes, the discrepancies were most pronounced for globus pallidus and thalamus and largest at the lower end of the volume distribution - the accuracy caveat for basal ganglia and thalamus.
+
+
+
+
+[5] Henschel L, Conjeti S, Estrada S, et al. (2020). FastSurfer - A fast and accurate deep
+learning based neuroimaging pipeline. Neuroimage.
+doi:10.1016/j.neuroimage.2020.117012. PMID:32526386.
+   Shows: FastSurfer replicates FreeSurfer's anatomical segmentation (95 classes) including surface reconstruction and cortical parcellation as a deep-learning pipeline, with high accuracy on unseen data and increased test-retest reliability, in a fraction of FreeSurfer's runtime - cited as the scalable FreeSurfer alternative.
+
+
+
+
+[6] van Nederpelt DR, Amiri H, Brouwer I, et al. (2023). Reliability of brain atrophy
+measurements in multiple sclerosis using MRI: an assessment of six freely available software
+packages for cross-sectional analyses. Neuroradiology.
+doi:10.1007/s00234-023-03189-8. PMID:37526657.
+   Shows: In 21 people with MS rescanned on three 3 T scanners, all six packages reached good to excellent agreement for large structures, lesion filling made no clear difference and between-scanner smallest detectable change was large (4.83% for SynthSeg thalamus up to 29.25% for CAT12 thalamus), which hampers clinical use of atrophy measurements - the source of the SDC figures used here.
+
+
+
+
+[7] Reuter M, Schmansky NJ, Rosas HD, et al. (2012). Within-subject template estimation for
+unbiased longitudinal image analysis. Neuroimage.
+doi:10.1016/j.neuroimage.2012.02.084. PMID:22430496.
+   Shows: An unbiased, robust within-subject template built from all time points and identical processing of every time point reduce processing bias and over-regularisation and increase precision and discrimination power - the justification for the FreeSurfer longitudinal stream.
+
+
+
+
+[8] Puonti O, Iglesias JE, Van Leemput K (2016). Fast and sequence-adaptive whole-brain
+segmentation using parametric Bayesian modeling. Neuroimage.
+doi:10.1016/j.neuroimage.2016.09.011. PMID:27612647.
+   Shows: A sequence-adaptive parametric Bayesian whole-brain segmentation reached state-of-the-art accuracy on four datasets with different scanners, field strengths and sequences while being one to two orders of magnitude faster, and is robust to small training sets - cited for SAMSEG.
+
+
+
+
+[9] Billot B, Cerri S, Van Leemput K, et al. (2021). Joint segmentation of multiple
+sclerosis lesions and brain anatomy in MRI scans of any contrast and resolution with CNNs.
+Proc IEEE Int Symp Biomed Imaging. doi:10.1109/isbi48211.2021.9434127. PMID:34367472.
+   Shows: A CNN that trains only on synthetic scans with simulated lesions segments MS lesions and brain anatomy jointly in scans of any contrast and resolution and was compared with a state-of-the-art Bayesian FreeSurfer approach and with dataset-specific CNNs trained on real data - cited here for lesion-aware segmentation, although the abstract describes a SynthSeg-based CNN and not an extension of SAMSEG (see section 7).
+
+
+
+
+[10] Dewey J, Hana G, Russell T, et al. (2010). Reliability and validity of MRI-based
+automated volumetry software relative to auto-assisted manual measurement of subcortical
+structures in HIV-infected patients from a multisite study. Neuroimage.
+doi:10.1016/j.neuroimage.2010.03.033. PMID:20338250.
+   Shows: Against auto-assisted manual tracing of caudate, putamen, amygdala and hippocampus in 120 HIV patients of a multisite study, FreeSurfer showed the lower absolute volume difference in five structures, higher sensitivity in seven and higher spatial overlap in all eight, with less variability than IBASPM, yet the authors still require visual inspection and manual correction.
+
+
+
+
+[11] Sghirripa S, Bhalerao G, Griffanti L, et al. (2025). Evaluating Traditional, Deep
+Learning and Subfield Methods for Automatically Segmenting the Hippocampus From MRI.
+Hum Brain Mapp. doi:10.1002/hbm.70200. PMID:40143669.
+   Shows: A benchmark of ten automatic hippocampus methods found that most, especially deep-learning methods trained on manual labels, performed well on public data but showed more error and variability on clinical data and often over-segmented the anterior hippocampus - the reason to validate on a local, lesion-containing sample.
+
+
+
+
+[12] Marizzoni M, Antelmi L, Bosch B, et al. (2016). Longitudinal reproducibility of
+automatically segmented hippocampal subfields: A multisite European 3T study on healthy
+elderly. Hum Brain Mapp. doi:10.1002/hbm.22859. PMID:26043939.
+   Shows: In 65 healthy elderly scanned at 13 3 T sites, hippocampal-subfield reproducibility was very good for whole hippocampus, CA2-3, CA4-DG and subiculum (~2% error, DICE > 0.90), good for CA1 and presubiculum (~5%) and poor for fimbria and hippocampal fissure (~15%), and within-session averaging of two T1 images improved subfield but not whole-hippocampus reproducibility - the error budget of the subfield branch.
+
+
+
+
+[13] Iglesias JE, Insausti R, Lerma-Usabiaga G, et al. (2018). A probabilistic atlas of the
+human thalamic nuclei combining ex vivo MRI and histology. Neuroimage.
+doi:10.1016/j.neuroimage.2018.08.012. PMID:30121337.
+   Shows: A probabilistic atlas of 26 thalamic nuclei built from ex vivo MRI and serial histology of 12 thalami (12 whole thalami from six autopsy samples) segmented in vivo with excellent test-retest reliability, robustness to contrast changes and sensitivity to differential thalamic effects in Alzheimer's disease - the reference atlas for thalamic nuclei.
+
+
+
+
+[14] Tregidgo HFJ, Soskic S, Althonayan J, et al. (2023). Accurate Bayesian segmentation of
+thalamic nuclei using diffusion MRI and an improved histological atlas. Neuroimage.
+doi:10.1016/j.neuroimage.2023.120129. PMID:37088323.
+   Shows: A Bayesian thalamic segmentation that fuses a histological atlas with structural and diffusion MRI likelihoods labelled 25 thalamic labels per hemisphere, improving nucleus identification by up to 10 percentage points over structural MRI alone with median test-retest Dice above 0.85 - the dedicated thalamic option, but it needs diffusion MRI.
+
+
+
+
+[15] Fortin JP, Parker D, Tunc B, et al. (2017). Harmonization of multi-site diffusion
+tensor imaging data. Neuroimage. doi:10.1016/j.neuroimage.2017.08.047. PMID:28826946.
+   Shows: In FA and MD maps of 205 healthy participants, DTI measurements were highly site-specific and combining sites without harmonisation could be counter-productive, while ComBat best modelled and removed inter-site variability and preserved biological variability.
+
+
+
+
+[16] Fortin JP, Cullen N, Sheline YI, et al. (2018). Harmonization of cortical thickness
+measurements across scanners and sites. Neuroimage.
+doi:10.1016/j.neuroimage.2017.11.024. PMID:29155184.
+   Shows: Across two large multi-site studies and 11 scanners, ComBat removed unwanted scanner-related variance in cortical thickness values while increasing the power and reproducibility of the subsequent statistical analyses - the cross-sectional harmonisation precedent.
+
+
+
+
+[17] Beer JC, Tustison NJ, Cook PA, et al. (2020). Longitudinal ComBat: A method for
+harmonizing longitudinal multi-scanner imaging data. Neuroimage.
+doi:10.1016/j.neuroimage.2020.117129. PMID:32640273.
+   Shows: On longitudinal cortical thickness of 663 ADNI participants, longitudinal ComBat was more powerful for detecting longitudinal change than cross-sectional ComBat and controlled the type I error rate better than unharmonised data with scanner as a covariate - the recommended harmonisation for our 4-session design.
+
+
+
+
+[18] Lu YC, Zuo L, Chou YY, et al. (2025). An evaluation of image-based and statistical
+techniques for harmonizing brain volume measurements. Imaging Neurosci (Camb).
+doi:10.1162/IMAG.a.73. PMID:40800765.
+   Shows: Comparing neuroCombat, DeepHarmony and HACA3 on GRE and MPRAGE data, all improved volume consistency but HACA3 was most effective (absolute volume difference < 3%, ICC > 0.9), and neuroCombat detected simulated hippocampal atrophy only when training data were available - the caveat to fit harmonisation on a training split.
+
+
+
+
+[19] Monereo-Sanchez J, de Jong JJA, Drenthen GS, et al. (2021). Quality control strategies
+for brain MRI segmentation and parcellation: Practical approaches and recommendations -
+insights from the Maastricht study. Neuroimage.
+doi:10.1016/j.neuroimage.2021.118174. PMID:34000406.
+   Shows: Among 12 quality-control strategies applied to 259 participants of the Maastricht Study, manual QC reduced relative unexplained variance most, the best automated alternatives were based on Euler numbers and MRIQC scores, and excluding outliers on global morphological measures increased unexplained variance - the basis for our QC recommendation.
+
+
+
+
+[20] Patenaude B, Smith SM, Kennedy DN, et al. (2011). A Bayesian model of shape and
+appearance for subcortical brain segmentation. Neuroimage.
+doi:10.1016/j.neuroimage.2011.02.046. PMID:21352927.
+   Shows: A Bayesian shape-and-appearance model trained on 336 manually labelled T1 images segmented 15 subcortical structures with median Dice overlaps of 0.7-0.9, comparable or better than other automated methods, and is distributed as FIRST with FSL - cited as the FSL subcortical option.
+
+
+
+
+[21] Isensee F, Jaeger PF, Kohl SAA, et al. (2021). nnU-Net: a self-configuring method for
+deep learning-based biomedical image segmentation. Nat Methods.
+doi:10.1038/s41592-020-01008-z. PMID:33288961.
+   Shows: nnU-Net configures its own preprocessing, network architecture, training and post-processing and without manual intervention surpassed most existing approaches, including highly specialised ones, on 23 public datasets - the framework for fine-tuning on local stroke data.
+
+
+
+
+[22] Karim HT, Andreescu C, MacCloud RL, et al. (2016). The effects of white matter disease
+on the accuracy of automated segmentation. Psychiatry Res Neuroimaging.
+doi:10.1016/j.pscychresns.2016.05.003. PMID:27254085.
+   Shows: In a late-life depression sample, white matter hyperintensities significantly affected segmentation, whether they were filled with normal-appearing white-matter intensities or a multispectral segmentation was used, and the affected regions were not limited to the WMH themselves, so studies in high-WMH populations should account for WMH - the WMH caveat for our cohort.
+
+
+
+
+[23] Gesierich B, Sander L, Pirpamer L, et al. (2025). Extended Technical and Clinical
+Validation of Deep Learning-Based Brainstem Segmentation for Application in
+Neurodegenerative Diseases. Hum Brain Mapp. doi:10.1002/hbm.70141. PMID:39936343.
+   Shows: Two deep-learning brainstem segmentation models (MD-GRU, nnU-Net) reached median Dice >= 0.95, showed scan-rescan and inter-scanner limits of agreement similar to longitudinal FreeSurfer in patients with cerebral small vessel disease, detected brainstem atrophy in 100% of multiple system atrophy patients and improved further with lesion filling in MS - the brainstem-specific, lesion-tolerant benchmark.
+
+
+
+
+[24] Goebl P, Wingrove J, Abdelmannan O, et al. (2025). Enabling new insights from old
+scans by repurposing clinical MRI archives for multiple sclerosis research. Nat Commun.
+doi:10.1038/s41467-025-58274-8. PMID:40195318.
+   Shows: MindGlide, trained on 4,247 scans of 2,934 MS patients across 592 scanners and validated on 14,952 scans, extracted lesion and region volumes from any single MRI contrast and detected treatment effects on T2-lesion accrual and on cortical and deep grey-matter volume loss - evidence for single-contrast deep learning on archive-like data.
+
+
+
+
+[25] Ozzoude M, Ramirez J, Raamana PR, et al. (2020). Cortical Thickness Estimation in
+Individuals With Cerebral Small Vessel Disease, Focal Atrophy, and Chronic Stroke Lesions.
+Front Neurosci. doi:10.3389/fnins.2020.598868. PMID:33381009.
+   Shows: In 155 patients with cerebral small vessel disease, focal atrophy and chronic stroke lesions, a correction procedure raised acceptable QC ratings for the cortical ribbon from 18 to 76% and for tissue segmentation from 38 to 92% and reduced failures, with the corrected output only then showing the expected association with cognitive status - the evidence that lesions and atrophy need explicit correction.
+
+
+
+
+[26] Schwarzer J, Khadhraoui E, Einspanner E, et al. (2025). Comparison of brain volumetry
+in patients with non-lesional epilepsy on 3 and 7 T MPRAGE. Quant Imaging Med Surg.
+doi:10.21037/qims-2025-1263. PMID:41209181.
+   Shows: Comparing 3 T and 7 T MPRAGE in non-lesional epilepsy, FreeSurfer and FastSurfer differed significantly at both field strengths with FastSurfer giving higher volumes, and 7 T inhomogeneities caused deviations in left hippocampal sub-segmentation while 3 T hippocampus segmentation was more homogeneous - cited for the sensitivity of these tools to acquisition conditions.
+
+
+
+
+[27] Quattrini G, Pievani M, Jovicich J, et al. (2020). Amygdalar nuclei and hippocampal
+subfields on MRI: Test-retest reliability of automated volumetry across different MRI sites
+and vendors. Neuroimage. doi:10.1016/j.neuroimage.2020.116932. PMID:32416226.
+   Shows: Across two independent cohorts with repeated 3D T1 MRI at different sites and vendors, site and vendor effects were extensive for the DICE score and reliability correlated strongly with volume size: only structures above 200 mm3 (amygdalar nuclei) and 300 mm3 (hippocampal subfields, except the molecular layer) reached reproducibility error < 5% and DICE > 0.80 - the volume thresholds used for reporting.
+
+
+
+
+[28] Li Q, Pardoe H, Lichter R, et al. (2015). Cortical thickness estimation in longitudinal
+stroke studies: A comparison of 3 measurement methods. Neuroimage Clin.
+doi:10.1016/j.nicl.2014.08.017. PMID:26110108.
+   Shows: Comparing one surface-based and two voxel-based cortical thickness methods in patients imaged in the first month after stroke and at 3 months, the methods differed importantly in high-curvature and peri-lesional regions but had similar reproducibility, and both approaches were judged valid in stroke - cited for the general effect of stroke lesions on automated estimates, not for subcortical volumes.
+
+
+
+
+[29] Hafiz R, Farmer C, Joseph L, et al. (2026). Evaluating Precision and Responsiveness of
+MRI-derived Brain Volumetric and Clinical Outcome Measures in CLN3 Disease. medRxiv.
+doi:10.64898/2026.09.29.26363931. PMID:42856707.
+   Shows: In 44 individuals with CLN3 disease, SynthSeg-v2 brain parenchyma and grey-matter volume were the most precise and responsive MRI-derived metrics (parenchyma decline -1.32%/year, minimum follow-up 0.85 years to detect progression in 75% of the cohort), supporting volumetric MRI as a trial endpoint - the precision argument for volumetric readouts.
+
+
+
+
+[30] Casamitjana A, Sala-Llonch R, Lekadir K, et al. (2025). USLR: An open-source tool for
+unbiased and smooth longitudinal registration of brain MRI. Med Image Anal.
+doi:10.1016/j.media.2025.103662. PMID:40592111.
+   Shows: USLR estimates spatial transformations in a Bayesian Lie-algebra framework that bring all timepoints to an unbiased subject-specific space with a smooth trajectory, and improved on cross-sectional methods in identifying group differences and in reducing intra-subject variability - the unbiased longitudinal registration alternative used in track 1.
+
+
+
+
+[31] Blattner T, Romascano D, McKinley R, et al. (2026). Mitigating the Impact of MR
+Sequence Parameters: Increasing the Robustness of DL-Based Cortical Thickness Estimates.
+Hum Brain Mapp. doi:10.1002/hbm.70560. PMID:42252567.
+   Shows: Fine-tuning a deep-learning segmentation tool on simulated MPRAGE images derived from quantitative relaxation maps reduced its sensitivity to inversion and repetition time markedly while keeping sensitivity to cortical atrophy, outperforming FreeSurfer and SynthSeg on a synthetic atrophy dataset - evidence that acquisition parameters feed into the change signal.
+
+
+
+
+[32] Wiltgen T, McGinnis J, Schlaeger S, et al. (2024). LST-AI: A deep learning ensemble
+for accurate MS lesion segmentation. Neuroimage Clin.
+doi:10.1016/j.nicl.2024.103611. PMID:38703470.
+   Shows: LST-AI, a 3D U-Net ensemble trained on 491 in-house T1/FLAIR MS image pairs, exceeded Dice and F1 scores of 0.62 and outperformed LST, SAMSEG and nnU-Net (all below 0.56), including a Dice of 0.65 on the MSSEG-1 challenge - why lesion maps should come from a validated lesion segmenter.
+
+---
+
+### Verification note
+
+Titles, journals, years, DOIs and author lists above were re-extracted programmatically
+from the PubMed XML stored in this folder after an initial hand-written draft was found to
+have mis-attributed DOIs (reference-list DOIs had leaked into some entries); the
+programmatic pass is the authoritative one. Every claim in sections 2-5 carries a bracketed
+number pointing to this list. Statements that the retrieved abstracts do not support are
+marked **unverified**. The final report was assembled by remapping the citation numbers
+after the reference list was corrected; see `BODY_remap.md` for the remapped body text.
+
+---
+### Claims not supported by the abstracts
+Claims from sections 2-4 that the abstract of the cited reference does not support; each
+was marked "(unverified)" at its place in the text. Checked against the abstracts retrieved
+with `literatur details <PMID>`.
+
+1. Sub-section 3.2, ref [2]: "it has no learned spatial prior from a fixed atlas".
+   The SynthSeg abstract describes domain randomisation of contrast and resolution and
+   training on synthetic data sampled from a generative model conditioned on segmentations,
+   but says nothing about a spatial prior or an atlas and never states that atlas priors are
+   absent. There is no claim in the abstract that the method has no spatial prior, so the
+   statement cannot be attributed to it. Same claim reappears in section 4, point 9.
+2. Sub-section 3.2, ref [2]: "Note that the absence of an atlas prior is a double-edged
+   property" and the following mechanistic sentence about removing regularisation. This is a
+   consequence drawn from claim 1; the abstract contains no such statement about a shape or
+   atlas prior, about unusual anatomy, or about lesions pulling towards a population shape.
+3. Sub-section 3.4, ref [9]: the description as "Its [SAMSEG's] lesion-aware extension".
+   Ref [9] is a SynthSeg-based CNN that trains on synthetic scans with simulated lesions;
+   the abstract does not present it as an extension of SAMSEG nor as a variant of the
+   sequence-adaptive Bayesian method of [8]. The Lesion-adaptive SAMSEG that the report
+   actually uses is not covered by any retrieved abstract here. Repeated in section 4,
+   point 3.
+4. Section 2, bullet 6, refs [11,12]: "Hippocampal subfields and amygdalar nuclei are only
+   reliable above roughly 200-300 mm3 per structure". Neither cited abstract states these
+   volume thresholds: ref [12] reports per-subfield reproducibility errors and only that
+   test-retest reproducibility improved with volume size, and ref [11] is a benchmark of ten
+   hippocampal segmentation methods that gives no volume threshold. The 200 mm3 (amygdalar
+   nuclei) and 300 mm3 (hippocampal subfields) numbers come from ref [27], which is not
+   cited in this bullet; the threshold as cited is therefore not covered by its sources.
+   The fimbria/fissure part of the same bullet (~15% error) is supported by [12] and stays
+   verified.
+5. Section 3.12, ref [19]: that manually editing surfaces changed "hippocampal volumes more
+   than some cortical measures" and that "the semi-automated strategies performed well".
+   The abstract states that manual editing produced particularly large changes in subcortical
+   volumes and moderate changes in cortical surface area, thickness and hippocampal volumes -
+   it never sets hippocampal volumes above cortical measures - and it concludes that manual
+   QC strategies reduced relative unexplained variance most, with the best automated
+   alternatives based on Euler numbers and MRIQC scores, so "the semi-automated strategies
+   performed well" is not what the paper found (the best semi-automated strategies were not
+   identified as the top performers, and outlier exclusion on global morphological measures
+   made things worse). Same wording repeated in section 4, point 10. The related statement
+   in section 2 ("manual editing moves subcortical volumes substantially") is supported by
+   the same abstract and stays unmarked.
+6. Section 4, point 9, ref [2]: "SynthSeg has no learned spatial prior, so it cannot
+   regularise a partly lesioned or low-contrast anterior hippocampus ... [2]". The citation
+   covers neither half: the abstract says nothing about a spatial prior (claim 1) and
+   nothing about how SynthSeg behaves on a lesioned or low-contrast hippocampus. The
+   over-segmentation of the anterior hippocampal border is supported by ref [11], which is
+   cited separately in the same point and stays verified.
+
+Not affected (the report already handles them correctly): the "SynthSeg underestimates
+hippocampal atrophy" hypothesis is explicitly labelled **unverified** in section 2 and is
+not presented as a supported claim. No retrieved report here measured SynthSeg hippocampal
+atrophy rates against FreeSurfer-long in stroke, which section 5 already states as an open
+question.

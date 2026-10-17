@@ -7,6 +7,9 @@ Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [research-fractal-dimensionality-from-freesurfer-2026-10](findings/research-fractal-dimensionality-from-freesurfer-2026-10.md) | Literature (22 refs, checked): FD by box counting on FreeSurfer masks; ICC ~0.9-0.95; sensitive to registration/sequence/site; more sensitive than volume; usable longitudinally |
+| befund | [research-lesion-filling-before-segmentation-2026-10](findings/research-lesion-filling-before-segmentation-2026-10.md) | Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling |
+| befund | [research-subcortical-segmentation-longitudinal-stroke-2026-10](findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md) | Literature (32 refs, checked): longitudinal template + longComBat decisive; between-scanner SDC 4.8-29 %; packages overestimate basal ganglia/thalamus; SynthSeg hippocampal underestimation unverified |
 | befund | [same-session-sequences-align-by-header-not-voxel-flirt](findings/same-session-sequences-align-by-header-not-voxel-flirt.md) | FLAIR onto T2*/SWI of one session: header coordinates align exactly (Dice 0.98); a voxel-space FLIRT start rotated LPS vs RAS files; SynthSeg from FLAIR only where it covers the brain (>= 0.85) |
 | regel | [longitudinal-volumetry-needs-error-statistics](rules/longitudinal-volumetry-needs-error-statistics.md) | Zu jeder Trendseite eine Fehlerseite: Test-Retest (SDw, CV, ICC, SDC95, Bland-Altman), Laengsschnitt-Residuen, Nachweisbarkeit (Jahre bis SDC), Ausfall/QC je Zeitpunkt; Laesionsausschluss nur mit Maske in allen Sitzungen |
 

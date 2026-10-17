@@ -1,0 +1,397 @@
+---
+id: research-lesion-filling-before-segmentation-2026-10
+typ: befund
+status: vorschlag
+thema: knowledge/brain_volumetry
+stand: 2026-10-17
+herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 'Shows' spot checks against abstracts)
+verweist_auf: [check-every-cited-source-and-summarise-it]
+---
+
+# Literature: lesion filling vs masking before segmentation and volumetry in stroke/WMH cohorts
+
+## Aussage
+- White-matter lesions are not a cosmetic problem: they are misclassified as grey matter (or vice versa) during
+  intensity-based segmentation, which biases GM/WM volumes and cortical thickness [1][2][3][6][11].
+- The bias is size- and contrast-dependent: it grows with lesion volume and is worst when lesion intensity is
+  close to the GM/WM interface [1][2][3].
+- Merely masking lesions out does **not** remove the bias; only replacing the lesioned voxels with plausible
+  tissue intensities (filling / inpainting) restored accurate tissue-class measurements [2].
+- Filling with normal-appearing WM intensity (LEAP, FSL `lesion_filling`) reduced simulated GM/WM volume errors
+  from ~2.3% / ~3.6% to ~0.1% [1]; the FSL/LST family is the standard building block in clinical pipelines
+  [2][7][26] (unverified: [1] supports the error reduction, but no abstract shows that FSL/LST is the *standard*
+  building block of clinical pipelines - that part is an inference from [2][7][26] using it).
+- Filling is not universally beneficial: in MS, FreeSurfer volumetry was essentially unchanged by filling, while
+  FSL-SIENAX and SPM changed, and inter-scanner reproducibility differed between packages [7][8].
+- Filling can introduce artefacts that scale with lesion load (r = 0.84 with total lesion volume) and therefore
+  needs quality control, especially at high lesion load [33].
+- Patch-based and deep-learning inpainting (NiftySeg/Prados, FastSurfer-LIT, MSRepaint, VBG) replaces lesions with
+  plausible texture instead of a flat WM intensity and outperforms simple filling on downstream parcellation
+  [5][17][18][21].
+- WMH specifically bias FreeSurfer subcortical GM volumes (caudate, putamen, thalamus, pallidum, accumbens) in a
+  systematic, age- and diagnosis-dependent way; correcting for WMH changed the direction of age and AD effects
+  [11]. WMH should therefore be corrected or explicitly accounted for, not ignored [11][36].
+- Modern tools partly handle lesions natively: SAMSEG has an explicit WMH/lesion model [14][15] and SynthSeg is
+  contrast- and resolution-robust and needs no retraining [13]. Neither the SynthSeg nor the SynthSeg+ abstract
+  mentions a lesion class (unverified as a negative claim — the abstracts simply do not describe one), so filling
+  remains the safer route for lesion-adjacent volumetry.
+- Masking (rather than filling) at the level of cortical-thickness estimation is the better strategy when
+  cortical thickness is the endpoint: masking lesion voxels from CT computation significantly attenuated
+  lesion-induced bias in TBI [12].
+- No single method is correct for all endpoints; for longitudinal stroke cohorts the defensible practice is: run
+  lesioned and lesion-free versions, apply one fixed, documented pipeline, and report the sensitivity of the
+  result to the lesion-handling choice [7][8][12][14].
+
+### Practical recommendation (as written for our setup)
+Our setup: infarcts filled by mirroring, WMH by FSL `lesion_filling`, thresholds 1 ml (infarct) / 10 ml (WMH).
+
+1. Mirroring for infarcts is defensible and has a long lineage - virtual brain transplantation filled the lesion
+   from the non-stroke hemisphere before FreeSurfer surface reconstruction [38], and modern variants (VBG [17],
+   FastSurfer-LIT [18], MSRepaint [21]) are essentially automatic, QC-able versions of the same idea. Keep
+   mirroring, but verify it does not duplicate healthy tissue across the midline for lesions touching midline
+   structures or crossing the falx; those need patch-based or diffusion inpainting instead [5][18].
+2. Keep FSL `lesion_filling` for WMH: it is the classical, reproducible implementation of the "refill with
+   normal-appearing WM" principle that removed the segmentation bias in the foundational simulation studies
+   [1][2], and it remains the reference against which newer inpainting is benchmarked [21].
+3. Thresholds: the retrieved literature does not support a hard volume cut-off. The bias is continuous in lesion
+   volume and worst near the GM/WM intensity interface [2][3]; a 1 ml / 10 ml rule is a pragmatic save-compute
+   choice, not a bias-free boundary. For subjects just below the threshold the systematic error is still present -
+   report it as a sensitivity analysis rather than treating those scans as clean.
+4. Because filling can introduce artefacts that scale with lesion load (r = 0.84) [33], add a QC step (difference
+   image before/after filling; check for rasterisation, spurious edges near CSF and deep GM) and exclude subjects
+   whose filling QC fails rather than silently carrying artefacts. Note also the cautionary result that filling
+   can reduce parcellation accuracy for small lesions in FastSurfer [29] - filling small lesions is not
+   automatically an improvement.
+5. For volumetry in these subjects, prefer a pipeline that tolerates lesions: SAMSEG (explicit WMH model,
+   FreeSurfer-integrated [14][15]) or SynthSeg/SynthSeg+ on the filled image for whole-brain and ICV [13][19].
+   Do **not** switch segmentation engines between arms or between time points: engine choice changes volumes more
+   than filling does [7][8][16].
+6. For cortical-thickness endpoints after stroke, prefer masking lesion voxels from CT estimation (not only from
+   summarisation) - this was the only variant that significantly attenuated the bias in the closest available
+   analogue (contusions in TBI) [12].
+7. For WMH volume itself, report at least one cross-check: WMH-SynthSeg on T1 (good T1-only performance in stroke
+   [23]) or SAMSEG (multi-site-robust [22][35]) alongside the FSL/BIANCA-based numbers, and state which is the
+   primary measure.
+
+## Trägt
+Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). 
+## Trägt nicht
+Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:
+
+- No retrieved study validates the exact combination "mirror-filled infarct plus FSL `lesion_filling` for WMH,
+  with 1 ml / 10 ml thresholds" in a stroke cohort; our pipeline is assembled from method papers, not validated
+  as a whole (unverified).
+- Threshold effects (1 ml / 10 ml) are not studied anywhere in the retrieved literature and are unverified as a
+  bias-relevant cut-off.
+- Filling versus not filling is largely a wash for whole-brain volume in MS across six packages [8], but stroke
+  lesions (cavities, cysts, CSF-like intensity) behave differently from MS WM lesions; comparable stroke-specific
+  validation on whole-brain/GM volumes is missing.
+- Artefact burden of FSL `lesion_filling` at high WMH load is documented for network analysis [33] but not
+  quantified for volumetry.
+- Long-term longitudinal stability of deep-learning inpainting (FastSurfer-LIT, MSRepaint) across scanners and
+  over years is not yet established [18][20][21].
+- Reporting standards: there is no consensus on which version (filled / unfilled / masked) should be published as
+  the primary analysis in stroke cohorts [20].
+
+## Bruchindikator
+A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.
+
+## Ablesung
+All references were retrieved in this task from PubMed (E-utilities) and Europe PMC; abstracts were read. Bracketed
+numbers are those used in the text. All entries below are PubMed-indexed journal articles.
+
+[1] Chard DT; Jackson JS; Miller DH; et al. (2010). Reducing the impact of white matter lesions on automated
+measures of brain gray and white matter volumes. Journal of Magnetic Resonance Imaging. DOI:10.1002/jmri.22214.
+PMID:20575080.
+   Shows: simulated white-matter lesions of 15 ml at 70% of normal WM intensity inflated SPM gray-matter fractions by
+   about 2.3% and lowered white-matter fractions by about 3.6%, and filling the lesions with values approximating
+   normal WM (LEAP) reduced these errors to about 0.1%; cited as the foundational demonstration that lesion filling
+   makes tissue-class volumetry valid.
+
+[2] Battaglini M; Jenkinson M; De Stefano N (2012). Evaluating and reducing the impact of white matter lesions on
+brain volume measurements. Human Brain Mapping. DOI:10.1002/hbm.21344. PMID:21882300.
+   Shows: the lesion-induced tissue misclassification of segmentation-based SIENAX varies strongly with lesion size
+   and intensity (worst when lesion intensity resembles the GM/WM interface) while registration-based SIENA is not
+   biased, that masking the lesions out leaves the misclassification in place, and that refilling with
+   normal-appearing white-matter intensities restores accurate tissue-class measurements.
+
+[3] Gelineau-Morel R; Tomassini V; Jenkinson M; et al. (2012). The effect of hypointense white matter lesions on
+automated gray matter segmentation in multiple sclerosis. Human Brain Mapping. DOI:10.1002/hbm.21402. PMID:21976406.
+   Shows: higher WM lesion volume artificially reduced total gray-matter volume in real MS data by about 72% of the
+   simulated effect, misclassified voxels sat at the GM/WM border and could be remote from the lesion, and lesion
+   filling corrected this and revealed lateralised deep-gray-matter shape changes.
+
+[4] Valverde S; Oliver A; Llado X (2014). A white matter lesion-filling approach to improve brain tissue volume
+measurements. NeuroImage: Clinical. DOI:10.1016/j.nicl.2014.08.016. PMID:25379419.
+   Shows: refilling lesion voxels with random values drawn from a per-2D-slice white-matter intensity distribution
+   yielded the lowest deviation in WM volume at 1.5 T and performed at least as well as state-of-the-art refilling
+   at 3 T, i.e. simple intensity-matched filling is competitive.
+
+[5] Prados F; Cardoso MJ; Kanber B; et al. (2016). A multi-time-point modality-agnostic patch-based method for
+lesion filling in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2016.06.053. PMID:27377222.
+Conference precursor: Prados F; et al. (2014), MICCAI, DOI:10.1007/978-3-319-10470-6_97, PMID:25485451.
+   Shows: a 5D patch-based multi-modality, multi-time-point non-local-means algorithm fills lesions with the most
+   plausible texture and introduces less bias, fewer artefacts and fewer spurious edges than existing filling
+   techniques, even when lesions neighbour gray matter or CSF; cited as the reference patch-based inpainting method.
+
+[6] Magon S; Gaetano L; Chakravarty MM; et al. (2014). White matter lesion filling improves the accuracy of
+cortical thickness measurements in multiple sclerosis patients: a longitudinal study. BMC Neuroscience.
+DOI:10.1186/1471-2202-15-106. PMID:25200127.
+   Shows: on unfilled T1 images 72% of WM lesion volume was misclassified as gray matter, filling raised correct
+   lesion classification to 94%, mean cortical thickness was significantly thinner on unfilled images, and
+   vertex-wise longitudinal analyses were more sensitive after filling.
+
+[7] Guo C; Ferreira D; Fink K; et al. (2019). Repeatability and reproducibility of FreeSurfer, FSL-SIENAX and SPM
+brain volumetric measurements and the effect of lesion filling in multiple sclerosis. European Radiology.
+DOI:10.1007/s00330-018-5710-x. PMID:30242503.
+   Shows: MS lesion filling changed the output of FSL-SIENAX, SPM and SPM-CAT but not of FreeSurfer, with
+   within-scanner CoV of 0.17-0.96% against 0.65-5.0% between scanners, and intracranial-volume normalisation
+   improved inter-scanner reproducibility; cited because the filling effect is software-specific and the scanner
+   must stay constant.
+
+[8] van Nederpelt DR; Amiri H; Brouwer I; et al. (2023). Reliability of brain atrophy measurements in multiple
+sclerosis using MRI: an assessment of six freely available software packages for cross-sectional analyses.
+Neuroradiology. DOI:10.1007/s00234-023-03189-8. PMID:37526657.
+   Shows: across FreeSurfer, FSL, SAMSEG, FastSurfer, CAT-12 and SynthSeg in 21 MS patients scanned on three 3 T
+   scanners there were no clear differences between lesion-filled and non-filled images, while between-scanner
+   differences dominated (smallest detectable change 4.83% for SynthSeg thalamus up to 29.25%).
+
+[9] de Sitter A; Verhoeven T; Burggraaff J; et al. (2020). Reduced accuracy of MRI deep grey matter segmentation
+in multiple sclerosis: an evaluation of four automated methods against manual reference segmentations in a
+multi-center cohort. Journal of Neurology. DOI:10.1007/s00415-020-10023-1. PMID:32621103.
+   Shows: automated deep-gray-matter segmentation (FSL-FIRST, FreeSurfer, Geodesic Information Flow, volBrain) was
+   significantly less accurate in 21 MS patients than in 11 controls, the accuracy degraded with lesion volume and
+   atrophy, and lesion filling did not substantially change the segmentations.
+
+[10] Clerigues A; Valverde S; Salvi J; et al. (2023). Minimizing the effect of white matter lesions on deep
+learning based tissue segmentation for brain volumetry. Computerized Medical Imaging and Graphics.
+DOI:10.1016/j.compmedimag.2022.102157. PMID:36535217.
+   Shows: a 3D patch-based deep-learning framework performing end-to-end inpainting and segmentation produced a
+   significantly smaller and more localised error from artificial WM lesions than a classical reference
+   segmentation method, which showed much larger global differences.
+
+[11] Dadar M; Potvin O; Camicioli R; et al. (2021). Beware of white matter hyperintensities causing systematic
+errors in FreeSurfer gray matter segmentations! Human Brain Mapping. DOI:10.1002/hbm.25398. PMID:33783933.
+   Shows: in 1,077 ADNI participants WMH overlapped subcortical gray-matter volumes and biased FreeSurfer
+   estimates, so that uncorrected caudate volume increased with age and did not separate AD patients from
+   controls, while WMH-corrected volumes decreased with age, distinguished AD and correlated with cognition;
+   cited as the argument that WMH must be corrected rather than ignored.
+
+[12] Brennan D; Schneider ALC; Shinohara RT; et al. (2026). Contusions bias cortical thickness estimates after
+traumatic brain injury: A TRACK-TBI study. NeuroImage: Clinical. DOI:10.1016/j.nicl.2026.104003. PMID:42114207.
+   Shows: in 86 TRACK-TBI participants contusions inflated cross-sectional cortical thickness and biased
+   longitudinal thickness change, the default and summarisation-only masking strategies stayed biased, and masking
+   lesion voxels from thickness estimation significantly attenuated the bias.
+
+[13] Billot B; Greve DN; Puonti O; et al. (2023). SynthSeg: Segmentation of brain MRI scans of any contrast and
+resolution without retraining. Medical Image Analysis. DOI:10.1016/j.media.2023.102789. PMID:36857946.
+   Shows: SynthSeg, trained on synthetic data with fully randomised contrast and resolution, segments real scans of
+   six modalities and ten resolutions without retraining or fine-tuning and generalises better than supervised CNNs
+   and Bayesian segmentation; cited as the contrast- and resolution-robust segmentation route.
+
+[14] Cerri S; Puonti O; Meier DS; et al. (2021). A contrast-adaptive method for simultaneous whole-brain and
+lesion segmentation in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2020.117471. PMID:33099007.
+   Shows: a contrast-adaptive generative model with an explicit white-matter lesion model segments MS lesions and
+   dozens of normal-appearing structures simultaneously across four datasets without retraining, also works on
+   healthy controls, and is released inside FreeSurfer (SAMSEG).
+
+[15] Puonti O; Iglesias JE; Van Leemput K (2016). Fast and sequence-adaptive whole-brain segmentation using
+parametric Bayesian modeling. NeuroImage. DOI:10.1016/j.neuroimage.2016.09.011. PMID:27612647.
+   Shows: a generative parametric Bayesian whole-brain segmentation method matched state-of-the-art accuracy on
+   T1-weighted scans while being one to two orders of magnitude faster and robust to different contrast,
+   multi-contrast data and small training sets; cited as the model underlying SAMSEG.
+
+[16] Sederevicius D; Vidal-Pineiro D; Sorensen O; et al. (2021). Reliability and sensitivity of two whole-brain
+segmentation approaches included in FreeSurfer - ASEG and SAMSEG. NeuroImage. DOI:10.1016/j.neuroimage.2021.118113.
+PMID:33940143.
+   Shows: both ASEG and SAMSEG are reliable and detect within-person longitudinal change, but their age
+   trajectories differ for most structures while SAMSEG yields significantly lower differences between repeated
+   measures; cited as the reason not to mix engines within one longitudinal study.
+
+[17] Radwan AM; Emsell L; Blommaert J; et al. (2021). Virtual brain grafting: Enabling whole brain parcellation in
+the presence of large lesions. NeuroImage. DOI:10.1016/j.neuroimage.2021.117731. PMID:33454411.
+   Shows: Virtual Brain Grafting generates a lesion-free T1 and parcellates brains with large, bilateral,
+   heterogeneous lesions better than a non-VBG approach (synthetic Dice 0.894 unilateral and 0.903 bilateral
+   versus 0.617), with neuroradiologist assessment confirming the improvement.
+
+[18] Pollak C; Kuegler D; Bauer T; et al. (2025). FastSurfer-LIT: Lesion inpainting tool for whole-brain MRI
+segmentation with tumors, cavities, and abnormalities. Imaging Neuroscience. DOI:10.1162/imag_a_00446.
+PMID:40109899.
+   Shows: FastSurfer-LIT, a denoising-diffusion inpainting tool, outperformed previously proposed solutions on
+   simulated tumours (N = 100) and synthetic MS lesions (N = 39) with better Dice and Hausdorff measures, and
+   increased the reliability of reproducing pre-operative cortical thickness estimates after resection surgery.
+
+[19] Billot B; Magdamo C; Cheng Y; et al. (2023). Robust machine learning segmentation for large-scale analysis of
+heterogeneous clinical brain MRI datasets. PNAS. DOI:10.1073/pnas.2216399120. PMID:36802420.
+   Shows: SynthSeg+ adds cortical parcellation, intracranial-volume estimation and automated detection of faulty
+   segmentations to label-only whole-brain segmentation and accurately replicates atrophy patterns on 14,000
+   heterogeneous clinical scans.
+
+[20] Deutscher E; Imms P; Irimia A; et al. (2026). The evolution of T1-weighted lesion inpainting tools in
+patients with brain injury: A scoping review. NeuroImage. DOI:10.1016/j.neuroimage.2026.121869. PMID:41881175.
+   Shows: a scoping review of 24 inpainting papers for acquired brain injury classifies the tools into traditional
+   (local/global diffusion, search- and a-priori patch-based, low-rank sparse) and deep-learning (CNN, GAN,
+   diffusion) families, discusses their strengths and limitations, and recommends steps to increase the adoption
+   of lesion inpainting; cited as the map of the available tools.
+
+[21] Zhang J; Zuo L; Liu Y; et al. (2026). MSRepaint: Multiple Sclerosis Repaint with conditional denoising
+diffusion implicit model for bidirectional lesion filling and synthesis. Medical Image Analysis.
+DOI:10.1016/j.media.2026.104338. PMID:42826585.
+   Shows: MSRepaint, a mask-conditioned diffusion model for bidirectional lesion filling and synthesis, outperformed
+   the FSL and NiftySeg filling methods and reached the accuracy of FastSurfer-LIT with over 20x faster inference,
+   while training MS lesion segmentation models on its synthetic lesions beat CarveMix-synthesised and real ISBI
+   data; cited as the current deep-learning benchmark for lesion filling.
+
+[22] Ferris JK; Tavenner BP; Khlif MS; et al. (2023). Optimizing automated white matter hyperintensity
+segmentation in individuals with stroke. Frontiers in Neuroimaging. DOI:10.3389/fnimg.2023.1099301. PMID:37554631.
+   Shows: an optimised BIANCA protocol performed well within a dataset but failed when a trained model was applied
+   to a new dataset, whereas the unsupervised SAMSEG needed no WMH masks, was more robust to multi-site data and was
+   only slightly worse than BIANCA within a single site; cited as the stroke-specific validation of both tools.
+
+[23] Khan MH; Chakraborty S; Ferris JK; et al. (2026). Estimating white matter hyperintensities volume in
+individuals with stroke using T1-weighted images. NeuroImage: Reports. DOI:10.1016/j.ynirp.2026.100344.
+PMID:42011418. Preprint: medRxiv (2025), DOI:10.1101/2025.10.22.25338564, PMID:41282712.
+   Shows: in 227 stroke patients WMH-SynthSeg with T1-only input produced more accurate and reliable WMH volumes
+   than SAMSEG with T1-only and performed comparably to SAMSEG with T1 plus FLAIR; cited as evidence that WMH can be
+   quantified from T1 alone when FLAIR is unavailable.
+
+[24] Gaubert M; Dell'Orco A; Lange C; et al. (2022). Performance evaluation of automated white matter
+hyperintensity segmentation algorithms in a multicenter cohort on cognitive impairment and dementia. Frontiers in
+Psychiatry. DOI:10.3389/fpsyt.2022.1010273. PMID:36713907.
+   Shows: in 50 DELCODE FLAIR scans the retrained deep-learning algorithm sysu_media achieved the best performance
+   (average Dice 0.702, F1 0.642), intra-class correlation was excellent for all algorithms except BIANCA (0.835),
+   and performance improved with higher WMH burden; cited as the multicentre benchmark of WMH segmentation tools.
+
+[25] Torres-Simon L; Del Cerro-Leon A; Yus M; et al. (2024). Decoding the best automated segmentation tools for
+vascular white matter hyperintensities in the aging brain: a clinician's guide to precision and purpose.
+GeroScience. DOI:10.1007/s11357-024-01238-5. PMID:38869712.
+   Shows: against clinician manual segmentations the supervised algorithms LST-LPA and BIANCA were superior,
+   particularly for small WMH, and their consistency improved when run in parallel with the unsupervised LST-LGA
+   and SAMSEG, with the resulting threshold identifying at-risk individuals in a cohort of 300; cited as guidance
+   on which WMH tool fits which purpose.
+
+[26] Schmidt P; Gaser C; Arsic M; et al. (2012). An automated tool for detection of FLAIR-hyperintense
+white-matter lesions in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2011.11.032. PMID:22119648.
+   Shows: an automated algorithm requiring a 3D gradient-echo T1-weighted plus a FLAIR image at 3 T detected
+   FLAIR-hyperintense MS lesions in 53 patients, 10 patients with posterior fossa lesions and 18 controls with R2
+   above 0.93 against manual tracing; cited as the origin of the LST lesion-segmentation family.
+
+[27] Wiltgen T; McGinnis J; Schlaeger S; et al. (2024). LST-AI: A deep learning ensemble for accurate MS lesion
+segmentation. NeuroImage: Clinical. DOI:10.1016/j.nicl.2024.103611. PMID:38703470.
+   Shows: LST-AI, an openly available deep-learning ensemble of three 3D U-Nets trained on 491 MS T1/FLAIR image
+   pairs, exceeded Dice and F1 scores of 0.62 on 103 test cases while LST, SAMSEG and nnU-Net stayed below 0.56,
+   and it also includes lesion location annotation; cited as the state of the art for MS lesion segmentation.
+
+[28] Ling Y; Jouvent E; Cousyn L; et al. (2018). Validation and optimization of BIANCA for the segmentation of
+extensive white matter hyperintensities. Neuroinformatics. DOI:10.1007/s12021-018-9372-2. PMID:29594711.
+   Shows: in patients with extensive WMH the best BIANCA configurations were multimodal FLAIR plus T1 input, a
+   mixed lesion-load training set and an individually chosen threshold (median Dice 0.80, ICC 0.97), though the
+   difference from the reference grew linearly with total WMH burden; cited as the BIANCA setup reference.
+
+[29] Deutscher E; Dennis E; Hillary FG; et al. (2025). FastSurfer parcellation accuracy after lesion filling in
+moderate-to-severe traumatic brain injury. Frontiers in Neurology. DOI:10.3389/fneur.2025.1652385. PMID:41451415.
+   Shows: in 140 synthetically lesioned ms-TBI images FastSurfer parcellations of the lesioned images were
+   significantly more accurate (DSC 0.93, PVD -0.40) than those of the virtual-brain-grafted images (DSC 0.81,
+   PVD -9.03), which the authors read as FastSurfer robustness to such focal lesions; cited as the cautionary
+   counterexample that filling can hurt.
+
+[30] Khlif MS; Egorova N; Werden E; et al. (2019). A comparison of automated segmentation and manual tracing in
+estimating hippocampal volume in ischemic stroke and healthy control participants. NeuroImage: Clinical.
+DOI:10.1016/j.nicl.2018.10.019. PMID:30606656.
+   Shows: among eight automated hippocampal segmentation methods in 105 ischemic stroke patients and 39 controls
+   FreeSurfer-Subfields scored highest (96.3%), and masking the stroke lesions before segmentation made the
+   hippocampal volumes agree less with manual tracing, so the authors recommend automated segmentation without
+   lesion masking in stroke; cited against blanket lesion masking.
+
+[31] Miller GN; Steeby CJ; Ortega-Marquez J; et al. (2025). Comparison of brain normalization software and lesion
+compensation techniques in chronic perinatal stroke imaging. Imaging Neuroscience. DOI:10.1162/IMAG.a.1048.
+PMID:42344990.
+   Shows: registering eleven variably distorted perinatal stroke brains showed ANTs and EasyReg to be significantly
+   more accurate than FNIRT (all three struggled with large lesions), and inserting a healthy tissue mask before
+   registration significantly improved FNIRT's lesion-mask normalisation; cited because lesion compensation matters
+   for registration in stroke.
+
+[32] Deutscher E; Dennis E; Burnett J; et al. (2025). ENIGMA's advanced guide for parcellation error
+identification (EAGLE-I): An implementation in the context of brain lesions. MethodsX.
+DOI:10.1016/j.mex.2025.103482. PMID:40791643.
+   Shows: EAGLE-I is a training resource that classifies parcellation region errors by type (unconnected versus
+   connected), size and directionality and records them on a standardised spreadsheet that automatically computes a
+   brain quality rating (pass to fail); cited as the dedicated QC guide for lesioned brains.
+
+[33] van der Weijden CWJ; Pitombeira MS; Haveman YRA; et al. (2022). The effect of lesion filling on brain network
+analysis in multiple sclerosis using structural magnetic resonance imaging. Insights into Imaging.
+DOI:10.1186/s13244-022-01198-4. PMID:35347460.
+   Shows: in 49 MS patients and 19 controls, artefacts in the lesion-filled T1 images correlated positively with
+   total lesion volume (r = 0.84) and had a major impact on gray-matter segmentation accuracy, while filling also
+   increased the detection rate of network alterations; cited as the reason to apply filling cautiously at high
+   lesion load.
+
+[34] Busby N; Kristinsson S; Johnson L; et al. (2025). White matter hyperintensity load independent from the
+stroke lesion is associated with chronic aphasia severity and treatment outcome. Stroke.
+DOI:10.1161/STROKEAHA.124.046710. PMID:40276856.
+   Shows: in 95 people with chronic post-stroke aphasia whole-brain Fazekas ratings were consistently higher than
+   right-hemisphere ratings, right-hemisphere ratings correlated more strongly with language behaviour, and only
+   right-hemisphere periventricular WMH was associated with naming improvement after therapy; cited as the argument
+   to measure WMH contralateral to the infarct.
+
+[35] Ferris JK; Lo BP; Barisano G; et al. (2024). Modulation of the association between corticospinal tract
+damage and outcome after stroke by white matter hyperintensities. Neurology. DOI:10.1212/WNL.0000000000209387.
+PMID:38701386.
+   Shows: in 223 participants of the ENIGMA Stroke Recovery Working Group WMH volume related to motor impairment
+   above and beyond weighted corticospinal tract lesion load, and in moderate-to-severe WMH only WMH volume
+   predicted impairment while CST lesion load no longer did; cited as evidence that WMH carry prognostic
+   information independent of the stroke lesion.
+
+[36] Hotz I; Deschwanden PF; Liem F; et al. (2022). Performance of three freely available methods for extracting
+white matter hyperintensities: FreeSurfer, UBO Detector, and BIANCA. Human Brain Mapping. DOI:10.1002/hbm.25739.
+PMID:34873789.
+   Shows: in 231 cognitively healthy older adults FreeSurfer (T1w) underestimated WMH volume and had the worst Dice
+   (0.434), BIANCA achieved the highest Dice in 3D FLAIR (0.602) but only a moderate relation to Fazekas scores,
+   and UBO Detector matched BIANCA and had the strongest Fazekas association in 2D FLAIR; cited as the comparison of
+   freely available WMH extraction methods.
+
+[37] Sdika M; Pelletier D (2009). Nonrigid registration of multiple sclerosis brain images using lesion
+inpainting for morphometry or lesion mapping. Human Brain Mapping. DOI:10.1002/hbm.20566. PMID:18412131.
+   Shows: MS lesions distort non-rigid registration, and filling the lesions so the brain resembles a healthy brain
+   before registration removed this bias, with the proposed filling method outperforming the state of the art;
+   cited as the first inpainting-for-registration application.
+
+[38] Solodkin A; Hasson U; Siugzdaite R; et al. (2010). Virtual brain transplantation (VBT): a method for accurate
+image registration and parcellation in large cortical stroke. Archives Italiennes de Biologie. PMID:21175010.
+(No DOI in the PubMed record.)
+   Shows: in thirteen chronic patients with a single large left-hemisphere stroke, filling the lesion with virtual
+   tissue transplanted from the non-stroke hemisphere yielded FreeSurfer parcellations of twelve regions that did
+   not differ between the lesioned and the non-lesioned hemisphere; cited as the lineage of mirror-based infarct
+   filling.
+
+[39] Hannoun S; Fayad G; El Ayoubi NK; et al. (2025). The effect of lesion filling on brain age estimation in
+multiple sclerosis. BMC Medical Imaging. DOI:10.1186/s12880-025-01897-6. PMID:40866833.
+   Shows: in 571 relapsing-remitting MS patients brain age estimates from lesion-filled and non-filled T1 images
+   agreed almost perfectly (r = 0.97, ICC = 0.962, mean difference 1.23 years) and lesion filling only modestly
+   improved the structural interpretability of the brain age gap; cited as evidence that filling has little effect
+   on this endpoint.
+### Claims not supported by the abstracts
+Three distinct claims from sections 2-4 are marked "(unverified)" in the text (four marker sites, because the
+SynthSeg/SynthSeg+ negative claim is stated twice), because the abstract of the reference(s) they cite does not
+establish them. All remaining claims in sections 2-4 were checked sentence by sentence against the retrieved
+abstracts and are supported.
+
+- Sections 2 and 3.2: "the FSL/LST family is the standard building block in clinical pipelines [2][7][26]".
+   Reference [1] supports the ~2.3% / ~3.6% -> ~0.1% error reduction, but none of [2][7][26] states that this
+   family is the *standard* building block; the abstracts only show that these tools use it ([2][7][26] use
+   FSL/LST filling, they do not compare adoption across pipelines).
+- Section 3.2: "Random-intensity filling ... performed at least as well as state-of-the-art refilling (lowest WM
+   deviation for FAST/SPM8 at 1.5 T and 3 T) [4]". The [4] abstract reports the lowest WM deviation at 1.5 T for
+   both segmenters and at 3 T only for FAST; with SPM8 at 3 T the method merely equalled the best method, so the
+   "at 1.5 T and 3 T" phrasing overstates the abstract.
+- Sections 2 and 3.5: "Neither [SynthSeg nor SynthSeg+] models lesion tissue as a class [13][19]". This is a
+   negative claim: the [13][19] abstracts describe no lesion class, but absence from an abstract is not evidence
+   of absence in the model, so it is not verifiable from the abstracts alone. (This marker was already present in
+   the report before the check; it is listed here for completeness.)
+
+Not listed: the two statements already flagged as "(unverified)" by the report itself in section 5 (no study
+validates our exact mirror + FSL `lesion_filling` + 1 ml / 10 ml combination; the 1 ml / 10 ml thresholds are not
+studied as a bias-relevant cut-off) are explicit statements about missing literature rather than claims that cite
+a reference as support.

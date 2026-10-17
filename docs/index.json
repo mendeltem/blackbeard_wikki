@@ -1177,6 +1177,39 @@
 "src": "knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md"
 },
 {
+"t": "Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use",
+"p": "brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Literature (22 refs, checked): FD by box counting on FreeSurfer masks; ICC ~0.9-0.95; sensitive to registration/sequence/site; more sensitive than volume; usable longitudinally",
+"id": "research-fractal-dimensionality-from-freesurfer-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.md"
+},
+{
+"t": "Literature: lesion filling vs masking before segmentation and volumetry in stroke/WMH cohorts",
+"p": "brain_volumetry/findings/research-lesion-filling-before-segmentation-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling",
+"id": "research-lesion-filling-before-segmentation-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-lesion-filling-before-segmentation-2026-10.md"
+},
+{
+"t": "Literature: subcortical segmentation for a multi-centre longitudinal stroke cohort",
+"p": "brain_volumetry/findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Literature (32 refs, checked): longitudinal template + longComBat decisive; between-scanner SDC 4.8-29 %; packages overestimate basal ganglia/thalamus; SynthSeg hippocampal underestimation unverified",
+"id": "research-subcortical-segmentation-longitudinal-stroke-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md"
+},
+{
 "t": "Sequences of one session align by their headers; a voxel-space FLIRT start can rotate them by 90-180 degrees",
 "p": "brain_volumetry/findings/same-session-sequences-align-by-header-not-voxel-flirt.html",
 "a": "brain_volumetry",
@@ -1395,6 +1428,17 @@
 "x": "Ein Klassifikator auf dem Kandidaten-Pool aller Kohorten, eine Schwelle 0,30: = Liquor-Regel auf VALDO/T2*, SWI +0,061; braucht keine Gewebekarte",
 "id": "one-shared-candidate-classifier-for-all-cohorts",
 "src": "knowledge/cmb_detection/findings/one-shared-candidate-classifier-for-all-cohorts.md"
+},
+{
+"t": "Literature: automatic cerebral microbleed detection 2023-2026 compared with MicrobleedNet and VALDO",
+"p": "cmb_detection/findings/research-cmb-detection-2023-2026.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Literature 2023-2026 (37 refs, checked): same 3D U-Net + FP-reduction design, public SHIVA-CMB F1 0.74 with weights, synthetic data, SWI/T2* shift, QSM for mimics",
+"id": "research-cmb-detection-2023-2026",
+"src": "knowledge/cmb_detection/findings/research-cmb-detection-2023-2026.md"
 },
 {
 "t": "The second-stage candidate classifier, ported into the training package, reproduces its gain",
@@ -2022,6 +2066,17 @@
 "x": "flash-Profil zeigte auf 1/2 GGUF-Teile -> Dienst starb -> agent exit -> totes tmux-Fenster; modellstart prueft jetzt alle Teile, agent.sh wartet bei Fehlstart",
 "id": "registry-pointed-at-half-a-model-agent-window-died",
 "src": "knowledge/local_llm_operation/findings/registry-pointed-at-half-a-model-agent-window-died.md"
+},
+{
+"t": "Literature: which open-weight LLM fits a local patient-data agent on one 24 GB GPU",
+"p": "local_llm_operation/findings/research-local-llm-for-patient-data-on-24gb-2026-10.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "Literature (25 refs, checked): 4-5 bit plateau, ternary PTQ viable, tool calling is the weak spot, local open-weight models proven for clinical text; medical models not a default",
+"id": "research-local-llm-for-patient-data-on-24gb-2026-10",
+"src": "knowledge/local_llm_operation/findings/research-local-llm-for-patient-data-on-24gb-2026-10.md"
 },
 {
 "t": "Eine Liste von Abbruchgruenden im System-Prompt laesst kleine Modelle abmustern",

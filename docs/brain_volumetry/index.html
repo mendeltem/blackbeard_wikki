@@ -43,10 +43,11 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:87.5%" title="getragen: 14"></i><i class="warn" style="width:12.5%" title="vorschlag: 2"></i></div><div class="counts"><span class="ok">14 getragen</span> <span class="warn">2 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:73.7%" title="getragen: 14"></i><i class="warn" style="width:26.3%" title="vorschlag: 5"></i></div><div class="counts"><span class="ok">14 getragen</span> <span class="warn">5 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-16:</strong> Sequenzen derselben Sitzung (FLAIR auf T2*/SWI) per Header-Weltkoordinaten zusammenbringen; ein FLIRT-Start im Voxelraum drehte LPS- gegen RAS-Dateien falsch. SynthSeg aus FLAIR nur, wo es die Hirnmaske abdeckt (<a href="findings/same-session-sequences-align-by-header-not-voxel-flirt.html">same-session-sequences-align-by-header-not-voxel-flirt</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-17 (drei Literaturberichte, je Quelle geprueft und zusammengefasst):</strong> Fraktale Dimensionalitaet zuverlaessig (ICC ~0,9-0,95), aber standort-/registrierungsabhaengig (<a href="findings/research-fractal-dimensionality-from-freesurfer-2026-10.html">research-fractal-dimensionality-from-freesurfer-2026-10</a>); Fuellen statt Ausblenden, Artefakte wachsen mit Last (<a href="findings/research-lesion-filling-before-segmentation-2026-10.html">research-lesion-filling-before-segmentation-2026-10</a>); subkortikal entscheiden Laengsschnitt-Template und longComBat, Scanner-SDC 4,8-29 % (<a href="findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.html">research-subcortical-segmentation-longitudinal-stroke-2026-10</a>).</p>
+<p><strong>Neu 2026-10-16:</strong> Sequenzen derselben Sitzung (FLAIR auf T2*/SWI) per Header-Weltkoordinaten zusammenbringen; ein FLIRT-Start im Voxelraum drehte LPS- gegen RAS-Dateien falsch. SynthSeg aus FLAIR nur, wo es die Hirnmaske abdeckt (<a href="findings/same-session-sequences-align-by-header-not-voxel-flirt.html">same-session-sequences-align-by-header-not-voxel-flirt</a>).</p>
 <p>Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Verlaufs-Volumetrie liefert zwei Seiten: die Trendseite (gemischtes Modell, Steigung je Proband, Seitenvergleich)
 und die Fehlerseite. Die Fehlerseite hat vier Bausteine: Test-Retest je Struktur aus zwei Segmentierungen derselben
@@ -186,7 +187,922 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(11)</span></h2><details class="entry" id="demdas-meeting-primer-finke-2026-10-16"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-meeting-primer-finke-2026-10-16.html">Study guide: DEMDAS, brain MRI and autoimmune encephalitis imaging, for a data scientist</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Study guide (11 pages, PDF next to it, for audio/notebook learning): DEDEMAS study (real name of DEMDAS), our pipeline step by step, small vessel disease terms, autoimmune encephalitis and Finke&#x27;s methods (fractal dimensionality, DTI/FA/MD/NODDI, rs-fMRI, animal MRI), overlaps, meeting questions, glossary, statistics; 29 PubMed-checked sources</span></summary><div class="body"><p class="small muted">Herkunft: study guide written for Mendel before the meeting with Carsten Finke (Charité neurology) on 28.10.2026 or later; Alita session 16.10.2026; PDF next to this file; all references checked in PubMed on 16.10.2026 · <a href="findings/demdas-meeting-primer-finke-2026-10-16.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.md">Markdown</a></p><p>Version 1, 16 October 2026. Written for Mendel Temuulen (data scientist) to prepare a meeting with Carsten Finke (Department of Neurology and Experimental Neurology, Charité). It is meant to be read, and also to be loaded into a notebook tool and turned into an audio overview, so it is written in full sentences and spells out every abbreviation the first time it appears. No patient data, no identifiers. Numbers from the literature carry a reference number in square brackets; the list is at the end.</p>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(14)</span></h2><details class="entry" id="research-fractal-dimensionality-from-freesurfer-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-fractal-dimensionality-from-freesurfer-2026-10.html">Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Literature (22 refs, checked): FD by box counting on FreeSurfer masks; ICC ~0.9-0.95; sensitive to registration/sequence/site; more sensitive than volume; usable longitudinally</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-fractal-dimensionality-from-freesurfer-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>FD is computed by applying a box-counting / fractal estimator to a <strong>binary 3D mask of a segmented
+  structure</strong> (cortical ribbon, WM volume, GM/WM boundary, pial surface, or an individual subcortical /
+  parcellated region), typically after FreeSurfer segmentation and 3D reconstruction [1][6][16][22].</li>
+<li>The natural analysis unit is a per-structure or per-parcellation binary volume; whole-brain,
+  whole-cortex, lobar and single-subcortical-nucleus variants are all in use [1][3][19][20][22].</li>
+<li><strong>Scale / box-size range and estimator choice matter and must be fixed and reported</strong>: spatial-scale
+  optimisation improves FD accuracy, and different estimators (e.g. correlation dimension vs others)
+  differ substantially in reproducibility [6][16].</li>
+<li>Reliability is generally <strong>good</strong>: intersession ICCs around 0.9–0.95 for the best-performing estimators,
+  with FD and gyrification typically more reliable than cortical thickness [2][16].</li>
+<li>FD is <strong>sensitive to image characteristics</strong>, not just to structure: image registration scheme,
+  sequence weighting and spatial resolution significantly shift absolute FD values [6]; scanning protocol
+  choice changes reliability [2].</li>
+<li>FD frequently shows <strong>greater age- and disease-related sensitivity than volume</strong> for subcortical
+  structures (notably caudate and thalamus) and greater sensitivity than cortical thickness or gyrification
+  for age-related cortical differences [1][3][4].</li>
+<li>In clinical work FD adds information beyond volumetry: in anti-LGI1 encephalitis (a Charité cohort) FD was
+  reduced in fronto-temporo-parietal and subcortical regions and was often the <em>more important</em> measure in
+  affected areas [8].</li>
+<li>FD is usable <strong>longitudinally</strong>: linear mixed-effects models over up to 3 visits in anti-LGI1 encephalitis
+  detected regional FD change [8], and a multi-site age-prediction study shows cross-site structural
+  measures are systematic enough for individual-level modelling [5].</li>
+<li>For our 600-patient multi-centre cohort the main threats are <strong>site/scanner and registration effects on
+  absolute FD</strong>; a fixed processing pipeline plus site harmonisation and reliability checks are mandatory [6][2].</li>
+</ul>
+<hr />
+<h3>Practical recommendation (as written for our setup)</h3>
+<p>FreeSurfer 8 <code>recon-all</code> + longitudinal stream, multi-centre 3T stroke cohort, ~600 patients, up to 4 sessions
+over 5 years.</p>
+<ol>
+<li><strong>Compute FD on FreeSurfer output with a fixed, reported estimator.</strong> Segment with the longitudinal stream,
+   build binary masks per cortical parcellation and per subcortical structure, and run a box-counting /
+   fractal estimator on those masks. Follow the retrieved practice of FreeSurfer segmentation plus an FD
+   toolbox (calcFD is the one named in the literature) [1][19][20]; a whole-brain/skeleton 3DFD box-counting
+   alternative exists [17].</li>
+<li><strong>Fix the scale range and the estimator, and state them in the methods.</strong> Do not use defaults: optimise the
+   spatial scale in simulations/phantoms first [6], and prefer the estimator with the highest within-subject
+   reproducibility (correlation dimension performed best, ICC 0.9–0.95) [16]. Report box sizes and estimator
+   explicitly — heterogeneity in these choices is the main reason the systematic review cannot pool results [7].</li>
+<li><strong>Treat registration as a first-class confound.</strong> Unbalanced registration shifts absolute FD and produces
+   spurious associations; re-register consistently and verify no deviation clusters around the registration
+   target [6]. Keep the FreeSurfer longitudinal template-based processing uniform across sessions and sites.</li>
+<li><strong>Run an in-study reliability/QC check.</strong> You have repeated sessions (up to 4 over 5 years) — use them to
+   compute intersession ICCs for FD per structure, mirroring the test-retest literature [2][16], and drop
+   structures with poor reproducibility.</li>
+<li><strong>Harmonise across sites and model site explicitly.</strong> Multi-centre FD is affected by image characteristics
+   [6]; a cross-site design is feasible (1056-adult multi-site age prediction worked) but site must enter the
+   statistical model [5]. Harmonisation of FD itself (e.g. ComBat) is <strong>unverified</strong> in the retrieved
+   literature and should be validated internally before use.</li>
+<li><strong>Always report FD alongside volume and thickness.</strong> FD adds independent information and is often more
+   sensitive, but they index distinct structure aspects [1][3][4]; reviewers expect all three [7].</li>
+<li><strong>Use longitudinal mixed-effects models</strong> with age (FD is non-linearly age-dependent [15]) and disease
+   duration as predictors, as done in the Charité anti-LGI1 study [8].</li>
+<li><strong>Expect region-specific effects, not a global FD drop.</strong> Clinical FD differences are regional
+   [8][11][12][21][22]; plan a parcellated/hierarchical analysis with multiple-comparison control rather than
+   one whole-cortex number.</li>
+</ol>
+<hr />
+<h2>Trägt</h2>
+<p>Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). Spot check: reference with PMID 39347569 is a COMMENTARY on Wang et al.; its 'Shows' line describes the original study's results.</p>
+<h2>Trägt nicht</h2>
+<p>Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:</p>
+<ul>
+<li><strong>Small vessel disease:</strong> no retrieved study reports FD in SVD or against WMH burden — a clear gap for this
+  stroke cohort.</li>
+<li><strong>FD in acute and post-stroke outcome prediction:</strong> only one stroke study (dysarthria) was retrieved [13];
+  FD as a stroke-outcome biomarker is not established here.</li>
+<li><strong>Field strength:</strong> no retrieved abstract isolates 1.5T vs 3T vs 7T effects on FD; relevant if any site in the
+  consortium differs.</li>
+<li><strong>Harmonisation:</strong> whether ComBat-style or other harmonisation preserves FD signal across sites is
+  <strong>unverified</strong>.</li>
+<li><strong>Python tooling:</strong> no retrieved abstract documents a maintained Python implementation; the literature is
+  MATLAB-centric (calcFD, Madan toolbox) [1][19][20].</li>
+<li><strong>Acquisition protocol for maximum reliability:</strong> the test-retest work shows protocol matters but does not
+  give a single recommended 3T protocol for FD [2][6].</li>
+<li><strong>Stroke-specific FD reference values</strong> across the 5-year trajectory, and whether FD change is monotonic or
+  state-dependent (as in anorexia nervosa [19][20]), are unknown.</li>
+</ul>
+<hr />
+<h2>Bruchindikator</h2>
+<p>A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.</p>
+<h2>Ablesung</h2>
+<p>All references were retrieved and verified via PubMed E-utilities in this task; author/year/title/journal/DOI
+were extracted from the efetch XML (<code>refs/verified_refs_out.txt</code>).</p>
+<p>[1] Madan CR, Kensinger EA (2016). Cortical complexity as a measure of age-related brain atrophy. <em>NeuroImage</em>.
+    DOI 10.1016/j.neuroimage.2016.04.029. PMID 27103141.
+   Shows: in over 400 adults across the lifespan, whole-cortex fractal dimensionality was more sensitive to
+   age-related differences than either cortical thickness or gyrification index, with regional differences
+   suggesting the measures index distinct aspects of cortical structure, and the authors provide a freely
+   available MATLAB toolbox.
+[2] Madan CR, Kensinger EA (2017). Test-retest reliability of brain morphology estimates. <em>Brain Informatics</em>.
+    DOI 10.1007/s40708-016-0060-4. PMID 28054317.
+   Shows: across two open-access test-retest datasets, intersession reliability of cortical thickness,
+   gyrification and fractal dimensionality and of subcortical volume and fractal dimensionality was generally
+   good - best for gyrification and FD - and highest for the dataset whose sequence was optimised for
+   brain-morphology analyses.
+[3] Madan CR, Kensinger EA (2017). Age-related differences in the structural complexity of subcortical and
+    ventricular structures. <em>Neurobiology of Aging</em>. DOI 10.1016/j.neurobiolaging.2016.10.023. PMID 27939959.
+   Shows: in nearly 900 adults (18-94 years) across three datasets, age-related differences in structural
+   complexity exceeded those in volume for subcortical structures, particularly caudate and thalamus, while
+   ventricular complexity was not more strongly related to age than volume.
+[4] Madan CR (2021). Beyond volumetry: Considering age-related changes in brain shape complexity using fractal
+    dimensionality. <em>Aging Brain</em>. DOI 10.1016/j.nbas.2021.100016. PMID 36911503.
+   Shows: fractal dimensionality captures both volumetric and shape-related age differences and is more
+   sensitive to age-related subcortical differences than volume, and the standard normalisation methods are
+   not robust enough to adjust for these inter-individual shape differences.
+[5] Madan CR, Kensinger EA (2018). Predicting age from cortical structure across the lifespan. <em>European
+    Journal of Neuroscience</em>. DOI 10.1111/ejn.13835. PMID 29359873.
+   Shows: using T1-weighted MRI from multiple sites (training set 1056 healthy adults, 18-97 years), age was
+   predicted in two independent held-out samples with a median error of 6-7 years, best when combining
+   cortical thickness and fractal dimensionality - evidence that cross-site structural measures are systematic
+   enough for individual-level modelling.
+[6] Krohn S, et al. (2019). Evaluation of the 3D fractal dimension as a marker of structural brain complexity
+    in multiple-acquisition MRI. <em>Human Brain Mapping</em>. DOI 10.1002/hbm.24599. PMID 31090254.
+   Shows: spatial-scale optimisation significantly improved FD estimation accuracy in simulations, FD
+   estimates were highly stable across repeated acquisitions in the MASSIVE and Midnight Scan Club datasets but
+   sensitive to image characteristics, and unbalanced registration had a significant impact on absolute FD,
+   inducing deviation clusters, bidirectional correlations and spurious associations that disappeared after
+   re-registration.
+[7] Meregalli V, et al. (2022). Cortical complexity estimation using fractal dimension: A systematic review of
+    the literature on clinical and nonclinical samples. <em>European Journal of Neuroscience</em>.
+    DOI 10.1111/ejn.15631. PMID 35229388.
+   Shows: a systematic review of 62 studies found cortical complexity appears to decrease with ageing and in
+   various pathological processes, but the high heterogeneity between studies prevents firm conclusions - cited
+   as the reason estimator and scale settings must be reported.
+[8] Zhao W, Wurdack K, et al. (2026). Structural Brain Changes Are Linked to Clinical and Cognitive Outcomes
+    in Anti-LGI1 Encephalitis. <em>Neurology: Neuroimmunology &amp; Neuroinflammation</em>.
+    DOI 10.1212/NXI.0000000000200649. PMID 42753224. (Charité–Universitätsmedizin Berlin)
+   Shows: in 34 patients with anti-LGI1 encephalitis and 34 matched controls (Charité, 3T T1-weighted MRI
+   processed with FreeSurfer plus fractal analysis, up to 3 visits), FD was reduced in fronto-temporo-parietal
+   cortices and FD and volume were reduced subcortically, with FD more frequently the more important measure;
+   reduced pallidal FD related to less mRS improvement and fronto-temporal/subcortical reductions to impaired
+   cognition, and longitudinal change was modelled with linear mixed-effects models.
+[9] Krohn S, Romanello A, et al. (2026). Fractal analysis of brain shape formation predicts age and genetic
+    similarity in human newborns. <em>Nature Neuroscience</em>. DOI 10.1038/s41593-025-02107-w. PMID 41461933.
+   Shows: fractal dimensionality of neonatal brain shape predicted age at scan (mean error about 4 days),
+   detected premature-birth signatures not captured by brain size, and captured age and genetic information
+   significantly better than cortical thickness, curvature, gyrification, sulcation, surface area and the
+   T1/T2 ratio.
+[10] Wang S, et al. (2024). Neuro-evolutionary evidence for a universal fractal primate brain shape. <em>eLife</em>.
+    DOI 10.7554/eLife.92080. PMID 39347569.
+   Shows: cortices of 11 primate species (overlapping 70 further mammals) follow a common scale-free
+   morphometric trajectory approximating one archetypal fractal shape with df = 2.5, and the effect size of
+   ageing on morphology rose more than fourfold at a spatial scale of about 2 mm compared with standard
+   morphological analyses.
+[11] Tibon R, et al. (2026). Structural complexity of brain regions in mild cognitive impairment and
+    Alzheimer's disease. <em>Brain and Cognition</em>. DOI 10.1016/j.bandc.2026.106443. PMID 42166829.
+   Shows: FD measures were consistent across the ADNI and BioFIND datasets, separated MCI/AD patients from
+   controls including at the individual level, and the regional contributions matched the brain's memory
+   network.
+[12] Schoen S, et al. (2025). Boundary complexity of cortical and subcortical areas predicts deep brain
+    stimulation outcomes in Parkinson's disease. <em>Nature Communications</em>. DOI 10.1038/s41467-025-60695-4.
+    PMID 40595525.
+   Shows: in 231 Parkinson's disease patients, FD differed from controls in nine cortical and subcortical
+   regions, and adding regional FD improved prediction of post-DBS medication change (R2 0.252 -&gt; 0.388;
+   classification AUC 0.64 -&gt; 0.76).
+[13] Zhou Y, et al. (2026). Cortical morphological changes in stroke-associated dysarthria patients.
+    <em>Frontiers in Neurology</em>. DOI 10.3389/fneur.2026.1766268. PMID 41940291.
+   Shows: in 48 patients with stroke-associated dysarthria and 72 matched controls (surface-based
+   morphometry), fractal dimension was significantly increased in the left insula and gyrification was elevated
+   in bilateral insula, superior temporal and precentral gyri, with no difference between supratentorial and
+   infratentorial lesions.
+[14] Schwichtenberg K, et al. (2026). Association of structural brain changes with cognitive deficits and
+    fatigue in patients with post-COVID-19 condition. <em>Brain Communications</em>. DOI 10.1093/braincomms/fcag099.
+    PMID 41940188.
+   Shows: in 49 patients with post-COVID-19 condition versus 48 matched controls, thalamic volumes were
+   reduced and fractal dimensionality showed increased complexity in the occipital lobes and hippocampal
+   fimbriae with reduced complexity in the thalamus bilaterally.
+[15] Farahibozorg S, et al. (2015). Age- and sex-related variations in the brain white matter fractal dimension
+    throughout adulthood: an MRI study. <em>Clinical Neuroradiology</em>. DOI 10.1007/s00062-013-0273-3. PMID 24413801.
+   Shows: box-counting FD of white matter in 209 healthy adults followed an inverse-U trajectory over adulthood
+   (general and skeleton FD, boundary FD less affected), with sex differences and sharper age-related change in
+   men, and FD correlated positively with volume.
+[16] Goñi J, et al. (2013). Robust estimation of fractal measures for characterizing the structural complexity
+    of the human brain: optimization and reproducibility. <em>NeuroImage</em>. DOI 10.1016/j.neuroimage.2013.06.072.
+    PMID 23831414.
+   Shows: analysing the box-counting parameters of three fractal methods for the pial surface, cortical ribbon
+   volume, white-matter volume and GM/WM boundary in two datasets from different centres (50 subjects x 3 and
+   24 subjects x 4 sessions), the correlation dimension gave the highest within-subject reproducibility
+   (ICC 0.9-0.95) and several parameters were identified as critical, with region-specific individual
+   variability in parcellated cortical and subcortical grey matter.
+[17] Jiménez J, et al. (2014). A Web platform for the interactive visualization and analysis of the 3D fractal
+    dimension of MRI data. <em>Journal of Biomedical Informatics</em>. DOI 10.1016/j.jbi.2014.05.011. PMID 24909817.
+   Shows: a public web platform (3dfd.ujaen.es) computes the 3D box-counting fractal dimension of the entire
+   brain volume and of its 3D skeleton from MR images, demonstrated on multiple sclerosis, intrauterine growth
+   restriction and Alzheimer's disease data.
+[18] Collantoni E, et al. (2026). Cortical complexity in eating disorders: a systematic review and qualitative
+    synthesis. <em>European Archives of Psychiatry and Clinical Neuroscience</em>.
+    DOI 10.1007/s00406-025-02001-3. PMID 40307480.
+   Shows: a systematic review of 13 studies (525 AN, 69 BN, 478 controls) found consistent local gyrification
+   reductions in frontal, temporal and parietal regions in acute anorexia nervosa with partial normalisation
+   after weight restoration, and notes that emerging metrics such as fractal dimension lack methodological
+   consistency across studies.
+[19] Collantoni E, et al. (2020). Cortical Complexity in Anorexia Nervosa: A Fractal Dimension Analysis.
+    <em>Journal of Clinical Medicine</em>. DOI 10.3390/jcm9030833. PMID 32204343.
+   Shows: in 58 women with anorexia nervosa (38 acutely underweight, 20 recovered) and 38 controls, FreeSurfer
+   surface extraction plus the calcFD toolbox showed lower whole-cortex mean FD in acute AN (recovered patients
+   did not differ from controls) and FD correlating with age, BMI and illness duration.
+[20] Collantoni E, et al. (2023). Volume and complexity of the thalamus in Anorexia Nervosa: An exploratory
+    evaluation. <em>European Eating Disorders Review</em>. DOI 10.1002/erv.2965. PMID 36573401.
+   Shows: in 38 acute AN patients, 20 recovered AN patients and 38 controls, thalamic volume and calcFD
+   complexity were reduced at the whole-thalamus and nucleus level in acute AN and these alterations
+   normalised almost completely after weight restoration.
+[21] Chen JH, et al. (2020). Brain Cortical Complexity Alteration in Amyotrophic Lateral Sclerosis: A
+    Preliminary Fractal Dimensionality Study. <em>BioMed Research International</em>. DOI 10.1155/2020/1521679.
+    PMID 32280675.
+   Shows: in 22 ALS patients versus 20 healthy controls, regional FD computed with a computational anatomy
+   toolbox was decreased in motor and insular/cingulate regions, with FD in the right precentral gyrus
+   correlating with ALSFRS-R and disease-progression rate.
+[22] Zhao W, et al. (2018). Reduced structural complexity of the right cerebellar cortex in male children with
+    autism spectrum disorder. <em>PLoS ONE</em>. DOI 10.1371/journal.pone.0196964. PMID 29995885.
+   Shows: the first high-resolution 3D fractal analysis of the cerebellum (FreeSurfer-segmented) in 20 boys
+   with autism spectrum disorder versus 18 matched typically developing boys found a significant reduction of
+   FD in the right cerebellar cortex.</p>
+<hr />
+<h3>Note on source discipline</h3>
+<ul>
+<li>22 references, all retrieved live in this task (PubMed E-utilities and Europe PMC); journal, year, DOI and
+  PMID were read from the efetch XML, not from memory.</li>
+<li>Claims marked <strong>unverified</strong>: Python FD ports; field-strength-specific FD effects; FD harmonisation across
+  sites; FD in small vessel disease.</li>
+<li>Every reference carries a one-line <strong>Shows:</strong> summary taken from the retrieved abstract (17.10.2026 rule).</li>
+</ul>
+<hr />
+<h3>Claims not supported by the abstracts</h3>
+<p>Each claim below is attributed in the text to a reference whose retrieved abstract does not contain the
+statement; those spots are now marked <code>(unverified)</code> in the body.</p>
+<ul>
+<li><strong>Section 3.2 (Tools):</strong> "FreeSurfer is used for surface extraction and FD is then computed with <code>calcFD</code> on
+   cortical regions [19] and on the thalamus and its nuclei [20]." The abstracts of [19] and [20] do not name
+   <code>calcFD</code> (they describe FreeSurfer surface extraction and fractal-dimension estimation of the thalamus and
+   25 nuclei). The toolbox name is plausible but not in the abstracts.</li>
+<li><strong>Section 3.2 (Tools):</strong> "A FreeSurfer→FD chain exists and is used in Charité cohorts [8][19][20]." The
+   retrieved abstracts of [8], [19] and [20] do not show any use of FD in a Charité cohort other than [8]
+   itself (which is Charité); [19] and [20] are Milan cohorts and nothing in their abstracts links them to
+   Charité.</li>
+<li><strong>Section 3.8 (Longitudinal use):</strong> "Grey-matter FD in the white matter followed an inverted-U trajectory
+   across adulthood in a large sample (209 adults) [15]." The abstract of [15] reports FD of <strong>white matter</strong>
+   (general and skeleton FD, inverse-U over adulthood) — not "grey-matter FD in the white matter".</li>
+<li><strong>Section 3.8 (Longitudinal use):</strong> "Age-related FD trajectories are described as systematic enough to be
+   captured in individual-level models [4][5]." This is supported for [5] (multi-site age prediction, median
+   error 6–7 years). The abstract of [4] states that FD is more sensitive to age-related differences and that
+   standard normalisation is not robust enough; it does not describe individual-level modelling.</li>
+</ul></div></details><details class="entry" id="research-lesion-filling-before-segmentation-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-lesion-filling-before-segmentation-2026-10.html">Literature: lesion filling vs masking before segmentation and volumetry in stroke/WMH cohorts</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-lesion-filling-before-segmentation-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-lesion-filling-before-segmentation-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>White-matter lesions are not a cosmetic problem: they are misclassified as grey matter (or vice versa) during
+  intensity-based segmentation, which biases GM/WM volumes and cortical thickness [1][2][3][6][11].</li>
+<li>The bias is size- and contrast-dependent: it grows with lesion volume and is worst when lesion intensity is
+  close to the GM/WM interface [1][2][3].</li>
+<li>Merely masking lesions out does <strong>not</strong> remove the bias; only replacing the lesioned voxels with plausible
+  tissue intensities (filling / inpainting) restored accurate tissue-class measurements [2].</li>
+<li>Filling with normal-appearing WM intensity (LEAP, FSL <code>lesion_filling</code>) reduced simulated GM/WM volume errors
+  from ~2.3% / ~3.6% to ~0.1% [1]; the FSL/LST family is the standard building block in clinical pipelines
+  [2][7][26] (unverified: [1] supports the error reduction, but no abstract shows that FSL/LST is the <em>standard</em>
+  building block of clinical pipelines - that part is an inference from [2][7][26] using it).</li>
+<li>Filling is not universally beneficial: in MS, FreeSurfer volumetry was essentially unchanged by filling, while
+  FSL-SIENAX and SPM changed, and inter-scanner reproducibility differed between packages [7][8].</li>
+<li>Filling can introduce artefacts that scale with lesion load (r = 0.84 with total lesion volume) and therefore
+  needs quality control, especially at high lesion load [33].</li>
+<li>Patch-based and deep-learning inpainting (NiftySeg/Prados, FastSurfer-LIT, MSRepaint, VBG) replaces lesions with
+  plausible texture instead of a flat WM intensity and outperforms simple filling on downstream parcellation
+  [5][17][18][21].</li>
+<li>WMH specifically bias FreeSurfer subcortical GM volumes (caudate, putamen, thalamus, pallidum, accumbens) in a
+  systematic, age- and diagnosis-dependent way; correcting for WMH changed the direction of age and AD effects
+  [11]. WMH should therefore be corrected or explicitly accounted for, not ignored [11][36].</li>
+<li>Modern tools partly handle lesions natively: SAMSEG has an explicit WMH/lesion model [14][15] and SynthSeg is
+  contrast- and resolution-robust and needs no retraining [13]. Neither the SynthSeg nor the SynthSeg+ abstract
+  mentions a lesion class (unverified as a negative claim — the abstracts simply do not describe one), so filling
+  remains the safer route for lesion-adjacent volumetry.</li>
+<li>Masking (rather than filling) at the level of cortical-thickness estimation is the better strategy when
+  cortical thickness is the endpoint: masking lesion voxels from CT computation significantly attenuated
+  lesion-induced bias in TBI [12].</li>
+<li>No single method is correct for all endpoints; for longitudinal stroke cohorts the defensible practice is: run
+  lesioned and lesion-free versions, apply one fixed, documented pipeline, and report the sensitivity of the
+  result to the lesion-handling choice [7][8][12][14].</li>
+</ul>
+<h3>Practical recommendation (as written for our setup)</h3>
+<p>Our setup: infarcts filled by mirroring, WMH by FSL <code>lesion_filling</code>, thresholds 1 ml (infarct) / 10 ml (WMH).</p>
+<ol>
+<li>Mirroring for infarcts is defensible and has a long lineage - virtual brain transplantation filled the lesion
+   from the non-stroke hemisphere before FreeSurfer surface reconstruction [38], and modern variants (VBG [17],
+   FastSurfer-LIT [18], MSRepaint [21]) are essentially automatic, QC-able versions of the same idea. Keep
+   mirroring, but verify it does not duplicate healthy tissue across the midline for lesions touching midline
+   structures or crossing the falx; those need patch-based or diffusion inpainting instead [5][18].</li>
+<li>Keep FSL <code>lesion_filling</code> for WMH: it is the classical, reproducible implementation of the "refill with
+   normal-appearing WM" principle that removed the segmentation bias in the foundational simulation studies
+   [1][2], and it remains the reference against which newer inpainting is benchmarked [21].</li>
+<li>Thresholds: the retrieved literature does not support a hard volume cut-off. The bias is continuous in lesion
+   volume and worst near the GM/WM intensity interface [2][3]; a 1 ml / 10 ml rule is a pragmatic save-compute
+   choice, not a bias-free boundary. For subjects just below the threshold the systematic error is still present -
+   report it as a sensitivity analysis rather than treating those scans as clean.</li>
+<li>Because filling can introduce artefacts that scale with lesion load (r = 0.84) [33], add a QC step (difference
+   image before/after filling; check for rasterisation, spurious edges near CSF and deep GM) and exclude subjects
+   whose filling QC fails rather than silently carrying artefacts. Note also the cautionary result that filling
+   can reduce parcellation accuracy for small lesions in FastSurfer [29] - filling small lesions is not
+   automatically an improvement.</li>
+<li>For volumetry in these subjects, prefer a pipeline that tolerates lesions: SAMSEG (explicit WMH model,
+   FreeSurfer-integrated [14][15]) or SynthSeg/SynthSeg+ on the filled image for whole-brain and ICV [13][19].
+   Do <strong>not</strong> switch segmentation engines between arms or between time points: engine choice changes volumes more
+   than filling does [7][8][16].</li>
+<li>For cortical-thickness endpoints after stroke, prefer masking lesion voxels from CT estimation (not only from
+   summarisation) - this was the only variant that significantly attenuated the bias in the closest available
+   analogue (contusions in TBI) [12].</li>
+<li>For WMH volume itself, report at least one cross-check: WMH-SynthSeg on T1 (good T1-only performance in stroke
+   [23]) or SAMSEG (multi-site-robust [22][35]) alongside the FSL/BIANCA-based numbers, and state which is the
+   primary measure.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). </p>
+<h2>Trägt nicht</h2>
+<p>Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:</p>
+<ul>
+<li>No retrieved study validates the exact combination "mirror-filled infarct plus FSL <code>lesion_filling</code> for WMH,
+  with 1 ml / 10 ml thresholds" in a stroke cohort; our pipeline is assembled from method papers, not validated
+  as a whole (unverified).</li>
+<li>Threshold effects (1 ml / 10 ml) are not studied anywhere in the retrieved literature and are unverified as a
+  bias-relevant cut-off.</li>
+<li>Filling versus not filling is largely a wash for whole-brain volume in MS across six packages [8], but stroke
+  lesions (cavities, cysts, CSF-like intensity) behave differently from MS WM lesions; comparable stroke-specific
+  validation on whole-brain/GM volumes is missing.</li>
+<li>Artefact burden of FSL <code>lesion_filling</code> at high WMH load is documented for network analysis [33] but not
+  quantified for volumetry.</li>
+<li>Long-term longitudinal stability of deep-learning inpainting (FastSurfer-LIT, MSRepaint) across scanners and
+  over years is not yet established [18][20][21].</li>
+<li>Reporting standards: there is no consensus on which version (filled / unfilled / masked) should be published as
+  the primary analysis in stroke cohorts [20].</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.</p>
+<h2>Ablesung</h2>
+<p>All references were retrieved in this task from PubMed (E-utilities) and Europe PMC; abstracts were read. Bracketed
+numbers are those used in the text. All entries below are PubMed-indexed journal articles.</p>
+<p>[1] Chard DT; Jackson JS; Miller DH; et al. (2010). Reducing the impact of white matter lesions on automated
+measures of brain gray and white matter volumes. Journal of Magnetic Resonance Imaging. DOI:10.1002/jmri.22214.
+PMID:20575080.
+   Shows: simulated white-matter lesions of 15 ml at 70% of normal WM intensity inflated SPM gray-matter fractions by
+   about 2.3% and lowered white-matter fractions by about 3.6%, and filling the lesions with values approximating
+   normal WM (LEAP) reduced these errors to about 0.1%; cited as the foundational demonstration that lesion filling
+   makes tissue-class volumetry valid.</p>
+<p>[2] Battaglini M; Jenkinson M; De Stefano N (2012). Evaluating and reducing the impact of white matter lesions on
+brain volume measurements. Human Brain Mapping. DOI:10.1002/hbm.21344. PMID:21882300.
+   Shows: the lesion-induced tissue misclassification of segmentation-based SIENAX varies strongly with lesion size
+   and intensity (worst when lesion intensity resembles the GM/WM interface) while registration-based SIENA is not
+   biased, that masking the lesions out leaves the misclassification in place, and that refilling with
+   normal-appearing white-matter intensities restores accurate tissue-class measurements.</p>
+<p>[3] Gelineau-Morel R; Tomassini V; Jenkinson M; et al. (2012). The effect of hypointense white matter lesions on
+automated gray matter segmentation in multiple sclerosis. Human Brain Mapping. DOI:10.1002/hbm.21402. PMID:21976406.
+   Shows: higher WM lesion volume artificially reduced total gray-matter volume in real MS data by about 72% of the
+   simulated effect, misclassified voxels sat at the GM/WM border and could be remote from the lesion, and lesion
+   filling corrected this and revealed lateralised deep-gray-matter shape changes.</p>
+<p>[4] Valverde S; Oliver A; Llado X (2014). A white matter lesion-filling approach to improve brain tissue volume
+measurements. NeuroImage: Clinical. DOI:10.1016/j.nicl.2014.08.016. PMID:25379419.
+   Shows: refilling lesion voxels with random values drawn from a per-2D-slice white-matter intensity distribution
+   yielded the lowest deviation in WM volume at 1.5 T and performed at least as well as state-of-the-art refilling
+   at 3 T, i.e. simple intensity-matched filling is competitive.</p>
+<p>[5] Prados F; Cardoso MJ; Kanber B; et al. (2016). A multi-time-point modality-agnostic patch-based method for
+lesion filling in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2016.06.053. PMID:27377222.
+Conference precursor: Prados F; et al. (2014), MICCAI, DOI:10.1007/978-3-319-10470-6_97, PMID:25485451.
+   Shows: a 5D patch-based multi-modality, multi-time-point non-local-means algorithm fills lesions with the most
+   plausible texture and introduces less bias, fewer artefacts and fewer spurious edges than existing filling
+   techniques, even when lesions neighbour gray matter or CSF; cited as the reference patch-based inpainting method.</p>
+<p>[6] Magon S; Gaetano L; Chakravarty MM; et al. (2014). White matter lesion filling improves the accuracy of
+cortical thickness measurements in multiple sclerosis patients: a longitudinal study. BMC Neuroscience.
+DOI:10.1186/1471-2202-15-106. PMID:25200127.
+   Shows: on unfilled T1 images 72% of WM lesion volume was misclassified as gray matter, filling raised correct
+   lesion classification to 94%, mean cortical thickness was significantly thinner on unfilled images, and
+   vertex-wise longitudinal analyses were more sensitive after filling.</p>
+<p>[7] Guo C; Ferreira D; Fink K; et al. (2019). Repeatability and reproducibility of FreeSurfer, FSL-SIENAX and SPM
+brain volumetric measurements and the effect of lesion filling in multiple sclerosis. European Radiology.
+DOI:10.1007/s00330-018-5710-x. PMID:30242503.
+   Shows: MS lesion filling changed the output of FSL-SIENAX, SPM and SPM-CAT but not of FreeSurfer, with
+   within-scanner CoV of 0.17-0.96% against 0.65-5.0% between scanners, and intracranial-volume normalisation
+   improved inter-scanner reproducibility; cited because the filling effect is software-specific and the scanner
+   must stay constant.</p>
+<p>[8] van Nederpelt DR; Amiri H; Brouwer I; et al. (2023). Reliability of brain atrophy measurements in multiple
+sclerosis using MRI: an assessment of six freely available software packages for cross-sectional analyses.
+Neuroradiology. DOI:10.1007/s00234-023-03189-8. PMID:37526657.
+   Shows: across FreeSurfer, FSL, SAMSEG, FastSurfer, CAT-12 and SynthSeg in 21 MS patients scanned on three 3 T
+   scanners there were no clear differences between lesion-filled and non-filled images, while between-scanner
+   differences dominated (smallest detectable change 4.83% for SynthSeg thalamus up to 29.25%).</p>
+<p>[9] de Sitter A; Verhoeven T; Burggraaff J; et al. (2020). Reduced accuracy of MRI deep grey matter segmentation
+in multiple sclerosis: an evaluation of four automated methods against manual reference segmentations in a
+multi-center cohort. Journal of Neurology. DOI:10.1007/s00415-020-10023-1. PMID:32621103.
+   Shows: automated deep-gray-matter segmentation (FSL-FIRST, FreeSurfer, Geodesic Information Flow, volBrain) was
+   significantly less accurate in 21 MS patients than in 11 controls, the accuracy degraded with lesion volume and
+   atrophy, and lesion filling did not substantially change the segmentations.</p>
+<p>[10] Clerigues A; Valverde S; Salvi J; et al. (2023). Minimizing the effect of white matter lesions on deep
+learning based tissue segmentation for brain volumetry. Computerized Medical Imaging and Graphics.
+DOI:10.1016/j.compmedimag.2022.102157. PMID:36535217.
+   Shows: a 3D patch-based deep-learning framework performing end-to-end inpainting and segmentation produced a
+   significantly smaller and more localised error from artificial WM lesions than a classical reference
+   segmentation method, which showed much larger global differences.</p>
+<p>[11] Dadar M; Potvin O; Camicioli R; et al. (2021). Beware of white matter hyperintensities causing systematic
+errors in FreeSurfer gray matter segmentations! Human Brain Mapping. DOI:10.1002/hbm.25398. PMID:33783933.
+   Shows: in 1,077 ADNI participants WMH overlapped subcortical gray-matter volumes and biased FreeSurfer
+   estimates, so that uncorrected caudate volume increased with age and did not separate AD patients from
+   controls, while WMH-corrected volumes decreased with age, distinguished AD and correlated with cognition;
+   cited as the argument that WMH must be corrected rather than ignored.</p>
+<p>[12] Brennan D; Schneider ALC; Shinohara RT; et al. (2026). Contusions bias cortical thickness estimates after
+traumatic brain injury: A TRACK-TBI study. NeuroImage: Clinical. DOI:10.1016/j.nicl.2026.104003. PMID:42114207.
+   Shows: in 86 TRACK-TBI participants contusions inflated cross-sectional cortical thickness and biased
+   longitudinal thickness change, the default and summarisation-only masking strategies stayed biased, and masking
+   lesion voxels from thickness estimation significantly attenuated the bias.</p>
+<p>[13] Billot B; Greve DN; Puonti O; et al. (2023). SynthSeg: Segmentation of brain MRI scans of any contrast and
+resolution without retraining. Medical Image Analysis. DOI:10.1016/j.media.2023.102789. PMID:36857946.
+   Shows: SynthSeg, trained on synthetic data with fully randomised contrast and resolution, segments real scans of
+   six modalities and ten resolutions without retraining or fine-tuning and generalises better than supervised CNNs
+   and Bayesian segmentation; cited as the contrast- and resolution-robust segmentation route.</p>
+<p>[14] Cerri S; Puonti O; Meier DS; et al. (2021). A contrast-adaptive method for simultaneous whole-brain and
+lesion segmentation in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2020.117471. PMID:33099007.
+   Shows: a contrast-adaptive generative model with an explicit white-matter lesion model segments MS lesions and
+   dozens of normal-appearing structures simultaneously across four datasets without retraining, also works on
+   healthy controls, and is released inside FreeSurfer (SAMSEG).</p>
+<p>[15] Puonti O; Iglesias JE; Van Leemput K (2016). Fast and sequence-adaptive whole-brain segmentation using
+parametric Bayesian modeling. NeuroImage. DOI:10.1016/j.neuroimage.2016.09.011. PMID:27612647.
+   Shows: a generative parametric Bayesian whole-brain segmentation method matched state-of-the-art accuracy on
+   T1-weighted scans while being one to two orders of magnitude faster and robust to different contrast,
+   multi-contrast data and small training sets; cited as the model underlying SAMSEG.</p>
+<p>[16] Sederevicius D; Vidal-Pineiro D; Sorensen O; et al. (2021). Reliability and sensitivity of two whole-brain
+segmentation approaches included in FreeSurfer - ASEG and SAMSEG. NeuroImage. DOI:10.1016/j.neuroimage.2021.118113.
+PMID:33940143.
+   Shows: both ASEG and SAMSEG are reliable and detect within-person longitudinal change, but their age
+   trajectories differ for most structures while SAMSEG yields significantly lower differences between repeated
+   measures; cited as the reason not to mix engines within one longitudinal study.</p>
+<p>[17] Radwan AM; Emsell L; Blommaert J; et al. (2021). Virtual brain grafting: Enabling whole brain parcellation in
+the presence of large lesions. NeuroImage. DOI:10.1016/j.neuroimage.2021.117731. PMID:33454411.
+   Shows: Virtual Brain Grafting generates a lesion-free T1 and parcellates brains with large, bilateral,
+   heterogeneous lesions better than a non-VBG approach (synthetic Dice 0.894 unilateral and 0.903 bilateral
+   versus 0.617), with neuroradiologist assessment confirming the improvement.</p>
+<p>[18] Pollak C; Kuegler D; Bauer T; et al. (2025). FastSurfer-LIT: Lesion inpainting tool for whole-brain MRI
+segmentation with tumors, cavities, and abnormalities. Imaging Neuroscience. DOI:10.1162/imag_a_00446.
+PMID:40109899.
+   Shows: FastSurfer-LIT, a denoising-diffusion inpainting tool, outperformed previously proposed solutions on
+   simulated tumours (N = 100) and synthetic MS lesions (N = 39) with better Dice and Hausdorff measures, and
+   increased the reliability of reproducing pre-operative cortical thickness estimates after resection surgery.</p>
+<p>[19] Billot B; Magdamo C; Cheng Y; et al. (2023). Robust machine learning segmentation for large-scale analysis of
+heterogeneous clinical brain MRI datasets. PNAS. DOI:10.1073/pnas.2216399120. PMID:36802420.
+   Shows: SynthSeg+ adds cortical parcellation, intracranial-volume estimation and automated detection of faulty
+   segmentations to label-only whole-brain segmentation and accurately replicates atrophy patterns on 14,000
+   heterogeneous clinical scans.</p>
+<p>[20] Deutscher E; Imms P; Irimia A; et al. (2026). The evolution of T1-weighted lesion inpainting tools in
+patients with brain injury: A scoping review. NeuroImage. DOI:10.1016/j.neuroimage.2026.121869. PMID:41881175.
+   Shows: a scoping review of 24 inpainting papers for acquired brain injury classifies the tools into traditional
+   (local/global diffusion, search- and a-priori patch-based, low-rank sparse) and deep-learning (CNN, GAN,
+   diffusion) families, discusses their strengths and limitations, and recommends steps to increase the adoption
+   of lesion inpainting; cited as the map of the available tools.</p>
+<p>[21] Zhang J; Zuo L; Liu Y; et al. (2026). MSRepaint: Multiple Sclerosis Repaint with conditional denoising
+diffusion implicit model for bidirectional lesion filling and synthesis. Medical Image Analysis.
+DOI:10.1016/j.media.2026.104338. PMID:42826585.
+   Shows: MSRepaint, a mask-conditioned diffusion model for bidirectional lesion filling and synthesis, outperformed
+   the FSL and NiftySeg filling methods and reached the accuracy of FastSurfer-LIT with over 20x faster inference,
+   while training MS lesion segmentation models on its synthetic lesions beat CarveMix-synthesised and real ISBI
+   data; cited as the current deep-learning benchmark for lesion filling.</p>
+<p>[22] Ferris JK; Tavenner BP; Khlif MS; et al. (2023). Optimizing automated white matter hyperintensity
+segmentation in individuals with stroke. Frontiers in Neuroimaging. DOI:10.3389/fnimg.2023.1099301. PMID:37554631.
+   Shows: an optimised BIANCA protocol performed well within a dataset but failed when a trained model was applied
+   to a new dataset, whereas the unsupervised SAMSEG needed no WMH masks, was more robust to multi-site data and was
+   only slightly worse than BIANCA within a single site; cited as the stroke-specific validation of both tools.</p>
+<p>[23] Khan MH; Chakraborty S; Ferris JK; et al. (2026). Estimating white matter hyperintensities volume in
+individuals with stroke using T1-weighted images. NeuroImage: Reports. DOI:10.1016/j.ynirp.2026.100344.
+PMID:42011418. Preprint: medRxiv (2025), DOI:10.1101/2025.10.22.25338564, PMID:41282712.
+   Shows: in 227 stroke patients WMH-SynthSeg with T1-only input produced more accurate and reliable WMH volumes
+   than SAMSEG with T1-only and performed comparably to SAMSEG with T1 plus FLAIR; cited as evidence that WMH can be
+   quantified from T1 alone when FLAIR is unavailable.</p>
+<p>[24] Gaubert M; Dell'Orco A; Lange C; et al. (2022). Performance evaluation of automated white matter
+hyperintensity segmentation algorithms in a multicenter cohort on cognitive impairment and dementia. Frontiers in
+Psychiatry. DOI:10.3389/fpsyt.2022.1010273. PMID:36713907.
+   Shows: in 50 DELCODE FLAIR scans the retrained deep-learning algorithm sysu_media achieved the best performance
+   (average Dice 0.702, F1 0.642), intra-class correlation was excellent for all algorithms except BIANCA (0.835),
+   and performance improved with higher WMH burden; cited as the multicentre benchmark of WMH segmentation tools.</p>
+<p>[25] Torres-Simon L; Del Cerro-Leon A; Yus M; et al. (2024). Decoding the best automated segmentation tools for
+vascular white matter hyperintensities in the aging brain: a clinician's guide to precision and purpose.
+GeroScience. DOI:10.1007/s11357-024-01238-5. PMID:38869712.
+   Shows: against clinician manual segmentations the supervised algorithms LST-LPA and BIANCA were superior,
+   particularly for small WMH, and their consistency improved when run in parallel with the unsupervised LST-LGA
+   and SAMSEG, with the resulting threshold identifying at-risk individuals in a cohort of 300; cited as guidance
+   on which WMH tool fits which purpose.</p>
+<p>[26] Schmidt P; Gaser C; Arsic M; et al. (2012). An automated tool for detection of FLAIR-hyperintense
+white-matter lesions in multiple sclerosis. NeuroImage. DOI:10.1016/j.neuroimage.2011.11.032. PMID:22119648.
+   Shows: an automated algorithm requiring a 3D gradient-echo T1-weighted plus a FLAIR image at 3 T detected
+   FLAIR-hyperintense MS lesions in 53 patients, 10 patients with posterior fossa lesions and 18 controls with R2
+   above 0.93 against manual tracing; cited as the origin of the LST lesion-segmentation family.</p>
+<p>[27] Wiltgen T; McGinnis J; Schlaeger S; et al. (2024). LST-AI: A deep learning ensemble for accurate MS lesion
+segmentation. NeuroImage: Clinical. DOI:10.1016/j.nicl.2024.103611. PMID:38703470.
+   Shows: LST-AI, an openly available deep-learning ensemble of three 3D U-Nets trained on 491 MS T1/FLAIR image
+   pairs, exceeded Dice and F1 scores of 0.62 on 103 test cases while LST, SAMSEG and nnU-Net stayed below 0.56,
+   and it also includes lesion location annotation; cited as the state of the art for MS lesion segmentation.</p>
+<p>[28] Ling Y; Jouvent E; Cousyn L; et al. (2018). Validation and optimization of BIANCA for the segmentation of
+extensive white matter hyperintensities. Neuroinformatics. DOI:10.1007/s12021-018-9372-2. PMID:29594711.
+   Shows: in patients with extensive WMH the best BIANCA configurations were multimodal FLAIR plus T1 input, a
+   mixed lesion-load training set and an individually chosen threshold (median Dice 0.80, ICC 0.97), though the
+   difference from the reference grew linearly with total WMH burden; cited as the BIANCA setup reference.</p>
+<p>[29] Deutscher E; Dennis E; Hillary FG; et al. (2025). FastSurfer parcellation accuracy after lesion filling in
+moderate-to-severe traumatic brain injury. Frontiers in Neurology. DOI:10.3389/fneur.2025.1652385. PMID:41451415.
+   Shows: in 140 synthetically lesioned ms-TBI images FastSurfer parcellations of the lesioned images were
+   significantly more accurate (DSC 0.93, PVD -0.40) than those of the virtual-brain-grafted images (DSC 0.81,
+   PVD -9.03), which the authors read as FastSurfer robustness to such focal lesions; cited as the cautionary
+   counterexample that filling can hurt.</p>
+<p>[30] Khlif MS; Egorova N; Werden E; et al. (2019). A comparison of automated segmentation and manual tracing in
+estimating hippocampal volume in ischemic stroke and healthy control participants. NeuroImage: Clinical.
+DOI:10.1016/j.nicl.2018.10.019. PMID:30606656.
+   Shows: among eight automated hippocampal segmentation methods in 105 ischemic stroke patients and 39 controls
+   FreeSurfer-Subfields scored highest (96.3%), and masking the stroke lesions before segmentation made the
+   hippocampal volumes agree less with manual tracing, so the authors recommend automated segmentation without
+   lesion masking in stroke; cited against blanket lesion masking.</p>
+<p>[31] Miller GN; Steeby CJ; Ortega-Marquez J; et al. (2025). Comparison of brain normalization software and lesion
+compensation techniques in chronic perinatal stroke imaging. Imaging Neuroscience. DOI:10.1162/IMAG.a.1048.
+PMID:42344990.
+   Shows: registering eleven variably distorted perinatal stroke brains showed ANTs and EasyReg to be significantly
+   more accurate than FNIRT (all three struggled with large lesions), and inserting a healthy tissue mask before
+   registration significantly improved FNIRT's lesion-mask normalisation; cited because lesion compensation matters
+   for registration in stroke.</p>
+<p>[32] Deutscher E; Dennis E; Burnett J; et al. (2025). ENIGMA's advanced guide for parcellation error
+identification (EAGLE-I): An implementation in the context of brain lesions. MethodsX.
+DOI:10.1016/j.mex.2025.103482. PMID:40791643.
+   Shows: EAGLE-I is a training resource that classifies parcellation region errors by type (unconnected versus
+   connected), size and directionality and records them on a standardised spreadsheet that automatically computes a
+   brain quality rating (pass to fail); cited as the dedicated QC guide for lesioned brains.</p>
+<p>[33] van der Weijden CWJ; Pitombeira MS; Haveman YRA; et al. (2022). The effect of lesion filling on brain network
+analysis in multiple sclerosis using structural magnetic resonance imaging. Insights into Imaging.
+DOI:10.1186/s13244-022-01198-4. PMID:35347460.
+   Shows: in 49 MS patients and 19 controls, artefacts in the lesion-filled T1 images correlated positively with
+   total lesion volume (r = 0.84) and had a major impact on gray-matter segmentation accuracy, while filling also
+   increased the detection rate of network alterations; cited as the reason to apply filling cautiously at high
+   lesion load.</p>
+<p>[34] Busby N; Kristinsson S; Johnson L; et al. (2025). White matter hyperintensity load independent from the
+stroke lesion is associated with chronic aphasia severity and treatment outcome. Stroke.
+DOI:10.1161/STROKEAHA.124.046710. PMID:40276856.
+   Shows: in 95 people with chronic post-stroke aphasia whole-brain Fazekas ratings were consistently higher than
+   right-hemisphere ratings, right-hemisphere ratings correlated more strongly with language behaviour, and only
+   right-hemisphere periventricular WMH was associated with naming improvement after therapy; cited as the argument
+   to measure WMH contralateral to the infarct.</p>
+<p>[35] Ferris JK; Lo BP; Barisano G; et al. (2024). Modulation of the association between corticospinal tract
+damage and outcome after stroke by white matter hyperintensities. Neurology. DOI:10.1212/WNL.0000000000209387.
+PMID:38701386.
+   Shows: in 223 participants of the ENIGMA Stroke Recovery Working Group WMH volume related to motor impairment
+   above and beyond weighted corticospinal tract lesion load, and in moderate-to-severe WMH only WMH volume
+   predicted impairment while CST lesion load no longer did; cited as evidence that WMH carry prognostic
+   information independent of the stroke lesion.</p>
+<p>[36] Hotz I; Deschwanden PF; Liem F; et al. (2022). Performance of three freely available methods for extracting
+white matter hyperintensities: FreeSurfer, UBO Detector, and BIANCA. Human Brain Mapping. DOI:10.1002/hbm.25739.
+PMID:34873789.
+   Shows: in 231 cognitively healthy older adults FreeSurfer (T1w) underestimated WMH volume and had the worst Dice
+   (0.434), BIANCA achieved the highest Dice in 3D FLAIR (0.602) but only a moderate relation to Fazekas scores,
+   and UBO Detector matched BIANCA and had the strongest Fazekas association in 2D FLAIR; cited as the comparison of
+   freely available WMH extraction methods.</p>
+<p>[37] Sdika M; Pelletier D (2009). Nonrigid registration of multiple sclerosis brain images using lesion
+inpainting for morphometry or lesion mapping. Human Brain Mapping. DOI:10.1002/hbm.20566. PMID:18412131.
+   Shows: MS lesions distort non-rigid registration, and filling the lesions so the brain resembles a healthy brain
+   before registration removed this bias, with the proposed filling method outperforming the state of the art;
+   cited as the first inpainting-for-registration application.</p>
+<p>[38] Solodkin A; Hasson U; Siugzdaite R; et al. (2010). Virtual brain transplantation (VBT): a method for accurate
+image registration and parcellation in large cortical stroke. Archives Italiennes de Biologie. PMID:21175010.
+(No DOI in the PubMed record.)
+   Shows: in thirteen chronic patients with a single large left-hemisphere stroke, filling the lesion with virtual
+   tissue transplanted from the non-stroke hemisphere yielded FreeSurfer parcellations of twelve regions that did
+   not differ between the lesioned and the non-lesioned hemisphere; cited as the lineage of mirror-based infarct
+   filling.</p>
+<p>[39] Hannoun S; Fayad G; El Ayoubi NK; et al. (2025). The effect of lesion filling on brain age estimation in
+multiple sclerosis. BMC Medical Imaging. DOI:10.1186/s12880-025-01897-6. PMID:40866833.
+   Shows: in 571 relapsing-remitting MS patients brain age estimates from lesion-filled and non-filled T1 images
+   agreed almost perfectly (r = 0.97, ICC = 0.962, mean difference 1.23 years) and lesion filling only modestly
+   improved the structural interpretability of the brain age gap; cited as evidence that filling has little effect
+   on this endpoint.</p>
+<h3>Claims not supported by the abstracts</h3>
+<p>Three distinct claims from sections 2-4 are marked "(unverified)" in the text (four marker sites, because the
+SynthSeg/SynthSeg+ negative claim is stated twice), because the abstract of the reference(s) they cite does not
+establish them. All remaining claims in sections 2-4 were checked sentence by sentence against the retrieved
+abstracts and are supported.</p>
+<ul>
+<li>Sections 2 and 3.2: "the FSL/LST family is the standard building block in clinical pipelines [2][7][26]".
+   Reference [1] supports the ~2.3% / ~3.6% -&gt; ~0.1% error reduction, but none of [2][7][26] states that this
+   family is the <em>standard</em> building block; the abstracts only show that these tools use it ([2][7][26] use
+   FSL/LST filling, they do not compare adoption across pipelines).</li>
+<li>Section 3.2: "Random-intensity filling ... performed at least as well as state-of-the-art refilling (lowest WM
+   deviation for FAST/SPM8 at 1.5 T and 3 T) [4]". The [4] abstract reports the lowest WM deviation at 1.5 T for
+   both segmenters and at 3 T only for FAST; with SPM8 at 3 T the method merely equalled the best method, so the
+   "at 1.5 T and 3 T" phrasing overstates the abstract.</li>
+<li>Sections 2 and 3.5: "Neither [SynthSeg nor SynthSeg+] models lesion tissue as a class [13][19]". This is a
+   negative claim: the [13][19] abstracts describe no lesion class, but absence from an abstract is not evidence
+   of absence in the model, so it is not verifiable from the abstracts alone. (This marker was already present in
+   the report before the check; it is listed here for completeness.)</li>
+</ul>
+<p>Not listed: the two statements already flagged as "(unverified)" by the report itself in section 5 (no study
+validates our exact mirror + FSL <code>lesion_filling</code> + 1 ml / 10 ml combination; the 1 ml / 10 ml thresholds are not
+studied as a bias-relevant cut-off) are explicit statements about missing literature rather than claims that cite
+a reference as support.</p></div></details><details class="entry" id="research-subcortical-segmentation-longitudinal-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.html">Literature: subcortical segmentation for a multi-centre longitudinal stroke cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Literature (32 refs, checked): longitudinal template + longComBat decisive; between-scanner SDC 4.8-29 %; packages overestimate basal ganglia/thalamus; SynthSeg hippocampal underestimation unverified</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC/arXiv retrieval, checked by Claude Code 2026-10-17 (quellen-pruefen 0 wrong, 10/10 &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>FreeSurfer <code>aseg</code>, SynthSeg/SynthSeg+, FastSurfer, SAMSEG and FSL FIRST are all usable
+  for the large structures (whole hippocampus, striatum, thalamus, brainstem); the choice
+  is decided less by peak accuracy than by longitudinal use, lesion handling and
+  site harmonisation [1,2,3,4,5,6,7,8,10].</li>
+<li>For a longitudinal cohort the decisive step is processing all sessions through one
+  unbiased within-subject template (FreeSurfer longitudinal stream) or an equivalent
+  longitudinal registration; treating sessions independently injects processing variance
+  into the change signal [7,27].</li>
+<li>Lesion filling of T1 is sensible before any T1-based segmentation, but in the one
+  retrieved head-to-head test lesion filling did <strong>not</strong> change between-scanner and
+  within-scanner agreement for the six tested tools; the residual scanner effect was the
+  larger problem [6].</li>
+<li>Reported smallest detectable change (SDC) is small within a scanner (1.0% for SAMSEG
+  whole brain) but much larger between scanners (4.8% for SynthSeg thalamus up to 29.3%
+  for CAT12 thalamus), which is the real limit on detecting atrophy [6].</li>
+<li>Accuracy checks against manual tracing show automated packages systematically
+  <em>overestimate</em> basal-ganglia and thalamic volumes; the pallidum and thalamus are the
+  weakest structures, and errors are worst for the smallest volumes [4].</li>
+<li>Hippocampal subfields and amygdalar nuclei are only reliable above roughly 200–300 mm3
+  per structure (unverified); small nuclei such as fimbria and hippocampal fissure have ~15%
+  reproducibility error [11,12].</li>
+<li>Thalamic nuclei need a dedicated atlas (optionally with diffusion MRI); they are not a
+  standard output of the general packages [13,14].</li>
+<li>Harmonisation is not optional: all retrieved harmonisation studies show large site or
+  scanner effects in volumetric and cortical measures, and ComBat/longComBat remove them
+  while preserving biological variance; longComBat is more powerful for longitudinal
+  change than cross-sectional ComBat [15,16,17,18].</li>
+<li>Automatic QC flags exist (SynthSeg+ faulty-segmentation detection, MRIQC/Qoala-T
+  style outlier metrics), but manual inspection of a sample remains necessary; manual
+  editing of surfaces changes subcortical volumes substantially [3,10,19].</li>
+<li>The specific claim that SynthSeg underestimates hippocampal atrophy is <strong>unverified</strong>
+  in the retrieved literature; plausible mechanisms below, but it must be tested in-house
+  against the FreeSurfer longitudinal stream before it is accepted as fact [6,11,12].</li>
+</ul>
+<hr />
+<h3>Practical recommendation (as written for our setup)</h3>
+<p>Given the retrieved evidence and the existing SynthSeg + FreeSurfer 8.x local setup, I
+recommend a two-track pipeline with a single primary analysis track and a cross-check.</p>
+<p>Primary track (volumetric readout for group statistics over time):
+1. Build one unbiased within-subject template per patient from all available sessions and
+   process every session against it (FreeSurfer longitudinal stream, or an equivalent
+   unbiased longitudinal registration). This is the step that most directly reduces the
+   processing variance that currently mixes into the change signal [7,30].
+2. Use lesion-filled T1 for segmentation, but do not expect lesion filling to remove
+   scanner effects; it addresses lesion-driven, not site-driven, variance [6,23]. Keep the
+   FLAIR-based lesion masks under a validated segmenter for the lesion maps themselves
+   [32].
+3. Keep SAMSEG (lesion-aware variant) as the primary T1 segmenter for the basal ganglia,
+   thalamus and brainstem. Justification: it was the most repeatable within scanner in the
+   3 T multicentre test (whole brain SDC 1.02%), is sequence-adaptive and protocol-robust,
+   and has a lesion-aware mode (unverified); it also delivered among the best
+   between-scanner SDC for thalamus with SynthSeg [6,8,9].
+4. Keep the FreeSurfer longitudinal stream (or FastSurfer-long) in parallel as the
+   reference segmentation for the same structures, because it is the best-validated
+   longitudinal framework and enables the hippocampal-subfield branch [7,12,27].
+5. Derive harmonisation from the raw volumes: apply longitudinal ComBat with scanner/ site
+   as batch and age/interval as covariates, and fit it on a training split. Cross-sectional
+   ComBat is an acceptable fallback, but expect lower power for change; and if ComBat is
+   fitted without training data it may fail to recover atrophy, so always check that
+   harmonisation preserves the expected atrophy contrast [17,18].
+6. Report structures only where the retrieved reliability evidence supports them:
+   whole hippocampus, striatum, thalamus, brainstem and larger amygdala volumes are the
+   robust core; hippocampal subfields above ~300 mm3 and amygdalar nuclei above ~200 mm3
+   only if the cohort-specific test-retest supports them; fimbria and hippocampal fissure
+   should not be primary endpoints [4,11,12,27].
+7. Do not use thalamic nuclei as a primary endpoint in this cohort unless diffusion MRI is
+   available and a nuclei-specific atlas is deployed; they are not a standard output of the
+   general tools and their reliability thresholds are stricter still [13,14].</p>
+<p>Cross-check track (this directly addresses the observed underestimation):
+8. On 20–30 patients, run FreeSurfer-long, SAMSEG and SynthSeg side by side on the same
+   lesion-filled, template-registered T1s and compare the <em>annualised percentage change</em>
+   of hippocampal volume, not the cross-sectional volumes. Report the tool-specific SDC
+   and compute whether each tool can separate patients with expected decline from stable
+   patients. Use the within-scanner versus between-scanner SDC decomposition from [6] as
+   the template for this analysis.
+9. Treat the "SynthSeg underestimates hippocampal atrophy" statement as a hypothesis to
+   test, because no retrieved abstract states it. The retrieved facts that make it
+   plausible are: SynthSeg has no learned spatial prior (unverified), so it cannot
+   regularise a partly lesioned or low-contrast anterior hippocampus [2]; most hippocampus
+   methods
+   over-segment at the anterior border and degrade on clinical data [11]; and
+   hippocampal-subfield reliability is strongly volume-dependent, so small structures
+   carry the largest error [12,27].
+10. Regardless of the chosen segmenter, run automatic QC (SynthSeg+ faulty-segmentation
+    flag plus an MRIQC/Qoala-T-style outlier pass on global measures, Euler number and
+    CNR) and manually review the flagged scans; a semi-automated strategy was the
+    best-performing one in the retrieved QC comparison (unverified), and manual editing
+    moves subcortical volumes substantially [3,19].</p>
+<p>If the group is willing to invest in task-specific training, a fine-tuned nnU-Net (or an
+ensemble) on locally traced stroke data is the most promising route to a single
+lesion-robust segmenter, based on the nnU-Net benchmark and the successful task-specific
+brainstem and single-contrast MS models [21,23,24]; a local training set of even a few
+dozen traced cases is a realistic starting point.</p>
+<hr />
+<h2>Trägt</h2>
+<p>Every reference was retrieved in the task; the tool quellen-pruefen found 0 wrong PMIDs/titles and all DOIs registered
+(2026-10-17); each reference has a one-sentence "Shows" summary from its abstract; claims not supported by the cited
+abstract are marked (unverified). </p>
+<h2>Trägt nicht</h2>
+<p>Abstract-level evidence only (no full texts read); a literature map, not a systematic review. Open questions:</p>
+<ul>
+<li>No retrieved study measured hippocampal <em>atrophy rate</em> with SynthSeg against the
+  FreeSurfer longitudinal stream in a <em>stroke</em> cohort; the head-to-head evidence is from
+  MS and from cross-sectional accuracy benchmarks. This gap is the core of the local
+  observation and should be closed with the cross-check track in section 4.</li>
+<li>The retrieved multicentre test found no clear effect of lesion filling on agreement
+  [6], which conflicts with the intuitive expectation and with the lesion-aware brainstem
+  result [23]; a stroke-specific replication is missing.</li>
+<li>WMH effects on segmentation are documented but the best correction method is explicitly
+  left open by the retrieved paper [22].</li>
+<li>Ventricle enlargement is not separately quantified in the retrieved abstracts; its
+  interaction with basal-ganglia and thalamic segmentation in stroke is <strong>unverified</strong>
+  from this evidence base.</li>
+<li>Between-scanner SDC (4.8–29.3%) [6] and the harmonisation results [17,18] together imply
+  that a 5-year, 4-session, multi-site design may need within-site-only change estimates
+  or a very carefully fitted longitudinal ComBat; the required sample size for a given
+  effect size was not retrieved and is <strong>unverified</strong>.</li>
+<li>Thalamic nuclei and hippocampal subfield reliability in the presence of basal-ganglia
+  infarcts specifically was not found in the retrieved literature.</li>
+</ul>
+<hr />
+<h2>Bruchindikator</h2>
+<p>A cited abstract that does not contain the claim, or a newer study that contradicts the recommendation.</p>
+<h2>Ablesung</h2>
+<p>All entries were retrieved in this task via PubMed E-utilities / Europe PMC REST; DOIs and
+PMIDs are the ones the API returned for each record. Authors, year, title, journal and DOI
+were re-extracted programmatically from the stored XML (<code>REFS_VERIFIED.txt</code> in this
+folder). No arXiv source was used. No reference here was written from memory.</p>
+<p>[1] Fischl B, Salat DH, Busa E, et al. (2002). Whole brain segmentation: automated
+labeling of neuroanatomical structures in the human brain. Neuron.
+doi:10.1016/s0896-6273(02)00569-x. PMID:11832223.
+   Shows: In this FreeSurfer aseg method, voxels are labelled with one of 37 classes (including caudate, putamen, pallidum, thalamus, hippocampus and amygdala) from probabilistic information of a manually labelled training set, with accuracy comparable to manual labelling and robustness to anatomical variability such as ventricular enlargement - it is the baseline segmentation of our FreeSurfer branch.</p>
+<p>[2] Billot B, Greve DN, Puonti O, et al. (2023). SynthSeg: Segmentation of brain MRI scans
+of any contrast and resolution without retraining. Med Image Anal.
+doi:10.1016/j.media.2023.102789. PMID:36857946.
+   Shows: A CNN trained only on synthetic scans with fully randomised contrast and resolution segments real scans of six modalities and ten resolutions without retraining or fine-tuning, which is the cross-contrast robustness claimed for the local SynthSeg setup.</p>
+<p>[3] Billot B, Magdamo C, Cheng Y, et al. (2023). Robust machine learning segmentation for
+large-scale analysis of heterogeneous clinical brain MRI datasets. Proc Natl Acad Sci U S A.
+doi:10.1073/pnas.2216399120. PMID:36802420.
+   Shows: SynthSeg+ adds cortical parcellation, intracranial volume estimation and automated detection of faulty segmentations to whole-brain segmentation and replicated atrophy patterns in an ageing study of 14,000 scans - cited as an automatic QC flag for a large cohort.</p>
+<p>[4] Makowski C, Beland S, Kostopoulos P, et al. (2018). Evaluating accuracy of striatal,
+pallidal, and thalamic segmentation methods: Comparing automated approaches to manual
+delineation. Neuroimage. doi:10.1016/j.neuroimage.2017.02.069. PMID:28259781.
+   Shows: Against manual delineation of striatum, globus pallidus and thalamus in 30 subjects all three automated packages (FreeSurfer, FSL, MAGeT-Brain) overestimated volumes, the discrepancies were most pronounced for globus pallidus and thalamus and largest at the lower end of the volume distribution - the accuracy caveat for basal ganglia and thalamus.</p>
+<p>[5] Henschel L, Conjeti S, Estrada S, et al. (2020). FastSurfer - A fast and accurate deep
+learning based neuroimaging pipeline. Neuroimage.
+doi:10.1016/j.neuroimage.2020.117012. PMID:32526386.
+   Shows: FastSurfer replicates FreeSurfer's anatomical segmentation (95 classes) including surface reconstruction and cortical parcellation as a deep-learning pipeline, with high accuracy on unseen data and increased test-retest reliability, in a fraction of FreeSurfer's runtime - cited as the scalable FreeSurfer alternative.</p>
+<p>[6] van Nederpelt DR, Amiri H, Brouwer I, et al. (2023). Reliability of brain atrophy
+measurements in multiple sclerosis using MRI: an assessment of six freely available software
+packages for cross-sectional analyses. Neuroradiology.
+doi:10.1007/s00234-023-03189-8. PMID:37526657.
+   Shows: In 21 people with MS rescanned on three 3 T scanners, all six packages reached good to excellent agreement for large structures, lesion filling made no clear difference and between-scanner smallest detectable change was large (4.83% for SynthSeg thalamus up to 29.25% for CAT12 thalamus), which hampers clinical use of atrophy measurements - the source of the SDC figures used here.</p>
+<p>[7] Reuter M, Schmansky NJ, Rosas HD, et al. (2012). Within-subject template estimation for
+unbiased longitudinal image analysis. Neuroimage.
+doi:10.1016/j.neuroimage.2012.02.084. PMID:22430496.
+   Shows: An unbiased, robust within-subject template built from all time points and identical processing of every time point reduce processing bias and over-regularisation and increase precision and discrimination power - the justification for the FreeSurfer longitudinal stream.</p>
+<p>[8] Puonti O, Iglesias JE, Van Leemput K (2016). Fast and sequence-adaptive whole-brain
+segmentation using parametric Bayesian modeling. Neuroimage.
+doi:10.1016/j.neuroimage.2016.09.011. PMID:27612647.
+   Shows: A sequence-adaptive parametric Bayesian whole-brain segmentation reached state-of-the-art accuracy on four datasets with different scanners, field strengths and sequences while being one to two orders of magnitude faster, and is robust to small training sets - cited for SAMSEG.</p>
+<p>[9] Billot B, Cerri S, Van Leemput K, et al. (2021). Joint segmentation of multiple
+sclerosis lesions and brain anatomy in MRI scans of any contrast and resolution with CNNs.
+Proc IEEE Int Symp Biomed Imaging. doi:10.1109/isbi48211.2021.9434127. PMID:34367472.
+   Shows: A CNN that trains only on synthetic scans with simulated lesions segments MS lesions and brain anatomy jointly in scans of any contrast and resolution and was compared with a state-of-the-art Bayesian FreeSurfer approach and with dataset-specific CNNs trained on real data - cited here for lesion-aware segmentation, although the abstract describes a SynthSeg-based CNN and not an extension of SAMSEG (see section 7).</p>
+<p>[10] Dewey J, Hana G, Russell T, et al. (2010). Reliability and validity of MRI-based
+automated volumetry software relative to auto-assisted manual measurement of subcortical
+structures in HIV-infected patients from a multisite study. Neuroimage.
+doi:10.1016/j.neuroimage.2010.03.033. PMID:20338250.
+   Shows: Against auto-assisted manual tracing of caudate, putamen, amygdala and hippocampus in 120 HIV patients of a multisite study, FreeSurfer showed the lower absolute volume difference in five structures, higher sensitivity in seven and higher spatial overlap in all eight, with less variability than IBASPM, yet the authors still require visual inspection and manual correction.</p>
+<p>[11] Sghirripa S, Bhalerao G, Griffanti L, et al. (2025). Evaluating Traditional, Deep
+Learning and Subfield Methods for Automatically Segmenting the Hippocampus From MRI.
+Hum Brain Mapp. doi:10.1002/hbm.70200. PMID:40143669.
+   Shows: A benchmark of ten automatic hippocampus methods found that most, especially deep-learning methods trained on manual labels, performed well on public data but showed more error and variability on clinical data and often over-segmented the anterior hippocampus - the reason to validate on a local, lesion-containing sample.</p>
+<p>[12] Marizzoni M, Antelmi L, Bosch B, et al. (2016). Longitudinal reproducibility of
+automatically segmented hippocampal subfields: A multisite European 3T study on healthy
+elderly. Hum Brain Mapp. doi:10.1002/hbm.22859. PMID:26043939.
+   Shows: In 65 healthy elderly scanned at 13 3 T sites, hippocampal-subfield reproducibility was very good for whole hippocampus, CA2-3, CA4-DG and subiculum (~2% error, DICE &gt; 0.90), good for CA1 and presubiculum (~5%) and poor for fimbria and hippocampal fissure (~15%), and within-session averaging of two T1 images improved subfield but not whole-hippocampus reproducibility - the error budget of the subfield branch.</p>
+<p>[13] Iglesias JE, Insausti R, Lerma-Usabiaga G, et al. (2018). A probabilistic atlas of the
+human thalamic nuclei combining ex vivo MRI and histology. Neuroimage.
+doi:10.1016/j.neuroimage.2018.08.012. PMID:30121337.
+   Shows: A probabilistic atlas of 26 thalamic nuclei built from ex vivo MRI and serial histology of 12 thalami (12 whole thalami from six autopsy samples) segmented in vivo with excellent test-retest reliability, robustness to contrast changes and sensitivity to differential thalamic effects in Alzheimer's disease - the reference atlas for thalamic nuclei.</p>
+<p>[14] Tregidgo HFJ, Soskic S, Althonayan J, et al. (2023). Accurate Bayesian segmentation of
+thalamic nuclei using diffusion MRI and an improved histological atlas. Neuroimage.
+doi:10.1016/j.neuroimage.2023.120129. PMID:37088323.
+   Shows: A Bayesian thalamic segmentation that fuses a histological atlas with structural and diffusion MRI likelihoods labelled 25 thalamic labels per hemisphere, improving nucleus identification by up to 10 percentage points over structural MRI alone with median test-retest Dice above 0.85 - the dedicated thalamic option, but it needs diffusion MRI.</p>
+<p>[15] Fortin JP, Parker D, Tunc B, et al. (2017). Harmonization of multi-site diffusion
+tensor imaging data. Neuroimage. doi:10.1016/j.neuroimage.2017.08.047. PMID:28826946.
+   Shows: In FA and MD maps of 205 healthy participants, DTI measurements were highly site-specific and combining sites without harmonisation could be counter-productive, while ComBat best modelled and removed inter-site variability and preserved biological variability.</p>
+<p>[16] Fortin JP, Cullen N, Sheline YI, et al. (2018). Harmonization of cortical thickness
+measurements across scanners and sites. Neuroimage.
+doi:10.1016/j.neuroimage.2017.11.024. PMID:29155184.
+   Shows: Across two large multi-site studies and 11 scanners, ComBat removed unwanted scanner-related variance in cortical thickness values while increasing the power and reproducibility of the subsequent statistical analyses - the cross-sectional harmonisation precedent.</p>
+<p>[17] Beer JC, Tustison NJ, Cook PA, et al. (2020). Longitudinal ComBat: A method for
+harmonizing longitudinal multi-scanner imaging data. Neuroimage.
+doi:10.1016/j.neuroimage.2020.117129. PMID:32640273.
+   Shows: On longitudinal cortical thickness of 663 ADNI participants, longitudinal ComBat was more powerful for detecting longitudinal change than cross-sectional ComBat and controlled the type I error rate better than unharmonised data with scanner as a covariate - the recommended harmonisation for our 4-session design.</p>
+<p>[18] Lu YC, Zuo L, Chou YY, et al. (2025). An evaluation of image-based and statistical
+techniques for harmonizing brain volume measurements. Imaging Neurosci (Camb).
+doi:10.1162/IMAG.a.73. PMID:40800765.
+   Shows: Comparing neuroCombat, DeepHarmony and HACA3 on GRE and MPRAGE data, all improved volume consistency but HACA3 was most effective (absolute volume difference &lt; 3%, ICC &gt; 0.9), and neuroCombat detected simulated hippocampal atrophy only when training data were available - the caveat to fit harmonisation on a training split.</p>
+<p>[19] Monereo-Sanchez J, de Jong JJA, Drenthen GS, et al. (2021). Quality control strategies
+for brain MRI segmentation and parcellation: Practical approaches and recommendations -
+insights from the Maastricht study. Neuroimage.
+doi:10.1016/j.neuroimage.2021.118174. PMID:34000406.
+   Shows: Among 12 quality-control strategies applied to 259 participants of the Maastricht Study, manual QC reduced relative unexplained variance most, the best automated alternatives were based on Euler numbers and MRIQC scores, and excluding outliers on global morphological measures increased unexplained variance - the basis for our QC recommendation.</p>
+<p>[20] Patenaude B, Smith SM, Kennedy DN, et al. (2011). A Bayesian model of shape and
+appearance for subcortical brain segmentation. Neuroimage.
+doi:10.1016/j.neuroimage.2011.02.046. PMID:21352927.
+   Shows: A Bayesian shape-and-appearance model trained on 336 manually labelled T1 images segmented 15 subcortical structures with median Dice overlaps of 0.7-0.9, comparable or better than other automated methods, and is distributed as FIRST with FSL - cited as the FSL subcortical option.</p>
+<p>[21] Isensee F, Jaeger PF, Kohl SAA, et al. (2021). nnU-Net: a self-configuring method for
+deep learning-based biomedical image segmentation. Nat Methods.
+doi:10.1038/s41592-020-01008-z. PMID:33288961.
+   Shows: nnU-Net configures its own preprocessing, network architecture, training and post-processing and without manual intervention surpassed most existing approaches, including highly specialised ones, on 23 public datasets - the framework for fine-tuning on local stroke data.</p>
+<p>[22] Karim HT, Andreescu C, MacCloud RL, et al. (2016). The effects of white matter disease
+on the accuracy of automated segmentation. Psychiatry Res Neuroimaging.
+doi:10.1016/j.pscychresns.2016.05.003. PMID:27254085.
+   Shows: In a late-life depression sample, white matter hyperintensities significantly affected segmentation, whether they were filled with normal-appearing white-matter intensities or a multispectral segmentation was used, and the affected regions were not limited to the WMH themselves, so studies in high-WMH populations should account for WMH - the WMH caveat for our cohort.</p>
+<p>[23] Gesierich B, Sander L, Pirpamer L, et al. (2025). Extended Technical and Clinical
+Validation of Deep Learning-Based Brainstem Segmentation for Application in
+Neurodegenerative Diseases. Hum Brain Mapp. doi:10.1002/hbm.70141. PMID:39936343.
+   Shows: Two deep-learning brainstem segmentation models (MD-GRU, nnU-Net) reached median Dice &gt;= 0.95, showed scan-rescan and inter-scanner limits of agreement similar to longitudinal FreeSurfer in patients with cerebral small vessel disease, detected brainstem atrophy in 100% of multiple system atrophy patients and improved further with lesion filling in MS - the brainstem-specific, lesion-tolerant benchmark.</p>
+<p>[24] Goebl P, Wingrove J, Abdelmannan O, et al. (2025). Enabling new insights from old
+scans by repurposing clinical MRI archives for multiple sclerosis research. Nat Commun.
+doi:10.1038/s41467-025-58274-8. PMID:40195318.
+   Shows: MindGlide, trained on 4,247 scans of 2,934 MS patients across 592 scanners and validated on 14,952 scans, extracted lesion and region volumes from any single MRI contrast and detected treatment effects on T2-lesion accrual and on cortical and deep grey-matter volume loss - evidence for single-contrast deep learning on archive-like data.</p>
+<p>[25] Ozzoude M, Ramirez J, Raamana PR, et al. (2020). Cortical Thickness Estimation in
+Individuals With Cerebral Small Vessel Disease, Focal Atrophy, and Chronic Stroke Lesions.
+Front Neurosci. doi:10.3389/fnins.2020.598868. PMID:33381009.
+   Shows: In 155 patients with cerebral small vessel disease, focal atrophy and chronic stroke lesions, a correction procedure raised acceptable QC ratings for the cortical ribbon from 18 to 76% and for tissue segmentation from 38 to 92% and reduced failures, with the corrected output only then showing the expected association with cognitive status - the evidence that lesions and atrophy need explicit correction.</p>
+<p>[26] Schwarzer J, Khadhraoui E, Einspanner E, et al. (2025). Comparison of brain volumetry
+in patients with non-lesional epilepsy on 3 and 7 T MPRAGE. Quant Imaging Med Surg.
+doi:10.21037/qims-2025-1263. PMID:41209181.
+   Shows: Comparing 3 T and 7 T MPRAGE in non-lesional epilepsy, FreeSurfer and FastSurfer differed significantly at both field strengths with FastSurfer giving higher volumes, and 7 T inhomogeneities caused deviations in left hippocampal sub-segmentation while 3 T hippocampus segmentation was more homogeneous - cited for the sensitivity of these tools to acquisition conditions.</p>
+<p>[27] Quattrini G, Pievani M, Jovicich J, et al. (2020). Amygdalar nuclei and hippocampal
+subfields on MRI: Test-retest reliability of automated volumetry across different MRI sites
+and vendors. Neuroimage. doi:10.1016/j.neuroimage.2020.116932. PMID:32416226.
+   Shows: Across two independent cohorts with repeated 3D T1 MRI at different sites and vendors, site and vendor effects were extensive for the DICE score and reliability correlated strongly with volume size: only structures above 200 mm3 (amygdalar nuclei) and 300 mm3 (hippocampal subfields, except the molecular layer) reached reproducibility error &lt; 5% and DICE &gt; 0.80 - the volume thresholds used for reporting.</p>
+<p>[28] Li Q, Pardoe H, Lichter R, et al. (2015). Cortical thickness estimation in longitudinal
+stroke studies: A comparison of 3 measurement methods. Neuroimage Clin.
+doi:10.1016/j.nicl.2014.08.017. PMID:26110108.
+   Shows: Comparing one surface-based and two voxel-based cortical thickness methods in patients imaged in the first month after stroke and at 3 months, the methods differed importantly in high-curvature and peri-lesional regions but had similar reproducibility, and both approaches were judged valid in stroke - cited for the general effect of stroke lesions on automated estimates, not for subcortical volumes.</p>
+<p>[29] Hafiz R, Farmer C, Joseph L, et al. (2026). Evaluating Precision and Responsiveness of
+MRI-derived Brain Volumetric and Clinical Outcome Measures in CLN3 Disease. medRxiv.
+doi:10.64898/2026.09.29.26363931. PMID:42856707.
+   Shows: In 44 individuals with CLN3 disease, SynthSeg-v2 brain parenchyma and grey-matter volume were the most precise and responsive MRI-derived metrics (parenchyma decline -1.32%/year, minimum follow-up 0.85 years to detect progression in 75% of the cohort), supporting volumetric MRI as a trial endpoint - the precision argument for volumetric readouts.</p>
+<p>[30] Casamitjana A, Sala-Llonch R, Lekadir K, et al. (2025). USLR: An open-source tool for
+unbiased and smooth longitudinal registration of brain MRI. Med Image Anal.
+doi:10.1016/j.media.2025.103662. PMID:40592111.
+   Shows: USLR estimates spatial transformations in a Bayesian Lie-algebra framework that bring all timepoints to an unbiased subject-specific space with a smooth trajectory, and improved on cross-sectional methods in identifying group differences and in reducing intra-subject variability - the unbiased longitudinal registration alternative used in track 1.</p>
+<p>[31] Blattner T, Romascano D, McKinley R, et al. (2026). Mitigating the Impact of MR
+Sequence Parameters: Increasing the Robustness of DL-Based Cortical Thickness Estimates.
+Hum Brain Mapp. doi:10.1002/hbm.70560. PMID:42252567.
+   Shows: Fine-tuning a deep-learning segmentation tool on simulated MPRAGE images derived from quantitative relaxation maps reduced its sensitivity to inversion and repetition time markedly while keeping sensitivity to cortical atrophy, outperforming FreeSurfer and SynthSeg on a synthetic atrophy dataset - evidence that acquisition parameters feed into the change signal.</p>
+<p>[32] Wiltgen T, McGinnis J, Schlaeger S, et al. (2024). LST-AI: A deep learning ensemble
+for accurate MS lesion segmentation. Neuroimage Clin.
+doi:10.1016/j.nicl.2024.103611. PMID:38703470.
+   Shows: LST-AI, a 3D U-Net ensemble trained on 491 in-house T1/FLAIR MS image pairs, exceeded Dice and F1 scores of 0.62 and outperformed LST, SAMSEG and nnU-Net (all below 0.56), including a Dice of 0.65 on the MSSEG-1 challenge - why lesion maps should come from a validated lesion segmenter.</p>
+<hr />
+<h3>Verification note</h3>
+<p>Titles, journals, years, DOIs and author lists above were re-extracted programmatically
+from the PubMed XML stored in this folder after an initial hand-written draft was found to
+have mis-attributed DOIs (reference-list DOIs had leaked into some entries); the
+programmatic pass is the authoritative one. Every claim in sections 2-5 carries a bracketed
+number pointing to this list. Statements that the retrieved abstracts do not support are
+marked <strong>unverified</strong>. The final report was assembled by remapping the citation numbers
+after the reference list was corrected; see <code>BODY_remap.md</code> for the remapped body text.</p>
+<hr />
+<h3>Claims not supported by the abstracts</h3>
+<p>Claims from sections 2-4 that the abstract of the cited reference does not support; each
+was marked "(unverified)" at its place in the text. Checked against the abstracts retrieved
+with <code>literatur details &lt;PMID&gt;</code>.</p>
+<ol>
+<li>Sub-section 3.2, ref [2]: "it has no learned spatial prior from a fixed atlas".
+   The SynthSeg abstract describes domain randomisation of contrast and resolution and
+   training on synthetic data sampled from a generative model conditioned on segmentations,
+   but says nothing about a spatial prior or an atlas and never states that atlas priors are
+   absent. There is no claim in the abstract that the method has no spatial prior, so the
+   statement cannot be attributed to it. Same claim reappears in section 4, point 9.</li>
+<li>Sub-section 3.2, ref [2]: "Note that the absence of an atlas prior is a double-edged
+   property" and the following mechanistic sentence about removing regularisation. This is a
+   consequence drawn from claim 1; the abstract contains no such statement about a shape or
+   atlas prior, about unusual anatomy, or about lesions pulling towards a population shape.</li>
+<li>Sub-section 3.4, ref [9]: the description as "Its [SAMSEG's] lesion-aware extension".
+   Ref [9] is a SynthSeg-based CNN that trains on synthetic scans with simulated lesions;
+   the abstract does not present it as an extension of SAMSEG nor as a variant of the
+   sequence-adaptive Bayesian method of [8]. The Lesion-adaptive SAMSEG that the report
+   actually uses is not covered by any retrieved abstract here. Repeated in section 4,
+   point 3.</li>
+<li>Section 2, bullet 6, refs [11,12]: "Hippocampal subfields and amygdalar nuclei are only
+   reliable above roughly 200-300 mm3 per structure". Neither cited abstract states these
+   volume thresholds: ref [12] reports per-subfield reproducibility errors and only that
+   test-retest reproducibility improved with volume size, and ref [11] is a benchmark of ten
+   hippocampal segmentation methods that gives no volume threshold. The 200 mm3 (amygdalar
+   nuclei) and 300 mm3 (hippocampal subfields) numbers come from ref [27], which is not
+   cited in this bullet; the threshold as cited is therefore not covered by its sources.
+   The fimbria/fissure part of the same bullet (~15% error) is supported by [12] and stays
+   verified.</li>
+<li>Section 3.12, ref [19]: that manually editing surfaces changed "hippocampal volumes more
+   than some cortical measures" and that "the semi-automated strategies performed well".
+   The abstract states that manual editing produced particularly large changes in subcortical
+   volumes and moderate changes in cortical surface area, thickness and hippocampal volumes -
+   it never sets hippocampal volumes above cortical measures - and it concludes that manual
+   QC strategies reduced relative unexplained variance most, with the best automated
+   alternatives based on Euler numbers and MRIQC scores, so "the semi-automated strategies
+   performed well" is not what the paper found (the best semi-automated strategies were not
+   identified as the top performers, and outlier exclusion on global morphological measures
+   made things worse). Same wording repeated in section 4, point 10. The related statement
+   in section 2 ("manual editing moves subcortical volumes substantially") is supported by
+   the same abstract and stays unmarked.</li>
+<li>Section 4, point 9, ref [2]: "SynthSeg has no learned spatial prior, so it cannot
+   regularise a partly lesioned or low-contrast anterior hippocampus ... [2]". The citation
+   covers neither half: the abstract says nothing about a spatial prior (claim 1) and
+   nothing about how SynthSeg behaves on a lesioned or low-contrast hippocampus. The
+   over-segmentation of the anterior hippocampal border is supported by ref [11], which is
+   cited separately in the same point and stays verified.</li>
+</ol>
+<p>Not affected (the report already handles them correctly): the "SynthSeg underestimates
+hippocampal atrophy" hypothesis is explicitly labelled <strong>unverified</strong> in section 2 and is
+not presented as a supported claim. No retrieved report here measured SynthSeg hippocampal
+atrophy rates against FreeSurfer-long in stroke, which section 5 already states as an open
+question.</p></div></details><details class="entry" id="demdas-meeting-primer-finke-2026-10-16"><summary><span class="type">Befund</span><span class="t"><a href="findings/demdas-meeting-primer-finke-2026-10-16.html">Study guide: DEMDAS, brain MRI and autoimmune encephalitis imaging, for a data scientist</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Study guide (11 pages, PDF next to it, for audio/notebook learning): DEDEMAS study (real name of DEMDAS), our pipeline step by step, small vessel disease terms, autoimmune encephalitis and Finke&#x27;s methods (fractal dimensionality, DTI/FA/MD/NODDI, rs-fMRI, animal MRI), overlaps, meeting questions, glossary, statistics; 29 PubMed-checked sources</span></summary><div class="body"><p class="small muted">Herkunft: study guide written for Mendel before the meeting with Carsten Finke (Charité neurology) on 28.10.2026 or later; Alita session 16.10.2026; PDF next to this file; all references checked in PubMed on 16.10.2026 · <a href="findings/demdas-meeting-primer-finke-2026-10-16.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/demdas-meeting-primer-finke-2026-10-16.md">Markdown</a></p><p>Version 1, 16 October 2026. Written for Mendel Temuulen (data scientist) to prepare a meeting with Carsten Finke (Department of Neurology and Experimental Neurology, Charité). It is meant to be read, and also to be loaded into a notebook tool and turned into an audio overview, so it is written in full sentences and spells out every abbreviation the first time it appears. No patient data, no identifiers. Numbers from the literature carry a reference number in square brackets; the list is at the end.</p>
 <p><strong>How to use it.</strong> Part A explains the study and our processing pipeline, so that you can describe your own work in clinical words. Part B explains the imaging methods Carsten Finke uses. Part C connects the two and lists questions for the meeting. Part D is a glossary of all technical terms, and Part E explains the statistics that appear in his papers.</p>
 <hr />
 <h1>Part A: the study and our pipeline</h1>

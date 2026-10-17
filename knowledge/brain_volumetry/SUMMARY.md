@@ -1,5 +1,7 @@
 # brain_volumetry: Kurzstand
 
+**Neu 2026-10-17 (drei Literaturberichte, je Quelle geprueft und zusammengefasst):** Fraktale Dimensionalitaet zuverlaessig (ICC ~0,9-0,95), aber standort-/registrierungsabhaengig ([research-fractal-dimensionality-from-freesurfer-2026-10](findings/research-fractal-dimensionality-from-freesurfer-2026-10.md)); Fuellen statt Ausblenden, Artefakte wachsen mit Last ([research-lesion-filling-before-segmentation-2026-10](findings/research-lesion-filling-before-segmentation-2026-10.md)); subkortikal entscheiden Laengsschnitt-Template und longComBat, Scanner-SDC 4,8-29 % ([research-subcortical-segmentation-longitudinal-stroke-2026-10](findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md)).
+
 **Neu 2026-10-16:** Sequenzen derselben Sitzung (FLAIR auf T2*/SWI) per Header-Weltkoordinaten zusammenbringen; ein FLIRT-Start im Voxelraum drehte LPS- gegen RAS-Dateien falsch. SynthSeg aus FLAIR nur, wo es die Hirnmaske abdeckt ([same-session-sequences-align-by-header-not-voxel-flirt](findings/same-session-sequences-align-by-header-not-voxel-flirt.md)).
 
 Stand 2026-10-13. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).
