@@ -2156,6 +2156,17 @@
 "src": "knowledge/local_llm_operation/rules/foreign-gpu-process-before-measuring.md"
 },
 {
+"t": "Before \"move X to Alita\": find out whether Alita is a folder or a drive",
+"p": "local_llm_operation/rules/group-drive-move-ask-what-alita-means.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "\"ALITA\" is the group drive on the wiki hub, not a folder on the workstation (which is Alita); copy+checksum, 84 % full",
+"id": "group-drive-move-ask-what-alita-means",
+"src": "knowledge/local_llm_operation/rules/group-drive-move-ask-what-alita-means.md"
+},
+{
 "t": "Der Modellserver startet nur, wenn die Karte Platz hat, und mit dem Profil, das jetzt passt",
 "p": "local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.html",
 "a": "local_llm_operation",

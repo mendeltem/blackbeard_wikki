@@ -10,6 +10,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| regel | [group-drive-move-ask-what-alita-means](rules/group-drive-move-ask-what-alita-means.md) | "ALITA" is the group drive on the wiki hub, not a folder on the workstation (which is Alita); copy+checksum, 84 % full |
 | befund | [clara-cle-agents-solve-bounded-code-tasks-slower](findings/clara-cle-agents-solve-bounded-code-tasks-slower.md) | Claude Code vs Hermes/OpenCode on the hub: bounded code tasks all correct, 6-18x slower; open review: Claude 6 extra real bugs, OpenCode 1, Hermes timeout |
 | regel | [remote-model-gets-only-data-free-skills-and-redacted-text](rules/remote-model-gets-only-data-free-skills-and-redacted-text.md) | Shared skills split by data; OpenCode also reads ~/.claude/skills (OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1); Hermes skills.external_dirs; fallback reports redact ids |
 | befund | [hpc-nodes-answer-only-ssh-and-shards-start-at-once](findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.md) | Cluster nodes: only port 22 from the intranet (an API needs a tunnel or gateway); GPU shard starts at once, a whole A100 waited ~9 h; 7 x 80 GB, 20 x 40 GB (2026-10-16) |

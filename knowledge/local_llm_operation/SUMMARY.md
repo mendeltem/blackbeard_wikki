@@ -2,6 +2,8 @@
 
 **Neu 2026-10-17 (gemessen):** Agenten auf dem Charité-Modell-Hub (Hermes, OpenCode) loesen abgegrenzte Code-Aufgaben richtig, aber 6- bis 18-mal langsamer als Claude Code; beim offenen Review fand Claude Code 6 echte Zusatzfehler, OpenCode 1, Hermes lief in die Zeitgrenze ([clara-cle-agents-solve-bounded-code-tasks-slower](findings/clara-cle-agents-solve-bounded-code-tasks-slower.md)).
 
+**Neu 2026-10-17 (Clé/Clara, beim Plattenreinigen):** "ALITA" ist ein Laufwerksname, kein Ordner — das Gruppenlaufwerk der AG am Wiki-Hub (`CSB_NeuroRad/temuuleu/ALITA`), waehrend die Maschine selbst Alita heisst (ein "Verschieben nach Alita" darauf ist ein Nullweg). Von einem Profil mit Remote-Modell ist der Datenort unter `/media` gesperrt, Uebertragen laeuft per `scp`/`rsync` von Hand oder aus dem lokalen Profil. Vorher Platz pruefen: das geteilte 12-TB-Laufwerk war 84 % voll (2,0 TB frei). Und ein Passwort im Chat ist verbrannt — der Klassifikator blockt es als Brute-Force-Muster, die Zeilen gehoeren dem Nutzer ([group-drive-move-ask-what-alita-means](rules/group-drive-move-ask-what-alita-means.md)).
+
 **Neu 2026-10-16:** Entferntes Modell (Clé) bekommt nur datenfreie Skills und geschwaerzten Text: OpenCode liest auch ~/.claude/skills (Schalter OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1), Hermes per skills.external_dirs; Morgenkontrolle faellt nach 5 min auf Clé zurueck ([remote-model-gets-only-data-free-skills-and-redacted-text](rules/remote-model-gets-only-data-free-skills-and-redacted-text.md)).
 
 Stand 2026-10-06. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
