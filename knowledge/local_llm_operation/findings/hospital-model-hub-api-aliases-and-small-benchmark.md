@@ -24,7 +24,10 @@ verweist_auf: [clara-cle-agents-solve-bounded-code-tasks-slower, remote-model-ge
    that addition disappeared (306 instead of ~800 prompt tokens).
 4. Usage is counted per user per month (reset date shown); a limit is not shown in the UI, the manual or the API headers.
 5. Local comparison, same benchmark: Ternary-Bonsai-2-27B (PQ2_0, 6.8 GB, PrismML llama.cpp fork) 92 %, 45 tok/s, tool calls
-   work, fits next to other GPU jobs on a 24 GB card. (Qwen3.8-27B Q4 run pending.)
+   work, fits next to other GPU jobs on a 24 GB card. Qwen3.8-27B Q4 (16 GB): 95 %, tool calls work (4 tok/s in this run
+   only because 30 of its layers were offloaded to RAM next to running GPU jobs; ~30 tok/s alone on the card).
+   Decision 2026-10-17: keep the 27B Q4 (patient data, with vision projector) and Bonsai (beside GPU jobs: the model
+   starter picks it when the card is held); Flash-Next 177B MoE, MedGemma 27B/4B, Qwen3-Coder-30B and 1.7-8B models deleted.
 
 ## Trägt
 Benchmark script and results 2026-10-16/17 (llm_bench.py, results_cle_20261016.json, results_bonsai.json); tool-call probes.
