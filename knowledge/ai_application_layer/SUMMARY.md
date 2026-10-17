@@ -8,9 +8,9 @@ Ob der Capex der Angebotsseite aus der Anwendungsschicht zurückfließt. Gegenbu
 
 **Regeln (vorschlag):** Wertschöpfung ≠ Abschöpfung ≠ Rückfluss. Fehlende Messung ist keine gemessene Abwesenheit.
 
-**Offen:** Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten). Flughafen-Check-in als Use Case erfassen.
+**Offen:** Mengenbilanz der Beschleuniger (Residuum nicht auflösbar, ±145 Mrd. aus einem Posten).
 
-**Use-Case-Katalog:** [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/), 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Flughafen-Check-in seit 2026-10-05 als Karte drin (98 Karten). Weitere Lücken: 11 Kandidaten zur Prüfung am Samstag (Prüfpunkt use-case-overview-gaps).
+**Use-Case-Katalog:** [ai_use_cases_overview](https://mendeltem.github.io/ai_use_cases_overview/), 97 Use Cases in 15 Clustern mit Reifegrad, Belegqualität, Wachstum und Quelle (Stand Sep. 2026). Flughafen-Check-in seit 2026-10-05 als Karte drin (98 Karten). Weitere Lücken: Kandidatenliste vom 05.10. am 2026-10-17 gegen den Kartensbestand geprüft — von elf Kandidaten waren vier schon abgedeckt (Be My Eyes, Rail predictive maintenance, KI-Containerterminals, Liefer-Dispatch), sieben bestätigt, davon fünf mit Primaerquelle (kassenloser Handel, Kennzeichenerkennung/Maut, KI-Kreditscoring, KI-Hoergeraete, Content-Moderation), zwei ohne Quelle (Flugsicherung, Briefsortierung). Neun neue Kandidaten aus Branchen ohne Karte kamen dazu (u. a. Automobil-OEM, personalisierte Werbung) — noch unbelegt. SEC-EDGAR-Volltext war die tragende Quelle, weil die allgemeinen Suchdienste aus diesem Netz nicht antworten (agent_tooling).
 
 **KI an Standorten (vorschlag, 2026-10-06):** Von 128 lv-5-Standorten im Supply Atlas ist KI an 42 am Standort belegt, an 39 nur beim Betreiber, an 27 nicht belegt, 13 sind selbst KI-Infrastruktur, 3 offen. Konzernbelege nie auf Werke übertragen (operator-evidence-is-not-site-evidence). Offen: Stufe 4 (221), drei Kraftwerke, Betreiber Tuoketuo.
 

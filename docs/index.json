@@ -66,6 +66,17 @@
 "src": "knowledge/agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.md"
 },
 {
+"t": "From this network only a few search endpoints answer; SEC EDGAR full text is the one that gives primary sources",
+"p": "agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "1. Measured on 2026-10-17 from the Cle workstation: the general web-search endpoints are unusable, but **SEC EDGAR full-text search works** and returns company filings (10-K, 10-Q, 8-K, EX-99 presses) with the exact Archive URL of the docum",
+"id": "sec-edgar-fulltext-search-is-the-reachable-primary-source",
+"src": "knowledge/agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.md"
+},
+{
 "t": "Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide",
 "p": "agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html",
 "a": "agent_tooling",
@@ -594,13 +605,13 @@
 "src": "knowledge/ai_application_layer/open_checks/use-case-card-corrections-2026-10.md"
 },
 {
-"t": "Lücken in ai_use_cases_overview: Kandidatenliste",
+"t": "Gaps in ai_use_cases_overview: candidates checked against the live card stock",
 "p": "ai_application_layer/open_checks/use-case-overview-gaps.html",
 "a": "ai_application_layer",
 "y": "Prüfpunkt",
 "s": "offen",
-"d": "2026-10-05",
-"x": "Der Flughafen-Check-in fehlte in der Übersichtsseite (siehe [airport-biometric-checkin-use-case](airport-biometric-checkin-use-case.md)). Ein sparsamer Erstdurchlauf am 2026-10-05 hat 30 bekannte, produktiv laufende KI-Anwendungen per Stich",
+"d": "2026-10-17",
+"x": "The 2026-10-05 list was a keyword guess against a 98-card page. On 2026-10-17 the live page (mendeltem.github.io/ai_use_cases_overview) was read directly: the array `const UC` holds 144 cards in 13 labelled cluster blocks (Mobility, warehou",
 "id": "use-case-overview-gaps",
 "src": "knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md"
 },
@@ -3353,6 +3364,17 @@
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
+},
+{
+"t": "web_research",
+"p": "tools/general/web_research/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "",
+"x": "tools/general/web_research",
+"id": "web_research",
+"src": "tools/general/web_research/README.md"
 },
 {
 "t": "wiki_html",

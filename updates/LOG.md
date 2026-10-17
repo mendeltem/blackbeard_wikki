@@ -1,3 +1,4 @@
+2026-10-17 | mendeltem | knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md, knowledge/agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.md, knowledge/agent_tooling/INDEX.md, knowledge/agent_tooling/SUMMARY.md, knowledge/ai_application_layer/INDEX.md, knowledge/ai_application_layer/SUMMARY.md, tools/general/web_research/, tools/general/INDEX.md | ai_use_cases_overview: Lueckenkandidaten gegen den live Kartenbestand (144 Karten) geprueft, fuenf Luecken mit Primaerquelle (Upstart, Verra Mobility, Demant, Sonova, TaskUs), zwei unbelegt; Befund: SEC-EDGAR-Volltext ist aus diesem Netz die erreichbare Primaerquelle (neues Tool web_research)
 # Änderungsprotokoll
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`

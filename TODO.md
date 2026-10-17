@@ -14,11 +14,11 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-17. Nicht vo
   - [ ] Coding-Anteil gegen Token-Statistiken halten (der Projekt-Report „AI Use Case Landscape Juli 2026“ nennt ~54 % des Coding-LLM-Spends bei Anthropic, Menlo Ventures, Sekundärquelle).
   - [ ] Ergebnis als Spannweite je Bereich mit Quelle eintragen, Lücken offen lassen (Regel [absence-of-measurement-is-not-measurement-of-absence](knowledge/ai_application_layer/rules/absence-of-measurement-is-not-measurement-of-absence.md)).
 - [KI-Prüfung im Supply Atlas fortsetzen](knowledge/ai_application_layer/open_checks/supply-atlas-ai-use-level4.md) (pruefpunkt, offen, Stand 2026-10-06)
-- [Lücken in ai_use_cases_overview: Kandidatenliste](knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md) (pruefpunkt, offen, Stand 2026-10-05)
-  - [ ] Samstag (viel Token-Budget): je Kandidat Webrecherche nach dem Muster des Flughafen-Falls, also Produktion ja/nein, Kennzahl mit Herkunft, Behörde gegen Firmenangabe, Einstufung Reife/Beleg/Wachstum.
-  - [ ] Weitere Kandidaten systematisch sammeln: zuerst die Behördenverzeichnisse aus "Suchquellen", dann Lückenliste der Seite (Branchen ohne Karte) Branche für Branche gegen bekannte Produktivfälle halten.
-  - [ ] Die zwei möglicherweise zufälligen Treffer gegen die Kartentexte lesen.
-  - [ ] Je bestätigter Lücke Kartenentwurf an Mendel, gesammelt eintragen (Schreibzugriff auf ai_use_cases_overview nötig).
+- [Gaps in ai_use_cases_overview: candidates checked against the live card stock](knowledge/ai_application_layer/open_checks/use-case-overview-gaps.md) (pruefpunkt, offen, Stand 2026-10-17)
+  - [ ] Draft cards for the five sourced gaps (ANPR/tolling first) and send them to Mendel; page write access needed.
+  - [ ] Verify the six candidates that have no source yet (ATC, mail sorting, checkout-free scale, computational
+  - [ ] Fresh read of the page before each pass — it changed twice in October alone; the keyword list from 05.10. is stale.
+  - [ ] Decide language: this area is German, the standing rule says English for agent-written entries. Settled here by
 - [Einsatzorte: zweiter Durchgang und neue Kartenhinweise](knowledge/ai_application_layer/open_checks/use-case-places-second-pass.md) (pruefpunkt, offen, Stand 2026-10-07)
 
 ## ai_buyers

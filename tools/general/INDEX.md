@@ -9,3 +9,4 @@ Tools ohne Fachbezug.
 | [js_literal_to_json/](js_literal_to_json/README.md) | python | Zieht `const NAME = {…}`-Literale aus einer HTML- oder JS-Datei und schreibt sie als JSON, ohne Node und ohne Build |
 | [wiki_maintenance/](wiki_maintenance/README.md) | python | Erzeugt `TODO.md` aus allen offenen Punkten der Wiki, prüft tote Links und fehlende Indexzeilen |
 | [wiki_html/](wiki_html/README.md) | python | Baut aus den Markdown-Quellen die HTML-Lesefassung `docs/` (index.html mit Suche, Bereichsseiten, Eintragsseiten, Rückverweise, index.json) |
+| [web_research/](web_research/README.md) | python | SEC-EDGAR-Volltextsuche als Primärquelle, weil die allgemeinen Suchdienste von dieser Maschine aus nicht antworten |
