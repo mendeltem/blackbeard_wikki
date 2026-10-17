@@ -143,6 +143,17 @@
 "src": "knowledge/agent_tooling/rules/cheap-precheck-ranks-but-does-not-decide.md"
 },
 {
+"t": "Every cited source is checked against the original and carries a one-sentence summary",
+"p": "agent_tooling/rules/check-every-cited-source-and-summarise-it.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-17",
+"x": "Every source: exists (PMID/DOI), PMID belongs to the title, claim in the abstract, one 'Shows:' sentence; agent report had 20/28 real PMIDs on invented titles; tool quellen-pruefen",
+"id": "check-every-cited-source-and-summarise-it",
+"src": "knowledge/agent_tooling/rules/check-every-cited-source-and-summarise-it.md"
+},
+{
 "t": "Gerechnetes und Gemeintes müssen auseinanderzuhalten sein",
 "p": "agent_tooling/rules/computed-and-judged-must-stay-separable.html",
 "a": "agent_tooling",

@@ -1,5 +1,6 @@
 # agent_tooling: Kurzstand
 
+**Regel 2026-10-17 (Nutzer):** Jede zitierte Quelle pruefen (existiert, Link geht, PMID gehoert zum Titel, Aussage im Abstract) und je Quelle ein Satz "Shows: ..."; ein Agentenbericht hatte 20 von 28 echten PMIDs an erfundenen Titeln ([check-every-cited-source-and-summarise-it](rules/check-every-cited-source-and-summarise-it.md)).
 **Neu 2026-10-17:** Verschieben = kopieren + SHA-256 beidseitig + erst dann loeschen; grep -q unter pipefail meldet einen Treffer als Fehler; stuendlicher Platzwaechter haelt Dienste unter 20 GB per SIGSTOP an; kompakte Literatursuche ueber freie APIs spart Tokens ([disk-guard-verified-move-and-compact-literature-search](findings/disk-guard-verified-move-and-compact-literature-search.md)).
 Stand 2026-10-07. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
