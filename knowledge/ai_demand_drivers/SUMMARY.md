@@ -1,6 +1,6 @@
 # ai_demand_drivers: Kurzstand
 
-Stand 2026-10-16. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-17. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels Investmentsicht.
 
@@ -13,6 +13,8 @@ Warum die KI-Nachfrage nach Compute und Speicher hoch bleibt. Kern von Mendels I
 **New 2026-10-15 (TSMC 3Q26):** Revenue US$46.7bn above guidance, HPC 68% (+22% QoQ), N3+N2 41% of wafer revenue, revenue per wafer +13.9% QoQ on +3.2% shipments (getragen, IR). Call (vorschlag until official transcript): 4Q26 guide US$52.3 to 54.3bn, 2026 growth ~44% (fourth raise this year), capex US$60 to 64bn; Wei: demand above supply, gap still big, AI accelerator CAGR probably above mid-to-high 50s; consumer segments weak.
 
 **New 2026-10-16 (vorschlag, thesis Mendel):** Older HBM hardware holds its value: hyperscalers retire for power efficiency, capex-limited buyers (labs, SMEs, local compliance inference) absorb it; HBM takes the wafers that GDDR7/DDR5 would need. Indicators trade press only: H100 one-year rental 1.70 to 2.35 USD/GPU-h (Oct 2025 to Mar 2026), RTX 5090 EU street >5,000 EUR vs 1,999 USD MSRP. Counter: rental prices fell in 2025; a vendor blog prices used A100 below new. Adds no new HBM bits and no memory-maker revenue. Open: primary price series.
+
+**New 2026-10-17 (vorschlag):** GB300 ramp: Nvidia revenue inflected Aug to Oct 2025 (GB300 ~2/3 of Blackwell, Tier 1a), ODM racks Q4 2025 to Q1 2026, estimated GB300 revenue peak ~63 bn USD in May to Jul 2026; Rubin revenue ramp Nov 2026 to Jan 2027 (Jefferies >40 % of GPU revenue), racks Feb to Apr 2027.
 
 **Befunde (vorschlag):** GB HBM je MW seit 2020 nicht gestiegen, mit Rubin −17 %. ASICs verbauen HBM. Rubin seit August 2026 in Auslieferung, ~20 % des DC-Umsatzes Q3 GJ27, Ende Sep. 2026 erst 1–3 % der Blackwell-Stückzahl.
 

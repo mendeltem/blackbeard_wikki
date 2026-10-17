@@ -781,6 +781,17 @@
 "src": "knowledge/ai_demand_drivers/findings/debt-headroom-big-four-2026.md"
 },
 {
+"t": "GB300 ramp timing and the Rubin handover",
+"p": "ai_demand_drivers/findings/gb300-ramp-timing-and-rubin-handover.html",
+"a": "ai_demand_drivers",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "",
+"id": "gb300-ramp-timing-and-rubin-handover",
+"src": "knowledge/ai_demand_drivers/findings/gb300-ramp-timing-and-rubin-handover.md"
+},
+{
 "t": "GB HBM je MW: seit sechs Jahren kein Zuwachs, mit Rubin ein Rückgang",
 "p": "ai_demand_drivers/findings/hbm-gb-per-mw-three-generations.html",
 "a": "ai_demand_drivers",
@@ -2574,6 +2585,17 @@
 "src": "knowledge/memory_supply/mechanisms/capex-discipline-after-2023.md"
 },
 {
+"t": "CPU-attached LPDDR adds conventional DRAM demand on top of HBM",
+"p": "memory_supply/mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.html",
+"a": "memory_supply",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-10-17",
+"x": "",
+"id": "cpu-attached-lpddr-adds-conventional-dram-demand",
+"src": "knowledge/memory_supply/mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.md"
+},
+{
 "t": "Opportunitaetskosten je Wafer: DDR5 gegen HBM",
 "p": "memory_supply/mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html",
 "a": "memory_supply",
@@ -2656,7 +2678,7 @@
 "a": "memory_supply",
 "y": "Prüfpunkt",
 "s": "offen",
-"d": "2026-10-16",
+"d": "2026-10-17",
 "x": "",
 "id": "rubin-hbm-capacity-technology-or-scarcity",
 "src": "knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md"
@@ -3393,7 +3415,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -3404,7 +3426,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -3415,7 +3437,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -3437,7 +3459,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-10-17",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -3448,7 +3470,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-17",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -3459,7 +3481,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-10-17",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -3470,7 +3492,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -3481,7 +3503,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-17",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -3492,7 +3514,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-17",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -3503,7 +3525,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-10-17",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -3514,7 +3536,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -3525,7 +3547,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -3536,7 +3558,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-17",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -3547,7 +3569,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-10-17",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -3558,7 +3580,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-10-17",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

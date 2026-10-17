@@ -1,0 +1,115 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CPU-attached LPDDR adds conventional DRAM demand on top of HBM</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">memory_supply</a> › <a href="../index.html#mechanisms">Mechanismus</a></div><h1>CPU-attached LPDDR adds conventional DRAM demand on top of HBM</h1><div class="meta"><span>Typ</span><span>Mechanismus</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-17</span><span>Herkunft</span><span>Chat with Mendel (claude.ai project &quot;Artificial Intelligence&quot;), 2026-10-17</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="hbm-eats-wafer-area.html">HBM frisst Waferflaeche</a> <span class="muted small">(memory_supply)</span><br><a href="gpu-memory-absorbs-fab-additions.html">Mehr Speicher je GPU frisst den Fab-Zubau</a> <span class="muted small">(memory_supply)</span><br><a href="ddr5-hbm-per-wafer-opportunity-cost.html">Opportunitaetskosten je Wafer: DDR5 gegen HBM</a> <span class="muted small">(memory_supply)</span><br><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a> <span class="muted small">(memory_supply)</span><br><a href="../../ai_demand_drivers/axioms/bandwidth-bottleneck.html">Bandwidth bottleneck (von Neumann bottleneck), widening: axiom 1 of 3</a> <span class="muted small">(ai_demand_drivers)</span></span><span>Verwiesen von</span><span><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a> <span class="muted small">(memory_supply)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.md">knowledge/memory_supply/mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.md</a></span></div><h2>Statement</h2>
+<p>Thesis Mendel (2026-10-17): the host CPU's memory is a second, so far uncounted DRAM sink that comes on top of the
+GPU-driven HBM shortage. With Vera Rubin the CPU side grows faster than the HBM side, and it draws on the same
+conventional DRAM pool that the HBM wafer shift already squeezes.</p>
+<p>Why the CPU gets more memory: the LPDDR5X behind Vera serves as a capacity tier for the GPU (offloaded KV cache for
+long contexts and multi-step agents, reached coherently over NVLink-C2C) and as working memory for agent workloads
+that run on the CPU (tool calls, sandboxes, RL environments, data preparation). This is a capacity role, not CPU
+compute on memory, so the von Neumann bottleneck of classic CPUs does not argue against it.</p>
+<p>Specs (Tier 1b, vendor):
+- Grace: up to 480 GB LPDDR5X, 512 GB/s. Vera: up to 1.5 TB LPDDR5X (8 SOCAMM modules), 1.2 TB/s.
+- NVL72 rack: GB300 about 17 TB LPDDR5X (36 Grace), Vera Rubin up to 54 TB (36 Vera).
+- CPU:GPU ratio unchanged at 1:2 in NVL72. HGX Rubin NVL8 uses an x86 host, no Vera.
+- Reported (TrendForce, June 2026): SOCAMM capacity in the Vera Rubin superchip halved. Nvidia (August 2026) only
+  restated "up to 1.5 TB". Shipped configuration open.</p>
+<p>Calculation per GPU (wafer-equivalent in GB of standard DRAM; HBM3E factor 3, HBM4 factor 4, LPDDR factor 1, from
+hbm-eats-wafer-area; these factors are assumptions):</p>
+<pre><code>B300:               288 x 3 + 240 = 1,104
+Rubin, SOCAMM half: 288 x 4 + 375 = 1,527  (+38 %)
+Rubin, full 1.5 TB: 288 x 4 + 750 = 1,902  (+72 %)
+
+Increase per GPU 423 to 798, of which HBM +288, CPU LPDDR +135 to +510
+-&gt; CPU side carries 32 to 64 % of the per-GPU increase, while HBM stays 60 to 75 % of the level.
+</code></pre>
+<p>Scale (assumptions): KeyBanc (July 2026) 1.7 to 1.8 M Rubin units in 2026, read as packages, all in NVL72 (too high:
+part NVL8, Rubin delayed) -&gt; 0.85 to 0.9 M Vera hosts x 0.75 to 1.5 TB = 0.6 to 1.35 EB LPDDR5X. Against about 40 EB
+global DRAM capacity 2026 (Commercial Times via TrendForce, trade press) that is 1.5 to 3.4 % of bits and wafers.
+HBM for comparison: about 9 % of bits, 22 % of wafers in 2026 (TrendForce).</p>
+<p>Extra demand outside this count: Vera sold as a standalone server (LPX), and x86 servers for agent workloads with
+DDR5. Nvidia CFO (Q2 FY27 call): CPU revenue expected to more than double in fiscal 2028. SK hynix 3Q25: shipments
+of server DDR5 of 128 GB and more more than doubled QoQ.</p>
+<p>Judgment (Claude, 2026-10-17): fastest-growing DRAM sink in Nvidia's stack, not the largest. Probability that
+Nvidia's CPU-attached DRAM overtakes HBM in wafer use by 2028: below 10 %. Probability that CPU-side server DRAM in
+total (all vendors) is a main driver of the conventional DRAM shortage in 2027: about 60 %.</p>
+<p>Channel for memory makers (Mendel 2026-10-17: "new bullish sign for next year"): with bits capped by wafer capacity,
+the extra demand acts mainly through the price of conventional DRAM, not through volume. TrendForce: since 1Q26 a
+DDR5 64 GB RDIMM wafer earns more than an HBM wafer, so suppliers allocate by price
+(ddr5-hbm-per-wafer-opportunity-cost).</p>
+<h2>Carries</h2>
+<p>The direction: per GPU, Rubin needs about 40 to 70 % more DRAM wafer than B300, and a third to two thirds of the
+increase is conventional DRAM at the CPU. Demand pressure on conventional DRAM comes from two sides at once.</p>
+<h2>Does not carry</h2>
+<p>Shipped volumes or prices. The SOCAMM configuration is unresolved, the wafer factors are rules of thumb, unit counts
+are a broker estimate. The KV-cache rationale is architecture reading; no Nvidia figure quantifies it.</p>
+<h2>Break indicator</h2>
+<ul>
+<li>Nvidia ships Vera Rubin with clearly less than 750 GB per CPU as standard: CPU share of the increase falls toward 30 %.</li>
+<li>Standalone Vera and agent-server volumes stay small (no million-unit scale by 2027).</li>
+<li>KV cache moves to other tiers (flash, CXL pools, GDDR7 prefill like Rubin CPX) instead of CPU LPDDR.</li>
+</ul>
+<h2>Source</h2>
+<ul>
+<li>Nvidia NVL72 and Grace specs (Tier 1b): https://www.gigabyte.com/FileUpload/Global/WebPage/1052/NVIDIA_2026_1H_V2.pdf</li>
+<li>Vera 1.5 TB, 54 TB per rack (vendor spec via partner page, Tier 1b): https://www.cudocompute.com/products/nvidia-vera-rubin</li>
+<li>Grace vs Vera capacity and bandwidth, Nvidia statement August 2026, TrendForce June report (trade press): https://xenospectrum.com/en/nvidia-vera-memory-config/</li>
+<li>Standalone Vera (trade press): https://rutab.net/b/hardware/2026/05/19/nvidia-nachala-postavki-processorov-vera-dlya-sistem-ii_2.html</li>
+<li>Nvidia Q2 FY27, CPU revenue outlook (trade press quoting the call): https://hothardware.com/news/nvidias-ai-empire-crushes-q2-estimates-data-center-demand</li>
+<li>KeyBanc 1.7 to 1.8 M Rubin units (broker via press): https://invezz.com/nz/news/2026/07/15/tsmc-stock-braces-for-record-earnings-but-this-nvidia-risk-could-derail-the-rally/</li>
+<li>40 EB DRAM 2026, HBM factor 4 (trade press): https://www.trendforce.com/news/2025/12/26/news-ai-reportedly-to-consume-20-of-global-dram-wafer-capacity-in-2026-hbm-gddr7-lead-demand/</li>
+<li>HBM wafer and bit share, DDR5 vs HBM per-wafer revenue (TrendForce): https://dramexchange.com/WeeklyResearch/PrinterFriendly/2/12718.html</li>
+<li>SK hynix 3Q25 press release (Tier 1a): https://technode.global/?p=110728</li>
+</ul>
+<h2>Linked</h2>
+<ul>
+<li><a href="hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a></li>
+<li><a href="../open_checks/rubin-hbm-capacity-technology-or-scarcity.html">rubin-hbm-capacity-technology-or-scarcity</a></li>
+<li><a href="../../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-17 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

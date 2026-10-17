@@ -1,6 +1,6 @@
 # memory_supply: Kurzstand
 
-Stand 2026-10-16. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
+Stand 2026-10-17. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md). Status je Eintrag dort.
 
 Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
@@ -14,10 +14,12 @@ Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.
 
 **New 2026-10-16 (vorschlag, theses Mendel):** Second-source HBM4 (Samsung, Micron) is limited by yield and qualification, not wafers, and what arrives is contracted ahead: no 2027 surplus. Trade press points to rising 2027 HBM prices (TrendForce up to +50 %; Samsung asking ~4 USD/Gb HBM4 vs ~1.50 HBM3E; Micron 2027 volume contracted). The question moves to 2028 contracts. Open: Rubin 288 GB set by stack technology (12-Hi, bandwidth priority, AMD gets 432 GB) or by scarcity (Nvidia >50 % of HBM, Rubin Ultra reportedly cut from 1 TB); judgment ~50/50.
 
+**New 2026-10-17 (vorschlag, thesis Mendel):** CPU-attached LPDDR is a second DRAM sink on top of HBM. Vera up to 1.5 TB LPDDR5X vs Grace 480 GB (Tier 1b), CPU:GPU still 1:2; reported SOCAMM halving unresolved. Per GPU Rubin needs ~40 to 70 % more DRAM wafer than B300 (1,104 -> 1,527 to 1,902 GB-equivalent), the CPU side carries 32 to 64 % of that increase; ~1.5 to 3.4 % of 2026 DRAM. Acts on conventional DRAM, mainly through price because bits are capped. Rubin Ultra readings now 1 TB -> 384 GB -> 256 GB (8 x 8-Hi, KeyBanc 2026-10-16, suppliers expect despec), partly yield-driven.
+
 **Risiko:** CXMT entlastet konventionelles DRAM, nicht HBM.
 
 **Offen:** Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030, HBM contract prices 2027 (Q3 calls), Rubin capacity technology vs scarcity.
 
-**Lesen bei:** Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.
+**Lesen bei:** Investieren, DRAM, HBM, LPDDR, Vera, SOCAMM, CPU-Speicher, Speicherzyklus, Knappheit, Fabs.
 
 **Auf den Seiten:** Globus [SK hynix](https://mendeltem.github.io/Supply_Atlas3D/?company=SKHYNIX), [Samsung](https://mendeltem.github.io/Supply_Atlas3D/?company=SAMSUNG), [Micron](https://mendeltem.github.io/Supply_Atlas3D/?company=MU) (Werke, Speicherschicht); Karte [HBM-Speicher](https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle); Firmenzahlen [SK hynix](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX), [Micron](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU), [Samsung](https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG).

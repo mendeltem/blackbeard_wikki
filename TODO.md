@@ -94,7 +94,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-17. Nicht vo
   - [ ] Die Nvidia-Allokationsanteile gegen gemeldete HBM-Umsätze der drei Hersteller
   - [ ] Prüfen, ob Samsungs HBM4-Zertifizierung in reale Auslieferung mündet; eine
   - [ ] Anteil gegen die Flächenrechnung aus
-- [Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?](knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md) (pruefpunkt, offen, Stand 2026-10-16)
+- [Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?](knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md) (pruefpunkt, offen, Stand 2026-10-17)
 - [HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030](knowledge/memory_supply/open_checks/rubin-hbm4-wafer-demand-2028-2030.md) (pruefpunkt, offen, Stand 2026-10-03)
 
 ## model_capability_cost

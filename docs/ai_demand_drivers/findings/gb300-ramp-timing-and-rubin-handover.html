@@ -1,0 +1,114 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GB300 ramp timing and the Rubin handover</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_demand_drivers</a> › <a href="../index.html#findings">Befund</a></div><h1>GB300 ramp timing and the Rubin handover</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-17</span><span>Herkunft</span><span>Chat with Mendel (claude.ai project &quot;Artificial Intelligence&quot;), 2026-10-17</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="rubin-shipments-start-q3-fy27.html">Rubin: Auslieferung ab August 2026, rund 20 Prozent des DC-Umsatzes im Q3 GJ2027</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../open_checks/rubin-share-of-blackwell-base.html">Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../mechanisms/cadence-and-yield-trough.html">Kadenz und Yield-Tal</a> <span class="muted small">(ai_demand_drivers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/findings/gb300-ramp-timing-and-rubin-handover.md">knowledge/ai_demand_drivers/findings/gb300-ramp-timing-and-rubin-handover.md</a></span></div><h2>Statement</h2>
+<p>When B300/GB300 volume rose, read from filings and ODM data, and when Rubin takes over.</p>
+<p>Reported (Tier 1a, Nvidia releases and calls; fiscal quarters mapped to calendar months):
+- Q2 FY26 (May to Jul 2025): GB300 production shipments started; Blackwell Ultra "tens of billions" of revenue;
+  inventory 11 -&gt; 15 bn USD to support the ramp.
+- Q3 FY26 (Aug to Oct 2025): GB300 crossed GB200, about two thirds of Blackwell revenue. Data center 51.2 bn,
+  networking 8.2 bn.
+- Q4 FY26 (Nov 2025 to Jan 2026): data center 62.3 bn, networking 11 bn, "Blackwell Ultra ramp".
+- Q1 FY27 (Feb to Apr 2026): DC compute 60.4 bn, networking 14.8 bn, growth from "Blackwell 300 products".
+- Q2 FY27 (May to Jul 2026): data center 89.0 bn, driven by Blackwell Ultra; networking +138 % YoY.
+- Q3 FY27 guide (Aug to Oct 2026): revenue 108 bn, Vera Rubin about 20 % of data center revenue.</p>
+<p>Supply chain lag (trade press and broker notes): HBM3E 12-Hi (the B300 stack) shipped from Q4 2024 (SK hynix call,
+Tier 1a). Quanta GB300 trial production late Q3 2025, mass production Q4 2025; Morgan Stanley (Nov 2025) GB300 rack
+assembly started, 14 to 15k GB racks in Q4 2025 after 8 to 8.5k in Q3; Quanta: GB300 replaced GB200 as main line in
+early 2026. Chain: HBM -&gt; Nvidia revenue -&gt; ODM racks, roughly one quarter per step.</p>
+<p>Estimate of GB300 revenue (Claude; compute = DC minus networking, Hopper about 2 bn in Q3 FY26; GB300 share of
+Blackwell after Q3 FY26 is an assumption of 75 to 90 %):</p>
+<pre><code>Q2 FY26 ~10 (lower bound of "tens of billions")
+Q3 FY26 ~27  (43.0 compute - 2 Hopper = 41 x 2/3)
+Q4 FY26 ~40  (51.3 x 75-85 %)
+Q1 FY27 ~52  (60.4 x 85-90 %)
+Q2 FY27 ~63  (89.0 - ~17.3 networking = 71.7 x 85-90 %)
+Q3 FY27 ~51  (guide-derived: ~100 DC - 20 Rubin - ~20 networking, then 85 %)
+</code></pre>
+<p>At a 65 % GB300 share the peak would be about 47 instead of 63 bn; the shape stays.</p>
+<p>Rubin handover: Nvidia guides first Vera Rubin shipments Q3 2026, volume ramp Q4 2026, growth through H1 2027.
+Jefferies: Rubin about 12 % of GPU revenue in Q3 FY27, above 40 % in Q4 FY27, possibly the largest contributor in
+Q1 FY28. Rough: DC ~115 bn in Q4 FY27 (assumption +15 % QoQ), compute ~93, &gt;40 % -&gt; above 37 bn Rubin. Racks in data
+centres one to two quarters later, Feb to Apr 2027, possibly shorter (Rubin compute tray assembly about 5 instead of
+about 120 minutes, per analysts). Probability (Claude) that Rubin is at least 35 % of compute revenue in Q4 FY27:
+about 70 %.</p>
+<p>TrendForce (April 2026): Blackwell over 70 % of Nvidia high-end GPU shipments in 2026, led by GB300/B300; Rubin cut
+from 29 to 22 % because of HBM4 qualification and other delays.</p>
+<h2>Carries</h2>
+<p>Timing: Nvidia's GB300 revenue inflected in Aug to Oct 2025, ODM rack volume in Q4 2025 to Q1 2026; GB300 revenue
+peaked around May to Jul 2026; Rubin's revenue ramp is Nov 2026 to Jan 2027.</p>
+<h2>Does not carry</h2>
+<p>GB300 dollar figures after Q3 FY26: Nvidia does not split them, these are estimates. Not unit counts. Rack timing
+rests on one cycle of lag.</p>
+<h2>Break indicator</h2>
+<ul>
+<li>Nvidia's Q3 FY27 report (around 2026-11-19) guides Rubin clearly below about 35 % of compute for Q4 FY27.</li>
+<li>ODM monthly revenue (Foxconn, Quanta, Wistron, around the 10th of each month) shows GB300 rack volume rising into
+  2027: GB300 plateau longer than assumed.</li>
+<li>Further HBM4 or thermal-lid delays (KeyBanc July 2026, KYEC guidance cut) push Rubin volume into 2027.</li>
+</ul>
+<h2>Source</h2>
+<ul>
+<li>Nvidia Q4 FY26 release, SEC 8-K (Tier 1a): https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm</li>
+<li>Nvidia Q2 FY26 investor presentation (Tier 1a): https://s201.q4cdn.com/141608511/files/doc_financials/2026/q2/NVDA-F2Q26-Quarterly-Presentation-FINAL.pdf</li>
+<li>Nvidia Q3 FY26 call summary: https://vectorshift.ai/research/companies/nvidia/earnings/2026-q3-summary</li>
+<li>Nvidia Q1 FY27 release (via HPCwire): https://www.hpcwire.com/off-the-wire/nvidia-announces-financial-results-for-1st-quarter-fiscal-2027/</li>
+<li>Nvidia Q2 FY27 (via StorageNewsletter, Nasdaq/Zacks): https://www.storagenewsletter.com/2026/08/27/nvidia-fiscal-2q27-financial-results/ , https://www.nasdaq.com/articles/nvidia-q2-earnings-beat-blackwell-ultra-data-center-strength</li>
+<li>SK hynix Q4 2024 call (Tier 1a): https://seekingalpha.com/article/4771229-sk-hynix-inc-hxscf-q4-2024-earnings-call-transcript</li>
+<li>Quanta GB300 timing (Digitimes): https://www.digitimes.com/tag/shipment/0011846.html</li>
+<li>Morgan Stanley rack counts (TechNews): https://technews.tw/?p=1465078</li>
+<li>Quanta Q1 2026 (TVBS): https://news.tvbs.com.tw/english/3177453</li>
+<li>TrendForce April 2026: https://www.trendforce.com/presscenter/news/20260408-13003.html</li>
+<li>Rubin timeline: https://www.digitalcitizen.life/nvidia-confirms-vera-rubin-launch-for-q3-as-blackwell-demand-keeps-climbing/</li>
+<li>Jefferies Rubin share (via Tiger Brokers): https://www.itiger.com/news/1100856992</li>
+<li>KeyBanc delay, KYEC (broker via press): https://invezz.com/nz/news/2026/07/15/tsmc-stock-braces-for-record-earnings-but-this-nvidia-risk-could-derail-the-rally/ , https://longportapp.cn/news/296117430</li>
+</ul>
+<h2>Linked</h2>
+<ul>
+<li><a href="rubin-shipments-start-q3-fy27.html">rubin-shipments-start-q3-fy27</a></li>
+<li><a href="../open_checks/rubin-share-of-blackwell-base.html">rubin-share-of-blackwell-base</a></li>
+<li><a href="../mechanisms/cadence-and-yield-trough.html">cadence-and-yield-trough</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-17 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

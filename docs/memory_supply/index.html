@@ -42,20 +42,21 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › memory_supply</div><h1>memory_supply</h1><p>Angebotsseite: Waferflaeche, Werke, Flaechenaufteilung HBM gegen DDR</p><p class="muted small">Investieren, DRAM, HBM, Wafer, Fabs, Speicherzyklus, Knappheit, CXMT, ASML, EUV, Samsung, Micron, HBM4-Preise 2027, Zweitlieferant, Rubin-Kapazität</p>
-<div class="stripe"><i class="warn" style="width:53.3%" title="vorschlag: 8"></i><i class="info" style="width:33.3%" title="offen: 5"></i><i class="ok" style="width:13.3%" title="getragen: 2"></i></div><div class="counts"><span class="warn">8 vorschlag</span> <span class="info">5 offen</span> <span class="ok">2 getragen</span></div><div class="small"><p>Angebotsseite des Speichers: Waferflaeche, Werke, Knoten und was die Flaechenaufteilung zwischen HBM und konventionellem DRAM fuer Bits und Preise bedeutet. Die Nachfrageseite steht in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, die Ergebnisrechnung in <a href="../memory_earnings/index.html">memory_earnings</a>.</p>
+<main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › memory_supply</div><h1>memory_supply</h1><p>Angebotsseite: Waferflaeche, Werke, Flaechenaufteilung HBM gegen DDR</p><p class="muted small">Investieren, DRAM, HBM, Wafer, Fabs, Speicherzyklus, Knappheit, CXMT, ASML, EUV, Samsung, Micron, HBM4-Preise 2027, Zweitlieferant, Rubin-Kapazität, Rubin Ultra, LPDDR, Vera, SOCAMM, CPU-Speicher</p>
+<div class="stripe"><i class="warn" style="width:56.2%" title="vorschlag: 9"></i><i class="info" style="width:31.2%" title="offen: 5"></i><i class="ok" style="width:12.5%" title="getragen: 2"></i></div><div class="counts"><span class="warn">9 vorschlag</span> <span class="info">5 offen</span> <span class="ok">2 getragen</span></div><div class="small"><p>Angebotsseite des Speichers: Waferflaeche, Werke, Knoten und was die Flaechenaufteilung zwischen HBM und konventionellem DRAM fuer Bits und Preise bedeutet. Die Nachfrageseite steht in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, die Ergebnisrechnung in <a href="../memory_earnings/index.html">memory_earnings</a>.</p>
 <p>Vor jedem Argument mit dem Standardzyklus (Knappheit, Capex, Überangebot) gilt die Regel <a href="rules/no-standard-cycle-without-absorption-check.html">Kein Standardzyklus ohne Absorptionsprüfung</a>: erst zeigen, dass der Zubau nicht von mehr Speicher je GPU aufgefressen wird (<a href="mechanisms/gpu-memory-absorbs-fab-additions.html">Mechanismus</a>).</p>
-<p>Stand 2026-10-16. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-16. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<p>Stand 2026-10-17. Ein Eintrag je Datei.</p></div>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-17. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Angebotsseite des Speichers: Waferfläche, Werke, HBM gegen DDR.</p>
 <p><strong>Zuerst:</strong> Regel (getragen) Kein Standardzyklus ohne Absorptionsprüfung. Mechanismus (vorschlag, These Mendel): Mehr Speicher je GPU frisst den Fab-Zubau, DRAM-Wafer bis 2030 knapp. GB je Package wächst je Generation ×3–5, GB je Wafer nur ×1,4. Gestützt auf die drei Axiome aus ai_demand_drivers.</p>
 <p><strong>Mechanismen (vorschlag):</strong> HBM frisst Waferfläche (HBM3E ~3×, HBM4 ~4× je Bit). Opportunitätskosten je Wafer DDR5 gegen HBM. Capex-Disziplin nach 2023.</p>
 <p><strong>Zahlen (Annahmen/Branchendienste):</strong> HBM 22 % der DRAM-Wafer 2026; Rubin = Blackwell-Menge bis 2028 → ~30 % (nur 288 GB) bis 52 % (mit Ultra 1 TB); konv. DRAM −10 % Fläche gegen 2026. Fab-Vorlauf 4–5 Jahre.</p>
 <p><strong>Werkzeugseite (getragen, ASML Tier 1a):</strong> Speicher 49 % von ASMLs Systemumsatz Q2 2026, +75 % erwartet für 2026, großteils Knotenwechsel (EUV statt Multi-Patterning), nicht proportional mehr Wafer. ASML sieht 2027/28 Lieferlücke: fertige Fab-Hüllen nicht zwingend voll bestückbar.</p>
 <p><strong>New 2026-10-16 (vorschlag, theses Mendel):</strong> Second-source HBM4 (Samsung, Micron) is limited by yield and qualification, not wafers, and what arrives is contracted ahead: no 2027 surplus. Trade press points to rising 2027 HBM prices (TrendForce up to +50 %; Samsung asking ~4 USD/Gb HBM4 vs ~1.50 HBM3E; Micron 2027 volume contracted). The question moves to 2028 contracts. Open: Rubin 288 GB set by stack technology (12-Hi, bandwidth priority, AMD gets 432 GB) or by scarcity (Nvidia &gt;50 % of HBM, Rubin Ultra reportedly cut from 1 TB); judgment ~50/50.</p>
+<p><strong>New 2026-10-17 (vorschlag, thesis Mendel):</strong> CPU-attached LPDDR is a second DRAM sink on top of HBM. Vera up to 1.5 TB LPDDR5X vs Grace 480 GB (Tier 1b), CPU:GPU still 1:2; reported SOCAMM halving unresolved. Per GPU Rubin needs ~40 to 70 % more DRAM wafer than B300 (1,104 -&gt; 1,527 to 1,902 GB-equivalent), the CPU side carries 32 to 64 % of that increase; ~1.5 to 3.4 % of 2026 DRAM. Acts on conventional DRAM, mainly through price because bits are capped. Rubin Ultra readings now 1 TB -&gt; 384 GB -&gt; 256 GB (8 x 8-Hi, KeyBanc 2026-10-16, suppliers expect despec), partly yield-driven.</p>
 <p><strong>Risiko:</strong> CXMT entlastet konventionelles DRAM, nicht HBM.</p>
 <p><strong>Offen:</strong> Waferkapazität je Werk, HBM-Marktanteil/Nvidia-Allokation, Rubin-HBM4-Wafernachfrage 2028–2030, HBM contract prices 2027 (Q3 calls), Rubin capacity technology vs scarcity.</p>
-<p><strong>Lesen bei:</strong> Investieren, DRAM, HBM, Speicherzyklus, Knappheit, Fabs.</p>
+<p><strong>Lesen bei:</strong> Investieren, DRAM, HBM, LPDDR, Vera, SOCAMM, CPU-Speicher, Speicherzyklus, Knappheit, Fabs.</p>
 <p><strong>Auf den Seiten:</strong> Globus <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=SAMSUNG">Samsung</a>, <a href="https://mendeltem.github.io/Supply_Atlas3D/?company=MU">Micron</a> (Werke, Speicherschicht); Karte <a href="https://mendeltem.github.io/ai_use_cases_overview/#uc=hbm-memory-the-supercycle">HBM-Speicher</a>; Firmenzahlen <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SKHYNIX">SK hynix</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/MU">Micron</a>, <a href="https://mendeltem.github.io/AI_Companys/nvidia-oekosystem.html#/de/SAMSUNG">Samsung</a>.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(2)</span></h2><details class="entry" id="no-standard-cycle-without-absorption-check"><summary><span class="type">Regel</span><span class="t"><a href="rules/no-standard-cycle-without-absorption-check.html">Kein Standardzyklus ohne Absorptionsprüfung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: Vorgabe Mendel, 2026-10-03 · <a href="rules/no-standard-cycle-without-absorption-check.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/rules/no-standard-cycle-without-absorption-check.md">Markdown</a></p><h2>Aussage</h2>
@@ -93,7 +94,75 @@ Angebots-Wachstum  = Wachstum (GB je Wafer) × Wachstum (Waferkapazität)
 <ul>
 <li><a href="open_checks/dram-wafer-capacity-by-fab.html">dram-wafer-capacity-by-fab</a></li>
 <li><a href="../compute_bottlenecks/rules/announced-is-not-built.html">announced-is-not-built</a></li>
-</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(5)</span></h2><details class="entry" id="second-source-hbm4-arrives-presold"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/second-source-hbm4-arrives-presold.html">Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16; thesis Mendel · <a href="mechanisms/second-source-hbm4-arrives-presold.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/second-source-hbm4-arrives-presold.md">Markdown</a></p><h2>Statement</h2>
+</ul></div></details><h2 id="mechanisms">Mechanismus <span class="muted small">(6)</span></h2><details class="entry" id="cpu-attached-lpddr-adds-conventional-dram-demand"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.html">CPU-attached LPDDR adds conventional DRAM demand on top of HBM</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (claude.ai project &quot;Artificial Intelligence&quot;), 2026-10-17 · <a href="mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.md">Markdown</a></p><h2>Statement</h2>
+<p>Thesis Mendel (2026-10-17): the host CPU's memory is a second, so far uncounted DRAM sink that comes on top of the
+GPU-driven HBM shortage. With Vera Rubin the CPU side grows faster than the HBM side, and it draws on the same
+conventional DRAM pool that the HBM wafer shift already squeezes.</p>
+<p>Why the CPU gets more memory: the LPDDR5X behind Vera serves as a capacity tier for the GPU (offloaded KV cache for
+long contexts and multi-step agents, reached coherently over NVLink-C2C) and as working memory for agent workloads
+that run on the CPU (tool calls, sandboxes, RL environments, data preparation). This is a capacity role, not CPU
+compute on memory, so the von Neumann bottleneck of classic CPUs does not argue against it.</p>
+<p>Specs (Tier 1b, vendor):
+- Grace: up to 480 GB LPDDR5X, 512 GB/s. Vera: up to 1.5 TB LPDDR5X (8 SOCAMM modules), 1.2 TB/s.
+- NVL72 rack: GB300 about 17 TB LPDDR5X (36 Grace), Vera Rubin up to 54 TB (36 Vera).
+- CPU:GPU ratio unchanged at 1:2 in NVL72. HGX Rubin NVL8 uses an x86 host, no Vera.
+- Reported (TrendForce, June 2026): SOCAMM capacity in the Vera Rubin superchip halved. Nvidia (August 2026) only
+  restated "up to 1.5 TB". Shipped configuration open.</p>
+<p>Calculation per GPU (wafer-equivalent in GB of standard DRAM; HBM3E factor 3, HBM4 factor 4, LPDDR factor 1, from
+hbm-eats-wafer-area; these factors are assumptions):</p>
+<pre><code>B300:               288 x 3 + 240 = 1,104
+Rubin, SOCAMM half: 288 x 4 + 375 = 1,527  (+38 %)
+Rubin, full 1.5 TB: 288 x 4 + 750 = 1,902  (+72 %)
+
+Increase per GPU 423 to 798, of which HBM +288, CPU LPDDR +135 to +510
+-&gt; CPU side carries 32 to 64 % of the per-GPU increase, while HBM stays 60 to 75 % of the level.
+</code></pre>
+<p>Scale (assumptions): KeyBanc (July 2026) 1.7 to 1.8 M Rubin units in 2026, read as packages, all in NVL72 (too high:
+part NVL8, Rubin delayed) -&gt; 0.85 to 0.9 M Vera hosts x 0.75 to 1.5 TB = 0.6 to 1.35 EB LPDDR5X. Against about 40 EB
+global DRAM capacity 2026 (Commercial Times via TrendForce, trade press) that is 1.5 to 3.4 % of bits and wafers.
+HBM for comparison: about 9 % of bits, 22 % of wafers in 2026 (TrendForce).</p>
+<p>Extra demand outside this count: Vera sold as a standalone server (LPX), and x86 servers for agent workloads with
+DDR5. Nvidia CFO (Q2 FY27 call): CPU revenue expected to more than double in fiscal 2028. SK hynix 3Q25: shipments
+of server DDR5 of 128 GB and more more than doubled QoQ.</p>
+<p>Judgment (Claude, 2026-10-17): fastest-growing DRAM sink in Nvidia's stack, not the largest. Probability that
+Nvidia's CPU-attached DRAM overtakes HBM in wafer use by 2028: below 10 %. Probability that CPU-side server DRAM in
+total (all vendors) is a main driver of the conventional DRAM shortage in 2027: about 60 %.</p>
+<p>Channel for memory makers (Mendel 2026-10-17: "new bullish sign for next year"): with bits capped by wafer capacity,
+the extra demand acts mainly through the price of conventional DRAM, not through volume. TrendForce: since 1Q26 a
+DDR5 64 GB RDIMM wafer earns more than an HBM wafer, so suppliers allocate by price
+(ddr5-hbm-per-wafer-opportunity-cost).</p>
+<h2>Carries</h2>
+<p>The direction: per GPU, Rubin needs about 40 to 70 % more DRAM wafer than B300, and a third to two thirds of the
+increase is conventional DRAM at the CPU. Demand pressure on conventional DRAM comes from two sides at once.</p>
+<h2>Does not carry</h2>
+<p>Shipped volumes or prices. The SOCAMM configuration is unresolved, the wafer factors are rules of thumb, unit counts
+are a broker estimate. The KV-cache rationale is architecture reading; no Nvidia figure quantifies it.</p>
+<h2>Break indicator</h2>
+<ul>
+<li>Nvidia ships Vera Rubin with clearly less than 750 GB per CPU as standard: CPU share of the increase falls toward 30 %.</li>
+<li>Standalone Vera and agent-server volumes stay small (no million-unit scale by 2027).</li>
+<li>KV cache moves to other tiers (flash, CXL pools, GDDR7 prefill like Rubin CPX) instead of CPU LPDDR.</li>
+</ul>
+<h2>Source</h2>
+<ul>
+<li>Nvidia NVL72 and Grace specs (Tier 1b): https://www.gigabyte.com/FileUpload/Global/WebPage/1052/NVIDIA_2026_1H_V2.pdf</li>
+<li>Vera 1.5 TB, 54 TB per rack (vendor spec via partner page, Tier 1b): https://www.cudocompute.com/products/nvidia-vera-rubin</li>
+<li>Grace vs Vera capacity and bandwidth, Nvidia statement August 2026, TrendForce June report (trade press): https://xenospectrum.com/en/nvidia-vera-memory-config/</li>
+<li>Standalone Vera (trade press): https://rutab.net/b/hardware/2026/05/19/nvidia-nachala-postavki-processorov-vera-dlya-sistem-ii_2.html</li>
+<li>Nvidia Q2 FY27, CPU revenue outlook (trade press quoting the call): https://hothardware.com/news/nvidias-ai-empire-crushes-q2-estimates-data-center-demand</li>
+<li>KeyBanc 1.7 to 1.8 M Rubin units (broker via press): https://invezz.com/nz/news/2026/07/15/tsmc-stock-braces-for-record-earnings-but-this-nvidia-risk-could-derail-the-rally/</li>
+<li>40 EB DRAM 2026, HBM factor 4 (trade press): https://www.trendforce.com/news/2025/12/26/news-ai-reportedly-to-consume-20-of-global-dram-wafer-capacity-in-2026-hbm-gddr7-lead-demand/</li>
+<li>HBM wafer and bit share, DDR5 vs HBM per-wafer revenue (TrendForce): https://dramexchange.com/WeeklyResearch/PrinterFriendly/2/12718.html</li>
+<li>SK hynix 3Q25 press release (Tier 1a): https://technode.global/?p=110728</li>
+</ul>
+<h2>Linked</h2>
+<ul>
+<li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
+<li><a href="mechanisms/gpu-memory-absorbs-fab-additions.html">gpu-memory-absorbs-fab-additions</a></li>
+<li><a href="mechanisms/ddr5-hbm-per-wafer-opportunity-cost.html">ddr5-hbm-per-wafer-opportunity-cost</a></li>
+<li><a href="open_checks/rubin-hbm-capacity-technology-or-scarcity.html">rubin-hbm-capacity-technology-or-scarcity</a></li>
+<li><a href="../ai_demand_drivers/axioms/bandwidth-bottleneck.html">bandwidth-bottleneck</a></li>
+</ul></div></details><details class="entry" id="second-source-hbm4-arrives-presold"><summary><span class="type">Mechanismus</span><span class="t"><a href="mechanisms/second-source-hbm4-arrives-presold.html">Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16; thesis Mendel · <a href="mechanisms/second-source-hbm4-arrives-presold.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/mechanisms/second-source-hbm4-arrives-presold.md">Markdown</a></p><h2>Statement</h2>
 <p>Thesis Mendel (2026-10-16): "Samsung and Micron cannot suddenly conjure that much HBM4; it simply takes too long."</p>
 <p>Chain:</p>
 <pre><code>second-source HBM4 volume limited by yield and customer qualification, not by DRAM wafers
@@ -314,30 +383,7 @@ Flaeche fuer DDR = Gesamtkapazitaet x (1 - HBM-Wafer-Anteil)
 <li><a href="mechanisms/capex-discipline-after-2023.html">capex-discipline-after-2023</a></li>
 <li><a href="../ai_demand_drivers/mechanisms/automation-cuts-both-ways.html">automation-cuts-both-ways</a></li>
 <li><a href="../china_industrial_strategy/index.html">china_industrial_strategy</a></li>
-</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(5)</span></h2><details class="entry" id="hbm-contract-prices-2027"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/hbm-contract-prices-2027.html">HBM contract prices and volumes for 2027: company readings</a></span><span class="badge info">offen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16 · <a href="open_checks/hbm-contract-prices-2027.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/hbm-contract-prices-2027.md">Markdown</a></p><h2>Statement</h2>
-<p>second-source-hbm4-arrives-presold rests on trade press (HBM up to +50 % in 2027, Samsung asking ~4 USD/Gb for HBM4
-against ~1.50 for HBM3E, Micron's 2027 volume contracted). To read it from the companies:</p>
-<ol>
-<li>SK Hynix Q3 2026 call (27 October US time, 28 October Seoul): is 2027 HBM volume and price agreed, HBM4 share of HBM revenue, direction of HBM price per bit.</li>
-<li>Samsung Q3 2026 call (late October): 2027 HBM4 terms, share at Nvidia, HBM4 yield comments.</li>
-<li>Micron FQ1 FY2027 (December 2026): share of 2027 HBM contracted, price direction.</li>
-<li>Nvidia: whether a server price increase of more than 15 % in early 2027 is confirmed.</li>
-<li>A dated per-Gb price comparison HBM3E against HBM4 from a company statement, not an analyst.</li>
-</ol>
-<h2>Carries</h2>
-<p>Turns the mechanism's indicators into company statements.</p>
-<h2>Does not carry</h2>
-<p>Any reading before the calls; asking prices are not contract prices.</p>
-<h2>Break indicator</h2>
-<p>Not applicable, open check. Done when the 2027 price direction is confirmed or contradicted by at least two of the
-three memory makers.</p>
-<h2>Source</h2>
-<p>blind</p>
-<h2>Linked</h2>
-<ul>
-<li><a href="mechanisms/second-source-hbm4-arrives-presold.html">second-source-hbm4-arrives-presold</a></li>
-<li><a href="open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a></li>
-</ul></div></details><details class="entry" id="rubin-hbm-capacity-technology-or-scarcity"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16 · <a href="open_checks/rubin-hbm-capacity-technology-or-scarcity.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md">Markdown</a></p><h2>Statement</h2>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(5)</span></h2><details class="entry" id="rubin-hbm-capacity-technology-or-scarcity"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/rubin-hbm-capacity-technology-or-scarcity.html">Rubin&#x27;s 288 GB HBM: set by stack technology or by DRAM scarcity?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-17</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16 · <a href="open_checks/rubin-hbm-capacity-technology-or-scarcity.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/rubin-hbm-capacity-technology-or-scarcity.md">Markdown</a></p><h2>Statement</h2>
 <p>Thesis Mendel (2026-10-16): "Rubin has 288 GB, like B300, because DRAM is scarce. If it were not scarce, Rubin
 would have significantly more." This is the per-package case of gpu-memory-absorbs-fab-additions ("the design is
 adapted to the available HBM"). Two readings, both with evidence:</p>
@@ -352,6 +398,20 @@ adapted to the available HBM"). Two readings, both with evidence:</p>
 - Rubin CPX takes prefill to GDDR7: Nvidia actively saves HBM.
 - Rubin Ultra reportedly cut from 1 TB to about two thirds (~683 GB) because of HBM scarcity (TrendForce, August 2026, see gpu-memory-absorbs-fab-additions). This is the strongest point for the thesis: scarcity binding on a design during the current shortage.
 - Single unconfirmed report of 16 stacks and 576 GB for Vera Rubin (Hankyung via TrendForce, March 2026). If it was planned and dropped, it supports the thesis.</p>
+<p><strong>Update 2026-10-17 (Rubin Ultra readings, all trade press or broker notes):</strong>
+- GTC 2026 plan: 4 compute dies, 16 HBM4E stacks, about 1 TB per package.
+- Summer 2026 (TrendForce, Korean sell-side 2026-06-18): likely 2 dies plus 8 HBM4E stacks of 12-Hi 48 GB, about
+  384 GB; reasons named: packaging reticle limit and HBM stacking yield; spec "not final", to be set after H2 2026
+  validation; Nvidia may consider HBM4E 8-Hi because supply is tight and prices rise.
+- August 2026 (TechNews): Nvidia testing 192 GB and 256 GB variants, some stepping back from HBM4E to HBM4; reasons
+  named: HBM supply, price, and HBM4E complexity lagging the schedule.
+- 2026-10-16 (KeyBanc via X): Nvidia samples Rubin Ultra with 384 GB HBM4E (8 x 12-Hi, +33 % vs Rubin's 288 GB), but
+  most memory suppliers expect a despec to 256 GB (8 x 8-Hi, -11 % vs Rubin and B300).
+- Read: package capacity 1,024 -&gt; 384 -&gt; 256 GB, i.e. -75 % against the GTC plan. 8-Hi instead of 12-Hi is also a
+  yield choice, not only a wafer choice. The 683 GB figure cited above is superseded by these readings.
+- Effect on bits: 256 instead of 288 GB needs +12.5 % units to hold HBM bits; 256 instead of 384 GB needs +50 %.
+  While supply binds, shipped bits are set by capacity, not by the datasheet; the hit falls on the 12-Hi/16-Hi
+  premium. If the despec is mainly yield, mature 12-Hi/16-Hi stacking in 2028 adds per-GPU demand onto supply.</p>
 <p>Judgment (Claude, 2026-10-16, thin basis): Rubin's 288 GB was set mainly by stack technology and the bandwidth
 priority; scarcity is the likelier reason that no higher-capacity variant followed and that Rubin Ultra is cut.
 Probability that scarcity is the main constraint on GB per package in 2026/27: about 50 % (first estimate ~30 %,
@@ -379,6 +439,10 @@ or packaging reasons while bits would be available → technology binds.</p>
 <li>TrendForce, 2026-03-09 (Hankyung, 16 stacks / 576 GB): https://www.trendforce.com/news/2026/03/09/news-samsung-sk%E2%80%AFhynix-reportedly-tapped-as-nvidia-rubin-hbm4-suppliers-shipments-could-start-in-march</li>
 <li>AMD MI455X 432 GB HBM4: https://www.storagereview.com/news/amd-mi455x-and-helios-432gb-hbm4-72-gpu-racks-and-a-real-answer-to-vera-rubin</li>
 <li>Rubin Ultra cut: TrendForce, August 2026, as cited in gpu-memory-absorbs-fab-additions.</li>
+<li>Rubin Ultra 384 GB, spec not final (TrendForce via KuCoin): https://www.kucoin.com/pt/news/insight/NVDA/6a6f780a9bd794000857a58b</li>
+<li>Korean sell-side note 2026-06-18 (reticle limit, stacking yield): https://stock.pstatic.net/stock-research/industry/61/20260618_industry_907123000.pdf</li>
+<li>Nvidia testing 192/256 GB (TechNews, 2026-08-11): https://technews.tw/2026/08/11/nvidia-reportedly-testing-lower-memory-configs-of-rubin-ultra-as-memory-shortage-bites-back/</li>
+<li>KeyBanc 384 GB sampling, 256 GB expected (via @pequityresearch on X, 2026-10-16): no primary link</li>
 </ul>
 <h2>Linked</h2>
 <ul>
@@ -388,6 +452,29 @@ or packaging reasons while bits would be available → technology binds.</p>
 <li><a href="../compute_bottlenecks/mechanisms/allocation-beats-datasheet.html">allocation-beats-datasheet</a></li>
 <li><a href="mechanisms/hbm-eats-wafer-area.html">hbm-eats-wafer-area</a></li>
 <li><a href="mechanisms/second-source-hbm4-arrives-presold.html">second-source-hbm4-arrives-presold</a></li>
+</ul></div></details><details class="entry" id="hbm-contract-prices-2027"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/hbm-contract-prices-2027.html">HBM contract prices and volumes for 2027: company readings</a></span><span class="badge info">offen</span><span class="muted small">2026-10-16</span></summary><div class="body"><p class="small muted">Herkunft: Chat with Mendel (Claude Code, cloud session), 2026-10-16 · <a href="open_checks/hbm-contract-prices-2027.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/hbm-contract-prices-2027.md">Markdown</a></p><h2>Statement</h2>
+<p>second-source-hbm4-arrives-presold rests on trade press (HBM up to +50 % in 2027, Samsung asking ~4 USD/Gb for HBM4
+against ~1.50 for HBM3E, Micron's 2027 volume contracted). To read it from the companies:</p>
+<ol>
+<li>SK Hynix Q3 2026 call (27 October US time, 28 October Seoul): is 2027 HBM volume and price agreed, HBM4 share of HBM revenue, direction of HBM price per bit.</li>
+<li>Samsung Q3 2026 call (late October): 2027 HBM4 terms, share at Nvidia, HBM4 yield comments.</li>
+<li>Micron FQ1 FY2027 (December 2026): share of 2027 HBM contracted, price direction.</li>
+<li>Nvidia: whether a server price increase of more than 15 % in early 2027 is confirmed.</li>
+<li>A dated per-Gb price comparison HBM3E against HBM4 from a company statement, not an analyst.</li>
+</ol>
+<h2>Carries</h2>
+<p>Turns the mechanism's indicators into company statements.</p>
+<h2>Does not carry</h2>
+<p>Any reading before the calls; asking prices are not contract prices.</p>
+<h2>Break indicator</h2>
+<p>Not applicable, open check. Done when the 2027 price direction is confirmed or contradicted by at least two of the
+three memory makers.</p>
+<h2>Source</h2>
+<p>blind</p>
+<h2>Linked</h2>
+<ul>
+<li><a href="mechanisms/second-source-hbm4-arrives-presold.html">second-source-hbm4-arrives-presold</a></li>
+<li><a href="open_checks/hbm-market-share-and-nvidia-allocation.html">hbm-market-share-and-nvidia-allocation</a></li>
 </ul></div></details><details class="entry" id="rubin-hbm4-wafer-demand-2028-2030"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">HBM4- und DRAM-Wafernachfrage durch Rubin und Nachfolger, 2028 bis 2030</a></span><span class="badge info">offen</span><span class="muted small">2026-10-03</span></summary><div class="body"><p class="small muted">Herkunft: Projekt AI_news, Gespräch 2026-10-03 · <a href="open_checks/rubin-hbm4-wafer-demand-2028-2030.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_supply/open_checks/rubin-hbm4-wafer-demand-2028-2030.md">Markdown</a></p><h2>Aussage</h2>
 <p>Erste Durchrechnung, jede Zahl mit Herkunft. Grundannahme (Vorgabe Mendel): Bis Ende 2028 gibt es so viele Rubin-Packages wie beim Blackwell-Höchststand, rund 10,5 Mio. (9,5 bis 11,4 Mio., aus <a href="../ai_demand_drivers/open_checks/rubin-share-of-blackwell-base.html">rubin-share-of-blackwell-base</a>).</p>
 <p><strong>Eingaben</strong></p>
