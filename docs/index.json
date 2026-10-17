@@ -358,7 +358,7 @@
 "y": "Regel",
 "s": "getragen",
 "d": "2026-10-16",
-"x": "Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR",
+"x": "Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR; 17.10.2026 erneut von 0 gruen (6 Bloecke, 3 h 55, F1 0,963 der Bauspielzeug-Bei",
 "id": "release-test-means-fresh-machine-with-release-assets",
 "src": "knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md"
 },

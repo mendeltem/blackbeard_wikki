@@ -10,6 +10,8 @@ Werkzeuge, auf deren Ausgabe sich jemand verlässt. Roter Faden: Ein Prüfwerkze
 
 **Vorschlag, neu 2026-10-16 (Alita):** Datensatz-Uebergabe: ein Ordner je Fall unter derivatives/preprocessed, sprechende Dateinamen, alles auf der Scan-Matrix, Layout des Fremdwerkzeugs als Geschwisterordner mit dessen Namen, keine Kopien (fehlende Ordner baut ein Skript), files.xlsx mit Spaltenerklaerung, QC-Seite, Pruefsummen ([dataset-handover-one-folder-per-case-no-copies](rules/dataset-handover-one-folder-per-case-no-copies.md)). Regel 'installierbar' erweitert: JEDER Bau von 0 in neuer Umgebung mit neuem Namen.
 
+**Nachtrag 2026-10-17 (gemessen, anderes Agentenprofil):** Der ganze README-Ablauf von `cmb_3d_unet_experiments` lief erneut von 0 (frischer Klon von GitHub, neue Umgebung, jeder Befehl woertlich): sechs Bloecke, alle gruen, 3 h 55 auf einer RTX A5000. Der Aufwand steckt in der Kreuzvalidierung selbst (2 h 28 von fuenf Trainingszuglaengen), nicht in der Installation (93 s). Lehre: README-Zeiten sind Untergrenzen, und das F1 0,963 der Bauspielzeug-Beispiele belegt nur, dass die Befehle laufen -- kein Erkennungsergebnis.
+
 **Vorschlag, neu 2026-10-16 (Alita):** README eines Forschungspakets: eine Zeile, eine Abbildung (keine zweite, die sie wiederholt), jeder Befehl in eigenem Kopierblock mit einer Zeile Wirkung, jeder Block laeuft woertlich aus frischem Clone, Details in docs/DETAILS.md, Hardware/Software klein ganz unten; nutzt eine Kollegin schon ein anderes Werkzeug, dessen Befehle, Optionen und Ordner spiegeln ([readme-for-a-research-package](rules/readme-for-a-research-package.md)).
 
 **Lesen bei:** Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.

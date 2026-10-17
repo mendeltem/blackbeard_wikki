@@ -54,5 +54,36 @@ Beleg am selben Abend: der erste Lauf von 0 fand zwei Fehler, die 89 gruene Test
 Die eigene Entwicklungsumgebung ist kein Beleg: dort ist das Paket editierbar installiert, Hilfspakete
 (z. B. openpyxl fuer die Dateitabelle) sind von frueher da, Umgebungsvariablen gesetzt.
 
+## Confirmed 2026-10-17 (second independent fresh run, different agent profile)
+
+The whole README of `cmb_3d_unet_experiments` ran from zero again on the workstation: fresh clone from GitHub,
+brand-new conda env, no reuse of the dev environment. All six command blocks verbatim, working directory = the
+clone, `ALL README BLOCKS OK`. Total 14,098 s (3 h 55 min) on one RTX A5000, max VRAM 1.71 GiB:
+
+| block | command | measured |
+|---|---|---|
+| install | `./install.sh --name <new>` | 93 s |
+| 4 | `cmbx preprocess` (2 raw scans, FSL-free `-f True`) | 15 s |
+| 5 | `cmbx train` (10 cases, 60 epochs) | 1524 s |
+| 6 | `cmbx train --frst False` | 1778 s |
+| 7 | `cmbx fine_tune -m pre` | 1786 s |
+| 8 | `cmbx evaluate` (2 cases without labels) | 3 s |
+| 9 | `cmbx cross_validate -fold 5` | 8899 s |
+
+What a new user should know:
+
+- **The check is affordable but not short: budget ~4 h from clone to green.** One single block (cross-validation,
+  five trainings of 60 epochs) is 63 % of it; `train`, `train --frst False` and `fine_tune` are ~30 min each.
+- **The README understates its own cost.** It promises "about 1 h on one GPU" for cross-validation on the examples;
+  measured 2 h 28 on an RTX A5000. Treat README timings as lower bounds and state the GPU.
+- **No external download is needed after the install:** `fine_tune -m pre` loads the pretrained VALDO weights from
+  the repository itself (`models/valdo_t2/final/model.pt`) and logs the channel match
+  (`['image','frst'] <- ['image','frst']`). Good for a fresh machine without internet beyond pip/GitHub.
+- **The synthetic examples are a plumbing test, not a benchmark.** Cross-validation returned F1 0.963 on 10 cases
+  (13 reference lesions, one false positive, per-case F1 mean 0.980). A green run proves the commands work on a new
+  machine -- it says nothing about detection quality, and such a number must never be quoted as a result.
+- **Silent-failure surface shrinks as more of the chain is public:** `preprocess`, `train`, `fine_tune`, `evaluate`,
+  `cross_validate` all ran without FSL, HD-BET, FreeSurfer or SimpleITK present.
+
 ## Verknuepft
 - [pip-freeze-is-not-an-install-file](pip-freeze-is-not-an-install-file.md)

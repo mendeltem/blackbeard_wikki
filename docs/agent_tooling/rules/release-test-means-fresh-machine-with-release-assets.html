@@ -81,6 +81,71 @@ cmb_3d_unet_experiments tut genau das, also <code>--name &lt;neu&gt;</code>), da
 Beleg am selben Abend: der erste Lauf von 0 fand zwei Fehler, die 89 gruene Tests uebersahen -- (1) <code>evaluate -o ../my_runs/pred</code> (relativ, wie in der README) schrieb abgeleitete Dateien mit relativem Pfad in eine Fallliste, die Pfade relativ zu IHREM Ordner aufloest: Pfad verdoppelt, Abbruch; alle Tests nutzten absolute tmp-Pfade. (2) Der Validierungsanteil (-tr_prop 0.8) hielt beim Beispiel genau einen Fall OHNE Laesion zurueck (10 x 0.2 ergab per Gleitkomma 1), F1 dort immer 0, Schwellenwahl sinnlos. Daraus: Tests rufen die Befehle so auf wie die README (relative Pfade, Arbeitsordner = Repo), und ein neuer Test muss am alten Code scheitern.
 Die eigene Entwicklungsumgebung ist kein Beleg: dort ist das Paket editierbar installiert, Hilfspakete
 (z. B. openpyxl fuer die Dateitabelle) sind von frueher da, Umgebungsvariablen gesetzt.</p>
+<h2>Confirmed 2026-10-17 (second independent fresh run, different agent profile)</h2>
+<p>The whole README of <code>cmb_3d_unet_experiments</code> ran from zero again on the workstation: fresh clone from GitHub,
+brand-new conda env, no reuse of the dev environment. All six command blocks verbatim, working directory = the
+clone, <code>ALL README BLOCKS OK</code>. Total 14,098 s (3 h 55 min) on one RTX A5000, max VRAM 1.71 GiB:</p>
+<table>
+<thead>
+<tr>
+<th>block</th>
+<th>command</th>
+<th>measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>install</td>
+<td><code>./install.sh --name &lt;new&gt;</code></td>
+<td>93 s</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>cmbx preprocess</code> (2 raw scans, FSL-free <code>-f True</code>)</td>
+<td>15 s</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>cmbx train</code> (10 cases, 60 epochs)</td>
+<td>1524 s</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>cmbx train --frst False</code></td>
+<td>1778 s</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>cmbx fine_tune -m pre</code></td>
+<td>1786 s</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>cmbx evaluate</code> (2 cases without labels)</td>
+<td>3 s</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>cmbx cross_validate -fold 5</code></td>
+<td>8899 s</td>
+</tr>
+</tbody>
+</table>
+<p>What a new user should know:</p>
+<ul>
+<li><strong>The check is affordable but not short: budget ~4 h from clone to green.</strong> One single block (cross-validation,
+  five trainings of 60 epochs) is 63 % of it; <code>train</code>, <code>train --frst False</code> and <code>fine_tune</code> are ~30 min each.</li>
+<li><strong>The README understates its own cost.</strong> It promises "about 1 h on one GPU" for cross-validation on the examples;
+  measured 2 h 28 on an RTX A5000. Treat README timings as lower bounds and state the GPU.</li>
+<li><strong>No external download is needed after the install:</strong> <code>fine_tune -m pre</code> loads the pretrained VALDO weights from
+  the repository itself (<code>models/valdo_t2/final/model.pt</code>) and logs the channel match
+  (<code>['image','frst'] &lt;- ['image','frst']</code>). Good for a fresh machine without internet beyond pip/GitHub.</li>
+<li><strong>The synthetic examples are a plumbing test, not a benchmark.</strong> Cross-validation returned F1 0.963 on 10 cases
+  (13 reference lesions, one false positive, per-case F1 mean 0.980). A green run proves the commands work on a new
+  machine -- it says nothing about detection quality, and such a number must never be quoted as a result.</li>
+<li><strong>Silent-failure surface shrinks as more of the chain is public:</strong> <code>preprocess</code>, <code>train</code>, <code>fine_tune</code>, <code>evaluate</code>,
+  <code>cross_validate</code> all ran without FSL, HD-BET, FreeSurfer or SimpleITK present.</li>
+</ul>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></li>

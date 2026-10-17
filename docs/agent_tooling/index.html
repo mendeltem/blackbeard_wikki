@@ -55,6 +55,7 @@ geglaubt, weil es wie eine Messung aussieht.</p>
 <p><strong>Getragen (alles Regeln):</strong> Kein stiller Rückfallwert. Leer ist nicht fehlend. Unbekannt ist kein Wert in Vergleichen (<code>null &lt;= 0</code> ist wahr). Erstmessung ist keine Veränderung. Gerechnetes und Gedeutetes getrennt halten (zwei Schichten).</p>
 <p><strong>Vorschlag (aus dem Projekt rea übernommen):</strong> Werkzeuge nach Aufgabenform schneiden (inspect, search, trace, compare, workflow, observe), Primitive vor Workflows, vollständige Ergebnisse, Belege inline, keine Bestätigungs-Schalter. Ob ein Agent das richtige Werkzeug wählt, zeigt nur eine Spur am echten Host, nicht Schema oder Wortüberlappung. Skills routen zuerst nach Zielart und gehen vor dem Abschluss ihre Checkliste durch. Tests belegen Aussagen (echter E2E vor Integration vor Goldens), nicht Verkabelung; verweigerte Berechtigung ist kein Bestehen.</p>
 <p><strong>Vorschlag, neu 2026-10-16 (Alita):</strong> Datensatz-Uebergabe: ein Ordner je Fall unter derivatives/preprocessed, sprechende Dateinamen, alles auf der Scan-Matrix, Layout des Fremdwerkzeugs als Geschwisterordner mit dessen Namen, keine Kopien (fehlende Ordner baut ein Skript), files.xlsx mit Spaltenerklaerung, QC-Seite, Pruefsummen (<a href="rules/dataset-handover-one-folder-per-case-no-copies.html">dataset-handover-one-folder-per-case-no-copies</a>). Regel 'installierbar' erweitert: JEDER Bau von 0 in neuer Umgebung mit neuem Namen.</p>
+<p><strong>Nachtrag 2026-10-17 (gemessen, anderes Agentenprofil):</strong> Der ganze README-Ablauf von <code>cmb_3d_unet_experiments</code> lief erneut von 0 (frischer Klon von GitHub, neue Umgebung, jeder Befehl woertlich): sechs Bloecke, alle gruen, 3 h 55 auf einer RTX A5000. Der Aufwand steckt in der Kreuzvalidierung selbst (2 h 28 von fuenf Trainingszuglaengen), nicht in der Installation (93 s). Lehre: README-Zeiten sind Untergrenzen, und das F1 0,963 der Bauspielzeug-Beispiele belegt nur, dass die Befehle laufen -- kein Erkennungsergebnis.</p>
 <p><strong>Vorschlag, neu 2026-10-16 (Alita):</strong> README eines Forschungspakets: eine Zeile, eine Abbildung (keine zweite, die sie wiederholt), jeder Befehl in eigenem Kopierblock mit einer Zeile Wirkung, jeder Block laeuft woertlich aus frischem Clone, Details in docs/DETAILS.md, Hardware/Software klein ganz unten; nutzt eine Kollegin schon ein anderes Werkzeug, dessen Befehle, Optionen und Ordner spiegeln (<a href="rules/readme-for-a-research-package.html">readme-for-a-research-package</a>).</p>
 <p><strong>Lesen bei:</strong> Code für Messung, Prüfung, Vorbedingungen, Melder, Berichte. MCP-Server, Agenten-Werkzeuge, Skills, Testaufbau.</p>
 <p><strong>Vorschlag, neu 2026-10-07 (Alita):</strong> Ein Waechter prueft die Vorbedingung (Treiber, Karte, Netz), bevor er neu startet; scheitert sie, meldet er einmal und pausiert. 445 Neustarts in fuenf Tagen waren Taetigkeit ohne Wirkung, und ein Fehlertext, der mit einer Zahl verglichen wird, sah aus wie "noch kein Platz".</p>
@@ -173,7 +174,7 @@ does, why it is useful and how to start, and move longer documentation elsewhere
 <h2>Ablesung</h2>
 <p>jehna, readme-best-practices, https://github.com/jehna/readme-best-practices (README-default.md). GitHub Docs, About
 READMEs, https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes.
-Applied in https://github.com/mendeltem/cmb_3d_unet_experiments (2026-10-16).</p></div></details><details class="entry" id="release-test-means-fresh-machine-with-release-assets"><summary><span class="type">Regel</span><span class="t"><a href="rules/release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR</span></summary><div class="body"><p class="small muted">Herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07 · <a href="rules/release-test-means-fresh-machine-with-release-assets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md">Markdown</a></p><h2>Aussage</h2>
+Applied in https://github.com/mendeltem/cmb_3d_unet_experiments (2026-10-16).</p></div></details><details class="entry" id="release-test-means-fresh-machine-with-release-assets"><summary><span class="type">Regel</span><span class="t"><a href="rules/release-test-means-fresh-machine-with-release-assets.html">&quot;Installierbar&quot; heisst: frische Maschine, nur die README-Befehle, Gewichte vom Release -- und jede CLI-Option einmal</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR; 17.10.2026 erneut von 0 gruen (6 Bloecke, 3 h 55, F1 0,963 der Bauspielzeug-Beispiele ist kein Ergebnis)</span></summary><div class="body"><p class="small muted">Herkunft: Repo microbleed_detection_3D_UNET, Neuer-Server-Tests und GitHub-Actions-Job fresh-machine, 2026-10-07 · <a href="rules/release-test-means-fresh-machine-with-release-assets.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/release-test-means-fresh-machine-with-release-assets.md">Markdown</a></p><h2>Aussage</h2>
 <p>Ein Paket mit vortrainierten Gewichten gilt erst als installierbar, wenn drei Dinge
 unabhaengig voneinander durchlaufen:</p>
 <ol>
@@ -212,6 +213,71 @@ cmb_3d_unet_experiments tut genau das, also <code>--name &lt;neu&gt;</code>), da
 Beleg am selben Abend: der erste Lauf von 0 fand zwei Fehler, die 89 gruene Tests uebersahen -- (1) <code>evaluate -o ../my_runs/pred</code> (relativ, wie in der README) schrieb abgeleitete Dateien mit relativem Pfad in eine Fallliste, die Pfade relativ zu IHREM Ordner aufloest: Pfad verdoppelt, Abbruch; alle Tests nutzten absolute tmp-Pfade. (2) Der Validierungsanteil (-tr_prop 0.8) hielt beim Beispiel genau einen Fall OHNE Laesion zurueck (10 x 0.2 ergab per Gleitkomma 1), F1 dort immer 0, Schwellenwahl sinnlos. Daraus: Tests rufen die Befehle so auf wie die README (relative Pfade, Arbeitsordner = Repo), und ein neuer Test muss am alten Code scheitern.
 Die eigene Entwicklungsumgebung ist kein Beleg: dort ist das Paket editierbar installiert, Hilfspakete
 (z. B. openpyxl fuer die Dateitabelle) sind von frueher da, Umgebungsvariablen gesetzt.</p>
+<h2>Confirmed 2026-10-17 (second independent fresh run, different agent profile)</h2>
+<p>The whole README of <code>cmb_3d_unet_experiments</code> ran from zero again on the workstation: fresh clone from GitHub,
+brand-new conda env, no reuse of the dev environment. All six command blocks verbatim, working directory = the
+clone, <code>ALL README BLOCKS OK</code>. Total 14,098 s (3 h 55 min) on one RTX A5000, max VRAM 1.71 GiB:</p>
+<table>
+<thead>
+<tr>
+<th>block</th>
+<th>command</th>
+<th>measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>install</td>
+<td><code>./install.sh --name &lt;new&gt;</code></td>
+<td>93 s</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>cmbx preprocess</code> (2 raw scans, FSL-free <code>-f True</code>)</td>
+<td>15 s</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>cmbx train</code> (10 cases, 60 epochs)</td>
+<td>1524 s</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>cmbx train --frst False</code></td>
+<td>1778 s</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>cmbx fine_tune -m pre</code></td>
+<td>1786 s</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>cmbx evaluate</code> (2 cases without labels)</td>
+<td>3 s</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>cmbx cross_validate -fold 5</code></td>
+<td>8899 s</td>
+</tr>
+</tbody>
+</table>
+<p>What a new user should know:</p>
+<ul>
+<li><strong>The check is affordable but not short: budget ~4 h from clone to green.</strong> One single block (cross-validation,
+  five trainings of 60 epochs) is 63 % of it; <code>train</code>, <code>train --frst False</code> and <code>fine_tune</code> are ~30 min each.</li>
+<li><strong>The README understates its own cost.</strong> It promises "about 1 h on one GPU" for cross-validation on the examples;
+  measured 2 h 28 on an RTX A5000. Treat README timings as lower bounds and state the GPU.</li>
+<li><strong>No external download is needed after the install:</strong> <code>fine_tune -m pre</code> loads the pretrained VALDO weights from
+  the repository itself (<code>models/valdo_t2/final/model.pt</code>) and logs the channel match
+  (<code>['image','frst'] &lt;- ['image','frst']</code>). Good for a fresh machine without internet beyond pip/GitHub.</li>
+<li><strong>The synthetic examples are a plumbing test, not a benchmark.</strong> Cross-validation returned F1 0.963 on 10 cases
+  (13 reference lesions, one false positive, per-case F1 mean 0.980). A green run proves the commands work on a new
+  machine -- it says nothing about detection quality, and such a number must never be quoted as a result.</li>
+<li><strong>Silent-failure surface shrinks as more of the chain is public:</strong> <code>preprocess</code>, <code>train</code>, <code>fine_tune</code>, <code>evaluate</code>,
+  <code>cross_validate</code> all ran without FSL, HD-BET, FreeSurfer or SimpleITK present.</li>
+</ul>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="rules/pip-freeze-is-not-an-install-file.html">pip-freeze-is-not-an-install-file</a></li>
