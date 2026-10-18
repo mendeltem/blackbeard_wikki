@@ -1,0 +1,123 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Literature, run twice: where two independent research runs on longitudinal post-stroke volumetry agree and disagree</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Literature, run twice: where two independent research runs on longitudinal post-stroke volumetry agree and disagree</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-18</span><span>Herkunft</span><span>16 literature topics on longitudinal post-stroke volumetry, each researched twice and independently by the remote-model agent (Clara on the hospital model hub; first run model &quot;clea&quot;, second run model &quot;frontier&quot;, second run forbidden to open the first); quellen-pruefen 2026-10-18 on the second runs (512 references, 502 with PMID, 502 correct, 0 wrong, 10 without PMID); recommendation-by-recommendation comparison by a Claude Code subagent, checked and committed by Claude Code</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="research-icv-normalisation-and-lesioned-structures-2026-10.html">Literature: head-size normalisation and handling of structures that overlap a stroke lesion</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-scanner-change-within-subject-longitudinal-2026-10.html">Literature: scanner, software or coil change between visits of the same participant</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-cross-sectional-vs-longitudinal-consistency-2026-10.html">Literature: is cross-sectional per-session segmentation (SynthSeg, recon-all) consistent enough for 5-year atrophy, or is a longitudinal pipeline required?</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-attrition-and-missing-data-longitudinal-stroke-2026-10.html">Literature: drop-out and missing visits in long-term stroke and dementia imaging cohorts</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-first-vs-second-run-volumetry-2026-10.md">knowledge/brain_volumetry/findings/research-first-vs-second-run-volumetry-2026-10.md</a></span></div><h2>Aussage</h2>
+<p>Running every literature question twice, with a different model and no access to the first answer, is cheap and
+changes the conclusions in a few decisive places. Agreement across runs marks robust advice; disagreement marks
+places where the literature does not decide and own data or an own experiment must.</p>
+<p><strong>Robust (both runs):</strong> a scanner change inside a participant is a directed bias, not noise, and must be modelled with a
+time-varying scanner term [1]; ICV enters as a covariate or residual, the ratio only as a sensitivity analysis [2,3];
+the longitudinal stream is more precise than per-session segmentation for change; QC is a cascade of cheap gates plus a
+human pass on the flagged tail, and outlier exclusion on global volumes increases unexplained variance [4]; mixed
+models with random intercept and slope, real time in years, no deletion of incomplete participants.</p>
+<p><strong>Contradictions between runs (the literature does not settle these):</strong>
+1. <em>Mirror (enantiomorphic) filling of infarcts.</em> Run 1 calls it the best-validated classical family; run 2 finds no
+   published volumetric validation at all and recommends against it as a default. Classical WM-intensity filling is
+   strongly mask- and method-dependent: with gold-standard masks FSL <code>lesion_filling</code> left 24.5 % of the lesion area
+   classified as GM versus 0.4 % for LEAP [5]; filling fixes misclassification that masking alone does not [6].
+2. <em>Primary stream raw or filled T1.</em> Split across topics and runs; the two ICV/lesion runs and the inpainting run 2
+   make the raw stream primary and the filled stream a sensitivity analysis.
+3. <em>ICV once per participant or per session.</em> Run 1: baseline, time-invariant. Run 2: session-specific; the ICV
+   estimator itself differs between scanners, segmentation-based TIV is more consistent across scanners [2].
+4. <em>Harmonisation.</em> One run favours longitudinal ComBat over a scanner covariate [7], another the time-varying scanner
+   term in the mixed model [1] and doubts that ComBat removes an effect confounded with time.
+5. <em>Early interval (0-6 months).</em> Non-linear fast early atrophy (spline terms) versus "mostly measurement error, fit
+   slopes on later visits".
+6. <em>WMH tool.</em> LST-AI is validated on MS lesions only [8]; segcsvdWMH reports the best Dice on heterogeneous ageing/SVD
+   cohorts [9].</p>
+<h2>Trägt</h2>
+<p>Second-run references (checked: PMID matches title):</p>
+<p>[1] Lee H, Nakamura K, Narayanan S, et al. (2019). Estimating and accounting for the effect of MRI scanner changes on
+longitudinal whole-brain volume change measurements. NeuroImage 184:555-565. PMID: 30253207.
+Shows: scanner/sequence changes shift whole-brain change measures with a sign; a fixed corrective term per transition
+in a mixed model improves fit.</p>
+<p>[2] Koike S, Maikusa N, Cai L, et al. (2025). Estimation of the intracranial volume is crucial ... Human Brain Mapping.
+doi:10.1002/hbm.70405. PMID: 41190774.
+Shows: eTIV and segmentation-based TIV agree only moderately (ICC 0.78) and sbTIV is more consistent across scanners
+in longitudinal data.</p>
+<p>[3] Brzezinski-Rittner A, Moqadam R, Zeighami Y, Dadar M. (2026). Intracranial volume: To adjust or not to adjust? It
+is not a matter of if, but how. Imaging Neuroscience 4. doi:10.1162/imag.a.1235. PMID: 42206219.
+Shows: proportional (ratio) correction can invert associations; covariate and residual adjustment agree with a
+TIV-matched reference.</p>
+<p>[4] Monereo-Sanchez J, de Jong JJA, Drenthen GS, et al. (2021). Quality control strategies for brain MRI segmentation
+and parcellation. NeuroImage. doi:10.1016/j.neuroimage.2021.118174. PMID: 34000406.
+Shows: Euler number and MRIQC-based exclusion perform best among automated options; excluding outliers on global
+morphological measures increased relative unexplained variance.</p>
+<p>[5] Popescu V, Ran NC, Barkhof F, et al. (2014). Accurate GM atrophy quantification in MS using lesion-filling with
+co-registered 2D lesion masks. NeuroImage: Clinical. doi:10.1016/j.nicl.2014.01.004. PMID: 24567908.
+Shows: with gold-standard masks LEAP left 0.4 % of the lesion area as GM, FSL lesion_filling 24.5 %.</p>
+<p>[6] Battaglini M, Jenkinson M, De Stefano N. (2012). Evaluating and reducing the impact of white matter lesions on brain
+volume measurements. Human Brain Mapping. doi:10.1002/hbm.21344. PMID: 21882300.
+Shows: inserted WM lesions caused GM/WM misclassification that persisted when lesions were masked and was removed by
+filling with normal-appearing WM intensity.</p>
+<p>[7] Beer JC, Tustison NJ, Cook PA, et al. (2020). Longitudinal ComBat: a method for harmonizing longitudinal
+multi-scanner imaging data. NeuroImage. doi:10.1016/j.neuroimage.2020.117129. PMID: 32640273.
+Shows: longitudinal ComBat was more powerful for longitudinal change and controlled type I error better than
+cross-sectional ComBat.</p>
+<p>[8] Wiltgen T, McGinnis J, Schlaeger S, et al. (2024). LST-AI: a deep learning ensemble for accurate MS lesion
+segmentation. NeuroImage: Clinical 42. doi:10.1016/j.nicl.2024.103611. PMID: 38703470.
+Shows: three-U-Net ensemble beat LST, SAMSEG and nnU-Net on MS data (Dice 0.65 on MSSEG-1).</p>
+<p>[9] Gibson E, Ramirez J, Woods LA, et al. (2024). segcsvdWMH: a CNN-based tool for quantifying white matter
+hyperintensities in heterogeneous patient cohorts. Human Brain Mapping 45. doi:10.1002/hbm.70104. PMID: 39723488.
+Shows: mean Dice 0.86 across four heterogeneous datasets, +7.8 % over HyperMapp3r and +21.8 % over SAMSEG.</p>
+<p>Own data (2026-10-18, cohort-level, relative values only): within the same site, participants who changed scanner
+show a global scale step of about +1.5 % in every volume including the ICV proxy, which vanishes when each volume is
+divided by the same-session ICV; this argues for a per-session ICV in this cohort (contradiction 3).</p>
+<h2>Trägt nicht</h2>
+<ul>
+<li>No run found a volumetric validation of mirror filling; absence in two searches is not proof of absence.</li>
+<li>The comparison read the short-answer and recommendation sections, not every paragraph.</li>
+<li>10 second-run references carry only a DOI and were not checked by PMID.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<ul>
+<li>A published validation of enantiomorphic filling for structure volumes, or an own simulation (synthetic lesions in a
+  healthy hemisphere, filled vs original volume per structure) that shows a bias below the smallest detectable change.</li>
+<li>Own data in which raw and filled streams give the same slopes per structure.</li>
+</ul>
+<h2>Ablesung</h2>
+<p>For any methods decision: do it where both runs agree; where they disagree, decide by own data (measured step, test-
+retest SDC) or by a small own experiment, and record the decision with both positions in the analysis plan.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-18 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

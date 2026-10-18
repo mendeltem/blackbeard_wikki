@@ -1232,6 +1232,17 @@
 "src": "knowledge/brain_volumetry/findings/research-cross-sectional-vs-longitudinal-consistency-2026-10.md"
 },
 {
+"t": "Literature, run twice: where two independent research runs on longitudinal post-stroke volumetry agree and disagree",
+"p": "brain_volumetry/findings/research-first-vs-second-run-volumetry-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature run twice (16 topics, 512 refs checked): agreements and six contradictions (mirror filling, raw vs filled, ICV per session, harmonisation, early interval, WMH tool)",
+"id": "research-first-vs-second-run-volumetry-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-first-vs-second-run-volumetry-2026-10.md"
+},
+{
 "t": "Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use",
 "p": "brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.html",
 "a": "brain_volumetry",
