@@ -1,0 +1,282 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Literature: head-size normalisation and handling of structures that overlap a stroke lesion</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Literature: head-size normalisation and handling of structures that overlap a stroke lesion</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-18</span><span>Herkunft</span><span>research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, public literature only; quellen-pruefen 2026-10-18 (24 references, 24 with PMID, 24 correct, 0 wrong); checked and committed by Claude Code</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-cross-sectional-vs-longitudinal-consistency-2026-10.html">Literature: is cross-sectional per-session segmentation (SynthSeg, recon-all) consistent enough for 5-year atrophy, or is a longitudinal pipeline required?</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-icv-normalisation-and-lesioned-structures-2026-10.md">knowledge/brain_volumetry/findings/research-icv-normalisation-and-lesioned-structures-2026-10.md</a></span></div><h2>Aussage</h2>
+<ul>
+<li>Estimate head size once per subject and treat it as time-invariant. Longitudinal change must come from
+  tissue, never from a re-estimated ICV: an ICV that itself shrinks with atrophy cancels the very effect
+  being measured [1, 2].</li>
+<li>ICV estimation is not neutral. FreeSurfer eTIV over-estimated TIV as atrophy progressed in a longitudinal
+  dementia cohort [1], and both SPM- and FreeSurfer-based ICV showed bias related to sex, atrophy or skull
+  size [2]. With 7 sites sharing one protocol, keep the estimation method fixed and QC ICV per subject
+  across visits rather than trusting a single number.</li>
+<li>SynthSeg is contrast- and resolution-robust and needs no retraining, which is exactly what a
+  multi-scanner MPRAGE cohort needs [3]. In an independent multi-scanner, multi-software comparison (MS)
+  SynthSeg, SAMSEG and FastSurfer gave good to excellent repeatability for large structures, but
+  between-scanner smallest-detectable-change was still 5-29 % - so scanner change, not software, is the
+  dominant error source [4].</li>
+<li>Do not use the proportional (tissue/ICV) method as the primary normalisation. It flips the sign of the
+  volume-ICV association, changes the direction of sex differences, and is inconsistent with covariate and
+  residual approaches whenever the brain-behaviour association is not null [5, 6, 7, 8, 9, 10].</li>
+<li>Prefer the residual method (regress region on ICV in a reference/normative sample, use the residual) or
+  include ICV/TIV as a covariate in the model. Across 2320 UK Biobank regression models, adjustment and
+  residual agreed with each other but disagreed with crude and proportional estimates [7]; the residual
+  method removed the ICV association with no direction switch and improved single-subject z-score
+  detection (thalamus AUC 0.84 vs 0.79) [10].</li>
+<li>If ICV/TIV is entered as a covariate, it must be a fixed degree of freedom spent once per subject;
+  adding it as a covariate was the best-performing method in a matched UK Biobank design [8].</li>
+<li>Lesion filling is about registration and boundary stability, not about inventing volumes. Filling MS/WMH
+  lesions with WM-like intensity reduces grey-matter over-estimation and improves tissue-volume accuracy
+  [11, 12], but naive filling with normal-appearing white matter introduces artefacts whose magnitude
+  scales with total lesion volume (r = 0.84) [13].</li>
+<li>Mirroring the contralateral hemisphere ("virtual brain grafting/transplantation") is a legitimate way to
+  restore landmarks so that FreeSurfer parcellation of the lesioned hemisphere matches the intact one; it
+  was validated with sulcal-area comparison [15]. But the filled voxels are synthetic, and the accepted use
+  is to enable parcellation/registration, not to read the filled voxel values as biology [13, 15].</li>
+<li>WMH are a systematic confound for grey-matter volumetry. WMH overlap inflates caudate and other GM
+  volumes; after WMH correction caudate volume declined with age and separated patients, which uncorrected
+  volumes failed to do [14].</li>
+<li>In our setup, compute SynthSeg volumes on raw T1 and on the lesion-filled T1 and report both, but make
+  the primary longitudinal model the raw-T1 volumes with lesion load as a covariate; use the filled images
+  only where filling demonstrably stabilises the pipeline.</li>
+<li>Mask, do not trust. Cortical-thickness bias from focal lesions is reduced by fully masking lesion voxels
+  from tissue probability maps rather than only from summarisation [16]; infarcted ipsilesional vertices
+  should be identified from stroke masks and excluded before any cortical-thickness analysis [17].</li>
+<li>Expect genuine, region-specific, ipsilesional-greater atrophy (thalamus, hippocampus), and treat it as a
+  signal of secondary degeneration, not as a segmentation artefact [18, 19, 20].</li>
+</ul>
+<h3>Practical recommendation (as written for a multisite longitudinal stroke cohort)</h3>
+<ol>
+<li>Head size: estimate ICV/TIV once per subject from the baseline (or best-QC) scan with a single fixed
+   method; QC it across visits as a subject-level stability check, and never let a per-visit re-estimation
+   feed the longitudinal model (atrophy-sensitive TIV would cancel the effect [1, 2]).</li>
+<li>Normalisation in the LMM: use ICV as a covariate, or model the region on the residual scale, both
+   computed against a fixed reference/normative sample; do not use the proportional fraction as the primary
+   outcome [5, 6, 7, 8, 9, 10]. Report the proportional result only as a sensitivity analysis.</li>
+<li>Two volume streams: keep the primary longitudinal stream on raw T1 (SynthSeg 2, <code>--robust --qc</code>,
+   per-structure QC &gt;= 0.65, Euler gate) with infarct volume and WMH volume as covariates. Keep the
+   lesion-filled stream as a robustness/secondary stream, reported alongside - and evaluated per structure,
+   because filling effects are structure- and load-dependent [12, 13, 21].</li>
+<li>Lesion filling: for the filled stream, prefer a patch-based/in-painting or grafting approach over naive
+   fill-with-NAWM [11, 13]; validate by checking that the difference between raw and filled volumes does
+   not scale with lesion volume (the artefact signature of [13]).</li>
+<li>WMH: because WMH overlap inflates subcortical GM volumes and can flip clinical associations [14], always
+   report caudate/putamen/thalamus volumes with and without WMH handling, and consider WMH volume as a
+   covariate rather than only a filling step.</li>
+<li>Cortical thickness: exclude/flag lesioned vertices using a priori stroke masks before analysis, and
+   prefer masking lesion voxels out of the tissue probability maps (fully masked) rather than only out of
+   the summarisation [16, 17].</li>
+<li>Ipsilesional vs contralesional: do not merge hemispheres. Model ipsilesional and contralesional volumes
+   separately (or their ratio) and expect an ipsilesional excess that is partly secondary degeneration
+   [18, 19, 20, 24]. Where a structure directly overlaps the lesion, flag/exclude it per subject and
+   structure, and record that in the QC table.</li>
+<li>Scanner/harmonisation: cross-scanner smallest detectable change dominates software differences [4], so
+   keep longComBat in the plan, harmonise within scanner/site, and report the lesion-filled/raw sensitivity
+   in the same framework.</li>
+<li>Reporting: give head-size-normalised volumes with the adjustment method named explicitly, since
+   "ICV-corrected" is not one method and different methods disagree [7, 9, 22].</li>
+</ol>
+<h2>Trägt</h2>
+<p>24 references, each retrieved in the task with the literature tool and checked (PMID matches title, DOI registered at doi.org). Each reference carries one "Shows:" sentence from its abstract.</p>
+<p>[1] Pengas G, Pereira JM, Williams GB, et al., 2009, Comparative reliability of total intracranial volume
+estimation methods and the influence of atrophy in a longitudinal semantic dementia cohort, J Neuroimaging,
+doi:10.1111/j.1552-6569.2008.00246.x, PMID:18494772.
+Shows: in a longitudinally imaged semantic-dementia cohort, fully automated FreeSurfer over-estimated TIV as
+atrophy progressed while a mid-cranial PD-based method was least susceptible, so TIV estimation is not
+atrophy-invariant - the reason to fix head size per subject in a longitudinal study.</p>
+<p>[2] Nordenskjöld R, Malmberg F, Larsson EM, et al., 2013, Intracranial volume estimated with commonly used
+methods could introduce bias in studies including brain volume measurements, Neuroimage,
+doi:10.1016/j.neuroimage.2013.06.068, PMID:23827332.
+Shows: comparing SPM and FreeSurfer ICV with reference segmentations in 399 scans of 75-year-olds found both
+over-estimated ICV, SPM biased by sex and atrophy and FreeSurfer by skull size, and hippocampal
+normalisation associations changed with the ICV measure - direct evidence that ICV choice biases results.</p>
+<p>[3] Billot B, Greve DN, Puonti O, et al., 2023, SynthSeg: Segmentation of brain MRI scans of any contrast
+and resolution without retraining, Med Image Anal, doi:10.1016/j.media.2023.102789, PMID:36857946.
+Shows: SynthSeg, trained on synthetic scans with fully randomised contrast and resolution, segments scans
+across six modalities and ten resolutions without retraining, which is what justifies one model across
+several scanner models and visits.</p>
+<p>[4] van Nederpelt DR, Amiri H, Brouwer I, et al., 2023, Reliability of brain atrophy measurements in
+multiple sclerosis using MRI: an assessment of six freely available software packages for cross-sectional
+analyses, Neuroradiology, doi:10.1007/s00234-023-03189-8, PMID:37526657.
+Shows: across three 3 T scanners and six packages (including SAMSEG, FastSurfer, SynthSeg), large-structure
+ICC was good to excellent and filled vs non-filled images did not differ clearly, but between-scanner
+smallest detectable change was 4.83-29.25 %, identifying scanner change as the dominant error source.</p>
+<p>[5] Voevodskaya O, Simmons A, Nordenskjöld R, et al., 2014, The effects of intracranial volume adjustment
+approaches on multiple regional MRI volumes in healthy aging and Alzheimer's disease, Front Aging Neurosci,
+doi:10.3389/fnagi.2014.00264, PMID:25339897.
+Shows: raw regional volumes correlate positively with ICV while volume-to-ICV fractions correlate negatively,
+and only residual correction eliminated the ICV correlation and the sex differences - the core argument
+against the proportional method.</p>
+<p>[6] Sanfilipo MP, Benedict RH, Zivadinov R, et al., 2004, Correction for intracranial volume in analysis of
+whole brain atrophy in multiple sclerosis: the proportion vs. residual method, Neuroimage,
+doi:10.1016/j.neuroimage.2004.03.037, PMID:15275929.
+Shows: injecting systematic and random ICV/parenchymal error showed the proportion method shifted normalized
+means and reduced power under random error, whereas residual-based predicted volumes were largely unaffected
+and stable in power - early evidence preferring the residual method.</p>
+<p>[7] Wang J, Hill-Jarrett T, Buto P, et al., 2024, Comparison of approaches to control for intracranial
+volume in research on the association of brain volumes with cognitive outcomes, Hum Brain Mapp,
+doi:10.1002/hbm.26633, PMID:38433682.
+Shows: across 2320 UK Biobank regression models (N = 41,964), the covariate and residual approaches agreed
+but disagreed with the crude and proportional approaches, and for the hippocampus the proportional approach
+even reversed the sign of the cognition association - so "ICV-corrected" is not one method.</p>
+<p>[8] Dhamala E, Ooi LQR, Chen J, et al., 2022, Proportional intracranial volume correction differentially
+biases behavioral predictions across neuroanatomical features, sexes, and development, Neuroimage,
+doi:10.1016/j.neuroimage.2022.119485, PMID:35843514.
+Shows: proportional ICV correction reduced prediction accuracy from surface area and GM volume but increased
+it from cortical thickness, and changed cross-sex/cross-age generalisability, demonstrating that the choice
+of ICV correction has feature- and subgroup-specific effects.</p>
+<p>[9] Hu M, Lou Y, Zhu C, et al., 2024, Evaluating the Impact of Intracranial Volume Correction Approaches on
+the Quantification of Intracranial Structures in MRI: A Systematic Analysis, J Magn Reson Imaging,
+doi:10.1002/jmri.28974, PMID:37702125.
+Shows: against a TIV-matched gold standard in 141 volunteers, the residual method had the highest consistency
+(94.4 %), while unadjusted structures differed significantly between sexes - supporting residual correction.</p>
+<p>[10] Opfer R, Krüger J, Spies L, et al., 2022, Single-subject analysis of regional brain volumetric measures
+can be strongly influenced by the method for head size adjustment, Neuroradiology,
+doi:10.1007/s00234-022-02961-6, PMID:35462574.
+Shows: in 5059 normative scans the residual method removed the TIV association and cut between-subject
+variability more than the proportional method, and gave a higher AUC for detecting thalamic atrophy in MS
+(0.84 vs 0.79) - the single-subject argument for the residual method.</p>
+<p>[11] Prados F, Cardoso MJ, Kanber B, et al., 2016, A multi-time-point modality-agnostic patch-based method
+for lesion filling in multiple sclerosis, Neuroimage, doi:10.1016/j.neuroimage.2016.06.053, PMID:27377222.
+Shows: a 5D patch-based non-local-means lesion filling that fills lesions with the most plausible texture
+introduced fewer artefacts and spurious edges than standard fill-with-nearby-WM methods, notably where
+lesions abut ventricles or deep grey matter.</p>
+<p>[12] Valverde S, Oliver A, Lladó X, 2014, A white matter lesion-filling approach to improve brain tissue
+volume measurements, Neuroimage Clin, doi:10.1016/j.nicl.2014.08.016, PMID:25379419.
+Shows: refilling WM lesions with intensities drawn from the slice WM distribution reduced the tissue-volume
+deviation from the lesion-free ground truth across 1.5 T and 3 T data and two segmentation tools, i.e.
+lesion filling improves tissue-volume accuracy.</p>
+<p>[13] van der Weijden CWJ, Pitombeira MS, Haveman YRA, et al., 2022, The effect of lesion filling on brain
+network analysis in multiple sclerosis using structural magnetic resonance imaging, Insights Imaging,
+doi:10.1186/s13244-022-01198-4, PMID:35347460.
+Shows: artefacts in lesion-filled T1w images correlated with total lesion volume (r = 0.84, p &lt; 0.001) and
+had a major impact on GM segmentation accuracy, so lesion filling should be applied cautiously at higher
+lesion loads - the load-dependence warning for our filling step.</p>
+<p>[14] Dadar M, Potvin O, Camicioli R, et al., 2021, Beware of white matter hyperintensities causing
+systematic errors in FreeSurfer gray matter segmentations!, Hum Brain Mapp, doi:10.1002/hbm.25398,
+PMID:33783933.
+Shows: in 1077 ADNI participants (4321 time-points) WMH overlapped more with GM structures at higher WMH
+burden, and without WMH correction caudate volume increased with age and failed to separate AD, which
+changed to decline and group separation after correction - WMH handling flips clinical associations.</p>
+<p>[15] Solodkin A, Hasson U, Siugzdaite R, et al., 2010, Virtual brain transplantation (VBT): a method for
+accurate image registration and parcellation in large cortical stroke, Arch Ital Biol, PMID:21175010.
+Shows: filling a large left-hemisphere stroke by transplanting tissue mirrored from the non-stroke
+hemisphere produced no FreeSurfer parcellation difference for 12 regions between lesioned and non-lesioned
+hemispheres - validation that mirroring restores landmarks for parcellation.</p>
+<p>[16] Brennan D, Schneider ALC, Shinohara RT, et al., 2026, Contusions bias cortical thickness estimates
+after traumatic brain injury: A TRACK-TBI study, Neuroimage Clin, doi:10.1016/j.nicl.2026.104003,
+PMID:42114207.
+Shows: in 86 TRACK-TBI participants, unmasked and summarisation-only masking left lesion-related
+cross-sectional and longitudinal cortical-thickness bias, while fully masking lesion voxels from tissue
+probability maps attenuated the cross-sectional bias - a concrete lesion-handling recommendation.</p>
+<p>[17] Khlif MS, Egorova-Brumley N, Bird LJ, et al., 2022, Cortical thinning 3 years after ischaemic stroke
+is associated with cognitive impairment and APOE ε4, Neuroimage Clin, doi:10.1016/j.nicl.2022.103200,
+PMID:36116165.
+Shows: in the CANVAS stroke cohort, infarcted ipsilesional vertices were identified from a-priori stroke
+lesion masks and excluded before mixed-effects cortical-thickness analysis - a concrete example of
+excluding lesioned cortex in a longitudinal stroke study.</p>
+<p>[18] Yassi N, Malpas CB, Campbell BC, et al., 2015, Contralesional thalamic surface atrophy and functional
+disconnection 3 months after ischemic stroke, Cerebrovasc Dis, doi:10.1159/000381105, PMID:25823493.
+Shows: in 15 anterior-circulation stroke patients imaged up to 3 months, contralesional thalamic volume
+fell significantly (-2.1 %, p = 0.047) with declining functional connectivity and atrophy correlated with
+stroke severity - remote structural and functional change coexist.</p>
+<p>[19] Geng J, Gao F, Ramirez J, et al., 2023, Secondary thalamic atrophy related to brain infarction may
+contribute to post-stroke cognitive impairment, J Stroke Cerebrovasc Dis,
+doi:10.1016/j.jstrokecerebrovasdis.2022.106895, PMID:36495644.
+Shows: after controlling for head size and global brain atrophy, infarct volume independently correlated
+with ipsilateral thalamic volume (beta = -0.069, p = 0.024), and left thalamic atrophy correlated with
+poorer cognition - the template for a head-size- and atrophy-adjusted remote-atrophy analysis.</p>
+<p>[20] Aamodt EB, Lydersen S, Alnæs D, et al., 2022, Longitudinal Brain Changes After Stroke and the
+Association With Cognitive Decline, Front Neurol, doi:10.3389/fneur.2022.856919, PMID:35720079.
+Shows: in 244 Nor-COAST survivors with FreeSurfer at baseline/18/36 months, cortices and subcortices showed
+greater ipsi- than contralesional atrophy rate (more prominent right), with medial-temporal atrophy after
+left strokes and larger lesions after right strokes linked to cognitive decline.</p>
+<p>[21] Guo C, Ferreira D, Fink K, et al., 2019, Repeatability and reproducibility of FreeSurfer, FSL-SIENAX
+and SPM brain volumetric measurements and the effect of lesion filling in multiple sclerosis, Eur Radiol,
+doi:10.1007/s00330-018-5710-x, PMID:30242503.
+Shows: repeat scanning of MS patients on three scanners showed within-scanner variability lower than
+between-scanner, ICV normalisation improved FreeSurfer and SPM reproducibility, and MS lesion filling
+changed FSL/SPM output but not FreeSurfer - directly relevant to a multi-scanner ICV-normalised volumetry.</p>
+<p>[22] Brzezinski-Rittner A, Moqadam R, Zeighami Y, et al., 2026, Intracranial volume: To adjust or not to
+adjust? It is not a matter of if, but how, Imaging Neurosci (Camb), doi:10.1162/IMAG.a.1235, PMID:42206219.
+Shows: against a TIV-matched UK Biobank gold standard, adding TIV as a covariate was the best-performing
+adjustment method, and smoothing of cortical metrics itself biased sex-difference estimates - the most
+recent head-to-head of ICV adjustment methods.</p>
+<p>[23] Radwan AM, Emsell L, Blommaert J, et al., 2021, Virtual brain grafting: Enabling whole brain
+parcellation in the presence of large lesions, Neuroimage, doi:10.1016/j.neuroimage.2021.117731,
+PMID:33454411.
+Shows: Virtual Brain Grafting generates a lesion-free T1 so that recon-all parcellation succeeds in
+heterogeneous focal pathology, with mean Dice 0.894 (unilateral) / 0.903 (bilateral) versus 0.617 without
+grafting, and quantifies the influence of lesion volume and overlap on labeling accuracy.</p>
+<p>[24] Zavaliangos-Petropulu A, Lo B, Donnelly MR, et al., 2022, Chronic Stroke Sensorimotor Impairment Is
+Related to Smaller Hippocampal Volumes: An ENIGMA Analysis, J Am Heart Assoc, doi:10.1161/JAHA.121.025109,
+PMID:35574963.
+Shows: pooling 357 chronic stroke patients across 18 ENIGMA cohorts, sensorimotor impairment was associated
+with ipsilesional (p = 0.005) but not contralesional hippocampal volume, and hippocampal volume was
+associated with lesion size - evidence that even non-lesioned, ipsilesional structures carry
+secondary-degeneration signal and should be analysed per hemisphere.</p>
+<h2>Trägt nicht</h2>
+<p>Open questions from the report:</p>
+<ul>
+<li>Which ICV estimator is most atrophy-stable for a mixed Siemens MPRAGE cohort (eTIV vs SynthSeg-derived
+  vs SAMSEG-derived), given that all automated estimators showed some atrophy- or skull-related bias in the
+  older literature [1, 2]? A within-cohort repeat/scan-rescan check on the same subjects would answer this.</li>
+<li>Does mirror-based contour filling (our infarct-filling step) preserve parcellation accuracy at the lesion
+  margin specifically, or only globally? The grafting literature [15, 23] reports region-level agreement,
+  but the load-dependent artefact warning [13] has not been tested for mirroring in stroke (mostly tested
+  in MS/glioma).</li>
+<li>How large is the residual-vs-covariate difference in a stroke cohort with WMH and atrophy, and does the
+  choice interact with longComBat?</li>
+<li>Best criterion to flag a structure as "lesion-overlapping vs secondary-degenerated": overlap fraction,
+  distance from infarct, or ipsilesional-contralesional asymmetry?</li>
+<li>Whether WMH filling with normal-appearing WM intensity reproduces the caudate-volume bias of [14] in our
+  pipeline, or whether the WMH-filling step already mitigates it.</li>
+</ul>
+<p>Claims rest on abstracts, not full texts, unless the report says otherwise.</p>
+<h2>Bruchindikator</h2>
+<p>A full-text reading or a later consensus paper contradicts a cited effect size or recommendation; or our own cohort data show the opposite (for example no scanner effect at a scanner change).</p>
+<h2>Ablesung</h2>
+<p>Report written 2026-10-18 by Clara (hospital model hub), question set by Claude Code after a pipeline audit; sources verified with quellen-pruefen the same day.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-18 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

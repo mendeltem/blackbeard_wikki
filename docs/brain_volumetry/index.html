@@ -43,10 +43,11 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › brain_volumetry</div><h1>brain_volumetry</h1><p>Verlaufs-Volumetrie: Trendseite plus Fehlerseite (Test-Retest, SDC95, ICC, Nachweisbarkeit, Ausfall/QC)</p><p class="muted small">Volumetrie, SynthSeg, FreeSurfer, Atrophie, Laengsschnitt, Test-Retest, SDC, ICC, Messfehler, Hippocampus, MRT</p>
-<div class="stripe"><i class="ok" style="width:56.0%" title="getragen: 14"></i><i class="warn" style="width:44.0%" title="vorschlag: 11"></i></div><div class="counts"><span class="ok">14 getragen</span> <span class="warn">11 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
+<div class="stripe"><i class="ok" style="width:50.0%" title="getragen: 15"></i><i class="warn" style="width:50.0%" title="vorschlag: 15"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">15 vorschlag</span></div><div class="small"><p>Volumetrie des Gehirns ueber die Zeit (SynthSeg, FreeSurfer, eigene Netze): wie Verlaufszahlen gerechnet und
 wie ihre Messfehler ausgewiesen werden. Keine Patientendaten; Zahlen bleiben bei den Projekten.</p>
 <p>Stand 2026-10-13. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-18 (Literaturbericht, 32 Quellen geprueft):</strong> Querschnitts-Segmentierung pro Sitzung (SynthSeg/recon-all) reicht fuer 5-Jahres-Atrophie <em>innerhalb</em> einer Person nicht; der FreeSurfer-Laengsschnitt-Stream ist systematisch praeziser (+15-50 %), der Rest ist Rauschen (<a href="findings/research-cross-sectional-vs-longitudinal-consistency-2026-10.html">research-cross-sectional-vs-longitudinal-consistency-2026-10</a>). Kernpunkte: SDC-basiertes Flagging implausibler Volumen<em>anstiege</em> (Ganzhirn ~0,6-1,1 %, je Struktur 1-15 % innerhalb / 5-29 % zwischen Scannern); unbiasiertes Within-Subject-Template als Kernkorrektur; Laesionswachstum verzerrt GM/Dicke, Fuellen ist Standard; longComBat fuer unser Design, aber nur bei nachgewiesenem Scanner-Effekt.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-18 (vier Literaturberichte, 91 Quellen geprueft, plus eine Regel):</strong> Kopfgroesse einmal je Person schaetzen, Strukturen im Infarkt markieren (<a href="findings/research-icv-normalisation-and-lesioned-structures-2026-10.html">research-icv-normalisation-and-lesioned-structures-2026-10</a>); Ausfall ist informativ, Tod und Ausstieg getrennt modellieren (<a href="findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.html">research-attrition-and-missing-data-longitudinal-stroke-2026-10</a>); Scannerwechsel (z. B. Trio -&gt; Prisma, Software-Update, Spule) verschiebt Volumen um mehrere Prozent und muss als zeitabhaengige Kovariate oder per longComBat behandelt werden (<a href="findings/research-scanner-change-within-subject-longitudinal-2026-10.html">research-scanner-change-within-subject-longitudinal-2026-10</a>); STROBE + COBIDAS als Berichtsgeruest (<a href="findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.html">research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10</a>). Regel: SynthSeg --parc hat keine Labels 3/42 (<a href="rules/synthseg-parc-moves-cortex-labels.html">synthseg-parc-moves-cortex-labels</a>).</p>
+<p><strong>Neu 2026-10-18 (Literaturbericht, 32 Quellen geprueft):</strong> Querschnitts-Segmentierung pro Sitzung (SynthSeg/recon-all) reicht fuer 5-Jahres-Atrophie <em>innerhalb</em> einer Person nicht; der FreeSurfer-Laengsschnitt-Stream ist systematisch praeziser (+15-50 %), der Rest ist Rauschen (<a href="findings/research-cross-sectional-vs-longitudinal-consistency-2026-10.html">research-cross-sectional-vs-longitudinal-consistency-2026-10</a>). Kernpunkte: SDC-basiertes Flagging implausibler Volumen<em>anstiege</em> (Ganzhirn ~0,6-1,1 %, je Struktur 1-15 % innerhalb / 5-29 % zwischen Scannern); unbiasiertes Within-Subject-Template als Kernkorrektur; Laesionswachstum verzerrt GM/Dicke, Fuellen ist Standard; longComBat fuer unser Design, aber nur bei nachgewiesenem Scanner-Effekt.</p>
 <p><strong>Neu 2026-10-18 (drei Literaturberichte, geprueft):</strong> Kortexfehler ~38 % in klinischen T1 sind erwartbar, Euler-Zahl ist die beste billige QC-Kennzahl, Verlaeufe mit gemischten Modellen + longComBat (<a href="findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html">research-cortex-segmentation-multisite-older-stroke-2026-10</a>, <a href="findings/research-segmentation-qc-at-scale-2026-10.html">research-segmentation-qc-at-scale-2026-10</a>, <a href="findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">research-longitudinal-volumetry-statistics-after-stroke-2026-10</a>).</p>
 <p><strong>Neu 2026-10-18 (Literaturbericht, 21 Quellen geprueft):</strong> Wie die Qualitaet automatischer Segmentierungen in einer Kohorte von ~1500 Sitzungen zu steuern ist (<a href="findings/literature-segmentation-qc-at-cohort-scale-2026-10.html">literature-segmentation-qc-at-cohort-scale-2026-10</a>). Kernpunkte: kein Einzelwert entscheidet; Euler-Zahl bester belegter Skalar (AUC 0,98-0,99), MRIQC/CAT12 ohne Anpassung nur kappa 0,30/0,28; Volumen-Ausreisser nie als Ausschlusskriterium (erhoehte unerklaerte Varianz); SynthSeg-QC 36 % -&gt; 91 % nach Rescale/Crop; bewertete Stichprobe ueber kappa-KI dimensionieren; Edits brauchen eine Kovariate und eine Sensitivitaetsanalyse.</p>
 <p><strong>Neu 2026-10-17 (drei Literaturberichte, je Quelle geprueft und zusammengefasst):</strong> Fraktale Dimensionalitaet zuverlaessig (ICC ~0,9-0,95), aber standort-/registrierungsabhaengig (<a href="findings/research-fractal-dimensionality-from-freesurfer-2026-10.html">research-fractal-dimensionality-from-freesurfer-2026-10</a>); Fuellen statt Ausblenden, Artefakte wachsen mit Last (<a href="findings/research-lesion-filling-before-segmentation-2026-10.html">research-lesion-filling-before-segmentation-2026-10</a>); subkortikal entscheiden Laengsschnitt-Template und longComBat, Scanner-SDC 4,8-29 % (<a href="findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.html">research-subcortical-segmentation-longitudinal-stroke-2026-10</a>).</p>
@@ -63,7 +64,24 @@ Laesionsausschluss nur, wenn die Maske in allen Sitzungen existiert, sonst entst
 <p><strong>Neu 2026-10-13 (mit Quellen):</strong> FreeSurfer-Plan fuer Schlaganfall-Laengsschnitte: Long-Stream statt Einzelsitzungen (Vidal-Pineiro 2025: +0,25 ICC; 0-6 Monate ist Rauschen, Raten aus 0/36/60), Laesionen vor recon-all fuellen (Chard 2010, Battaglini 2012, Magon 2014; ONDRI Ozzoude 2020: Fehlrate 62 % -&gt; 8 %), Euler-Zahl als QC-Gate (Rosen 2018, Monereo-Sanchez 2021), eigene SDC95 aus 40 Doppelaufnahmen, longComBat (Beer 2020). Jeder Wiki-Eintrag nennt ab jetzt seine Quellen (Nutzerregel 13.10.).</p>
 <p><strong>Neu 2026-10-13 (nachmittags, mit Quellen):</strong> Durchsicht aller 17 Mehrfach-Sitzungs-Probanden: Ausrichtung und Serienregistrierung ueberall gut; chronische Infarkte bei Folgesitzungen ohne Maske (DWI-Modell nur akut), SynthSeg gibt Hoehlen Label 0 -&gt; vorwaerts getragene Maske noetig. Euler-Zahl nur aus dem Binary (LD_LIBRARY_PATH), nie aus dem Log-Ende. Protokoll v1 eingefroren. HPC-Messung: SynthSeg robust 50 s / 19,9 GB je Sitzung, SAMSEG 7 min / 11 GB.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(5)</span></h2><details class="entry" id="euler-number-needs-the-binary-not-the-log"><summary><span class="type">Regel</span><span class="t"><a href="rules/euler-number-needs-the-binary-not-the-log.html">Take the Euler number from `mris_euler_number` on `?h.orig.nofix`; a log fallback can return the post-fix value 2</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">mris_euler_number auf orig.nofix mit LD_LIBRARY_PATH; Log-Fallback liefert Nach-Fix-Wert 2</span></summary><div class="body"><p class="small muted">Herkunft: QC gate of the DEMDAS pilot, 13.10.2026: 6 of 61 finished sessions reported Euler = 2 · <a href="rules/euler-number-needs-the-binary-not-the-log.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/euler-number-needs-the-binary-not-the-log.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(6)</span></h2><details class="entry" id="synthseg-parc-moves-cortex-labels"><summary><span class="type">Regel</span><span class="t"><a href="rules/synthseg-parc-moves-cortex-labels.html">SynthSeg with --parc has no labels 3/42: the cortex is 1001-1035 / 2001-2035</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-18</span><span class="i">SynthSeg --parc has no labels 3/42: count the cortex as 1001-1035/2001-2035; check label lists against a real segmentation</span></summary><div class="body"><p class="small muted">Herkunft: own pipeline audit 2026-10-18 (Alita); two own scripts of 2026-10-17 counted the cortex with labels 3/42 only · <a href="rules/synthseg-parc-moves-cortex-labels.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/synthseg-parc-moves-cortex-labels.md">Markdown</a></p><h2>Aussage</h2>
+<p><code>mri_synthseg --parc</code> (FreeSurfer 8.2.0, SynthSeg 2) replaces Left/Right-Cerebral-Cortex (FreeSurfer LUT 3/42) by the
+Desikan-Killiany parcels 1001-1035 and 2001-2035. Code that selects the cortex as <code>[3, 42]</code> silently gets zero voxels:
+on 2026-10-17 a cohort volume table had cortex = 0 ml in every session (so no cortex growth flag could ever fire), and a
+rating page drew no cortex outline on any of its images, which also made a vision model's "no cortex error" verdicts
+meaningless. Rule: cortex = <code>[3, 42] + range(1000, 1036) + range(2000, 2036)</code>, and every new label list is checked
+against <code>np.unique</code> of one real segmentation before a cohort run (zero-voxel classes are an error, not a result).</p>
+<h2>Trägt</h2>
+<p>Own audit 2026-10-18: after the fix the outline appears on every image (orange pixels per image from ~3 to ~44 000) and
+the cortex volume column is non-zero. Label definitions: FreeSurferColorLUT; Billot et al. 2023, PNAS,
+"Robust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets",
+doi:10.1073/pnas.2216399120, PMID 36802420 (SynthSeg 2 with cortical parcellation).</p>
+<h2>Trägt nicht</h2>
+<p>Without <code>--parc</code> the labels 3/42 exist; code must handle both.</p>
+<h2>Bruchindikator</h2>
+<p>A structure total of exactly 0 in every row of a table, or an overlay colour that never appears in the rendered images.</p>
+<h2>Ablesung</h2>
+<p>2026-10-18, pipeline audit of a ~1500-session cohort; pixel count of the overlay colour per image, <code>np.unique</code> of a segmentation.</p></div></details><details class="entry" id="euler-number-needs-the-binary-not-the-log"><summary><span class="type">Regel</span><span class="t"><a href="rules/euler-number-needs-the-binary-not-the-log.html">Take the Euler number from `mris_euler_number` on `?h.orig.nofix`; a log fallback can return the post-fix value 2</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-13</span><span class="i">mris_euler_number auf orig.nofix mit LD_LIBRARY_PATH; Log-Fallback liefert Nach-Fix-Wert 2</span></summary><div class="body"><p class="small muted">Herkunft: QC gate of the DEMDAS pilot, 13.10.2026: 6 of 61 finished sessions reported Euler = 2 · <a href="rules/euler-number-needs-the-binary-not-the-log.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/rules/euler-number-needs-the-binary-not-the-log.md">Markdown</a></p><h2>Aussage</h2>
 <p>The QC-relevant Euler number is that of the UNCORRECTED surface (<code>surf/lh.orig.nofix</code>, <code>rh.orig.nofix</code>), read with
 <code>mris_euler_number</code>. In FreeSurfer 8.2 the binary needs the ITK libraries (<code>libitkvnl_algo-5.3.so.1</code>) on LD_LIBRARY_PATH; without
 them it fails silently in a subprocess and a fallback that greps <code>recon-all.log</code> can pick the LAST "euler #" line, which is the
@@ -190,7 +208,7 @@ Baustein 1 exakt der Pipeline entspricht und die Rindenregionen dazukommen.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.html">qc-pages-explain-every-number-on-hover</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(20)</span></h2><details class="entry" id="literature-segmentation-qc-at-cohort-scale-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/literature-segmentation-qc-at-cohort-scale-2026-10.html">Literature: how to control automatic segmentation quality in a cohort of ~1500 sessions</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (21 refs, checked): no single score decides QC; Euler number best validated scalar (AUC 0.98-0.99); MRIQC/CAT12 kappa 0.30/0.28 off the shelf; never trim on volume outliers; SynthSeg QC 36% -&gt; 91% after rescale/crop; size the rated subsample via kappa CI; edits need a covariate</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC retrieval, /home/uchralt/cle-arbeit/recherche/g_segmentation_qc_at_scale/REPORT.md, quellen-pruefen 0 wrong (21 refs) · <a href="findings/literature-segmentation-qc-at-cohort-scale-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/literature-segmentation-qc-at-cohort-scale-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(24)</span></h2><details class="entry" id="literature-segmentation-qc-at-cohort-scale-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/literature-segmentation-qc-at-cohort-scale-2026-10.html">Literature: how to control automatic segmentation quality in a cohort of ~1500 sessions</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (21 refs, checked): no single score decides QC; Euler number best validated scalar (AUC 0.98-0.99); MRIQC/CAT12 kappa 0.30/0.28 off the shelf; never trim on volume outliers; SynthSeg QC 36% -&gt; 91% after rescale/crop; size the rated subsample via kappa CI; edits need a covariate</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) with PubMed/Europe PMC retrieval, /home/uchralt/cle-arbeit/recherche/g_segmentation_qc_at_scale/REPORT.md, quellen-pruefen 0 wrong (21 refs) · <a href="findings/literature-segmentation-qc-at-cohort-scale-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/literature-segmentation-qc-at-cohort-scale-2026-10.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li>There is exactly one head-to-head comparison of QC strategies at our scale: 12 strategies
   (2 manual, 5 automated: MRIQC, Qoala-T, global morphometry, Euler number, CNR; 5
@@ -282,7 +300,236 @@ Europe PMC in this task and checked with <code>quellen-pruefen</code> (0 wrong).
 <ul>
 <li><a href="findings/synthseg-cortex-qc-depends-on-site-not-protocol.html">synthseg-cortex-qc-depends-on-site-not-protocol</a></li>
 <li><a href="rules/euler-number-needs-the-binary-not-the-log.html">euler-number-needs-the-binary-not-the-log</a></li>
-</ul></div></details><details class="entry" id="research-cortex-segmentation-multisite-older-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html">Literature: reliable cortical segmentation in a multi-centre older post-stroke cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (20 refs, checked): cortical failure ~38 % in clinical T1 is expected (atrophy, WMH, partial volume); volume vs thickness need different tools; SAMSEG most reproducible across scanners</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><details class="entry" id="research-attrition-and-missing-data-longitudinal-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.html">Literature: drop-out and missing visits in long-term stroke and dementia imaging cohorts</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (21 refs, checked): drop-out and missing visits in long-term stroke and dementia imaging cohorts</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, public literature only; quellen-pruefen 2026-10-18 (21 references, 21 with PMID, 21 correct, 0 wrong); checked and committed by Claude Code · <a href="findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>Attrition in long-term stroke/dementia cohorts is large and non-random: 40–77 % cumulative loss over 2–10 years is
+  common, and the dominant causes are death, refusal, institutionalisation and loss of contact, not the imaging
+  itself [1,2,4].</li>
+<li>Attrition is <em>informative</em>: the same variables that predict the outcome (older age, male sex, lower cognition,
+  higher dementia rating, frailty/comorbidity, social isolation, more severe stroke) also predict drop-out
+  [1,2,4,5]. A complete-case analysis therefore systematically drops the participants whose trajectories matter most.</li>
+<li>The bias can be quantified and is not small: after post-stroke patients unavailable for clinic visits were excluded,
+  the measured 5-year dementia incidence fell from 29 % to 17 %, while the non-clinic-assessed patients had 45 %
+  [3]. Inverse-probability-of-attrition weighting changed smoking–cognitive-decline estimates by 56–86 % [21].</li>
+<li>Death and non-participation must be distinguished and modelled as competing risks/events; collapsing them biases
+  cognitive-decline and dementia-risk estimates [14,12,13].</li>
+<li>A linear mixed model fitted by (restricted) maximum likelihood is valid only under MAR and already uses all available
+  observations; it is a defensible primary analysis but it is <em>not</em> a correction for informative drop-out [7,11].</li>
+<li>For outcome-related drop-out, the recommended toolkit is: multiple imputation (MI) with auxiliary variables, joint
+  models of the longitudinal marker and the time-to-event, and pattern-mixture / delta-adjustment sensitivity analyses
+  that deliberately depart from MAR [7,10,11,12,13].</li>
+<li>SDOH, transport, family support and the practical difficulty of bringing frail elderly patients to a scanner are
+  modifiable drivers of LTFU, so retention is partly an operational problem, not only a statistical one [5].</li>
+<li>Image-quality exclusion is a second, independent, non-random filter: head motion biases cortical grey-matter volume
+  and thickness downward by roughly 0.7 %/mm/min and remains significant even after a rigorous QC gate [15]; the
+  Euler number is a reliable T1 quality measure but is regionally correlated with cortical thickness, so QC-based
+  exclusion is itself a confounder of atrophy estimates [16].</li>
+<li>QC strategy matters: manual inspection is most reliable but subjective; Euler-number- and MRIQC-based outlier
+  detection are the best automated alternatives, whereas excluding outliers on <em>global morphological measures</em>
+  increases unexplained variance [17].</li>
+<li>Report the missing-data mechanism assumed, the proportion and pattern of missingness, the method, and at least one
+  sensitivity analysis departing from MAR, per the TARMOS framework [8].</li>
+</ul>
+<h3>Practical recommendation (as written for a multisite longitudinal stroke cohort)</h3>
+<p>Ordered, concrete, and mapped to the references.</p>
+<p><strong>A. Design and measurement (before any modelling)</strong></p>
+<ol>
+<li>Use every available follow-up channel, not just the scanner visit, to keep outcome ascertainment high. Pendlebury's
+   protocol (home visit + telephone + primary-care record review) recovered 42 % of dementia diagnoses that clinic-only
+   follow-up would have missed [3]. For our 0/6/36/60-month schedule, add a telephone/remote assessment and a
+   record-based dementia/recurrent-stroke/death ascertainment at each wave.</li>
+<li>Keep the same scanner per participant across waves if the schedule allows; always normalise volumes to intracranial
+   volume; do not change the scanner vendor/model within a participant without recording it [18].</li>
+<li>Treat head motion as a measured variable at every session (even though MPRAGE 1 mm is short) and include it as a
+   covariate; a QC pass does not remove the motion bias [15,16].</li>
+<li>Make the QC gate image-quality-based (Euler number / MRIQC-type metrics), and <em>log</em> every excluded time point with
+   the reason. Do not gate on global morphological outliers — that increases unexplained variance [17]. Our
+   SynthSeg QC &gt;= 0.65 per-structure gate is fine, but record per-structure pass/fail, not only subject-level.</li>
+<li>Expect lesion filling to help grey-matter measures on the raw-T1 side and to behave differently across software;
+   report results on both raw T1 and lesion-filled T1 as a sensitivity analysis rather than choosing one [18].</li>
+</ol>
+<p><strong>B. Primary analysis</strong></p>
+<ol start="6">
+<li>Primary: linear mixed model / restricted maximum likelihood on all available observations, with time, site, scanner,
+   intracranial volume, age, sex, motion and lesion volume as fixed effects and random intercept + slope per
+   participant. This is valid under MAR and uses incomplete trajectories [7].</li>
+<li>Do <em>not</em> present the mixed model as a solution to informative drop-out. State explicitly the MAR assumption and
+   list the auxiliary variables (baseline cognition, stroke severity/NIHSS, discharge disposition, comorbidity/frailty
+   index, education, living situation, socioeconomic indicators) that predict both missingness and the outcome
+   [1,2,4,5].</li>
+<li>Harmonise with longComBat before trajectory modelling, and include scanner/site as a covariate in the model to
+   protect against residual site effects [19].</li>
+</ol>
+<p><strong>C. Missingness handling (the core of the question)</strong></p>
+<ol start="9">
+<li>Distinguish the missingness types in the data structure: (i) death, (ii) recurrent stroke / institutionalisation
+   (competing events), (iii) refusal/no-contact, (iv) scan acquired but QC-failed, (v) sequence/metric missing. Do not
+   collapse them [14,13].</li>
+<li>Add a joint model of the longitudinal atrophy slope and the time-to-event of dementia/death (and ideally recurrent
+    stroke as a competing risk) as the primary <em>sensitivity</em> model for the trajectory estimates; use it especially
+    because SynthSeg volumes are measured with error, where a time-varying-covariate Cox model underestimates the
+    marker–hazard association [11,12,13].</li>
+<li>Run multiple imputation (with the auxiliary variables from item 7) as an alternative to the mixed model, and
+    report how the two compare; use FIML as a third, cheap comparison [9].</li>
+<li>Run a documented MNAR sensitivity analysis using MI with delta adjustment, with delta varying by an auxiliary
+    variable (e.g. baseline cognition or frailty), and report the delta range at which conclusions change [10].</li>
+<li>Quantify how much of the sample each filter removes: cumulative drop-out, per-visit scan availability, per-structure
+    QC-fail rate, and sequence/modality availability — and compare baseline characteristics of retained vs lost
+    participants in a table and an inverse-probability-of-participation weight [20,3].</li>
+<li>Report the effect of assuming different outcomes for the missing: Du et al. found that 0–14.3 % of significant
+    results became non-significant when alternative assumptions about LTFU patients were used [6]. Pre-specify a
+    tipping-point analysis.</li>
+</ol>
+<p><strong>D. Reporting</strong></p>
+<ol start="15">
+<li>Follow the TARMOS three-step framework [8]: (1) analysis plan stating the analysis model and the missing-data
+    approach, and whether complete-records analysis is likely valid, whether MI is likely to help, and whether a
+    sensitivity analysis on the mechanism is required; (2) examine the data and check those choices; (3) report the
+    missing-data description, the method, all analyses, and interpret in light of missingness.</li>
+<li>Minimum reporting set: proportion missing per variable per visit; mechanism assumed; reasons for missingness
+    disaggregated (death/refusal/QC-fail/missing sequence); method; sensitivity analyses; and the software versions
+    (SynthSeg 2 / FreeSurfer 8.2, longComBat) so the pipeline is reproducible [8,9].</li>
+</ol>
+<p><strong>E. What is <em>not</em> recommended</strong></p>
+<ul>
+<li>Listwise deletion / complete-case analysis as the primary analysis [9,7].</li>
+<li>Gating on global morphological outliers [17].</li>
+<li>Reporting only clinic/scanner attendance without disaggregating non-attendance reasons [3,6].</li>
+<li>Presenting a mixed model as if it fixed non-random attrition [7].</li>
+</ul>
+<h2>Trägt</h2>
+<p>21 references, each retrieved in the task with the literature tool and checked (PMID matches title, DOI registered at doi.org). Each reference carries one "Shows:" sentence from its abstract.</p>
+<p>[1] Jacobsen E, Ran X, Liu A, et al. (2021). Predictors of attrition in a longitudinal population-based study of
+aging. International Psychogeriatrics. doi:10.1017/S1041610220000447. PMID: 32301414.
+Shows: 77 % of an aging cohort attrited over 10 years and drop-out was predicted by older age, male sex, lower
+cognitive scores, higher clinical dementia ratings, lower function, inactivity and social isolation; the authors
+conclude that ignoring attrition biases results when missingness relates to the outcome.</p>
+<p>[2] Coley N, Gardette V, Touzé E, et al. (2008). Predictive factors of attrition in a cohort of Alzheimer disease
+patients. The REAL.FR study. Neuroepidemiology. doi:10.1159/000144087. PMID: 18622142.
+Shows: 40.5 % of 686 mild-to-moderate AD patients dropped out within 2 years, with refusal 20.9 %, death 20.1 %,
+institutionalisation 19.8 % and loss to follow-up 19.8 %, at a constant ~12 % per 6-month wave, predicted by unrelated
+caregiver, loss of autonomy and caregiver burden.</p>
+<p>[3] Pendlebury ST, Chen PJ, Welch SJ, et al. (2015). Methodological Factors in Determining Risk of Dementia After
+Transient Ischemic Attack and Stroke: (II) Effect of Attrition on Follow-Up. Stroke.
+doi:10.1161/STROKEAHA.115.009065. PMID: 25953366.
+Shows: in OXVASC 42 % of dementia diagnoses occurred in patients unavailable for clinic follow-up, and the 5-year
+dementia incidence was 29 % overall but 17 % in clinic-assessed versus 45 % in non-clinic-assessed patients, so
+excluding non-attenders halves the measured risk; multi-channel follow-up recovers most of it.</p>
+<p>[4] Katsuno N, Li PZ, Bourbeau J, et al. (2023). Factors Associated with Attrition in a Longitudinal Cohort of Older
+Adults in the Community. Chronic Obstructive Pulmonary Diseases. doi:10.15326/jcopdf.2022.0380. PMID: 37099700.
+Shows: 77 % mean retention over a median 9 years in a multi-site cohort (dropout 39 %, loss of contact 27 %, death 9 %),
+with lower education, higher pack-years, cardiovascular disease and higher anxiety/depression scores independently
+predicting attrition.</p>
+<p>[5] Larson S, John S, Gowrisankar S, et al. (2025). Social Determinants of Health Framework Identifies Patients at
+Risk for Loss to Follow-Up After Stroke. Journal of the American Heart Association. doi:10.1161/JAHA.124.040986.
+PMID: 40281658.
+Shows: only 56 % of ~2600 ischaemic-stroke patients returned for follow-up; greater impairment, less education,
+scheduling inflexibility and lack of home support were associated with lower follow-up, defining an at-risk population
+and modifiable targets.</p>
+<p>[6] Du P, Qin M, Liu Y, et al. (2026). Lost to follow-up in randomized clinical trials on long-term patient management
+following stroke: A cross-sectional survey. International Journal of Stroke. doi:10.1177/17474930251394853.
+PMID: 41137200.
+Shows: across 58 post-stroke care trials, median LTFU was 9.0 % for patients with higher odds at older age and higher
+female proportion, and assuming different event rates for LTFU patients rendered 0–14.3 % of significant results
+non-significant.</p>
+<p>[7] Ibrahim JG, Molenberghs G (2009). Missing data methods in longitudinal studies: a review. Test (Madrid).
+doi:10.1007/s11749-009-0138-x. PMID: 21218187.
+Shows: a detailed taxonomy of missing-data patterns, mechanisms (MCAR/MAR/MNAR), inferential paradigms and
+sensitivity-analysis frameworks for longitudinal data, with concrete modelling devices and two case studies.</p>
+<p>[8] Lee KJ, Tilling KM, Cornish RP, et al. (2021). Framework for the treatment and reporting of missing data in
+observational studies: The Treatment And Reporting of Missing data in Observational Studies framework. Journal of
+Clinical Epidemiology. doi:10.1016/j.jclinepi.2021.01.008. PMID: 33539930.
+Shows: a three-step TARMOS framework — analysis plan, data examination, transparent reporting — to decide whether
+complete-records analysis is valid, whether multiple imputation helps, and whether a missingness-mechanism sensitivity
+analysis is required.</p>
+<p>[9] Li L, Bayat M, Hayes TB, et al. (2025). Missing data approaches for longitudinal neuroimaging research: Examples
+from the Adolescent Brain and Cognitive Development (ABCD) Study. Developmental Cognitive Neuroscience.
+doi:10.1016/j.dcn.2025.101563. PMID: 40413902.
+Shows: listwise deletion in large longitudinal neuroimaging datasets risks substantial bias, and multiple imputation,
+propensity-score weighting and FIML are the recommended alternatives, illustrated with practical code on ABCD data.</p>
+<p>[10] Leacy FP, Floyd S, Yates TA, et al. (2017). Analyses of Sensitivity to the Missing-at-Random Assumption Using
+Multiple Imputation With Delta Adjustment: Application to a Tuberculosis/HIV Prevalence Survey With Incomplete
+HIV-Status Data. American Journal of Epidemiology. doi:10.1093/aje/kww107. PMID: 28073767.
+Shows: multiple imputation with delta adjustment imputes univariate missing data under general MNAR mechanisms and
+enables sensitivity analyses with a constant delta or a delta varying by covariate, demonstrated on 34,446 survey
+respondents.</p>
+<p>[11] Asar Ö, Ritchie J, Kalra PA, et al. (2015). Joint modelling of repeated measurement and time-to-event data: an
+introductory tutorial. International Journal of Epidemiology. doi:10.1093/ije/dyu262. PMID: 25604450.
+Shows: in a nephrology case study a Cox model with a time-varying covariate substantially underestimated the
+marker–hazard association because it ignores measurement error, whereas joint models combining a linear mixed-effects
+model with a Cox model should be preferred.</p>
+<p>[12] Proust-Lima C, Dartigues JF, Jacqmin-Gadda H (2016). Joint modeling of repeated multivariate cognitive measures
+and competing risks of dementia and death: a latent process and latent class approach. Statistics in Medicine.
+doi:10.1002/sim.6731. PMID: 26376900.
+Shows: a joint latent-process/latent-class model handles multiple longitudinal markers of different natures together
+with multiple causes of progression (dementia and death), with a score test for conditional independence and
+individual dynamic cumulative incidences.</p>
+<p>[13] van Oudenhoven FM, Swinkels SHN, Soininen H, et al. (2021). A competing risk joint model for dealing with
+different types of missing data in an intervention trial in prodromal Alzheimer's disease. Alzheimer's Research &amp;
+Therapy. doi:10.1186/s13195-021-00801-y. PMID: 33752738.
+Shows: a competing-risk joint model that models trajectory, timing and type of missingness simultaneously yielded
+unbiased intervention-effect estimates in the LipiDiDiet trial despite high outcome-dependent missingness.</p>
+<p>[14] Rajan KB, Leurgans SE (2010). Joint modeling of missing data due to non-participation and death in longitudinal
+aging studies. Statistics in Medicine. doi:10.1002/sim.4010. PMID: 20645281.
+Shows: treating non-participation and death as the same missingness type biases estimates in marginal models of
+cognitive decline, and a multiple inverse-probability-weighting approach that separates the two missing-data types is
+consistent and asymptotically normal under stated conditions.</p>
+<p>[15] Reuter M, Tisdall MD, Qureshi A, et al. (2015). Head motion during MRI acquisition reduces gray matter volume and
+thickness estimates. NeuroImage. doi:10.1016/j.neuroimage.2014.12.006. PMID: 25498430.
+Shows: within-session motion tasks biased cortical grey-matter volume and thickness by about 0.7 % per mm/min of
+motion, regionally varying and still significant after excluding scans that fail a rigorous quality check.</p>
+<p>[16] Rosen AFG, Roalf DR, Ruparel K, et al. (2018). Quantitative assessment of structural image quality. NeuroImage.
+doi:10.1016/j.neuroimage.2017.12.059. PMID: 29278774.
+Shows: the FreeSurfer Euler number identified manually rated unusable T1 images with AUC 0.98–0.99 across samples but
+was regionally related to cortical thickness, and failing to control for data quality systematically biased
+age associations.</p>
+<p>[17] Monereo-Sánchez J, de Jong JJA, Drenthen GS, et al. (2021). Quality control strategies for brain MRI segmentation
+and parcellation: Practical approaches and recommendations - insights from the Maastricht study. NeuroImage.
+doi:10.1016/j.neuroimage.2021.118174. PMID: 34000406.
+Shows: comparing 12 QC strategies in 259 participants, manual QC reduced unexplained variance most, Euler-number and
+MRIQC detection were the best automated alternatives, and excluding outliers on global morphological measures
+increased unexplained variance and must be avoided.</p>
+<p>[18] Guo C, Ferreira D, Fink K, et al. (2019). Repeatability and reproducibility of FreeSurfer, FSL-SIENAX and SPM brain
+volumetric measurements and the effect of lesion filling in multiple sclerosis. European Radiology.
+doi:10.1007/s00330-018-5710-x. PMID: 30242503.
+Shows: across three Siemens scanners within-scanner variability was lower than between-scanner, ICV normalisation
+improved FreeSurfer/SPM inter-scanner reproducibility, and lesion filling changed FSL-SIENAX/SPM/SPM-CAT but not
+FreeSurfer output.</p>
+<p>[19] Beer JC, Tustison NJ, Cook PA, et al. (2020). Longitudinal ComBat: A method for harmonizing longitudinal
+multi-scanner imaging data. NeuroImage. doi:10.1016/j.neuroimage.2020.117129. PMID: 32640273.
+Shows: in 663 ADNI participants additive and multiplicative scanner effects were present in cortical thickness and
+longitudinal ComBat detected longitudinal change with more power and better type-I error control than cross-sectional
+ComBat or unharmonised data with scanner as a covariate.</p>
+<p>[20] Schoeler T, Speed D, Porcu E, et al. (2023). Participation bias in the UK Biobank distorts genetic associations
+and downstream analyses. Nature Human Behaviour. doi:10.1038/s41562-023-01579-9. PMID: 37106081.
+Shows: weighting UK Biobank to be representative changed SNP effect sizes and revealed novel associations for 12
+traits, left heritability nearly unchanged (&lt;= 5 %) but changed genetic correlations by up to 0.31 and Mendelian
+randomisation estimates by up to 0.15.</p>
+<p>[21] Weuve J, Tchetgen Tchetgen EJ, Glymour MM, et al. (2012). Accounting for bias due to selective attrition: the
+example of smoking and cognitive decline. Epidemiology. doi:10.1097/EDE.0b013e318230e861. PMID: 21989136.
+Shows: in the Chicago Health and Aging Project (n = 3713) higher previous cognitive score predicted both survival and
+continued participation, and inverse-probability-of-attrition weighting increased the estimated smoking effect on
+cognitive decline by 56–86 %, demonstrating an outcome-dependent missingness mechanism and a quantified bias.</p>
+<h2>Trägt nicht</h2>
+<p>Open questions from the report:</p>
+<ul>
+<li>No retrieved reference validates a SynthSeg-specific QC threshold (ours: QC &gt;= 0.65) against manual ratings in a
+  stroke population; the QC literature assessed FreeSurfer Euler numbers and MRIQC [16,17]. The threshold's
+  sensitivity/specificity relative to manual QC remains unverified here.</li>
+<li>No retrieved study quantifies the bias of <em>lesion-filled versus raw T1 atrophy slopes</em> in a longitudinal stroke
+  cohort across scanners; Guo et al. compared software for MS lesion filling cross-sectionally [18], Magon et al.
+  showed lesion filling changes cortical thickness longitudinally in MS, but not in a multi-site stroke cohort.</li>
+<li>The relative performance of competing-risk joint models versus MI with delta adjustment in a <em>stroke</em> cohort with
+  a 5-year, sparse (0/6/36/60-month) schedule is not directly evidenced by retrieved work; the joint-model evidence
+  comes from nephrology, AD trials and population ageing studies [11,13,12].</li>
+<li>How best to combine longComBat with a joint model (harmonise-then-model versus model site jointly) is not settled
+  by the retrieved literature [19].</li>
+</ul>
+<p>Claims rest on abstracts, not full texts, unless the report says otherwise.</p>
+<h2>Bruchindikator</h2>
+<p>A full-text reading or a later consensus paper contradicts a cited effect size or recommendation; or our own cohort data show the opposite (for example no scanner effect at a scanner change).</p>
+<h2>Ablesung</h2>
+<p>Report written 2026-10-18 by Clara (hospital model hub), question set by Claude Code after a pipeline audit; sources verified with quellen-pruefen the same day.</p></div></details><details class="entry" id="research-cortex-segmentation-multisite-older-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html">Literature: reliable cortical segmentation in a multi-centre older post-stroke cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (20 refs, checked): cortical failure ~38 % in clinical T1 is expected (atrophy, WMH, partial volume); volume vs thickness need different tools; SAMSEG most reproducible across scanners</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li><strong>Cortical failure is expected in such a cohort, not a bug of ours.</strong> In 732 clinical T1 scans the
   cortical-thickness step failed visually in <strong>38.5 %</strong> of scans, with errors concentrated in regions of
@@ -594,7 +841,242 @@ Shows: cross-sectional cortical thickness values differed systematically between
 <p>[31] Aamodt EB, Lydersen S, Alnæs D, et al. (2022). Longitudinal Brain Changes After Stroke and the Association With Cognitive Decline. Frontiers in Neurology. doi:10.3389/fneur.2022.856919. PMID: 35720079.
 Shows: in a multisite stroke cohort followed up to 36 months, cortical thickness and subcortical volumes declined more in the ipsilesional hemisphere and were associated with cognitive decline, demonstrating feasible longitudinal atrophy detection in stroke.</p>
 <p>[32] Khan MH, Chakraborty S, Ferris JK, et al. (2026). Estimating white matter hyperintensities volume in individuals with stroke using T1-weighted images. NeuroImage: Reports. doi:10.1016/j.ynirp.2026.100344. PMID: 42011418.
-Shows: WMH-SynthSeg and SAMSEG can estimate WMH volume from T1 alone in 227 stroke patients, relevant where FLAIR is unavailable, but accuracy varies with the lesion mask used.</p></div></details><details class="entry" id="research-longitudinal-volumetry-statistics-after-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (27 refs, checked): mixed models with random slopes, non-linear early atrophy, MAR-aware missing data, longComBat over site covariate, scanner change within site biases 2-4 %</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+Shows: WMH-SynthSeg and SAMSEG can estimate WMH volume from T1 alone in 227 stroke patients, relevant where FLAIR is unavailable, but accuracy varies with the lesion mask used.</p></div></details><details class="entry" id="research-icv-normalisation-and-lesioned-structures-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-icv-normalisation-and-lesioned-structures-2026-10.html">Literature: head-size normalisation and handling of structures that overlap a stroke lesion</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (24 refs, checked): head-size normalisation and handling of structures that overlap a stroke lesion</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, public literature only; quellen-pruefen 2026-10-18 (24 references, 24 with PMID, 24 correct, 0 wrong); checked and committed by Claude Code · <a href="findings/research-icv-normalisation-and-lesioned-structures-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-icv-normalisation-and-lesioned-structures-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>Estimate head size once per subject and treat it as time-invariant. Longitudinal change must come from
+  tissue, never from a re-estimated ICV: an ICV that itself shrinks with atrophy cancels the very effect
+  being measured [1, 2].</li>
+<li>ICV estimation is not neutral. FreeSurfer eTIV over-estimated TIV as atrophy progressed in a longitudinal
+  dementia cohort [1], and both SPM- and FreeSurfer-based ICV showed bias related to sex, atrophy or skull
+  size [2]. With 7 sites sharing one protocol, keep the estimation method fixed and QC ICV per subject
+  across visits rather than trusting a single number.</li>
+<li>SynthSeg is contrast- and resolution-robust and needs no retraining, which is exactly what a
+  multi-scanner MPRAGE cohort needs [3]. In an independent multi-scanner, multi-software comparison (MS)
+  SynthSeg, SAMSEG and FastSurfer gave good to excellent repeatability for large structures, but
+  between-scanner smallest-detectable-change was still 5-29 % - so scanner change, not software, is the
+  dominant error source [4].</li>
+<li>Do not use the proportional (tissue/ICV) method as the primary normalisation. It flips the sign of the
+  volume-ICV association, changes the direction of sex differences, and is inconsistent with covariate and
+  residual approaches whenever the brain-behaviour association is not null [5, 6, 7, 8, 9, 10].</li>
+<li>Prefer the residual method (regress region on ICV in a reference/normative sample, use the residual) or
+  include ICV/TIV as a covariate in the model. Across 2320 UK Biobank regression models, adjustment and
+  residual agreed with each other but disagreed with crude and proportional estimates [7]; the residual
+  method removed the ICV association with no direction switch and improved single-subject z-score
+  detection (thalamus AUC 0.84 vs 0.79) [10].</li>
+<li>If ICV/TIV is entered as a covariate, it must be a fixed degree of freedom spent once per subject;
+  adding it as a covariate was the best-performing method in a matched UK Biobank design [8].</li>
+<li>Lesion filling is about registration and boundary stability, not about inventing volumes. Filling MS/WMH
+  lesions with WM-like intensity reduces grey-matter over-estimation and improves tissue-volume accuracy
+  [11, 12], but naive filling with normal-appearing white matter introduces artefacts whose magnitude
+  scales with total lesion volume (r = 0.84) [13].</li>
+<li>Mirroring the contralateral hemisphere ("virtual brain grafting/transplantation") is a legitimate way to
+  restore landmarks so that FreeSurfer parcellation of the lesioned hemisphere matches the intact one; it
+  was validated with sulcal-area comparison [15]. But the filled voxels are synthetic, and the accepted use
+  is to enable parcellation/registration, not to read the filled voxel values as biology [13, 15].</li>
+<li>WMH are a systematic confound for grey-matter volumetry. WMH overlap inflates caudate and other GM
+  volumes; after WMH correction caudate volume declined with age and separated patients, which uncorrected
+  volumes failed to do [14].</li>
+<li>In our setup, compute SynthSeg volumes on raw T1 and on the lesion-filled T1 and report both, but make
+  the primary longitudinal model the raw-T1 volumes with lesion load as a covariate; use the filled images
+  only where filling demonstrably stabilises the pipeline.</li>
+<li>Mask, do not trust. Cortical-thickness bias from focal lesions is reduced by fully masking lesion voxels
+  from tissue probability maps rather than only from summarisation [16]; infarcted ipsilesional vertices
+  should be identified from stroke masks and excluded before any cortical-thickness analysis [17].</li>
+<li>Expect genuine, region-specific, ipsilesional-greater atrophy (thalamus, hippocampus), and treat it as a
+  signal of secondary degeneration, not as a segmentation artefact [18, 19, 20].</li>
+</ul>
+<h3>Practical recommendation (as written for a multisite longitudinal stroke cohort)</h3>
+<ol>
+<li>Head size: estimate ICV/TIV once per subject from the baseline (or best-QC) scan with a single fixed
+   method; QC it across visits as a subject-level stability check, and never let a per-visit re-estimation
+   feed the longitudinal model (atrophy-sensitive TIV would cancel the effect [1, 2]).</li>
+<li>Normalisation in the LMM: use ICV as a covariate, or model the region on the residual scale, both
+   computed against a fixed reference/normative sample; do not use the proportional fraction as the primary
+   outcome [5, 6, 7, 8, 9, 10]. Report the proportional result only as a sensitivity analysis.</li>
+<li>Two volume streams: keep the primary longitudinal stream on raw T1 (SynthSeg 2, <code>--robust --qc</code>,
+   per-structure QC &gt;= 0.65, Euler gate) with infarct volume and WMH volume as covariates. Keep the
+   lesion-filled stream as a robustness/secondary stream, reported alongside - and evaluated per structure,
+   because filling effects are structure- and load-dependent [12, 13, 21].</li>
+<li>Lesion filling: for the filled stream, prefer a patch-based/in-painting or grafting approach over naive
+   fill-with-NAWM [11, 13]; validate by checking that the difference between raw and filled volumes does
+   not scale with lesion volume (the artefact signature of [13]).</li>
+<li>WMH: because WMH overlap inflates subcortical GM volumes and can flip clinical associations [14], always
+   report caudate/putamen/thalamus volumes with and without WMH handling, and consider WMH volume as a
+   covariate rather than only a filling step.</li>
+<li>Cortical thickness: exclude/flag lesioned vertices using a priori stroke masks before analysis, and
+   prefer masking lesion voxels out of the tissue probability maps (fully masked) rather than only out of
+   the summarisation [16, 17].</li>
+<li>Ipsilesional vs contralesional: do not merge hemispheres. Model ipsilesional and contralesional volumes
+   separately (or their ratio) and expect an ipsilesional excess that is partly secondary degeneration
+   [18, 19, 20, 24]. Where a structure directly overlaps the lesion, flag/exclude it per subject and
+   structure, and record that in the QC table.</li>
+<li>Scanner/harmonisation: cross-scanner smallest detectable change dominates software differences [4], so
+   keep longComBat in the plan, harmonise within scanner/site, and report the lesion-filled/raw sensitivity
+   in the same framework.</li>
+<li>Reporting: give head-size-normalised volumes with the adjustment method named explicitly, since
+   "ICV-corrected" is not one method and different methods disagree [7, 9, 22].</li>
+</ol>
+<h2>Trägt</h2>
+<p>24 references, each retrieved in the task with the literature tool and checked (PMID matches title, DOI registered at doi.org). Each reference carries one "Shows:" sentence from its abstract.</p>
+<p>[1] Pengas G, Pereira JM, Williams GB, et al., 2009, Comparative reliability of total intracranial volume
+estimation methods and the influence of atrophy in a longitudinal semantic dementia cohort, J Neuroimaging,
+doi:10.1111/j.1552-6569.2008.00246.x, PMID:18494772.
+Shows: in a longitudinally imaged semantic-dementia cohort, fully automated FreeSurfer over-estimated TIV as
+atrophy progressed while a mid-cranial PD-based method was least susceptible, so TIV estimation is not
+atrophy-invariant - the reason to fix head size per subject in a longitudinal study.</p>
+<p>[2] Nordenskjöld R, Malmberg F, Larsson EM, et al., 2013, Intracranial volume estimated with commonly used
+methods could introduce bias in studies including brain volume measurements, Neuroimage,
+doi:10.1016/j.neuroimage.2013.06.068, PMID:23827332.
+Shows: comparing SPM and FreeSurfer ICV with reference segmentations in 399 scans of 75-year-olds found both
+over-estimated ICV, SPM biased by sex and atrophy and FreeSurfer by skull size, and hippocampal
+normalisation associations changed with the ICV measure - direct evidence that ICV choice biases results.</p>
+<p>[3] Billot B, Greve DN, Puonti O, et al., 2023, SynthSeg: Segmentation of brain MRI scans of any contrast
+and resolution without retraining, Med Image Anal, doi:10.1016/j.media.2023.102789, PMID:36857946.
+Shows: SynthSeg, trained on synthetic scans with fully randomised contrast and resolution, segments scans
+across six modalities and ten resolutions without retraining, which is what justifies one model across
+several scanner models and visits.</p>
+<p>[4] van Nederpelt DR, Amiri H, Brouwer I, et al., 2023, Reliability of brain atrophy measurements in
+multiple sclerosis using MRI: an assessment of six freely available software packages for cross-sectional
+analyses, Neuroradiology, doi:10.1007/s00234-023-03189-8, PMID:37526657.
+Shows: across three 3 T scanners and six packages (including SAMSEG, FastSurfer, SynthSeg), large-structure
+ICC was good to excellent and filled vs non-filled images did not differ clearly, but between-scanner
+smallest detectable change was 4.83-29.25 %, identifying scanner change as the dominant error source.</p>
+<p>[5] Voevodskaya O, Simmons A, Nordenskjöld R, et al., 2014, The effects of intracranial volume adjustment
+approaches on multiple regional MRI volumes in healthy aging and Alzheimer's disease, Front Aging Neurosci,
+doi:10.3389/fnagi.2014.00264, PMID:25339897.
+Shows: raw regional volumes correlate positively with ICV while volume-to-ICV fractions correlate negatively,
+and only residual correction eliminated the ICV correlation and the sex differences - the core argument
+against the proportional method.</p>
+<p>[6] Sanfilipo MP, Benedict RH, Zivadinov R, et al., 2004, Correction for intracranial volume in analysis of
+whole brain atrophy in multiple sclerosis: the proportion vs. residual method, Neuroimage,
+doi:10.1016/j.neuroimage.2004.03.037, PMID:15275929.
+Shows: injecting systematic and random ICV/parenchymal error showed the proportion method shifted normalized
+means and reduced power under random error, whereas residual-based predicted volumes were largely unaffected
+and stable in power - early evidence preferring the residual method.</p>
+<p>[7] Wang J, Hill-Jarrett T, Buto P, et al., 2024, Comparison of approaches to control for intracranial
+volume in research on the association of brain volumes with cognitive outcomes, Hum Brain Mapp,
+doi:10.1002/hbm.26633, PMID:38433682.
+Shows: across 2320 UK Biobank regression models (N = 41,964), the covariate and residual approaches agreed
+but disagreed with the crude and proportional approaches, and for the hippocampus the proportional approach
+even reversed the sign of the cognition association - so "ICV-corrected" is not one method.</p>
+<p>[8] Dhamala E, Ooi LQR, Chen J, et al., 2022, Proportional intracranial volume correction differentially
+biases behavioral predictions across neuroanatomical features, sexes, and development, Neuroimage,
+doi:10.1016/j.neuroimage.2022.119485, PMID:35843514.
+Shows: proportional ICV correction reduced prediction accuracy from surface area and GM volume but increased
+it from cortical thickness, and changed cross-sex/cross-age generalisability, demonstrating that the choice
+of ICV correction has feature- and subgroup-specific effects.</p>
+<p>[9] Hu M, Lou Y, Zhu C, et al., 2024, Evaluating the Impact of Intracranial Volume Correction Approaches on
+the Quantification of Intracranial Structures in MRI: A Systematic Analysis, J Magn Reson Imaging,
+doi:10.1002/jmri.28974, PMID:37702125.
+Shows: against a TIV-matched gold standard in 141 volunteers, the residual method had the highest consistency
+(94.4 %), while unadjusted structures differed significantly between sexes - supporting residual correction.</p>
+<p>[10] Opfer R, Krüger J, Spies L, et al., 2022, Single-subject analysis of regional brain volumetric measures
+can be strongly influenced by the method for head size adjustment, Neuroradiology,
+doi:10.1007/s00234-022-02961-6, PMID:35462574.
+Shows: in 5059 normative scans the residual method removed the TIV association and cut between-subject
+variability more than the proportional method, and gave a higher AUC for detecting thalamic atrophy in MS
+(0.84 vs 0.79) - the single-subject argument for the residual method.</p>
+<p>[11] Prados F, Cardoso MJ, Kanber B, et al., 2016, A multi-time-point modality-agnostic patch-based method
+for lesion filling in multiple sclerosis, Neuroimage, doi:10.1016/j.neuroimage.2016.06.053, PMID:27377222.
+Shows: a 5D patch-based non-local-means lesion filling that fills lesions with the most plausible texture
+introduced fewer artefacts and spurious edges than standard fill-with-nearby-WM methods, notably where
+lesions abut ventricles or deep grey matter.</p>
+<p>[12] Valverde S, Oliver A, Lladó X, 2014, A white matter lesion-filling approach to improve brain tissue
+volume measurements, Neuroimage Clin, doi:10.1016/j.nicl.2014.08.016, PMID:25379419.
+Shows: refilling WM lesions with intensities drawn from the slice WM distribution reduced the tissue-volume
+deviation from the lesion-free ground truth across 1.5 T and 3 T data and two segmentation tools, i.e.
+lesion filling improves tissue-volume accuracy.</p>
+<p>[13] van der Weijden CWJ, Pitombeira MS, Haveman YRA, et al., 2022, The effect of lesion filling on brain
+network analysis in multiple sclerosis using structural magnetic resonance imaging, Insights Imaging,
+doi:10.1186/s13244-022-01198-4, PMID:35347460.
+Shows: artefacts in lesion-filled T1w images correlated with total lesion volume (r = 0.84, p &lt; 0.001) and
+had a major impact on GM segmentation accuracy, so lesion filling should be applied cautiously at higher
+lesion loads - the load-dependence warning for our filling step.</p>
+<p>[14] Dadar M, Potvin O, Camicioli R, et al., 2021, Beware of white matter hyperintensities causing
+systematic errors in FreeSurfer gray matter segmentations!, Hum Brain Mapp, doi:10.1002/hbm.25398,
+PMID:33783933.
+Shows: in 1077 ADNI participants (4321 time-points) WMH overlapped more with GM structures at higher WMH
+burden, and without WMH correction caudate volume increased with age and failed to separate AD, which
+changed to decline and group separation after correction - WMH handling flips clinical associations.</p>
+<p>[15] Solodkin A, Hasson U, Siugzdaite R, et al., 2010, Virtual brain transplantation (VBT): a method for
+accurate image registration and parcellation in large cortical stroke, Arch Ital Biol, PMID:21175010.
+Shows: filling a large left-hemisphere stroke by transplanting tissue mirrored from the non-stroke
+hemisphere produced no FreeSurfer parcellation difference for 12 regions between lesioned and non-lesioned
+hemispheres - validation that mirroring restores landmarks for parcellation.</p>
+<p>[16] Brennan D, Schneider ALC, Shinohara RT, et al., 2026, Contusions bias cortical thickness estimates
+after traumatic brain injury: A TRACK-TBI study, Neuroimage Clin, doi:10.1016/j.nicl.2026.104003,
+PMID:42114207.
+Shows: in 86 TRACK-TBI participants, unmasked and summarisation-only masking left lesion-related
+cross-sectional and longitudinal cortical-thickness bias, while fully masking lesion voxels from tissue
+probability maps attenuated the cross-sectional bias - a concrete lesion-handling recommendation.</p>
+<p>[17] Khlif MS, Egorova-Brumley N, Bird LJ, et al., 2022, Cortical thinning 3 years after ischaemic stroke
+is associated with cognitive impairment and APOE ε4, Neuroimage Clin, doi:10.1016/j.nicl.2022.103200,
+PMID:36116165.
+Shows: in the CANVAS stroke cohort, infarcted ipsilesional vertices were identified from a-priori stroke
+lesion masks and excluded before mixed-effects cortical-thickness analysis - a concrete example of
+excluding lesioned cortex in a longitudinal stroke study.</p>
+<p>[18] Yassi N, Malpas CB, Campbell BC, et al., 2015, Contralesional thalamic surface atrophy and functional
+disconnection 3 months after ischemic stroke, Cerebrovasc Dis, doi:10.1159/000381105, PMID:25823493.
+Shows: in 15 anterior-circulation stroke patients imaged up to 3 months, contralesional thalamic volume
+fell significantly (-2.1 %, p = 0.047) with declining functional connectivity and atrophy correlated with
+stroke severity - remote structural and functional change coexist.</p>
+<p>[19] Geng J, Gao F, Ramirez J, et al., 2023, Secondary thalamic atrophy related to brain infarction may
+contribute to post-stroke cognitive impairment, J Stroke Cerebrovasc Dis,
+doi:10.1016/j.jstrokecerebrovasdis.2022.106895, PMID:36495644.
+Shows: after controlling for head size and global brain atrophy, infarct volume independently correlated
+with ipsilateral thalamic volume (beta = -0.069, p = 0.024), and left thalamic atrophy correlated with
+poorer cognition - the template for a head-size- and atrophy-adjusted remote-atrophy analysis.</p>
+<p>[20] Aamodt EB, Lydersen S, Alnæs D, et al., 2022, Longitudinal Brain Changes After Stroke and the
+Association With Cognitive Decline, Front Neurol, doi:10.3389/fneur.2022.856919, PMID:35720079.
+Shows: in 244 Nor-COAST survivors with FreeSurfer at baseline/18/36 months, cortices and subcortices showed
+greater ipsi- than contralesional atrophy rate (more prominent right), with medial-temporal atrophy after
+left strokes and larger lesions after right strokes linked to cognitive decline.</p>
+<p>[21] Guo C, Ferreira D, Fink K, et al., 2019, Repeatability and reproducibility of FreeSurfer, FSL-SIENAX
+and SPM brain volumetric measurements and the effect of lesion filling in multiple sclerosis, Eur Radiol,
+doi:10.1007/s00330-018-5710-x, PMID:30242503.
+Shows: repeat scanning of MS patients on three scanners showed within-scanner variability lower than
+between-scanner, ICV normalisation improved FreeSurfer and SPM reproducibility, and MS lesion filling
+changed FSL/SPM output but not FreeSurfer - directly relevant to a multi-scanner ICV-normalised volumetry.</p>
+<p>[22] Brzezinski-Rittner A, Moqadam R, Zeighami Y, et al., 2026, Intracranial volume: To adjust or not to
+adjust? It is not a matter of if, but how, Imaging Neurosci (Camb), doi:10.1162/IMAG.a.1235, PMID:42206219.
+Shows: against a TIV-matched UK Biobank gold standard, adding TIV as a covariate was the best-performing
+adjustment method, and smoothing of cortical metrics itself biased sex-difference estimates - the most
+recent head-to-head of ICV adjustment methods.</p>
+<p>[23] Radwan AM, Emsell L, Blommaert J, et al., 2021, Virtual brain grafting: Enabling whole brain
+parcellation in the presence of large lesions, Neuroimage, doi:10.1016/j.neuroimage.2021.117731,
+PMID:33454411.
+Shows: Virtual Brain Grafting generates a lesion-free T1 so that recon-all parcellation succeeds in
+heterogeneous focal pathology, with mean Dice 0.894 (unilateral) / 0.903 (bilateral) versus 0.617 without
+grafting, and quantifies the influence of lesion volume and overlap on labeling accuracy.</p>
+<p>[24] Zavaliangos-Petropulu A, Lo B, Donnelly MR, et al., 2022, Chronic Stroke Sensorimotor Impairment Is
+Related to Smaller Hippocampal Volumes: An ENIGMA Analysis, J Am Heart Assoc, doi:10.1161/JAHA.121.025109,
+PMID:35574963.
+Shows: pooling 357 chronic stroke patients across 18 ENIGMA cohorts, sensorimotor impairment was associated
+with ipsilesional (p = 0.005) but not contralesional hippocampal volume, and hippocampal volume was
+associated with lesion size - evidence that even non-lesioned, ipsilesional structures carry
+secondary-degeneration signal and should be analysed per hemisphere.</p>
+<h2>Trägt nicht</h2>
+<p>Open questions from the report:</p>
+<ul>
+<li>Which ICV estimator is most atrophy-stable for a mixed Siemens MPRAGE cohort (eTIV vs SynthSeg-derived
+  vs SAMSEG-derived), given that all automated estimators showed some atrophy- or skull-related bias in the
+  older literature [1, 2]? A within-cohort repeat/scan-rescan check on the same subjects would answer this.</li>
+<li>Does mirror-based contour filling (our infarct-filling step) preserve parcellation accuracy at the lesion
+  margin specifically, or only globally? The grafting literature [15, 23] reports region-level agreement,
+  but the load-dependent artefact warning [13] has not been tested for mirroring in stroke (mostly tested
+  in MS/glioma).</li>
+<li>How large is the residual-vs-covariate difference in a stroke cohort with WMH and atrophy, and does the
+  choice interact with longComBat?</li>
+<li>Best criterion to flag a structure as "lesion-overlapping vs secondary-degenerated": overlap fraction,
+  distance from infarct, or ipsilesional-contralesional asymmetry?</li>
+<li>Whether WMH filling with normal-appearing WM intensity reproduces the caudate-volume bias of [14] in our
+  pipeline, or whether the WMH-filling step already mitigates it.</li>
+</ul>
+<p>Claims rest on abstracts, not full texts, unless the report says otherwise.</p>
+<h2>Bruchindikator</h2>
+<p>A full-text reading or a later consensus paper contradicts a cited effect size or recommendation; or our own cohort data show the opposite (for example no scanner effect at a scanner change).</p>
+<h2>Ablesung</h2>
+<p>Report written 2026-10-18 by Clara (hospital model hub), question set by Claude Code after a pipeline audit; sources verified with quellen-pruefen the same day.</p></div></details><details class="entry" id="research-longitudinal-volumetry-statistics-after-stroke-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (27 refs, checked): mixed models with random slopes, non-linear early atrophy, MAR-aware missing data, longComBat over site covariate, scanner change within site biases 2-4 %</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li>Use a linear mixed-effects model with <strong>subject-specific random intercepts and random slopes for time</strong>; this is the
   standard for longitudinal neuroimaging and is markedly more powerful than repeated-measures ANOVA or per-subject
@@ -827,7 +1309,433 @@ predict evolution to dementia in patients with vascular mild cognitive impairmen
 doi:10.1016/j.jns.2024.123163, PMID:39128160.
 Shows: in 110 patients with vascular MCI followed for 2 years, 32 progressed to vascular dementia; converters had
 lower hippocampal volume (p = 0.015) and higher lesion volumes in specific tracts, hippocampal volume alone did not
-fully explain progression (p = 0.059) but combined with WMH volume the model was significant (p = 0.035).</p></div></details><details class="entry" id="research-segmentation-qc-at-scale-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-segmentation-qc-at-scale-2026-10.html">Literature: quality control of automatic brain segmentation in ~1500 sessions</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (21 refs, checked): Euler number best cheap QC metric (AUC 0.98-0.99); trained classifiers beat single metrics; outlier exclusion on global measures can hurt; calibrate thresholds on a rated sample</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-segmentation-qc-at-scale-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-segmentation-qc-at-scale-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+fully explain progression (p = 0.059) but combined with WMH volume the model was significant (p = 0.035).</p></div></details><details class="entry" id="research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.html">Literature: methods and reporting checklist for a multisite longitudinal structural MRI cohort</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (22 refs, checked): methods and reporting checklist for a multisite longitudinal structural MRI cohort</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, public literature only; quellen-pruefen 2026-10-18 (22 references, 22 with PMID, 22 correct, 0 wrong); checked and committed by Claude Code · <a href="findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>The binding skeleton for our paper is STROBE (cohort checklist, 22 items) for the epidemiological/design part plus
+  COBIDAS/OHBM for the imaging/analysis part; STROBE governs participants, flow, missing data, descriptive data, outcome
+  definitions and generalisability [5, 6], COBIDAS governs acquisition, preprocessing, model specification and
+  code/data sharing [1, 2].</li>
+<li>Empirical checks show that reporting is the weak link, not the analysis: across published studies methods and results
+  reporting "can differ greatly" and clarifies far less than the guidelines intend [3], and the checklist literature
+  itself identifies transparency/reproducibility as a persisting obstacle that checklists have not yet solved [4].</li>
+<li>What is most often missing in practice is not the headline model but the audit trail: exact software versions and
+  container/singularity images, the full preprocessing parameter set, QC metric + threshold + number of excluded scans,
+  and an a-priori analysis plan deposited before unblinding [1, 3, 4, 7].</li>
+<li>Pre-registration / a dated analysis plan is the single cheapest protection against analytical flexibility: 70 teams
+  analysing one dataset with the same 9 hypotheses chose no two identical workflows and reached materially different
+  results [22]; pre-registration formalises the prediction/postdiction distinction [7].</li>
+<li>For multisite data, scanner variance must be quantified and reported, because it exceeded age- and sex-related
+  variance for almost all structural features in a large multisite cohort [18]; ComBat removes it and increases power and
+  reproducibility when applied correctly [14, 15].</li>
+<li>Harmonisation is not a solved problem for exactly our design: no method (there including ComBat and LongComBat)
+  successfully harmonised a <em>longitudinal</em> dataset with scanner change within subject [17]; longComBat is validated for
+  cross-sectional and longitudinal use on travelling subjects [16], so our longitudinal ComBat claims need an explicit
+  within-subject scanner-change sensitivity analysis.</li>
+<li>QC must be reported as a quantitative, pre-specified gate and then handled in the model: the Euler number tracks manual
+  quality ratings and detects "unusable" images with AUC 0.98-0.99 [11], automated QC generalises to unseen sites only at
+  ~76% accuracy and remains susceptible to site effects [13], and thresholding by QC score attenuates but does not
+  eliminate the bias quality induces on cortical estimates [12].</li>
+<li>Where rating or visual reading is involved, blinding/calibration and agreement statistics belong in the methods:
+  multisite expert readers reached only substantial (not perfect) agreement (Fleiss' kappa 0.70-0.87), with calibration
+  necessary for comparability [10].</li>
+<li>Lesion handling must be reported as a method, not a footnote: lesion filling improved the power to detect atrophy and
+  ventricular growth and reduced the required sample size by ~25% [19]; SynthSeg's value is precisely that it generalises
+  without retraining, which must be stated together with the version used [20].</li>
+<li>Multiple comparisons across many regions need a pre-specified correction: permutation inference for the GLM gives exact
+  false-positive control under exchangeability [21]; the correction family and the number of tested regions must be
+  reported [1, 3].</li>
+</ul>
+<h3>Practical recommendation (as written for a multisite longitudinal stroke cohort)</h3>
+<p>Two-column checklist: what to report, and what our cohort must document concretely.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Source</th>
+<th>What our cohort must document</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Study design / cohort checklist</td>
+<td>STROBE [5, 6]</td>
+<td>Prospective cohort, eligibility, recruitment, visit windows for 0/6/36/60 months, flow diagram with attrition per visit and per site</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Imaging acquisition reporting (COBIDAS)</td>
+<td>[1, 2, 3]</td>
+<td>MPRAGE 1 mm parameters, the exact sequence per site, all Siemens models by site, field strength, coil, protocol deviations, scan dates</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Preprocessing reporting</td>
+<td>[1, 2, 3]</td>
+<td>SynthSeg 2 / FreeSurfer 8.2, exact flags (<code>--robust --qc</code>), cross-sectional per-session processing (state explicitly that no longitudinal stream was used), recon-all for thickness, container/image digest</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Software version freezing</td>
+<td>[1, 2, 4, 20]</td>
+<td>Frozen versions and container hashes for segmentation, recon-all, QC gate, lesion filling, harmonisation and model code; repository DOI</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Lesion filling as a method</td>
+<td>[19, 20]</td>
+<td>Infarct filling by contralateral mirroring and WMH filling with NAWM intensity described operationally; which analysis is primary (raw vs filled); agreement/validation of the filled images</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SVD terminology</td>
+<td>STRIVE-2 [8]</td>
+<td>WMH and atrophy defined in STRIVE-2 terms; acknowledge that WMH delineation conventionally uses FLAIR and that a T1-only cohort limits WMH quantification</td>
+</tr>
+<tr>
+<td>7</td>
+<td>QC metric and gate</td>
+<td>[11, 12, 13]</td>
+<td>SynthSeg per-structure QC &gt;= 0.65 and Euler-number gate defined a priori, per-site and per-structure counts excluded, and the gate applied before any model fit</td>
+</tr>
+<tr>
+<td>8</td>
+<td>QC beyond the gate</td>
+<td>[12, 13]</td>
+<td>Sensitivity analysis with QC score as covariate; per-site QC distributions; statement that automated QC generalises imperfectly to new sites</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Blinding / rating independence</td>
+<td>[10]</td>
+<td>QC and any manual lesion editing blind to group, visit and site; if any manual step remains: rater training, number of raters, inter-rater agreement</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Statistical model</td>
+<td>[15, 22]</td>
+<td>Linear mixed models fully specified (fixed effects, random intercepts/slopes, time metric, covariance structure), and explicit separation of between- and within-subject effects</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Multiple comparisons</td>
+<td>[1, 3, 21]</td>
+<td>Pre-specified region family, correction method (e.g. permutation with <code>randomise</code>), one-/two-sided, and the number of tested structures</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Pre-registration / analysis plan</td>
+<td>[7, 22]</td>
+<td>Dated analysis plan before analysis (OSF/registered report): hypotheses, region set, primary outcome, covariates, correction, sensitivity/multiverse analyses</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Multisite harmonisation</td>
+<td>[14, 15, 16, 17, 18]</td>
+<td>longComBat specification (batch = site/scanner, covariates, time); pre-harmonisation scanner-variance quantification; a within-subject scanner-change sensitivity analysis because longitudinal harmonisation failed in direct comparison</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Missing data / attrition</td>
+<td>[5, 6]</td>
+<td>Missingness pattern at 36/60 months (death, dropout, scanner change), assumed mechanism, and the model's handling of it</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Robustness of the segmentation tool</td>
+<td>[20]</td>
+<td>Statement that SynthSeg generalises across contrast/resolution without retraining, plus the version actually used and its QC behaviour in our data</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Data and code sharing</td>
+<td>[1, 2, 4]</td>
+<td>Sharing statement: derived data, analysis code, container, and what cannot be shared (patient-level imaging) and why</td>
+</tr>
+</tbody>
+</table>
+<p>Priorities if reviewers force cuts: items 3, 4, 7, 12 and 13 are the ones most often missing in comparable papers and
+the ones a methods-aware reviewer will check first [3, 4, 12, 17].</p>
+<h2>Trägt</h2>
+<p>22 references, each retrieved in the task with the literature tool and checked (PMID matches title, DOI registered at doi.org). Each reference carries one "Shows:" sentence from its abstract.</p>
+<p>[1] Nichols TE, Das S, Eickhoff SB, et al. (2017). Best practices in data analysis and sharing in neuroimaging using MRI. Nature Neuroscience. DOI 10.1038/nn.4500. PMID 28230846.
+Shows: the OHBM best-practice (COBIDAS) recommendations for MRI data analysis, results reporting and algorithm/data sharing, and the discipline-level barriers to them — cited as the primary structural-MRI reporting standard for our analysis and sharing section.</p>
+<p>[2] Pernet C, Garrido MI, Gramfort A, et al. (2020). Issues and recommendations from the OHBM COBIDAS MEEG committee for reproducible EEG and MEG research. Nature Neuroscience. DOI 10.1038/s41593-020-00709-0. PMID 32958924.
+Shows: the OHBM COBIDAS committee's "living" recommendations covering acquisition, analysis, reporting and sharing of data and analysis code — cited because it defines the current OHBM expectation that code and analysis choices are reported, not only results.</p>
+<p>[3] Acar F, Maumet C, Heuten T, et al. (2023). Review Paper: Reporting Practices for Task fMRI Studies. Neuroinformatics. DOI 10.1007/s12021-022-09606-2. PMID 36199009.
+Shows: a review of 160 papers finding that reporting styles for methods and results differ greatly and that results reporting needed a dedicated audit beyond the earlier methods-only reviews based on the 2008 guidelines — cited as the empirical evidence that guideline adherence, not analysis quality, is the common failure point.</p>
+<p>[4] Ekhtiari H, Zare-Bidoky M, Sangchooli A, et al. (2024). Reporting checklists in neuroimaging: promoting transparency, replicability, and reproducibility. Neuropsychopharmacology. DOI 10.1038/s41386-024-01973-5. PMID 39242922.
+Shows: lack of transparency, reproducibility and reliability remains a significant obstacle in neuroimaging; the review defines what a neuroimaging reporting checklist is, the core values that should inform its design (transparency, repeatability, data sharing), and a development cycle — cited for the checklist rationale and for what current checklists still fail to achieve.</p>
+<p>[5] Vandenbroucke JP, von Elm E, Altman DG, et al. (2014). Strengthening the Reporting of Observational Studies in Epidemiology (STROBE): explanation and elaboration. International Journal of Surgery. DOI 10.1016/j.ijsu.2014.07.014. PMID 25046751.
+Shows: the rationale and published examples for each of the 22 STROBE items (18 common to cohort/case-control/cross-sectional, 4 design-specific) plus flow-diagram templates, aimed at improving reporting of observational studies — cited as our design-level reporting backbone.</p>
+<p>[6] Cuschieri S (2019). The STROBE guidelines. Saudi Journal of Anaesthesia. DOI 10.4103/sja.SJA_543_18. PMID 30930717.
+Shows: STROBE consists of 22 checklist items to be fulfilled before submission and is a reporting aid for authors, explicitly not a validation tool for study conduct or a design framework — cited to justify pairing STROBE with an imaging guideline rather than treating it as sufficient.</p>
+<p>[7] Nosek BA, Ebersole CR, DeHaven AC, et al. (2018). The preregistration revolution. Proceedings of the National Academy of Sciences of the USA. DOI 10.1073/pnas.1708274114. PMID 29531091.
+Shows: the distinction between generating hypotheses with existing observations (postdiction) and testing them with new observations (prediction) is conceptually accepted but not respected in practice, motivating preregistration — cited as the basis for requiring a dated analysis plan.</p>
+<p>[8] Duering M, Biessels GJ, Brodtmann A, et al. (2023). Neuroimaging standards for research into small vessel disease-advances since 2013. Lancet Neurology. DOI 10.1016/S1474-4422(23)00131-X. PMID 37236211.
+Shows: STRIVE-2 updates the 2013 standards for established SVD markers and new sequences/features, and highlights a key role for quantitative imaging biomarkers of sub-visible tissue damage as intermediary outcomes — cited as the standardised terminology and the licence/obligation for our quantitative WMH and atrophy markers.</p>
+<p>[9] Liew SL, Zavaliangos-Petropulu A, Jahanshad N, et al. (2022). The ENIGMA Stroke Recovery Working Group: Big data neuroimaging to study brain-behavior relationships after stroke. Human Brain Mapping. DOI 10.1002/hbm.25015. PMID 32310331.
+Shows: the working group's neuroinformatics protocols for managing multisite stroke brain MRI, behavioural and demographic data (data intake, preprocessing, data handling) across over 2,100 patients from 39 research studies in 10 countries — cited as the stroke-specific template for how a multisite stroke cohort documents its intake and preprocessing.</p>
+<p>[10] Soleimani-Meigooni DN, Pezzoli S, Blazhenets G, et al. (2025). Calibration of multisite raters for prospective visual reads of amyloid PET scans. Alzheimer's &amp; Dementia. DOI 10.1002/alz.70732. PMID 41030129.
+Shows: ten experts from eight centres reading 180 scans reached substantial inter-rater agreement (Fleiss' kappa 0.78 overall, 0.70-0.87 across tracers, full consensus on 69%), with lower agreement for intermediate-signal scans, and the calibration set becomes a training standard — cited as evidence that multisite rating requires documented calibration, reliability and reader blinding.</p>
+<p>[11] Rosen AFG, Roalf DR, Ruparel K, et al. (2018). Quantitative assessment of structural image quality. Neuroimage. DOI 10.1016/j.neuroimage.2017.12.059. PMID 29278774.
+Shows: the FreeSurfer Euler number correlated with manual quality ratings across samples and identified images rated unusable with high accuracy (AUC 0.98-0.99), and quality was related to cortical thickness and biased age associations — cited as the justification for a quantitative Euler-number gate and for controlling quality in the model.</p>
+<p>[12] Bedford SA, Ortiz-Rosa A, Schabdach JM, et al. (2023). The impact of quality control on cortical morphometry comparisons in autism. Imaging Neuroscience. DOI 10.1162/imag_a_00022. PMID 38495338.
+Shows: thresholding by QC score attenuated but did not eliminate the impact of image quality on cortical estimates, and inadequate control for quality altered case-control comparison results — cited to show that a QC gate alone is insufficient and quality must also enter the analysis.</p>
+<p>[13] Esteban O, Birman D, Schaer M, et al. (2017). MRIQC: Advancing the automatic prediction of image quality in MRI from unseen sites. PLoS One. DOI 10.1371/journal.pone.0184661. PMID 28945803.
+Shows: MRIQC's accept/exclude classifier reached about 76% accuracy on new sites and on a held-out dataset, while remaining susceptible to site effects and unable to account for artifacts specific to new sites — cited to require per-site QC reporting rather than a single pooled QC statistic.</p>
+<p>[14] Fortin JP, Cullen N, Sheline YI, et al. (2018). Harmonization of cortical thickness measurements across scanners and sites. Neuroimage. DOI 10.1016/j.neuroimage.2017.11.024. PMID 29155184.
+Shows: in two multi-site studies across 11 scanners, scanner effects biased cortical thickness analyses, and ComBat removed the unwanted scan variability while increasing the power and reproducibility of subsequent analyses — cited as the primary reference for ComBat harmonisation of structural measures.</p>
+<p>[15] Sun D, Rakesh G, Haswell CC, et al. (2022). A comparison of methods to harmonize cortical thickness measurements across scanners and sites. Neuroimage. DOI 10.1016/j.neuroimage.2022.119509. PMID 35917919.
+Shows: comparing site-random-intercept LME, LME with random slopes, ComBat and ComBat-GAM on cortical thickness from 29 sites, ComBat-GAM was most sensitive for case-control differences and age-related thinning, and ComBat/ComBat-GAM outperformed LME methods for sex effects — cited to justify ComBat-GAM for non-linear site effects and to require stating which harmonisation was used and why.</p>
+<p>[16] Richter S, Winzeck S, Correia MM, et al. (2022). Validation of cross-sectional and longitudinal ComBat harmonization methods for magnetic resonance imaging data on a travelling subject cohort. Neuroimage: Reports. DOI 10.1016/j.ynirp.2022.100136. PMID 36507071.
+Shows: ComBat harmonisation methods were validated for cross-sectional and longitudinal use on a travelling-subject cohort, addressing the need created by multicentre studies with hardware and protocol differences — cited as the validation basis for the planned longComBat step.</p>
+<p>[17] Gebre RK, Senjem ML, Raghavan S, et al. (2023). Cross-scanner harmonization methods for structural MRI may need further work: A comparison study. Neuroimage. DOI 10.1016/j.neuroimage.2023.119912. PMID 36731814.
+Shows: comparing deep-learning, histogram-matching and statistical (ComBat, LongComBat) harmonisation on participants scanned on GE and Siemens scanners, over-/under-estimation of cortical thickness followed scanner change and none of the methods succeeded on the longitudinal dataset, with region-dependent performance — cited as the decisive caveat forcing a within-subject scanner-change sensitivity analysis.</p>
+<p>[18] Dudley JA, Maloney TC, Simon JO, et al. (2023). ABCD_Harmonizer: An Open-source Tool for Mapping and Controlling for Scanner Induced Variance in the Adolescent Brain Cognitive Development Study. Neuroinformatics. DOI 10.1007/s12021-023-09624-8. PMID 36940062.
+Shows: scanner-induced variance was present in every image feature and for almost all features exceeded variance attributable to age and sex, ComBat removed it while preserving biological variability, and ComBat-harmonised data gave more accurate effect-size estimates than ordinary least-squares control for scanner in subsamples — cited to require quantifying and reporting scanner variance in our 7-site cohort.</p>
+<p>[19] Guizard N, Nakamura K, Coupé P, et al. (2015). Non-Local Means Inpainting of MS Lesions in Longitudinal Image Processing. Frontiers in Neuroscience. DOI 10.3389/fnins.2015.00456. PMID 26696815.
+Shows: a patch-based non-local-means lesion-filling method outperformed FSL lesion fill, Lesion-LEAP and simple masking or NAWM-intensity filling in reproducing healthy images, and improved the power to detect brain atrophy or ventricular growth, reducing the required sample size by 25% — cited as the quantitative justification for our lesion-filled T1 analysis and for reporting the filling method in detail.</p>
+<p>[20] Billot B, Greve DN, Puonti O, et al. (2023). SynthSeg: Segmentation of brain MRI scans of any contrast and resolution without retraining. Medical Image Analysis. DOI 10.1016/j.media.2023.102789. PMID 36857946.
+Shows: SynthSeg segments scans of widely varying contrast and resolution without retraining or fine-tuning by training on randomised synthetic data, and generalised to 5,000 scans of six modalities and ten resolutions — cited as the basis for using SynthSeg across our scanner models and as the robustness statement to include with the frozen version.</p>
+<p>[21] Winkler AM, Ridgway GR, Webster MA, et al. (2014). Permutation inference for the general linear model. Neuroimage. DOI 10.1016/j.neuroimage.2014.01.060. PMID 24530839.
+Shows: a generic permutation framework for complex GLMs with exchangeable and/or symmetric errors gives excellent false-positive control in common imaging scenarios even with nuisance variables, and provides the complete <code>randomise</code> algorithm — cited as the pre-specifiable multiple-comparison strategy for our region family.</p>
+<p>[22] Botvinik-Nezer R, Holzmeister F, Camerer CF, et al. (2020). Variability in the analysis of a single neuroimaging dataset by many teams. Nature. DOI 10.1038/s41586-020-2314-9. PMID 32483374.
+Shows: 70 independent teams analysing the same dataset against the same 9 ex-ante hypotheses chose no two identical workflows and produced sizeable variation in hypothesis-test results, leading the authors to recommend validating and sharing workflows and reporting multiple analyses — cited as the empirical argument for a pre-specified analysis plan plus sensitivity/multiverse analyses.</p>
+<h2>Trägt nicht</h2>
+<p>Open questions from the report:</p>
+<ul>
+<li>Longitudinal harmonisation is unresolved: no tested method (incl. LongComBat) harmonised a dataset with scanner change
+  within subject [17], while longComBat is validated on travelling subjects [16]; how large is our within-subject scanner
+  change and does it survive as a sensitivity analysis?</li>
+<li>STRIVE-2 endorses quantitative imaging biomarkers [8], but its WMH guidance assumes FLAIR; what is the defensible
+  T1-only WMH statement for a stroke cohort?</li>
+<li>Does a SynthSeg QC &gt;= 0.65 gate need site-specific recalibration, given that automated QC classifiers reach only ~76%
+  accuracy on unseen sites [13]?</li>
+<li>The prevalence of pre-registration in structural-MRI cohorts is itself unmeasured here (no retrieved abstract reports
+  it) — "commonly missing" for pre-registration rests on the multiverse evidence [22] and the preregistration paper [7],
+  not on an imaging-specific audit; marked as unverified for our field.</li>
+<li>Whether lesion filling should be primary or a sensitivity analysis in a cohort where infarcts are the exposure, not
+  noise, is not answered by the retrieved lesion-filling evidence [19].</li>
+<li>Optimal handling of quality as covariate vs gate: thresholding attenuates but does not remove bias [12]; the best
+  specification for a longitudinal mixed model is not settled by the retrieved literature.</li>
+</ul>
+<p>Claims rest on abstracts, not full texts, unless the report says otherwise.</p>
+<h2>Bruchindikator</h2>
+<p>A full-text reading or a later consensus paper contradicts a cited effect size or recommendation; or our own cohort data show the opposite (for example no scanner effect at a scanner change).</p>
+<h2>Ablesung</h2>
+<p>Report written 2026-10-18 by Clara (hospital model hub), question set by Claude Code after a pipeline audit; sources verified with quellen-pruefen the same day.</p></div></details><details class="entry" id="research-scanner-change-within-subject-longitudinal-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-scanner-change-within-subject-longitudinal-2026-10.html">Literature: scanner, software or coil change between visits of the same participant</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (24 refs, checked): scanner, software or coil change between visits of the same participant</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, public literature only; quellen-pruefen 2026-10-18 (24 references, 24 with PMID, 24 correct, 0 wrong); checked and committed by Claude Code · <a href="findings/research-scanner-change-within-subject-longitudinal-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-scanner-change-within-subject-longitudinal-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<ul>
+<li>A scanner change is a real, structure- and method-dependent bias, not noise: whole-brain atrophy measures moved
+  by about 3.4-4.1 % across a 1.5 T -&gt; 3 T upgrade [1], and 2-4 % regional grey-matter differences appeared even
+  between two 3 T scanners of the same vendor after a firmware/software upgrade [2].</li>
+<li>Direction and size depend on the structure and on the contrast: cortical thickness increased in frontal,
+  temporal and cingulate regions while parietal thickness and amygdala, pallidum, hippocampus and striatum
+  volumes decreased across a Tim Trio -&gt; Prisma upgrade [3]; another upgrade produced 30 % higher and more
+  variable neocortical CNR, larger frontal volumes/thickness, and WMH volumes that were 68 % smaller on FLAIR [4].</li>
+<li>Scanner <em>software</em> alone is enough: an SNR increase of ~24 % after a software upgrade shifted SPM5 grey-matter
+  volumes by up to 4.3 % [5]. Head coils are equally dangerous: replacing an 8-channel with a 32-channel coil gave
+  6-9 % relative grey/white-matter volume differences with identical sequences [6].</li>
+<li>Reliability can look excellent (ICC &gt; 0.8) while systematic between-scanner differences remain statistically
+  significant in a large majority of regions [2]; ICC alone therefore does not prove longitudinal comparability.</li>
+<li>Effect sizes from multi-scanner test-retest in MS: between-scanner smallest detectable change ranged from 4.8 %
+  (SynthSeg, thalamus) to 29 % (CAT12, thalamus), whole-brain ~1 % within scanner [8]; scanner differences between
+  1.5 T Siemens Avanto, 3 T Skyra and 3 T Prisma were systematic for all tested segmentation tools [21].</li>
+<li>SynthSeg is the most contrast/resolution-robust of the compared tools [18] and had the best between-scanner
+  reproducibility for large structures in the MS comparison [8], but this robustness does not make it immune to
+  site/coil effects (tissue classifiers still differ by manufacturer and SNR [9]).</li>
+<li>Two harmonisation families: statistical (ComBat / longitudinal ComBat) and image-level (deep learning contrast
+  harmonisation). longComBat is more powerful and better calibrated than cross-sectional ComBat for longitudinal
+  cortical thickness [13]; travelling-subject designs need only about 6 well-scanned travelling subjects to
+  reduce measurement bias by up to 85 % [16]; longComBat/ComBat performs well for diffusion but does <em>not</em> always
+  help structural data and can be harmful when no scanner effect exists [14].</li>
+<li>No harmonisation method reliably removes a real scanner <em>change</em> in longitudinal structural data in all cases:
+  ComBat matched distributions but could not increase ICC or remove scanner-change effects, and CycleGAN / neural
+  style transfer were only slightly better [15].</li>
+<li>Correction options in practice: model the scanner as a covariate/time-varying factor (a mixed model with scanner
+  type was sufficient to remove the upgrade effect after a corrective term in MS [1]); or harmonise longitudinally
+  (longComBat [13]); or add an image-level contrast harmonisation step [17].</li>
+<li>Minimum pre-slope checks: verify per-visit DICOM/ProtocolName, manufacturer, model, software version and receive
+  coil (these fields drive all above effects [4,5,6]); run MRIQC-style raw-image QC (site effects limit
+  classifier generalisation to unseen sites [22]); gate on Euler number / surface quality, which correlates with
+  manual ratings and biases cortical thickness [20]; and, if possible, include travelling subjects or a phantom.</li>
+</ul>
+<h3>Practical recommendation (as written for a multisite longitudinal stroke cohort)</h3>
+<ol>
+<li>Metadata audit first. For every session extract from DICOM: Manufacturer, ManufacturerModelName,
+   SoftwareVersions, ReceiveCoilName/TransmitCoilName, ProtocolName, SequenceName, and any reconstruction/distortion
+   flags. Cross-tabulate against visit (0/6/36/60 months) and site. Any field that changes within a participant is a
+   candidate "scanner change" variable [4,5,6,9].</li>
+<li>Model the change explicitly. In the planned linear mixed model, include a <em>time-varying</em> scanner variable
+   (site x model x software x coil composite, as the travelling-subject work defines "scanner" [14]) as a fixed
+   effect, or a random scanner effect, in addition to the planned covariates. Where a clean upgrade with controls
+   exists, a corrective term estimated from stable (control/travelling) subjects is a defensible option [1].</li>
+<li>Run longComBat as the planned harmonisation, but verify the assumption. Because harmonising structural data
+   that has no scanner effect can remove biology [14], first quantify the scanner effect (ICC, and the
+   travelling-subject Cohen's-d style bias metric [16]) before harmonising. longComBat is preferable to
+   cross-sectional ComBat for longitudinal thickness [13].</li>
+<li>Run both raw and lesion-filled SynthSeg. SynthSeg is designed to be contrast/resolution-robust [18] and had the
+   best large-structure between-scanner reproducibility in the six-tool MS comparison [8]; report the raw-vs-filled
+   difference as a sensitivity analysis (no clear global penalty for filling in MS [8]; lesion-aware longitudinal
+   segmentation improves reliability in lesioned brains [19]).</li>
+<li>QC gates as planned, but make them scanner-aware. Keep SynthSeg QC &gt;= 0.65 per structure, keep the Euler-number
+   gate (objective, correlates with manual quality and with thickness [20]), and add MRIQC raw-image metrics per
+   visit because unseen-site generalisation of automated QC is imperfect [22]. Inspect QC pass-rate as a function
+   of site/visit: a differential pass-rate is itself evidence of a scanner effect.</li>
+<li>Reference-structure drift check. Report TIV and a small set of large, stable structures per participant across
+   visits; procedure-dependent TIV reliability means TIV should not be assumed constant [11].</li>
+<li>Interpret with realistic effect sizes. Between-scanner smallest detectable changes of several percent
+   (e.g. 4.8-6.5 % for SynthSeg thalamus/whole brain in [8]) can exceed true 36-60-month atrophic change; where an
+   upgrade is unavoidable mid-study, prioritise a travelling-subject sub-study and/or a soft image-level
+   harmonisation as a sensitivity analysis [15,17].</li>
+<li>Report everything that changed: gradient-distortion correction / reconstruction settings, sequence and coil are
+   known to shift thickness and volumes even between scanners of the same vendor and field strength [2,4,5,6].</li>
+</ol>
+<h2>Trägt</h2>
+<p>24 references, each retrieved in the task with the literature tool and checked (PMID matches title, DOI registered at doi.org). Each reference carries one "Shows:" sentence from its abstract.</p>
+<ol>
+<li>Sinnecker T, Schädelin S, Benkert P, et al. (2022). Brain atrophy measurement over a MRI scanner change in
+   multiple sclerosis. NeuroImage: Clinical. doi:10.1016/j.nicl.2022.103148. PMID: 36007437.
+   Shows: in 20 MS patients and 26 controls, mean whole-brain volume change during a 1.5 T -&gt; 3 T upgrade was
+   -4.1 +/- 0.8 % (MS) vs -3.4 +/- 0.6 % (controls); a 3.4 % corrective term from controls removed the scanner
+   association in a linear mixed-effects model. Cited for scanner-upgrade effect size on atrophy and for the
+   corrective-term strategy.</li>
+<li>Medawar E, Thieleking R, Manuilova I, et al. (2021). Estimating the effect of a scanner upgrade on measures of
+   grey matter structure for longitudinal designs. PLoS ONE. doi:10.1371/journal.pone.0239021. PMID: 34610020.
+   Shows: Verio vs Skyra (3 T, FreeSurfer longitudinal stream, 116 adults) had ICC &gt; 0.8 yet significant differences
+   in &gt;= 67 % of regions (~2-4 %); distortion correction only slightly reduced bias. Cited for the "high ICC but
+   systematic bias" point.</li>
+<li>Plitman E, Bussy A, Valiquette V, et al. (2021). The impact of the Siemens Tim Trio to Prisma upgrade and the
+   addition of volumetric navigators on cortical thickness, structure volume, and 1H-MRS indices. NeuroImage.
+   doi:10.1016/j.neuroimage.2021.118172. PMID: 34082116.
+   Shows: across the upgrade, frontal/temporal/cingulate thickness and thalamus volume increased while parietal
+   thickness and amygdala, globus pallidus, hippocampus and striatum volumes decreased; 1H-MRS unaffected. Cited
+   for direction-dependent effect sizes on thickness and subcortical volumes.</li>
+<li>Potvin O, Khademi A, Chouinard I, et al. (2019). Measurement Variability Following MRI System Upgrade.
+   Frontiers in Neurology. doi:10.3389/fneur.2019.00726. PMID: 31379704.
+   Shows: Trio -&gt; Prismafit upgrades yielded ~30 % higher and more variable neocortical CNR, larger frontal
+   volume/thickness, and 68 % smaller WMH volumes on FLAIR. Cited for WMH and contrast effects of upgrades.</li>
+<li>Shuter B, Yeh IB, Graham S, et al. (2008). Reproducibility of brain tissue volumes in longitudinal studies:
+   effects of changes in signal-to-noise ratio and scanner software. NeuroImage. doi:10.1016/j.neuroimage.2008.02.003.
+   PMID: 18394925.
+   Shows: a software upgrade raised voxel intensity 5-fold and WM SNR by 24 %, shifting SPM5 GM volumes by up to
+   4.3 %. Cited for scanner-software-only effects and the recommendation to monitor SNR.</li>
+<li>Panman JL, To YY, van der Ende EL, et al. (2019). Bias Introduced by Multiple Head Coils in MRI Research: An 8
+   Channel and 32 Channel Coil Comparison. Frontiers in Neuroscience. doi:10.3389/fnins.2019.00729. PMID: 31379483.
+   Shows: with stable sequence parameters, 8- vs 32-channel coils produced 6-9 % relative GM/WM volume differences
+   from altered contrast/segmentation. Cited for head-coil effect size.</li>
+<li>Biberacher V, Schmidt P, Keshavan A, et al. (2016). Intra- and interscanner variability of magnetic resonance
+   imaging based volumetry in multiple sclerosis. NeuroImage. doi:10.1016/j.neuroimage.2016.07.035. PMID: 27431758.
+   Shows: two MS patients scanned six times on each of three 3 T scanners had significant between-scanner
+   differences and marked within-scanner repeat variability; effect size must exceed this false-positive magnitude.
+   Cited for repeatability vs reproducibility magnitudes.</li>
+<li>van Nederpelt DR, Amiri H, Brouwer I, et al. (2023). Reliability of brain atrophy measurements in multiple
+   sclerosis using MRI: an assessment of six freely available software packages for cross-sectional analyses.
+   Neuroradiology. doi:10.1007/s00234-023-03189-8. PMID: 37526657.
+   Shows: across three 3 T scanners, ICCs 0.4-1 between scanners; within-scanner SDC 1.02 % (SAMSEG whole brain) to
+   14.55 % (FreeSurfer CSF), between-scanner SDC 4.83 % (SynthSeg thalamus) to 29.25 % (CAT12 thalamus), with no
+   clear filled-vs-non-filled difference. Cited for SynthSeg/FreeSurfer between-scanner SDC.</li>
+<li>Dadar M, Duchesne S. (2020). Reliability assessment of tissue classification algorithms for multi-center and
+   multi-scanner data. NeuroImage. doi:10.1016/j.neuroimage.2020.116928. PMID: 32413463.
+   Shows: one individual across 73 sessions / 27 sites; all six tools differed significantly across manufacturers
+   and SNR tertiles. Cited for vendor/SNR-driven segmentation bias.</li>
+<li>Haddad E, Pizzagalli F, Zhu AH, et al. (2023). Multisite test-retest reliability and compatibility of brain
+    metrics derived from FreeSurfer versions 7.1, 6.0, and 5.3. Human Brain Mapping. doi:10.1002/hbm.26147.
+    PMID: 36437735.
+    Shows: v7.1 cortical thickness had low compatibility with older versions (ICC 0.37-0.61 on cingulate), similar
+    for some surface areas and subcortical volumes, and version differences altered downstream age associations.
+    Cited for pipeline/software-version effects (relevant to FreeSurfer 8.2 cross-sectional recon-all).</li>
+<li>Koike S, Maikusa N, Cai L, et al. (2025). Estimation of the Intracranial Volume Is Crucial in Multi-Site
+    Studies: Reliability for Longitudinal Investigations and Traveling Subjects. Human Brain Mapping.
+    doi:10.1002/hbm.70405. PMID: 41190774.
+    Shows: across 6524 scans, 21 sites and 13 machine types, eTIV vs sbTIV agreement varied by procedure (ICC
+    0.62-0.94; 1.0 mm isotropic best; sbTIV more consistent longitudinally). Cited for TIV as a multi-site drift
+    probe.</li>
+<li>Reuter M, Schmansky NJ, Rosas HD, et al. (2012). Within-subject template estimation for unbiased longitudinal
+    image analysis. NeuroImage. doi:10.1016/j.neuroimage.2012.02.084. PMID: 22430496.
+    Shows: an unbiased within-subject template with identical treatment of all time points increases precision and
+    discrimination power while avoiding over-regularisation. Cited for the principle behind longitudinal pipelines.</li>
+<li>Beer JC, Tustison NJ, Cook PA, et al. (2020). Longitudinal ComBat: A method for harmonizing longitudinal
+    multi-scanner imaging data. NeuroImage. doi:10.1016/j.neuroimage.2020.117129. PMID: 32640273.
+    Shows: on 663 ADNI cortical thickness datasets, longitudinal ComBat was more powerful for detecting
+    longitudinal change than cross-sectional ComBat and controlled type-I error better than unharmonised data with
+    scanner as covariate. Cited for longComBat.</li>
+<li>Richter S, Winzeck S, Correia MM, et al. (2022). Validation of cross-sectional and longitudinal ComBat
+    harmonization methods for magnetic resonance imaging data on a travelling subject cohort. NeuroImage: Reports.
+    doi:10.1016/j.ynirp.2022.100136. PMID: 36507071.
+    Shows: in 73 travelling subjects / 161 scans, structural data had no scanner effect and harmonisation obscured
+    biology, while diffusion data were successfully harmonised; longComBat was less effective for cross-sectional
+    WM data. Cited for "do not harmonise without a scanner effect" and for harmonisation validation design.</li>
+<li>Gebre RK, Senjem ML, Raghavan S, et al. (2023). Cross-scanner harmonization methods for structural MRI may
+    need further work: A comparison study. NeuroImage. doi:10.1016/j.neuroimage.2023.119912. PMID: 36731814.
+    Shows: GE -&gt; Siemens comparison (113 crossover, 454 longitudinal) revealed scanner-change over/underestimation
+    of cortical thickness; ComBat matched distributions but could not raise ICCs or remove scanner-change effects,
+    and CycleGAN/NST only slightly better. Cited for the limits of harmonisation across a real scanner change.</li>
+<li>Maikusa N, Zhu Y, Uematsu A, et al. (2021). Comparison of traveling-subject and ComBat harmonization methods
+    for assessing structural brain characteristics. Human Brain Mapping. doi:10.1002/hbm.25615. PMID: 34402132.
+    Shows: TS-GLM and TS-ComBat reduced measurement bias by up to 85 % and 81.3 % vs 59 % for ComBat, with at least
+    six travelling subjects needed under matched protocols. Cited for travelling-subject design requirements.</li>
+<li>Dewey BE, Zhao C, Reinhold JC, et al. (2019). DeepHarmony: A deep learning approach to contrast harmonization
+    across scanner changes. Magnetic Resonance Imaging. doi:10.1016/j.mri.2019.05.041. PMID: 31301354.
+    Shows: a U-Net trained on an 8-subject overlap cohort improved cross-protocol volume-consistency and largely
+    removed protocol-change effects on MS atrophy calculations. Cited for image-level harmonisation.</li>
+<li>Billot B, Greve DN, Puonti O, et al. (2023). SynthSeg: Segmentation of brain MRI scans of any contrast and
+    resolution without retraining. Medical Image Analysis. doi:10.1016/j.media.2023.102789. PMID: 36857946.
+    Shows: domain-randomised training makes SynthSeg robust to contrast and resolution changes, generalising across
+    five modalities and ten resolutions without retraining. Cited for SynthSeg's robustness justification.</li>
+<li>Cerri S, Greve DN, Hoopes A, et al. (2023). An open-source tool for longitudinal whole-brain and white matter
+    lesion segmentation. NeuroImage: Clinical. doi:10.1016/j.nicl.2023.103354. PMID: 36907041.
+    Shows: subject-specific latent variables enforcing temporal consistency raise test-retest reliability and
+    sensitivity to longitudinal disease effects in AD/MS data. Cited for lesion-aware longitudinal segmentation.</li>
+<li>Bedford SA, Ortiz-Rosa A, Schabdach JM, et al. (2023). The impact of quality control on cortical morphometry
+    comparisons in autism. Imaging Neuroscience. doi:10.1162/imag_a_00022. PMID: 38495338.
+    Shows: FreeSurfer surface quality interacts with clinical/demographic factors; thresholding by QC attenuates
+    but does not eliminate quality impact, and inadequate QC control alters case-control results. Cited for QC as a
+    mandatory step before morphometry.</li>
+<li>Sederevičius D, Vidal-Piñeiro D, Sørensen Ø, et al. (2021). Reliability and sensitivity of two whole-brain
+    segmentation approaches included in FreeSurfer - ASEG and SAMSEG. NeuroImage. doi:10.1016/j.neuroimage.2021.118113.
+    PMID: 33940143.
+    Shows: SAMSEG had significantly lower differences between repeated measures for intra- and inter-scanner data
+    than ASEG without losing sensitivity. Cited for segmentation-method choice under scanner change.</li>
+<li>Esteban O, Birman D, Schaer M, et al. (2017). MRIQC: Advancing the automatic prediction of image quality in MRI
+    from unseen sites. PLoS ONE. doi:10.1371/journal.pone.0184661. PMID: 28945803.
+    Shows: MRIQC's accept/exclude classifier reached 76 % +/- 13 % accuracy on new sites, i.e. it is susceptible to
+    site effects and needs site-aware use. Cited for raw-image QC in a 7-site cohort.</li>
+<li>Fortin JP, Cullen N, Sheline YI, et al. (2018). Harmonization of cortical thickness measurements across
+    scanners and sites. NeuroImage. doi:10.1016/j.neuroimage.2017.11.024. PMID: 29155184.
+    Shows: ComBat removed scanner-related variability in cortical thickness across two large multi-site studies
+    (11 scanners) and increased power and reproducibility of subsequent analyses. Cited as the statistical
+    foundation of the ComBat family used for structural MRI.</li>
+<li>Radua J, Vieta E, Shinohara R, et al. (2020). Increased power by harmonizing structural MRI site differences
+    with the ComBat batch adjustment method in ENIGMA. NeuroImage. doi:10.1016/j.neuroimage.2020.116956.
+    PMID: 32470572.
+    Shows: in 2897 schizophrenia cases and 3141 controls from 33 sites, ComBat mega-analysis substantially increased
+    statistical significance versus random-effects meta-analysis and slightly versus mixed-effects mega-analysis.
+    Cited for the power gain of ComBat over site-as-covariate approaches at scale.</li>
+</ol>
+<h2>Trägt nicht</h2>
+<p>Open questions from the report:</p>
+<ul>
+<li>What is the exact effect size of a head-coil change specifically on SynthSeg 2 output? The coil literature we
+  retrieved used VBM/FSL [6]; a direct SynthSeg coil comparison was not found.</li>
+<li>Can scanner/platform changes be detected automatically and reliably from DICOM headers in a longitudinal cohort
+  (the sub-question's literal form)? No validated algorithm was retrieved; this remains unverified here and is a
+  gap for a methods paper.</li>
+<li>Does longComBat remain calibrated when the scanner variable is <em>time-varying within subject</em> (an upgrade midway),
+  as opposed to the between-subject site structure assumed in most ADNI-style evaluations [13,15]?</li>
+<li>Which is better for a stroke cohort with WMH: longComBat on FreeSurfer/SynthSeg volumes, a scanner covariate in
+  the mixed model, or image-level deep harmonisation? The retrieved comparison suggests none dominates [15].</li>
+<li>Stroke-specific lesion-filling effects on cortical thickness across visits were not directly retrieved; the
+  closest evidence is MS and general lesion-aware longitudinal segmentation [8,19].</li>
+<li>Whether a travelling-subject sub-study of ~6 participants [16] is sufficient when the coil, not just the
+  platform, changes.</li>
+</ul>
+<p>Claims rest on abstracts, not full texts, unless the report says otherwise.</p>
+<h2>Bruchindikator</h2>
+<p>A full-text reading or a later consensus paper contradicts a cited effect size or recommendation; or our own cohort data show the opposite (for example no scanner effect at a scanner change).</p>
+<h2>Ablesung</h2>
+<p>Report written 2026-10-18 by Clara (hospital model hub), question set by Claude Code after a pipeline audit; sources verified with quellen-pruefen the same day.</p></div></details><details class="entry" id="research-segmentation-qc-at-scale-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-segmentation-qc-at-scale-2026-10.html">Literature: quality control of automatic brain segmentation in ~1500 sessions</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (21 refs, checked): Euler number best cheap QC metric (AUC 0.98-0.99); trained classifiers beat single metrics; outlier exclusion on global measures can hurt; calibrate thresholds on a rated sample</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-segmentation-qc-at-scale-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-segmentation-qc-at-scale-2026-10.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li>No single automated score decides quality. The comparison of 12 QC strategies on 259 FreeSurfer-processed
   scans found manual QC reduced unexplained variance most, and that the best automated substitutes were the

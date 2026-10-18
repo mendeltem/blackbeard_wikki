@@ -1199,6 +1199,17 @@
 "src": "knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md"
 },
 {
+"t": "Literature: drop-out and missing visits in long-term stroke and dementia imaging cohorts",
+"p": "brain_volumetry/findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (21 refs, checked): drop-out and missing visits in long-term stroke and dementia imaging cohorts",
+"id": "research-attrition-and-missing-data-longitudinal-stroke-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.md"
+},
+{
 "t": "Literature: reliable cortical segmentation in a multi-centre older post-stroke cohort",
 "p": "brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html",
 "a": "brain_volumetry",
@@ -1232,6 +1243,17 @@
 "src": "knowledge/brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.md"
 },
 {
+"t": "Literature: head-size normalisation and handling of structures that overlap a stroke lesion",
+"p": "brain_volumetry/findings/research-icv-normalisation-and-lesioned-structures-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (24 refs, checked): head-size normalisation and handling of structures that overlap a stroke lesion",
+"id": "research-icv-normalisation-and-lesioned-structures-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-icv-normalisation-and-lesioned-structures-2026-10.md"
+},
+{
 "t": "Literature: lesion filling vs masking before segmentation and volumetry in stroke/WMH cohorts",
 "p": "brain_volumetry/findings/research-lesion-filling-before-segmentation-2026-10.html",
 "a": "brain_volumetry",
@@ -1252,6 +1274,28 @@
 "x": "Literature (27 refs, checked): mixed models with random slopes, non-linear early atrophy, MAR-aware missing data, longComBat over site covariate, scanner change within site biases 2-4 %",
 "id": "research-longitudinal-volumetry-statistics-after-stroke-2026-10",
 "src": "knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md"
+},
+{
+"t": "Literature: methods and reporting checklist for a multisite longitudinal structural MRI cohort",
+"p": "brain_volumetry/findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (22 refs, checked): methods and reporting checklist for a multisite longitudinal structural MRI cohort",
+"id": "research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.md"
+},
+{
+"t": "Literature: scanner, software or coil change between visits of the same participant",
+"p": "brain_volumetry/findings/research-scanner-change-within-subject-longitudinal-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (24 refs, checked): scanner, software or coil change between visits of the same participant",
+"id": "research-scanner-change-within-subject-longitudinal-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-scanner-change-within-subject-longitudinal-2026-10.md"
 },
 {
 "t": "Literature: quality control of automatic brain segmentation in ~1500 sessions",
@@ -1362,6 +1406,17 @@
 "x": "Vorschlag: Schleuse nur um autorecon1 (Synth-Phase), autorecon2/3 frei -> ~7,5 statt 3,4 Sitzungen je Stunde; getragen erst nach dem ersten gemessenen Batch",
 "id": "schedule-recon-all-8-by-phase-not-by-run",
 "src": "knowledge/brain_volumetry/rules/schedule-recon-all-8-by-phase-not-by-run.md"
+},
+{
+"t": "SynthSeg with --parc has no labels 3/42: the cortex is 1001-1035 / 2001-2035",
+"p": "brain_volumetry/rules/synthseg-parc-moves-cortex-labels.html",
+"a": "brain_volumetry",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-18",
+"x": "SynthSeg --parc has no labels 3/42: count the cortex as 1001-1035/2001-2035; check label lists against a real segmentation",
+"id": "synthseg-parc-moves-cortex-labels",
+"src": "knowledge/brain_volumetry/rules/synthseg-parc-moves-cortex-labels.md"
 },
 {
 "t": "„KI+\": Breitenziel 70 Prozent bis 2027",
