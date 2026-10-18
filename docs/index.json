@@ -1210,6 +1210,17 @@
 "src": "knowledge/brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.md"
 },
 {
+"t": "Literature: is cross-sectional per-session segmentation (SynthSeg, recon-all) consistent enough for 5-year atrophy, or is a longitudinal pipeline required?",
+"p": "brain_volumetry/findings/research-cross-sectional-vs-longitudinal-consistency-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (32 refs, checked): per-session cross-sectional segmentation (SynthSeg/recon-all) is NOT enough for 5-year within-person atrophy - longitudinal stream is systematically superior (+15-50 %); SDC-based flagging of implausible incre",
+"id": "research-cross-sectional-vs-longitudinal-consistency-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-cross-sectional-vs-longitudinal-consistency-2026-10.md"
+},
+{
 "t": "Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use",
 "p": "brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.html",
 "a": "brain_volumetry",
