@@ -1199,6 +1199,17 @@
 "src": "knowledge/brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.md"
 },
 {
+"t": "Literature: reliable cortical segmentation in a multi-centre older post-stroke cohort",
+"p": "brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (20 refs, checked): cortical failure ~38 % in clinical T1 is expected (atrophy, WMH, partial volume); volume vs thickness need different tools; SAMSEG most reproducible across scanners",
+"id": "research-cortex-segmentation-multisite-older-stroke-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-cortex-segmentation-multisite-older-stroke-2026-10.md"
+},
+{
 "t": "Literature: fractal dimensionality (FD) from FreeSurfer output, tools, settings, reliability, clinical use",
 "p": "brain_volumetry/findings/research-fractal-dimensionality-from-freesurfer-2026-10.html",
 "a": "brain_volumetry",
@@ -1219,6 +1230,28 @@
 "x": "Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling",
 "id": "research-lesion-filling-before-segmentation-2026-10",
 "src": "knowledge/brain_volumetry/findings/research-lesion-filling-before-segmentation-2026-10.md"
+},
+{
+"t": "Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort",
+"p": "brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (27 refs, checked): mixed models with random slopes, non-linear early atrophy, MAR-aware missing data, longComBat over site covariate, scanner change within site biases 2-4 %",
+"id": "research-longitudinal-volumetry-statistics-after-stroke-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md"
+},
+{
+"t": "Literature: quality control of automatic brain segmentation in ~1500 sessions",
+"p": "brain_volumetry/findings/research-segmentation-qc-at-scale-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (21 refs, checked): Euler number best cheap QC metric (AUC 0.98-0.99); trained classifiers beat single metrics; outlier exclusion on global measures can hurt; calibrate thresholds on a rated sample",
+"id": "research-segmentation-qc-at-scale-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-segmentation-qc-at-scale-2026-10.md"
 },
 {
 "t": "Literature: subcortical segmentation for a multi-centre longitudinal stroke cohort",
@@ -2869,6 +2902,17 @@
 "x": "Automatisches QC-Gate je DEMDAS-Sitzung: Euler-Zahl + SynthSeg-QC-Score (qc_gate.py -> qc_gate.csv), eine Zeile je Sitzung mit T1w",
 "id": "demdas-qc-gate-euler-synthseg",
 "src": "knowledge/mri_qc_viewers/findings/demdas-qc-gate-euler-synthseg.md"
+},
+{
+"t": "Literature: can vision-language models pre-sort medical image / segmentation QC?",
+"p": "mri_qc_viewers/findings/research-vision-language-models-for-image-qc-2026-10.html",
+"a": "mri_qc_viewers",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (30 refs, checked): no study shows autonomous VLM QC of segmentation overlays; orientation and image-only questions are weak, over-calling and kappa ~0.6; supervised use and local validation first",
+"id": "research-vision-language-models-for-image-qc-2026-10",
+"src": "knowledge/mri_qc_viewers/findings/research-vision-language-models-for-image-qc-2026-10.md"
 },
 {
 "t": "Den Schichtbetrachter als Tool unter tools/mri/ einstellen",

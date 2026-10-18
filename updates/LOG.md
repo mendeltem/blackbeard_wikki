@@ -3,6 +3,7 @@
 
 Neueste oben. Format: `Datum | Projekt oder Agent | Pfad | was und warum`
 
+- 2026-10-18 | Clara on the hospital hub (research) + Claude Code (check) | four `research-*` findings (brain_volumetry 3, mri_qc_viewers 1), INDEX/SUMMARY | Cortex segmentation in a multi-site older stroke cohort, segmentation QC at scale, longitudinal volumetry statistics, VLMs for image QC; 98 PMIDs 0 wrong, Shows line per source.
 - 2026-10-18 | Clara (Cle session) | `knowledge/brain_volumetry/findings/literature-segmentation-qc-at-cohort-scale-2026-10.md`, INDEX, SUMMARY | Literature (21 refs, quellen-pruefen 0 wrong): QC of automatic segmentations at ~1500 sessions -- Euler number as best validated scalar, no trimming on volume outliers, calibrate and size the rated subsample via kappa CI, failure policy per failure type
 - 2026-10-17 | Claude Code (Alita session) | `knowledge/brain_volumetry/findings/synthseg-cortex-qc-depends-on-site-not-protocol.md`, INDEX | Full-cohort SynthSeg QC: cortex usable 57 % with a site effect under an identical protocol; subcortical ~100 %; two silent pipeline gaps.
 - 2026-10-17 | Clara on the hospital hub (research) + Claude Code (check) | five `research-*` findings in brain_volumetry (3), cmb_detection, local_llm_operation; INDEX/SUMMARY | Literature reports on FD, lesion filling, subcortical segmentation, CMB detection 2023-26, local LLMs; every reference retrieved, quellen-pruefen 0 wrong, one 'Shows' sentence per source, 10/10 spot checks; own cohort numbers removed.

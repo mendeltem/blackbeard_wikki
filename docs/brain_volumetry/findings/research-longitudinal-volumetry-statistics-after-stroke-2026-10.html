@@ -1,0 +1,280 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Literature: statistics for longitudinal brain volumes after stroke in a multi-site cohort</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-18</span><span>Herkunft</span><span>research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts)</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="synthseg-cortex-qc-depends-on-site-not-protocol.html">SynthSeg&#x27;s cortex QC score splits by site, not by protocol; subcortical scores are almost all fine</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md">knowledge/brain_volumetry/findings/research-longitudinal-volumetry-statistics-after-stroke-2026-10.md</a></span></div><h2>Aussage</h2>
+<ul>
+<li>Use a linear mixed-effects model with <strong>subject-specific random intercepts and random slopes for time</strong>; this is the
+  standard for longitudinal neuroimaging and is markedly more powerful than repeated-measures ANOVA or per-subject
+  slope extraction [1].</li>
+<li><strong>Code time as continuous years since baseline</strong> for the atrophy rate, and add a non-linear term (spline or piecewise
+  segments) because post-stroke atrophy is <strong>not linear</strong> — the first ~3 months are 2-4x faster than later periods [5][6].</li>
+<li><strong>Missing visits:</strong> do not use listwise deletion. Mixed models already give valid inference under MAR; where the
+  missingness is informative, use FIML / multiple imputation / IPW [3]. Expect heavy dropout: attrition to &lt;50% by
+  36 months is described in comparable stroke cohorts [7].</li>
+<li><strong>Site and scanner:</strong> include site and scanner as covariates in the model as the minimal option, but this does not
+  remove scanner-related variance — site explained &gt;50% of volume variance even with a harmonised protocol [13].
+  Use <strong>longitudinal ComBat</strong> for longitudinal data; it is more powerful for detecting change than cross-sectional
+  ComBat and controls type I error better than "scanner as covariate" [11][10][12].</li>
+<li><strong>Scanner change within a site</strong> is a real, measurable bias (significant differences in &gt;=67% of cortical/subcortical
+  regions, ~2-4%, after a 3T upgrade [14]); correct it with a transfer term estimated in controls (or in
+  travelling subjects) and model it as a fixed effect [14][15].</li>
+<li><strong>Head size:</strong> do not divide by ICV. Proportional correction biases results and can reverse the direction of
+  associations; <strong>residual/adjusted ICV</strong> (or ICV as a covariate) is preferable [16][17].</li>
+<li><strong>Lesion volume</strong> must be a covariate: it is an independent predictor of post-stroke cognition and larger lesions are
+  associated with greater later atrophy [4][8][9].</li>
+<li><strong>Measurement error</strong> sets the floor: longitudinal FreeSurfer improves precision by 15-50% over cross-sectional
+  [18][19]; with 2-year follow-up reliability of individual change is only modest and 2-year designs need ~2.7x more
+  subjects than 4-year designs [19]. Report a smallest detectable change, not just a p-value.</li>
+<li><strong>Normative modelling</strong> (centile/z-deviation from a healthy reference) adds individual-level deviation on top of the
+  group-level LME and captures heterogeneity that case-control averages away [20][21].</li>
+<li><strong>Power:</strong> with ~600 patients, 4 visits and long follow-up you are in a comfortable range for whole-brain and
+  subcortical change, but individual-level claims about small structures (entorhinal, choroid plexus) remain
+  underpowered [18][19][2].</li>
+</ul>
+<h3>Practical recommendation (as written for our setup)</h3>
+<p>Model (per structure, per hemisphere where ipsi/contralesional contrast is of interest):</p>
+<ul>
+<li>Outcome: harmonised regional volume (longitudinal FreeSurfer stream, [18][19]), <em>not</em> divided by ICV.</li>
+<li>Fixed effects: time in years since stroke (continuous) + a non-linear term (piecewise with break at ~3-6 months, or
+  natural spline); time x group interaction of interest; ICV [16][17]; age, sex; chronic lesion volume [7][8]; WMH
+  volume [8]; scanner identity as a factor [14][15]; cognitive status at 6 months if it is the exposure of interest
+  [6].</li>
+<li>Random effects: random intercept + random slope for time at the subject level; site as a random effect
+  (used in [8]); scanner as a random effect is an alternative but see the warning in [13] that variance-component
+  modelling explained site effects poorly.</li>
+<li>Harmonisation: longitudinal ComBat with site/scanner as batch and biological covariates preserved [11]; report the
+  unharmonised model as a sensitivity analysis. Use cross-sectional ComBat only if you cannot use the longitudinal
+  variant [10][12].</li>
+<li>Missing data: REML is the default (valid under MAR); add MICE/FIML/imputation for missing covariates and pre-specified
+  auxiliary variables [3][4]. Report the visit-specific n and the dropout pattern.</li>
+<li>Scanner changes: maintain a scanner/metadata log; if a change occurred, acquire a bridging sample and estimate a
+  transfer/corrective term from controls as in [14]; re-run the model with a scanner-change indicator.</li>
+<li>Reporting: for every structure, publish the within-subject SD/CV and smallest detectable change from a test-retest
+  or literature source [20][21][18]; report the group-level atrophy rate with a CI and, separately, the fraction of
+  individuals whose change exceeds the smallest detectable change.</li>
+<li>Individual-level layer: add a normative-model z-score at baseline and its change as a secondary outcome [22][23],
+  with explicit acknowledgement of the sample-size/uncertainty limits of normative models [24].</li>
+<li>Power: run the power analysis for the exact LME with the planned visit-specific n and the observed within-subject
+  correlation, and report sensitivity over a range of assumptions [2].</li>
+</ul>
+<h2>Trägt</h2>
+<p>Every reference retrieved in the task; quellen-pruefen: 0 wrong PMIDs/titles, DOIs registered (2026-10-18); one "Shows"
+sentence per reference from its abstract; spot checks consistent.</p>
+<h2>Trägt nicht</h2>
+<p>Abstract-level evidence, a literature map rather than a systematic review. Open questions:</p>
+<ul>
+<li>Which scanner/site effects remain after longitudinal ComBat in <em>our</em> cohort, given that site effects persisted even
+  under a harmonised protocol in [13]? Only measurable with a repeat-scan bridging sample.</li>
+<li>To what extent is our dropout informative (MNAR) with respect to the volume trajectory, and are IPW or a joint model
+  needed in addition to REML? [3][4] give the methods, not the answer for this cohort.</li>
+<li>Is a single non-linear time model sufficient, or should the early (&lt;6 months) and late (&gt;36 months) phases be
+  analysed as separate models? [5] motivates the question but does not settle the model choice.</li>
+<li>How large is the scanner-change correction term for our specific upgrade, and can controls provide it? [14] gives a
+  3.4% figure for a 1.5T-&gt;3T change; this is not transferable without our own bridge data.</li>
+<li>Does ICV itself drift after a scanner change or after large infarcts, and how should it then be handled [13][17]?</li>
+<li>Which normative reference model matches our segmentation version and age range, and is its uncertainty acceptable for
+  individual-level claims at ~600 patients [23][24]?</li>
+<li>Thalamic atrophy specifically: [5][7] show stroke-driven thalamic loss, but the relative contribution of direct
+  thalamic infarction vs secondary degeneration to a "thalamic atrophy rate" is not resolved by the retrieved papers.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>A cited abstract that does not contain the claim, or a newer study contradicting the recommendation.</p>
+<h2>Ablesung</h2>
+<p>[1] Bernal-Rusiel JL, Reuter M, Greve DN, et al., 2013, Spatiotemporal linear mixed effects modeling for the
+mass-univariate analysis of longitudinal neuroimage data, Neuroimage, doi:10.1016/j.neuroimage.2013.05.049,
+PMID:23702413.
+Shows: extends linear mixed-effects modelling to mass-univariate longitudinal neuroimaging and reports a dramatic gain
+in statistical power and repeatability of findings over two alternative methods while controlling the false-positive
+rate — the methodological basis for the recommended LME.</p>
+<p>[2] Harrall KK, Muller KE, Starling AP, et al., 2023, Power and sample size analysis for longitudinal mixed models of
+health in populations exposed to environmental contaminants: a tutorial, BMC Med Res Methodol,
+doi:10.1186/s12874-022-01819-y, PMID:36635621.
+Shows: a practical tutorial showing how to align a power analysis with the planned longitudinal mixed model, which
+inputs are needed (effect size, SD, within-subject correlation) and how to report sensitivity analyses — the basis for
+the power recommendation.</p>
+<p>[3] Li L, Bayat M, Hayes TB, et al., 2025, Missing data approaches for longitudinal neuroimaging research: Examples
+from the Adolescent Brain and Cognitive Development (ABCD) Study, Dev Cogn Neurosci, doi:10.1016/j.dcn.2025.101563,
+PMID:40413902.
+Shows: listwise deletion is not recommended for longitudinal neuroimaging because it can bias results substantially;
+multiple imputation, propensity-score weighting and full information maximum likelihood are advocated — the basis for
+the missing-data recommendation.</p>
+<p>[4] Chandrasekaran G, Xie SX, 2024, Improving Regression Analysis with Imputation in a Longitudinal Study of
+Alzheimer's Disease, J Alzheimers Dis, doi:10.3233/JAD-231047, PMID:38640151.
+Shows: in 1063 ADNI subjects with mild cognitive impairment, MICE imputation before a linear mixed-effects model gave
+valid but tighter confidence intervals, i.e. improved efficiency over analysis without imputation, while warning that
+an invalid imputation approach can compromise the analysis.</p>
+<p>[5] Brodtmann A, Khlif MS, Egorova N, et al., 2020, Dynamic Regional Brain Atrophy Rates in the First Year After
+Ischemic Stroke, Stroke, doi:10.1161/STROKEAHA.120.030256, PMID:32772680.
+Shows: with a linear mixed-effect model over baseline/3/12 months in 113 stroke and 40 control participants,
+ipsilesional hemispheric, hippocampal and thalamic atrophy rates were 2-4 times greater in the first 3 months than
+between 3 and 12 months — evidence that time must be modelled non-linearly.</p>
+<p>[6] Brodtmann A, Werden E, Khlif MS, et al., 2021, Neurodegeneration Over 3 Years Following Ischaemic Stroke:
+Findings From the Cognition and Neocortical Volume After Stroke Study, Front Neurol, doi:10.3389/fneur.2021.754204,
+PMID:34744989.
+Shows: 3-month-to-3-year total brain volume loss was 20.3 cm3 (SD 14.8) in 93 stroke survivors versus 14.2 cm3 (SD 13.2)
+in 39 controls (adjusted difference 7.88 cm3, 95% CI 2.84-12.91, p = 0.002), and was larger in those cognitively
+impaired at 3 months (adjusted difference 10.42 cm3, 95% CI 3.04-17.80) — a concrete post-stroke atrophy rate and its
+link to early cognitive impairment.</p>
+<p>[7] Aamodt EB, Lydersen S, Alnæs D, et al., 2022, Longitudinal Brain Changes After Stroke and the Association With
+Cognitive Decline, Front Neurol, doi:10.3389/fneur.2022.856919, PMID:35720079.
+Shows: in 244 stroke survivors from five hospitals followed to 36 months (145 scanned at 18 months, 72 at 36 months),
+atrophy was greater ipsilesionally and more so on the right, and greater atrophy and larger stroke lesion volumes were
+associated with cognitive decline — evidence for lesion volume as covariate and for the attrition pattern.</p>
+<p>[8] de Kort FAS, Coenen M, Weaver NA, et al., 2023, White Matter Hyperintensity Volume and Poststroke Cognition: An
+Individual Patient Data Pooled Analysis of 9 Ischemic Stroke Cohort Studies, Stroke,
+doi:10.1161/STROKEAHA.123.044297, PMID:37901947.
+Shows: in 1568 pooled patients, linear mixed models with study site as a random effect found a dose-dependent inverse
+association of WMH volume with all four cognitive domains independent of acute infarct volume, lacunes and old
+infarcts — direct precedent for site as a random effect and for lesion/WMH covariates.</p>
+<p>[9] Ball EL, Shah M, Ross E, et al., 2023, Predictors of post-stroke cognitive impairment using acute structural MRI
+neuroimaging: A systematic review and meta-analysis, Int J Stroke, doi:10.1177/17474930221120349, PMID:35924821.
+Shows: pooling 26 papers (27 populations, N = 13,114) with MRI at stroke onset and cognitive outcome at least 3 months
+later, cerebral atrophy (OR 2.48, 95% CI 1.15-4.62), microbleeds (OR 1.36, 1.08-1.70) and increasing WMH severity
+(OR 1.26, 1.06-1.49) were associated with later cognitive outcome.</p>
+<p>[10] Fortin JP, Cullen N, Sheline YI, et al., 2018, Harmonization of cortical thickness measurements across scanners
+and sites, Neuroimage, doi:10.1016/j.neuroimage.2017.11.024, PMID:29155184.
+Shows: across 11 scanners in two multi-site studies ComBat removed unwanted scanner variability while increasing the
+power and reproducibility of subsequent analyses, and is applicable to lifespan trajectories — the core cross-sectional
+harmonisation reference.</p>
+<p>[11] Beer JC, Tustison NJ, Cook PA, et al., 2020, Longitudinal ComBat: A method for harmonizing longitudinal
+multi-scanner imaging data, Neuroimage, doi:10.1016/j.neuroimage.2020.117129, PMID:32640273.
+Shows: with 663 ADNI participants, longitudinal ComBat was more powerful for detecting longitudinal change than
+cross-sectional ComBat and controlled the type I error rate better than unharmonised data with scanner as a covariate,
+while modelling additive and multiplicative scanner effects — the key harmonisation reference for a longitudinal design.</p>
+<p>[12] Radua J, Vieta E, Shinohara R, et al., 2020, Increased power by harmonizing structural MRI site differences with
+the ComBat batch adjustment method in ENIGMA, Neuroimage, doi:10.1016/j.neuroimage.2020.116956, PMID:32470572.
+Shows: in 33 sites (~6000 subjects) ComBat substantially increased statistical significance versus random-effects
+meta-analysis and slightly increased it versus mixed-effects mega-analysis, with R functions robust to partially
+missing regions and transferable between datasets — evidence for the power gain and for practical applicability.</p>
+<p>[13] Clark KA, O'Donnell CM, Elliott MA, et al., 2023, Intersite brain MRI volumetric biases persist even in a
+harmonized multisubject study of multiple sclerosis, J Neuroimaging, doi:10.1111/jon.13147, PMID:37587544.
+Shows: with scan/rescan data from 11 volunteers at four sites, site explained &gt;50% (expanding to &gt;75% across two
+vendors) of the variation in most estimated volumes, random-effect model assumptions were violated for most
+comparisons, and differences persisted despite protocol harmonisation — the cautionary counterweight to pure
+covariate/variance-component adjustment.</p>
+<p>[14] Sinnecker T, Schädelin S, Benkert P, et al., 2022, Brain atrophy measurement over a MRI scanner change in
+multiple sclerosis, Neuroimage Clin, doi:10.1016/j.nicl.2022.103148, PMID:36007437.
+Shows: after a 1.5T-to-3T scanner upgrade the mean whole-brain volume change was -4.1% in patients and -3.4% in
+controls; a fixed corrective term of 3.4% (95% CI 3.13-3.67) estimated from controls removed the association of
+atrophy measures with scanner type (p = 0.29) in a linear mixed-effects model — the template for handling a scanner
+change with bridge data.</p>
+<p>[15] Medawar E, Thieleking R, Manuilova I, et al., 2021, Estimating the effect of a scanner upgrade on measures of
+grey matter structure for longitudinal designs, PLoS One, doi:10.1371/journal.pone.0239021, PMID:34610020.
+Shows: comparing 3T Verio and Skyra in 116 healthy adults using the longitudinal FreeSurfer stream, between-scanner
+ICC was &gt;0.8 but paired tests showed significant differences in at least 67% of regions with 2-4% differences, only
+slightly reduced by offline gradient-distortion correction, plus systematic differences in contrast-based quality
+metrics.</p>
+<p>[16] Dhamala E, Ooi LQR, Chen J, et al., 2022, Proportional intracranial volume correction differentially biases
+behavioral predictions across neuroanatomical features, sexes, and development, Neuroimage,
+doi:10.1016/j.neuroimage.2022.119485, PMID:35843514.
+Shows: proportional ICV correction reduced predictive accuracy for surface area and grey matter volume while increasing
+it for cortical thickness in 1013 adults and 1823 children, and changed the generalisability of models across sexes and
+age groups — evidence against treating proportional ICV correction as neutral.</p>
+<p>[17] Opfer R, Krüger J, Spies L, et al., 2022, Single-subject analysis of regional brain volumetric measures can be
+strongly influenced by the method for head size adjustment, Neuroradiology, doi:10.1007/s00234-022-02961-6,
+PMID:35462574.
+Shows: in a normative database of 5059 T1w images and 127 MS patients, the residual TIV method removed the TIV
+association in all regions and reduced between-subject variability more than the proportion method, and gave a larger
+AUC for thalamic atrophy (0.84 vs 0.79); method differences exceeded one z-score point in 5% of subjects.</p>
+<p>[18] Reuter M, Schmansky NJ, Rosas HD, et al., 2012, Within-subject template estimation for unbiased longitudinal
+image analysis, Neuroimage, doi:10.1016/j.neuroimage.2012.02.084, PMID:22430496.
+Shows: unbiased within-subject template creation for longitudinal FreeSurfer processing reduces variability and avoids
+over-regularisation, giving a significant increase in precision and discrimination power that can allow smaller sample
+sizes or shorter trials — the reason to use the longitudinal processing stream.</p>
+<p>[19] Jovicich J, Marizzoni M, Sala-Llonch R, et al., 2013, Brain morphometry reproducibility in multi-center 3T MRI
+studies: a comparison of cross-sectional and longitudinal segmentations, Neuroimage,
+doi:10.1016/j.neuroimage.2013.05.007, PMID:23668971.
+Shows: across-session test-retest data from 8 sites in 4 countries and three vendors showed longitudinal FreeSurfer
+segmentation is systematically more reliable across sites regardless of MRI system differences, with reproducibility
+errors about half of those of cross-sectional analysis for volume segmentations.</p>
+<p>[20] Rusinek H, Bokacheva L, Chen H, et al., 2026, Test-retest reliability of FreeSurfer measures of
+neurodegeneration, Neuroimage, doi:10.1016/j.neuroimage.2026.121920, PMID:41966233.
+Shows: two 3T scans ~5.5 weeks apart in 100 older adults showed longitudinal processing improved precision by 15-50%
+(largest gain for entorhinal thickness), large well-defined regions (hippocampus, AD signature) were more reliable
+than small complex ones (entorhinal cortex, choroid plexus), and image quality (Euler characteristic) was the only
+factor significantly associated with variability.</p>
+<p>[21] Vidal-Piñeiro D, Sørensen Ø, Strømstad M, et al., 2025, Reliability of structural brain change in cognitively
+healthy adult samples, Imaging Neurosci (Camb), doi:10.1162/imag_a_00547, PMID:40800869.
+Shows: reliability of individual change is modest at 2-year follow-up; longer follow-up increases reliability
+substantially while adding observations helps little; 2-year designs need about 2.7x (4-year) and 4.0x (6-year) more
+individuals for comparable power; subcortical volume is more reliable than cortical measures and the longitudinal
+FreeSurfer stream clearly outperforms the cross-sectional one.</p>
+<p>[22] Marquand AF, Rezek I, Buitelaar J, et al., 2016, Understanding Heterogeneity in Clinical Cohorts Using Normative
+Models: Beyond Case-Control Studies, Biol Psychiatry, doi:10.1016/j.biopsych.2015.12.023, PMID:26927419.
+Shows: introduces normative modelling to parse heterogeneity in clinical cohorts with individual-level predictions,
+identifying outliers within a healthy reference distribution and relating the magnitude of deviation to
+symptomatology — the conceptual basis for adding individual deviation analysis.</p>
+<p>[23] Ge R, Yu Y, Qi YX, et al., 2024, Normative modelling of brain morphometry across the lifespan with
+CentileBrain: algorithm benchmarking and model optimisation, Lancet Digit Health, doi:10.1016/S2589-7500(23)00250-9,
+PMID:38395541.
+Shows: benchmarking across 37,407 healthy individuals from 87 datasets showed multivariate fractional polynomial
+regression with non-linear age terms and linear global-measure covariates to be optimal, accurate across the lifespan
+and stable longitudinally over 2 years, with performance plateauing beyond about 3000 participants.</p>
+<p>[24] Bozek J, Griffanti L, Lau S, et al., 2023, Normative models for neuroimaging markers: Impact of model selection,
+sample size and evaluation criteria, Neuroimage, doi:10.1016/j.neuroimage.2023.119864, PMID:36621581.
+Shows: simulation of normative models for hippocampal volume across sample sizes from 50 to 50,000 shows that bias
+decreases only modestly with sample size, that uncertainty of model performance is substantial even at large
+neuroimaging sample sizes and rises sharply at the ends of the age range, and that flexible models perform better —
+a caution for individual-level normative claims.</p>
+<p>[25] Khlif MS, Werden E, Bird LJ, et al., 2022, Atrophy of Ipsilesional Hippocampal Subfields Vary Over First Year
+After Ischemic Stroke, J Magn Reson Imaging, doi:10.1002/jmri.28009, PMID:34837426.
+Shows: in 92 stroke and 39 healthy participants with FreeSurfer subfield segmentation, there was no group difference at
+3 months but a significant difference in ipsilesional whole-hippocampal volume reduction between 3 and 12 months
+(p = 0.027, ipsilesional volume smaller at 12 months p = 0.035), with 1.19% ipsilesional atrophy over 9 months, the
+hippocampal tail contributing 22.7% and CA1 reduction significant ipsilesionally (p = 0.007) and discriminating better
+than whole hippocampus (p &lt; 0.01).</p>
+<p>[26] Pendlebury ST, Rothwell PM, 2009, Prevalence, incidence, and factors associated with pre-stroke and post-stroke
+dementia: a systematic review and meta-analysis, Lancet Neurol, doi:10.1016/S1474-4422(09)70236-4, PMID:19782001.
+Shows: pooling 30 cohorts (7511 patients), pre-stroke dementia prevalence was 9-14%; post-stroke (&lt;1 year) dementia
+ranged from 7.4% (population-based first-ever stroke excluding pre-stroke dementia) to 41.3% (hospital-based recurrent
+stroke including it), with cumulative incidence beyond the first year only about 3.0% per year; medial temporal lobe
+atrophy was strongly associated with pre-stroke dementia.</p>
+<p>[27] Manco C, Cortese R, Leoncini M, et al., 2024, Hippocampal atrophy and white matter lesions characteristics can
+predict evolution to dementia in patients with vascular mild cognitive impairment, J Neurol Sci,
+doi:10.1016/j.jns.2024.123163, PMID:39128160.
+Shows: in 110 patients with vascular MCI followed for 2 years, 32 progressed to vascular dementia; converters had
+lower hippocampal volume (p = 0.015) and higher lesion volumes in specific tracts, hippocampal volume alone did not
+fully explain progression (p = 0.059) but combined with WMH volume the model was significant (p = 0.035).</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-18 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
