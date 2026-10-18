@@ -7,6 +7,7 @@ Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [literature-segmentation-qc-at-cohort-scale-2026-10](findings/literature-segmentation-qc-at-cohort-scale-2026-10.md) | Literature (21 refs, checked): no single score decides QC; Euler number best validated scalar (AUC 0.98-0.99); MRIQC/CAT12 kappa 0.30/0.28 off the shelf; never trim on volume outliers; SynthSeg QC 36% -> 91% after rescale/crop; size the rated subsample via kappa CI; edits need a covariate |
 | befund | [synthseg-cortex-qc-depends-on-site-not-protocol](findings/synthseg-cortex-qc-depends-on-site-not-protocol.md) | Full cohort: subcortical QC >= 0.65 in 99.8-100 %, cortex 57 %; cortex 18-88 % by site with identical protocol (scanner explains part); empty volume table and 237 sessions without QC found; growth flag ~4 % |
 | befund | [research-fractal-dimensionality-from-freesurfer-2026-10](findings/research-fractal-dimensionality-from-freesurfer-2026-10.md) | Literature (22 refs, checked): FD by box counting on FreeSurfer masks; ICC ~0.9-0.95; sensitive to registration/sequence/site; more sensitive than volume; usable longitudinally |
 | befund | [research-lesion-filling-before-segmentation-2026-10](findings/research-lesion-filling-before-segmentation-2026-10.md) | Literature (39 refs, checked): filling not masking fixes tissue misclassification; FreeSurfer volumes barely change in MS; artefacts scale with load; inpainting beats flat filling |

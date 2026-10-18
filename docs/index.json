@@ -1177,6 +1177,17 @@
 "src": "knowledge/brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.md"
 },
 {
+"t": "Literature: how to control automatic segmentation quality in a cohort of ~1500 sessions",
+"p": "brain_volumetry/findings/literature-segmentation-qc-at-cohort-scale-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-18",
+"x": "Literature (21 refs, checked): no single score decides QC; Euler number best validated scalar (AUC 0.98-0.99); MRIQC/CAT12 kappa 0.30/0.28 off the shelf; never trim on volume outliers; SynthSeg QC 36% -> 91% after rescale/crop; size the rat",
+"id": "literature-segmentation-qc-at-cohort-scale-2026-10",
+"src": "knowledge/brain_volumetry/findings/literature-segmentation-qc-at-cohort-scale-2026-10.md"
+},
+{
 "t": "recon-all 8.2: the memory peak is a 15-minute phase, not the whole run",
 "p": "brain_volumetry/findings/recon-all-8-memory-peak-is-a-15-minute-phase.html",
 "a": "brain_volumetry",
