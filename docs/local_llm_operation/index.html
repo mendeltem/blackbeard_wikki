@@ -49,7 +49,7 @@ Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.<
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>). Own measurement the same evening (CPU, 60 routing and 154 real approval cases): both local models beat bge-m3 kNN on confidence (approval coverage at 5 % error 0.94 decider-4b, 0.91 H2O, 0 kNN); a p &gt;= 0.8 gate let 1 and 0 of 36 approval-needed commands through.</p>
 <p><strong>Neu 2026-10-17 (Literatur, 25 gepruefte Quellen):</strong> Lokale Modelle fuer Patientendaten: Qualitaet stabil bei 4-5 Bit, ternaere Nachquantisierung bis 70B tragfaehig, Werkzeugaufrufe sind die Schwachstelle und muessen end-to-end getestet werden (<a href="findings/research-local-llm-for-patient-data-on-24gb-2026-10.html">research-local-llm-for-patient-data-on-24gb-2026-10</a>).</p>
 <p><strong>Neu 2026-10-17 (Hub-API, vLLM-Cluster, Sperre):</strong> Die Hub-API ist OpenAI-kompatibel (Aliase fast/frontier/eu/light/clea, Werkzeugaufrufe gehen); im 13-Aufgaben-Test clea 100 %, frontier 96 %, fast 92 % bei 180 tok/s, Denkmodelle brauchen max_tokens &gt;= 6000 (<a href="findings/hospital-model-hub-api-aliases-and-small-benchmark.html">hospital-model-hub-api-aliases-and-small-benchmark</a>). vLLM aus PyPI scheitert am Clustertreiber 565 (CUDA 12.7); das cu129-Release-Wheel plus torchcodec cpu laeuft, Start 4,5 min (<a href="findings/vllm-on-a-cuda-12-7-cluster-driver.html">vllm-on-a-cuda-12-7-cluster-driver</a>). Fuer Agenten mit Remote-Modell ist ein pre_tool_call-Plugin die harte Sperre, die Prompt-Regel nur eine Bitte (<a href="findings/pre-tool-hook-blocks-data-paths-for-remote-model.html">pre-tool-hook-blocks-data-paths-for-remote-model</a>).</p>
 <p><strong>Neu 2026-10-17 (gemessen):</strong> Agenten auf dem Charité-Modell-Hub (Hermes, OpenCode) loesen abgegrenzte Code-Aufgaben richtig, aber 6- bis 18-mal langsamer als Claude Code; beim offenen Review fand Claude Code 6 echte Zusatzfehler, OpenCode 1, Hermes lief in die Zeitgrenze (<a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">clara-cle-agents-solve-bounded-code-tasks-slower</a>).</p>
@@ -1938,6 +1938,93 @@ coverage at 5 % error, because its confidence does not separate right from wrong
 <h2>Bruchindikator</h2>
 <p>On the own test set the local model does not beat embedding kNN in coverage at 5 % error, or shadow mode shows
 confident wrong approvals: then keep kNN routing and human approvals.</p>
+<h2>Nachtrag 2026-10-19 evening: own measurement on Alita (CPU, 8 threads)</h2>
+<p>Local service for both models in the <code>/v1/systemone</code> format, measured on own cases against bge-m3 kNN
+(leave-one-out, k = 5). Own run 2026-10-19; the cases stay private (real commands with paths).</p>
+<table>
+<thead>
+<tr>
+<th>family</th>
+<th>method</th>
+<th>accuracy</th>
+<th>coverage at 5 % error</th>
+<th>p &gt;= 0.8: cases / errors</th>
+<th>approval-needed caught</th>
+<th>confident wrong "auto"</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>routing, 60 requests, 3 targets</td>
+<td>kNN</td>
+<td>0.80</td>
+<td>0.13</td>
+<td>29 / 2</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td></td>
+<td>decider-4b v2.1 Q4_K_M</td>
+<td>0.83</td>
+<td>0.62</td>
+<td>23 / 0</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td></td>
+<td>H2O-Lightning-4B Q8_0</td>
+<td>0.88</td>
+<td>0.80</td>
+<td>31 / 0</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>approval, 154 real shell commands, 36 need approval</td>
+<td>kNN</td>
+<td>0.82</td>
+<td>0.00</td>
+<td>130 / 17</td>
+<td>11 of 36</td>
+<td>16</td>
+</tr>
+<tr>
+<td></td>
+<td>decider-4b</td>
+<td>0.92</td>
+<td>0.94</td>
+<td>113 / 3</td>
+<td>26 of 36</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>H2O-Lightning-4B</td>
+<td>0.92</td>
+<td>0.91</td>
+<td>93 / 2</td>
+<td>25 of 36</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Both models beat kNN mainly in confidence, not in accuracy: kNN is confidently wrong (16 confident "auto" on
+  commands that need approval), the models put almost all their misses below p = 0.8. Approval vs kNN: McNemar
+  p = 0.004 (decider) and 0.006 (H2O); routing differences are not significant (n = 60).</li>
+<li>A gate "auto only at p &gt;= 0.8, otherwise ask" would have let through 1 (decider, a borderline delete) and 0 (H2O)
+  of the 36 approval-needed commands, while deciding 73 % / 60 % of all commands without a human.</li>
+<li>Misses cluster on commands that act on a remote host over ssh and on edits of another agent's configuration: such
+  classes belong in the fixed rule layer before the model.</li>
+<li>Labels: one labeller (the agent) with a rubric written before any model ran; no second rater yet.</li>
+<li>Practical: the H2O stock GGUF needs a llama.cpp build from October 2026 (older builds stop at the missing
+  next-token-prediction layer <code>blk.32</code>); the readout through llama-server <code>/completion</code> with an equal logit bias on
+  the labels reproduced the vendor card example (0.9654 vs 0.9657). The vendor's yes/no floor (0.801) must be off for
+  thresholding: with it every yes/no answer reports at least 0.801. CPU latency median 1.3-4.6 s (decider) and
+  3.9-9.5 s (H2O) per decision: a live gate needs the GPU.</li>
+</ul>
 <h2>Ablesung</h2>
 <p>Web research 2026-10-19, each source opened:
 - TypeSafe AI, Jev product page, https://typesafe.ai/ (accessed 2026-10-19): Jev as "System One Model" for automation,

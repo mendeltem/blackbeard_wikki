@@ -54,6 +54,33 @@ coverage at 5 % error, because its confidence does not separate right from wrong
 On the own test set the local model does not beat embedding kNN in coverage at 5 % error, or shadow mode shows
 confident wrong approvals: then keep kNN routing and human approvals.
 
+## Nachtrag 2026-10-19 evening: own measurement on Alita (CPU, 8 threads)
+Local service for both models in the `/v1/systemone` format, measured on own cases against bge-m3 kNN
+(leave-one-out, k = 5). Own run 2026-10-19; the cases stay private (real commands with paths).
+
+| family | method | accuracy | coverage at 5 % error | p >= 0.8: cases / errors | approval-needed caught | confident wrong "auto" |
+|---|---|---|---|---|---|---|
+| routing, 60 requests, 3 targets | kNN | 0.80 | 0.13 | 29 / 2 | - | - |
+| | decider-4b v2.1 Q4_K_M | 0.83 | 0.62 | 23 / 0 | - | - |
+| | H2O-Lightning-4B Q8_0 | 0.88 | 0.80 | 31 / 0 | - | - |
+| approval, 154 real shell commands, 36 need approval | kNN | 0.82 | 0.00 | 130 / 17 | 11 of 36 | 16 |
+| | decider-4b | 0.92 | 0.94 | 113 / 3 | 26 of 36 | 1 |
+| | H2O-Lightning-4B | 0.92 | 0.91 | 93 / 2 | 25 of 36 | 0 |
+
+- Both models beat kNN mainly in confidence, not in accuracy: kNN is confidently wrong (16 confident "auto" on
+  commands that need approval), the models put almost all their misses below p = 0.8. Approval vs kNN: McNemar
+  p = 0.004 (decider) and 0.006 (H2O); routing differences are not significant (n = 60).
+- A gate "auto only at p >= 0.8, otherwise ask" would have let through 1 (decider, a borderline delete) and 0 (H2O)
+  of the 36 approval-needed commands, while deciding 73 % / 60 % of all commands without a human.
+- Misses cluster on commands that act on a remote host over ssh and on edits of another agent's configuration: such
+  classes belong in the fixed rule layer before the model.
+- Labels: one labeller (the agent) with a rubric written before any model ran; no second rater yet.
+- Practical: the H2O stock GGUF needs a llama.cpp build from October 2026 (older builds stop at the missing
+  next-token-prediction layer `blk.32`); the readout through llama-server `/completion` with an equal logit bias on
+  the labels reproduced the vendor card example (0.9654 vs 0.9657). The vendor's yes/no floor (0.801) must be off for
+  thresholding: with it every yes/no answer reports at least 0.801. CPU latency median 1.3-4.6 s (decider) and
+  3.9-9.5 s (H2O) per decision: a live gate needs the GPU.
+
 ## Ablesung
 Web research 2026-10-19, each source opened:
 - TypeSafe AI, Jev product page, https://typesafe.ai/ (accessed 2026-10-19): Jev as "System One Model" for automation,
