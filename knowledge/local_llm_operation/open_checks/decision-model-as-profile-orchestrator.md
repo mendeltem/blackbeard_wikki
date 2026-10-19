@@ -92,6 +92,10 @@ oder als CPU-Dienst neben das 27B; ein zweiter llama-server auf 8003 mit
 `--n-gpu-layers 0` kostet nur RAM. Messung wie oben: 60 Faelle, drei Ziele,
 gegen Embedding+kNN und Laya.
 
+## Nachtrag 2026-10-19
+State of open System One models and harness integration (approvals, prepared context, evaluation): see
+[system-one-decision-layer-for-agent-harnesses](system-one-decision-layer-for-agent-harnesses.md).
+
 ## Verknuepft
 - [laya-router-before-agent](../findings/laya-router-before-agent.md)
 - [flash-next-177b-moe-on-24gb-card](../findings/flash-next-177b-moe-on-24gb-card.md)

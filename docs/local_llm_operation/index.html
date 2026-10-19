@@ -43,13 +43,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness, HPC, SLURM, shard, Port 22, Tunnel</p>
-<div class="stripe"><i class="warn" style="width:43.9%" title="vorschlag: 18"></i><i class="ok" style="width:39.0%" title="getragen: 16"></i><i class="info" style="width:14.6%" title="offen: 6"></i><i class="" style="width:2.4%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">18 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">6 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+<div class="stripe"><i class="warn" style="width:42.9%" title="vorschlag: 18"></i><i class="ok" style="width:38.1%" title="getragen: 16"></i><i class="info" style="width:16.7%" title="offen: 7"></i><i class="" style="width:2.4%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">18 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
 Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
 <p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-17 (Literatur, 25 gepruefte Quellen):</strong> Lokale Modelle fuer Patientendaten: Qualitaet stabil bei 4-5 Bit, ternaere Nachquantisierung bis 70B tragfaehig, Werkzeugaufrufe sind die Schwachstelle und muessen end-to-end getestet werden (<a href="findings/research-local-llm-for-patient-data-on-24gb-2026-10.html">research-local-llm-for-patient-data-on-24gb-2026-10</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>).</p>
+<p><strong>Neu 2026-10-17 (Literatur, 25 gepruefte Quellen):</strong> Lokale Modelle fuer Patientendaten: Qualitaet stabil bei 4-5 Bit, ternaere Nachquantisierung bis 70B tragfaehig, Werkzeugaufrufe sind die Schwachstelle und muessen end-to-end getestet werden (<a href="findings/research-local-llm-for-patient-data-on-24gb-2026-10.html">research-local-llm-for-patient-data-on-24gb-2026-10</a>).</p>
 <p><strong>Neu 2026-10-17 (Hub-API, vLLM-Cluster, Sperre):</strong> Die Hub-API ist OpenAI-kompatibel (Aliase fast/frontier/eu/light/clea, Werkzeugaufrufe gehen); im 13-Aufgaben-Test clea 100 %, frontier 96 %, fast 92 % bei 180 tok/s, Denkmodelle brauchen max_tokens &gt;= 6000 (<a href="findings/hospital-model-hub-api-aliases-and-small-benchmark.html">hospital-model-hub-api-aliases-and-small-benchmark</a>). vLLM aus PyPI scheitert am Clustertreiber 565 (CUDA 12.7); das cu129-Release-Wheel plus torchcodec cpu laeuft, Start 4,5 min (<a href="findings/vllm-on-a-cuda-12-7-cluster-driver.html">vllm-on-a-cuda-12-7-cluster-driver</a>). Fuer Agenten mit Remote-Modell ist ein pre_tool_call-Plugin die harte Sperre, die Prompt-Regel nur eine Bitte (<a href="findings/pre-tool-hook-blocks-data-paths-for-remote-model.html">pre-tool-hook-blocks-data-paths-for-remote-model</a>).</p>
 <p><strong>Neu 2026-10-17 (gemessen):</strong> Agenten auf dem Charité-Modell-Hub (Hermes, OpenCode) loesen abgegrenzte Code-Aufgaben richtig, aber 6- bis 18-mal langsamer als Claude Code; beim offenen Review fand Claude Code 6 echte Zusatzfehler, OpenCode 1, Hermes lief in die Zeitgrenze (<a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">clara-cle-agents-solve-bounded-code-tasks-slower</a>).</p>
 <p><strong>Neu 2026-10-17 (Clé/Clara, beim Plattenreinigen):</strong> "ALITA" ist ein Laufwerksname, kein Ordner — das Gruppenlaufwerk der AG am Wiki-Hub (<code>CSB_NeuroRad/temuuleu/ALITA</code>), waehrend die Maschine selbst Alita heisst (ein "Verschieben nach Alita" darauf ist ein Nullweg). Von einem Profil mit Remote-Modell ist der Datenort unter <code>/media</code> gesperrt, Uebertragen laeuft per <code>scp</code>/<code>rsync</code> von Hand oder aus dem lokalen Profil. Vorher Platz pruefen: das geteilte 12-TB-Laufwerk war 84 % voll (2,0 TB frei). Und ein Passwort im Chat ist verbrannt — der Klassifikator blockt es als Brute-Force-Muster, die Zeilen gehoeren dem Nutzer (<a href="rules/group-drive-move-ask-what-alita-means.html">group-drive-move-ask-what-alita-means</a>).</p>
@@ -57,7 +58,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
 <p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
 <p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
-<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="37.9" width="319.0" height="12.1" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 33</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 33)</figcaption></figure>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="38.2" width="319.0" height="11.8" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 34</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 34)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(6)</span></h2><details class="entry" id="group-drive-move-ask-what-alita-means"><summary><span class="type">Regel</span><span class="t"><a href="rules/group-drive-move-ask-what-alita-means.html">Before &quot;move X to Alita&quot;: find out whether Alita is a folder or a drive</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">&quot;ALITA&quot; is the group drive on the wiki hub, not a folder on the workstation (which is Alita); copy+checksum, 84 % full</span></summary><div class="body"><p class="small muted">Herkunft: Clé (Hermes, remote profile) 2026-10-17, disk cleanup on the workstation; user asked to &quot;move the MATLAB installer and the models to Alita&quot; · <a href="rules/group-drive-move-ask-what-alita-means.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/group-drive-move-ask-what-alita-means.md">Markdown</a></p><h2>Aussage</h2>
 <ol>
@@ -1866,7 +1867,103 @@ Datei. Zweiter Versuch ueber Offsets: 14,12 GiB, Summe stimmt mit der Datei.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
-</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(6)</span></h2><details class="entry" id="decision-model-as-profile-orchestrator"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Laya/Jev/Arch-Router als Weiche: nur zwischen residenten Zielen (klein/gross/Cloud), nie je Anfrage zwischen exklusiven Profilen; Laya zero-shot 0,36, erst gegen kNN messen</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Webrecherche 2026-10-08 zu Laya 0.4.0, Jev, Arch-Router, Routing-Benchmarks; eigene Profilmessungen · <a href="open_checks/decision-model-as-profile-orchestrator.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(7)</span></h2><details class="entry" id="system-one-decision-layer-for-agent-harnesses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a></span><span class="badge info">offen</span><span class="muted small">2026-10-19</span><span class="i">System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first</span></summary><div class="body"><p class="small muted">Herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08 · <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">Markdown</a></p><h2>Aussage</h2>
+<p>"System One" models (TypeSafe's Jev and its open clones) answer typed questions (Choice, Score, yes/no) with a
+probability in 30-500 ms instead of generating text. Inside an agent harness they fit four decision points:
+(1) which model handles the turn, (2) which prepared context (profile, skill set, saved prefix slot) it starts from,
+(3) whether a tool call runs without asking, (4) whether a result passes (task done, source supports the claim).
+Not to be confused with JEPA (LeCun's joint-embedding world models: V-JEPA 2.1, VL-JEPA, LeWorldModel): no JEPA model
+was found that makes harness decisions.</p>
+<p>State 2026-10-19 (foreign numbers unless marked):</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>open</th>
+<th>evidence</th>
+<th>use here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jev (TypeSafe)</td>
+<td>no, hosted API only</td>
+<td>JevBench reference 71.5; vendor's own workflow evals 67.8 % vs 74.1 % of a frontier model</td>
+<td>only for text without data</td>
+</tr>
+<tr>
+<td>H2O-Lightning-4B (h2oai, Qwen3.5-4B)</td>
+<td>Apache-2.0, GGUF</td>
+<td>model card: JevBench v1.1 composite 72.5 (&gt; Jev 71.5), ECE 0.017, 29 ms p50</td>
+<td>strongest local candidate</td>
+</tr>
+<tr>
+<td>decider-4b v2.1 (Mapika)</td>
+<td>Apache-2.0, GGUF</td>
+<td>own run 2026-10-08: 50/60 vs kNN 49/60, 21/21 at p &gt;= 0.8</td>
+<td>already on Alita</td>
+</tr>
+<tr>
+<td>Kev-4B</td>
+<td>Apache-2.0</td>
+<td>JevBench rank 37, but ties decider-4b on an independent 11-task panel (coverage at 5 % error 0.555 vs 0.556)</td>
+<td>comparison candidate</td>
+</tr>
+</tbody>
+</table>
+<p>The leaderboard does not transfer: on the independent panel a raw Qwen3-4B with ~72 % accuracy reaches only 0.091
+coverage at 5 % error, because its confidence does not separate right from wrong answers.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Harness: Hermes. Version 0.20.5 already has <code>approvals.mode: smart</code> with an auxiliary approval model; most
+  ready-made System One plugins target Hermes (approvals, routing, skill choice). OpenCode and Claude Code work through
+  plugins / PreToolUse and Stop hooks.</li>
+<li>Fixed rules before the model: anything that touches patient data goes to the local model, never decided by the
+  classifier; a deterministic deny list (cohort guard) runs before any learned approval gate; unclear cases escalate
+  to the human. A reviewed gate is safer than blanket allowlist entries for whole command classes.</li>
+<li>A hosted System One model sees the state it judges: data-free text only. Local clones speak the same wire format
+  (<code>POST /v1/systemone</code>), so plugins switch by base URL.</li>
+<li>Order: local service (decider-4b, H2O-Lightning-4B) -&gt; own test set (routing cases, real approval requests from the
+  harness logs, acceptance checks) scored as coverage at 5 % error against embedding kNN -&gt; one week shadow mode
+  (decide and log, do not act) -&gt; live with threshold p &gt;= 0.8, below that unchanged.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Taking a leaderboard rank as the choice: rank depends on the board and its weighting of speed and cost.</li>
+<li>The Hermes approval plugin with a plain-HTTP local server: it accepts custom endpoints only as HTTPS on the default
+  port (needs a local TLS proxy or a patch). The Hermes routing plugin talks to TypeSafe only (needs a base-URL patch).</li>
+<li>llama.cpp builds without the <code>/v1/systemone</code> route (proposed in llama.cpp PR #30361); decider runs through its own
+  Python wrapper meanwhile.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>On the own test set the local model does not beat embedding kNN in coverage at 5 % error, or shadow mode shows
+confident wrong approvals: then keep kNN routing and human approvals.</p>
+<h2>Ablesung</h2>
+<p>Web research 2026-10-19, each source opened:
+- TypeSafe AI, Jev product page, https://typesafe.ai/ (accessed 2026-10-19): Jev as "System One Model" for automation,
+  thresholds for autonomous action vs review, 42 USD per billion input tokens; no JEPA.
+- width.ai, "What Is Jev AI? TypeSafe's System One Model, and Where It Fits in an Agent Harness",
+  https://www.width.ai/post/what-is-jev-ai-typesafe : routing, context selection, tool approval, scoring; all speed and
+  cost numbers vendor-reported; nine documented failure modes ("context rot").
+- awesome-jev-tools, https://github.com/v-modal/awesome-jev-tools : curated list (&gt;100 tools) of harness plugins for
+  routing, approvals, compaction, evaluation, and local replacements.
+- anpicasso/hermes-jev-approvals (MIT), https://github.com/anpicasso/hermes-jev-approvals : replaces the Hermes smart
+  approval reviewer; six typed questions, fixed rule chain, self-reported 4.4x fewer prompts on 153 commands.
+- punkcanyang/hermes-jev-router (MIT), https://github.com/punkcanyang/hermes-jev-router : per-turn tier routing plus
+  trim-then-compress; no published measurements.
+- ReallyArtificial/stuntdouble (MIT), https://github.com/ReallyArtificial/stuntdouble : shadow proxy that runs local
+  doubles (Kev, Laya) beside Jev and logs agreement (against Jev, not ground truth).
+- h2oai/h2o-lightning-4b model card, https://huggingface.co/h2oai/h2o-lightning-4b : JevBench 72.5 vs 71.5, ECE 0.017,
+  <code>/v1/systemone</code> via vLLM or llama-server GGUF.
+- Anyesh, "The open Jev clones: three ways to read a decision, and a leaderboard that does not transfer", DEV Community,
+  https://dev.to/anyesh/the-open-jev-clones-three-ways-to-read-a-decision-and-a-leaderboard-that-does-not-transfer-4aea :
+  pointer head (Kev), mask-marker encoder (Laya), first-token logits; 11-task panel numbers above.
+- Barbosa JAS, 2026, "Calibrated Decision Models for Autonomous Penetration-Testing Harnesses: JEV and Laya as System
+  One Decision Layers", arXiv:2609.28940 : position paper, four decision points, one case study without significance.
+- unverified: JevBench leaderboard https://benchmarkheaven.com/jev-models (page too large to load; reportedly
+  Quyet-1.0-Large leads on another score); JEPA timeline (V-JEPA 2.1 March 2026, AMI Labs) only from secondary
+  coverage, https://startuphub.ai/ai-news/ai-figures/2026/figure-yann-lecun-jepa-release-cadence-2026-08-20 .
+Own: decider-4b v2.1 Q4_K_M on 60 routing cases, 2026-10-08 (see decision-model-as-profile-orchestrator).</p></div></details><details class="entry" id="decision-model-as-profile-orchestrator"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a></span><span class="badge info">offen</span><span class="muted small">2026-10-08</span><span class="i">Laya/Jev/Arch-Router als Weiche: nur zwischen residenten Zielen (klein/gross/Cloud), nie je Anfrage zwischen exklusiven Profilen; Laya zero-shot 0,36, erst gegen kNN messen</span></summary><div class="body"><p class="small muted">Herkunft: Alita, Webrecherche 2026-10-08 zu Laya 0.4.0, Jev, Arch-Router, Routing-Benchmarks; eigene Profilmessungen · <a href="open_checks/decision-model-as-profile-orchestrator.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/decision-model-as-profile-orchestrator.md">Markdown</a></p><h2>Aussage</h2>
 <p>Ein Entscheidungsmodell (Jev von TypeSafe, offen: Laya von Convai) liefert in
 30 bis 100 ms eine Wahl mit Wahrscheinlichkeit statt Text. Als Orchestrator
 taugt es nur dort, wo beide Ziele gleichzeitig antworten koennen. Auf einer
@@ -1972,6 +2069,9 @@ llama.cpp. Laya bleibt der kleinste Weg (322-421 Mio., CPU, 60 ms).</p>
 oder als CPU-Dienst neben das 27B; ein zweiter llama-server auf 8003 mit
 <code>--n-gpu-layers 0</code> kostet nur RAM. Messung wie oben: 60 Faelle, drei Ziele,
 gegen Embedding+kNN und Laya.</p>
+<h2>Nachtrag 2026-10-19</h2>
+<p>State of open System One models and harness integration (approvals, prepared context, evaluation): see
+<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
@@ -2209,5 +2309,5 @@ unterscheiden.</p>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-18 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-19 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>
