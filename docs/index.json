@@ -1331,6 +1331,17 @@
 "src": "knowledge/brain_volumetry/findings/research-subcortical-segmentation-longitudinal-stroke-2026-10.md"
 },
 {
+"t": "Literature: how good is SynthSeg 2 in FreeSurfer 8.2 (`mri_synthseg --parc --robust`) for longitudinal volumetry",
+"p": "brain_volumetry/findings/research-synthseg2-freesurfer82-validation-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-19",
+"x": "Literature (2 reports, 65 refs, checked): accuracy, precision, QC threshold 0.65 and version effects of SynthSeg 2 / FreeSurfer 8.2",
+"id": "research-synthseg2-freesurfer82-validation-2026-10",
+"src": "knowledge/brain_volumetry/findings/research-synthseg2-freesurfer82-validation-2026-10.md"
+},
+{
 "t": "Sequences of one session align by their headers; a voxel-space FLIRT start can rotate them by 90-180 degrees",
 "p": "brain_volumetry/findings/same-session-sequences-align-by-header-not-voxel-flirt.html",
 "a": "brain_volumetry",

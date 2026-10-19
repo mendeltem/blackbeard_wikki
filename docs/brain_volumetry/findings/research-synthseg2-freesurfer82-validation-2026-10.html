@@ -1,0 +1,94 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Literature: how good is SynthSeg 2 in FreeSurfer 8.2 (`mri_synthseg --parc --robust`) for longitudinal volumetry</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Literature: how good is SynthSeg 2 in FreeSurfer 8.2 (`mri_synthseg --parc --robust`) for longitudinal volumetry</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-19</span><span>Herkunft</span><span>two independent research reports by the remote-model agent (Clara on the hospital model hub), checked by Claude Code 2026-10-19 (quellen-pruefen 65 refs, 0 wrong; QC-threshold claim checked against the full text of Billot 2023 PNAS)</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="research-segmentation-qc-at-scale-2026-10.html">Literature: quality control of automatic brain segmentation in ~1500 sessions</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-cross-sectional-vs-longitudinal-consistency-2026-10.html">Literature: is cross-sectional per-session segmentation (SynthSeg, recon-all) consistent enough for 5-year atrophy, or is a longitudinal pipeline required?</a> <span class="muted small">(brain_volumetry)</span><br><a href="research-scanner-change-within-subject-longitudinal-2026-10.html">Literature: scanner, software or coil change between visits of the same participant</a> <span class="muted small">(brain_volumetry)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/research-synthseg2-freesurfer82-validation-2026-10.md">knowledge/brain_volumetry/findings/research-synthseg2-freesurfer82-validation-2026-10.md</a></span></div><h2>Aussage</h2>
+<ul>
+<li>Accuracy: SynthSeg reaches mean Dice 0.88 against manual labels on 1 mm MPRAGE (supervised in-domain network 0.91,
+  SAMSEG 0.85) and is designed for raw scans without skull stripping or bias correction [1]. The robust version with
+  cortical parcellation, QC and ICV ("SynthSeg+") is what <code>--parc --robust</code> runs [2]. Thin structures (cortex) lose
+  accuracy first; no per-parcel validation of labels 1001-1035/2001-2035 against manual tracing was found.</li>
+<li>QC threshold 0.65 is validated for the whole-scan decision: "reject if at least one region scores below 0.65" gave
+  sensitivity 0.999, specificity 0.906, accuracy 0.981, AUC 0.998 against an expert's pass/fail on 594 clinical scans;
+  the value was chosen on a validation set. Per structure the authors applied it (age trajectories) but did not
+  validate it separately [2]. The two reports disagreed here; the full text settles it.</li>
+<li>Precision: within-scanner smallest detectable change in a six-package comparison ranged from about 1 % (whole brain)
+  upwards, and every package showed systematic between-scanner differences (between-scanner SDC from 4.8 %, SynthSeg
+  thalamus) [3]. A same-session test-retest in an own cohort gave SDC95 0.66 % (brain), 1.38 % (cortex), but 4.67 % for
+  the thalamus, worse than the 2-3 % reported for SynthSeg and SAMSEG in [3] (full-text value, per review).</li>
+<li>The FreeSurfer longitudinal stream improves test-retest precision by 15-50 % over cross-sectional processing [4];
+  per-session SynthSeg is cross-sectional, so change measures need <code>recon-all -long</code> or SAMSEG for confirmation.</li>
+<li>Versions: <code>recon-all</code> 8.0 replaced the front end with SynthSeg, SynthStrip and SynthMorph and gives different output
+  than version 7; 8.1 and 8.2 give the same output as 8.0 (FreeSurfer release notes, documentation, not peer-reviewed)
+  [D1]. Never mix 7.x and 8.x within one longitudinal series. The 8.2 notes also warn that different combinations of build
+  and execution operating system can give different results, and offer <code>fs-allowed-os.txt</code> / <code>fs-allowed-versions.txt</code>
+  to lock them [D1]: workstation and HPC runs of the same series must use the same build and OS, or be compared first.</li>
+<li>Scanner change: a major upgrade shifted whole-brain volume by 3.4 % in healthy controls; a fixed corrective term
+  was estimated [5].</li>
+<li>Lesions: in ischaemic stroke, masking infarcts before automated segmentation made hippocampal volumes agree <em>less</em>
+  with manual tracing [6]; evidence on lesion filling is mixed, so keep the unfilled segmentation as a sensitivity
+  analysis.</li>
+<li>Trust at group level: ICV, brain, GM, WM, ventricles, total cortex, thalamus. Confirm with a second method:
+  hippocampus, amygdala, pallidum, thalamus and all change measures.</li>
+</ul>
+<h2>Trägt</h2>
+<p>Two independent reports (35 + 32 references; quellen-pruefen 65 PMIDs correct, 0 wrong, 2 preprint/documentation
+items without PMID). Threshold numbers read in the full text of [2] (Table 1 and Methods).</p>
+<h2>Trägt nicht</h2>
+<p>Most precision figures come from MS or healthy cohorts, not stroke; the thalamus value from [3] was not in its abstract.
+No peer-reviewed validation of <code>recon-all</code> 8.2 itself was found (only documentation). Pallidum reliability for SynthSeg
+specifically was not retrievable.</p>
+<h2>Bruchindikator</h2>
+<p>A per-structure validation of the 0.65 threshold showing poor agreement with visual ratings, or a validation of
+FreeSurfer 8.x showing version effects within 8.x.</p>
+<h2>Ablesung</h2>
+<p>Sources:
+1. Billot B, Greve DN, Puonti O, et al. 2023. SynthSeg: segmentation of brain MRI scans of any contrast and resolution without retraining. Med Image Anal 86:102789. DOI 10.1016/j.media.2023.102789. PMID 36857946.
+2. Billot B, Magdamo C, Cheng Y, et al. 2023. Robust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets. PNAS 120:e2216399120. DOI 10.1073/pnas.2216399120. PMID 36802420.
+3. van Nederpelt DR, Amiri H, Brouwer I, et al. 2023. Reliability of brain atrophy measurements in multiple sclerosis using MRI: an assessment of six freely available software packages for cross-sectional analyses. Neuroradiology 65:1459-1472. DOI 10.1007/s00234-023-03189-8. PMID 37526657.
+4. Rusinek H, Bokacheva L, Chen H, et al. 2026. Test-retest reliability of FreeSurfer measures of neurodegeneration. NeuroImage 333:121920. DOI 10.1016/j.neuroimage.2026.121920. PMID 41966233.
+5. Sinnecker T, Schadelin S, Benkert P, et al. 2022. Brain atrophy measurement over a MRI scanner change in multiple sclerosis. NeuroImage Clin 36:103148. DOI 10.1016/j.nicl.2022.103148. PMID 36007437.
+6. Khlif MS, Egorova N, Werden E, et al. 2019. A comparison of automated segmentation and manual tracing in estimating hippocampal volume in ischemic stroke and healthy control participants. NeuroImage Clin 21:101581. DOI 10.1016/j.nicl.2018.10.019. PMID 30606656.
+D1. FreeSurfer release notes 8.0.0-8.2.0, https://surfer.nmr.mgh.harvard.edu/fswiki/ReleaseNotes (documentation).</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-19 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

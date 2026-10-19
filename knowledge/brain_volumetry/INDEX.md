@@ -7,6 +7,7 @@ Stand 2026-10-13. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [research-synthseg2-freesurfer82-validation-2026-10](findings/research-synthseg2-freesurfer82-validation-2026-10.md) | Literature (2 reports, 65 refs, checked): accuracy, precision, QC threshold 0.65 and version effects of SynthSeg 2 / FreeSurfer 8.2 |
 | regel | [synthseg-parc-moves-cortex-labels](rules/synthseg-parc-moves-cortex-labels.md) | SynthSeg --parc has no labels 3/42: count the cortex as 1001-1035/2001-2035; check label lists against a real segmentation |
 | befund | [research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10](findings/research-methods-reporting-checklist-multisite-longitudinal-mri-2026-10.md) | Literature (22 refs, checked): methods and reporting checklist for a multisite longitudinal structural MRI cohort |
 | befund | [research-scanner-change-within-subject-longitudinal-2026-10](findings/research-scanner-change-within-subject-longitudinal-2026-10.md) | Literature (24 refs, checked): scanner, software or coil change between visits of the same participant |
