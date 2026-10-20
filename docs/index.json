@@ -2370,7 +2370,7 @@
 "a": "local_llm_operation",
 "y": "Prüfpunkt",
 "s": "offen",
-"d": "2026-10-19",
+"d": "2026-10-20",
 "x": "System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first",
 "id": "system-one-decision-layer-for-agent-harnesses",
 "src": "knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md"

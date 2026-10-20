@@ -1,6 +1,6 @@
 # TODO
 
-Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-19. Nicht von Hand bearbeiten:
+Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-20. Nicht von Hand bearbeiten:
 Änderungen gehören in den jeweiligen Eintrag, danach Liste neu erzeugen.
 
 32 offene Einträge.
@@ -72,7 +72,7 @@ Automatisch erzeugt von `tools/general/wiki_maintenance` am 2026-10-19. Nicht vo
 - [Kleiner Harness statt kleineres Modell?](knowledge/local_llm_operation/open_checks/minimal-harness-prompt-size.md) (pruefpunkt, offen, Stand 2026-10-04)
 - [Lademodus bei Expert-Offloading: mmap oder none?](knowledge/local_llm_operation/open_checks/mmap-vs-load-mode-none.md) (pruefpunkt, offen, Stand 2026-08-29)
 - [Wie viel Thinking brauchen Routineaufgaben im Agenten?](knowledge/local_llm_operation/open_checks/reasoning-effort-for-routine-agent-tasks.md) (pruefpunkt, offen, Stand 2026-10-04)
-- [A "System One" decision layer in the agent harness: four decisions, local model only, measure on own cases first](knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md) (pruefpunkt, offen, Stand 2026-10-19)
+- [A "System One" decision layer in the agent harness: four decisions, local model only, measure on own cases first](knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md) (pruefpunkt, offen, Stand 2026-10-20)
 
 ## manufacturing_costs
 

@@ -3,7 +3,7 @@ id: system-one-decision-layer-for-agent-harnesses
 typ: pruefpunkt
 status: offen
 thema: knowledge/local_llm_operation
-stand: 2026-10-19
+stand: 2026-10-20
 herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08
 verweist_auf: [decision-model-as-profile-orchestrator, laya-router-before-agent, lean-hermes-toolsets]
 ---
@@ -81,7 +81,50 @@ Local service for both models in the `/v1/systemone` format, measured on own cas
   thresholding: with it every yes/no answer reports at least 0.801. CPU latency median 1.3-4.6 s (decider) and
   3.9-9.5 s (H2O) per decision: a live gate needs the GPU.
 
+## Nachtrag 2026-10-20: independent evidence and the security gap
+Web research 2026-10-20, sources opened (see Ablesung).
+- The readout is not new: reading candidate-label logits at an answer slot and recalibrating them is PET (2020) and
+  "Calibrate Before Use" (2021); the clones differ in training data and calibration, not in mechanism (zephel01). Any
+  local model can be read the same way; the fine-tuned clones mainly buy calibration.
+- Confidence does not transfer between distributions. The decider-4b card itself warns "do not read a confidence of 0.8
+  as an 80% chance of being right": v2.1 is overconfident on hard items (JevBench hard tier mean confidence 0.799 at
+  accuracy 0.649; held-out hard-family ECE 0.147, v2 had 0.046). An independent evidence review (xbill, 2026-09-24)
+  finds labels beat zero-shot wherever tried, and that 50 to a few hundred own labels with one fitted temperature remove
+  most calibration error; the error direction changes by domain. Consequence here: the p >= 0.8 gate holds only for the
+  measured distribution (H2O 0 errors in 93 confident approvals, two-sided 95 % upper bound about 4 %); refit and
+  remeasure when the command mix changes.
+- Reported weak spots (single studies, unreplicated): swapping option names changed 32.5 % of answers; models are most
+  confidently wrong when the answer is not in the input. Decision point 4 ("does the source support the claim") is
+  exactly that case, so it needs its own measurement before any use.
+- Security is the real limit. The gate judges text the agent wrote, and the agent can be steered by injected text. In
+  AI-control experiments, prompt injections placed in the monitored output make LLM monitors pass malicious work, and
+  resampling makes it worse (Terekhov et al.). Instruction privilege escalation reached all 13 attack objectives on all
+  three coding-agent harnesses that offer an automatic permission review (He et al.). A 4B gate is no more robust than
+  the monitors tested there. Consequence: deterministic rules stay first (cohort guard, patient data, remote hosts, other
+  agents' configuration, deletes outside scratch), the model only thins out prompts for what the rules leave open, and
+  an adversarial set (commands carrying "safe, read-only" comments or injected instructions) is measured before live.
+- New hosted entrant: Microsoft-Decision-1 (2026-10-09, post-trained from Qwen3.5-9B, Foundry and OpenRouter), vendor
+  claims best accuracy on 36 benchmarks and 1.3 % decision flips under perturbation, no ECE published; hosted, so
+  data-free text only.
+
 ## Ablesung
+Web research 2026-10-20, each source opened:
+- Mapika, decider-4b model card v2.1, https://github.com/Mapika/decider/blob/main/MODEL_CARD_4B.md : Qwen3.5-4B-Base,
+  logit readout with per-type temperatures, hard-item overconfidence warning, no statement on adversarial robustness.
+- xbill, "Jev After Eight Days of Independent Tests", DEV Community, 2026-09-24,
+  https://dev.to/gde/jev-after-eight-days-of-independent-tests-level-with-mid-price-llms-behind-the-frontier-1kln :
+  graded evidence review (14 preprints, 104 repos); labels beat zero-shot; one temperature on 50-300 labels fixes most
+  calibration error; option-name swap study graded C.
+- zephel01, "I read 7 clones of Jev", note.com, 2026-09-21, https://note.com/zephel01/n/ne9a2c037e513 : the clones
+  reproduce the interface; the mechanism is PET / Calibrate Before Use; calibration and question isolation stay open.
+- Terekhov M, Panfilov A, et al., "Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols", arXiv:2510.09462
+  (v2 2026-03-02; listed as ICLR 2026 poster), https://arxiv.org/abs/2510.09462 : prompt injections in the untrusted
+  model's output evade monitors; Defer-to-Resample backfires.
+- He X, Chen Y, et al., "When Context Gets Root: Privilege Escalation in LLM Harnesses", arXiv:2608.27299, 2026-08-27,
+  https://arxiv.org/abs/2608.27299 : 13/13 objectives on 6 harnesses; under automatic permission review 13/13 on all 3
+  harnesses with that mode (harnesses not named in the abstract).
+- Microsoft Command Line, "Microsoft-Decision-1", 2026-10-09,
+  https://commandline.microsoft.com/microsoft-decision-1-model-foundry/ : vendor post, Qwen3.5-9B base, no ECE.
 Web research 2026-10-19, each source opened:
 - TypeSafe AI, Jev product page, https://typesafe.ai/ (accessed 2026-10-19): Jev as "System One Model" for automation,
   thresholds for autonomous action vs review, 42 USD per billion input tokens; no JEPA.

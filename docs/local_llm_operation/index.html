@@ -49,7 +49,8 @@ Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.<
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>). Own measurement the same evening (CPU, 60 routing and 154 real approval cases): both local models beat bge-m3 kNN on confidence (approval coverage at 5 % error 0.94 decider-4b, 0.91 H2O, 0 kNN); a p &gt;= 0.8 gate let 1 and 0 of 36 approval-needed commands through.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-20 (web research, sources checked):</strong> System One confidence does not transfer between distributions (the decider-4b card warns against reading 0.8 as 80 %; own labels and one fitted temperature fix most of it), and an approval gate that reads agent-written text can be talked past by prompt injection (AI-control monitors, automatic permission review in three coding harnesses). Rules stay first; the model only thins out prompts; an adversarial set is measured before live. See <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>.</p>
+<p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>). Own measurement the same evening (CPU, 60 routing and 154 real approval cases): both local models beat bge-m3 kNN on confidence (approval coverage at 5 % error 0.94 decider-4b, 0.91 H2O, 0 kNN); a p &gt;= 0.8 gate let 1 and 0 of 36 approval-needed commands through.</p>
 <p><strong>Neu 2026-10-17 (Literatur, 25 gepruefte Quellen):</strong> Lokale Modelle fuer Patientendaten: Qualitaet stabil bei 4-5 Bit, ternaere Nachquantisierung bis 70B tragfaehig, Werkzeugaufrufe sind die Schwachstelle und muessen end-to-end getestet werden (<a href="findings/research-local-llm-for-patient-data-on-24gb-2026-10.html">research-local-llm-for-patient-data-on-24gb-2026-10</a>).</p>
 <p><strong>Neu 2026-10-17 (Hub-API, vLLM-Cluster, Sperre):</strong> Die Hub-API ist OpenAI-kompatibel (Aliase fast/frontier/eu/light/clea, Werkzeugaufrufe gehen); im 13-Aufgaben-Test clea 100 %, frontier 96 %, fast 92 % bei 180 tok/s, Denkmodelle brauchen max_tokens &gt;= 6000 (<a href="findings/hospital-model-hub-api-aliases-and-small-benchmark.html">hospital-model-hub-api-aliases-and-small-benchmark</a>). vLLM aus PyPI scheitert am Clustertreiber 565 (CUDA 12.7); das cu129-Release-Wheel plus torchcodec cpu laeuft, Start 4,5 min (<a href="findings/vllm-on-a-cuda-12-7-cluster-driver.html">vllm-on-a-cuda-12-7-cluster-driver</a>). Fuer Agenten mit Remote-Modell ist ein pre_tool_call-Plugin die harte Sperre, die Prompt-Regel nur eine Bitte (<a href="findings/pre-tool-hook-blocks-data-paths-for-remote-model.html">pre-tool-hook-blocks-data-paths-for-remote-model</a>).</p>
 <p><strong>Neu 2026-10-17 (gemessen):</strong> Agenten auf dem Charité-Modell-Hub (Hermes, OpenCode) loesen abgegrenzte Code-Aufgaben richtig, aber 6- bis 18-mal langsamer als Claude Code; beim offenen Review fand Claude Code 6 echte Zusatzfehler, OpenCode 1, Hermes lief in die Zeitgrenze (<a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">clara-cle-agents-solve-bounded-code-tasks-slower</a>).</p>
@@ -1867,7 +1868,7 @@ Datei. Zweiter Versuch ueber Offsets: 14,12 GiB, Summe stimmt mit der Datei.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
-</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(7)</span></h2><details class="entry" id="system-one-decision-layer-for-agent-harnesses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a></span><span class="badge info">offen</span><span class="muted small">2026-10-19</span><span class="i">System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first</span></summary><div class="body"><p class="small muted">Herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08 · <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(7)</span></h2><details class="entry" id="system-one-decision-layer-for-agent-harnesses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a></span><span class="badge info">offen</span><span class="muted small">2026-10-20</span><span class="i">System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first</span></summary><div class="body"><p class="small muted">Herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08 · <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">Markdown</a></p><h2>Aussage</h2>
 <p>"System One" models (TypeSafe's Jev and its open clones) answer typed questions (Choice, Score, yes/no) with a
 probability in 30-500 ms instead of generating text. Inside an agent harness they fit four decision points:
 (1) which model handles the turn, (2) which prepared context (profile, skill set, saved prefix slot) it starts from,
@@ -2025,8 +2026,50 @@ confident wrong approvals: then keep kNN routing and human approvals.</p>
   thresholding: with it every yes/no answer reports at least 0.801. CPU latency median 1.3-4.6 s (decider) and
   3.9-9.5 s (H2O) per decision: a live gate needs the GPU.</li>
 </ul>
+<h2>Nachtrag 2026-10-20: independent evidence and the security gap</h2>
+<p>Web research 2026-10-20, sources opened (see Ablesung).
+- The readout is not new: reading candidate-label logits at an answer slot and recalibrating them is PET (2020) and
+  "Calibrate Before Use" (2021); the clones differ in training data and calibration, not in mechanism (zephel01). Any
+  local model can be read the same way; the fine-tuned clones mainly buy calibration.
+- Confidence does not transfer between distributions. The decider-4b card itself warns "do not read a confidence of 0.8
+  as an 80% chance of being right": v2.1 is overconfident on hard items (JevBench hard tier mean confidence 0.799 at
+  accuracy 0.649; held-out hard-family ECE 0.147, v2 had 0.046). An independent evidence review (xbill, 2026-09-24)
+  finds labels beat zero-shot wherever tried, and that 50 to a few hundred own labels with one fitted temperature remove
+  most calibration error; the error direction changes by domain. Consequence here: the p &gt;= 0.8 gate holds only for the
+  measured distribution (H2O 0 errors in 93 confident approvals, two-sided 95 % upper bound about 4 %); refit and
+  remeasure when the command mix changes.
+- Reported weak spots (single studies, unreplicated): swapping option names changed 32.5 % of answers; models are most
+  confidently wrong when the answer is not in the input. Decision point 4 ("does the source support the claim") is
+  exactly that case, so it needs its own measurement before any use.
+- Security is the real limit. The gate judges text the agent wrote, and the agent can be steered by injected text. In
+  AI-control experiments, prompt injections placed in the monitored output make LLM monitors pass malicious work, and
+  resampling makes it worse (Terekhov et al.). Instruction privilege escalation reached all 13 attack objectives on all
+  three coding-agent harnesses that offer an automatic permission review (He et al.). A 4B gate is no more robust than
+  the monitors tested there. Consequence: deterministic rules stay first (cohort guard, patient data, remote hosts, other
+  agents' configuration, deletes outside scratch), the model only thins out prompts for what the rules leave open, and
+  an adversarial set (commands carrying "safe, read-only" comments or injected instructions) is measured before live.
+- New hosted entrant: Microsoft-Decision-1 (2026-10-09, post-trained from Qwen3.5-9B, Foundry and OpenRouter), vendor
+  claims best accuracy on 36 benchmarks and 1.3 % decision flips under perturbation, no ECE published; hosted, so
+  data-free text only.</p>
 <h2>Ablesung</h2>
-<p>Web research 2026-10-19, each source opened:
+<p>Web research 2026-10-20, each source opened:
+- Mapika, decider-4b model card v2.1, https://github.com/Mapika/decider/blob/main/MODEL_CARD_4B.md : Qwen3.5-4B-Base,
+  logit readout with per-type temperatures, hard-item overconfidence warning, no statement on adversarial robustness.
+- xbill, "Jev After Eight Days of Independent Tests", DEV Community, 2026-09-24,
+  https://dev.to/gde/jev-after-eight-days-of-independent-tests-level-with-mid-price-llms-behind-the-frontier-1kln :
+  graded evidence review (14 preprints, 104 repos); labels beat zero-shot; one temperature on 50-300 labels fixes most
+  calibration error; option-name swap study graded C.
+- zephel01, "I read 7 clones of Jev", note.com, 2026-09-21, https://note.com/zephel01/n/ne9a2c037e513 : the clones
+  reproduce the interface; the mechanism is PET / Calibrate Before Use; calibration and question isolation stay open.
+- Terekhov M, Panfilov A, et al., "Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols", arXiv:2510.09462
+  (v2 2026-03-02; listed as ICLR 2026 poster), https://arxiv.org/abs/2510.09462 : prompt injections in the untrusted
+  model's output evade monitors; Defer-to-Resample backfires.
+- He X, Chen Y, et al., "When Context Gets Root: Privilege Escalation in LLM Harnesses", arXiv:2608.27299, 2026-08-27,
+  https://arxiv.org/abs/2608.27299 : 13/13 objectives on 6 harnesses; under automatic permission review 13/13 on all 3
+  harnesses with that mode (harnesses not named in the abstract).
+- Microsoft Command Line, "Microsoft-Decision-1", 2026-10-09,
+  https://commandline.microsoft.com/microsoft-decision-1-model-foundry/ : vendor post, Qwen3.5-9B base, no ECE.
+Web research 2026-10-19, each source opened:
 - TypeSafe AI, Jev product page, https://typesafe.ai/ (accessed 2026-10-19): Jev as "System One Model" for automation,
   thresholds for autonomous action vs review, 42 USD per billion input tokens; no JEPA.
 - width.ai, "What Is Jev AI? TypeSafe's System One Model, and Where It Fits in an Agent Harness",
@@ -2396,5 +2439,5 @@ unterscheiden.</p>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-19 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-20 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>
