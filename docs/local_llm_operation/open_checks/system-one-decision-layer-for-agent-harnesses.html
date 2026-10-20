@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge info">offen</span></span><span>Stand</span><span>2026-10-20</span><span>Herkunft</span><span>Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08</span><span>Zuletzt geändert</span><span>2026-10-20 local_llm_operation: System One independent evidence and security gap</span><span>Verweist auf</span><span><a href="decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/laya-router-before-agent.html">Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge info">offen</span></span><span>Stand</span><span>2026-10-20</span><span>Herkunft</span><span>Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08</span><span>Zuletzt geändert</span><span>2026-10-20 local_llm_operation: Hermes System One integration paths checked in code</span><span>Verweist auf</span><span><a href="decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/laya-router-before-agent.html">Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s</a> <span class="muted small">(local_llm_operation)</span><br><a href="../findings/lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md</a></span></div><h2>Aussage</h2>
 <p>"System One" models (TypeSafe's Jev and its open clones) answer typed questions (Choice, Score, yes/no) with a
 probability in 30-500 ms instead of generating text. Inside an agent harness they fit four decision points:
 (1) which model handles the turn, (2) which prepared context (profile, skill set, saved prefix slot) it starts from,
@@ -245,6 +245,27 @@ confident wrong approvals: then keep kNN routing and human approvals.</p>
 <li>Other harnesses: Claude Code PreToolUse hooks can allow, deny, ask or defer, and UserPromptSubmit can add context, but
   no hook switches the model. OpenCode <code>tool.execute.before</code> can block or rewrite arguments; per-request model hooks
   are not on its plugin page.</li>
+</ul>
+<h2>Nachtrag 2026-10-20 night: gate built and tested with the real Hermes (own runs)</h2>
+<ul>
+<li>Gate = fixed rules (remote hosts, publishing, secrets, system state, kills, deletes outside scratch, code fetched
+  from outside, other agents' configuration, copies out of patient-data locations), then H2O-Lightning-4B; APPROVE only
+  at p(auto) &gt;= 0.8, everything else to the human, never DENY. On the 154 labelled commands: 67 approved (43 %), 0 of
+  36 approval-needed approved; of the 48 that Hermes' own patterns flag, 13 approved. The patient-data rule was narrowed
+  once on this set (reads allowed, copies not), so the shadow week is the clean test.</li>
+<li>End to end in an interactive Hermes session (System 2 = Qwen3.8-27B local, System 1 = H2O via the bridge): a flagged
+  harmless one-liner was approved by System 1 and ran; <code>rm -rf build</code> (p_auto 0.36) and <code>curl | bash</code> (fixed rule)
+  went to the human panel, were denied, and the agent stopped as told.</li>
+<li>Hermes single-query mode (<code>-q</code>) blocks flagged commands before smart mode is consulted; smart approvals only run in
+  interactive sessions and the gateway, so a test must drive an interactive session.</li>
+<li>The state description matters: Hermes only supplies its flag reason ("script execution via -c flag"), and that text
+  pushed H2O toward "ask" (one-liner p_auto 0.75 with it, 0.90 without). The measured set had the agent's own intent
+  instead. The shadow week logs both variants.</li>
+<li>The bridge must refuse unless exactly one <code>&lt;command&gt;</code> and one <code>&lt;/command&gt;</code> marker appear: a scanner message inside
+  Hermes' description carried a stray marker, and a pair-matching regex took the wrong text.</li>
+<li>Shadow week from 2026-10-20 on the gateway profile: an observer plugin (<code>pre_approval_request</code>,
+  <code>post_approval_response</code>) asks the gate in the background and logs it next to the human's answer; approvals stay
+  manual, so nothing changes for the user.</li>
 </ul>
 <h2>Ablesung</h2>
 <p>Code and docs checked 2026-10-20 evening:

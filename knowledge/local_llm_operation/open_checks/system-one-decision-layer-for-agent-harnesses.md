@@ -127,6 +127,26 @@ Web research 2026-10-20, sources opened (see Ablesung).
   no hook switches the model. OpenCode `tool.execute.before` can block or rewrite arguments; per-request model hooks
   are not on its plugin page.
 
+## Nachtrag 2026-10-20 night: gate built and tested with the real Hermes (own runs)
+- Gate = fixed rules (remote hosts, publishing, secrets, system state, kills, deletes outside scratch, code fetched
+  from outside, other agents' configuration, copies out of patient-data locations), then H2O-Lightning-4B; APPROVE only
+  at p(auto) >= 0.8, everything else to the human, never DENY. On the 154 labelled commands: 67 approved (43 %), 0 of
+  36 approval-needed approved; of the 48 that Hermes' own patterns flag, 13 approved. The patient-data rule was narrowed
+  once on this set (reads allowed, copies not), so the shadow week is the clean test.
+- End to end in an interactive Hermes session (System 2 = Qwen3.8-27B local, System 1 = H2O via the bridge): a flagged
+  harmless one-liner was approved by System 1 and ran; `rm -rf build` (p_auto 0.36) and `curl | bash` (fixed rule)
+  went to the human panel, were denied, and the agent stopped as told.
+- Hermes single-query mode (`-q`) blocks flagged commands before smart mode is consulted; smart approvals only run in
+  interactive sessions and the gateway, so a test must drive an interactive session.
+- The state description matters: Hermes only supplies its flag reason ("script execution via -c flag"), and that text
+  pushed H2O toward "ask" (one-liner p_auto 0.75 with it, 0.90 without). The measured set had the agent's own intent
+  instead. The shadow week logs both variants.
+- The bridge must refuse unless exactly one `<command>` and one `</command>` marker appear: a scanner message inside
+  Hermes' description carried a stray marker, and a pair-matching regex took the wrong text.
+- Shadow week from 2026-10-20 on the gateway profile: an observer plugin (`pre_approval_request`,
+  `post_approval_response`) asks the gate in the background and logs it next to the human's answer; approvals stay
+  manual, so nothing changes for the user.
+
 ## Ablesung
 Code and docs checked 2026-10-20 evening:
 - Hermes Agent v0.20.5 source: `tools/approval.py` (`_smart_approve`, smart-mode phase), `hermes_cli/plugins.py`
