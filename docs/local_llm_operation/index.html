@@ -43,13 +43,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness, HPC, SLURM, shard, Port 22, Tunnel</p>
-<div class="stripe"><i class="warn" style="width:44.2%" title="vorschlag: 19"></i><i class="ok" style="width:37.2%" title="getragen: 16"></i><i class="info" style="width:16.3%" title="offen: 7"></i><i class="" style="width:2.3%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">19 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+<div class="stripe"><i class="warn" style="width:46.7%" title="vorschlag: 21"></i><i class="ok" style="width:35.6%" title="getragen: 16"></i><i class="info" style="width:15.6%" title="offen: 7"></i><i class="" style="width:2.2%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">21 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
 Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
 <p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-20 (own incident and fix):</strong> A GPU lock must die with its job (kernel <code>flock</code>, inherited by children), carry an expiry, and stop blocking once it has expired with no GPU job for 2 h; one shared check instead of ten copies of "is the PID alive?". A <code>sleep infinity</code> holder had kept the local model off the card for five days. See <a href="rules/gpu-lock-dies-with-its-job.html">gpu-lock-dies-with-its-job</a>.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-20 (own reading and install):</strong> Hermes keeps every conversation in the profile database and has no switch to turn that off; a no-record session needs a throwaway profile home in RAM started through the normal launcher (<a href="findings/hermes-keeps-every-conversation-in-state-db.html">hermes-keeps-every-conversation-in-state-db</a>). Kromoss, a 5B text-to-image model, installs with torch 2.9 cu126 on the CUDA 12.4 driver; its bf16 weights (27 GB) need CPU offload on 24 GB, image generation not yet measured (<a href="findings/kromoss-text-to-image-install-on-24gb-card.html">kromoss-text-to-image-install-on-24gb-card</a>).</p>
+<p><strong>New 2026-10-20 (own incident and fix):</strong> A GPU lock must die with its job (kernel <code>flock</code>, inherited by children), carry an expiry, and stop blocking once it has expired with no GPU job for 2 h; one shared check instead of ten copies of "is the PID alive?". A <code>sleep infinity</code> holder had kept the local model off the card for five days. See <a href="rules/gpu-lock-dies-with-its-job.html">gpu-lock-dies-with-its-job</a>.</p>
 <p><strong>New 2026-10-20 (web research, sources checked):</strong> System One confidence does not transfer between distributions (the decider-4b card warns against reading 0.8 as 80 %; own labels and one fitted temperature fix most of it), and an approval gate that reads agent-written text can be talked past by prompt injection (AI-control monitors, automatic permission review in three coding harnesses). Rules stay first; the model only thins out prompts; an adversarial set is measured before live. See <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>.</p>
 <p><strong>New 2026-10-19 (web research, sources checked):</strong> A "System One" decision model (TypeSafe's Jev; open clones H2O-Lightning-4B, decider-4b, Kev-4B with the same <code>/v1/systemone</code> wire format) fits four harness decisions: model choice, prepared context, tool approval, evaluation. Hermes is the natural harness (smart approvals, most plugins); patient data stays with a local model; leaderboards do not transfer, so measure coverage at 5 % error on own cases against kNN, then a shadow week (<a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>). Own measurement the same evening (CPU, 60 routing and 154 real approval cases): both local models beat bge-m3 kNN on confidence (approval coverage at 5 % error 0.94 decider-4b, 0.91 H2O, 0 kNN); a p &gt;= 0.8 gate let 1 and 0 of 36 approval-needed commands through.</p>
 <p><strong>Neu 2026-10-17 (Literatur, 25 gepruefte Quellen):</strong> Lokale Modelle fuer Patientendaten: Qualitaet stabil bei 4-5 Bit, ternaere Nachquantisierung bis 70B tragfaehig, Werkzeugaufrufe sind die Schwachstelle und muessen end-to-end getestet werden (<a href="findings/research-local-llm-for-patient-data-on-24gb-2026-10.html">research-local-llm-for-patient-data-on-24gb-2026-10</a>).</p>
@@ -60,7 +61,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
 <p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
 <p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
-<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="38.6" width="319.0" height="11.4" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 35</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 35)</figcaption></figure>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="39.2" width="319.0" height="10.8" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 37</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 37)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="gpu-lock-dies-with-its-job"><summary><span class="type">Regel</span><span class="t"><a href="rules/gpu-lock-dies-with-its-job.html">A GPU lock dies with its job, expires, and an expired idle lock stops blocking</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">GPU lock held by the job itself (kernel flock), with expiry; an expired lock without GPU job for 2 h stops blocking and is reported once</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB), incident 2026-10-15 to 2026-10-20; tool gpu-sperre built and tested 2026-10-20 · <a href="rules/gpu-lock-dies-with-its-job.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/gpu-lock-dies-with-its-job.md">Markdown</a></p><h2>Aussage</h2>
 <p>When a language model server and GPU jobs share one card, the lock that keeps the model off the card must
@@ -403,7 +404,79 @@ verlaengert. Dann greift der Cache nicht.</p>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(22)</span></h2><details class="entry" id="clara-cle-agents-solve-bounded-code-tasks-slower"><summary><span class="type">Befund</span><span class="t"><a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">Agents on the institutional model hub solve bounded code tasks correctly, 6-18 times slower; long reviews time out</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Claude Code vs Hermes/OpenCode on the hub: bounded code tasks all correct, 6-18x slower; open review: Claude 6 extra real bugs, OpenCode 1, Hermes timeout</span></summary><div class="body"><p class="small muted">Herkunft: Agent benchmark on Alita 2026-10-16/17: four tasks from the same day&#x27;s work (bug fix with test, feature with tests, code review, wiki entry with sources), Claude Code vs Hermes and OpenCode on an institutional model hub (Clé, model clea), fresh clone at the commit before each fix, 45 min limit, hidden checks · <a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/clara-cle-agents-solve-bounded-code-tasks-slower.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(24)</span></h2><details class="entry" id="hermes-keeps-every-conversation-in-state-db"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-keeps-every-conversation-in-state-db.html">Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">Hermes writes every message to state.db, no flag turns it off; a no-record session needs a throwaway HERMES_HOME in RAM, guard log stays</span></summary><div class="body"><p class="small muted">Herkunft: Alita, source reading of Hermes Agent v0.20.5 (2026.8.19) and the local launch chain, 2026-10-20; user question about a private mode for the local agent · <a href="findings/hermes-keeps-every-conversation-in-state-db.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md">Markdown</a></p><h2>Aussage</h2>
+<p>Hermes Agent writes every message of a session to SQLite <code>$HERMES_HOME/state.db</code> (<code>_persist_session</code> in
+<code>run_agent.py</code>, called on every exit path "so conversations are never lost"). Per-session JSON snapshots exist too, but
+only when <code>sessions.write_json_snapshots</code> is on (default off). No CLI flag turns the session store off: <code>--safe-mode</code>
+and <code>--ignore-rules</code> drop user config, memory injection, plugins and MCP servers, not persistence; <code>--source tool</code> only
+hides sessions from the session lists.</p>
+<p>Around a local agent there are usually more recorders than the database. On Alita:
+- the session database and the Hermes logs and readline history (<code>.hermes_history</code>) in the profile;
+- a terminal recording of the tmux wrapper (<code>pipe-pane</code>) in the profile;
+- the outbound guard's log, holding up to 2000 characters of each text that was checked before leaving the machine;
+- not the model server: llama-server does not log prompt text at default verbosity and saves KV slots only on an
+  explicit request.</p>
+<p>A session without a record therefore needs a throwaway <code>HERMES_HOME</code>: a fresh folder in RAM (<code>/dev/shm</code>, mode 700)
+holding copies of config, rules (SOUL.md), memory and skills, deleted on exit. Start it through the normal launcher so
+the protection layers (guard, network block, PATH wrappers) stay, and without the terminal recording. The launcher must
+accept a home override, because it hard-codes the profile path.</p>
+<h2>Traegt</h2>
+<p>A local model on the same machine. What the agent learns in such a session (memory, skills) is thrown away with the
+folder; files it writes with its tools stay where it wrote them.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>A hosted model profile: the provider's server logs are out of reach.</li>
+<li>The outbound guard log: keep it, it is the record of what left the machine.</li>
+<li>RAM is not a guarantee: pages can be swapped to disk.</li>
+<li>Not built yet: Claude Code's auto-mode classifier refused the one-line launcher change as "Logging/Audit Tampering";
+  it needs an explicit decision by the user.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>After a private session, files under the real profile (state.db, logs, sessions) changed during its run, or the
+throwaway folder is still in <code>/dev/shm</code> after exit.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Nous Research, Hermes Agent, https://github.com/NousResearch/hermes-agent (MIT; accessed 2026-10-20): the README
+  describes FTS5 session search over past conversations and names no option to disable persistence.</li>
+<li>Own reading 2026-10-20 of the installed v0.20.5: <code>run_agent.py</code> <code>_persist_session</code> and <code>_save_session_log</code>
+  (<code>sessions.write_json_snapshots</code>, default False), <code>hermes chat --help</code> (no persistence flag), <code>hermes_constants.py</code>
+  (<code>HERMES_HOME</code> override).</li>
+</ul></div></details><details class="entry" id="kromoss-text-to-image-install-on-24gb-card"><summary><span class="type">Befund</span><span class="t"><a href="findings/kromoss-text-to-image-install-on-24gb-card.html">Kromoss (5B text-to-image) installs on a 24 GB card with torch 2.9 cu126, but bf16 weights need CPU offload</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">Kromoss 5B text-to-image: one weight layout (28 GB), custom pipeline read before use, torch 2.9 cu126 on CUDA 12.4 driver, bf16 needs CPU offload</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB, driver 550 = CUDA 12.4, 62 GB RAM), install 2026-10-20; no image generated yet · <a href="findings/kromoss-text-to-image-install-on-24gb-card.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/kromoss-text-to-image-install-on-24gb-card.md">Markdown</a></p><h2>Aussage</h2>
+<p>Kromoss (lodestones, Apache-2.0) is a full fine-tune of MOSS-Image-Base at 1024 px: a 5B diffusion transformer
+(42 blocks, width 3072), Qwen3.5-9B as text encoder and the small FLUX.2 VAE; an 8-step DMD2 LoRA is the recommended
+fast path (8 steps, CFG 1). Install facts from 2026-10-20:
+- The repo carries two layouts of the same weights: diffusers folders (transformer 10.2 GB, text encoder 16.8 GB, VAE
+  0.25 GB) and ComfyUI single files (35 GB more, including an int8 ConvRot DiT of 5.4 GB). Download one layout with
+  include patterns: about 28 GB with the LoRA instead of about 64 GB.
+- <code>hf download</code> with one <code>--include</code> followed by several patterns fetched only part of them; one <code>--include</code> per
+  pattern, or named files, worked (cause not checked).
+- Loading needs <code>trust_remote_code</code> / <code>custom_pipeline</code> (one file, three identical copies). Read before running: it
+  imports only torch, diffusers and transformers, with no network, subprocess or pickle loading.
+- It needs torch &gt;= 2.9. The cu126 wheel (torch 2.9.1) runs on a CUDA 12.4 driver: CUDA available, pipeline imports
+  (with diffusers 0.41, transformers 5.20).
+- bf16 transformer plus text encoder is about 27 GB, more than the card. The pipeline declares a CPU offload order
+  (text encoder, transformer, VAE), so the encoder can leave the card before denoising; the ComfyUI int8 file is the
+  other way down.</p>
+<h2>Traegt</h2>
+<p>A local install next to other GPU users when the card is free for the run (take the GPU lock, stop the language model
+server for the run).</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>Not measured yet: time per image, peak VRAM with offload, image quality. The vendor's only numbers are CLIP scores
+  on 100 PartiPrompts (27.90 at 50 steps, 28.13 with the DMD2 LoRA at 8 steps, base 27.19).</li>
+<li>Running beside a loaded 27B language model (21 GB): no room.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>CUDA out of memory at 1024 px with model CPU offload and the 8-step LoRA: then try the int8 ConvRot weights or
+sequential offload.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>lodestones, Kromoss model card, https://huggingface.co/lodestones/Kromoss (accessed 2026-10-20): architecture,
+  layouts, LoRAs, recommended settings, PartiPrompts CLIP scores, Apache-2.0.</li>
+<li>OpenMOSS-Team, MOSS-Image-Base, https://huggingface.co/OpenMOSS-Team/MOSS-Image-Base (accessed 2026-10-20): base
+  text-to-image model, about 5B parameters, Apache-2.0, technical report arXiv:2610.23374 (not opened).</li>
+<li>Own install on Alita 2026-10-20: file sizes from the Hub API matched the download; CUDA and import check passed.</li>
+</ul></div></details><details class="entry" id="clara-cle-agents-solve-bounded-code-tasks-slower"><summary><span class="type">Befund</span><span class="t"><a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">Agents on the institutional model hub solve bounded code tasks correctly, 6-18 times slower; long reviews time out</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-17</span><span class="i">Claude Code vs Hermes/OpenCode on the hub: bounded code tasks all correct, 6-18x slower; open review: Claude 6 extra real bugs, OpenCode 1, Hermes timeout</span></summary><div class="body"><p class="small muted">Herkunft: Agent benchmark on Alita 2026-10-16/17: four tasks from the same day&#x27;s work (bug fix with test, feature with tests, code review, wiki entry with sources), Claude Code vs Hermes and OpenCode on an institutional model hub (Clé, model clea), fresh clone at the commit before each fix, 45 min limit, hidden checks · <a href="findings/clara-cle-agents-solve-bounded-code-tasks-slower.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/clara-cle-agents-solve-bounded-code-tasks-slower.md">Markdown</a></p><h2>Aussage</h2>
 <ol>
 <li>Bug fix with a test that fails on the old code, feature change with tests, and a wiki entry with correct DOIs:
    all three agents passed every hidden check (README-style test, five seeds of the held-out behaviour, full test

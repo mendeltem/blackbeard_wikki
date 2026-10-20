@@ -2123,6 +2123,17 @@
 "src": "knowledge/local_llm_operation/findings/hermes-delegates-to-opencode-locally.md"
 },
 {
+"t": "Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home",
+"p": "local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-20",
+"x": "Hermes writes every message to state.db, no flag turns it off; a no-record session needs a throwaway HERMES_HOME in RAM, guard log stays",
+"id": "hermes-keeps-every-conversation-in-state-db",
+"src": "knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md"
+},
+{
 "t": "The hospital model hub API: OpenAI-compatible, five aliases, tool calls work, reasoning needs a large max_tokens",
 "p": "local_llm_operation/findings/hospital-model-hub-api-aliases-and-small-benchmark.html",
 "a": "local_llm_operation",
@@ -2143,6 +2154,17 @@
 "x": "Cluster nodes: only port 22 from the intranet (an API needs a tunnel or gateway); GPU shard starts at once, a whole A100 waited ~9 h; 7 x 80 GB, 20 x 40 GB (2026-10-16)",
 "id": "hpc-nodes-answer-only-ssh-and-shards-start-at-once",
 "src": "knowledge/local_llm_operation/findings/hpc-nodes-answer-only-ssh-and-shards-start-at-once.md"
+},
+{
+"t": "Kromoss (5B text-to-image) installs on a 24 GB card with torch 2.9 cu126, but bf16 weights need CPU offload",
+"p": "local_llm_operation/findings/kromoss-text-to-image-install-on-24gb-card.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-20",
+"x": "Kromoss 5B text-to-image: one weight layout (28 GB), custom pipeline read before use, torch 2.9 cu126 on CUDA 12.4 driver, bf16 needs CPU offload",
+"id": "kromoss-text-to-image-install-on-24gb-card",
+"src": "knowledge/local_llm_operation/findings/kromoss-text-to-image-install-on-24gb-card.md"
 },
 {
 "t": "Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s",

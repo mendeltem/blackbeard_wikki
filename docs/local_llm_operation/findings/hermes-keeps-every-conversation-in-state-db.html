@@ -1,0 +1,84 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-20</span><span>Herkunft</span><span>Alita, source reading of Hermes Agent v0.20.5 (2026.8.19) and the local launch chain, 2026-10-20; user question about a private mode for the local agent</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="pre-tool-hook-blocks-data-paths-for-remote-model.html">A pre-tool-call plugin is the hard barrier for a remote-model agent; a system-prompt rule alone is a request</a> <span class="muted small">(local_llm_operation)</span><br><a href="../rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">A remote model gets only data-free skills and redacted text</a> <span class="muted small">(local_llm_operation)</span><br><a href="hermes-agent-local-qwen-benchmark.html">Hermes Agent mit lokalem Qwen3.6 loest Alltagsaufgaben, scheitert an Format und Rueckfragen</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md">knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md</a></span></div><h2>Aussage</h2>
+<p>Hermes Agent writes every message of a session to SQLite <code>$HERMES_HOME/state.db</code> (<code>_persist_session</code> in
+<code>run_agent.py</code>, called on every exit path "so conversations are never lost"). Per-session JSON snapshots exist too, but
+only when <code>sessions.write_json_snapshots</code> is on (default off). No CLI flag turns the session store off: <code>--safe-mode</code>
+and <code>--ignore-rules</code> drop user config, memory injection, plugins and MCP servers, not persistence; <code>--source tool</code> only
+hides sessions from the session lists.</p>
+<p>Around a local agent there are usually more recorders than the database. On Alita:
+- the session database and the Hermes logs and readline history (<code>.hermes_history</code>) in the profile;
+- a terminal recording of the tmux wrapper (<code>pipe-pane</code>) in the profile;
+- the outbound guard's log, holding up to 2000 characters of each text that was checked before leaving the machine;
+- not the model server: llama-server does not log prompt text at default verbosity and saves KV slots only on an
+  explicit request.</p>
+<p>A session without a record therefore needs a throwaway <code>HERMES_HOME</code>: a fresh folder in RAM (<code>/dev/shm</code>, mode 700)
+holding copies of config, rules (SOUL.md), memory and skills, deleted on exit. Start it through the normal launcher so
+the protection layers (guard, network block, PATH wrappers) stay, and without the terminal recording. The launcher must
+accept a home override, because it hard-codes the profile path.</p>
+<h2>Traegt</h2>
+<p>A local model on the same machine. What the agent learns in such a session (memory, skills) is thrown away with the
+folder; files it writes with its tools stay where it wrote them.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>A hosted model profile: the provider's server logs are out of reach.</li>
+<li>The outbound guard log: keep it, it is the record of what left the machine.</li>
+<li>RAM is not a guarantee: pages can be swapped to disk.</li>
+<li>Not built yet: Claude Code's auto-mode classifier refused the one-line launcher change as "Logging/Audit Tampering";
+  it needs an explicit decision by the user.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>After a private session, files under the real profile (state.db, logs, sessions) changed during its run, or the
+throwaway folder is still in <code>/dev/shm</code> after exit.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Nous Research, Hermes Agent, https://github.com/NousResearch/hermes-agent (MIT; accessed 2026-10-20): the README
+  describes FTS5 session search over past conversations and names no option to disable persistence.</li>
+<li>Own reading 2026-10-20 of the installed v0.20.5: <code>run_agent.py</code> <code>_persist_session</code> and <code>_save_session_log</code>
+  (<code>sessions.write_json_snapshots</code>, default False), <code>hermes chat --help</code> (no persistence flag), <code>hermes_constants.py</code>
+  (<code>HERMES_HOME</code> override).</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-20 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
