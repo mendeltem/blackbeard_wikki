@@ -2453,6 +2453,17 @@
 "src": "knowledge/local_llm_operation/rules/foreign-gpu-process-before-measuring.md"
 },
 {
+"t": "A GPU lock dies with its job, expires, and an expired idle lock stops blocking",
+"p": "local_llm_operation/rules/gpu-lock-dies-with-its-job.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-20",
+"x": "GPU lock held by the job itself (kernel flock), with expiry; an expired lock without GPU job for 2 h stops blocking and is reported once",
+"id": "gpu-lock-dies-with-its-job",
+"src": "knowledge/local_llm_operation/rules/gpu-lock-dies-with-its-job.md"
+},
+{
 "t": "Before \"move X to Alita\": find out whether Alita is a folder or a drive",
 "p": "local_llm_operation/rules/group-drive-move-ask-what-alita-means.html",
 "a": "local_llm_operation",

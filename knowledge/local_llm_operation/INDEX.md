@@ -52,6 +52,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | regel | [every-agent-crash-becomes-a-lesson](rules/every-agent-crash-becomes-a-lesson.md) | Jeder Absturz: Kette aus Logs, jeden Fehler benennen, Abhilfe im Code mit Test, Befund im Wiki; Agent wartet statt Fenster zu schliessen |
 | befund | [registry-pointed-at-half-a-model-agent-window-died](findings/registry-pointed-at-half-a-model-agent-window-died.md) | flash-Profil zeigte auf 1/2 GGUF-Teile -> Dienst starb -> agent exit -> totes tmux-Fenster; modellstart prueft jetzt alle Teile, agent.sh wartet bei Fehlstart |
 | regel | [model-server-start-checks-card-and-picks-profile](rules/model-server-start-checks-card-and-picks-profile.md) | Modellserver nur starten, wenn die Karte Platz hat: Sperre, freier VRAM minus angemeldeter Bedarf des laufenden Laufs, Profil fuer diesen Start; passt nichts, rc 3 statt wartender Dienst |
+| regel | [gpu-lock-dies-with-its-job](rules/gpu-lock-dies-with-its-job.md) | GPU lock held by the job itself (kernel flock), with expiry; an expired lock without GPU job for 2 h stops blocking and is reported once |
 
 ## Werkzeuge dazu
 
