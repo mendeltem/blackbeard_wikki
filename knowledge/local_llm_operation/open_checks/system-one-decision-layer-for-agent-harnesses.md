@@ -107,7 +107,40 @@ Web research 2026-10-20, sources opened (see Ablesung).
   claims best accuracy on 36 benchmarks and 1.3 % decision flips under perturbation, no ECE published; hosted, so
   data-free text only.
 
+## Nachtrag 2026-10-20 evening: Hermes integration paths, checked in the code of v0.20.5
+- Approvals work without a patch. With `approvals.mode: smart`, Hermes sends every command that its own danger
+  patterns flag to the `auxiliary.approval` model as a plain chat request (shell comments stripped, command inside
+  `<command>` delimiters, `max_tokens` 16) and reads one word: APPROVE, DENY or ESCALATE. That base URL may be plain
+  `http://127.0.0.1`. A small local bridge therefore turns the request into a `/v1/systemone` question; one exists
+  (approval-judge-bridge, MIT, Hermes as reference host, judge URL configurable), or a few lines of own code. The
+  HTTPS-only limit above belongs to the hermes-jev-approvals plugin, not to this route.
+- Shadow mode is then trivial: the bridge always answers ESCALATE (the human decides as before) and logs what the
+  local model would have said.
+- Limits: smart mode only sees commands the patterns already flag (rules first, but the gate must be measured on that
+  subset); `--yolo` sessions bypass approvals; a `pre_tool_call` plugin can block or force a human question, never
+  auto-approve.
+- Context choice: a `pre_llm_call` plugin can add a context block to the user message of each turn (spilled to a file
+  above 10,000 characters); it does not restore a saved KV slot at the start of the prompt.
+- Model choice per turn: nothing built in (`smart_model_routing` is a legacy key, disabled; hermes-jev-router talks to
+  TypeSafe only). The harness-independent route is an OpenAI-compatible routing proxy in front of the model.
+- Other harnesses: Claude Code PreToolUse hooks can allow, deny, ask or defer, and UserPromptSubmit can add context, but
+  no hook switches the model. OpenCode `tool.execute.before` can block or rewrite arguments; per-request model hooks
+  are not on its plugin page.
+
 ## Ablesung
+Code and docs checked 2026-10-20 evening:
+- Hermes Agent v0.20.5 source: `tools/approval.py` (`_smart_approve`, smart-mode phase), `hermes_cli/plugins.py`
+  (`VALID_HOOKS`, pre_tool_call directives block/approve), `agent/turn_context.py` (pre_llm_call context),
+  `tools/hook_output_spill.py` (10,000 characters).
+- oppih, approval-judge-bridge, https://github.com/oppih/approval-judge-bridge : OpenAI-compatible approval bridge for
+  Hermes smart mode, one-word verdict, fail-closed to ESCALATE, MIT.
+- anpicasso, hermes-jev-approvals, https://github.com/anpicasso/hermes-jev-approvals : serves auxiliary.approval,
+  custom base_url HTTPS on the default port only.
+- v-modal, awesome-jev-tools, https://github.com/v-modal/awesome-jev-tools : list of Hermes, OpenCode and Claude Code
+  plugins and routing proxies (first 100,000 characters read).
+- Anthropic, Claude Code hooks reference, https://code.claude.com/docs/en/hooks : PreToolUse permissionDecision allow,
+  deny, ask, defer; UserPromptSubmit additionalContext; hooks cannot choose the model.
+- OpenCode plugin docs, https://opencode.ai/docs/plugins/ : tool.execute.before, permission events.
 Web research 2026-10-20, each source opened:
 - Mapika, decider-4b model card v2.1, https://github.com/Mapika/decider/blob/main/MODEL_CARD_4B.md : Qwen3.5-4B-Base,
   logit readout with per-type temperatures, hard-item overconfidence warning, no statement on adversarial robustness.
