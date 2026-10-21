@@ -43,18 +43,23 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › webcam_eye_tracking</div><h1>webcam_eye_tracking</h1><p>Gaze from the normal phone or laptop camera in the browser: realistic accuracy, features, calibration, licence traps</p><p class="muted small">Eye tracking, Blickverfolgung, gaze, Webcam, Frontkamera, MediaPipe, Iris, WebGazer, Kalibrierung, GitHub Pages</p>
-<div class="stripe"><i class="warn" style="width:100.0%" title="vorschlag: 1"></i></div><div class="counts"><span class="warn">1 vorschlag</span></div><div class="small"><p>Gaze tracking with the normal camera of a phone or laptop, in the browser: what accuracy is realistic, which features
+<div class="stripe"><i class="warn" style="width:100.0%" title="vorschlag: 2"></i></div><div class="counts"><span class="warn">2 vorschlag</span></div><div class="small"><p>Gaze tracking with the normal camera of a phone or laptop, in the browser: what accuracy is realistic, which features
 and calibration work, licence traps.</p>
 <p>Stand 2026-10-21. One entry per file.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-21. Prefill for chats and agents. Details in <a href="index.html">INDEX.md</a>.</p>
+<p><strong>Moving after calibration (vorschlag):</strong> pose features fitted on a still calibration extrapolate wildly when the
+phone moves. Fix: iris offset along the image axes (measures gaze relative to the camera line, right under roll), a
+5 s movement phase with the eyes on one dot, distance from iris size (11.7 mm, Vakunov &amp; Lagun 2020), offset as a
+Kalman state updated by taps (Kalman 1960). Gyroscope not useful (measures phone vs room, not vs head). Toy simulation
+only; real phone not measured.</p>
 <p><strong>Camera-only gaze on phones (vorschlag):</strong> about 2-3 cm error is realistic with MediaPipe iris landmarks, head pose
 and a per-person ridge regression after a 9-dot calibration; trained CNNs with personal fine-tuning reach 0.5 cm
 (Valliappan 2020), WebGazer about 4 deg on laptops (Papoutsaki 2016). Enough for three large targets, not for words.
 Live app: https://mendeltem.github.io/camera-eye-tracker/. Real-phone error not measured yet.</p>
 <p><strong>Offen:</strong> measure the test-dot error on a real Android and iPhone.</p>
-<p><strong>Lesen bei:</strong> eye tracking, gaze, Blickverfolgung, webcam, front camera, MediaPipe, iris, WebGazer, calibration.</p></div>
+<p><strong>Lesen bei:</strong> Kalman, head movement, Kopfbewegung, eye tracking, gaze, Blickverfolgung, webcam, front camera, MediaPipe, iris, WebGazer, calibration.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="findings">Befund <span class="muted small">(1)</span></h2><details class="entry" id="camera-only-gaze-on-phones"><summary><span class="type">Befund</span><span class="t"><a href="findings/camera-only-gaze-on-phones.html">Camera-only gaze on a phone: about 2-3 cm with landmark features and a per-person regression</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: Claude (Alita), literature check 2026-10-21 and own app mendeltem/camera-eye-tracker (fce963a) · <a href="findings/camera-only-gaze-on-phones.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/webcam_eye_tracking/findings/camera-only-gaze-on-phones.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="findings">Befund <span class="muted small">(2)</span></h2><details class="entry" id="camera-only-gaze-on-phones"><summary><span class="type">Befund</span><span class="t"><a href="findings/camera-only-gaze-on-phones.html">Camera-only gaze on a phone: about 2-3 cm with landmark features and a per-person regression</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: Claude (Alita), literature check 2026-10-21 and own app mendeltem/camera-eye-tracker (fce963a) · <a href="findings/camera-only-gaze-on-phones.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/webcam_eye_tracking/findings/camera-only-gaze-on-phones.md">Markdown</a></p><h2>Aussage</h2>
 <p>Gaze from the normal front camera, in the browser, lands around 2-3 cm of error on a phone after a short calibration
 (own estimate from the studies below, not measured on a real phone yet). Trained CNNs with heavy personal calibration
 reach 0.5 cm, but only with large training sets and outlier users removed. The method that runs as a static page:
@@ -121,6 +126,44 @@ landmark-plus-ridge on phones far worse than 3 cm.</p>
 <h2>Ablesung</h2>
 <p>Live: https://mendeltem.github.io/camera-eye-tracker/ (2026-10-21). Headless Chromium with a fake camera passes the
 whole chain (10/10 steps, also against the live site); the test cannot measure accuracy because a still photo does
-not follow the dots. Real-phone error: not measured yet.</p></div></details></div></main>
+not follow the dots. Real-phone error: not measured yet.</p></div></details><details class="entry" id="moving-after-calibration"><summary><span class="type">Befund</span><span class="t"><a href="findings/moving-after-calibration.html">Moving head or phone after calibration: fix the features and calibrate with movement, not the gyroscope</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: Claude (Alita), own app mendeltem/camera-eye-tracker (b1c666a, 5f6e037), geometry and a toy simulation; user observation 2026-10-21 that the phone had to stay still · <a href="findings/moving-after-calibration.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/webcam_eye_tracking/findings/moving-after-calibration.md">Markdown</a></p><h2>Aussage</h2>
+<p>A per-person regression fitted while head and phone stay still breaks when either moves, because its weights for
+head pose and face position were fitted on a tiny spread and a move multiplies them by values far outside it. Four
+parts address this without a trained network:</p>
+<ol>
+<li><strong>Iris offset along the image axes, not in the eye's own frame.</strong> The iris sits in front of the eyeball centre,
+   so its image offset measures the angle between the gaze and the eye-to-camera line. To first order this stays
+   constant when the head moves or turns while the eyes hold a screen point, and it rotates with the screen when the
+   head rolls, as the gaze point does. The eye-frame offset used before turns with the head and is wrong under roll.</li>
+<li><strong>A movement phase in the calibration</strong>: about 5 s with the eyes on one dot while the head turns left, right, up
+   and down. These frames teach the fit which feature changes (lids, blendshapes, pose) do not move the gaze point.
+   Features are held within the calibrated range plus one standard deviation.</li>
+<li><strong>Distance from the iris size.</strong> The visible iris is 11.7 ± 0.5 mm wide across a wide population (Vakunov &amp; Lagun
+   2020, Google Research blog, 2020-08-06, https://research.google/blog/mediapipe-iris-real-time-iris-tracking-depth-estimation/;
+   4.3 % mean relative depth error against an iPhone depth sensor). The gaze offset from the camera scales with the
+   distance, so predictions are scaled by iris size at calibration / iris size now.</li>
+<li><strong>The slow offset as a Kalman state</strong> (Kalman 1960, J Basic Eng 82(1):35-45, doi:10.1115/1.3662552): a random walk
+   whose variance grows with time and with the pose change since the last correction. A tap where the user looks is
+   the measurement; after a large move the app shows a centre dot to look at and tap.</li>
+</ol>
+<p>The phone gyroscope does not help here: it measures the phone turning in the room, while the gaze point depends on
+the phone relative to the head, which the camera already sees. Walking with the phone held still in front of the
+face reads as movement, and iOS needs an extra permission. A Kalman filter helps for drift, and for jitter only as
+much as the One Euro filter already does.</p>
+<h2>Trägt</h2>
+<p>Hand-held phone use with small head and grip changes after one calibration. In a toy simulation that follows the
+geometry above (tests/gaze.test.mjs), after a head turn the error stays at the still error with the movement phase
+(about 1 % of the screen) and grows to about 28 % of the screen without it.</p>
+<h2>Trägt nicht</h2>
+<p>Not measured on a real phone yet; the toy simulation only confirms the mechanism under its own assumptions. The
+eye-corner midpoint is not the eyeball centre, so large head turns leave a parallax error. One offset serves the whole
+screen and every pose. Turning the phone between portrait and landscape still needs a new calibration.</p>
+<h2>Bruchindikator</h2>
+<p>On a real phone, the test-dot error or tap errors after a deliberate head turn of about 10 degrees grow as much with
+the new calibration as with the old one (compare via the app's data export).</p>
+<h2>Ablesung</h2>
+<p>App 5f6e037 live at https://mendeltem.github.io/camera-eye-tracker/ (2026-10-21): unit tests 18/18, headless browser
+test 12/12 locally, from a fresh clone and against the live site. The result card offers "Save the data" (features,
+targets, times; no picture) so model variants can be compared on a real calibration.</p></div></details></div></main>
 <footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

@@ -3498,6 +3498,17 @@
 "src": "knowledge/webcam_eye_tracking/findings/camera-only-gaze-on-phones.md"
 },
 {
+"t": "Moving head or phone after calibration: fix the features and calibrate with movement, not the gyroscope",
+"p": "webcam_eye_tracking/findings/moving-after-calibration.html",
+"a": "webcam_eye_tracking",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "A per-person regression fitted while head and phone stay still breaks when either moves, because its weights for head pose and face position were fitted on a tiny spread and a move multiplies them by values far outside it. Four parts addres",
+"id": "moving-after-calibration",
+"src": "knowledge/webcam_eye_tracking/findings/moving-after-calibration.md"
+},
+{
 "t": "Ein als Paket geaendertes Netz brachte keinen Gewinn und kostete Laesions-Recall",
 "p": "wmh_segmentation/findings/architecture-package-brought-no-gain.html",
 "a": "wmh_segmentation",
