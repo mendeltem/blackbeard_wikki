@@ -3487,6 +3487,17 @@
 "src": "knowledge/web_globes/rules/cesium-api-drift.md"
 },
 {
+"t": "Camera-only gaze on a phone: about 2-3 cm with landmark features and a per-person regression",
+"p": "webcam_eye_tracking/findings/camera-only-gaze-on-phones.html",
+"a": "webcam_eye_tracking",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "Gaze from the normal front camera, in the browser, lands around 2-3 cm of error on a phone after a short calibration (own estimate from the studies below, not measured on a real phone yet). Trained CNNs with heavy personal calibration reach",
+"id": "camera-only-gaze-on-phones",
+"src": "knowledge/webcam_eye_tracking/findings/camera-only-gaze-on-phones.md"
+},
+{
 "t": "Ein als Paket geaendertes Netz brachte keinen Gewinn und kostete Laesions-Recall",
 "p": "wmh_segmentation/findings/architecture-package-brought-no-gain.html",
 "a": "wmh_segmentation",
