@@ -2134,6 +2134,17 @@
 "src": "knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md"
 },
 {
+"t": "Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages",
+"p": "local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line",
+"id": "hermes-oneshot-ignores-ephemeral-prompt-and-prefill",
+"src": "knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md"
+},
+{
 "t": "The hospital model hub API: OpenAI-compatible, five aliases, tool calls work, reasoning needs a large max_tokens",
 "p": "local_llm_operation/findings/hospital-model-hub-api-aliases-and-small-benchmark.html",
 "a": "local_llm_operation",
