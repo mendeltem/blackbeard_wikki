@@ -1,0 +1,114 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Review of the local agent harness: sandbox and critic matter more than caching</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Review of the local agent harness: sandbox and critic matter more than caching</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-21</span><span>Herkunft</span><span>Alita, review of the running Hermes setup against published practice; own log counts 2026-10-21</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a> <span class="muted small">(local_llm_operation)</span><br><a href="../open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md">knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md</a></span></div><h2>Aussage</h2>
+<p>A local agent (27B hybrid model on one llama-server slot) works a job queue with a driver loop, a same-model critic
+and an acceptance checklist; it runs with approvals bypassed, behind a loopback-only network rule. A Telegram agent
+uses LLM-judged approvals, with a 4B classifier in shadow mode. Compared with published practice, ranked by risk:</p>
+<ol>
+<li><strong>No filesystem sandbox while approvals are bypassed.</strong> The network is locked, the filesystem is not. Hermes'
+   hard floor only blocks damage rooted at <code>/</code>, raw disks and shutdown, so <code>rm -rf</code> of a data folder in the home
+   directory passes. OWASP LLM06 and Anthropic's sandboxing post both ask for filesystem and network isolation
+   together. Landlock (kernel ABI 8 here) restricts writes without root; bubblewrap fails on this Ubuntu because
+   unprivileged user namespaces are restricted by AppArmor; Hermes also has a Docker terminal backend.</li>
+<li><strong>The critic is the same model.</strong> Without external feedback, self-correction does not reliably help and can hurt
+   (Huang 2024, Kamoi 2024); models evaluate their own output too kindly (Panickssery 2024); models of 13B or less
+   need a strong verifier (Zhang 2024). Own log: of 106 finished jobs, 6 ended after round 1, and 30 (28 %) used all
+   4 rounds with the critic still reporting serious findings, yet passed the checklist. Critic and checklist disagree.
+   Better: checks that can fail (run the script, count the files, compare the numbers), agreed before the work
+   starts, or a judge from another model family.</li>
+<li><strong>Approval classifier.</strong> Rules first, classifier only for the rest, never auto-deny: this matches Anthropic's auto
+   mode design, where even the large classifier missed 17 % of 52 real overeager actions. A 4B model should stay in
+   shadow until its misses on the own log are counted.</li>
+<li><strong>Caching is mostly fine.</strong> Of the last 2601 requests with more than 8k tokens in the slot, 89 % reused the prefix
+   and 4 % were computed cold (median 35 s each). <code>--cache-reuse</code> is disabled by the server for this hybrid model on
+   every load. The host-memory prompt cache (<code>--cache-ram</code>, default 8 GiB) is on and full; with one slot it saves
+   and loads only when less than half of the slot is kept (<code>--slot-prompt-similarity</code> path), see open PR #22083.</li>
+</ol>
+<h2>Traegt</h2>
+<p>One GPU workstation, one llama-server slot, one hybrid 27B model, Hermes v0.20.5, job queue with critic rounds.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>The critic numbers come from 108 driver logs up to 2026-08-28 (half of the finished jobs have no log); they show
+  disagreement, not which side is right.</li>
+<li>The 17 % miss rate is Anthropic's figure for their classifier, not a measurement of the 4B model.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>A job that the critic passes in round 1 fails a real executable check, or a sandboxed run breaks a job that needs
+to write outside the allowed folders.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet", ICLR 2024, arXiv:2310.01798: without
+  external feedback, accuracy fell after self-correction (GPT-4 on GSM8K 95.5 to 89.0 over two rounds).</li>
+<li>Kamoi et al., "When Can LLMs Actually Correct Their Own Mistakes?", TACL 2024, arXiv:2406.01297: self-correction
+  works with reliable external feedback or fine-tuning, not with prompted self-feedback in general.</li>
+<li>Panickssery, Bowman, Feng, "LLM Evaluators Recognize and Favor Their Own Generations", NeurIPS 2024,
+  arXiv:2404.13076: self-recognition correlates linearly with self-preference.</li>
+<li>Zhang et al., "Small Language Models Need Strong Verifiers to Self-Correct Reasoning", Findings of ACL 2024,
+  arXiv:2404.17140: small models gain only with a strong verifier.</li>
+<li>Gou et al., "CRITIC", ICLR 2024, arXiv:2305.11738: tool-interactive critique beats critique without tools.</li>
+<li>Anthropic Engineering, "Making Claude Code safer with sandboxing" (2025),
+  https://www.anthropic.com/engineering/claude-code-sandboxing: filesystem plus network isolation, 84 % fewer
+  permission prompts (internal figure).</li>
+<li>Anthropic Engineering, "How we built Claude Code auto mode" (2026),
+  https://www.anthropic.com/engineering/claude-code-auto-mode: rules first, two-stage classifier, 0.4 % false
+  positives, 17 % misses on 52 real overeager actions.</li>
+<li>OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency,
+  https://genai.owasp.org/llmrisk/llm062025-excessive-agency/: least privilege, authorisation outside the LLM.</li>
+<li>Anthropic, "Effective harnesses for long-running agents" (2025),
+  https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents, and "Harness design for
+  long-running apps" (2026), https://www.anthropic.com/research/harness-design-long-running-apps: progress file,
+  one task at a time, done only after end-to-end tests, a separate skeptical evaluator tuned by reading its logs,
+  remove one harness component at a time to test it.</li>
+<li>Manus, "Context Engineering for AI Agents" (2025),
+  https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus, and Anthropic prompt caching
+  docs, https://platform.claude.com/docs/en/build-with-claude/prompt-caching: static first, timestamps last.</li>
+<li>llama.cpp PR #16391 "server : host-memory prompt caching" (merged 2025-10-09), PR #9866 "server : reuse context
+  chunks" (merged 2024-10-13), PR #22083 (open): https://github.com/ggml-org/llama.cpp. Own source reading
+  <code>tools/server/server-context.cpp</code> (save to RAM only if f_keep &lt; 0.5 on the similarity path).</li>
+<li>Own run 2026-10-21: server log (cache_reuse disabled message on each load, prompt-eval counts), driver logs,
+  Landlock ABI query, <code>kernel.apparmor_restrict_unprivileged_userns = 1</code>.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

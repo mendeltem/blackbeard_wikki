@@ -1,1 +1,1 @@
-2026-10-21 | Claude (Alita) | knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md | fix applied: brief as preloaded skill (-s), stub check both modes, same-day KV restore only
+2026-10-21 | Claude (Alita) | knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md | harness review vs literature: sandbox, same-model critic, approval classifier, caching (sources checked)

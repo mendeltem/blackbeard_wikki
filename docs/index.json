@@ -2200,6 +2200,17 @@
 "src": "knowledge/local_llm_operation/findings/lean-hermes-toolsets.md"
 },
 {
+"t": "Review of the local agent harness: sandbox and critic matter more than caching",
+"p": "local_llm_operation/findings/local-agent-harness-review-2026-10.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "review against published practice: filesystem sandbox missing under yolo, same-model critic disagrees with checklist (28 % hit the round limit), caching 89 % reuse",
+"id": "local-agent-harness-review-2026-10",
+"src": "knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md"
+},
+{
 "t": "Lokaler Rechercheschwarm: erster Lauf vom einen Satz bis zum Bericht",
 "p": "local_llm_operation/findings/local-research-swarm-first-run-2026-10-09.html",
 "a": "local_llm_operation",

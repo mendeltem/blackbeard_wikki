@@ -43,13 +43,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness, HPC, SLURM, shard, Port 22, Tunnel</p>
-<div class="stripe"><i class="warn" style="width:47.8%" title="vorschlag: 22"></i><i class="ok" style="width:34.8%" title="getragen: 16"></i><i class="info" style="width:15.2%" title="offen: 7"></i><i class="" style="width:2.2%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">22 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+<div class="stripe"><i class="warn" style="width:48.9%" title="vorschlag: 23"></i><i class="ok" style="width:34.0%" title="getragen: 16"></i><i class="info" style="width:14.9%" title="offen: 7"></i><i class="" style="width:2.1%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">23 vorschlag</span> <span class="ok">16 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
 Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
 <p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-21 (own reading and stub probe):</strong> "Prefill" covers three things: Hermes prefill turns (few-shot examples inserted after the system prompt, never saved), llama.cpp prompt processing (about 12 s for 8.6k tokens here) and the thinking-only continuation. In one-shot mode (<code>hermes -z</code>) Hermes v0.20.5 drops both <code>HERMES_EPHEMERAL_SYSTEM_PROMPT</code> and the prefill file; only <code>-s</code> preloaded skills get in. A theme brief passed that way never reached one-shot agents (<a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">hermes-oneshot-ignores-ephemeral-prompt-and-prefill</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-21 (review with checked sources):</strong> The biggest gaps in the local agent setup are a missing filesystem sandbox while approvals are bypassed (Landlock works without root here) and a critic that is the same model: 28 % of finished jobs used all critic rounds yet passed the checklist. Prompt caching is mostly fine (89 % prefix reuse), <code>--cache-reuse</code> is disabled for the hybrid model (<a href="findings/local-agent-harness-review-2026-10.html">local-agent-harness-review-2026-10</a>).</p>
+<p><strong>New 2026-10-21 (own reading and stub probe):</strong> "Prefill" covers three things: Hermes prefill turns (few-shot examples inserted after the system prompt, never saved), llama.cpp prompt processing (about 12 s for 8.6k tokens here) and the thinking-only continuation. In one-shot mode (<code>hermes -z</code>) Hermes v0.20.5 drops both <code>HERMES_EPHEMERAL_SYSTEM_PROMPT</code> and the prefill file; only <code>-s</code> preloaded skills get in. A theme brief passed that way never reached one-shot agents (<a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">hermes-oneshot-ignores-ephemeral-prompt-and-prefill</a>).</p>
 <p><strong>New 2026-10-20 (own reading and install):</strong> Hermes keeps every conversation in the profile database and has no switch to turn that off; a no-record session needs a throwaway profile home in RAM started through the normal launcher (<a href="findings/hermes-keeps-every-conversation-in-state-db.html">hermes-keeps-every-conversation-in-state-db</a>). Kromoss, a 5B text-to-image model, installs with torch 2.9 cu126 on the CUDA 12.4 driver; its bf16 weights (27 GB) need CPU offload on 24 GB, image generation not yet measured (<a href="findings/kromoss-text-to-image-install-on-24gb-card.html">kromoss-text-to-image-install-on-24gb-card</a>).</p>
 <p><strong>New 2026-10-20 (own incident and fix):</strong> A GPU lock must die with its job (kernel <code>flock</code>, inherited by children), carry an expiry, and stop blocking once it has expired with no GPU job for 2 h; one shared check instead of ten copies of "is the PID alive?". A <code>sleep infinity</code> holder had kept the local model off the card for five days. See <a href="rules/gpu-lock-dies-with-its-job.html">gpu-lock-dies-with-its-job</a>.</p>
 <p><strong>New 2026-10-20 (web research, sources checked):</strong> System One confidence does not transfer between distributions (the decider-4b card warns against reading 0.8 as 80 %; own labels and one fitted temperature fix most of it), and an approval gate that reads agent-written text can be talked past by prompt injection (AI-control monitors, automatic permission review in three coding harnesses). Rules stay first; the model only thins out prompts; an adversarial set is measured before live. See <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">system-one-decision-layer-for-agent-harnesses</a>.</p>
@@ -62,7 +63,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
 <p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
 <p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
-<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="39.5" width="319.0" height="10.5" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 38</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 38)</figcaption></figure>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="39.7" width="319.0" height="10.3" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 39</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 39)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="gpu-lock-dies-with-its-job"><summary><span class="type">Regel</span><span class="t"><a href="rules/gpu-lock-dies-with-its-job.html">A GPU lock dies with its job, expires, and an expired idle lock stops blocking</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">GPU lock held by the job itself (kernel flock), with expiry; an expired lock without GPU job for 2 h stops blocking and is reported once</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB), incident 2026-10-15 to 2026-10-20; tool gpu-sperre built and tested 2026-10-20 · <a href="rules/gpu-lock-dies-with-its-job.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/gpu-lock-dies-with-its-job.md">Markdown</a></p><h2>Aussage</h2>
 <p>When a language model server and GPU jobs share one card, the lock that keeps the model off the card must
@@ -405,7 +406,7 @@ verlaengert. Dann greift der Cache nicht.</p>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(25)</span></h2><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(26)</span></h2><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
 <p>"Prefill" means three different things around a local agent, and only one of them is a file you configure:
 1. <strong>Hermes prefill messages</strong> (<code>prefill_messages_file</code> or <code>HERMES_PREFILL_MESSAGES_FILE</code>): a JSON list of
    <code>{role, content}</code> turns. Hermes inserts them on every API call right after the system prompt and before the real
@@ -456,6 +457,73 @@ KV-cache file is now restored only on the day it was written, because the brief 
   <code>--slot-save-path</code>, <code>POST /slots/{id}?action=save|restore</code>, <code>--cache-reuse</code>.</li>
 <li>Own run 2026-10-21: stub server probe (<code>-z</code> vs <code>chat -q</code>), detokenised slot files, prompt-eval timings from the
   server log.</li>
+</ul></div></details><details class="entry" id="local-agent-harness-review-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/local-agent-harness-review-2026-10.html">Review of the local agent harness: sandbox and critic matter more than caching</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">review against published practice: filesystem sandbox missing under yolo, same-model critic disagrees with checklist (28 % hit the round limit), caching 89 % reuse</span></summary><div class="body"><p class="small muted">Herkunft: Alita, review of the running Hermes setup against published practice; own log counts 2026-10-21 · <a href="findings/local-agent-harness-review-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<p>A local agent (27B hybrid model on one llama-server slot) works a job queue with a driver loop, a same-model critic
+and an acceptance checklist; it runs with approvals bypassed, behind a loopback-only network rule. A Telegram agent
+uses LLM-judged approvals, with a 4B classifier in shadow mode. Compared with published practice, ranked by risk:</p>
+<ol>
+<li><strong>No filesystem sandbox while approvals are bypassed.</strong> The network is locked, the filesystem is not. Hermes'
+   hard floor only blocks damage rooted at <code>/</code>, raw disks and shutdown, so <code>rm -rf</code> of a data folder in the home
+   directory passes. OWASP LLM06 and Anthropic's sandboxing post both ask for filesystem and network isolation
+   together. Landlock (kernel ABI 8 here) restricts writes without root; bubblewrap fails on this Ubuntu because
+   unprivileged user namespaces are restricted by AppArmor; Hermes also has a Docker terminal backend.</li>
+<li><strong>The critic is the same model.</strong> Without external feedback, self-correction does not reliably help and can hurt
+   (Huang 2024, Kamoi 2024); models evaluate their own output too kindly (Panickssery 2024); models of 13B or less
+   need a strong verifier (Zhang 2024). Own log: of 106 finished jobs, 6 ended after round 1, and 30 (28 %) used all
+   4 rounds with the critic still reporting serious findings, yet passed the checklist. Critic and checklist disagree.
+   Better: checks that can fail (run the script, count the files, compare the numbers), agreed before the work
+   starts, or a judge from another model family.</li>
+<li><strong>Approval classifier.</strong> Rules first, classifier only for the rest, never auto-deny: this matches Anthropic's auto
+   mode design, where even the large classifier missed 17 % of 52 real overeager actions. A 4B model should stay in
+   shadow until its misses on the own log are counted.</li>
+<li><strong>Caching is mostly fine.</strong> Of the last 2601 requests with more than 8k tokens in the slot, 89 % reused the prefix
+   and 4 % were computed cold (median 35 s each). <code>--cache-reuse</code> is disabled by the server for this hybrid model on
+   every load. The host-memory prompt cache (<code>--cache-ram</code>, default 8 GiB) is on and full; with one slot it saves
+   and loads only when less than half of the slot is kept (<code>--slot-prompt-similarity</code> path), see open PR #22083.</li>
+</ol>
+<h2>Traegt</h2>
+<p>One GPU workstation, one llama-server slot, one hybrid 27B model, Hermes v0.20.5, job queue with critic rounds.</p>
+<h2>Traegt nicht</h2>
+<ul>
+<li>The critic numbers come from 108 driver logs up to 2026-08-28 (half of the finished jobs have no log); they show
+  disagreement, not which side is right.</li>
+<li>The 17 % miss rate is Anthropic's figure for their classifier, not a measurement of the 4B model.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>A job that the critic passes in round 1 fails a real executable check, or a sandboxed run breaks a job that needs
+to write outside the allowed folders.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet", ICLR 2024, arXiv:2310.01798: without
+  external feedback, accuracy fell after self-correction (GPT-4 on GSM8K 95.5 to 89.0 over two rounds).</li>
+<li>Kamoi et al., "When Can LLMs Actually Correct Their Own Mistakes?", TACL 2024, arXiv:2406.01297: self-correction
+  works with reliable external feedback or fine-tuning, not with prompted self-feedback in general.</li>
+<li>Panickssery, Bowman, Feng, "LLM Evaluators Recognize and Favor Their Own Generations", NeurIPS 2024,
+  arXiv:2404.13076: self-recognition correlates linearly with self-preference.</li>
+<li>Zhang et al., "Small Language Models Need Strong Verifiers to Self-Correct Reasoning", Findings of ACL 2024,
+  arXiv:2404.17140: small models gain only with a strong verifier.</li>
+<li>Gou et al., "CRITIC", ICLR 2024, arXiv:2305.11738: tool-interactive critique beats critique without tools.</li>
+<li>Anthropic Engineering, "Making Claude Code safer with sandboxing" (2025),
+  https://www.anthropic.com/engineering/claude-code-sandboxing: filesystem plus network isolation, 84 % fewer
+  permission prompts (internal figure).</li>
+<li>Anthropic Engineering, "How we built Claude Code auto mode" (2026),
+  https://www.anthropic.com/engineering/claude-code-auto-mode: rules first, two-stage classifier, 0.4 % false
+  positives, 17 % misses on 52 real overeager actions.</li>
+<li>OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency,
+  https://genai.owasp.org/llmrisk/llm062025-excessive-agency/: least privilege, authorisation outside the LLM.</li>
+<li>Anthropic, "Effective harnesses for long-running agents" (2025),
+  https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents, and "Harness design for
+  long-running apps" (2026), https://www.anthropic.com/research/harness-design-long-running-apps: progress file,
+  one task at a time, done only after end-to-end tests, a separate skeptical evaluator tuned by reading its logs,
+  remove one harness component at a time to test it.</li>
+<li>Manus, "Context Engineering for AI Agents" (2025),
+  https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus, and Anthropic prompt caching
+  docs, https://platform.claude.com/docs/en/build-with-claude/prompt-caching: static first, timestamps last.</li>
+<li>llama.cpp PR #16391 "server : host-memory prompt caching" (merged 2025-10-09), PR #9866 "server : reuse context
+  chunks" (merged 2024-10-13), PR #22083 (open): https://github.com/ggml-org/llama.cpp. Own source reading
+  <code>tools/server/server-context.cpp</code> (save to RAM only if f_keep &lt; 0.5 on the similarity path).</li>
+<li>Own run 2026-10-21: server log (cache_reuse disabled message on each load, prompt-eval counts), driver logs,
+  Landlock ABI query, <code>kernel.apparmor_restrict_unprivileged_userns = 1</code>.</li>
 </ul></div></details><details class="entry" id="hermes-keeps-every-conversation-in-state-db"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-keeps-every-conversation-in-state-db.html">Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">Hermes writes every message to state.db, no flag turns it off; a no-record session needs a throwaway HERMES_HOME in RAM, guard log stays</span></summary><div class="body"><p class="small muted">Herkunft: Alita, source reading of Hermes Agent v0.20.5 (2026.8.19) and the local launch chain, 2026-10-20; user question about a private mode for the local agent · <a href="findings/hermes-keeps-every-conversation-in-state-db.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md">Markdown</a></p><h2>Aussage</h2>
 <p>Hermes Agent writes every message of a session to SQLite <code>$HERMES_HOME/state.db</code> (<code>_persist_session</code> in
 <code>run_agent.py</code>, called on every exit path "so conversations are never lost"). Per-session JSON snapshots exist too, but
