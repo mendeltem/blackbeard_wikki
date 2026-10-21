@@ -2519,6 +2519,17 @@
 "src": "knowledge/local_llm_operation/rules/group-drive-move-ask-what-alita-means.md"
 },
 {
+"t": "Der lokale Modellserver laeuft nur, wenn er gebraucht wird",
+"p": "local_llm_operation/rules/local-model-server-runs-only-when-needed.html",
+"a": "local_llm_operation",
+"y": "Regel",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "Der Dienst `llama-server.service` ist `enabled` **und** das Konto hat `Linger=yes`. Er startet also beim Booten ohne Login und laeuft dauerhaft. Das ist fuer den Datenschutz richtig — Patientendaten duerfen die Maschine nicht verlassen, als",
+"id": "local-model-server-runs-only-when-needed",
+"src": "knowledge/local_llm_operation/rules/local-model-server-runs-only-when-needed.md"
+},
+{
 "t": "Der Modellserver startet nur, wenn die Karte Platz hat, und mit dem Profil, das jetzt passt",
 "p": "local_llm_operation/rules/model-server-start-checks-card-and-picks-profile.html",
 "a": "local_llm_operation",
@@ -3144,6 +3155,39 @@
 "x": "~/QUALITY_CONTROLL ist die Quelle, der Stick eine Kopie; ganze Seite kopieren (Index + Sprites), qc_mirror_check.py, vor dem Abziehen sync, cmp, lsof",
 "id": "the-local-mirror-is-the-source-of-the-qc-stick",
 "src": "knowledge/mri_qc_viewers/rules/the-local-mirror-is-the-source-of-the-qc-stick.md"
+},
+{
+"t": "Das Fliegen-Konnektom traegt keinen Topologie-Vorteil, unter keiner Lernregel",
+"p": "neuromorphic_connectome/findings/fly-connectome-topology-carries-no-advantage.html",
+"a": "neuromorphic_connectome",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "Die biologische Verdrahtung von *Drosophila* ist ein brauchbares rekurrentes Substrat. Sie ist aber **nicht besser** als ein Zufallsgraph gleicher Dichte. Gemessen auf vier unabhaengigen Trainingsachsen, jeweils mit den Nullarmen `dp` (grad",
+"id": "fly-connectome-topology-carries-no-advantage",
+"src": "knowledge/neuromorphic_connectome/findings/fly-connectome-topology-carries-no-advantage.md"
+},
+{
+"t": "Das Fliegen-Subgraph ist ein brauchbares Substrat, aber nichts Besonderes",
+"p": "neuromorphic_connectome/findings/fly-subgraph-is-usable-but-not-special.html",
+"a": "neuromorphic_connectome",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "`fly783.csr` (138.639 Neuronen, 15.091.983 Kanten, Besetzung 0,08 %) laesst sich auf einer einzelnen 24-GB-Karte als rekurrentes Netz betreiben. Tragfaehig gemessener Betriebspunkt: LIF mit Surrogate-Gradient, `in_scale = 10,0`, spektraler ",
+"id": "fly-subgraph-is-usable-but-not-special",
+"src": "knowledge/neuromorphic_connectome/findings/fly-subgraph-is-usable-but-not-special.md"
+},
+{
+"t": "In STDP muessen Rate und Gewichtsschritt begrenzt sein, sonst saettigt der Clamp",
+"p": "neuromorphic_connectome/findings/spike-rate-must-be-bounded-in-stdp.html",
+"a": "neuromorphic_connectome",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "Ein erster STDP-Lauf auf dem Fliegen-Subgraph verschob die Gewichte in **einer** Epoche um 235 % ihrer Skala (`w_drift = 2,35`): die reine Pair-Regel `dW = A⁺·(sᵀx) − A⁻·(yᵀs)` ist ueber eine Batch von 16 Clips so gross, dass alle Synapsen ",
+"id": "spike-rate-must-be-bounded-in-stdp",
+"src": "knowledge/neuromorphic_connectome/findings/spike-rate-must-be-bounded-in-stdp.md"
 },
 {
 "t": "FinBERT wertet steigende Speicherpreise negativ, eine Herstellersicht-Bewertung positiv",

@@ -38,6 +38,25 @@ free -g
 Mehr als ein Inferenzprozess auf der GPU oder voller Swap: erst aufraeumen,
 dann messen.
 
+## Nachtrag 2026-10-21: nicht jeder grosse VRAM-Halter ist ein Rest
+Ein `llama-server`, der 20,4 von 24,6 GiB hielt, war **kein vergessener
+Vergleichslauf**, sondern der `enabled`-Dienst des eigenen lokalen Profils
+(`llama-server.service`, `Linger=yes`, `--n-gpu-layers 99`,
+`--ctx-size 81920`). Er laeuft absichtlich dauerhaft, weil das lokale Profil
+ihn als Gehirn fuer Patientendaten braucht. Vor dem "Aufraeumen" also erst
+die Herkunft klaeren:
+
+```
+systemctl --user is-enabled llama-server.service
+ps -o pid,lstart,cmd -p <pid>
+```
+
+Ein Prozess aus der eigenen Unit ist kein Fremdkoerper — ihn zu beenden nimmt
+dem lokalen Profil die Inferenz weg. Gewuenschte Loesung dort ist nicht
+killen, sondern `--sleep-idle-seconds`, siehe
+[local-model-server-runs-only-when-needed](local-model-server-runs-only-when-needed.md).
+
+
 ## Traegt nicht
 Andere Ursachen fuer langsames Prefill, etwa der Kaltstart nach dem Laden
 (erste Decode-Messung 17 t/s, warm 30-35 t/s).

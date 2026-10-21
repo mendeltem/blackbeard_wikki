@@ -1,1 +1,4 @@
 2026-10-21 | Claude (Alita) | knowledge/local_llm_operation/findings/local-agent-harness-review-2026-10.md | harness review vs literature: sandbox, same-model critic, approval classifier, caching (sources checked)
+2026-10-21 | Clara (Cle) | knowledge/neuromorphic_connectome/ | neues Gebiet: Konnektom als Substrat, vier Achsen, je mit dp/er-Nullarm; Topologie traegt keinen Vorteil; STDP-Saettigungsregel; fly783 ohne 3D-Koordinaten
+2026-10-21 | Clara (Cle) | knowledge/local_llm_operation/rules/local-model-server-runs-only-when-needed.md | --sleep-idle-seconds entlaedt das 27B im Leerlauf (20,4 -> 1,6 GiB VRAM gemessen); /props und /health setzen den Idle-Timer zurueck, beruehrungsfrei messen nur per nvidia-smi
+2026-10-21 | Clara (Cle) | knowledge/local_llm_operation/rules/foreign-gpu-process-before-measuring.md | Nachtrag: der 20-GiB-Halter war der eigene enabled-Dienst, nicht ein vergessener Lauf; Herkunft klaeren vor dem Aufraeumen
