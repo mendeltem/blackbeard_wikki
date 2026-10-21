@@ -2178,6 +2178,17 @@
 "src": "knowledge/local_llm_operation/findings/kromoss-text-to-image-install-on-24gb-card.md"
 },
 {
+"t": "A Landlock write lock for an agent that runs without approvals, built without root",
+"p": "local_llm_operation/findings/landlock-write-lock-for-a-yolo-agent.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "Landlock write lock without root for an agent with approvals bypassed: 20/20 checks, real run denies writes outside the list; systemd-run without --scope and tmux escape",
+"id": "landlock-write-lock-for-a-yolo-agent",
+"src": "knowledge/local_llm_operation/findings/landlock-write-lock-for-a-yolo-agent.md"
+},
+{
 "t": "Laya als Weiche vor dem Agenten: 24 von 30 richtig, 0,1 s",
 "p": "local_llm_operation/findings/laya-router-before-agent.html",
 "a": "local_llm_operation",
