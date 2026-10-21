@@ -426,6 +426,9 @@ verlaengert. Dann greift der Cache nicht.</p>
 <p>A theme brief handed over through <code>HERMES_EPHEMERAL_SYSTEM_PROMPT</code> therefore never reached a one-shot agent. The
 three per-theme KV-cache files warmed in one-shot mode in September 2026 contain the Hermes core and that day's date,
 and no brief text (token lists read from the slot files and detokenised).</p>
+<p>Fix applied 2026-10-21: the launcher writes each brief as a skill and passes <code>-s &lt;skill&gt;</code>. A stub check sends one
+<code>-z</code> and one <code>chat -q</code> request: the brief arrives exactly once in both, and is missing with the old launcher. A saved
+KV-cache file is now restored only on the day it was written, because the brief sits behind the date line.</p>
 <h2>Traegt</h2>
 <ul>
 <li>One-shot workers (cron jobs, drivers, warm-up calls) on Hermes v0.20.5: context that must reach them goes in with

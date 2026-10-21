@@ -34,6 +34,10 @@ A theme brief handed over through `HERMES_EPHEMERAL_SYSTEM_PROMPT` therefore nev
 three per-theme KV-cache files warmed in one-shot mode in September 2026 contain the Hermes core and that day's date,
 and no brief text (token lists read from the slot files and detokenised).
 
+Fix applied 2026-10-21: the launcher writes each brief as a skill and passes `-s <skill>`. A stub check sends one
+`-z` and one `chat -q` request: the brief arrives exactly once in both, and is missing with the old launcher. A saved
+KV-cache file is now restored only on the day it was written, because the brief sits behind the date line.
+
 ## Traegt
 - One-shot workers (cron jobs, drivers, warm-up calls) on Hermes v0.20.5: context that must reach them goes in with
   `-s <skill>` (preloaded skill) or at the start of the task text.
