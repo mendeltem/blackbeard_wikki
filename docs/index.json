@@ -1,5 +1,60 @@
 [
 {
+"t": "Derived artifacts carry the source class: a KV cache is a copy in number form",
+"p": "agent_coordination/findings/derived-artifacts-carry-their-source-class.html",
+"a": "agent_coordination",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-22",
+"x": "",
+"id": "derived-artifacts-carry-their-source-class",
+"src": "knowledge/agent_coordination/findings/derived-artifacts-carry-their-source-class.md"
+},
+{
+"t": "Research passes invent plausible PMIDs",
+"p": "agent_coordination/findings/research-passes-invent-plausible-pmids.html",
+"a": "agent_coordination",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "An agent asked to research a topic returns citations that *look* right and are wrong. On 2026-10-21 three headless research passes (Claude Code, `claude -p`, read-only tools, network on) were run against the three-data-classes rule. One pas",
+"id": "research-passes-invent-plausible-pmids",
+"src": "knowledge/agent_coordination/findings/research-passes-invent-plausible-pmids.md"
+},
+{
+"t": "/tmp is not volatile on Alita, and agent session stores persist there",
+"p": "agent_coordination/findings/tmp-is-not-volatile-and-session-stores-persist.html",
+"a": "agent_coordination",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "",
+"id": "tmp-is-not-volatile-and-session-stores-persist",
+"src": "knowledge/agent_coordination/findings/tmp-is-not-volatile-and-session-stores-persist.md"
+},
+{
+"t": "Die Pfadregel der Wachen fragt nach der Rolle, nicht nach dem Einhängepunkt",
+"p": "agent_coordination/findings/wachen-path-rule-by-role-not-by-mountpoint.html",
+"a": "agent_coordination",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-22",
+"x": "",
+"id": "wachen-path-rule-by-role-not-by-mountpoint",
+"src": "knowledge/agent_coordination/findings/wachen-path-rule-by-role-not-by-mountpoint.md"
+},
+{
+"t": "Do not log case-level content",
+"p": "agent_coordination/rules/do-not-log-case-level-content.html",
+"a": "agent_coordination",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "A log is a copy. Write no case-level content into logs, caches or agent session stores - not for class 3, not for class 2, and not into a temporary directory that sits next to the data. Case-level means anything that identifies or reconstru",
+"id": "do-not-log-case-level-content",
+"src": "knowledge/agent_coordination/rules/do-not-log-case-level-content.md"
+},
+{
 "t": "Main rule: all work is in English",
 "p": "agent_coordination/rules/everything-in-english.html",
 "a": "agent_coordination",
@@ -53,6 +108,17 @@
 "x": "An denselben Repos arbeiten mehrere Sitzungen gleichzeitig. Keine von ihnen sieht die andere. Daraus folgen drei Regeln, alle aus Schaden gelernt: **Vor dem Schreiben Zeitstempel lesen.** ls -la --time-style=+%H:%M:%S Bewegen sich Dateien i",
 "id": "parallel-sessions-same-working-tree",
 "src": "knowledge/agent_coordination/rules/parallel-sessions-same-working-tree.md"
+},
+{
+"t": "Three data classes decide what may leave the institution",
+"p": "agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.html",
+"a": "agent_coordination",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-21",
+"x": "Every dataset gets exactly one class before any agent touches it. The class decides the route, not the tool and not the question. This is a main rule: it applies to every area of this wiki, not to one project. 1. **Class 1 - fully open.** N",
+"id": "three-data-classes-decide-what-may-leave-the-institution",
+"src": "knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md"
 },
 {
 "t": "Three small tools: verified move to the group drive, an hourly disk guard, and compact literature search for token-priced agents",
@@ -160,7 +226,7 @@
 "y": "Regel",
 "s": "getragen",
 "d": "2026-10-17",
-"x": "Every source: exists (PMID/DOI), PMID belongs to the title, claim in the abstract, one 'Shows:' sentence; agent report had 20/28 real PMIDs on invented titles; tool quellen-pruefen",
+"x": "Every source: exists (PMID/DOI), PMID belongs to the title, claim in the abstract, one 'Shows:' sentence; agent report had 20/28 real PMIDs on invented titles; tool quellen-pruefen. Measured 2026-10-21: tool catches invented ids and mismatc",
 "id": "check-every-cited-source-and-summarise-it",
 "src": "knowledge/agent_tooling/rules/check-every-cited-source-and-summarise-it.md"
 },
@@ -1694,6 +1760,17 @@
 "src": "knowledge/cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md"
 },
 {
+"t": "Example scripts that restate a pipeline must reproduce its command bit for bit",
+"p": "cmb_detection/rules/example-scripts-reproduce-their-command-bit-for-bit.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-22",
+"x": "Example scripts (train, predict, fine-tune) against the commands on the CPU with fixed seeds: weights equal with torch.equal, masks voxel for voxel; one comparison with a model that finds lesions; copies checked by source text (2026-10-22)",
+"id": "example-scripts-reproduce-their-command-bit-for-bit",
+"src": "knowledge/cmb_detection/rules/example-scripts-reproduce-their-command-bit-for-bit.md"
+},
+{
 "t": "Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar",
 "p": "cmb_detection/rules/patches-not-whole-images-for-small-lesions.html",
 "a": "cmb_detection",
@@ -2231,6 +2308,17 @@
 "x": "",
 "id": "local-research-swarm-first-run-2026-10-09",
 "src": "knowledge/local_llm_operation/findings/local-research-swarm-first-run-2026-10-09.md"
+},
+{
+"t": "The vision projector works with the served model - but the running service still does not load it",
+"p": "local_llm_operation/findings/local-vision-projector-present-but-not-loaded.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-21",
+"x": "The 927 MB mmproj projector **matches** the served 27B (base `qwen35`, projector `qwen3vl_merger`) and really sees images: a test instance with `--mmproj` returned HTTP 200 and described a synthetic image correctly. The defect is wiring, no",
+"id": "local-vision-projector-present-but-not-loaded",
+"src": "knowledge/local_llm_operation/findings/local-vision-projector-present-but-not-loaded.md"
 },
 {
 "t": "Qwen3.6-35B-A3B findet eine Einzelangabe bis 125k Token, und der Prefill bleibt fast flach",

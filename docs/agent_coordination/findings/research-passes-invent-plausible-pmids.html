@@ -1,0 +1,86 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Research passes invent plausible PMIDs</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_coordination</a> › <a href="../index.html#findings">Befund</a></div><h1>Research passes invent plausible PMIDs</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-21</span><span>Herkunft</span><span>own runs 2026-10-21, three headless Claude research passes on the three-data-classes rule</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/three-data-classes-decide-what-may-leave-the-institution.html">Three data classes decide what may leave the institution</a> <span class="muted small">(agent_coordination)</span><br><a href="../../local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">A remote model gets only data-free skills and redacted text</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/research-passes-invent-plausible-pmids.md">knowledge/agent_coordination/findings/research-passes-invent-plausible-pmids.md</a></span></div><h2>Aussage</h2>
+<p>An agent asked to research a topic returns citations that <em>look</em> right and are wrong. On 2026-10-21 three headless
+research passes (Claude Code, <code>claude -p</code>, read-only tools, network on) were run against the three-data-classes rule.
+One pass cited Schwarz et al. 2019 NEJM with PMID 31657887 and Rocher et al. 2019 Nature Communications with PMID
+31427575, plus a PMC link. Checked against PubMed:</p>
+<ul>
+<li>PMID 31657887 is "Discrimination, Abuse, Harassment, and Burnout in Surgical Residency Training" (Hu YY, NEJM 2019).</li>
+<li>PMID 31427575 is "AAV-ie enables safe and efficient gene transfer to inner ear cells" (Tan F, Nat Commun 2019).</li>
+<li>The correct Schwarz PMID is 31644852, "Identification of Anonymous MRI Research Participants with Face-Recognition
+  Software" (N Engl J Med 2019).</li>
+<li>The Rocher claim could not be verified at all; the citation was removed rather than repaired.</li>
+</ul>
+<p>The numbers the pass reported (92 % embedding recovery, 70 of 84 rank-1 matches) were plausible and the <em>topics</em> were
+right - only the identifiers were fabricated. A wrong PMID on a real-looking claim is harder to catch than a
+nonsensical one.</p>
+<p><strong>Same trap, one step further in (own error, same day).</strong> After correcting the PMID, the figure "70 of 84 rank-1
+matches" was copied into the rule as if verified. It is not: PMID 31644852 is a brief report with <strong>no abstract</strong>, so the
+number was never read anywhere. An identifier can be perfectly real and the number beside it still invented. The rule now
+says the figures were not read. A verified id is not a verified sentence.</p>
+<h2>Trägt</h2>
+<p>It settles how to consume a research pass: treat every identifier as a claim to be checked, never as a lookup already
+done. The check is cheap (one EUtils/Europe PMC call per id) and the failure is silent otherwise. It also justifies
+using several independent passes: the passes agreed on the <em>shape</em> (Turing tiers, DUO vocabulary, output checking) and
+disagreed on nothing structural, so the consensus carries even where a single citation does not.</p>
+<h2>Trägt nicht</h2>
+<p>It does not mean the passes are useless. Two of three produced verified, load-bearing material: the Turing Data Safe
+Haven tier mapping, the UK Biobank/SAIL/Five Safes output-checking comparison, and the DUO label list. The DUO labels
+were re-read from <code>duo.csv</code> and matched exactly. The failure was narrow - identifiers - not the research.</p>
+<p>It also does not mean a check makes a source <em>true</em>: a valid PMID proves the paper exists and has that title, not that
+it supports the sentence it is attached to. That second step (read the abstract) stays manual.</p>
+<h2>Bruchindikator</h2>
+<p>A wiki entry carries a PMID or DOI that the sources-check tool cannot tie to its title, or that resolves to an
+unrelated paper. A citation is copied from a research pass without a check, or a "corrected" identifier is written
+without reading the paper it now points to. The same applies to a DOI that resolves but to the wrong article.</p>
+<h2>Ablesung</h2>
+<p>Check, own runs 2026-10-21: PubMed EUtils <code>esummary</code> for a PMID returns title, journal, first author - compare against
+the claim. Europe PMC <code>search?query=DOI:"..."</code> resolves a DOI to its article. Corrected Schwarz reference:
+https://pubmed.ncbi.nlm.nih.gov/31644852/ . Removed reference: Rocher et al. 2019, Nat Commun - PMID unverified, not
+reinstated. Rule that consumes this: <a href="../rules/three-data-classes-decide-what-may-leave-the-institution.html">three-data-classes-decide-what-may-leave-the-institution</a>.
+Tool for the standing check: <code>system/werkzeuge/quellen-pruefen</code>.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

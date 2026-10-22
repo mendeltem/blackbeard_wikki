@@ -55,8 +55,16 @@ Real numbers made the wrong list look trustworthy; only the automatic comparison
 <h2>Trägt nicht</h2>
 <p>The title check does not prove that the claim is in the paper; that needs reading the abstract (the tool prints the last
 abstract sentence with --kurz as an aid). References without PMID or DOI (software, web pages) are checked by hand.</p>
+<p><strong>Measured 2026-10-21 (Clara, Cle profile, test set <code>clara-pruefstand/T24</code>).</strong> Four cases against the tool itself:
+(A) invented PMID + invented title -&gt; caught (WRONG, exit 1); (B) real PMID, title of a different paper -&gt; caught (exit 1);
+(C) real PMID, matching title, but the sentence claims the OPPOSITE of what the abstract says (claimed a <em>reduced</em>
+stroke risk where the abstract reports an <em>increased</em> risk) -&gt; <strong>passed with exit 0 and "3 correct, 0 wrong"</strong>;
+(D) reference with no PMID -&gt; exit 2, "no references with PMID found" (correctly refuses to judge).</p>
+<p>Case C is the blind spot: the tool checks identity (does this PMID carry this title), not the claim. A report can be
+100 percent green and still misstate every source. The abstract check in step (3) of the rule stays manual work.</p>
 <h2>Bruchindikator</h2>
-<p>A report that passes the tool but whose claims are not in the cited abstracts.</p>
+<p>A report that passes the tool but whose claims are not in the cited abstracts. Measured instance: 2026-10-21, case C
+above — exit 0, "0 wrong", claim inverted relative to the abstract.</p>
 <h2>Ablesung</h2>
 <ul>
 <li>tool <code>quellen-pruefen REPORT.md [--kurz]</code> (2026-10-17): PubMed efetch title match (first 40 letters/digits), DOI
@@ -64,5 +72,5 @@ abstract sentence with --kurz as an aid). References without PMID or DOI (softwa
 <li>NCBI E-utilities: https://www.ncbi.nlm.nih.gov/books/NBK25501/ ; DOI handle API: https://www.doi.org/the-identifier/resources/factsheets/doi-resolution-documentation</li>
 <li>own check runs 2026-10-17 on the three reports</li>
 </ul></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../../search.js"></script></body></html>

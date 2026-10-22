@@ -102,30 +102,67 @@ Argument.</p>
 Anfrage pro Stunde ist das ein guter Tausch, fuer einen Chat mit hoher
 Frequenz nicht — dort ist der Kaltstart teurer als der gehaltene VRAM.</p>
 <h2>Bruchindikator</h2>
-<p>Ein <code>--sleep-idle-seconds</code>-Argument, das im Prozess steht
-(<code>/proc/&lt;pid&gt;/cmdline</code>) und trotzdem nicht greift: <strong>dann prueft man
-vermutlich mit dem Server selbst.</strong> <code>/props</code> und <code>/health</code> sind echte
-Anfragen und setzen den Idle-Timer zurueck. Wer den Schwellwert mit
-<code>curl /props</code> misst, misst sich selbst und sieht nie einen Schlafzustand.
-Beruehrungsfrei messen geht nur ueber <code>nvidia-smi</code>, das den Server nicht
-anspricht.</p>
-<p><strong>Zweite Falle, am selben Tag erlebt:</strong> wer den Schlaf prueft, indem er eine
-Anfrage stellt ("weckt er wieder auf?"), <strong>weckt ihn auf — und der VRAM ist
-wieder belegt.</strong> Am 21.10.2026 lief genau so ein Trainingsjob erneut in einen
-CUDA-OOM, obwohl der Server Minuten vorher geschlafen hatte: der Aufwachtest
-dazwischen hatte das Modell wieder geladen. Wer nach dem Test eine GPU-Arbeit
-starten will, muss entweder die Leerlaufzeit abwarten oder den Start an eine
-VRAM-Schranke binden (Schleife ueber <code>nvidia-smi --query-gpu=memory.free</code>,
-erst starten wenn genug frei ist). Pruefen und Nutzen sind hier dieselbe
-Handlung — die Reihenfolge entscheidet.</p>
+<p><strong>Zuerst eine Korrektur meiner eigenen ersten Fassung, 21.10.2026.</strong> Ich hatte
+hier geschrieben, <code>/props</code> und <code>/health</code> seien echte Anfragen und setzten den
+Idle-Timer zurueck — wer damit messe, sehe nie einen Schlaf. <strong>Das ist
+falsch.</strong> Im Quelltext (<code>tools/server/server-context.cpp</code>):</p>
+<pre><code>this-&gt;get_health = [this](const server_http_req &amp;) {
+    auto res = create_response(true);   // bypass_sleep
+</code></pre>
+<pre><code>this-&gt;get_props = [this](const server_http_req &amp;) {
+    auto res = create_response(true);   // bypass_sleep
+</code></pre>
+<p>Beide Routen laufen mit <code>bypass_sleep = true</code> und werden ausdruecklich
+<strong>waehrend</strong> des Schlafs bedient ("this endpoint can be accessed during
+sleeping"). Auch die Queue bestaetigt es: <code>task_resets_idle_timer()</code> schliesst
+nur <code>SERVER_TASK_TYPE_METRICS</code> aus, nicht Health oder Props. Messen mit
+<code>/health</code> oder <code>/props</code> verhindert den Schlaf also <strong>nicht</strong>. Wer das
+weiterverbreitet, schickt den naechsten auf eine falsche Spur — deshalb steht
+die Berichtigung hier und nicht nur im Log.</p>
+<p><strong>Der echte Bruchindikator ist eine echte Anfrage.</strong> Jeder Aufruf, der
+rechnet — <code>POST /v1/chat/completions</code>, auch "nur zum Test" — setzt den Timer
+zurueck und laedt das Modell. Am 21.10.2026 lief ein Trainingsjob in einen
+CUDA-OOM, weil Minuten vorher genau so ein Aufwachtest gelaufen war: der
+Server hatte kurz zuvor geschlafen, war danach wieder wach, und die 20 GB
+waren weg. <strong>Pruefen und Nutzen sind hier dieselbe Handlung — die Reihenfolge
+entscheidet.</strong></p>
+<p><strong>Zweite Beobachtung, die man nicht fuer einen Fehler haelt:</strong> der Schlaf
+kommt spaeter als die eingestellte Zeit. Bei <code>--sleep-idle-seconds 300</code> und
+letzter echter Anfrage um 18:53 trat er erst um ~19:02 ein, also nach ~9 min
+statt nach 5. Die Queue <strong>verschiebt</strong> den Idle-Takt, statt ihn
+zurueckzusetzen (<code>time_last_task = std::min(now, time_last_task + (now -
+t_update_slots))</code>): die Zeit, die <code>update_slots</code> selbst braucht, zaehlt nicht
+als Leerlauf. Wer nach dem Messen eine GPU-Arbeit startet, sollte deshalb
+nicht auf die Uhr schauen, sondern den Start an eine VRAM-Schranke binden:
+Schleife ueber <code>nvidia-smi --query-gpu=memory.free</code>, erst starten wenn genug
+frei ist. Beruehrungsfrei messen geht nur ueber <code>nvidia-smi</code>, das den Server
+gar nicht anspricht.</p>
+<h2>Wer ihn legitim weckt</h2>
+<p>Nicht jeder Aufruf ist ein Fehlgriff. Der <code>guard-daemon.service</code> schickt jeden
+ungeprueften Ausgang des gesperrten Agenten durch das lokale Modell
+(<code>system/guard/ask_outside.py</code> -&gt; <code>/v1/chat/completions</code> auf <code>:8000</code>). Solange
+dieser Waechter laeuft, wacht der Server bei echter Ausgangspruefung auf — das
+ist gewollt, kein Leck. Wer den VRAM dauerhaft braucht, muss diese Quelle
+kennen, sonst sucht er sie in einem Timer, der nie der Taeter war.</p>
+<p><strong>Zweiter Nutzen derselben Option:</strong> weil das Modell austauschbar aus der
+Registry kommt (<code>models.json</code>), kann Claude Codes Harness gegen dasselbe lokale
+Modell laufen — <code>system/claude-lokal.sh</code>, im <code>.bashrc</code> als <code>cl</code> verlinkt. Es
+setzt <code>ANTHROPIC_BASE_URL=http://127.0.0.1:8000</code>, <code>ANTHROPIC_MODEL</code> aus der
+Registry und <code>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1</code>; Werkzeuge,
+Dateizugriff und <code>CLAUDE.md</code> bleiben dieselben. Getestet am 21.10.2026:
+<code>claude-lokal.sh -p "Antworte nur mit dem Wort LOKAL"</code> antwortete <code>LOKAL</code>,
+Exit 0, ueber <code>127.0.0.1:8000</code>. Der Server schlief danach von selbst wieder ein
+(19:24 letzte Anfrage, 19:29 <code>free=22480</code>). Ein blankes <code>claude -p</code> dagegen
+laeuft <strong>nicht</strong> lokal, sondern in die Cloud — die beiden nicht verwechseln.</p>
 <h2>Ablesung</h2>
 <p>Eigene Messung, 21.10.2026, Cle-Arbeit. Regler: <code>start.sh</code> von
-<code>local_agentic_system</code>, Abschnitt "Ruhezustand". Testmodell und Endpunkt wie
-oben; die 27B-Messung war zu diesem Zeitpunkt noch offen.</p>
+<code>local_agentic_system</code>, Abschnitt "Ruhezustand". Die 27B-Messung oben ist am
+echten Dienst gelaufen (nicht mehr offen); das 0,5B-Testmodell diente nur dem
+ersten Nachweis.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="foreign-gpu-process-before-measuring.html">foreign-gpu-process-before-measuring</a></li>
 <li><a href="remote-model-gets-only-data-free-skills-and-redacted-text.html">remote-model-gets-only-data-free-skills-and-redacted-text</a></li>
 </ul></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../../search.js"></script></body></html>

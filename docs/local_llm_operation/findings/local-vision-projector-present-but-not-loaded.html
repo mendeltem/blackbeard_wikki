@@ -1,0 +1,105 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>The vision projector works with the served model - but the running service still does not load it</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>The vision projector works with the served model - but the running service still does not load it</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-21</span><span>Herkunft</span><span>Clara test set 2026-10-21 (Cle profile), tasks T18/T16; machine Alita, RTX A5000; projector test 2026-10-21</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="research-local-llm-for-patient-data-on-24gb-2026-10.html">Literature: which open-weight LLM fits a local patient-data agent on one 24 GB GPU</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/local-vision-projector-present-but-not-loaded.md">knowledge/local_llm_operation/findings/local-vision-projector-present-but-not-loaded.md</a></span></div><h2>Aussage</h2>
+<p>The projector <code>modelle/mmproj-F16.gguf</code> (927 MB) matches the served model and produces real image perception. A test
+instance started with <code>--mmproj</code> on a free port (8010) loaded it as <code>loaded multimodal model</code> and answered an image
+request with <strong>HTTP 200</strong> and a correct description of a synthetic test image (a large red circle with a black outline
+containing a smaller white upright rectangle - all three described). The original defect is therefore <strong>wiring, not
+capability</strong>: the file was always the right one, it was simply never passed to the server.</p>
+<p>What has <em>not</em> changed: the <strong>production</strong> service (<code>llama-server.service</code>, port 8000) still starts without
+<code>--mmproj</code>, so the patient-safe image route via the running service is still not operational as of this date. The
+test was run on a separate instance on purpose, so the running service was never touched.</p>
+<h2>Trägt</h2>
+<p>2026-10-21, four independent readings:
+1. Architecture match, read from the GGUF headers: base model <code>general.architecture = qwen35</code>, projector
+   <code>general.architecture = qwen3vl_merger</code>. The llama.cpp build in use contains the <code>PROJECTOR_TYPE_QWEN3VL</code> path
+   (<code>tools/mtmd/clip.cpp</code>, <code>tools/mtmd/models/qwen3vl.cpp</code>), so the pair is supported.
+2. The projector loads and llama.cpp recognises the pairing: <code>load_hparams: Qwen-VL models require at minimum 1024
+   image tokens ...</code> - the VL code path is active, not skipped.
+3. Server log of the test instance: <code>srv load_model: loaded multimodal model, 'modelle/mmproj-F16.gguf'</code>, then
+   <code>listening on http://127.0.0.1:8010</code>.
+4. End-to-end request: HTTP 200 with a description that matches the drawn shapes and colours; slot timings show
+   <code>prompt eval ... / 324 tokens</code> (the image tokens were encoded) and 110 completion tokens.</p>
+<h2>Trägt nicht</h2>
+<p>Also untested: image quality on real modality data (small lesions, faint WMH) rather than a synthetic drawing, and
+whether the local stack keeps the image on the machine end to end. Concurrent use is untested: the measurements below
+leave only ~1.6 GB free, so a second GPU-hungry job alongside the vision server would fail.</p>
+<h2>Produktionskonfiguration nachgemessen (2026-10-21)</h2>
+<p>A second test instance on port 8011 used the <strong>production</strong> profile verbatim (<code>--ctx-size 81920</code>, <code>--n-gpu-layers 99</code>,
+projector on CPU) and answered the same synthetic image with <strong>HTTP 200</strong> and a correct description ("a large red
+circle with a black border on a light grey background contains a white rectangle with a black border at the bottom
+centre"). VRAM held stable at <strong>22492 MiB used / 1613 MiB free</strong>, 52 C, 1 % utilisation, <strong>zero</strong> errors in the log
+across the request. Image encoding took 2226 ms for 284 prompt tokens. So vision and the full 80k context coexist -
+but the margin is thin, see the cost note.</p>
+<h2>Bruchindikator</h2>
+<p>The production <code>llama-server.service</code> gains an <code>--mmproj</code> argument and an image sent to port 8000 returns a description
+instead of HTTP 500. Or the reading above stops reproducing: the projector no longer loads, or the description does
+not match the drawn image.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>projector: <code>modelle/mmproj-F16.gguf</code>, 927,607,488 bytes; header architecture <code>qwen3vl_merger</code></li>
+<li>base model: <code>modelle/Qwen3.8-27B-UD-Q4_K_M.gguf</code>; header architecture <code>qwen35</code></li>
+<li>build support: <code>system/llama.cpp/tools/mtmd/clip.cpp</code> -&gt; <code>case PROJECTOR_TYPE_QWEN3VL</code>; binary <code>llama-mtmd-cli</code> and
+  <code>libmtmd.so</code> are built</li>
+<li>test instance log: <code>/tmp/vtest_server.log</code> -&gt; <code>loaded multimodal model</code> + <code>listening on ...:8010</code></li>
+<li>synthetic test image: <code>/tmp/vtest_synth.png</code> (drawn locally, no patient data)</li>
+<li>production startup script: <code>system/start.sh</code> -&gt; <code>exec "$SERVER" ...</code> has no <code>--mmproj</code>; registry entries carry an
+  <code>args</code> list that is appended via <code>REG_ARGS</code>, which is the natural place for a per-model projector</li>
+<li>prior reading (defect): <code>~/cle-arbeit/clara-pruefstand/ERGEBNIS.md</code> (2026-10-21)</li>
+</ul>
+<h2>Kostenhinweis (VRAM)</h2>
+<p>Measured on the test instance (8k context, projector on CPU): the process held <strong>16178 MiB</strong>, remaining free 6293 MiB,
+GPU 51 C at 1 % utilisation. The projector itself is 927 MB; the figure above is dominated by the 27B weights, not by
+the projector. The production profile declares <code>braucht_mib</code> around 21500 for a full 80k context - before enabling
+vision there, the context length is the lever, not the projector: an 80k KV cache plus image tokens is what threatens
+the OOM that killed an earlier training run. Reduce context or accept a separate vision instance.</p>
+<h2>Fallstrick bei der Kartenspuren-Auslesung</h2>
+<p>A fluttering VRAM band (here: 1624 MiB floor, spikes to ~2154 MiB every 15-30 s) is <strong>not</strong> evidence that the served
+model wakes. On 2026-10-21 that pattern was produced by an unrelated short-lived CUDA context (a local PyTorch
+measurement loop), while the 27B server had last written to its log 8 minutes earlier. A plain torch allocation moves
+the same 1624 -&gt; 1888 MiB and releases it on exit. Before blaming a service, compare the times: the server log's last
+write must fall inside the fluttering window.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

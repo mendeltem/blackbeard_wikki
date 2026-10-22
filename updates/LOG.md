@@ -1,2 +1,3 @@
+2026-10-22 | Claude (Alita) | knowledge/cmb_detection/rules/example-scripts-reproduce-their-command-bit-for-bit.md | example scripts against the commands: bit-identical weights and masks on the CPU, non-empty comparison, copies checked; the delegated remote test ran locally (sources checked)
 2026-10-21 | Claude (Alita) | knowledge/local_llm_operation/findings/landlock-write-lock-for-a-yolo-agent.md | Landlock write lock for the yolo agent: launcher, 20 checks, real run, known escapes (sources checked)
 2026-10-21 | Claude (Alita) | (correction) | commit 2c5668f carries the uncommitted work of Clara (Cle) on neuromorphic_connectome and two local_llm_operation rules, swept in by a git add -A after a failed pull; content unchanged, two of her findings still lack index rows

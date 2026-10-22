@@ -1,0 +1,87 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Do not log case-level content</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_coordination</a> › <a href="../index.html#rules">Regel</a></div><h1>Do not log case-level content</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-21</span><span>Herkunft</span><span>user instruction 2026-10-21 (&quot;wichtig logs da nicht machen&quot;), own runs 2026-10-21</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="three-data-classes-decide-what-may-leave-the-institution.html">Three data classes decide what may leave the institution</a> <span class="muted small">(agent_coordination)</span><br><a href="../../local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">A remote model gets only data-free skills and redacted text</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/do-not-log-case-level-content.md">knowledge/agent_coordination/rules/do-not-log-case-level-content.md</a></span></div><h2>Aussage</h2>
+<p>A log is a copy. Write no case-level content into logs, caches or agent session stores - not for class 3, not for class
+2, and not into a temporary directory that sits next to the data. Case-level means anything that identifies or
+reconstructs an individual record: subject or session ids, file paths, image headers, individual values, names, image
+files, unredacted report text.</p>
+<p>Rule of thumb: <strong>if it must not be committed, it must not be logged either.</strong> The same content that is too sensitive for
+a repository is too sensitive for a text file that happens to be called a log. A log is usually easier to find and
+harder to forget than the data itself.</p>
+<p>What is allowed and wanted: counts, durations, exit codes, decision outcomes, error classes, aggregate numbers, file
+names of <em>code</em> (not of data). "23 files processed, 4 skipped, exit 0" is a good log line. "sub-XXXX ses-YY image
+malformed" is not.</p>
+<h2>Trägt</h2>
+<p>It settles a whole class of small decisions without a judgement call each time: no debug output on by default, no
+"Vorgang gespeichert" file, no keeping last night's output "in case it is useful", no session store collecting the ids
+that were inside a prompt. The place for the run's own intermediate state is a temporary directory owned by that run,
+deleted when it ends - not a persistent history.</p>
+<p>It also protects against the case that is easy to miss: the log of a <em>program we did not write</em>. An agent harness, a
+service, a scheduler or a database keeps its own history. With Hermes, conversations land in the profile's state
+database by design. That is one more reason not to put the content in the prompt or the tool output in the first place -
+what never arrives cannot be stored.</p>
+<p>Standing check, own runs 2026-10-21: <code>/tmp</code> held exactly this kind of leftover from the day's work (image test logs, a
+background-visibility probe file, dispatcher output). None of it contained patient data because the work happened on
+the Cle side, but a probe file in a working directory is precisely the habit this rule forbids.</p>
+<h2>Trägt nicht</h2>
+<p>It does not forbid logging the <em>decision</em>. An audit trail is wanted and, for class 2 and 3, often required: which
+dataset, which class, which rule, what was decided, and when - about the data, never from the data. The guard log is
+not a violation, it is the point, as long as it records the decision and not the content (no excerpt field, no "logged
+value").</p>
+<p>It also does not forbid a short-lived in-memory trace while debugging one run, if that run is local and the trace dies
+with the process. What it forbids is the persistence: the file that outlives the run, the cache that is still there next
+week, the shared directory that someone else can read.</p>
+<h2>Bruchindikator</h2>
+<p>A log, cache or session store contains subject ids, session ids, data or image paths, individual values, image headers
+or unredacted report text. A debug output file or probe file is left in a working directory. Intermediate state is put
+next to the data instead of in the run's own temporary space. A log line is defended with "it is only the file name" -
+file names are case-level content. A tool is used with its default history on a class-2 or class-3 job.</p>
+<h2>Ablesung</h2>
+<p>User instruction, 2026-10-21, verbatim: "wichtig logs da nicht machen". Decided in the same session as the class rule, so
+it is written next to it: <a href="three-data-classes-decide-what-may-leave-the-institution.html">three-data-classes-decide-what-may-leave-the-institution</a>.
+Content that may not leave the institution at all: <a href="../../local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">remote-model-gets-only-data-free-skills-and-redacted-text</a>.
+Existing finding that an agent harness keeps its own history: <a href="../../local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.html">hermes-keeps-every-conversation-in-state-db</a>.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

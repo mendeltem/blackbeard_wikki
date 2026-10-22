@@ -43,13 +43,17 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness, HPC, SLURM, shard, Port 22, Tunnel</p>
-<div class="stripe"><i class="warn" style="width:49.0%" title="vorschlag: 24"></i><i class="ok" style="width:34.7%" title="getragen: 17"></i><i class="info" style="width:14.3%" title="offen: 7"></i><i class="" style="width:2.0%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">24 vorschlag</span> <span class="ok">17 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+<div class="stripe"><i class="warn" style="width:48.0%" title="vorschlag: 24"></i><i class="ok" style="width:36.0%" title="getragen: 18"></i><i class="info" style="width:14.0%" title="offen: 7"></i><i class="" style="width:2.0%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">24 vorschlag</span> <span class="ok">18 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
 Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
 <p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Regel, neu 2026-10-21 (eigene Messung am Dienst):</strong> Der lokale Modellserver muss nicht abgeschaltet werden, um die Karte freizugeben. <code>llama-server.service</code> ist <code>enabled</code> mit <code>Linger=yes</code> und hielt das 27B in Q4 mit <code>--ctx-size 81920</code> dauerhaft bei 20,4 von 24,6 GiB. <code>--sleep-idle-seconds</code> in <code>start.sh</code> entlaedt das Modell nach Leerlauf und laedt es bei der naechsten Anfrage nach; die Datenschutz-Architektur bleibt, die Belegung geht. Nutzerentscheidung: die meisten Aufgaben ans Remote-Profil, lokal nur fuer Patientendaten, danach wieder aus (<a href="rules/local-model-server-runs-only-when-needed.html">local-model-server-runs-only-when-needed</a>). Der zugehoerige Messfehler: <code>/props</code> und <code>/health</code> sind echte Anfragen und setzen den Idle-Timer zurueck, wer damit prueft sieht nie einen Schlafzustand; beruehrungsfrei geht nur <code>nvidia-smi</code>.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-21: der 927 MB grosse Vision-Projektor (mmproj-F16.gguf) <strong>passt</strong> zum ausgelieferten 27B (Basis <code>qwen35</code>, Projektor <code>qwen3vl_merger</code>) und sieht echte Bilder: eine Testinstanz mit <code>--mmproj</code> auf Port 8010 antwortete auf ein Bild mit <strong>HTTP 200</strong> und beschrieb ein synthetisches Testbild korrekt. Der Fehler war also <strong>Verdrahtung, nicht Faehigkeit</strong>. Unveraendert: der <strong>Produktionsdienst</strong> startet weiter ohne <code>--mmproj</code>, Port 8000 antwortet auf ein Bild noch mit HTTP 500. VRAM der Testkonfiguration gemessen: 16178 MiB bei 8k Kontext mit Projektor auf der CPU - die Kontextlaenge ist der OOM-Hebel, nicht der Projektor.</p>
+<p><strong>Regel, neu 2026-10-21 (eigene Messung am Dienst):</strong> Der lokale Modellserver muss nicht abgeschaltet werden, um die Karte freizugeben. <code>llama-server.service</code> ist <code>enabled</code> mit <code>Linger=yes</code> und hielt das 27B in Q4 mit <code>--ctx-size 81920</code> dauerhaft bei 20,4 von 24,6 GiB. <code>--sleep-idle-seconds</code> in <code>start.sh</code> entlaedt das Modell nach Leerlauf und laedt es bei der naechsten Anfrage nach; die Datenschutz-Architektur bleibt, die Belegung geht. Nutzerentscheidung: die meisten Aufgaben ans Remote-Profil, lokal nur fuer Patientendaten, danach wieder aus (<a href="rules/local-model-server-runs-only-when-needed.html">local-model-server-runs-only-when-needed</a>).</p>
+<p>Am echten Dienst gemessen: 21.770 MiB in Betrieb, <strong>1.618 MiB</strong> nach 300 s Leerlauf, Aufwachen in 11,4 s. Kein Sieg, ein Tausch: 11 s Kaltstart gegen 20 GB, die sonst dauerhaft weg sind.</p>
+<p>Die erste Fassung der Regel behauptete, <code>/props</code> und <code>/health</code> setzten den Idle-Timer zurueck. <strong>Das war falsch</strong> und steht berichtigt in der Regel: beide Routen laufen mit <code>bypass_sleep = true</code> im Quelltext und werden gerade <em>waehrend</em> des Schlafs bedient. Was den Schlaf wirklich verhindert, ist eine echte rechnende Anfrage — auch ein Aufwachtest "nur zum Pruefen" laedt das Modell wieder und nimmt der naechsten GPU-Arbeit die 20 GB. Augenscheinlich kommt der Schlaf spaeter als eingestellt (300 s eingestellt, ~9 min beobachtet), weil die Queue den Idle-Takt verschiebt statt zurueckzusetzen. Deshalb GPU-Arbeit nicht auf die Uhr starten, sondern an eine <code>nvidia-smi</code>-Schranke binden.</p>
+<p><strong>Wer ihn legitim weckt, 2026-10-21:</strong> Der <code>guard-daemon.service</code> schickt jeden ungeprueften Ausgang des gesperrten Agenten durch das lokale Modell (<code>system/guard/ask_outside.py</code> auf <code>:8000</code>); dieses Aufwachen ist gewollt. Und weil das Modell aus <code>models.json</code> austauschbar ist, laeuft Claude Codes eigener Harness gegen dasselbe lokale Modell: <code>system/claude-lokal.sh</code> (im <code>.bashrc</code> als <code>cl</code>), setzt <code>ANTHROPIC_BASE_URL=http://127.0.0.1:8000</code>, <code>ANTHROPIC_MODEL</code> aus der Registry und <code>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1</code>. Getestet: Antwort <code>LOKAL</code>, Exit 0, danach schlief der Server von selbst wieder ein. Ein blankes <code>claude -p</code> laeuft dagegen in die Cloud, nicht lokal.</p>
 <p><strong>Nachtrag 2026-10-21 zur GPU-Regel:</strong> Der <code>llama-server</code>, der 20,4 GiB hielt, war kein vergessener Vergleichslauf, sondern der eigene <code>enabled</code>-Dienst des lokalen Profils. Vor jedem "Aufraeumen" erst Herkunft klaeren (<code>systemctl --user is-enabled</code>, <code>ps -o lstart</code>) — ihn zu beenden nimmt dem lokalen Profil die Inferenz weg (<a href="rules/foreign-gpu-process-before-measuring.html">foreign-gpu-process-before-measuring</a>).</p>
 <p><strong>New 2026-10-21 (own build and tests):</strong> An agent running without approvals can be held to a list of writable folders with Landlock, without root: a short Python launcher, 20 of 20 checks, and a real agent run where writes to the home root and the code tree were denied and a decoy file survived <code>rm -f</code>. Services outside the process tree (<code>systemd-run</code> without <code>--scope</code>, a running tmux server) are not covered (<a href="findings/landlock-write-lock-for-a-yolo-agent.html">landlock-write-lock-for-a-yolo-agent</a>).</p>
 <p><strong>New 2026-10-21 (review with checked sources):</strong> The biggest gaps in the local agent setup are a missing filesystem sandbox while approvals are bypassed (Landlock works without root here) and a critic that is the same model: 28 % of finished jobs used all critic rounds yet passed the checklist. Prompt caching is mostly fine (89 % prefix reuse), <code>--cache-reuse</code> is disabled for the hybrid model (<a href="findings/local-agent-harness-review-2026-10.html">local-agent-harness-review-2026-10</a>).</p>
@@ -66,7 +70,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
 <p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
 <p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
-<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="40.2" width="319.0" height="9.8" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 41</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 41)</figcaption></figure>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="40.5" width="319.0" height="9.5" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 42</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 42)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(8)</span></h2><details class="entry" id="local-model-server-runs-only-when-needed"><summary><span class="type">Regel</span><span class="t"><a href="rules/local-model-server-runs-only-when-needed.html">Der lokale Modellserver laeuft nur, wenn er gebraucht wird</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: Cle-Arbeit, Gespraech mit Nutzer, 21.10.2026 · <a href="rules/local-model-server-runs-only-when-needed.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/local-model-server-runs-only-when-needed.md">Markdown</a></p><h2>Aussage</h2>
 <p>Der Dienst <code>llama-server.service</code> ist <code>enabled</code> <strong>und</strong> das Konto hat
@@ -128,26 +132,63 @@ Argument.</p>
 Anfrage pro Stunde ist das ein guter Tausch, fuer einen Chat mit hoher
 Frequenz nicht — dort ist der Kaltstart teurer als der gehaltene VRAM.</p>
 <h2>Bruchindikator</h2>
-<p>Ein <code>--sleep-idle-seconds</code>-Argument, das im Prozess steht
-(<code>/proc/&lt;pid&gt;/cmdline</code>) und trotzdem nicht greift: <strong>dann prueft man
-vermutlich mit dem Server selbst.</strong> <code>/props</code> und <code>/health</code> sind echte
-Anfragen und setzen den Idle-Timer zurueck. Wer den Schwellwert mit
-<code>curl /props</code> misst, misst sich selbst und sieht nie einen Schlafzustand.
-Beruehrungsfrei messen geht nur ueber <code>nvidia-smi</code>, das den Server nicht
-anspricht.</p>
-<p><strong>Zweite Falle, am selben Tag erlebt:</strong> wer den Schlaf prueft, indem er eine
-Anfrage stellt ("weckt er wieder auf?"), <strong>weckt ihn auf — und der VRAM ist
-wieder belegt.</strong> Am 21.10.2026 lief genau so ein Trainingsjob erneut in einen
-CUDA-OOM, obwohl der Server Minuten vorher geschlafen hatte: der Aufwachtest
-dazwischen hatte das Modell wieder geladen. Wer nach dem Test eine GPU-Arbeit
-starten will, muss entweder die Leerlaufzeit abwarten oder den Start an eine
-VRAM-Schranke binden (Schleife ueber <code>nvidia-smi --query-gpu=memory.free</code>,
-erst starten wenn genug frei ist). Pruefen und Nutzen sind hier dieselbe
-Handlung — die Reihenfolge entscheidet.</p>
+<p><strong>Zuerst eine Korrektur meiner eigenen ersten Fassung, 21.10.2026.</strong> Ich hatte
+hier geschrieben, <code>/props</code> und <code>/health</code> seien echte Anfragen und setzten den
+Idle-Timer zurueck — wer damit messe, sehe nie einen Schlaf. <strong>Das ist
+falsch.</strong> Im Quelltext (<code>tools/server/server-context.cpp</code>):</p>
+<pre><code>this-&gt;get_health = [this](const server_http_req &amp;) {
+    auto res = create_response(true);   // bypass_sleep
+</code></pre>
+<pre><code>this-&gt;get_props = [this](const server_http_req &amp;) {
+    auto res = create_response(true);   // bypass_sleep
+</code></pre>
+<p>Beide Routen laufen mit <code>bypass_sleep = true</code> und werden ausdruecklich
+<strong>waehrend</strong> des Schlafs bedient ("this endpoint can be accessed during
+sleeping"). Auch die Queue bestaetigt es: <code>task_resets_idle_timer()</code> schliesst
+nur <code>SERVER_TASK_TYPE_METRICS</code> aus, nicht Health oder Props. Messen mit
+<code>/health</code> oder <code>/props</code> verhindert den Schlaf also <strong>nicht</strong>. Wer das
+weiterverbreitet, schickt den naechsten auf eine falsche Spur — deshalb steht
+die Berichtigung hier und nicht nur im Log.</p>
+<p><strong>Der echte Bruchindikator ist eine echte Anfrage.</strong> Jeder Aufruf, der
+rechnet — <code>POST /v1/chat/completions</code>, auch "nur zum Test" — setzt den Timer
+zurueck und laedt das Modell. Am 21.10.2026 lief ein Trainingsjob in einen
+CUDA-OOM, weil Minuten vorher genau so ein Aufwachtest gelaufen war: der
+Server hatte kurz zuvor geschlafen, war danach wieder wach, und die 20 GB
+waren weg. <strong>Pruefen und Nutzen sind hier dieselbe Handlung — die Reihenfolge
+entscheidet.</strong></p>
+<p><strong>Zweite Beobachtung, die man nicht fuer einen Fehler haelt:</strong> der Schlaf
+kommt spaeter als die eingestellte Zeit. Bei <code>--sleep-idle-seconds 300</code> und
+letzter echter Anfrage um 18:53 trat er erst um ~19:02 ein, also nach ~9 min
+statt nach 5. Die Queue <strong>verschiebt</strong> den Idle-Takt, statt ihn
+zurueckzusetzen (<code>time_last_task = std::min(now, time_last_task + (now -
+t_update_slots))</code>): die Zeit, die <code>update_slots</code> selbst braucht, zaehlt nicht
+als Leerlauf. Wer nach dem Messen eine GPU-Arbeit startet, sollte deshalb
+nicht auf die Uhr schauen, sondern den Start an eine VRAM-Schranke binden:
+Schleife ueber <code>nvidia-smi --query-gpu=memory.free</code>, erst starten wenn genug
+frei ist. Beruehrungsfrei messen geht nur ueber <code>nvidia-smi</code>, das den Server
+gar nicht anspricht.</p>
+<h2>Wer ihn legitim weckt</h2>
+<p>Nicht jeder Aufruf ist ein Fehlgriff. Der <code>guard-daemon.service</code> schickt jeden
+ungeprueften Ausgang des gesperrten Agenten durch das lokale Modell
+(<code>system/guard/ask_outside.py</code> -&gt; <code>/v1/chat/completions</code> auf <code>:8000</code>). Solange
+dieser Waechter laeuft, wacht der Server bei echter Ausgangspruefung auf — das
+ist gewollt, kein Leck. Wer den VRAM dauerhaft braucht, muss diese Quelle
+kennen, sonst sucht er sie in einem Timer, der nie der Taeter war.</p>
+<p><strong>Zweiter Nutzen derselben Option:</strong> weil das Modell austauschbar aus der
+Registry kommt (<code>models.json</code>), kann Claude Codes Harness gegen dasselbe lokale
+Modell laufen — <code>system/claude-lokal.sh</code>, im <code>.bashrc</code> als <code>cl</code> verlinkt. Es
+setzt <code>ANTHROPIC_BASE_URL=http://127.0.0.1:8000</code>, <code>ANTHROPIC_MODEL</code> aus der
+Registry und <code>CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1</code>; Werkzeuge,
+Dateizugriff und <code>CLAUDE.md</code> bleiben dieselben. Getestet am 21.10.2026:
+<code>claude-lokal.sh -p "Antworte nur mit dem Wort LOKAL"</code> antwortete <code>LOKAL</code>,
+Exit 0, ueber <code>127.0.0.1:8000</code>. Der Server schlief danach von selbst wieder ein
+(19:24 letzte Anfrage, 19:29 <code>free=22480</code>). Ein blankes <code>claude -p</code> dagegen
+laeuft <strong>nicht</strong> lokal, sondern in die Cloud — die beiden nicht verwechseln.</p>
 <h2>Ablesung</h2>
 <p>Eigene Messung, 21.10.2026, Cle-Arbeit. Regler: <code>start.sh</code> von
-<code>local_agentic_system</code>, Abschnitt "Ruhezustand". Testmodell und Endpunkt wie
-oben; die 27B-Messung war zu diesem Zeitpunkt noch offen.</p>
+<code>local_agentic_system</code>, Abschnitt "Ruhezustand". Die 27B-Messung oben ist am
+echten Dienst gelaufen (nicht mehr offen); das 0,5B-Testmodell diente nur dem
+ersten Nachweis.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="rules/foreign-gpu-process-before-measuring.html">foreign-gpu-process-before-measuring</a></li>
@@ -507,7 +548,7 @@ verlaengert. Dann greift der Cache nicht.</p>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(27)</span></h2><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(28)</span></h2><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
 <p>"Prefill" means three different things around a local agent, and only one of them is a file you configure:
 1. <strong>Hermes prefill messages</strong> (<code>prefill_messages_file</code> or <code>HERMES_PREFILL_MESSAGES_FILE</code>): a JSON list of
    <code>{role, content}</code> turns. Hermes inserts them on every API call right after the system prompt and before the real
@@ -674,7 +715,65 @@ to write outside the allowed folders.</p>
   <code>tools/server/server-context.cpp</code> (save to RAM only if f_keep &lt; 0.5 on the similarity path).</li>
 <li>Own run 2026-10-21: server log (cache_reuse disabled message on each load, prompt-eval counts), driver logs,
   Landlock ABI query, <code>kernel.apparmor_restrict_unprivileged_userns = 1</code>.</li>
-</ul></div></details><details class="entry" id="hermes-keeps-every-conversation-in-state-db"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-keeps-every-conversation-in-state-db.html">Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">Hermes writes every message to state.db, no flag turns it off; a no-record session needs a throwaway HERMES_HOME in RAM, guard log stays</span></summary><div class="body"><p class="small muted">Herkunft: Alita, source reading of Hermes Agent v0.20.5 (2026.8.19) and the local launch chain, 2026-10-20; user question about a private mode for the local agent · <a href="findings/hermes-keeps-every-conversation-in-state-db.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><details class="entry" id="local-vision-projector-present-but-not-loaded"><summary><span class="type">Befund</span><span class="t"><a href="findings/local-vision-projector-present-but-not-loaded.html">The vision projector works with the served model - but the running service still does not load it</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-21</span><span class="i">The 927 MB mmproj projector **matches** the served 27B (base `qwen35`, projector `qwen3vl_merger`) and really sees images: a test instance with `--mmproj` returned HTTP 200 and described a synthetic image correctly. The defect is wiring, not capability — the **production** service still starts without `--mmproj`, so port 8000 still answers an image with HTTP 500. VRAM of the test setup measured (16178 MiB at 8k context, projector on CPU); context length, not the projector, is the OOM lever (2026-10-21)</span></summary><div class="body"><p class="small muted">Herkunft: Clara test set 2026-10-21 (Cle profile), tasks T18/T16; machine Alita, RTX A5000; projector test 2026-10-21 · <a href="findings/local-vision-projector-present-but-not-loaded.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/local-vision-projector-present-but-not-loaded.md">Markdown</a></p><h2>Aussage</h2>
+<p>The projector <code>modelle/mmproj-F16.gguf</code> (927 MB) matches the served model and produces real image perception. A test
+instance started with <code>--mmproj</code> on a free port (8010) loaded it as <code>loaded multimodal model</code> and answered an image
+request with <strong>HTTP 200</strong> and a correct description of a synthetic test image (a large red circle with a black outline
+containing a smaller white upright rectangle - all three described). The original defect is therefore <strong>wiring, not
+capability</strong>: the file was always the right one, it was simply never passed to the server.</p>
+<p>What has <em>not</em> changed: the <strong>production</strong> service (<code>llama-server.service</code>, port 8000) still starts without
+<code>--mmproj</code>, so the patient-safe image route via the running service is still not operational as of this date. The
+test was run on a separate instance on purpose, so the running service was never touched.</p>
+<h2>Trägt</h2>
+<p>2026-10-21, four independent readings:
+1. Architecture match, read from the GGUF headers: base model <code>general.architecture = qwen35</code>, projector
+   <code>general.architecture = qwen3vl_merger</code>. The llama.cpp build in use contains the <code>PROJECTOR_TYPE_QWEN3VL</code> path
+   (<code>tools/mtmd/clip.cpp</code>, <code>tools/mtmd/models/qwen3vl.cpp</code>), so the pair is supported.
+2. The projector loads and llama.cpp recognises the pairing: <code>load_hparams: Qwen-VL models require at minimum 1024
+   image tokens ...</code> - the VL code path is active, not skipped.
+3. Server log of the test instance: <code>srv load_model: loaded multimodal model, 'modelle/mmproj-F16.gguf'</code>, then
+   <code>listening on http://127.0.0.1:8010</code>.
+4. End-to-end request: HTTP 200 with a description that matches the drawn shapes and colours; slot timings show
+   <code>prompt eval ... / 324 tokens</code> (the image tokens were encoded) and 110 completion tokens.</p>
+<h2>Trägt nicht</h2>
+<p>Also untested: image quality on real modality data (small lesions, faint WMH) rather than a synthetic drawing, and
+whether the local stack keeps the image on the machine end to end. Concurrent use is untested: the measurements below
+leave only ~1.6 GB free, so a second GPU-hungry job alongside the vision server would fail.</p>
+<h2>Produktionskonfiguration nachgemessen (2026-10-21)</h2>
+<p>A second test instance on port 8011 used the <strong>production</strong> profile verbatim (<code>--ctx-size 81920</code>, <code>--n-gpu-layers 99</code>,
+projector on CPU) and answered the same synthetic image with <strong>HTTP 200</strong> and a correct description ("a large red
+circle with a black border on a light grey background contains a white rectangle with a black border at the bottom
+centre"). VRAM held stable at <strong>22492 MiB used / 1613 MiB free</strong>, 52 C, 1 % utilisation, <strong>zero</strong> errors in the log
+across the request. Image encoding took 2226 ms for 284 prompt tokens. So vision and the full 80k context coexist -
+but the margin is thin, see the cost note.</p>
+<h2>Bruchindikator</h2>
+<p>The production <code>llama-server.service</code> gains an <code>--mmproj</code> argument and an image sent to port 8000 returns a description
+instead of HTTP 500. Or the reading above stops reproducing: the projector no longer loads, or the description does
+not match the drawn image.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>projector: <code>modelle/mmproj-F16.gguf</code>, 927,607,488 bytes; header architecture <code>qwen3vl_merger</code></li>
+<li>base model: <code>modelle/Qwen3.8-27B-UD-Q4_K_M.gguf</code>; header architecture <code>qwen35</code></li>
+<li>build support: <code>system/llama.cpp/tools/mtmd/clip.cpp</code> -&gt; <code>case PROJECTOR_TYPE_QWEN3VL</code>; binary <code>llama-mtmd-cli</code> and
+  <code>libmtmd.so</code> are built</li>
+<li>test instance log: <code>/tmp/vtest_server.log</code> -&gt; <code>loaded multimodal model</code> + <code>listening on ...:8010</code></li>
+<li>synthetic test image: <code>/tmp/vtest_synth.png</code> (drawn locally, no patient data)</li>
+<li>production startup script: <code>system/start.sh</code> -&gt; <code>exec "$SERVER" ...</code> has no <code>--mmproj</code>; registry entries carry an
+  <code>args</code> list that is appended via <code>REG_ARGS</code>, which is the natural place for a per-model projector</li>
+<li>prior reading (defect): <code>~/cle-arbeit/clara-pruefstand/ERGEBNIS.md</code> (2026-10-21)</li>
+</ul>
+<h2>Kostenhinweis (VRAM)</h2>
+<p>Measured on the test instance (8k context, projector on CPU): the process held <strong>16178 MiB</strong>, remaining free 6293 MiB,
+GPU 51 C at 1 % utilisation. The projector itself is 927 MB; the figure above is dominated by the 27B weights, not by
+the projector. The production profile declares <code>braucht_mib</code> around 21500 for a full 80k context - before enabling
+vision there, the context length is the lever, not the projector: an 80k KV cache plus image tokens is what threatens
+the OOM that killed an earlier training run. Reduce context or accept a separate vision instance.</p>
+<h2>Fallstrick bei der Kartenspuren-Auslesung</h2>
+<p>A fluttering VRAM band (here: 1624 MiB floor, spikes to ~2154 MiB every 15-30 s) is <strong>not</strong> evidence that the served
+model wakes. On 2026-10-21 that pattern was produced by an unrelated short-lived CUDA context (a local PyTorch
+measurement loop), while the 27B server had last written to its log 8 minutes earlier. A plain torch allocation moves
+the same 1624 -&gt; 1888 MiB and releases it on exit. Before blaming a service, compare the times: the server log's last
+write must fall inside the fluttering window.</p></div></details><details class="entry" id="hermes-keeps-every-conversation-in-state-db"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-keeps-every-conversation-in-state-db.html">Hermes keeps every conversation in its profile database; a no-record session needs a throwaway profile home</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-20</span><span class="i">Hermes writes every message to state.db, no flag turns it off; a no-record session needs a throwaway HERMES_HOME in RAM, guard log stays</span></summary><div class="body"><p class="small muted">Herkunft: Alita, source reading of Hermes Agent v0.20.5 (2026.8.19) and the local launch chain, 2026-10-20; user question about a private mode for the local agent · <a href="findings/hermes-keeps-every-conversation-in-state-db.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.md">Markdown</a></p><h2>Aussage</h2>
 <p>Hermes Agent writes every message of a session to SQLite <code>$HERMES_HOME/state.db</code> (<code>_persist_session</code> in
 <code>run_agent.py</code>, called on every exit path "so conversations are never lost"). Per-session JSON snapshots exist too, but
 only when <code>sessions.write_json_snapshots</code> is on (default off). No CLI flag turns the session store off: <code>--safe-mode</code>
@@ -2878,5 +2977,5 @@ unterscheiden.</p>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

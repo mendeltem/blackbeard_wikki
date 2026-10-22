@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_coordination</div><h1>agent_coordination</h1><p>Mehrere Sitzungen in denselben Repos: fremde Arbeitsbaeume, doppelt belegte Dateinamen</p><p class="muted small">Agenten, parallele Sitzungen, Repos, Branches, Datenaustausch, Seitenverbund, deployments.json, Verlinkung</p>
-<div class="stripe"><i class="ok" style="width:100.0%" title="getragen: 5"></i></div><div class="counts"><span class="ok">5 getragen</span></div><div class="small"><p>Mehrere Agenten und Chats arbeiten gleichzeitig an denselben Repos, ohne
+<div class="stripe"><i class="ok" style="width:81.8%" title="getragen: 9"></i><i class="warn" style="width:18.2%" title="vorschlag: 2"></i></div><div class="counts"><span class="ok">9 getragen</span> <span class="warn">2 vorschlag</span></div><div class="small"><p>Mehrere Agenten und Chats arbeiten gleichzeitig an denselben Repos, ohne
 voneinander zu wissen. Hier steht, was dabei schiefgeht und was dagegen hilft.</p>
 <p>Abgrenzung zu <a href="../agent_tooling/index.html">agent_tooling</a>: dort geht es um ein
 Werkzeug und seine Ausgabe, hier um zwei Sitzungen und ein gemeinsames Repo.</p>
@@ -52,14 +52,226 @@ Annehmen.</strong> Ein überschriebener Stand, ein fremder Commit, eine stumm fa
 gelesene Datei — in allen drei Fällen hat niemand einen Fehler gemacht, der
 sichtbar geworden wäre.</p>
 <p>Stand 2026-10-11. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-11. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-22 (6): <strong>Wachen fragen nach der Rolle, nicht nach dem Einhängepunkt.</strong> Die pauschale Sperre des Wechselmedien-Pfads war ein Ortsmerkmal, kein Inhaltsmerkmal -- derselbe Träger trug auch ~74 GB Werkzeug. Jetzt entscheidet eine Rollendatei <code>ARBEITSPLATTE</code> im Datenträgerwurzelverzeichnis; fehlt sie, gilt der Ort weiter als Ablage. Die Regel wird dadurch strenger (jeder nicht erklärte Datenträger ist verdächtig) und die Inhaltsprüfungen bleiben unverändert scharf. Zwei Fallen: Umgebungsvariablen sind additiv und ersetzen nie, und Trägernamen mit Leerzeichen zerlegt man nicht am Wort.</p>
+<p>2026-10-22 (5): <strong>Derived artifacts carry the class of their source, and redaction does not lift it.</strong> A KV cache is processed prompt state in number form -- a copy, not a summary. Three older caches belonged to themes the guard blocks as cohort-bearing; nothing readable is inside them, so no content scan would have caught it. They were excluded from the export by rule, and the same rule excluded all 19 fresh caches. The speed claim was measured too and is weak: cold prefix 4.4 s, warm 0.4 s, after a distractor 0.8 s, against 29-34 s of process startup -- so 21 GB bought almost nothing. Data-free source files only go to the group drive. Details in <a href="findings/derived-artifacts-carry-their-source-class.html">findings/derived-artifacts-carry-their-source-class.md</a>.</p>
+<p>2026-10-21 (4): <strong>/tmp on Alita is not volatile.</strong> It sits on the root filesystem (<code>/dev/nvme0n1p2</code>, ext4), <code>tmp.mount</code> is not-found, and Claude Code keeps ~13 GB in ~59,000 files under <code>/tmp/claude-1000</code> with no <code>TMPDIR</code> set, so nothing ages out. Cleanup is only safe when no agent session runs (<code>lsof +D</code> first; 8 claude processes and 2 guard daemons were active here); better than deleting is pointing <code>TMPDIR</code> at <code>/run/user/$UID</code> so scratch dies with the process. Details in <a href="findings/tmp-is-not-volatile-and-session-stores-persist.html">findings/tmp-is-not-volatile-and-session-stores-persist.md</a>.</p>
+<p>2026-10-21 (3): two rules added. <strong>A no-AI clause binds locally too</strong> - if an agreement forbids AI processing, it forbids the local model and the institutional machine as well; following it costs almost nothing, ignoring it risks the whole access, and local execution is a route, not an exception. A dataset with such a clause has no usable class here: read the agreement first, assign the class second. <strong>Do not log case-level content</strong> - a log is a copy, and if it must not be committed it must not be logged either; counts and decisions yes, ids, paths, values and image headers no; intermediate state belongs in the run's own temporary space, not next to the data and not in a persistent session store.</p>
+<p>2026-10-21 (2): the class rule now carries the two things it was missing. <strong>Inheritance:</strong> an artefact carries the maximum class of its inputs - a mask, an embedding, a log line, a QC page or a model trained on class-3 data is itself class 3. <strong>Persons, not buildings:</strong> inside the institution, patient data access is role-bound (GDPR Art. 9(3)), so "class 2 may run here" is only as good as the name attached to here. Class 2 is also the softest class and must be read per agreement: DUO <code>IS</code> (institution specific) fits it, DUO <code>NMDS</code> (no methods research) forbids the software development our own rule assumes. Compared against established practice, the nearest counterpart is the Turing Data Safe Haven tiers 0-4; it judges by harm and pseudonymisation, this scheme judges by route, and established TREs additionally check the <em>output</em> where class 2 does not. Enforcement is weaker than it looks: <code>no_proxy</code> contains <code>.charite.de</code>, so a proxy log never sees the institutional route, and <code>netzsperre.sh</code> says of itself that it never ran on this machine. The guard needs a reject-pass-reject self-test with a mutation probe, not a rejection count. Details in <a href="index.html">INDEX.md</a>.</p>
+<p>2026-10-21: three headless Claude research passes invented two PMIDs for real-looking claims (one resolved to a surgical-residency paper, one to an inner-ear gene transfer paper). Every identifier from a research pass is a claim to check, not a lookup already done - see <a href="findings/research-passes-invent-plausible-pmids.html">findings/research-passes-invent-plausible-pmids.md</a>.</p>
+<p>2026-10-21: data classes are now a main rule in this area. Class 1 fully open (public GitHub, any cloud, any model), class 2 institution-usable under a data use agreement (Charite-internal hub only, e.g. HCP-Aging whose terms allow institutional sharing), class 3 own patient data (local profile only). The class is looked up per dataset before any agent touches it and applies to every wiki area.</p>
+<p>Stand 2026-10-11. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Mehrere Sitzungen arbeiten gleichzeitig an denselben Repos und sehen sich nicht. Der Schaden entsteht beim Annehmen, nicht beim Schreiben.</p>
 <p><strong>Getragen:</strong> Vor dem Schreiben Zeitstempel lesen, nie in einen fremden Arbeitsbaum schreiben (parallel-sessions-same-working-tree). Ein Dateiname hat genau einen Zweck, z. B. nicht <code>daten.json</code> zugleich als Quelle und Schnittstelle (one-filename-two-contracts).</p>
 <p><strong>Seitenverbund (2026-10-06, getragen):</strong> Use-Case-Board, Supply Atlas und AI_Companys sind verlinkt. Alle Zuordnungen nur in <code>ai_use_cases_overview/deployments.json</code>; Adressen <code>#uc=&lt;slug&gt;</code>, <code>?uc=</code>, <code>?company=</code>, <code>#/&lt;lang&gt;/&lt;TICKER&gt;</code> nicht ohne alle drei Seiten ändern; Rückweg auf AI_Companys steht in <code>werkzeuge/seite.py</code>, nicht in der HTML (one-mapping-file-for-linked-pages).</p>
 <p><strong>Wiki-Lesefassung (2026-10-11, getragen):</strong> Menschen lesen die erzeugte HTML-Seite <code>docs/index.html</code> (Suche, Kurzstand, aufklappbare Einträge, Rückverweise), Agenten schreiben weiter Markdown mit Frontmatter; <code>docs/</code> wird mit <code>tools/general/wiki_html</code> nach jedem Beitrag neu gebaut (pre-commit-Haken), nie von Hand (humans-read-html-agents-write-markdown).</p>
 <p><strong>Lesen bei:</strong> mehreren Agenten, geteilten Repos, Datenaustausch zwischen Projekten.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(5)</span></h2><details class="entry" id="everything-in-english"><summary><span class="type">Regel</span><span class="t"><a href="rules/everything-in-english.html">Main rule: all work is in English</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-15</span></summary><div class="body"><p class="small muted">Herkunft: Mendel, chat on workstation Alita, 2026-10-15 (&quot;ein Hauptregel in wiki sollte alle Arbeiten sollten auf Englisch sein&quot;) · <a href="rules/everything-in-english.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/everything-in-english.md">Markdown</a></p><h2>Statement</h2>
+<h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="do-not-log-case-level-content"><summary><span class="type">Regel</span><span class="t"><a href="rules/do-not-log-case-level-content.html">Do not log case-level content</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: user instruction 2026-10-21 (&quot;wichtig logs da nicht machen&quot;), own runs 2026-10-21 · <a href="rules/do-not-log-case-level-content.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/do-not-log-case-level-content.md">Markdown</a></p><h2>Aussage</h2>
+<p>A log is a copy. Write no case-level content into logs, caches or agent session stores - not for class 3, not for class
+2, and not into a temporary directory that sits next to the data. Case-level means anything that identifies or
+reconstructs an individual record: subject or session ids, file paths, image headers, individual values, names, image
+files, unredacted report text.</p>
+<p>Rule of thumb: <strong>if it must not be committed, it must not be logged either.</strong> The same content that is too sensitive for
+a repository is too sensitive for a text file that happens to be called a log. A log is usually easier to find and
+harder to forget than the data itself.</p>
+<p>What is allowed and wanted: counts, durations, exit codes, decision outcomes, error classes, aggregate numbers, file
+names of <em>code</em> (not of data). "23 files processed, 4 skipped, exit 0" is a good log line. "sub-XXXX ses-YY image
+malformed" is not.</p>
+<h2>Trägt</h2>
+<p>It settles a whole class of small decisions without a judgement call each time: no debug output on by default, no
+"Vorgang gespeichert" file, no keeping last night's output "in case it is useful", no session store collecting the ids
+that were inside a prompt. The place for the run's own intermediate state is a temporary directory owned by that run,
+deleted when it ends - not a persistent history.</p>
+<p>It also protects against the case that is easy to miss: the log of a <em>program we did not write</em>. An agent harness, a
+service, a scheduler or a database keeps its own history. With Hermes, conversations land in the profile's state
+database by design. That is one more reason not to put the content in the prompt or the tool output in the first place -
+what never arrives cannot be stored.</p>
+<p>Standing check, own runs 2026-10-21: <code>/tmp</code> held exactly this kind of leftover from the day's work (image test logs, a
+background-visibility probe file, dispatcher output). None of it contained patient data because the work happened on
+the Cle side, but a probe file in a working directory is precisely the habit this rule forbids.</p>
+<h2>Trägt nicht</h2>
+<p>It does not forbid logging the <em>decision</em>. An audit trail is wanted and, for class 2 and 3, often required: which
+dataset, which class, which rule, what was decided, and when - about the data, never from the data. The guard log is
+not a violation, it is the point, as long as it records the decision and not the content (no excerpt field, no "logged
+value").</p>
+<p>It also does not forbid a short-lived in-memory trace while debugging one run, if that run is local and the trace dies
+with the process. What it forbids is the persistence: the file that outlives the run, the cache that is still there next
+week, the shared directory that someone else can read.</p>
+<h2>Bruchindikator</h2>
+<p>A log, cache or session store contains subject ids, session ids, data or image paths, individual values, image headers
+or unredacted report text. A debug output file or probe file is left in a working directory. Intermediate state is put
+next to the data instead of in the run's own temporary space. A log line is defended with "it is only the file name" -
+file names are case-level content. A tool is used with its default history on a class-2 or class-3 job.</p>
+<h2>Ablesung</h2>
+<p>User instruction, 2026-10-21, verbatim: "wichtig logs da nicht machen". Decided in the same session as the class rule, so
+it is written next to it: <a href="rules/three-data-classes-decide-what-may-leave-the-institution.html">three-data-classes-decide-what-may-leave-the-institution</a>.
+Content that may not leave the institution at all: <a href="../local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">remote-model-gets-only-data-free-skills-and-redacted-text</a>.
+Existing finding that an agent harness keeps its own history: <a href="../local_llm_operation/findings/hermes-keeps-every-conversation-in-state-db.html">hermes-keeps-every-conversation-in-state-db</a>.</p></div></details><details class="entry" id="three-data-classes-decide-what-may-leave-the-institution"><summary><span class="type">Regel</span><span class="t"><a href="rules/three-data-classes-decide-what-may-leave-the-institution.html">Three data classes decide what may leave the institution</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: user decision 2026-10-21 (&quot;drei verschiedene klassen&quot;: fully open / institution-usable / completely private) · <a href="rules/three-data-classes-decide-what-may-leave-the-institution.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md">Markdown</a></p><h2>Aussage</h2>
+<p>Every dataset gets exactly one class before any agent touches it. The class decides the route, not the tool and not the
+question. This is a main rule: it applies to every area of this wiki, not to one project.</p>
+<ol>
+<li><strong>Class 1 - fully open.</strong> No registration, no data use agreement; open challenge data (e.g. VALDO, the WMH
+   challenge of the MICCAI line). May go anywhere open data may go: public GitHub, any cloud, any remote model, any
+   agent. The limit is the licence, not the route - if a platform forbids redistribution, the platform copy stays out
+   even though the data is open.</li>
+<li><strong>Class 2 - institution-usable, access-restricted.</strong> Access was granted to the institution under a data use
+   agreement or registration, and that grant is what permits processing. Example: HCP-Aging (AABC). Its terms allow a
+   local copy "for non-commercial research use" and allow sharing <strong>within my institution (e.g. on a shared server)</strong>
+   under the same terms, with every individual user bound. So the institutional hub (Cle, Charite-internal) <strong>may</strong>
+   process class 2. Not permitted: GitHub, public cloud, external APIs, redistribution outside the institution.</li>
+<li><strong>Class 3 - completely private.</strong> Own patient cohorts. The data stays local: no case on GitHub, no case in any
+   cloud, institutional one included. Local profile and local model only.</li>
+</ol>
+<p>The class belongs to the <strong>data</strong>, not to the <strong>task</strong>. This is the decisive point: a class-3 job is not
+automatically a local job. Thinking, reasoning, planning and coding about class-3 work contain no patient data as
+long as no case id, image, path or report sentence enters the prompt, and that part belongs on the institutional hub
+(Cle) like any other class-2 work. Only the piece that actually has to read the data runs in the local profile.</p>
+<p>So every class-3 task is cut in two before it starts:</p>
+<ul>
+<li><strong>Local, unavoidable:</strong> reading the images/records, computing metrics, comparing segments, extracting the numbers.
+  Here the patient data exists and must not leave the machine. Keep this part as small as it can be made.</li>
+<li><strong>Cle, everything else:</strong> the design of the method, the code, the pipeline, the evaluation logic, the write-up.
+  These consume a <em>result</em> (an aggregate, a redacted line) and need no case. Against a data-free contract they are
+  class-2 work and go to Cle - no reason to burn local capacity on them.</li>
+</ul>
+<p>Minimise the local share, maximise the Cle share. The test is not "does this touch the dataset" but "does this
+prompt contain patient data": if the prompt is data-free, it runs on Cle even when the surrounding job is class 3.</p>
+<h2>Where the scheme sits next to established practice</h2>
+<p>The nearest established counterpart is the <strong>Turing Data Safe Haven</strong> sensitivity tiering (Tier 0-4, preprint
+arXiv:1908.08737, docs fetched 2026-10-21). Roughly: Tier 0 "personal data ... for eventual publication" maps to
+class 1, Tier 2 (pseudonymised, no outbound internet) to class 2, Tier 3 (personal data, restricted networks) to
+class 3. Two differences matter:</p>
+<ol>
+<li>The tiers judge by <strong>harm on disclosure and degree of pseudonymisation</strong>, and they count what is <em>generated</em>
+   ("processed, combined or generated") - hence the inheritance rule above. This scheme judges by <strong>route</strong>; the
+   inheritance clause is what keeps the two from drifting apart.</li>
+<li>Established trusted research environments (Turing, UK Biobank RAP, SAIL, the Five Safes airlock) control the
+   <strong>output</strong>: only summary results pass a statistical disclosure check. This scheme's class 2 has no such output
+   check - it says "may compute here". That is a real gap: class 2 permits processing, it does not by itself certify
+   that the result is releasable.</li>
+</ol>
+<p>DUO gives the vocabulary to say which restriction is meant (see above); FIDES (Microsoft Research, arXiv:2505.23643)
+is the closest published idea to enforcing such labels against agent tool calls - labels on the data decide which calls
+are allowed. No scheme that tiers <em>datasets</em> to gate <em>agents</em> was found in the research-data field; that part looks
+unpublished.</p>
+<p>The class is a property of the data, not of the folder it happens to sit in: a class-2 copy stored outside the usual
+data location is still class 2, and sitting next to private cases does not promote it to class 3.</p>
+<h2>Derived artefacts and the person behind "institution"</h2>
+<p>The class is inherited, not reset. An artefact carries the <strong>maximum class of its inputs</strong>: a mask, an overlay, an
+embedding, a quality-control page, a log line or a model trained on class-3 data is itself class 3. A vector store has
+the class of its source, because embeddings can be inverted back towards the input (Morris et al. 2023,
+arXiv:2310.06816, recovered 92 % of 32-token inputs). Pushing such an artefact to a repository publishes the data
+indirectly, so every artefact needs one line recording its origin class, and the push check reads that line.</p>
+<p>"Institution" is a set of persons, not a building. Inside the institution, access to patient data is bound to a role
+(GDPR Art. 9(3), under professional secrecy), not granted to every instance that happens to sit on the same campus.
+Cle counts as institutional because the grant names the institution and the group behind it; a copy handed to an
+unrelated instance still needs its own basis. "Class 2 may run here" is therefore only as good as the name attached to
+<em>here</em>.</p>
+<p>Class 2 is also the softest of the three and must be looked up per dataset. Class 1 is bounded by a licence, class 3 by
+law, but class 2 is a <strong>method label</strong> whose reach is set by the individual data use agreement. Two labels from the
+GA4GH Data Use Ontology (DUO) frame it: <code>DUO:0000028 IS</code> <em>institution specific restriction</em> ("use is limited to use
+within an approved institution", verified in <code>duo.csv</code> 2026-10-21) fits; <code>DUO:0000015 NMDS</code> <em>no general methods
+research</em> does not - it forbids method development such as software or algorithms, and that collides with the wiki rule
+that public code knows no dataset. Assume class 2 is heterogeneous until the agreement says otherwise.</p>
+<h2>Trägt</h2>
+<p>The scheme corrects a real over-block. HCP-Aging was treated as if it were private ("local only") because it carries an
+access restriction - but its own terms allow institutional sharing, so the institutional hub may use it. Blocking it
+was stricter than the contract requires and cost usable work. In the other direction the scheme keeps the guard's
+purpose intact: private cases still never leave the local profile.</p>
+<h2>Trägt nicht</h2>
+<p>The class must be looked up, not inferred. "Open" (class 1) and "usable here" (class 2) are different questions, and an
+access restriction alone does not settle which one applies - read the terms. Class-1 and class-2 data also carry case
+ids that look like subject ids; a guard that blocks on id shape alone will fire on them, so the guard has to be
+class-aware rather than pattern-only.</p>
+<p>The split also has a cost: it only works if the seam between "has to see the data" and "consumes only a result" is
+drawn honestly. A local step that quietly hands whole records to Cle is not a split, it is a leak. And a plan that
+keeps reasoning local "to be safe" defeats the rule - being stricter than the contract costs capacity the same way
+over-blocking costs work.</p>
+<p>The enforcement is also weaker than it looks, and two of the weak points are measured (own runs 2026-10-21):</p>
+<ul>
+<li><strong>A proxy log cannot see the main route.</strong> <code>no_proxy</code> on this machine contains <code>.charite.de</code>, <code>10.0.0.0/8</code> and
+  <code>141.42.0.0/16</code>, so requests to Cle bypass the proxy entirely. Any evidence built on proxy traffic is blind exactly
+  where the institutional path runs. The strong version is an isolated network namespace with loopback only, plus a
+  counter-test in the same run: <code>curl</code> to Cle must fail. Then the path out does not exist and nobody has to trust a log.</li>
+<li><strong>The network fence is written but unproven here.</strong> <code>werkzeuge/netzsperre/netzsperre.sh</code> states about itself
+  "GESCHRIEBEN AUF VICTUS, NICHT AUF ALITA GELAUFEN". It exists; on this machine it has never been run. Built is not
+  the same as in force.</li>
+<li><strong>The guard's rejections have no target values.</strong> <code>guard/log/vorgaenge.jsonl</code> held 255 entries (156 rejected,
+  99 sent). That shows the guard does not reject blanket-wise; it does not show that its decisions are <em>right</em>, because
+  nothing states what the right answer would have been. A guard that always says no looks identical by count.</li>
+</ul>
+<p>So the guard needs a self-test, not a traffic count. With synthetic values only, expect reject-pass-reject:
+an invented id in the text must be rejected; a public challenge id next to plain numbers must pass (proving the guard
+is not blanket-rejecting); the same id split up, base64-encoded, in a filename or in a NIfTI <code>descrip</code> must be
+rejected. Then a mutation probe: switch off one rule in a <em>copy</em> of the guard and the series must go red - otherwise
+the test is vacuous. Finally reconcile the counts: requests sent by the sending layer must equal the entries marked
+sent in the log; any mismatch means a path around the guard.</p>
+<p>The most likely false assurance, all three measured or documented above: a proxy log that never sees the institutional
+route, a redaction that checks only text while ids also sit in filenames and image headers, and a "local" profile that
+quietly points <code>base_url</code> outward. The strongest counter-evidence is the counter-test, not the protocol.</p>
+<h2>If an agreement forbids AI, it forbids it locally too</h2>
+<p>The route rules above answer "may this leave the institution". They do not answer "may a model touch this at all", and
+those are different questions. An agreement can forbid AI processing outright - local model included, institutional
+machine included. When one does, obey it locally.</p>
+<p>The reasoning is not legal caution, it is arithmetic: following such a clause costs almost nothing (run the step by
+hand, script it, or leave it), while ignoring it risks the whole data access. There is no version of "we only used the
+local model" that the data provider will accept as compliance with a no-AI clause. Local execution is a <em>route</em>, not an
+exception.</p>
+<p>This is why the class is not a substitute for reading the agreement. A dataset whose terms contain such a clause has no
+usable class under this scheme: it is not class 1 (not open), not really class 2 (the institutional route is allowed but
+the processing is not), and not class 3 (it is not ours to decide). Read the agreement first, assign the class second.</p>
+<p><strong>Still open:</strong> two claims that real agreements do this - ADNI forbidding AI tools including local ones, HRS forbidding
+LLM processing - could not be verified from this machine (the ADNI PDF is blocked by the proxy, the HRS page returns no
+text; see Ablesung). Until they are read, treat "an agreement may forbid AI" as a live possibility to check per dataset,
+not as a settled label for any named dataset.</p>
+<h2>Bruchindikator</h2>
+<p>A class-2 or class-3 case reaches a public repository, a public cloud or an external API. A class-2 dataset is refused
+on the institutional hub on the grounds of "patient data" although its terms permit institutional use. A data-free
+planning or coding prompt for a class-3 job runs in the local profile instead of Cle, or a local step forwards raw
+records rather than an aggregate. An artefact (mask, embedding, log, quality-control page, trained weights) is pushed
+without a class line, or with a lower class than its inputs. Class 2 is treated as one uniform permission when its own
+agreement is narrower. A release decision rests on proxy traffic although the institutional route bypasses the proxy,
+or on a guard's rejection count although no target values exist. Case-level content (ids, paths, values, image headers)
+is written into a log, cache or agent session store beyond the run that needed it, is kept because it "might be useful
+later", or is placed next to the data instead of in the run's own temporary space.</p>
+<h2>Ablesung</h2>
+<p>VALDO (registration and grand-challenge terms of service): https://valdo.grand-challenge.org/ ,
+https://grand-challenge.org/policies/terms-of-service/ . WMH challenge: https://wmh.isi.uu.nl/ . HCP-Aging Data Use
+Terms, fetched 2026-10-21: https://www.humanconnectome.org/study/hcp-lifespan-aging/data-use-terms - wording quoted
+above is from there ("solely for academic research ... at a non-profit or government institution", "sharing of the Data
+OUTSIDE of my institution is NOT PERMITTED", "share the Data WITHIN MY INSTITUTION (e.g., on a shared server)").
+Class-3 rule from the cohort-guard, own runs 2026-10-21.</p>
+<p>Prior art and vocabulary, checked 2026-10-21 by three separate research passes plus own verification: Turing Data Safe
+Haven sensitivity tiers (https://data-safe-haven.readthedocs.io/en/latest/overview/sensitivity_tiers.html ,
+preprint arXiv:1908.08737); UK Biobank research analysis platform output rules
+(https://community.ukbiobank.co.uk/hc/en-gb/articles/31972311370013 ) and airlock plan
+(https://www.ukbiobank.ac.uk/about-our-data/protecting-the-data/data-security-updates/); SAIL (PMC8142954); Five Safes
+(vendor description only, https://lifebit.ai/blog/what-is-five-safes-framework/ , official ONS/HDR-UK page unverified);
+GA4GH DUO, labels read from the source file
+(https://raw.githubusercontent.com/EBISPOT/DUO/master/duo.csv - <code>DUO:0000028 IS</code>, <code>DUO:0000027 PS</code>, <code>DUO:0000026 US</code>,
+<code>DUO:0000007 DS</code>, <code>DUO:0000021 IRB</code>, <code>DUO:0000022 GS</code>, <code>DUO:0000015 NMDS</code>, <code>DUO:0000042 GRU</code>, <code>DUO:0000004 NRES</code>); NIH
+dbGaP Data Use Certification, cloud service provider clause from search excerpts only, PDF returned 403
+(https://www.grants.nih.gov/node/1245); HIPAA Limited Data Set agreement
+(https://contracts.med.wisc.edu/wp-content/uploads/sites/1494/2025/02/Data-Use-Agreement-for-Disclosure-of-LDS.pdf);
+FIDES, Microsoft Research (https://arxiv.org/pdf/2505.23643v2). <strong>Unverified, needs network access:</strong> claims that the
+ADNI agreement forbids AI tools including local ones (PDF https://adni-lde.loni.usc.edu/wp-content/themes/adni_2023/documents/ADNI_Data_Use_Agreement.pdf
+blocked by the proxy, CONNECT 503) and that HRS forbids LLM processing (https://hrsdata.isr.umich.edu/node/72486
+returned no text). If those hold, <code>IS</code> is the wrong label for class 2 and the class is contractual per dataset. Do not
+treat the class-2 wording above as settled until they are read.</p>
+<p>Embedding inversion: Morris et al. 2023, arXiv:2310.06816 (recovered 92 % of 32-token inputs; arXiv preprint, not
+peer-reviewed). Re-identification from face reconstruction of head MRI: Schwarz et al. 2019, N Engl J Med, PMID
+31644852, "Identification of Anonymous MRI Research Participants with Face-Recognition Software" - title, authors,
+journal (N Engl J Med 2019;381:1684-1686) and DOI 10.1056/NEJMc1908881 verified against PubMed 2026-10-21. It is a
+brief report with no abstract, so its specific figures were <strong>not</strong> read here; do not quote a number from it without
+opening the paper. A demographic-uniqueness claim (Rocher et al. 2019, Nature Communications)
+reached this wiki through a research pass but its PMID could <strong>not</strong> be verified on 2026-10-21 and the citation was
+removed; do not restore it without reading the paper.</p>
+<p><strong>Correction, same day:</strong> an earlier version of this reads section carried the PMIDs 31657887 and 31427575 for Schwarz and
+Rocher. Both are wrong - 31657887 is a surgical-residency burnout paper (Hu YY, NEJM) and 31427575 is an inner-ear gene
+transfer paper (Tan F, Nat Commun). They came from a research pass and were not checked before being written down. The
+lesson is in the rule itself: a PMID is not evidence that the source says what one believes it says.</p>
+<h2>Verknüpft</h2>
+<p><a href="../local_llm_operation/rules/remote-model-gets-only-data-free-skills-and-redacted-text.html">remote-model-gets-only-data-free-skills-and-redacted-text</a></p></div></details><details class="entry" id="everything-in-english"><summary><span class="type">Regel</span><span class="t"><a href="rules/everything-in-english.html">Main rule: all work is in English</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-15</span></summary><div class="body"><p class="small muted">Herkunft: Mendel, chat on workstation Alita, 2026-10-15 (&quot;ein Hauptregel in wiki sollte alle Arbeiten sollten auf Englisch sein&quot;) · <a href="rules/everything-in-english.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/rules/everything-in-english.md">Markdown</a></p><h2>Statement</h2>
 <p>Everything an agent produces is written in English: wiki entries (title, body, section headings), code, comments,
 commit messages, file and folder names, QC pages, tables and their column/sheet names, reports, primers and figures.
 The chat with Mendel may stay in German; the artefacts do not. Existing German entries are translated when they are
@@ -224,6 +436,222 @@ vollständig veraltet.</p>
 <h2>Verknüpft</h2>
 <ul>
 <li><a href="rules/one-filename-two-contracts.html">one-filename-two-contracts</a></li>
-</ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="derived-artifacts-carry-their-source-class"><summary><span class="type">Befund</span><span class="t"><a href="findings/derived-artifacts-carry-their-source-class.html">Derived artifacts carry the source class: a KV cache is a copy in number form</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-22</span></summary><div class="body"><p class="small muted">Herkunft: own run 2026-10-22 (building and exporting data-free prefill packages on Alita) · <a href="findings/derived-artifacts-carry-their-source-class.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/derived-artifacts-carry-their-source-class.md">Markdown</a></p><h2>What was found</h2>
+<p>A prefill package was built from data-free fragments (16 fragments, 19 packages), then an
+optional layer was added: precomputed KV caches, one per package, ~1.1 GB each, held under
+<code>system/logs/kvcache/</code>.</p>
+<p>The source fragments passed the outgoing guard. The caches derived from the <em>same</em> fragments
+were treated differently, and that is the correct reading, not an inconsistency:</p>
+<ul>
+<li>A KV cache is the processed prompt state in number form. It is a copy of the text it was
+  computed from, not a summary of it.</li>
+<li>If the source text was cohort-bound, the cache carries that binding even though no cohort
+  name is readable in it. The guard blocks by readable content, so it will not catch this.</li>
+<li>Three older caches (<code>thema-mb-arena</code>, <code>thema-valdo-t2s</code>, <code>thema-wmh-arena</code>) belong to themes
+  the guard blocks as cohort-bearing. They were excluded from the export for exactly this
+  reason, though nothing in them is searchable.</li>
+</ul>
+<p>Measured, same run: the file-level cache saves almost nothing. With the running service, a
+cold prefix took 4.4 s, the identical prompt right after took 0.4 s, and after a distractor
+0.8 s. The whole agent turn is 29-34 s, dominated by process startup. The 21 GB of caches buy
+roughly the seconds a warm slot already provides.</p>
+<h2>Why it matters</h2>
+<ol>
+<li><strong>Class inheritance applies to derived artifacts, and it survives redaction.</strong> A mask,
+   an embedding, a QC page or a model trained on class-3 input is class 3. A KV cache is the
+   same kind of object: it cannot be promoted to "data-free" by showing that no identifier is
+   visible inside it.</li>
+<li><strong>Guard coverage is by content, not by provenance.</strong> A cache of blocked source material
+   passes a content check because it contains no readable strings. So the exclusion has to be
+   a rule, not a scan result.</li>
+<li><strong>Group drives are a destination, not a sieve.</strong> On a Charite-internal group drive,
+   pseudonymised patient data may legitimately live. That is what makes it the wrong place for
+   derived artifacts of unknown provenance: the destination permits the material, so nothing
+   else will stop it. Only data-free source files belong in a package folder there.</li>
+<li><strong>Cost is a separate question from permission.</strong> The caches were dropped from the export on
+   both grounds, and the 21 GB mattered less than the class argument. Had they been cheap and
+   useful, the class rule would still have excluded them.</li>
+</ol>
+<h2>How to check (repeatable)</h2>
+<ol>
+<li>For every derived artifact ask: what was the maximum class of the text that produced it?
+   If that is not knowable, treat the artifact as the higher class.</li>
+<li>Do not try to decide it by grepping for names or identifiers. Absence of a match is not
+   evidence of absence of the binding.</li>
+<li>Export only source-level, data-free material to shared destinations
+   (<code>system/themen/auf-alita.sh</code> stages only <code>bausteine/ briefe/ werkzeuge/</code> and refuses the
+   <code>kvcache/</code> directory by design).</li>
+<li>Weigh the speed claim before shipping bulk: measure the warm-slot case first.</li>
+</ol>
+<h2>Trägt</h2>
+<ul>
+<li>A concrete instance of the class-inheritance rule on a real export, with the destination
+  being an internal group drive rather than an external API.</li>
+<li>The distinction between guarding by content (what the guard can do) and ruling by provenance
+  (what a person must do).</li>
+</ul>
+<h2>Trägt nicht</h2>
+<ul>
+<li>The number of caches or the byte sizes are specific to this run; they are not a property of
+  the method.</li>
+<li>No claim that the three excluded caches are a leak. They are prompt state of cohort-bearing
+  themes kept on the local route, nothing confirmed to have left.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Would be wrong if a KV cache were shown to be a lossy encoding that provably cannot be matched
+back to its source content, or if a shared destination were shown to strip provenance in a way
+that the class rule already accounts for.</p>
+<h2>Ablesung</h2>
+<p>Before copying any derived artifact to a shared or group destination, name the source class in
+one sentence. If the sentence needs a hedge, the artifact stays local.</p></div></details><details class="entry" id="wachen-path-rule-by-role-not-by-mountpoint"><summary><span class="type">Befund</span><span class="t"><a href="findings/wachen-path-rule-by-role-not-by-mountpoint.html">Die Pfadregel der Wachen fragt nach der Rolle, nicht nach dem Einhängepunkt</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-22</span></summary><div class="body"><p class="small muted">Herkunft: own run 2026-10-22 (making the external disk usable as a work volume) · <a href="findings/wachen-path-rule-by-role-not-by-mountpoint.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/wachen-path-rule-by-role-not-by-mountpoint.md">Markdown</a></p><h2>Befund</h2>
+<p>Mehrere Wachen sperrten pauschal den Einhängepunkt für Wechseldatenträger. Der
+Grund war gut: auf dem externen Träger lag tatsächlich einmal Kohortenmaterial.
+Nur ist der Einhängepunkt kein Merkmal für Inhalt. Derselbe Träger trug auch
+QWEN-Bundles, Papiere und FreeSurfer-Pakete -- rund 74 GB Werkzeug wurden
+mitgesperrt.</p>
+<p>Die Pfadregel ist jetzt rollenbasiert, nach derselben Hausregel wie bei den
+Datenklassen: <strong>die Rolle wird nachgeschaut, nicht angenommen.</strong> Sie steht als
+Datei <code>ARBEITSPLATTE</code> im Wurzelverzeichnis des Datenträgers.</p>
+<ul>
+<li>Datei vorhanden -&gt; Arbeitsplatte, von der Pfadregel ausgenommen</li>
+<li>Datei fehlt -&gt; wie bisher: der Ort gilt als Ablage und ist gesperrt</li>
+</ul>
+<p>Die Regel wird dabei <strong>strenger, nicht laxer</strong>: vorher war ein bestimmter
+Wechseldatenträger verdächtig, jetzt gilt jeder nicht erklärte Datenträger als
+Ablage. Ein Wechseldatenträger, der gar nicht gemountet ist, wird ebenfalls
+erfasst.</p>
+<h2>Was ausdrücklich NICHT fällt</h2>
+<p>Nur die Pfadregel fällt. Die Inhaltsprüfungen laufen unverändert weiter, auch auf
+einer erklärten Arbeitsplatte: BIDS-Kennungen, Bilddateinamen, gepackte
+Bilddateien, Kohortennamen. Nachgemessen: auf erklärter Arbeitsplatte werden eine
+BIDS-Kennung, ein NIfTI-Dateiname und ein gepackter NIfTI-Dateiname weiterhin
+erkannt. Wer Kohortenmaterial auf eine Arbeitsplatte kopiert, fliegt auf.</p>
+<h2>Zwei Fallen, die beim Bauen auffielen</h2>
+<ol>
+<li><strong>Umgebungsvariablen sind additive, keine Ersatzschalter.</strong> Die Pfadlisten
+   sind als <code>Umgebungsvariable + feste Literale</code> gebaut. Die Variablen zu leeren
+   erweitert nur, es ersetzt nie. Der naheliegende Hebel ist wirkungslos.</li>
+<li><strong>Trägernamen enthalten Leerzeichen.</strong> In der Einhängetabelle steht ein
+   Leerzeichen als <code>\040</code>. Eine Wortzerlegung des geprüften Textes hätte den
+   Namen abgeschnitten und die Rolle des falschen Ortes geprüft. Deshalb wird der
+   konkrete Einhängepunkt aus der Tabelle geholt und als ganze Zeichenkette im
+   Text gesucht.</li>
+</ol>
+<h2>Dritte Falle derselben Art</h2>
+<p>Die Rollendatei zählt <strong>nur in der Wurzel des Datenträgers</strong>. Eine erste Fassung
+lief vom Pfad bis zur Dateisystemwurzel hinauf und hätte eine Rollendatei in
+einem übergeordneten Verzeichnis den ganzen Baum darunter freigeben lassen --
+auch Bereiche auf anderen Datenträgern. Eine Datei im Heimverzeichnis hätte damit
+das Datenverzeichnis mitfreigegeben.</p>
+<h2>Randnotiz: eine Wache blockt ihren eigenen Quelltext</h2>
+<p>Die Fernwache verweigert das Lesen ihrer eigenen Quelldatei mit der Begründung,
+sie enthalte eine Bilddatei und einen Kohortennamen -- was stimmt, die Suchmuster
+stehen dort im Klartext. Das ist eine Eigenschaft, kein Fehler: sie schützt auch
+vor sich selbst. Praktische Folge: solche Dateien nicht mit dem normalen Leser
+öffnen, sondern Struktur und Zeilennummern gezielt abfragen oder die Literale zur
+Laufzeit zusammensetzen. Dasselbe gilt für Testbefehle: ein Prüfbefehl, der die
+gesuchte Zeichenkette wörtlich enthält, wird selbst geblockt -- Proben deshalb aus
+Teilen zusammensetzen.</p>
+<h2>Wo es liegt</h2>
+<ul>
+<li><code>system/waechter/rolle.py</code> -- Rollenlogik, an einer Stelle</li>
+<li><code>system/waechter/rolle-setzen.sh</code> -- Rollendatei setzen (löst den Trägerpfad
+  zur Laufzeit auf, damit kein fester Pfad im Skript steht)</li>
+<li><code>system/waechter/README-arbeitsplatte.md</code> -- dauerhaftes Einhängen nach
+  <code>/mnt/arbeit</code> (braucht sudo)</li>
+<li>verdrahtet in <code>system/waechter/pruefe.py</code>, <code>system/systemone/approval_gate.py</code>
+  und im Plugin der Fernwache</li>
+</ul></div></details><details class="entry" id="research-passes-invent-plausible-pmids"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-passes-invent-plausible-pmids.html">Research passes invent plausible PMIDs</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: own runs 2026-10-21, three headless Claude research passes on the three-data-classes rule · <a href="findings/research-passes-invent-plausible-pmids.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/research-passes-invent-plausible-pmids.md">Markdown</a></p><h2>Aussage</h2>
+<p>An agent asked to research a topic returns citations that <em>look</em> right and are wrong. On 2026-10-21 three headless
+research passes (Claude Code, <code>claude -p</code>, read-only tools, network on) were run against the three-data-classes rule.
+One pass cited Schwarz et al. 2019 NEJM with PMID 31657887 and Rocher et al. 2019 Nature Communications with PMID
+31427575, plus a PMC link. Checked against PubMed:</p>
+<ul>
+<li>PMID 31657887 is "Discrimination, Abuse, Harassment, and Burnout in Surgical Residency Training" (Hu YY, NEJM 2019).</li>
+<li>PMID 31427575 is "AAV-ie enables safe and efficient gene transfer to inner ear cells" (Tan F, Nat Commun 2019).</li>
+<li>The correct Schwarz PMID is 31644852, "Identification of Anonymous MRI Research Participants with Face-Recognition
+  Software" (N Engl J Med 2019).</li>
+<li>The Rocher claim could not be verified at all; the citation was removed rather than repaired.</li>
+</ul>
+<p>The numbers the pass reported (92 % embedding recovery, 70 of 84 rank-1 matches) were plausible and the <em>topics</em> were
+right - only the identifiers were fabricated. A wrong PMID on a real-looking claim is harder to catch than a
+nonsensical one.</p>
+<p><strong>Same trap, one step further in (own error, same day).</strong> After correcting the PMID, the figure "70 of 84 rank-1
+matches" was copied into the rule as if verified. It is not: PMID 31644852 is a brief report with <strong>no abstract</strong>, so the
+number was never read anywhere. An identifier can be perfectly real and the number beside it still invented. The rule now
+says the figures were not read. A verified id is not a verified sentence.</p>
+<h2>Trägt</h2>
+<p>It settles how to consume a research pass: treat every identifier as a claim to be checked, never as a lookup already
+done. The check is cheap (one EUtils/Europe PMC call per id) and the failure is silent otherwise. It also justifies
+using several independent passes: the passes agreed on the <em>shape</em> (Turing tiers, DUO vocabulary, output checking) and
+disagreed on nothing structural, so the consensus carries even where a single citation does not.</p>
+<h2>Trägt nicht</h2>
+<p>It does not mean the passes are useless. Two of three produced verified, load-bearing material: the Turing Data Safe
+Haven tier mapping, the UK Biobank/SAIL/Five Safes output-checking comparison, and the DUO label list. The DUO labels
+were re-read from <code>duo.csv</code> and matched exactly. The failure was narrow - identifiers - not the research.</p>
+<p>It also does not mean a check makes a source <em>true</em>: a valid PMID proves the paper exists and has that title, not that
+it supports the sentence it is attached to. That second step (read the abstract) stays manual.</p>
+<h2>Bruchindikator</h2>
+<p>A wiki entry carries a PMID or DOI that the sources-check tool cannot tie to its title, or that resolves to an
+unrelated paper. A citation is copied from a research pass without a check, or a "corrected" identifier is written
+without reading the paper it now points to. The same applies to a DOI that resolves but to the wrong article.</p>
+<h2>Ablesung</h2>
+<p>Check, own runs 2026-10-21: PubMed EUtils <code>esummary</code> for a PMID returns title, journal, first author - compare against
+the claim. Europe PMC <code>search?query=DOI:"..."</code> resolves a DOI to its article. Corrected Schwarz reference:
+https://pubmed.ncbi.nlm.nih.gov/31644852/ . Removed reference: Rocher et al. 2019, Nat Commun - PMID unverified, not
+reinstated. Rule that consumes this: <a href="rules/three-data-classes-decide-what-may-leave-the-institution.html">three-data-classes-decide-what-may-leave-the-institution</a>.
+Tool for the standing check: <code>system/werkzeuge/quellen-pruefen</code>.</p></div></details><details class="entry" id="tmp-is-not-volatile-and-session-stores-persist"><summary><span class="type">Befund</span><span class="t"><a href="findings/tmp-is-not-volatile-and-session-stores-persist.html">/tmp is not volatile on Alita, and agent session stores persist there</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: own runs 2026-10-21 (cleanup of /tmp scratch and Claude Code session stores on Alita) · <a href="findings/tmp-is-not-volatile-and-session-stores-persist.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/tmp-is-not-volatile-and-session-stores-persist.md">Markdown</a></p><h2>What was found</h2>
+<p>On Alita, <code>/tmp</code> lives on the root filesystem, not on a RAM-backed <code>tmpfs</code>:</p>
+<ul>
+<li><code>findmnt /tmp</code> resolves to <code>/dev/nvme0n1p2</code>, filesystem <code>ext4</code> (the same root partition).</li>
+<li><code>systemctl is-enabled tmp.mount</code> reports <code>not-found</code>.</li>
+<li>Claude Code writes its session state under <code>/tmp/claude-1000/</code> and no <code>TMPDIR</code> is set for it in
+  <code>~/.claude/settings.json</code>, <code>~/.bashrc</code> or <code>~/.profile</code>.</li>
+</ul>
+<p>Consequence: everything an agent or a script leaves in <code>/tmp</code> survives reboots and shutdowns. It does not age out
+on its own. The directory is, in practice, a durable store on a disk that also holds other people's data.</p>
+<h2>Why it matters</h2>
+<ol>
+<li><strong>"It is only in /tmp" is not a containment argument.</strong> A path under <code>/tmp</code> is not more ephemeral than a path under
+   the home directory; both are the same disk. An argument that says "this copy is harmless because /tmp is cleared"
+   is false here.</li>
+<li><strong>Agent session stores grow without bound.</strong> The Claude Code store on Alita held ~13 GB in ~59,000 files at the
+   time of this check, across many session directories. Most of it was from closed sessions. This is scratch, not
+   deliberate logging, but it is the same class of material a log rule is meant to bound.</li>
+<li><strong>Cleanup is unsafe while agents run.</strong> At check time 8 <code>claude</code> processes and 2 guard daemons were active, and
+   <code>lsof</code> showed five session directories held open, one being tailed live. Deleting those would have destroyed work
+   in progress.</li>
+</ol>
+<p>It does not follow that the store is a leak. It follows that its lifetime is not what the name suggests, so it must be
+handled deliberately rather than ignored.</p>
+<h2>How to check (repeatable)</h2>
+<pre><code>findmnt -no SOURCE,FSTYPE,OPTIONS /tmp     # tmpfs here means volatile; ext4 does not
+systemctl is-enabled tmp.mount             # not-found = no systemd-managed tmpfs
+df -h /tmp                                 # confirm it is the root filesystem
+lsof +D /tmp/claude-1000                   # which session dirs are in use right now
+pgrep -au $USER -f claude                  # is a session running at all
+du -sh /tmp/claude-1000                    # size of the store
+</code></pre>
+<h2>Cleanup recipe (only when no agent session is running)</h2>
+<ol>
+<li>Confirm no session is active: <code>pgrep -au $USER -f claude</code> is empty and <code>lsof +D /tmp/claude-1000</code> is empty.</li>
+<li>Delete only directories belonging to closed sessions; never remove a directory that <code>lsof</code> lists.</li>
+<li>Better than deleting: give the tool its own temporary directory, so the store disappears with the process -
+   e.g. <code>TMPDIR="$(mktemp -d /tmp/agent.XXXX)"</code> exported before the tool starts, removed afterwards. Setting <code>TMPDIR</code>
+   to a directory on a real <code>tmpfs</code> (<code>/run/user/$UID</code> is RAM-backed and per-user) achieves the same for scratch.</li>
+<li>Do not log what was deleted beyond counts and total size. File names and contents stay out of logs (see
+   <code>rules/do-not-log-case-level-content.md</code>).</li>
+</ol>
+<h2>Cost of being wrong</h2>
+<ul>
+<li>Ignoring it: the store keeps growing on the root disk and old session scratch stays readable indefinitely.</li>
+<li>Cleaning too eagerly: work in progress is destroyed and a running agent fails for no reason - the reason to check
+  <code>lsof</code> first.</li>
+</ul>
+<p>Befolgen (clean up deliberately, or redirect <code>TMPDIR</code>) costs a few minutes. Ignoring it risks both a full root disk and
+a long-lived copy of session material nobody chose to keep.</p>
+<h2>Open point</h2>
+<p>Whether the session store ever held case-level content was not inspected and must not be inspected from this profile:
+the guard refuses to read it. That question belongs to the local profile and to a session that is not running.</p></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

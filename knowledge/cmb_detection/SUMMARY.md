@@ -1,5 +1,7 @@
 # cmb_detection: Kurzstand
 
+**Neu 2026-10-22 (Python-Beispiele):** Training, Vorhersage und Fine-Tuning als lesbare Skripte; auf der CPU mit festen Seeds bitgleich zu den Befehlen (Gewichte, Masken), ein Vergleich mit einem Modell, das Laesionen findet; kopierte Funktionen per Quelltext geprueft ([example-scripts-reproduce-their-command-bit-for-bit](rules/example-scripts-reproduce-their-command-bit-for-bit.md)).
+
 **Neu 2026-10-17 (Literatur 2023-2026, 37 gepruefte Quellen):** Bauweise unveraendert 3D-U-Net plus FP-Reduktion; oeffentlich SHIVA-CMB mit Gewichten (F1 0,74); neu sind synthetische Daten, SWI/T2*-Uebertragung und QSM gegen Mimics ([research-cmb-detection-2023-2026](findings/research-cmb-detection-2023-2026.md)).
 
 Stand 2026-10-17. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).

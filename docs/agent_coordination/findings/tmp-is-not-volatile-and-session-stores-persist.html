@@ -1,0 +1,99 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>/tmp is not volatile on Alita, and agent session stores persist there</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_coordination</a> › <a href="../index.html#findings">Befund</a></div><h1>/tmp is not volatile on Alita, and agent session stores persist there</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ok">getragen</span></span><span>Stand</span><span>2026-10-21</span><span>Herkunft</span><span>own runs 2026-10-21 (cleanup of /tmp scratch and Claude Code session stores on Alita)</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_coordination/findings/tmp-is-not-volatile-and-session-stores-persist.md">knowledge/agent_coordination/findings/tmp-is-not-volatile-and-session-stores-persist.md</a></span></div><h2>What was found</h2>
+<p>On Alita, <code>/tmp</code> lives on the root filesystem, not on a RAM-backed <code>tmpfs</code>:</p>
+<ul>
+<li><code>findmnt /tmp</code> resolves to <code>/dev/nvme0n1p2</code>, filesystem <code>ext4</code> (the same root partition).</li>
+<li><code>systemctl is-enabled tmp.mount</code> reports <code>not-found</code>.</li>
+<li>Claude Code writes its session state under <code>/tmp/claude-1000/</code> and no <code>TMPDIR</code> is set for it in
+  <code>~/.claude/settings.json</code>, <code>~/.bashrc</code> or <code>~/.profile</code>.</li>
+</ul>
+<p>Consequence: everything an agent or a script leaves in <code>/tmp</code> survives reboots and shutdowns. It does not age out
+on its own. The directory is, in practice, a durable store on a disk that also holds other people's data.</p>
+<h2>Why it matters</h2>
+<ol>
+<li><strong>"It is only in /tmp" is not a containment argument.</strong> A path under <code>/tmp</code> is not more ephemeral than a path under
+   the home directory; both are the same disk. An argument that says "this copy is harmless because /tmp is cleared"
+   is false here.</li>
+<li><strong>Agent session stores grow without bound.</strong> The Claude Code store on Alita held ~13 GB in ~59,000 files at the
+   time of this check, across many session directories. Most of it was from closed sessions. This is scratch, not
+   deliberate logging, but it is the same class of material a log rule is meant to bound.</li>
+<li><strong>Cleanup is unsafe while agents run.</strong> At check time 8 <code>claude</code> processes and 2 guard daemons were active, and
+   <code>lsof</code> showed five session directories held open, one being tailed live. Deleting those would have destroyed work
+   in progress.</li>
+</ol>
+<p>It does not follow that the store is a leak. It follows that its lifetime is not what the name suggests, so it must be
+handled deliberately rather than ignored.</p>
+<h2>How to check (repeatable)</h2>
+<pre><code>findmnt -no SOURCE,FSTYPE,OPTIONS /tmp     # tmpfs here means volatile; ext4 does not
+systemctl is-enabled tmp.mount             # not-found = no systemd-managed tmpfs
+df -h /tmp                                 # confirm it is the root filesystem
+lsof +D /tmp/claude-1000                   # which session dirs are in use right now
+pgrep -au $USER -f claude                  # is a session running at all
+du -sh /tmp/claude-1000                    # size of the store
+</code></pre>
+<h2>Cleanup recipe (only when no agent session is running)</h2>
+<ol>
+<li>Confirm no session is active: <code>pgrep -au $USER -f claude</code> is empty and <code>lsof +D /tmp/claude-1000</code> is empty.</li>
+<li>Delete only directories belonging to closed sessions; never remove a directory that <code>lsof</code> lists.</li>
+<li>Better than deleting: give the tool its own temporary directory, so the store disappears with the process -
+   e.g. <code>TMPDIR="$(mktemp -d /tmp/agent.XXXX)"</code> exported before the tool starts, removed afterwards. Setting <code>TMPDIR</code>
+   to a directory on a real <code>tmpfs</code> (<code>/run/user/$UID</code> is RAM-backed and per-user) achieves the same for scratch.</li>
+<li>Do not log what was deleted beyond counts and total size. File names and contents stay out of logs (see
+   <code>rules/do-not-log-case-level-content.md</code>).</li>
+</ol>
+<h2>Cost of being wrong</h2>
+<ul>
+<li>Ignoring it: the store keeps growing on the root disk and old session scratch stays readable indefinitely.</li>
+<li>Cleaning too eagerly: work in progress is destroyed and a running agent fails for no reason - the reason to check
+  <code>lsof</code> first.</li>
+</ul>
+<p>Befolgen (clean up deliberately, or redirect <code>TMPDIR</code>) costs a few minutes. Ignoring it risks both a full root disk and
+a long-lived copy of session material nobody chose to keep.</p>
+<h2>Open point</h2>
+<p>Whether the session store ever held case-level content was not inspected and must not be inspected from this profile:
+the guard refuses to read it. That question belongs to the local profile and to a session that is not running.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

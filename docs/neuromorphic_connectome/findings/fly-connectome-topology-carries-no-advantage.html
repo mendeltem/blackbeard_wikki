@@ -81,6 +81,13 @@ gesprochener Ziffern (FSDD), LOSO-Ridge auf den Spikes:</p>
 <td>−0,0097</td>
 </tr>
 <tr>
+<td>BPTT, ganzes <code>W</code> (n=20000, 1 Seed)</td>
+<td>0,6625</td>
+<td>0,6558 ± 0,0057</td>
+<td>0,6425 ± 0,0113</td>
+<td>+0,0067 / +0,0200</td>
+</tr>
+<tr>
 <td>STDP, bio-lokale Regel (n=3000, 5 Seeds)</td>
 <td>0,5900 ± 0,0155</td>
 <td>0,5917 ± 0,0137</td>
@@ -90,9 +97,23 @@ gesprochener Ziffern (FSDD), LOSO-Ridge auf den Spikes:</p>
 </tbody>
 </table>
 <p>Kontrollarm ohne Netz: 0,5500.</p>
-<p>Der Kern: <strong>Trainieren hilft dem Netz deutlich</strong> (0,58 → 0,65), <strong>die
+<p>Der Kern: <strong>Trainieren hilft dem Netz deutlich</strong> (0,58 → 0,66), <strong>die
 Topologie traegt aber nichts</strong>. Und das gilt fuer den unbiologischen
 Stark-Optimierer BPTT <em>und</em> fuer die rein lokale biologische Regel STDP.</p>
+<p><strong>Die n=20000-<code>full</code>-Zeile ist kein Gegenbeleg, und zwar aus einem
+Handwerksgrund.</strong> Sie zeigt formal +0,0067 gegen <code>dp</code> und +0,0200 gegen <code>er</code>,
+aber <code>fly</code> steht dort auf <strong>einem einzigen Seed</strong> (<code>seeds = [args.seed] if arm
+== "fly" else args.seed_list</code>, <code>snn_fly.py:193</code>), waehrend die Nullarme ueber
+fuenf Seeds gemittelt sind. Das Konnektom ist fest, variiert wird nur die
+Gewichtsinitialisierung; die Nullarme muessen dagegen die Streuung ihres
+jeweiligen Rewirings mitteln. Ein Einzellauf gegen einen Fuenf-Seed-Mittelwert
+ist genau der Vergleich, den die Regel unten verbietet: <strong>der +0,0200 liegt
+innerhalb der <code>er</code>-Streuung (±0,0113), und der +0,0067 liegt in der
+<code>dp</code>-Streuung (±0,0057) an deren Rand.</strong> Dazu kommt, dass derselbe Arm bei
+n=5000 <strong>negativ</strong> war (−0,0097). Zwei Laeufe desselben Arms mit
+entgegengesetztem Vorzeichen sind das Muster eines Rauschartefakts, nicht
+eines Effekts. Wer den +0,0200 zitieren will, muss <code>fly</code> ueber mehrere Seeds
+wiederholen — bis dahin ist die Zeile ein offener Punkt, kein Vorteil.</p>
 <h2>Traegt</h2>
 <p>Die Aussage, dass "das Fliegengehirn als Substrat" per se kein
 Leistungsargument ist. Wer mit einem Konnektom eine Methode begruenden will,
@@ -103,16 +124,23 @@ liefern — der Befund ist nicht ein Artefakt eines bestimmten Lerners.</p>
 <h2>Traegt nicht</h2>
 <p>Keine Aussage darueber, ob das Konnektom fuer <em>andere</em> Aufgaben traegt:
 zeitliche Mustererkennung statt Ziffernklassifikation, Navigation, Motorik.
-Keine Aussage ueber groessere Subgraphen (der BPTT-<code>full</code>-Lauf auf n=20000
-kam wegen GPU-Belegung nicht zustande, siehe Bruchindikator).</p>
+Der BPTT-<code>full</code>-Lauf auf n=20000 ist inzwischen gelaufen (der GPU-Konflikt ist
+geloest, siehe Bruchindikator), aber bisher nur mit einem <code>fly</code>-Seed — siehe
+die Einschraenkung zur Zeile oben.</p>
 <p>Kein Beleg gegen "Neuromorphic Computing" insgesamt: gemessen ist die
 Topologie als Substrat, nicht der Nutzen von Spikes, Sparsity oder
 ereignisgetriebener Rechnung.</p>
 <h2>Bruchindikator</h2>
-<p>Ein <code>fly</code>-Vorteil ausserhalb der Seed-Streuung auf einer dieser Achsen. Oder
-derselbe Test auf n=20000 mit <code>--trainable full</code> — der fehlende, groessere
-Lauf. Solange der nicht da ist, ist die BPTT-<code>full</code>-Zeile nur bei n=5000
-belegt.</p>
+<p>Ein <code>fly</code>-Vorteil ausserhalb der Seed-Streuung auf einer dieser Achsen. Der
+naheliegendste Kandidat ist die n=20000-<code>full</code>-Zeile: <strong>dort <code>fly</code> ueber
+dieselben fuenf Seeds laufen lassen wie die Nullarme, nicht ueber einen.</strong>
+Erst dann ist der Vergleich symmetrisch. Solange das fehlt, ist der dortige
++0,0200 unfalsifiziert und darf nicht als Vorteil zitiert werden.</p>
+<p>Der zweite Bruchindikator ist der GPU-Konflikt selbst gewesen: er ist
+geloest, weil der eigene <code>llama-server</code> des lokalen Profils nach Leerlauf
+seinen VRAM freigibt. GPU-Arbeit aber nicht auf die Uhr starten, sondern an
+eine <code>nvidia-smi</code>-Schranke binden, sonst kommt der naechste CUDA-OOM —
+Details in <a href="../../local_llm_operation/rules/local-model-server-runs-only-when-needed.html">local-model-server-runs-only-when-needed</a>.</p>
 <h2>Ablesung</h2>
 <p>Eigene Messung, 21.10.2026, GPU-LIF mit Surrogate-Gradient, <code>snn_fly.py</code> und
 <code>stdp_fly.py</code>, Details in <code>RESULTS_neuromorphic_training.md</code> und
@@ -123,5 +151,5 @@ belegt.</p>
 <li><a href="fly-subgraph-is-usable-but-not-special.html">fly-subgraph-is-usable-but-not-special</a></li>
 <li><a href="spike-rate-must-be-bounded-in-stdp.html">spike-rate-must-be-bounded-in-stdp</a></li>
 </ul></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../../search.js"></script></body></html>

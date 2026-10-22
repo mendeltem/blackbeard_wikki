@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT, Labelkarte, Schichtdicke, Inferenz</p>
-<div class="stripe"><i class="ok" style="width:71.4%" title="getragen: 15"></i><i class="warn" style="width:28.6%" title="vorschlag: 6"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">6 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+<div class="stripe"><i class="ok" style="width:68.2%" title="getragen: 15"></i><i class="warn" style="width:31.8%" title="vorschlag: 7"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">7 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
 Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
 Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
 gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
@@ -52,7 +52,8 @@ Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
 Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-17 (Literatur 2023-2026, 37 gepruefte Quellen):</strong> Bauweise unveraendert 3D-U-Net plus FP-Reduktion; oeffentlich SHIVA-CMB mit Gewichten (F1 0,74); neu sind synthetische Daten, SWI/T2*-Uebertragung und QSM gegen Mimics (<a href="findings/research-cmb-detection-2023-2026.html">research-cmb-detection-2023-2026</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-10-22 (Python-Beispiele):</strong> Training, Vorhersage und Fine-Tuning als lesbare Skripte; auf der CPU mit festen Seeds bitgleich zu den Befehlen (Gewichte, Masken), ein Vergleich mit einem Modell, das Laesionen findet; kopierte Funktionen per Quelltext geprueft (<a href="rules/example-scripts-reproduce-their-command-bit-for-bit.html">example-scripts-reproduce-their-command-bit-for-bit</a>).</p>
+<p><strong>Neu 2026-10-17 (Literatur 2023-2026, 37 gepruefte Quellen):</strong> Bauweise unveraendert 3D-U-Net plus FP-Reduktion; oeffentlich SHIVA-CMB mit Gewichten (F1 0,74); neu sind synthetische Daten, SWI/T2*-Uebertragung und QSM gegen Mimics (<a href="findings/research-cmb-detection-2023-2026.html">research-cmb-detection-2023-2026</a>).</p>
 <p>Stand 2026-10-17. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <h2>Neu 2026-10-17 (Literatur 2023-2026)</h2>
 <p>Literatursichtung (PubMed + Europe PMC, 37 Treffer; arXiv im Proxy nicht erreichbar, HTTP 429). Der naechste
@@ -112,7 +113,50 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p
 <p><strong>Rule, new 2026-10-16:</strong> count microbleeds on the model grid and deliver a label map on the scan grid: on 5 mm slices two detections merged in the binary mask (37 -&gt; 36).</p>
 <p><strong>Finding (vorschlag), new 2026-10-16:</strong> start from the public VALDO weights and fine-tune with a small learning rate (1e-4): +0.11 F1 over short scratch training on one fold of another T2* cohort; unadapted the full-data weights over-detect (raise the threshold or fine-tune).</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(4)</span></h2><details class="entry" id="count-lesions-on-the-fine-grid-deliver-a-label-map"><summary><span class="type">Regel</span><span class="t"><a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">Count microbleeds on the model grid; deliver a label map on the input grid</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">On 5 mm slices two microbleeds merge in the binary mask (37 -&gt; 36); count on the model grid, deliver a label map (2026-10-16)</span></summary><div class="body"><p class="small muted">Herkunft: acceptance test of the inference of cmb_3d_unet_experiments, 2026-10-16 · <a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(5)</span></h2><details class="entry" id="example-scripts-reproduce-their-command-bit-for-bit"><summary><span class="type">Regel</span><span class="t"><a href="rules/example-scripts-reproduce-their-command-bit-for-bit.html">Example scripts that restate a pipeline must reproduce its command bit for bit</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-22</span><span class="i">Example scripts (train, predict, fine-tune) against the commands on the CPU with fixed seeds: weights equal with torch.equal, masks voxel for voxel; one comparison with a model that finds lesions; copies checked by source text (2026-10-22)</span></summary><div class="body"><p class="small muted">Herkunft: Python examples of cmb_3d_unet_experiments (branch python-examples, commit 53b21a0), own runs 2026-10-22 · <a href="rules/example-scripts-reproduce-their-command-bit-for-bit.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/example-scripts-reproduce-their-command-bit-for-bit.md">Markdown</a></p><h2>Aussage</h2>
+<p>Readable example scripts (train, predict, fine-tune written out step by step) are only trustworthy if a test shows that
+they compute what the package's own commands compute. With fixed seeds on the CPU that is an exact test, not a
+tolerance:</p>
+<ol>
+<li><strong>Weights equal with <code>torch.equal</code>, masks equal voxel for voxel.</strong> Measured 2026-10-22: <code>01_train_unet.py</code> against
+   <code>cmbx train --frst_from cmbx</code>, <code>03_fine_tune_unet.py</code> against <code>cmbx fine_tune --frst_from cmbx</code> (same weights, same
+   held-out cases, same threshold and minimum size), <code>02_predict_microbleeds.py</code> against <code>cmbx evaluate</code> (same masks on
+   the scan grid, same lesion counts).</li>
+<li><strong>Equality needs the same order of random draws:</strong> seed torch, then the numpy generator, then build the network,
+   then the optimizer over the same parameter list, then the patch draws in the same order. Predicting the held-out
+   cases draws nothing, so the script may evaluate at other epochs without changing the weights.</li>
+<li><strong>Two empty masks prove nothing.</strong> Keep one comparison with a model that finds lesions: the public VALDO model found
+   88 and 69 voxels on the two synthetic phantoms, and the test asserts a count above zero.</li>
+<li><strong>Copies stay copies:</strong> scripts meant to be read alone repeat a few functions; a test compares their source text
+   (<code>inspect.getsource</code>), so a fix in one cannot silently miss the other.</li>
+<li><strong>Numbered top-level scripts with a process pool need the <code>if __name__ == "__main__":</code> guard</strong> around the steps
+   (spawn and forkserver re-import the main module); functions stay above it, tests load the file with importlib.</li>
+</ol>
+<h2>Trägt</h2>
+<p>13 tests (about 90 s on 4 CPU threads, tiny network of width 8), full suite 322 green in a fresh environment.
+The same scripts gave the same numbers on a second run in a new environment (held-out F1 0.133 and 0.100 at epoch 1
+and 2, identical to the command).</p>
+<h2>Trägt nicht</h2>
+<p>Bit equality holds for one machine and one PyTorch build on the CPU; on a GPU (bfloat16 autocast) and across releases
+only closeness can be expected (PyTorch documentation). The from-zero check ran on the development workstation: a new
+local environment, and a delegated "remote" agent that in fact ran on the same machine (GPU hidden, warm pip cache).
+A truly fresh CPU-only machine is still open; such a check must first record host name and GPU, otherwise it does not
+count as a fresh machine.</p>
+<h2>Bruchindikator</h2>
+<p>A seed-for-seed rerun of script and command on the CPU that gives different weights, or a predict comparison whose
+masks are all empty.</p>
+<h2>Ablesung</h2>
+<p>PyTorch, "Reproducibility" notes (https://docs.pytorch.org/docs/2.14/notes/randomness.html, checked 2026-10-22):
+completely reproducible results are not guaranteed across releases, commits or platforms, nor between CPU and GPU;
+<code>torch.manual_seed</code> seeds the generator for all devices, and with other nondeterminism removed the same environment
+gives the same numbers. Python, <code>multiprocessing</code>, "Safe importing of main module"
+(https://docs.python.org/3/library/multiprocessing.html, checked 2026-10-22): with spawn or forkserver the main module
+must import without side effects; protect the entry point with <code>if __name__ == '__main__':</code>; since Python 3.14
+forkserver is the POSIX default. Code: https://github.com/mendeltem/cmb_3d_unet_experiments (examples/python,
+tests/test_python_examples.py). Own runs 2026-10-22 on synthetic phantoms only.</p>
+<h2>Verknüpft</h2>
+<p><a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a>,
+<a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">count-lesions-on-the-fine-grid-deliver-a-label-map</a></p></div></details><details class="entry" id="count-lesions-on-the-fine-grid-deliver-a-label-map"><summary><span class="type">Regel</span><span class="t"><a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">Count microbleeds on the model grid; deliver a label map on the input grid</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-16</span><span class="i">On 5 mm slices two microbleeds merge in the binary mask (37 -&gt; 36); count on the model grid, deliver a label map (2026-10-16)</span></summary><div class="body"><p class="small muted">Herkunft: acceptance test of the inference of cmb_3d_unet_experiments, 2026-10-16 · <a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.md">Markdown</a></p><h2>Aussage</h2>
 <p>A detector that works on a fine grid (0.5 x 0.5 x 1 mm) and writes its mask back onto the scan grid (e.g. 0.7 x 0.7 x
 5 mm slices) can merge two neighbouring microbleeds into one connected component of the binary mask: measured 37
 separate detections on the model grid, 36 components after resampling (nearest neighbour in world coordinates).
@@ -955,5 +999,5 @@ Neuroinform. 2023, doi:10.3389/fninf.2023.1204186, Code-Stand 958f1cb. Tier 1a (
 <li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
 <li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>
