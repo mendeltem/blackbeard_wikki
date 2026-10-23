@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-09</span><span>Herkunft</span><span>Alita, Ausgangswache (system/guard) des lokalen Agenten, Reparatur und Umbau 2026-10-09</span><span>Zuletzt geändert</span><span>2026-10-09 local_llm_operation: planner drop option, PVS research chain queued</span><span>Verweist auf</span><span><a href="../open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="local-research-swarm-first-run-2026-10-09.html">Lokaler Rechercheschwarm: erster Lauf vom einen Satz bis zum Bericht</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md">knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Recherche fuer einen Agenten ohne Netz: lokal zuerst, Cloud nur auf Zuruf, Waechter nur fuer eigene Daten</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-23</span><span>Herkunft</span><span>Alita, Ausgangswache (system/guard) des lokalen Agenten, Reparatur und Umbau 2026-10-09</span><span>Zuletzt geändert</span><span>2026-10-09 local_llm_operation: planner drop option, PVS research chain queued</span><span>Verweist auf</span><span><a href="../open_checks/decision-model-as-profile-orchestrator.html">Entscheidungsmodell als Weiche zwischen Modellprofilen: nur zwischen RESIDENTEN Modellen</a> <span class="muted small">(local_llm_operation)</span><br><a href="lean-hermes-toolsets.html">Schlanker Hermes: halber Prompt mit zwei Werkzeugen</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="local-research-swarm-first-run-2026-10-09.html">Lokaler Rechercheschwarm: erster Lauf vom einen Satz bis zum Bericht</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md">knowledge/local_llm_operation/findings/guarded-outbound-research-local-first.md</a></span></div><h2>Aussage</h2>
 <p>Ein lokaler Agent, der Patientendaten sieht, bekommt keinen Netzzugang; sein einziger Weg nach draussen ist ein
 Waechterdienst auf Loopback, der jede Frage prueft (Muster, dann lokales Modell, dann Protokoll). Drei Lehren aus
 dem Betrieb:</p>
@@ -88,6 +88,23 @@ der Kette die folgenden blockiert. Streichen ohne neues Planen: <code>plane --au
 danach pruefen, ob spaetere Auftraege noch auf die gestrichene Ausgabe verweisen (hier: Auftrag 5 wollte die
 CPU-Messung lesen, von Hand in plan.json korrigiert). Die PVS-Kette mit vier Auftraegen ist am 2026-10-09 10:40
 eingereiht, Clara arbeitet sie seriell ab.</p>
+<h2>Nachtrag 2026-10-23: twelve days without literature after the network switch</h2>
+<p>On 2026-10-13 the workstation moved to a LAN route that reaches the internet only through the hospital HTTP proxy. The
+proxy variables went into <code>~/.config/environment.d/</code> and the user manager, so every unit started <em>after</em> that day
+inherits them. The guard daemon had been running since 2026-10-12 and kept its old environment: every open-API lookup
+(PubMed E-utilities, Europe PMC, OpenAlex, Semantic Scholar, arXiv, all via <code>urllib</code>) failed with "Connection refused". Own guard log: last
+successful lookup 2026-10-11 18:20, then 129 failed lookups; the 04:00 morning research swarm reported
+"FAILED (no answers)", 0 of 8 questions, every day from 2026-10-21 on (before that the local model was busy).
+Fix 2026-10-23 17:17: <code>systemctl --user restart guard-daemon</code>, nothing else. The new process carries <code>https_proxy</code>
+and a <code>no_proxy</code> that keeps loopback and the hospital domain direct; a public test question came back in 40 s with
+PubMed/PMC sources. A scan of all running user services showed the other pre-switch services (chat GUI, agent loop,
+QC viewer, wiki server, embedding server) are loopback-only and need no proxy; the agent loop must not have one.
+Lesson: after a network or proxy change, compare the start time of every long-running service with the time of the
+change (<code>ps -o lstart= -p &lt;MainPID&gt;</code>, <code>/proc/&lt;pid&gt;/environ</code>); <code>environment.d</code> reaches only processes started later.
+Sources: systemd <code>environment.d(5)</code>, https://www.freedesktop.org/software/systemd/man/latest/environment.d.html
+(read at user-manager start, inherited by units it starts); Python <code>urllib.request.getproxies()</code>,
+https://docs.python.org/3/library/urllib.request.html#urllib.request.getproxies (reads the process environment);
+own guard log and service scan, 2026-10-23.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="../open_checks/decision-model-as-profile-orchestrator.html">decision-model-as-profile-orchestrator</a></li>
