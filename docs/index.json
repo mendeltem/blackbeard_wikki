@@ -2469,8 +2469,8 @@
 "a": "local_llm_operation",
 "y": "Prüfpunkt",
 "s": "offen",
-"d": "2026-10-06",
-"x": "Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen",
+"d": "2026-10-23",
+"x": "Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen; Nachtrag 23.10.: Nemotron 3.5 Bolt als einziger neuer 24-GB-Kandidat (Ampere ungenannt), DeepSeek-V4.1-Flash zu gross",
 "id": "local-stack-landscape-2026-10",
 "src": "knowledge/local_llm_operation/open_checks/local-stack-landscape-2026-10.md"
 },

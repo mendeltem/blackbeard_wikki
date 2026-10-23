@@ -3,9 +3,9 @@ id: local-stack-landscape-2026-10
 typ: pruefpunkt
 status: offen
 thema: knowledge/local_llm_operation
-stand: 2026-10-06
+stand: 2026-10-23
 herkunft: Claude-Code-Sitzung Victus, Webrecherche in drei Strängen, 2026-10-06
-verweist_auf: [moe-expert-offloading, prefix-cache-single-slot, dense-27b-vs-moe-on-8gb, laya-router-before-agent, lean-hermes-toolsets, minimal-harness-prompt-size]
+verweist_auf: [moe-expert-offloading, prefix-cache-single-slot, dense-27b-vs-moe-on-8gb, laya-router-before-agent, lean-hermes-toolsets, minimal-harness-prompt-size, flash-next-177b-moe-on-24gb-card]
 ---
 
 # Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt
@@ -67,6 +67,37 @@ Quellen [V]/[U] wie markiert, unter anderem:
 
 Vollständiger Stand mit allen Quellen: local_models `recherche/stand/2026-10-06.md`, täglich fortgeschrieben.
 
+## Addendum 2026-10-23: newest models against Alita (RTX A5000 24 GB, Ampere SM86, 62 GB RAM)
+Desk research on 2026-10-23, nothing measured on Alita yet. [V] = vendor or blog, checked on the model card.
+
+| Model (date) | Size | Fits Alita? | Note |
+|---|---|---|---|
+| NVIDIA Nemotron 3.5 Bolt 74B-A9B-24GB (HF 2026-10-15, OpenMDW-1.1) | 74B total, 9B active; experts IQ2_XXS (2.0625 bit), Mamba layers NVFP4, embedding/head Q8_0, quantization-aware distillation | open | Only new October model built for 24 GB. Hybrid Mamba-2/Transformer LatentMoE, text+image+video, up to 256K context, German listed. Vendor table against Qwen3.6-35B-A3B BF16: Terminal-Bench 2.1 50.98 vs 44.38, BrowseComp 66.75 vs 48.74, GPQA Diamond 86.43 vs 83.40, but AA-Omniscience accuracy 16.90 vs 19.47 and non-hallucination 61.27 vs 65.85 [V]. No comparison with Qwen3.8-27B. |
+| DeepSeek-V4.1-Flash-1017 (2026-10) | 763B (552B backbone + 196B Engram), FP8 with FP4 experts | no | Smallest GGUF UD-IQ1_S 233 GB, Unsloth recommends 128-145 GB RAM+VRAM, needs llama.cpp PR #30817. Alita has 86 GB RAM+VRAM. |
+| Qwen3.8-Flash-Next (2026-08) | 125B + 51B n-gram table, 6B active | yes, slow | Vendor: DeepSWE 58.7 vs 42.2 and SWE-bench Pro 62.5 vs 61.7 against Qwen3.8-27B [V]. Measured here 2026-10-07: 15-23 tok/s, RAM at the limit ([flash-next-177b-moe-on-24gb-card](../findings/flash-next-177b-moe-on-24gb-card.md)); files removed 2026-10-17. |
+| Qwen3.8-27B (2026-08, Apache 2.0) | 27.8B dense, Q4_K_M 16.4 GB | yes (in service) | October guides still name it the 24 GB pick [V]; no newer dense model of this class with independent numbers found. |
+
+**Catch for Bolt on Alita.** The NVIDIA GGUF card lists only Ada Lovelace and Blackwell; Ampere is not named.
+Its smallest llama-server recipe is "28GB" (32 GB card or 64 GB unified memory). The command uses `--spec-type draft-dflash`
+with a 998 MB draft model. Unsloth's IQ2_XXS is 22 GB plus the vision projector, with 24-32 GB RAM minimum.
+Whether llama.cpp runs the NVFP4 Mamba tensors on SM86, and how fast, is unverified.
+
+Out of reach (multi-GPU, only seen in news roundups, not checked): Meta Muse Spark Open 816B-A42B (2026-10-15),
+DeepSeek-V4-Pro, Reflection AI Beam 501B-A23B (announced 2026-10-05, weights pending).
+
+**Next measurement:** Bolt IQ2_XXS with a current llama.cpp build in its own folder, experts partly on the CPU
+(`--n-cpu-moe`) if 24 GB is not enough. Run the six check questions and the Clara task test against Qwen3.8-27B Q4
+(2026-10-17: 27B 95 %). Report tok/s at a 5k prompt.
+
+Sources (opened 2026-10-23):
+- https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB (model card: release 10/15/2026, quantization, benchmark table, languages)
+- https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF (GGUF files, supported architectures, 28GB/32GB recipes)
+- https://unsloth.ai/docs/models/nemotron-3.5-bolt (IQ2_XXS 22 GB, RAM guidance, "build latest llama.cpp")
+- https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017 (763B, FP8/FP4, MIT, vLLM/SGLang) and its config.json (384 experts, 6 per token)
+- https://unsloth.ai/docs/models/deepseek-v4.1-flash (GGUF 233-508 GB, 128-145 GB minimum, llama.cpp PR #30817)
+- https://huggingface.co/Qwen/Qwen3.8-Flash-Next (125B + 51B n-gram, 6B active, benchmarks against 27B)
+- https://dev.to/gpunz/how-much-vram-do-open-llms-really-need-real-gguf-sizes-for-35-models-october-2026-28n2 (GGUF sizes of 35 models, 2026-10-20)
+
 ## Verknüpft
 - [moe-expert-offloading](../mechanisms/moe-expert-offloading.md)
 - [prefix-cache-single-slot](../mechanisms/prefix-cache-single-slot.md)
@@ -74,3 +105,4 @@ Vollständiger Stand mit allen Quellen: local_models `recherche/stand/2026-10-06
 - [laya-router-before-agent](../findings/laya-router-before-agent.md)
 - [lean-hermes-toolsets](../findings/lean-hermes-toolsets.md)
 - [minimal-harness-prompt-size](minimal-harness-prompt-size.md)
+- [flash-next-177b-moe-on-24gb-card](../findings/flash-next-177b-moe-on-24gb-card.md)

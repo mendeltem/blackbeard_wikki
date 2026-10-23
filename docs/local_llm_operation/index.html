@@ -49,7 +49,8 @@ Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.<
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-21: der 927 MB grosse Vision-Projektor (mmproj-F16.gguf) <strong>passt</strong> zum ausgelieferten 27B (Basis <code>qwen35</code>, Projektor <code>qwen3vl_merger</code>) und sieht echte Bilder: eine Testinstanz mit <code>--mmproj</code> auf Port 8010 antwortete auf ein Bild mit <strong>HTTP 200</strong> und beschrieb ein synthetisches Testbild korrekt. Der Fehler war also <strong>Verdrahtung, nicht Faehigkeit</strong>. Unveraendert: der <strong>Produktionsdienst</strong> startet weiter ohne <code>--mmproj</code>, Port 8000 antwortet auf ein Bild noch mit HTTP 500. VRAM der Testkonfiguration gemessen: 16178 MiB bei 8k Kontext mit Projektor auf der CPU - die Kontextlaenge ist der OOM-Hebel, nicht der Projektor.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-23 (desk research, unmeasured): the only new October model built for a 24 GB card is <strong>NVIDIA Nemotron 3.5 Bolt 74B-A9B</strong> (HF 2026-10-15, 2-bit QAT experts, NVFP4 Mamba layers). Its vendor table beats Qwen3.6-35B-A3B on agent benchmarks but is worse on hallucination; it has no comparison with Qwen3.8-27B. On Alita it is open whether it runs, since the GGUF card names only Ada and Blackwell and the smallest recipe is 28 GB. <strong>DeepSeek-V4.1-Flash-1017</strong> does not fit: the smallest GGUF is 233 GB and 128 GB or more is recommended. Qwen3.8-27B stays the default until Bolt is measured. See <a href="open_checks/local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a>.</p>
+<p>2026-10-21: der 927 MB grosse Vision-Projektor (mmproj-F16.gguf) <strong>passt</strong> zum ausgelieferten 27B (Basis <code>qwen35</code>, Projektor <code>qwen3vl_merger</code>) und sieht echte Bilder: eine Testinstanz mit <code>--mmproj</code> auf Port 8010 antwortete auf ein Bild mit <strong>HTTP 200</strong> und beschrieb ein synthetisches Testbild korrekt. Der Fehler war also <strong>Verdrahtung, nicht Faehigkeit</strong>. Unveraendert: der <strong>Produktionsdienst</strong> startet weiter ohne <code>--mmproj</code>, Port 8000 antwortet auf ein Bild noch mit HTTP 500. VRAM der Testkonfiguration gemessen: 16178 MiB bei 8k Kontext mit Projektor auf der CPU - die Kontextlaenge ist der OOM-Hebel, nicht der Projektor.</p>
 <p><strong>Regel, neu 2026-10-21 (eigene Messung am Dienst):</strong> Der lokale Modellserver muss nicht abgeschaltet werden, um die Karte freizugeben. <code>llama-server.service</code> ist <code>enabled</code> mit <code>Linger=yes</code> und hielt das 27B in Q4 mit <code>--ctx-size 81920</code> dauerhaft bei 20,4 von 24,6 GiB. <code>--sleep-idle-seconds</code> in <code>start.sh</code> entlaedt das Modell nach Leerlauf und laedt es bei der naechsten Anfrage nach; die Datenschutz-Architektur bleibt, die Belegung geht. Nutzerentscheidung: die meisten Aufgaben ans Remote-Profil, lokal nur fuer Patientendaten, danach wieder aus (<a href="rules/local-model-server-runs-only-when-needed.html">local-model-server-runs-only-when-needed</a>).</p>
 <p>Am echten Dienst gemessen: 21.770 MiB in Betrieb, <strong>1.618 MiB</strong> nach 300 s Leerlauf, Aufwachen in 11,4 s. Kein Sieg, ein Tausch: 11 s Kaltstart gegen 20 GB, die sonst dauerhaft weg sind.</p>
 <p>Die erste Fassung der Regel behauptete, <code>/props</code> und <code>/health</code> setzten den Idle-Timer zurueck. <strong>Das war falsch</strong> und steht berichtigt in der Regel: beide Routen laufen mit <code>bypass_sleep = true</code> im Quelltext und werden gerade <em>waehrend</em> des Schlafs bedient. Was den Schlaf wirklich verhindert, ist eine echte rechnende Anfrage — auch ein Aufwachtest "nur zum Pruefen" laedt das Modell wieder und nimmt der naechsten GPU-Arbeit die 20 GB. Augenscheinlich kommt der Schlaf spaeter als eingestellt (300 s eingestellt, ~9 min beobachtet), weil die Queue den Idle-Takt verschiebt statt zurueckzusetzen. Deshalb GPU-Arbeit nicht auf die Uhr starten, sondern an eine <code>nvidia-smi</code>-Schranke binden.</p>
@@ -2351,7 +2352,121 @@ Datei. Zweiter Versuch ueber Offsets: 14,12 GiB, Summe stimmt mit der Datei.</p>
 <h2>Verknuepft</h2>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
-</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(7)</span></h2><details class="entry" id="system-one-decision-layer-for-agent-harnesses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a></span><span class="badge info">offen</span><span class="muted small">2026-10-20</span><span class="i">System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first</span></summary><div class="body"><p class="small muted">Herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08 · <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="open_checks">Prüfpunkt <span class="muted small">(7)</span></h2><details class="entry" id="local-stack-landscape-2026-10"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a></span><span class="badge info">offen</span><span class="muted small">2026-10-23</span><span class="i">Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen; Nachtrag 23.10.: Nemotron 3.5 Bolt als einziger neuer 24-GB-Kandidat (Ampere ungenannt), DeepSeek-V4.1-Flash zu gross</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Victus, Webrecherche in drei Strängen, 2026-10-06 · <a href="open_checks/local-stack-landscape-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/local-stack-landscape-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+<p>Webrecherche vom 2026-10-06 zu Modellen, Methoden und Entscheidungsmodellen für
+eine Consumer-GPU. Fast alle Zahlen sind Herstellerangaben oder Blogs [V];
+unabhängig [U] sind nur Artificial Analysis, localbench, Kaitchup und einzelne
+Community-Messungen. Daraus folgen Messungen auf Victus, keine Setzungen.</p>
+<p><strong>Modelle.</strong>
+- 8 GB: Qwen3.6-35B-A3B mit Experten auf der CPU bleibt die Wahl; nichts schlägt es nachweislich.
+  Schnell und ganz auf der GPU: Qwen3.5-9B oder MiMo-V2.6-Distill-Qwen-9B [V].
+  Ternary Bonsai 2 27B (Qwen3.8-27B ternär, 5,9 GB, 17.09.2026) ist unabhängig ungeprüft und braucht einen Fork.
+- 24 GB: Qwen3.8-27B (14.08.2026, Apache 2.0) laut Artificial Analysis stärkstes kleines Open-Modell [U].
+  Alternativen Laguna XS 2.1 (33B-A3B, braucht llama.cpp-PR #25165), Gemma 4 26B-A4B/31B.
+  Deutsch: Soofi S (31,6B-A3,2B, Lizenz unklar).</p>
+<p><strong>Methoden.</strong>
+- MTP-Speculative-Decoding in llama.cpp seit 16.05.2026 (<code>--spec-type draft-mtp --spec-draft-n-max 2</code>), +78 % auf Qwen3.6-27B [U, Blog].
+- <code>--n-cpu-moe</code>-Sweep: auf 8 GB 32–41 tok/s für Qwen3.6-35B-A3B, bestes N 25, nicht monoton [U, Community].
+  Victus misst bisher 19,4 (Windows) und 29,5 t/s (Ubuntu), siehe <a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a>.
+- Prefix-Cache über <code>--cache-ram</code>/<code>--cache-reuse</code> nur bei byte-stabilem System-Prompt und Tool-Liste.
+- KV-Cache q8_0 bei Qwen3.6 fast verlustfrei (KLD &lt; 0,04), bei Gemma 4 nicht (0,108) [U, localbench 24.04.2026].
+- OpenCode ohne ungenutzte Tools: 7 516 auf 5 335 Token im ersten Turn [U, Einzelmessung].</p>
+<p><strong>Entscheidungsmodelle.</strong>
+- Routing: Arch-Router-1.5B und Embedding+kNN als Gegner für Laya. RouterArena und LLMRouterBench (2026) finden einfache kNN-Router oft gleichauf [U].
+- Wächter für Shell-Befehle: Regelparser mit Allowlist, Modell nur für Grauzonen (Granite Guardian 4.1 8B, eigene Kriterien, Apache 2.0).
+  Inhalts-Guards wie Qwen3Guard oder Llama Guard decken Shell-Gefahr nicht ab.
+- Antwortprüfung: Skywork-Reward-V2 (0.6B–8B), LettuceDetect (ModernBERT, CPU).</p>
+<h2>Zu prüfen</h2>
+<ol>
+<li><code>--n-cpu-moe</code> 15–40 mit <code>llama-bench</code>, pp512/tg128, <code>-ub 512</code> gegen <code>-ub 4096</code>.</li>
+<li>MTP an/aus, <code>--spec-draft-n-max</code> 1/2/3, Akzeptanz bei Code und Prosa.</li>
+<li>KV f16/q8/q4 mit <code>llama-perplexity --kl-divergence</code> auf eigenen Agent-Logs.</li>
+<li>Time-to-first-token ab Turn 2 mit/ohne <code>--cache-ram</code>, volles gegen reduziertes Tool-Set.</li>
+<li>Laya gegen Arch-Router gegen Embedding+kNN auf den 60 Routing-Fällen in local_models <code>tools/laya/faelle/route.jsonl</code>.</li>
+<li>50 gefährliche und 50 harmlose Shell-Befehle: Regelparser gegen Granite Guardian 4.1.</li>
+</ol>
+<h2>Trägt nicht</h2>
+<p>Dass eines der genannten Modelle auf Victus besser ist. Keine der Zahlen ist hier gemessen;
+mehrere Ranking-Seiten widersprachen den Modellkarten und wurden verworfen.</p>
+<h2>Bruchindikator</h2>
+<p>Je Punkt unter "Zu prüfen" eine eigene Messung auf Victus; Ergebnis als Befund, dieser Prüfpunkt wird dann geschlossen oder verkleinert.</p>
+<h2>Ablesung</h2>
+<p>Quellen [V]/[U] wie markiert, unter anderem:
+- https://github.com/ggml-org/llama.cpp/pull/23269
+- https://huggingface.co/blog/Doctor-Shotgun/llamacpp-moe-offload-guide
+- https://localbench.substack.com/p/kv-cache-quantization-benchmark
+- https://kaitchup.substack.com/p/serving-exllamav3-with-tabbyapi-accuracy
+- https://artificialanalysis.ai/models/open-source/small
+- https://jacar.es/en/opencode-with-local-models/
+- https://arxiv.org/abs/2506.16655 (Arch-Router)
+- https://arxiv.org/abs/2601.07206 (LLMRouterBench)
+- https://huggingface.co/ibm-granite/granite-guardian-4.1-8b</p>
+<p>Vollständiger Stand mit allen Quellen: local_models <code>recherche/stand/2026-10-06.md</code>, täglich fortgeschrieben.</p>
+<h2>Addendum 2026-10-23: newest models against Alita (RTX A5000 24 GB, Ampere SM86, 62 GB RAM)</h2>
+<p>Desk research on 2026-10-23, nothing measured on Alita yet. [V] = vendor or blog, checked on the model card.</p>
+<table>
+<thead>
+<tr>
+<th>Model (date)</th>
+<th>Size</th>
+<th>Fits Alita?</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA Nemotron 3.5 Bolt 74B-A9B-24GB (HF 2026-10-15, OpenMDW-1.1)</td>
+<td>74B total, 9B active; experts IQ2_XXS (2.0625 bit), Mamba layers NVFP4, embedding/head Q8_0, quantization-aware distillation</td>
+<td>open</td>
+<td>Only new October model built for 24 GB. Hybrid Mamba-2/Transformer LatentMoE, text+image+video, up to 256K context, German listed. Vendor table against Qwen3.6-35B-A3B BF16: Terminal-Bench 2.1 50.98 vs 44.38, BrowseComp 66.75 vs 48.74, GPQA Diamond 86.43 vs 83.40, but AA-Omniscience accuracy 16.90 vs 19.47 and non-hallucination 61.27 vs 65.85 [V]. No comparison with Qwen3.8-27B.</td>
+</tr>
+<tr>
+<td>DeepSeek-V4.1-Flash-1017 (2026-10)</td>
+<td>763B (552B backbone + 196B Engram), FP8 with FP4 experts</td>
+<td>no</td>
+<td>Smallest GGUF UD-IQ1_S 233 GB, Unsloth recommends 128-145 GB RAM+VRAM, needs llama.cpp PR #30817. Alita has 86 GB RAM+VRAM.</td>
+</tr>
+<tr>
+<td>Qwen3.8-Flash-Next (2026-08)</td>
+<td>125B + 51B n-gram table, 6B active</td>
+<td>yes, slow</td>
+<td>Vendor: DeepSWE 58.7 vs 42.2 and SWE-bench Pro 62.5 vs 61.7 against Qwen3.8-27B [V]. Measured here 2026-10-07: 15-23 tok/s, RAM at the limit (<a href="findings/flash-next-177b-moe-on-24gb-card.html">flash-next-177b-moe-on-24gb-card</a>); files removed 2026-10-17.</td>
+</tr>
+<tr>
+<td>Qwen3.8-27B (2026-08, Apache 2.0)</td>
+<td>27.8B dense, Q4_K_M 16.4 GB</td>
+<td>yes (in service)</td>
+<td>October guides still name it the 24 GB pick [V]; no newer dense model of this class with independent numbers found.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Catch for Bolt on Alita.</strong> The NVIDIA GGUF card lists only Ada Lovelace and Blackwell; Ampere is not named.
+Its smallest llama-server recipe is "28GB" (32 GB card or 64 GB unified memory). The command uses <code>--spec-type draft-dflash</code>
+with a 998 MB draft model. Unsloth's IQ2_XXS is 22 GB plus the vision projector, with 24-32 GB RAM minimum.
+Whether llama.cpp runs the NVFP4 Mamba tensors on SM86, and how fast, is unverified.</p>
+<p>Out of reach (multi-GPU, only seen in news roundups, not checked): Meta Muse Spark Open 816B-A42B (2026-10-15),
+DeepSeek-V4-Pro, Reflection AI Beam 501B-A23B (announced 2026-10-05, weights pending).</p>
+<p><strong>Next measurement:</strong> Bolt IQ2_XXS with a current llama.cpp build in its own folder, experts partly on the CPU
+(<code>--n-cpu-moe</code>) if 24 GB is not enough. Run the six check questions and the Clara task test against Qwen3.8-27B Q4
+(2026-10-17: 27B 95 %). Report tok/s at a 5k prompt.</p>
+<p>Sources (opened 2026-10-23):
+- https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB (model card: release 10/15/2026, quantization, benchmark table, languages)
+- https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF (GGUF files, supported architectures, 28GB/32GB recipes)
+- https://unsloth.ai/docs/models/nemotron-3.5-bolt (IQ2_XXS 22 GB, RAM guidance, "build latest llama.cpp")
+- https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017 (763B, FP8/FP4, MIT, vLLM/SGLang) and its config.json (384 experts, 6 per token)
+- https://unsloth.ai/docs/models/deepseek-v4.1-flash (GGUF 233-508 GB, 128-145 GB minimum, llama.cpp PR #30817)
+- https://huggingface.co/Qwen/Qwen3.8-Flash-Next (125B + 51B n-gram, 6B active, benchmarks against 27B)
+- https://dev.to/gpunz/how-much-vram-do-open-llms-really-need-real-gguf-sizes-for-35-models-october-2026-28n2 (GGUF sizes of 35 models, 2026-10-20)</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
+<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
+<li><a href="open_checks/dense-27b-vs-moe-on-8gb.html">dense-27b-vs-moe-on-8gb</a></li>
+<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
+<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
+<li><a href="open_checks/minimal-harness-prompt-size.html">minimal-harness-prompt-size</a></li>
+<li><a href="findings/flash-next-177b-moe-on-24gb-card.html">flash-next-177b-moe-on-24gb-card</a></li>
+</ul></div></details><details class="entry" id="system-one-decision-layer-for-agent-harnesses"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">A &quot;System One&quot; decision layer in the agent harness: four decisions, local model only, measure on own cases first</a></span><span class="badge info">offen</span><span class="muted small">2026-10-20</span><span class="i">System One models (Jev, H2O-Lightning-4B, decider-4b, Kev) for model choice, prepared context, tool approval, evaluation in Hermes; local only, measure coverage at 5 % error vs kNN, shadow week first</span></summary><div class="body"><p class="small muted">Herkunft: Alita, web research 2026-10-19 (sources opened and checked one by one, see Ablesung); own routing measurement 2026-10-08 · <a href="open_checks/system-one-decision-layer-for-agent-harnesses.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/system-one-decision-layer-for-agent-harnesses.md">Markdown</a></p><h2>Aussage</h2>
 <p>"System One" models (TypeSafe's Jev and its open clones) answer typed questions (Choice, Score, yes/no) with a
 probability in 30-500 ms instead of generating text. Inside an agent harness they fit four decision points:
 (1) which model handles the turn, (2) which prepared context (profile, skill set, saved prefix slot) it starts from,
@@ -2746,64 +2861,6 @@ gegen Embedding+kNN und Laya.</p>
 <li><a href="findings/flash-next-177b-moe-on-24gb-card.html">flash-next-177b-moe-on-24gb-card</a></li>
 <li><a href="open_checks/local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a></li>
 <li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
-</ul></div></details><details class="entry" id="local-stack-landscape-2026-10"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a></span><span class="badge info">offen</span><span class="muted small">2026-10-06</span><span class="i">Webrecherche Okt 2026: Modelle fuer 8/24 GB, MTP, `--n-cpu-moe`-Sweep, Router und Waechter, sechs Messungen</span></summary><div class="body"><p class="small muted">Herkunft: Claude-Code-Sitzung Victus, Webrecherche in drei Strängen, 2026-10-06 · <a href="open_checks/local-stack-landscape-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/local-stack-landscape-2026-10.md">Markdown</a></p><h2>Aussage</h2>
-<p>Webrecherche vom 2026-10-06 zu Modellen, Methoden und Entscheidungsmodellen für
-eine Consumer-GPU. Fast alle Zahlen sind Herstellerangaben oder Blogs [V];
-unabhängig [U] sind nur Artificial Analysis, localbench, Kaitchup und einzelne
-Community-Messungen. Daraus folgen Messungen auf Victus, keine Setzungen.</p>
-<p><strong>Modelle.</strong>
-- 8 GB: Qwen3.6-35B-A3B mit Experten auf der CPU bleibt die Wahl; nichts schlägt es nachweislich.
-  Schnell und ganz auf der GPU: Qwen3.5-9B oder MiMo-V2.6-Distill-Qwen-9B [V].
-  Ternary Bonsai 2 27B (Qwen3.8-27B ternär, 5,9 GB, 17.09.2026) ist unabhängig ungeprüft und braucht einen Fork.
-- 24 GB: Qwen3.8-27B (14.08.2026, Apache 2.0) laut Artificial Analysis stärkstes kleines Open-Modell [U].
-  Alternativen Laguna XS 2.1 (33B-A3B, braucht llama.cpp-PR #25165), Gemma 4 26B-A4B/31B.
-  Deutsch: Soofi S (31,6B-A3,2B, Lizenz unklar).</p>
-<p><strong>Methoden.</strong>
-- MTP-Speculative-Decoding in llama.cpp seit 16.05.2026 (<code>--spec-type draft-mtp --spec-draft-n-max 2</code>), +78 % auf Qwen3.6-27B [U, Blog].
-- <code>--n-cpu-moe</code>-Sweep: auf 8 GB 32–41 tok/s für Qwen3.6-35B-A3B, bestes N 25, nicht monoton [U, Community].
-  Victus misst bisher 19,4 (Windows) und 29,5 t/s (Ubuntu), siehe <a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a>.
-- Prefix-Cache über <code>--cache-ram</code>/<code>--cache-reuse</code> nur bei byte-stabilem System-Prompt und Tool-Liste.
-- KV-Cache q8_0 bei Qwen3.6 fast verlustfrei (KLD &lt; 0,04), bei Gemma 4 nicht (0,108) [U, localbench 24.04.2026].
-- OpenCode ohne ungenutzte Tools: 7 516 auf 5 335 Token im ersten Turn [U, Einzelmessung].</p>
-<p><strong>Entscheidungsmodelle.</strong>
-- Routing: Arch-Router-1.5B und Embedding+kNN als Gegner für Laya. RouterArena und LLMRouterBench (2026) finden einfache kNN-Router oft gleichauf [U].
-- Wächter für Shell-Befehle: Regelparser mit Allowlist, Modell nur für Grauzonen (Granite Guardian 4.1 8B, eigene Kriterien, Apache 2.0).
-  Inhalts-Guards wie Qwen3Guard oder Llama Guard decken Shell-Gefahr nicht ab.
-- Antwortprüfung: Skywork-Reward-V2 (0.6B–8B), LettuceDetect (ModernBERT, CPU).</p>
-<h2>Zu prüfen</h2>
-<ol>
-<li><code>--n-cpu-moe</code> 15–40 mit <code>llama-bench</code>, pp512/tg128, <code>-ub 512</code> gegen <code>-ub 4096</code>.</li>
-<li>MTP an/aus, <code>--spec-draft-n-max</code> 1/2/3, Akzeptanz bei Code und Prosa.</li>
-<li>KV f16/q8/q4 mit <code>llama-perplexity --kl-divergence</code> auf eigenen Agent-Logs.</li>
-<li>Time-to-first-token ab Turn 2 mit/ohne <code>--cache-ram</code>, volles gegen reduziertes Tool-Set.</li>
-<li>Laya gegen Arch-Router gegen Embedding+kNN auf den 60 Routing-Fällen in local_models <code>tools/laya/faelle/route.jsonl</code>.</li>
-<li>50 gefährliche und 50 harmlose Shell-Befehle: Regelparser gegen Granite Guardian 4.1.</li>
-</ol>
-<h2>Trägt nicht</h2>
-<p>Dass eines der genannten Modelle auf Victus besser ist. Keine der Zahlen ist hier gemessen;
-mehrere Ranking-Seiten widersprachen den Modellkarten und wurden verworfen.</p>
-<h2>Bruchindikator</h2>
-<p>Je Punkt unter "Zu prüfen" eine eigene Messung auf Victus; Ergebnis als Befund, dieser Prüfpunkt wird dann geschlossen oder verkleinert.</p>
-<h2>Ablesung</h2>
-<p>Quellen [V]/[U] wie markiert, unter anderem:
-- https://github.com/ggml-org/llama.cpp/pull/23269
-- https://huggingface.co/blog/Doctor-Shotgun/llamacpp-moe-offload-guide
-- https://localbench.substack.com/p/kv-cache-quantization-benchmark
-- https://kaitchup.substack.com/p/serving-exllamav3-with-tabbyapi-accuracy
-- https://artificialanalysis.ai/models/open-source/small
-- https://jacar.es/en/opencode-with-local-models/
-- https://arxiv.org/abs/2506.16655 (Arch-Router)
-- https://arxiv.org/abs/2601.07206 (LLMRouterBench)
-- https://huggingface.co/ibm-granite/granite-guardian-4.1-8b</p>
-<p>Vollständiger Stand mit allen Quellen: local_models <code>recherche/stand/2026-10-06.md</code>, täglich fortgeschrieben.</p>
-<h2>Verknüpft</h2>
-<ul>
-<li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
-<li><a href="mechanisms/prefix-cache-single-slot.html">prefix-cache-single-slot</a></li>
-<li><a href="open_checks/dense-27b-vs-moe-on-8gb.html">dense-27b-vs-moe-on-8gb</a></li>
-<li><a href="findings/laya-router-before-agent.html">laya-router-before-agent</a></li>
-<li><a href="findings/lean-hermes-toolsets.html">lean-hermes-toolsets</a></li>
-<li><a href="open_checks/minimal-harness-prompt-size.html">minimal-harness-prompt-size</a></li>
 </ul></div></details><details class="entry" id="dense-27b-vs-moe-on-8gb"><summary><span class="type">Prüfpunkt</span><span class="t"><a href="open_checks/dense-27b-vs-moe-on-8gb.html">Weniger Denken bei einem dichten 27B: schneller als das MoE auf 8 GB?</a></span><span class="badge info">offen</span><span class="muted small">2026-10-04</span><span class="i">Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s</span></summary><div class="body"><p class="small muted">Herkunft: Video Sam Witteveen &quot;Which is The Best Qwen3.8-27B?&quot;, 2026-10-04 · <a href="open_checks/dense-27b-vs-moe-on-8gb.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/open_checks/dense-27b-vs-moe-on-8gb.md">Markdown</a></p><h2>Aussage</h2>
 <p>Drei Fine-Tunes von Qwen3.8-27B sollen bei fast gleicher Genauigkeit weniger
 Denk-Token erzeugen. Die Zahlen stammen von den Herstellern, berichtet im Video:</p>
