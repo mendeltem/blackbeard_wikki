@@ -43,13 +43,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › local_llm_operation</div><h1>local_llm_operation</h1><p>Betrieb lokaler Sprachmodelle: was auf die Karte passt, wie man misst, woran kleine Modelle scheitern</p><p class="muted small">lokale LLMs, llama.cpp, Ollama, Hermes Agent, VRAM, Quantisierung, Qwen, Victus, Kontextlaenge, Ubuntu, OpenCode, Laya, Jev, Router, Harness, HPC, SLURM, shard, Port 22, Tunnel</p>
-<div class="stripe"><i class="warn" style="width:48.0%" title="vorschlag: 24"></i><i class="ok" style="width:36.0%" title="getragen: 18"></i><i class="info" style="width:14.0%" title="offen: 7"></i><i class="" style="width:2.0%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">24 vorschlag</span> <span class="ok">18 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
+<div class="stripe"><i class="warn" style="width:49.0%" title="vorschlag: 25"></i><i class="ok" style="width:35.3%" title="getragen: 18"></i><i class="info" style="width:13.7%" title="offen: 7"></i><i class="" style="width:2.0%" title="gemessen: 1"></i></div><div class="counts"><span class="warn">25 vorschlag</span> <span class="ok">18 getragen</span> <span class="info">7 offen</span> <span class="">1 gemessen</span></div><div class="small"><p>Betrieb eines lokalen Sprachmodells auf eigener Hardware: was auf eine zu kleine
 Karte passt, wie man es misst, und woran kleine Modelle zuverlaessig scheitern.</p>
 <p>Alle Zahlen stammen von <strong>Victus</strong> (RTX 4070 Laptop 8 GB, Ryzen 7 7840HS,
 31,3 GB RAM, Qwen3.6-35B-A3B). Bis 2026-08-29 unter Windows 10 mit UD-IQ4_XS und
 llama.cpp b10603; ab 2026-10-03 unter Ubuntu 26.04 mit llama.cpp b11379 und Ollama.
 Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-23 (desk research, unmeasured): the only new October model built for a 24 GB card is <strong>NVIDIA Nemotron 3.5 Bolt 74B-A9B</strong> (HF 2026-10-15, 2-bit QAT experts, NVFP4 Mamba layers). Its vendor table beats Qwen3.6-35B-A3B on agent benchmarks but is worse on hallucination; it has no comparison with Qwen3.8-27B. On Alita it is open whether it runs, since the GGUF card names only Ada and Blackwell and the smallest recipe is 28 GB. <strong>DeepSeek-V4.1-Flash-1017</strong> does not fit: the smallest GGUF is 233 GB and 128 GB or more is recommended. Qwen3.8-27B stays the default until Bolt is measured. See <a href="open_checks/local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a>.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-23, measured: <strong>Nemotron 3.5 Bolt 74B-A9B</strong> (NVIDIA's 24GB GGUF) runs fully on the Ampere A5000 with llama.cpp f64a498 even though the card names only Ada and Blackwell. It generates 66-69 tok/s against ~30 for Qwen3.8-27B and needs 22.2 GB at 16k context. On the 13-task bench at the old 1 500-token budget it scores 88.5 % against 95 % for the 27B. All misses were empty answers because it was still reasoning; at 4 096 tokens it scores 96.2 %, but the 27B was not rerun at that budget. It explained "SWI" without the MRI meaning. See <a href="findings/nemotron-bolt-74b-on-ampere-24gb.html">nemotron-bolt-74b-on-ampere-24gb</a>.</p>
+<p>2026-10-23 (desk research, unmeasured): the only new October model built for a 24 GB card is <strong>NVIDIA Nemotron 3.5 Bolt 74B-A9B</strong> (HF 2026-10-15, 2-bit QAT experts, NVFP4 Mamba layers). Its vendor table beats Qwen3.6-35B-A3B on agent benchmarks but is worse on hallucination; it has no comparison with Qwen3.8-27B. On Alita it is open whether it runs, since the GGUF card names only Ada and Blackwell and the smallest recipe is 28 GB. <strong>DeepSeek-V4.1-Flash-1017</strong> does not fit: the smallest GGUF is 233 GB and 128 GB or more is recommended. Qwen3.8-27B stays the default until Bolt is measured. See <a href="open_checks/local-stack-landscape-2026-10.html">local-stack-landscape-2026-10</a>.</p>
 <p>2026-10-21: der 927 MB grosse Vision-Projektor (mmproj-F16.gguf) <strong>passt</strong> zum ausgelieferten 27B (Basis <code>qwen35</code>, Projektor <code>qwen3vl_merger</code>) und sieht echte Bilder: eine Testinstanz mit <code>--mmproj</code> auf Port 8010 antwortete auf ein Bild mit <strong>HTTP 200</strong> und beschrieb ein synthetisches Testbild korrekt. Der Fehler war also <strong>Verdrahtung, nicht Faehigkeit</strong>. Unveraendert: der <strong>Produktionsdienst</strong> startet weiter ohne <code>--mmproj</code>, Port 8000 antwortet auf ein Bild noch mit HTTP 500. VRAM der Testkonfiguration gemessen: 16178 MiB bei 8k Kontext mit Projektor auf der CPU - die Kontextlaenge ist der OOM-Hebel, nicht der Projektor.</p>
 <p><strong>Regel, neu 2026-10-21 (eigene Messung am Dienst):</strong> Der lokale Modellserver muss nicht abgeschaltet werden, um die Karte freizugeben. <code>llama-server.service</code> ist <code>enabled</code> mit <code>Linger=yes</code> und hielt das 27B in Q4 mit <code>--ctx-size 81920</code> dauerhaft bei 20,4 von 24,6 GiB. <code>--sleep-idle-seconds</code> in <code>start.sh</code> entlaedt das Modell nach Leerlauf und laedt es bei der naechsten Anfrage nach; die Datenschutz-Architektur bleibt, die Belegung geht. Nutzerentscheidung: die meisten Aufgaben ans Remote-Profil, lokal nur fuer Patientendaten, danach wieder aus (<a href="rules/local-model-server-runs-only-when-needed.html">local-model-server-runs-only-when-needed</a>).</p>
 <p>Am echten Dienst gemessen: 21.770 MiB in Betrieb, <strong>1.618 MiB</strong> nach 300 s Leerlauf, Aufwachen in 11,4 s. Kein Sieg, ein Tausch: 11 s Kaltstart gegen 20 GB, die sonst dauerhaft weg sind.</p>
@@ -71,7 +72,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.</p></div>
 <p>Stand 2026-10-06. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Lokale Modelle auf Victus (RTX 4070 8 GB, Qwen3.6-35B-A3B). Zahlen nicht übertragbar ohne Nachmessen.</p>
 <p><strong>Getragen:</strong> MoE-Offloading <code>-ngl 99 -ncmoe N</code>, 19,4 t/s unter Windows 10. Needle-Treffer bis 125k Token, <code>num_ctx 131072</code> passt in den RAM. Ollama kuerzt zu lange Prompts stumm auf 32k, das Modell antwortet dann falsch und sicher. <code>-np 1</code>, Historie nie umschreiben. Zählen braucht Thinking (Faktor 20). Regellisten im System-Prompt lassen kleine Modelle ablehnen. Prefill und Decode getrennt messen. Größe aus Tensortabelle, nicht aus Metadaten.</p>
-<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="40.5" width="319.0" height="9.5" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 42</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 42)</figcaption></figure>
+<p><strong>Vorschlag:</strong> Ubuntu statt Windows 10 mit gleichen Flags 29,5 t/s Decode und 500 t/s Prefill (Version nicht gleich). Hermes Agent mit lokalem Qwen loest abgegrenzte Aufgaben, Schwaechen bei Format und Rueckfragen. Hermes gibt Programmieraufgaben lokal an OpenCode ab (160 s), kein zweiter Slot. Vor jeder Messung fremde GPU-Prozesse pruefen (Prefill 30 statt 397 t/s). <code>opencode run</code> haengt ohne `</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="40.7" width="319.0" height="9.3" rx="1"><title>2026-08: 8</title></rect><rect x="320.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 43</title></rect><text x="0" y="65">2026-08</text><text x="640" y="65" text-anchor="end">2026-10</text></svg><figcaption>Einträge je Monat (Stand) (max 43)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(8)</span></h2><details class="entry" id="local-model-server-runs-only-when-needed"><summary><span class="type">Regel</span><span class="t"><a href="rules/local-model-server-runs-only-when-needed.html">Der lokale Modellserver laeuft nur, wenn er gebraucht wird</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-21</span></summary><div class="body"><p class="small muted">Herkunft: Cle-Arbeit, Gespraech mit Nutzer, 21.10.2026 · <a href="rules/local-model-server-runs-only-when-needed.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/rules/local-model-server-runs-only-when-needed.md">Markdown</a></p><h2>Aussage</h2>
 <p>Der Dienst <code>llama-server.service</code> ist <code>enabled</code> <strong>und</strong> das Konto hat
@@ -549,7 +550,80 @@ verlaengert. Dann greift der Cache nicht.</p>
 <ul>
 <li><a href="mechanisms/moe-expert-offloading.html">moe-expert-offloading</a></li>
 <li><a href="rules/separate-prefill-from-decode.html">separate-prefill-from-decode</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(28)</span></h2><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(29)</span></h2><details class="entry" id="nemotron-bolt-74b-on-ampere-24gb"><summary><span class="type">Befund</span><span class="t"><a href="findings/nemotron-bolt-74b-on-ampere-24gb.html">Nemotron 3.5 Bolt 74B-A9B (24GB GGUF) runs fully on an Ampere 24 GB card: 66-69 tok/s, 88.5 % on the 13-task bench at the old token budget</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-23</span><span class="i">Nemotron 3.5 Bolt 24GB-GGUF laeuft ganz auf der A5000 (Ampere): 66-69 tok/s, 22,2 GB bei 16k, 88,5 % im 13-Aufgaben-Test bei 1 500 Token (27B 95 %), 96,2 % bei 4 096</span></summary><div class="body"><p class="small muted">Herkunft: Alita (RTX A5000 24 GB, Ampere SM86, 62 GB RAM, driver 550 / CUDA 12.4), llama.cpp f64a498 built 2026-10-23 for sm_86, three runs 2026-10-23 09:06-09:16 · <a href="findings/nemotron-bolt-74b-on-ampere-24gb.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.md">Markdown</a></p><h2>Aussage</h2>
+<p>NVIDIA's own GGUF (<code>NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf</code>, 22 018 326 528 bytes, SHA-256 matches the Hub) loads
+with a current llama.cpp (master f64a498, 2026-10-23, CUDA build for sm_86) completely on an RTX A5000. The GGUF card names
+only Ada Lovelace and Blackwell, but the NVFP4 Mamba layers run on Ampere. Settings: <code>-ngl 99 --ctx-size 16384
+--parallel 1 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --jinja</code>, no draft model, no vision projector.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Load time</td>
+<td>20-25 s</td>
+</tr>
+<tr>
+<td>VRAM in use (16k context, one slot)</td>
+<td>22.2 GB of 24.6 GB; 1.9 GB left</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>66-69 tok/s (Qwen3.8-27B Q4 on the same card: ~30 tok/s)</td>
+</tr>
+<tr>
+<td>Prompt, 6 462 tokens</td>
+<td>1 222-1 320 tok/s</td>
+</tr>
+<tr>
+<td>System message in the middle of the conversation</td>
+<td>handled (answered "11")</td>
+</tr>
+<tr>
+<td>Tool call (one function, OpenAI format)</td>
+<td>correct call <code>get_weather({"city":"Berlin"})</code></td>
+</tr>
+<tr>
+<td>13-task bench x 2, max 1 500 tokens (same as 2026-10-17)</td>
+<td><strong>88.5 %</strong> (Qwen3.8-27B Q4 95 %, Ternary-Bonsai-2-27B 92 %)</td>
+</tr>
+<tr>
+<td>Same bench, max 4 096 tokens</td>
+<td>96.2 %</td>
+</tr>
+</tbody>
+</table>
+<p>All three misses at 1 500 tokens were budget misses: the model was still reasoning and returned empty content (cohort
+arithmetic twice, format task once). With 4 096 tokens one miss remained: "14" instead of 14.4 subjects. The long-prompt
+summary needed 1 236 output tokens. Bolt reasons long by default; a budget made for the 27B starves it.</p>
+<p><strong>Content caveat.</strong> The format task passed on form, but both answers explained "SWI" as a police network or a
+software system, not susceptibility-weighted imaging. The task is ambiguous (another model read it as SWI-Prolog
+on 2026-10-17), but a neuroimaging assistant should pick the MRI reading. The bench's format scorer does not see this.</p>
+<p><strong>Operational note (Alita).</strong> <code>gpu-sperre lauf --platz</code> stops Clara's model server and says the model watchdog brings it
+back. The watchdog does not restart it while any process matching <code>synthseg</code> runs, also a CPU-only SynthSeg. After the
+test the server stayed down until it was started by hand. Remaining VRAM after stopping the server was 22 977 MiB (the
+CPU embedding server keeps a 296 MiB CUDA context), so <code>--platz</code> above that fails with rc 4.</p>
+<h2>Trägt</h2>
+<p>24 GB cards from Ampere on with a llama.cpp from late October 2026; text and tool use at 16k context; tasks where speed
+matters more than the last points of accuracy, if the token budget is raised to about 4k.</p>
+<h2>Trägt nicht</h2>
+<p>A ranking against Qwen3.8-27B: the 27B was not rerun with 4 096 tokens, and 13 tasks are a coarse filter. Contexts above
+16k (only 1.9 GB VRAM left with q8 KV), the vision projector (1.73 GB against 1.9 GB left, probably too tight), the DFlash
+draft model, and agent work over many turns are all unmeasured. No patient data were involved.</p>
+<h2>Bruchindikator</h2>
+<p>The 27B at 4 096 tokens scores clearly above 96 %, or Bolt fails multi-turn agent tasks (Hermes/OpenCode) that the 27B
+solves; then the speed gain does not pay. A llama.cpp update that changes NVFP4 kernels on Ampere: measure again.</p>
+<h2>Ablesung</h2>
+<p>Own runs 2026-10-23 on Alita, script <code>bolt_test.sh</code> (server start, template probe, 6.5k prompt, tool call, then
+<code>llm_bench.py --repeats 2</code>), results <code>results_bolt_ctx16384_mt1500.json</code> / <code>_mt4096.json</code> (session scratchpad). Tier 1a.
+Benchmark of 2026-10-17: <a href="findings/hospital-model-hub-api-aliases-and-small-benchmark.html">hospital-model-hub-api-aliases-and-small-benchmark</a>.
+Model card (vendor, Tier 1b): https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB
+GGUF: https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF
+llama.cpp: https://github.com/ggml-org/llama.cpp (commit f64a498, 2026-10-23)</p></div></details><details class="entry" id="hermes-oneshot-ignores-ephemeral-prompt-and-prefill"><summary><span class="type">Befund</span><span class="t"><a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">Hermes one-shot mode (-z) drops the ephemeral system prompt and the prefill messages</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-21</span><span class="i">three meanings of prefill; `hermes -z` drops HERMES_EPHEMERAL_SYSTEM_PROMPT and prefill turns, use -s skills; chat mode appends them after the date line</span></summary><div class="body"><p class="small muted">Herkunft: Alita, installed Hermes Agent v0.20.5 (local commit f0daf560), recording stub server, 2026-10-21 · <a href="findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/hermes-oneshot-ignores-ephemeral-prompt-and-prefill.md">Markdown</a></p><h2>Aussage</h2>
 <p>"Prefill" means three different things around a local agent, and only one of them is a file you configure:
 1. <strong>Hermes prefill messages</strong> (<code>prefill_messages_file</code> or <code>HERMES_PREFILL_MESSAGES_FILE</code>): a JSON list of
    <code>{role, content}</code> turns. Hermes inserts them on every API call right after the system prompt and before the real
@@ -2417,7 +2491,7 @@ mehrere Ranking-Seiten widersprachen den Modellkarten und wurden verworfen.</p>
 <tr>
 <td>NVIDIA Nemotron 3.5 Bolt 74B-A9B-24GB (HF 2026-10-15, OpenMDW-1.1)</td>
 <td>74B total, 9B active; experts IQ2_XXS (2.0625 bit), Mamba layers NVFP4, embedding/head Q8_0, quantization-aware distillation</td>
-<td>open</td>
+<td>yes, measured 2026-10-23 (<a href="findings/nemotron-bolt-74b-on-ampere-24gb.html">finding</a>)</td>
 <td>Only new October model built for 24 GB. Hybrid Mamba-2/Transformer LatentMoE, text+image+video, up to 256K context, German listed. Vendor table against Qwen3.6-35B-A3B BF16: Terminal-Bench 2.1 50.98 vs 44.38, BrowseComp 66.75 vs 48.74, GPQA Diamond 86.43 vs 83.40, but AA-Omniscience accuracy 16.90 vs 19.47 and non-hallucination 61.27 vs 65.85 [V]. No comparison with Qwen3.8-27B.</td>
 </tr>
 <tr>
@@ -2443,7 +2517,7 @@ mehrere Ranking-Seiten widersprachen den Modellkarten und wurden verworfen.</p>
 <p><strong>Catch for Bolt on Alita.</strong> The NVIDIA GGUF card lists only Ada Lovelace and Blackwell; Ampere is not named.
 Its smallest llama-server recipe is "28GB" (32 GB card or 64 GB unified memory). The command uses <code>--spec-type draft-dflash</code>
 with a 998 MB draft model. Unsloth's IQ2_XXS is 22 GB plus the vision projector, with 24-32 GB RAM minimum.
-Whether llama.cpp runs the NVFP4 Mamba tensors on SM86, and how fast, is unverified.</p>
+Measured 2026-10-23: it runs fully on the A5000 (SM86), 66-69 tok/s, 22.2 GB at 16k context, 88.5 % on the 13-task bench at 1 500 tokens; see <a href="findings/nemotron-bolt-74b-on-ampere-24gb.html">nemotron-bolt-74b-on-ampere-24gb</a>.</p>
 <p>Out of reach (multi-GPU, only seen in news roundups, not checked): Meta Muse Spark Open 816B-A42B (2026-10-15),
 DeepSeek-V4-Pro, Reflection AI Beam 501B-A23B (announced 2026-10-05, weights pending).</p>
 <p><strong>Next measurement:</strong> Bolt IQ2_XXS with a current llama.cpp build in its own folder, experts partly on the CPU

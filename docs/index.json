@@ -2332,6 +2332,17 @@
 "src": "knowledge/local_llm_operation/findings/needle-recall-holds-to-125k.md"
 },
 {
+"t": "Nemotron 3.5 Bolt 74B-A9B (24GB GGUF) runs fully on an Ampere 24 GB card: 66-69 tok/s, 88.5 % on the 13-task bench at the old token budget",
+"p": "local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-23",
+"x": "Nemotron 3.5 Bolt 24GB-GGUF laeuft ganz auf der A5000 (Ampere): 66-69 tok/s, 22,2 GB bei 16k, 88,5 % im 13-Aufgaben-Test bei 1 500 Token (27B 95 %), 96,2 % bei 4 096",
+"id": "nemotron-bolt-74b-on-ampere-24gb",
+"src": "knowledge/local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.md"
+},
+{
 "t": "OpenCode laeuft gegen llama-server ueber eine Konfigdatei; mit einem Slot wartet es hinter dem Agenten",
 "p": "local_llm_operation/findings/opencode-against-llama-server-one-slot.html",
 "a": "local_llm_operation",

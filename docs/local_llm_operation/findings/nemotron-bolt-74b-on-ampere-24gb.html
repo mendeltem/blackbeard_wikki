@@ -1,0 +1,120 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Nemotron 3.5 Bolt 74B-A9B (24GB GGUF) runs fully on an Ampere 24 GB card: 66-69 tok/s, 88.5 % on the 13-task bench at the old token budget</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">local_llm_operation</a> › <a href="../index.html#findings">Befund</a></div><h1>Nemotron 3.5 Bolt 74B-A9B (24GB GGUF) runs fully on an Ampere 24 GB card: 66-69 tok/s, 88.5 % on the 13-task bench at the old token budget</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-23</span><span>Herkunft</span><span>Alita (RTX A5000 24 GB, Ampere SM86, 62 GB RAM, driver 550 / CUDA 12.4), llama.cpp f64a498 built 2026-10-23 for sm_86, three runs 2026-10-23 09:06-09:16</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../open_checks/local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a> <span class="muted small">(local_llm_operation)</span><br><a href="hospital-model-hub-api-aliases-and-small-benchmark.html">The hospital model hub API: OpenAI-compatible, five aliases, tool calls work, reasoning needs a large max_tokens</a> <span class="muted small">(local_llm_operation)</span><br><a href="flash-next-177b-moe-on-24gb-card.html">Ein 177B-MoE (Qwen3.8-Flash-Next GSQ-RCO) laeuft auf einer 24-GB-Karte: Experten im RAM, n-Gramm-Tabelle auf der Platte</a> <span class="muted small">(local_llm_operation)</span></span><span>Verwiesen von</span><span><a href="../open_checks/local-stack-landscape-2026-10.html">Lokaler Arbeitsplatz, Stand Oktober 2026: was auf 8 und 24 GB zu messen lohnt</a> <span class="muted small">(local_llm_operation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.md">knowledge/local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.md</a></span></div><h2>Aussage</h2>
+<p>NVIDIA's own GGUF (<code>NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf</code>, 22 018 326 528 bytes, SHA-256 matches the Hub) loads
+with a current llama.cpp (master f64a498, 2026-10-23, CUDA build for sm_86) completely on an RTX A5000. The GGUF card names
+only Ada Lovelace and Blackwell, but the NVFP4 Mamba layers run on Ampere. Settings: <code>-ngl 99 --ctx-size 16384
+--parallel 1 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --jinja</code>, no draft model, no vision projector.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Load time</td>
+<td>20-25 s</td>
+</tr>
+<tr>
+<td>VRAM in use (16k context, one slot)</td>
+<td>22.2 GB of 24.6 GB; 1.9 GB left</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>66-69 tok/s (Qwen3.8-27B Q4 on the same card: ~30 tok/s)</td>
+</tr>
+<tr>
+<td>Prompt, 6 462 tokens</td>
+<td>1 222-1 320 tok/s</td>
+</tr>
+<tr>
+<td>System message in the middle of the conversation</td>
+<td>handled (answered "11")</td>
+</tr>
+<tr>
+<td>Tool call (one function, OpenAI format)</td>
+<td>correct call <code>get_weather({"city":"Berlin"})</code></td>
+</tr>
+<tr>
+<td>13-task bench x 2, max 1 500 tokens (same as 2026-10-17)</td>
+<td><strong>88.5 %</strong> (Qwen3.8-27B Q4 95 %, Ternary-Bonsai-2-27B 92 %)</td>
+</tr>
+<tr>
+<td>Same bench, max 4 096 tokens</td>
+<td>96.2 %</td>
+</tr>
+</tbody>
+</table>
+<p>All three misses at 1 500 tokens were budget misses: the model was still reasoning and returned empty content (cohort
+arithmetic twice, format task once). With 4 096 tokens one miss remained: "14" instead of 14.4 subjects. The long-prompt
+summary needed 1 236 output tokens. Bolt reasons long by default; a budget made for the 27B starves it.</p>
+<p><strong>Content caveat.</strong> The format task passed on form, but both answers explained "SWI" as a police network or a
+software system, not susceptibility-weighted imaging. The task is ambiguous (another model read it as SWI-Prolog
+on 2026-10-17), but a neuroimaging assistant should pick the MRI reading. The bench's format scorer does not see this.</p>
+<p><strong>Operational note (Alita).</strong> <code>gpu-sperre lauf --platz</code> stops Clara's model server and says the model watchdog brings it
+back. The watchdog does not restart it while any process matching <code>synthseg</code> runs, also a CPU-only SynthSeg. After the
+test the server stayed down until it was started by hand. Remaining VRAM after stopping the server was 22 977 MiB (the
+CPU embedding server keeps a 296 MiB CUDA context), so <code>--platz</code> above that fails with rc 4.</p>
+<h2>Trägt</h2>
+<p>24 GB cards from Ampere on with a llama.cpp from late October 2026; text and tool use at 16k context; tasks where speed
+matters more than the last points of accuracy, if the token budget is raised to about 4k.</p>
+<h2>Trägt nicht</h2>
+<p>A ranking against Qwen3.8-27B: the 27B was not rerun with 4 096 tokens, and 13 tasks are a coarse filter. Contexts above
+16k (only 1.9 GB VRAM left with q8 KV), the vision projector (1.73 GB against 1.9 GB left, probably too tight), the DFlash
+draft model, and agent work over many turns are all unmeasured. No patient data were involved.</p>
+<h2>Bruchindikator</h2>
+<p>The 27B at 4 096 tokens scores clearly above 96 %, or Bolt fails multi-turn agent tasks (Hermes/OpenCode) that the 27B
+solves; then the speed gain does not pay. A llama.cpp update that changes NVFP4 kernels on Ampere: measure again.</p>
+<h2>Ablesung</h2>
+<p>Own runs 2026-10-23 on Alita, script <code>bolt_test.sh</code> (server start, template probe, 6.5k prompt, tool call, then
+<code>llm_bench.py --repeats 2</code>), results <code>results_bolt_ctx16384_mt1500.json</code> / <code>_mt4096.json</code> (session scratchpad). Tier 1a.
+Benchmark of 2026-10-17: <a href="hospital-model-hub-api-aliases-and-small-benchmark.html">hospital-model-hub-api-aliases-and-small-benchmark</a>.
+Model card (vendor, Tier 1b): https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB
+GGUF: https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF
+llama.cpp: https://github.com/ggml-org/llama.cpp (commit f64a498, 2026-10-23)</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-23 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
