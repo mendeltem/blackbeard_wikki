@@ -80,7 +80,7 @@ Desk research on 2026-10-23, nothing measured on Alita yet. [V] = vendor or blog
 **Catch for Bolt on Alita.** The NVIDIA GGUF card lists only Ada Lovelace and Blackwell; Ampere is not named.
 Its smallest llama-server recipe is "28GB" (32 GB card or 64 GB unified memory). The command uses `--spec-type draft-dflash`
 with a 998 MB draft model. Unsloth's IQ2_XXS is 22 GB plus the vision projector, with 24-32 GB RAM minimum.
-Measured 2026-10-23: it runs fully on the A5000 (SM86), 66-69 tok/s, 22.2 GB at 16k context, 88.5 % on the 13-task bench at 1 500 tokens; see [nemotron-bolt-74b-on-ampere-24gb](../findings/nemotron-bolt-74b-on-ampere-24gb.md).
+Measured 2026-10-23: it runs fully on the A5000 (SM86), 66-69 tok/s, 22.2 GB at 16k context, 88.5 % / 96.2 % on the 13-task bench at 1 500 / 4 096 tokens against 100 % / 97.4 % for the 27B (same card, same day), so not a replacement; see [nemotron-bolt-74b-on-ampere-24gb](../findings/nemotron-bolt-74b-on-ampere-24gb.md).
 
 Out of reach (multi-GPU, only seen in news roundups, not checked): Meta Muse Spark Open 816B-A42B (2026-10-15),
 DeepSeek-V4-Pro, Reflection AI Beam 501B-A23B (announced 2026-10-05, weights pending).

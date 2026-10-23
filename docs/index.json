@@ -2338,7 +2338,7 @@
 "y": "Befund",
 "s": "vorschlag",
 "d": "2026-10-23",
-"x": "Nemotron 3.5 Bolt 24GB-GGUF laeuft ganz auf der A5000 (Ampere): 66-69 tok/s, 22,2 GB bei 16k, 88,5 % im 13-Aufgaben-Test bei 1 500 Token (27B 95 %), 96,2 % bei 4 096",
+"x": "Nemotron 3.5 Bolt 24GB-GGUF laeuft ganz auf der A5000 (Ampere): 66-69 tok/s, 22,2 GB bei 16k, 88,5 % / 96,2 % im 13-Aufgaben-Test bei 1 500 / 4 096 Token; 27B gleicher Tag 100 % / 97,4 % -> 27B bleibt Standard",
 "id": "nemotron-bolt-74b-on-ampere-24gb",
 "src": "knowledge/local_llm_operation/findings/nemotron-bolt-74b-on-ampere-24gb.md"
 },

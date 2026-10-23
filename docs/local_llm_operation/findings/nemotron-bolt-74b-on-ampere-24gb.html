@@ -81,11 +81,19 @@ only Ada Lovelace and Blackwell, but the NVFP4 Mamba layers run on Ampere. Setti
 </tr>
 <tr>
 <td>13-task bench x 2, max 1 500 tokens (same as 2026-10-17)</td>
-<td><strong>88.5 %</strong> (Qwen3.8-27B Q4 95 %, Ternary-Bonsai-2-27B 92 %)</td>
+<td><strong>88.5 %</strong> (Qwen3.8-27B Q4 on the same card, same day: 100 %)</td>
 </tr>
 <tr>
 <td>Same bench, max 4 096 tokens</td>
-<td>96.2 %</td>
+<td>96.2 % (Qwen3.8-27B Q4: 97.4 %)</td>
+</tr>
+<tr>
+<td>Wall time for the 26 answers, 1 500 / 4 096 tokens</td>
+<td>206 s / 256 s (Qwen3.8-27B Q4: 254 s / 317 s)</td>
+</tr>
+<tr>
+<td>Output tokens per answer, mean, 4 096 tokens</td>
+<td>608 (Qwen3.8-27B Q4: 380, at most 1 214)</td>
 </tr>
 </tbody>
 </table>
@@ -99,15 +107,29 @@ on 2026-10-17), but a neuroimaging assistant should pick the MRI reading. The be
 back. The watchdog does not restart it while any process matching <code>synthseg</code> runs, also a CPU-only SynthSeg. After the
 test the server stayed down until it was started by hand. Remaining VRAM after stopping the server was 22 977 MiB (the
 CPU embedding server keeps a 296 MiB CUDA context), so <code>--platz</code> above that fails with rc 4.</p>
+<h2>Nachtrag 2026-10-23 17:30: the fair rerun of the 27B</h2>
+<p>Same bench, same day, same card: Qwen3.8-27B UD-Q4_K_M on Clara's live server (port 8000, one slot, 80k context, server
+defaults for sampling), <code>llm_bench.py --repeats 2</code> with 4 096 and with 1 500 tokens. Result: <strong>100 % at 1 500, 97.4 % at
+4 096</strong>. The only partial misses (4 096 run, both repeats) were the translation task answering "microhemorrhages"
+instead of the scored word "microbleeds", i.e. sampling noise and a strict scorer, not the budget: the 27B never used
+more than 1 214 output tokens, so 1 500 does not starve it. The 2026-10-17 value (94.9 %) came from a CPU-bound run at
+5 tok/s with one timeout and is replaced by these numbers.
+Verdict: on this bench the 27B is at least as accurate as Bolt (51.3/52 vs 48/52 answers over both budgets) and
+needs fewer tokens per answer. Bolt's 2.2x token speed shrinks to about 20 % less wall time because it reasons longer,
+and it misread "SWI". No reason to replace the 27B as Clara's default; Bolt stays on disk only for an agent test.
+Side finding: the first rerun attempt died after one answer because the agent loop restarts the model server after
+8 h uptime (<code>MODELL_FRISCH_H</code>) without checking whether the server is busy for another client; the restart needed
+SIGKILL after 60 s. Proposal: skip the fresh start while <code>/slots</code> reports <code>is_processing</code>.
+Results <code>results_q27_live_mt{1500,4096}.json</code> (session scratchpad), run 17:21-17:30.</p>
 <h2>Trägt</h2>
 <p>24 GB cards from Ampere on with a llama.cpp from late October 2026; text and tool use at 16k context; tasks where speed
 matters more than the last points of accuracy, if the token budget is raised to about 4k.</p>
 <h2>Trägt nicht</h2>
-<p>A ranking against Qwen3.8-27B: the 27B was not rerun with 4 096 tokens, and 13 tasks are a coarse filter. Contexts above
+<p>A fine ranking: 13 tasks x 2 are a coarse filter, the gaps are 1-3 answers out of 26. Contexts above
 16k (only 1.9 GB VRAM left with q8 KV), the vision projector (1.73 GB against 1.9 GB left, probably too tight), the DFlash
 draft model, and agent work over many turns are all unmeasured. No patient data were involved.</p>
 <h2>Bruchindikator</h2>
-<p>The 27B at 4 096 tokens scores clearly above 96 %, or Bolt fails multi-turn agent tasks (Hermes/OpenCode) that the 27B
+<p>Bolt beats the 27B on a larger or agentic task set, or Bolt fails multi-turn agent tasks (Hermes/OpenCode) that the 27B
 solves; then the speed gain does not pay. A llama.cpp update that changes NVFP4 kernels on Ampere: measure again.</p>
 <h2>Ablesung</h2>
 <p>Own runs 2026-10-23 on Alita, script <code>bolt_test.sh</code> (server start, template probe, 6.5k prompt, tool call, then
