@@ -18,3 +18,5 @@ Stand 2026-10-21. Ein Eintrag je Datei.
 | Eintrag | Typ | Status |
 |---|---|---|
 | [Das Fliegen-Konnektom traegt keinen Topologie-Vorteil, unter keiner Lernregel](findings/fly-connectome-topology-carries-no-advantage.md) | befund | getragen |
+| [Ein Fliegen-Subgraph ist benutzbar, aber nicht besonders](findings/fly-subgraph-is-usable-but-not-special.md) | befund | getragen |
+| [STDP braucht eine begrenzte Feuerrate und einen gedeckelten Gewichtsschritt](findings/spike-rate-must-be-bounded-in-stdp.md) | regel | getragen |

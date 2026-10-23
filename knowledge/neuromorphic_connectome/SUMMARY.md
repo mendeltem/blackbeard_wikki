@@ -9,9 +9,16 @@ biologische Verdrahtung traegt **keinen** Vorteil. Eingefrorenes Reservoir
 fly 0,5800 gegen dp 0,5820 / er 0,5900; BPTT nur `W_in` fly 0,6542 gegen
 dp 0,6533 ± 0,0096; BPTT ganzes `W` fly 0,6417 gegen dp 0,6514 ± 0,0039;
 STDP (bio-lokal) fly 0,5900 ± 0,0155 gegen dp 0,5917 ± 0,0137. Kontrolle ohne
-Netz 0,5500. Trainieren hilft deutlich (0,58 → 0,65), die Topologie nicht —
+Netz 0,5500. Trainieren hilft deutlich (0,58 → 0,66), die Topologie nicht —
 und zwar unter dem globalen Gradienten *und* unter der lokalen
 Spike-Timing-Regel ([fly-connectome-topology-carries-no-advantage](findings/fly-connectome-topology-carries-no-advantage.md)).
+
+Der nachgereichte n=20000-`full`-Lauf zeigt formal fly 0,6625 gegen dp 0,6558 /
+er 0,6425 (+0,0067 / +0,0200) — **aber `fly` lief dort nur mit einem Seed,
+waehrend die Nullarme ueber fuenf gemittelt sind**, und beide Abstaende liegen
+innerhalb der Null-Streuung. Bei n=5000 war derselbe Arm negativ (−0,0097). Das
+ist das Muster eines Rauschartefakts, kein Vorteil: offener Punkt, nicht
+Befund. Der Bruchindikator steht in der Befunddatei.
 
 **Regel, neu 2026-10-21 (eigener Fehllauf):** In STDP muessen Rate und
 Gewichtsschritt begrenzt sein. Ein erster Lauf verschob die Gewichte um 235 %
@@ -26,12 +33,12 @@ Rohdaten. Nutzbar ist die Datei als Testumgebung fuer Sparsity und lokale
 Lernregeln, nicht als Leistungsargument
 ([fly-subgraph-is-usable-but-not-special](findings/fly-subgraph-is-usable-but-not-special.md)).
 
-**Offen:** BPTT `--trainable full` auf n=20000 (der Lauf auf n=5000 kam wegen
-GPU-Belegung zustande, siehe `local_llm_operation`). Ereignisgetriebener
-Kernel statt fester Zeitschritte — das ist der Test, bei dem die Biologie
-auszahlen koennte, und der einzige Punkt auf der Liste mit neuer Aussage.
-`sum(exp)`-Spike-Dump und Video. STDP-Hyperparameter-Sweep aendert
-voraussichtlich nichts am Topologie-Befund, weil beide Nullen gleich
+**Offen:** `fly` im n=20000-`full`-Arm ueber dieselben fuenf Seeds laufen
+lassen wie die Nullarme (der bisherige Einzellauf ist nicht zitierfaehig).
+Ereignisgetriebener Kernel statt fester Zeitschritte — das ist der Test, bei
+dem die Biologie auszahlen koennte, und der einzige Punkt auf der Liste mit
+neuer Aussage. `sum(exp)`-Spike-Dump und Video. STDP-Hyperparameter-Sweep
+aendert voraussichtlich nichts am Topologie-Befund, weil beide Nullen gleich
 behandelt werden.
 
 Details in [INDEX.md](INDEX.md), Stand 2026-10-21.

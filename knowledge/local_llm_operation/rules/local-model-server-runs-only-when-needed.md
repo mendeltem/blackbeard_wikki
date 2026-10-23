@@ -64,28 +64,72 @@ Anfrage pro Stunde ist das ein guter Tausch, fuer einen Chat mit hoher
 Frequenz nicht — dort ist der Kaltstart teurer als der gehaltene VRAM.
 
 ## Bruchindikator
-Ein `--sleep-idle-seconds`-Argument, das im Prozess steht
-(`/proc/<pid>/cmdline`) und trotzdem nicht greift: **dann prueft man
-vermutlich mit dem Server selbst.** `/props` und `/health` sind echte
-Anfragen und setzen den Idle-Timer zurueck. Wer den Schwellwert mit
-`curl /props` misst, misst sich selbst und sieht nie einen Schlafzustand.
-Beruehrungsfrei messen geht nur ueber `nvidia-smi`, das den Server nicht
-anspricht.
+**Zuerst eine Korrektur meiner eigenen ersten Fassung, 21.10.2026.** Ich hatte
+hier geschrieben, `/props` und `/health` seien echte Anfragen und setzten den
+Idle-Timer zurueck — wer damit messe, sehe nie einen Schlaf. **Das ist
+falsch.** Im Quelltext (`tools/server/server-context.cpp`):
 
-**Zweite Falle, am selben Tag erlebt:** wer den Schlaf prueft, indem er eine
-Anfrage stellt ("weckt er wieder auf?"), **weckt ihn auf — und der VRAM ist
-wieder belegt.** Am 21.10.2026 lief genau so ein Trainingsjob erneut in einen
-CUDA-OOM, obwohl der Server Minuten vorher geschlafen hatte: der Aufwachtest
-dazwischen hatte das Modell wieder geladen. Wer nach dem Test eine GPU-Arbeit
-starten will, muss entweder die Leerlaufzeit abwarten oder den Start an eine
-VRAM-Schranke binden (Schleife ueber `nvidia-smi --query-gpu=memory.free`,
-erst starten wenn genug frei ist). Pruefen und Nutzen sind hier dieselbe
-Handlung — die Reihenfolge entscheidet.
+```
+this->get_health = [this](const server_http_req &) {
+    auto res = create_response(true);   // bypass_sleep
+```
+```
+this->get_props = [this](const server_http_req &) {
+    auto res = create_response(true);   // bypass_sleep
+```
+
+Beide Routen laufen mit `bypass_sleep = true` und werden ausdruecklich
+**waehrend** des Schlafs bedient ("this endpoint can be accessed during
+sleeping"). Auch die Queue bestaetigt es: `task_resets_idle_timer()` schliesst
+nur `SERVER_TASK_TYPE_METRICS` aus, nicht Health oder Props. Messen mit
+`/health` oder `/props` verhindert den Schlaf also **nicht**. Wer das
+weiterverbreitet, schickt den naechsten auf eine falsche Spur — deshalb steht
+die Berichtigung hier und nicht nur im Log.
+
+**Der echte Bruchindikator ist eine echte Anfrage.** Jeder Aufruf, der
+rechnet — `POST /v1/chat/completions`, auch "nur zum Test" — setzt den Timer
+zurueck und laedt das Modell. Am 21.10.2026 lief ein Trainingsjob in einen
+CUDA-OOM, weil Minuten vorher genau so ein Aufwachtest gelaufen war: der
+Server hatte kurz zuvor geschlafen, war danach wieder wach, und die 20 GB
+waren weg. **Pruefen und Nutzen sind hier dieselbe Handlung — die Reihenfolge
+entscheidet.**
+
+**Zweite Beobachtung, die man nicht fuer einen Fehler haelt:** der Schlaf
+kommt spaeter als die eingestellte Zeit. Bei `--sleep-idle-seconds 300` und
+letzter echter Anfrage um 18:53 trat er erst um ~19:02 ein, also nach ~9 min
+statt nach 5. Die Queue **verschiebt** den Idle-Takt, statt ihn
+zurueckzusetzen (`time_last_task = std::min(now, time_last_task + (now -
+t_update_slots))`): die Zeit, die `update_slots` selbst braucht, zaehlt nicht
+als Leerlauf. Wer nach dem Messen eine GPU-Arbeit startet, sollte deshalb
+nicht auf die Uhr schauen, sondern den Start an eine VRAM-Schranke binden:
+Schleife ueber `nvidia-smi --query-gpu=memory.free`, erst starten wenn genug
+frei ist. Beruehrungsfrei messen geht nur ueber `nvidia-smi`, das den Server
+gar nicht anspricht.
+
+## Wer ihn legitim weckt
+Nicht jeder Aufruf ist ein Fehlgriff. Der `guard-daemon.service` schickt jeden
+ungeprueften Ausgang des gesperrten Agenten durch das lokale Modell
+(`system/guard/ask_outside.py` -> `/v1/chat/completions` auf `:8000`). Solange
+dieser Waechter laeuft, wacht der Server bei echter Ausgangspruefung auf — das
+ist gewollt, kein Leck. Wer den VRAM dauerhaft braucht, muss diese Quelle
+kennen, sonst sucht er sie in einem Timer, der nie der Taeter war.
+
+**Zweiter Nutzen derselben Option:** weil das Modell austauschbar aus der
+Registry kommt (`models.json`), kann Claude Codes Harness gegen dasselbe lokale
+Modell laufen — `system/claude-lokal.sh`, im `.bashrc` als `cl` verlinkt. Es
+setzt `ANTHROPIC_BASE_URL=http://127.0.0.1:8000`, `ANTHROPIC_MODEL` aus der
+Registry und `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`; Werkzeuge,
+Dateizugriff und `CLAUDE.md` bleiben dieselben. Getestet am 21.10.2026:
+`claude-lokal.sh -p "Antworte nur mit dem Wort LOKAL"` antwortete `LOKAL`,
+Exit 0, ueber `127.0.0.1:8000`. Der Server schlief danach von selbst wieder ein
+(19:24 letzte Anfrage, 19:29 `free=22480`). Ein blankes `claude -p` dagegen
+laeuft **nicht** lokal, sondern in die Cloud — die beiden nicht verwechseln.
 
 ## Ablesung
 Eigene Messung, 21.10.2026, Cle-Arbeit. Regler: `start.sh` von
-`local_agentic_system`, Abschnitt "Ruhezustand". Testmodell und Endpunkt wie
-oben; die 27B-Messung war zu diesem Zeitpunkt noch offen.
+`local_agentic_system`, Abschnitt "Ruhezustand". Die 27B-Messung oben ist am
+echten Dienst gelaufen (nicht mehr offen); das 0,5B-Testmodell diente nur dem
+ersten Nachweis.
 
 ## Verknuepft
 - [foreign-gpu-process-before-measuring](../rules/foreign-gpu-process-before-measuring.md)

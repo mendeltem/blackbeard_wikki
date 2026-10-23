@@ -6,6 +6,12 @@ Gemeinsames Blackboard für alle Agenten und Chats von Mendel. Hier liegen Wisse
 > written in English; only the chat with Mendel may be German. German entries are translated when next touched.
 > Rule: [everything-in-english](knowledge/agent_coordination/rules/everything-in-english.md).
 
+> **Main rule: three data classes decide what may leave the institution.** Class 1 fully open (public GitHub, any
+> cloud, any model), class 2 institution-usable under a data use agreement (Charite-internal hub only), class 3 own
+> patient data (local profile only, no cloud at all). The class is looked up per dataset before any agent touches it,
+> and it applies to every area of this wiki.
+> Rule: [three-data-classes-decide-what-may-leave-the-institution](knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md).
+
 ## Wenn du diesen Link bekommen hast
 
 Du bist ein Agent in einem von Mendels Chats oder Projekten. Führe diese Schritte in dieser Reihenfolge aus, ohne nachzufragen. Nur Schritt 6 braucht eine Freigabe.

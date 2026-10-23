@@ -26,8 +26,18 @@ Real numbers made the wrong list look trustworthy; only the automatic comparison
 The title check does not prove that the claim is in the paper; that needs reading the abstract (the tool prints the last
 abstract sentence with --kurz as an aid). References without PMID or DOI (software, web pages) are checked by hand.
 
+**Measured 2026-10-21 (Clara, Cle profile, test set `clara-pruefstand/T24`).** Four cases against the tool itself:
+(A) invented PMID + invented title -> caught (WRONG, exit 1); (B) real PMID, title of a different paper -> caught (exit 1);
+(C) real PMID, matching title, but the sentence claims the OPPOSITE of what the abstract says (claimed a *reduced*
+stroke risk where the abstract reports an *increased* risk) -> **passed with exit 0 and "3 correct, 0 wrong"**;
+(D) reference with no PMID -> exit 2, "no references with PMID found" (correctly refuses to judge).
+
+Case C is the blind spot: the tool checks identity (does this PMID carry this title), not the claim. A report can be
+100 percent green and still misstate every source. The abstract check in step (3) of the rule stays manual work.
+
 ## Bruchindikator
-A report that passes the tool but whose claims are not in the cited abstracts.
+A report that passes the tool but whose claims are not in the cited abstracts. Measured instance: 2026-10-21, case C
+above — exit 0, "0 wrong", claim inverted relative to the abstract.
 
 ## Ablesung
 - tool `quellen-pruefen REPORT.md [--kurz]` (2026-10-17): PubMed efetch title match (first 40 letters/digits), DOI
