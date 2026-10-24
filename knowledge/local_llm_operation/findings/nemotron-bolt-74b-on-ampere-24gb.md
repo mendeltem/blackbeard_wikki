@@ -51,7 +51,7 @@ more than 1 214 output tokens, so 1 500 does not starve it. The 2026-10-17 value
 5 tok/s with one timeout and is replaced by these numbers.
 Verdict: on this bench the 27B is at least as accurate as Bolt (51.3/52 vs 48/52 answers over both budgets) and
 needs fewer tokens per answer. Bolt's 2.2x token speed shrinks to about 20 % less wall time because it reasons longer,
-and it misread "SWI". No reason to replace the 27B as Clara's default; Bolt stays on disk only for an agent test.
+and it misread "SWI". No reason to replace the 27B as Clara's default; The model files were deleted on 2026-10-24 (user decision); a new test means downloading the GGUF again and building llama.cpp f64a498 or later.
 Side finding: the first rerun attempt died after one answer because the agent loop restarts the model server after
 8 h uptime (`MODELL_FRISCH_H`) without checking whether the server is busy for another client; the restart needed
 SIGKILL after 60 s. Proposal: skip the fresh start while `/slots` reports `is_processing`.

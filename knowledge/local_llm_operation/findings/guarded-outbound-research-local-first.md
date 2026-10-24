@@ -74,6 +74,7 @@ Sources: systemd `environment.d(5)`, https://www.freedesktop.org/software/system
 (read at user-manager start, inherited by units it starts); Python `urllib.request.getproxies()`,
 https://docs.python.org/3/library/urllib.request.html#urllib.request.getproxies (reads the process environment);
 own guard log and service scan, 2026-10-23.
+First run after the fix, 2026-10-24 04:00: 8 of 8 areas researched in 39 min, but the commit failed: the wiki's pre-commit hook renders HTML with `python3`, which in the timer's PATH is the system Python without `python-markdown`. The hook now falls back to the conda Python when `import markdown` fails; the day's page was committed by hand under the timer's minimal PATH (130b1e1). Second lesson: test a repaired pipeline to its last step, here the push.
 
 ## Verknuepft
 - [decision-model-as-profile-orchestrator](../open_checks/decision-model-as-profile-orchestrator.md)
