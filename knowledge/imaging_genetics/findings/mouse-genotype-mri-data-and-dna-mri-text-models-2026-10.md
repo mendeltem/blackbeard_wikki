@@ -111,6 +111,39 @@ dated, ideally at several visits.
 | Petersen 2010, Neurology | ADNI clinical characterization, 819 participants, MCI progression 16.5 %/year | PMID 20042704, [10.1212/WNL.0b013e3181cb3e25](https://doi.org/10.1212/WNL.0b013e3181cb3e25) |
 | Livingston 2024, Lancet | Lancet Commission 2024 on dementia prevention (modifiable risk factors; abstract not available, text not re-read) | PMID 39096926, [10.1016/S0140-6736(24)01296-0](https://doi.org/10.1016/S0140-6736(24)01296-0) |
 
+## Nachtrag 2026-10-24: the time axis ("4D": 3D MRI over years)
+Understanding a disease like AD means knowing its course, not one snapshot. Four model families exist.
+
+**Event order.**
+- The event-based model learns the order of events across a cohort, without predefined clinical stages, from
+  cross-sectional or longitudinal data (Fonteijn 2012, familial AD and Huntington's disease).
+- SuStaIn adds subtypes, each with its own trajectory (Young 2018). It finds three AD subtypes, identifies genetic
+  FTD genotypes from imaging alone, and predicts diagnostic conversion better than models without subtype or stage.
+
+**Individual image forecasting.** Brain Latent Progression predicts a person's future 3D T1 MRI with a latent
+diffusion model conditioned on subject metadata, with voxel-level uncertainty (Puglisi 2025). It was trained on
+11,730 MRIs from 2,805 subjects and tested externally on 2,257 MRIs from 962 subjects; the code is public.
+
+**Digital twin.** Operator learning of the spatiotemporal spread of amyloid, tau and neurodegeneration per patient,
+used to simulate interventions in silico (Wang 2026; the authors claim >90 % prediction accuracy).
+
+**Assessment (mine).**
+- The building blocks for a "brain world model" exist separately:
+  - an MRI encoder gives a latent brain state;
+  - a dynamics module (BrLP-like) moves that state in time, conditioned on age, genotype (APOE or a DNA embedding)
+    and clinical scores;
+  - an LLM on top reads and explains the result.
+- The data must be repeated visits of the same people with dates, scores and comparable scanners.
+- "What if" simulations are only as good as the causal knowledge behind them. Associations such as
+  neuroticism -> dementia (see dementia_risk_factors) must not be fed in as causes.
+
+| Source | What it shows | ID |
+|---|---|---|
+| Fonteijn 2012, NeuroImage | Event-based disease progression model, familial AD and Huntington's disease | PMID 22281676, [10.1016/j.neuroimage.2012.01.062](https://doi.org/10.1016/j.neuroimage.2012.01.062) |
+| Young 2018, Nat Commun | SuStaIn: subtypes and stages; three AD subtypes; better conversion prediction | PMID 30323170, [10.1038/s41467-018-05892-0](https://doi.org/10.1038/s41467-018-05892-0) |
+| Puglisi 2025, Med Image Anal | Brain Latent Progression: individual future 3D MRI via latent diffusion, public code | PMID 40774097, [10.1016/j.media.2025.103734](https://doi.org/10.1016/j.media.2025.103734) |
+| Wang 2026, NPJ Syst Biol Appl | Digital-twin operator learning of amyloid/tau/neurodegeneration dynamics | PMID 42082519, [10.1038/s41540-026-00719-x](https://doi.org/10.1038/s41540-026-00719-x) |
+
 ## Trägt
 Choosing data and an architecture for a first genotype-MRI-text prototype; knowing that mouse MRI data carry
 labels, and that strain genomes have to be joined in separately.

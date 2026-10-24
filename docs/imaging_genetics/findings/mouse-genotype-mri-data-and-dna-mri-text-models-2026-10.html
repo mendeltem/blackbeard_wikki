@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span>2026-10-24 imaging_genetics: mouse genotype+MRI datasets and DNA/MRI/text models scan</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span>2026-10-24 imaging_genetics: clinical layer addendum (MoCA, age, biomarkers)</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
 <p><strong>Mouse data.</strong> I found no public dataset with a per-animal genome sequence plus brain MRI. The genetics in mouse MRI
 collections is a strain or a model label. A label still links to DNA, because the strains themselves are sequenced:
 the Mouse Genomes Project sequenced 17 inbred strains, including C57BL/6J, DBA/2J and CAST/EiJ (Keane 2011), and the
@@ -229,6 +229,58 @@ dated, ideally at several visits.</p>
 <td>Livingston 2024, Lancet</td>
 <td>Lancet Commission 2024 on dementia prevention (modifiable risk factors; abstract not available, text not re-read)</td>
 <td>PMID 39096926, <a href="https://doi.org/10.1016/S0140-6736(24)01296-0">10.1016/S0140-6736(24)01296-0</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Nachtrag 2026-10-24: the time axis ("4D": 3D MRI over years)</h2>
+<p>Understanding a disease like AD means knowing its course, not one snapshot. Four model families exist.</p>
+<p><strong>Event order.</strong>
+- The event-based model learns the order of events across a cohort, without predefined clinical stages, from
+  cross-sectional or longitudinal data (Fonteijn 2012, familial AD and Huntington's disease).
+- SuStaIn adds subtypes, each with its own trajectory (Young 2018). It finds three AD subtypes, identifies genetic
+  FTD genotypes from imaging alone, and predicts diagnostic conversion better than models without subtype or stage.</p>
+<p><strong>Individual image forecasting.</strong> Brain Latent Progression predicts a person's future 3D T1 MRI with a latent
+diffusion model conditioned on subject metadata, with voxel-level uncertainty (Puglisi 2025). It was trained on
+11,730 MRIs from 2,805 subjects and tested externally on 2,257 MRIs from 962 subjects; the code is public.</p>
+<p><strong>Digital twin.</strong> Operator learning of the spatiotemporal spread of amyloid, tau and neurodegeneration per patient,
+used to simulate interventions in silico (Wang 2026; the authors claim &gt;90 % prediction accuracy).</p>
+<p><strong>Assessment (mine).</strong>
+- The building blocks for a "brain world model" exist separately:
+  - an MRI encoder gives a latent brain state;
+  - a dynamics module (BrLP-like) moves that state in time, conditioned on age, genotype (APOE or a DNA embedding)
+    and clinical scores;
+  - an LLM on top reads and explains the result.
+- The data must be repeated visits of the same people with dates, scores and comparable scanners.
+- "What if" simulations are only as good as the causal knowledge behind them. Associations such as
+  neuroticism -&gt; dementia (see dementia_risk_factors) must not be fed in as causes.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it shows</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fonteijn 2012, NeuroImage</td>
+<td>Event-based disease progression model, familial AD and Huntington's disease</td>
+<td>PMID 22281676, <a href="https://doi.org/10.1016/j.neuroimage.2012.01.062">10.1016/j.neuroimage.2012.01.062</a></td>
+</tr>
+<tr>
+<td>Young 2018, Nat Commun</td>
+<td>SuStaIn: subtypes and stages; three AD subtypes; better conversion prediction</td>
+<td>PMID 30323170, <a href="https://doi.org/10.1038/s41467-018-05892-0">10.1038/s41467-018-05892-0</a></td>
+</tr>
+<tr>
+<td>Puglisi 2025, Med Image Anal</td>
+<td>Brain Latent Progression: individual future 3D MRI via latent diffusion, public code</td>
+<td>PMID 40774097, <a href="https://doi.org/10.1016/j.media.2025.103734">10.1016/j.media.2025.103734</a></td>
+</tr>
+<tr>
+<td>Wang 2026, NPJ Syst Biol Appl</td>
+<td>Digital-twin operator learning of amyloid/tau/neurodegeneration dynamics</td>
+<td>PMID 42082519, <a href="https://doi.org/10.1038/s41540-026-00719-x">10.1038/s41540-026-00719-x</a></td>
 </tr>
 </tbody>
 </table>
