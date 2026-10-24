@@ -1969,6 +1969,17 @@
 "src": "knowledge/daily_research/findings/2026-10-24.md"
 },
 {
+"t": "Neuroticism and Alzheimer's disease: a consistent but modest risk association; \"more plaques at autopsy\" and \"causal genetics\" do not hold",
+"p": "dementia_risk_factors/findings/neuroticism-and-alzheimer-evidence-check-2026-10.html",
+"a": "dementia_risk_factors",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-24",
+"x": "Neuroticism: replicated but modest dementia risk (HR about 1.1-1.2 per SD, 1.4-1.7 top vs bottom quartile); no link to plaques/tangles at autopsy, lower resilience instead; MR neuroticism -> AD null; vascular and mental-health mediation",
+"id": "neuroticism-and-alzheimer-evidence-check-2026-10",
+"src": "knowledge/dementia_risk_factors/findings/neuroticism-and-alzheimer-evidence-check-2026-10.md"
+},
+{
 "t": "Die Datenkette traegt die grossen Gewinne, das Trainingsrezept keinen",
 "p": "lesion_detection_method/mechanisms/data-chain-beats-training-levers.html",
 "a": "lesion_detection_method",

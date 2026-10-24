@@ -1,0 +1,677 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Neuroticism and Alzheimer&#x27;s disease: a consistent but modest risk association; &quot;more plaques at autopsy&quot; and &quot;causal genetics&quot; do not hold</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">dementia_risk_factors</a> › <a href="../index.html#findings">Befund</a></div><h1>Neuroticism and Alzheimer&#x27;s disease: a consistent but modest risk association; &quot;more plaques at autopsy&quot; and &quot;causal genetics&quot; do not hold</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature check 2026-10-24 of a popular text claiming a &quot;direct and robust&quot; neuroticism-Alzheimer link; four search passes (epidemiology, pathology/PET, genetics/MR, mechanisms), every PMID re-fetched from PubMed and key numbers checked against the abstracts</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/dementia_risk_factors/findings/neuroticism-and-alzheimer-evidence-check-2026-10.md">knowledge/dementia_risk_factors/findings/neuroticism-and-alzheimer-evidence-check-2026-10.md</a></span></div><h2>Aussage</h2>
+<p><strong>The association is real and replicated, but smaller than "twice the risk".</strong> Higher neuroticism (or "distress
+proneness", a short neuroticism scale) predicts incident Alzheimer's disease (AD) and all-cause dementia in many
+prospective cohorts since 2003. Pooled estimates are modest: HR 1.13 per scale unit (Low 2013, N = 3,285), HR 1.24
+(Aschwanden 2021, N about 30,000-33,000), AD HR 1.07 (Franks 2021, 497 cases). Large single cohorts: UK Biobank top vs
+bottom quartile AD HR 1.42 and all-cause 1.70 (Terracciano 2021, N = 401,422); EPIC-Norfolk HR 1.14 per SD over a
+median 22.7 years (Gao 2025). The "more than twice the risk" comes from the early Rush studies, which compare the 90th
+with the 10th percentile and had 55-140 incident cases.</p>
+<p><strong>Autopsy: neuroticism goes with less resilience, not with more pathology.</strong> The Rush clinical-pathologic studies found
+distress proneness unrelated to plaques, tangles, Lewy bodies and infarcts (Wilson 2006, Wilson 2007), and the
+individual-participant meta-analysis of eight studies found "no consistent associations with neuropathology" (Beck,
+autopsy N = 1,703). What autopsy work does show: at equal AD pathology, people high in neuroticism are less likely to
+stay free of dementia (Terracciano 2013, n = 111, OR 2.0; Graham 2021, n = 1,375). The one "more pathology" signal is
+a correlation of r = 0.26 with tangle stage in the n = 111 sample.</p>
+<p><strong>PET: small pooled effects, many null studies.</strong> Terracciano 2022 (BLSA, cognitively normal) found neuroticism with
+higher cortical amyloid (OR 1.68), and pooled 12 amyloid studies (r = 0.07, N = 3,015) and 8 tau studies (r = 0.15,
+N = 2,231). Several PET cohorts found no neuroticism-amyloid association (Byun 2020, n = 397; Yoon 2020; Oh 2022;
+Giannakopoulos 2022). Positive tau-PET findings in medial temporal regions come from small samples (Schultz 2020,
+n = 128; Parent 2022, n = 47). CSF and autosomal-dominant AD studies suggest the reverse arrow as well: AD pathology
+raising neuroticism (Tautvydaite 2017; Aschenbrenner 2020).</p>
+<p><strong>Genetics: no causal evidence for neuroticism -&gt; AD.</strong>
+- Neuroticism is highly polygenic: 136 loci (Nagel 2018), 116 loci (Luciano 2018).
+- Cortical structure is genetically correlated with neuroticism (Grasby 2020). That is a shared genetic signal, not
+  proof of causation.
+- The one Mendelian randomization (MR) study with AD as the outcome is null (Ma 2021, beta -0.0098, p = 0.262). Its
+  authors attribute the observational link to residual confounding.
+- MR of neuroticism on brain structure supports only white-matter diffusivity measures (Gao 2025, Psychological
+  Medicine; Zhao 2024), not cortical thickness.
+- The Molecular Psychiatry polygenic-score paper (Opel 2018) found lower surface area and states that no
+  associations with cortical thickness were detected.
+- In UK Biobank, a higher neuroticism polygenic score went with <em>less</em> cognitive decline (Akbarian 2024, n = 645 at
+  follow-up). Conversely, AD genetic risk raises neuroticism (Stephan 2018).</p>
+<p><strong>Reverse causation is partly but not fully excluded.</strong> BLSA found no preclinical change in neuroticism before
+dementia (Terracciano 2017), while OCTO-Twin, LASA and the Einstein Aging Study found rising neuroticism before
+diagnosis (Yoneda 2017, 2020). A 2025 meta-analysis puts self-reported preclinical change at SMD 0-0.2. The
+association persists after 20 or more years of follow-up (EPIC-Norfolk HR 1.09), which argues against a purely
+prodromal effect.</p>
+<p><strong>The plausible pathway is vascular and mental health.</strong>
+- In UK Biobank and EPIC-Norfolk the association is partly mediated by depression, anxiety, hypertension and
+  ischaemic heart disease, and it is stronger for vascular dementia (Gao 2024: +11 % all-cause, +15 % vascular).
+- Neuroticism goes with more white matter hyperintensities; about 40 % of that is explained by vascular risk
+  factors (Terracciano 2023, n = 40,602).
+- Long-standing distress mediates the midlife-neuroticism link in a 38-year cohort of women (Johansson 2014).
+- Cortisol/HPA evidence is weak: small samples, and a cortisol effect in men only (Montoliu 2021).</p>
+<p><strong>Prevention is untested.</strong> Neuroticism falls with therapy (meta-analysis d about 0.37 over about 24 weeks; Roberts
+2017). No trial has a dementia outcome, and 18 months of meditation in older adults did not change the volume of the
+target brain regions (Age-Well; Chételat 2022).</p>
+<h2>Check of the pasted claims</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Verdict</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rush Memory and Aging Project, Wilson, <em>Neurology</em>, "more than twice the risk"</td>
+<td><strong>Partly wrong.</strong> The 2003 <em>Neurology</em> paper is the Religious Orders Study (clergy): 90th vs 10th percentile = "twice the risk", 140 AD cases over 4.9 years. The RMAP paper is <em>Neuroepidemiology</em> 2006 (2.7x, 55 cases, about 3 years). A 2005 <em>Neurology</em> paper in a Chicago biracial community found 2.4x. Followed "until death" applies only to the autopsy subsets.</td>
+<td>Wilson 2003, 2005, 2006</td>
+</tr>
+<tr>
+<td>PET and autopsy show more amyloid plaques and tau tangles in memory regions</td>
+<td><strong>Autopsy part wrong, PET part overstated.</strong> Autopsy: no consistent link with pathology; the link is with lower resilience. PET: pooled r = 0.07 (amyloid) and 0.15 (tau), several null cohorts; the BLSA amyloid outcome is a global cortical mean, not a memory region. Tau-PET in entorhinal and amygdala comes from small samples.</td>
+<td>Wilson 2006/2007, Beck 2024, Terracciano 2013/2022, Byun 2020, Schultz 2020</td>
+</tr>
+<tr>
+<td>GWAS and MR prove a causal link of neuroticism genetics to lower cortical thickness and faster cognitive ageing (<em>Am J Psychiatry</em>, <em>Mol Psychiatry</em>)</td>
+<td><strong>Not supported.</strong> MR neuroticism -&gt; AD is null. MR on brain structure supports only white-matter diffusivity measures. The <em>Mol Psychiatry</em> paper reports surface area, not thickness. No matching <em>Am J Psychiatry</em> paper found. The polygenic score does not predict faster decline in UK Biobank.</td>
+<td>Ma 2021, Gao 2025, Zhao 2024, Opel 2018, Akbarian 2024</td>
+</tr>
+<tr>
+<td>"Directly and robustly established", "over two decades"</td>
+<td><strong>Two decades correct (first paper Dec 2003). "Robust" holds for a modest association, not for a direct or causal mechanism.</strong></td>
+<td>all above</td>
+</tr>
+</tbody>
+</table>
+<h2>Trägt</h2>
+<p>Risk communication and study design: neuroticism is a replicated, modest, partly mediated risk marker for dementia,
+somewhat stronger for vascular than for Alzheimer dementia. A study with personality or distress questionnaires plus
+structural MRI can test the vascular path directly (WMH, grey-matter volume) instead of assuming an amyloid path.</p>
+<h2>Trägt nicht</h2>
+<p>Claims that neuroticism causes AD, raises plaque or tangle load at autopsy, or that lowering it prevents dementia.
+Individual risk prediction: the per-SD effect (HR about 1.1-1.2) is small.</p>
+<h2>Bruchindikator</h2>
+<ul>
+<li>An MR study with current neuroticism instruments (Nagel 2018 or larger) and the newest AD GWAS shows a robust
+  non-null effect with pleiotropy checks.</li>
+<li>A large autopsy or longitudinal PET study shows that neuroticism predicts <em>accumulation</em> of amyloid or tau.</li>
+<li>A trial that lowers neuroticism or distress changes dementia incidence or biomarkers.</li>
+</ul>
+<h2>Ablesung</h2>
+<p><strong>How the check was done.</strong>
+- Searched PubMed on 2026-10-24 in four passes (three narrow sub-passes plus one by the main session).
+- Every PMID below was fetched again with PubMed <code>get_article_metadata</code>. First author, year, journal and DOI match.
+  The key numbers were checked against the fetched abstracts.
+- Not checked against full texts. One sub-pass read the BLSA PET full text (PMC). It reported that personality was a
+  single measure taken mostly within a year of the scan. That point was not re-checked here.
+- Bias note: genetic liability to neuroticism and to AD lowers participation in the optional UK Biobank components
+  such as imaging (Tyrrell 2021). Neuroticism-MRI results from UK Biobank can therefore be distorted.</p>
+<p><strong>Not covered.</strong>
+- No Mendelian randomization of AD -&gt; neuroticism was found.
+- No neuroticism x AD genetic-correlation value appears in any fetched abstract.
+- Not searched: Chinese cohorts, HRS and MIDUS beyond the papers listed, and preprints.</p>
+<h3>Sources (all verified in PubMed 2026-10-24)</h3>
+<table>
+<thead>
+<tr>
+<th>First author, year</th>
+<th>Journal</th>
+<th>What it shows</th>
+<th>PMID</th>
+<th>DOI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wilson 2003</td>
+<td>Neurology</td>
+<td>Religious Orders Study: 90th vs 10th percentile distress proneness, twice the AD risk; 140 cases, 4.9 y; unrelated to pathology</td>
+<td>14663028</td>
+<td>10.1212/01.wnl.0000096167.56734.59</td>
+</tr>
+<tr>
+<td>Breitner 2003</td>
+<td>Neurology</td>
+<td>Editorial "At my wits' end: neuroticism and dementia" on the 2003 paper</td>
+<td>14663023</td>
+<td>10.1212/wnl.61.11.1468</td>
+</tr>
+<tr>
+<td>Wilson 2005</td>
+<td>Neurology</td>
+<td>Biracial Chicago community, n = 1,064: distress-prone 2.4x AD; stronger in whites</td>
+<td>15668449</td>
+<td>10.1212/01.WNL.0000149525.53525.E7</td>
+</tr>
+<tr>
+<td>Wilson 2006</td>
+<td>Neuroepidemiology</td>
+<td>Rush MAP, &gt;600, 55 AD cases: 2.7x; unrelated to AD pathology (45 autopsies)</td>
+<td>16974109</td>
+<td>10.1159/000095761</td>
+</tr>
+<tr>
+<td>Wilson 2007</td>
+<td>Psychosomatic Medicine</td>
+<td>219 autopsies: chronic distress -&gt; dementia, not correlated with any neuropathology</td>
+<td>17244848</td>
+<td>10.1097/01.psy.0000250264.25017.21</td>
+</tr>
+<tr>
+<td>Wilson 2007</td>
+<td>Neurology</td>
+<td>n = 1,256: chronic distress -&gt; incident MCI, RR 1.02 per unit</td>
+<td>17562829</td>
+<td>10.1212/01.wnl.0000264930.97061.82</td>
+</tr>
+<tr>
+<td>Wilson 2011</td>
+<td>Am J Geriatr Psychiatry</td>
+<td>n = 785: anxiety and vulnerability to stress components drive AD risk; no pathology link</td>
+<td>21427641</td>
+<td>10.1097/JGP.0b013e31820119da</td>
+</tr>
+<tr>
+<td>Grodstein 2022</td>
+<td>BMJ Open</td>
+<td>ROS + MAP, n = 2,860: highest neuroticism tertile diagnosed about 4 y earlier (88.8 vs 93.1 y)</td>
+<td>35379643</td>
+<td>10.1136/bmjopen-2021-059317</td>
+</tr>
+<tr>
+<td>Duberstein 2011</td>
+<td>Psychology and Aging</td>
+<td>n = 767 aged 72+, 6 y: higher neuroticism, lower openness and conscientiousness -&gt; AD</td>
+<td>20973606</td>
+<td>10.1037/a0021377</td>
+</tr>
+<tr>
+<td>Low 2013</td>
+<td>Am J Geriatr Psychiatry</td>
+<td>Meta-analysis: HR 1.13 per unit neuroticism, N = 3,285</td>
+<td>23567438</td>
+<td>10.1016/j.jagp.2012.08.004</td>
+</tr>
+<tr>
+<td>Terracciano 2013</td>
+<td>Alzheimer's &amp; Dementia</td>
+<td>BLSA n = 1,671, 22 y: top quartile HR 3.1 for AD; meta-analysis of 5 studies confirms</td>
+<td>23706517</td>
+<td>10.1016/j.jalz.2013.03.002</td>
+</tr>
+<tr>
+<td>Johansson 2014</td>
+<td>Neurology</td>
+<td>800 women, 38 y: midlife neuroticism -&gt; AD, mediated by long-standing distress</td>
+<td>25274849</td>
+<td>10.1212/WNL.0000000000000907</td>
+</tr>
+<tr>
+<td>Terracciano 2017</td>
+<td>JAMA Psychiatry</td>
+<td>BLSA n = 2,046: higher baseline neuroticism in later cases, no preclinical change</td>
+<td>28975188</td>
+<td>10.1001/jamapsychiatry.2017.2816</td>
+</tr>
+<tr>
+<td>Yoneda 2017</td>
+<td>J Gerontol B</td>
+<td>OCTO-Twin: neuroticism rises before dementia diagnosis</td>
+<td>26945005</td>
+<td>10.1093/geronb/gbw006</td>
+</tr>
+<tr>
+<td>Yoneda 2020</td>
+<td>J Gerontol B</td>
+<td>LASA + Einstein Aging Study: rising neuroticism before dementia and MCI</td>
+<td>29608748</td>
+<td>10.1093/geronb/gby034</td>
+</tr>
+<tr>
+<td>Segerstrom 2020</td>
+<td>J Gerontol B</td>
+<td>Review: four explanatory models (common cause, health behaviour, pathoplastic, prodromal)</td>
+<td>29846724</td>
+<td>10.1093/geronb/gby063</td>
+</tr>
+<tr>
+<td>Stuart 2020</td>
+<td>J Alzheimer's Dis</td>
+<td>Systematic review, 22 studies: stress-dementia associations, confounding caution</td>
+<td>33016901</td>
+<td>10.3233/JAD-191096</td>
+</tr>
+<tr>
+<td>Aschwanden 2021</td>
+<td>Ageing Res Rev</td>
+<td>Meta-analysis: neuroticism HR 1.24, N about 30,000-33,000</td>
+<td>33561581</td>
+<td>10.1016/j.arr.2021.101269</td>
+</tr>
+<tr>
+<td>Franks 2021</td>
+<td>J Alzheimer's Dis</td>
+<td>Meta-analysis of stress: neuroticism AD HR 1.07, not significant for all-cause dementia</td>
+<td>34366334</td>
+<td>10.3233/JAD-210094</td>
+</tr>
+<tr>
+<td>Terracciano 2021</td>
+<td>J Psychiatric Research</td>
+<td>UK Biobank N = 401,422: top quartile AD HR 1.42, all-cause 1.70, vascular 1.73</td>
+<td>33819874</td>
+<td>10.1016/j.jpsychires.2021.03.039</td>
+</tr>
+<tr>
+<td>Beck 2024</td>
+<td>Alzheimer's &amp; Dementia</td>
+<td>IPD meta-analysis, 8 studies: neuroticism -&gt; diagnosis, not neuropathology (N = 1,703)</td>
+<td>38018701</td>
+<td>10.1002/alz.13523</td>
+</tr>
+<tr>
+<td>Gao 2024</td>
+<td>Alzheimer's &amp; Dementia</td>
+<td>UK Biobank 174,164: +11 % dementia, +15 % vascular; mediated by mental and vascular conditions</td>
+<td>38984680</td>
+<td>10.1002/alz.14071</td>
+</tr>
+<tr>
+<td>Liu 2024</td>
+<td>J Affective Disorders</td>
+<td>UK Biobank 393,939: excess risk of high neuroticism falls with more social contact</td>
+<td>38735577</td>
+<td>10.1016/j.jad.2024.05.055</td>
+</tr>
+<tr>
+<td>Troisi 2024</td>
+<td>Ageing Res Rev</td>
+<td>Systematic review: neuroticism a risk factor for MCI and dementia</td>
+<td>39153600</td>
+<td>10.1016/j.arr.2024.102455</td>
+</tr>
+<tr>
+<td>Gao 2025</td>
+<td>Age and Ageing</td>
+<td>EPIC-Norfolk 19,678, 22.7 y: HR 1.14 per SD; 1.09 after &gt;=20 y</td>
+<td>41275373</td>
+<td>10.1093/ageing/afaf339</td>
+</tr>
+<tr>
+<td>Terracciano 2025</td>
+<td>Ageing Res Rev</td>
+<td>Meta-analyses of personality change: small preclinical change (SMD 0-0.2), larger at clinical stage</td>
+<td>40752776</td>
+<td>10.1016/j.arr.2025.102852</td>
+</tr>
+<tr>
+<td>Terracciano 2013 (print)</td>
+<td>Neurobiology of Aging</td>
+<td>BLSA autopsy n = 111: neuroticism OR 2.0 for not staying asymptomatic despite AD pathology</td>
+<td>23040035</td>
+<td>10.1016/j.neurobiolaging.2012.08.008</td>
+</tr>
+<tr>
+<td>Graham 2021</td>
+<td>J Gerontol B</td>
+<td>ROS + MAP n = 1,375: neuroticism -&gt; lower cognitive resilience to pathology</td>
+<td>32969474</td>
+<td>10.1093/geronb/gbaa135</td>
+</tr>
+<tr>
+<td>De Jager 2021</td>
+<td>Transl Psychiatry</td>
+<td>n = 466 frontal-cortex transcriptomes: neuroticism-linked modules, partly via tau</td>
+<td>33627625</td>
+<td>10.1038/s41398-021-01253-6</td>
+</tr>
+<tr>
+<td>Grodstein 2022</td>
+<td>Aging Brain</td>
+<td>n = 355 cortical proteomics: two proteins mediate part of neuroticism -&gt; poor resilience (not Bonferroni)</td>
+<td>36874358</td>
+<td>10.1016/j.nbas.2022.100031</td>
+</tr>
+<tr>
+<td>Zammit 2026</td>
+<td>Transl Psychiatry</td>
+<td>n = 822 multi-omics: neuroticism differs across molecular AD subtypes after pathology adjustment</td>
+<td>42324246</td>
+<td>10.1038/s41398-026-04195-z</td>
+</tr>
+<tr>
+<td>Terracciano 2022</td>
+<td>Biological Psychiatry</td>
+<td>BLSA amyloid OR 1.68; meta-analysis amyloid r = 0.07 (N = 3,015), tau r = 0.15 (N = 2,231)</td>
+<td>34663503</td>
+<td>10.1016/j.biopsych.2021.08.021</td>
+</tr>
+<tr>
+<td>Schultz 2020</td>
+<td>Brain Imaging Behav</td>
+<td>n = 128 cognitively normal: neuroticism with tau-PET in amygdala, entorhinal, inferior temporal</td>
+<td>31486975</td>
+<td>10.1007/s11682-019-00163-y</td>
+</tr>
+<tr>
+<td>Byun 2020</td>
+<td>Psychiatry Clin Neurosci</td>
+<td>n = 397: no neuroticism-amyloid or -WMH association</td>
+<td>31985106</td>
+<td>10.1111/pcn.12983</td>
+</tr>
+<tr>
+<td>Yoon 2020</td>
+<td>Psychology and Aging</td>
+<td>Amyloid PET: only conscientiousness associated, neuroticism null</td>
+<td>33166168</td>
+<td>10.1037/pag0000582</td>
+</tr>
+<tr>
+<td>Oh 2022</td>
+<td>Front Aging Neurosci</td>
+<td>Amyloid PET: extraversion, not neuroticism, associated</td>
+<td>35912077</td>
+<td>10.3389/fnagi.2022.900581</td>
+</tr>
+<tr>
+<td>Giannakopoulos 2022</td>
+<td>J Alzheimer's Dis</td>
+<td>Amyloid PET: no personality effect on amyloid load</td>
+<td>34958019</td>
+<td>10.3233/JAD-215062</td>
+</tr>
+<tr>
+<td>Pichet Binette 2020</td>
+<td>Biological Psychiatry</td>
+<td>PREVENT-AD + DIAN: lower neuroticism in a latent profile with less amyloid and tau</td>
+<td>32228870</td>
+<td>10.1016/j.biopsych.2020.01.023</td>
+</tr>
+<tr>
+<td>Parent 2022</td>
+<td>NeuroImage</td>
+<td>n = 47: neuroticism -&gt; lower locus coeruleus catecholamine synthesis -&gt; amygdala tau</td>
+<td>36191755</td>
+<td>10.1016/j.neuroimage.2022.119658</td>
+</tr>
+<tr>
+<td>Baena 2021</td>
+<td>J Alzheimer's Dis</td>
+<td>PSEN1 E280A carriers: neuroticism with entorhinal tau, not amyloid</td>
+<td>34219716</td>
+<td>10.3233/JAD-210185</td>
+</tr>
+<tr>
+<td>Snitz 2015</td>
+<td>Am J Geriatr Psychiatry</td>
+<td>n = 92: neuroticism moderates the complaint-amyloid link</td>
+<td>25746485</td>
+<td>10.1016/j.jagp.2015.01.008</td>
+</tr>
+<tr>
+<td>Sohrabi 2020</td>
+<td>Brain Struct Funct</td>
+<td>n = 237 FDG-PET: neuroticism with lower metabolism incl. hippocampus</td>
+<td>32342225</td>
+<td>10.1007/s00429-020-02071-0</td>
+</tr>
+<tr>
+<td>Duchek 2020</td>
+<td>J Int Neuropsychol Soc</td>
+<td>n = 436 + 74: neuroticism separates normal from early AD, mediated by hippocampal volume</td>
+<td>31822309</td>
+<td>10.1017/S1355617719001358</td>
+</tr>
+<tr>
+<td>Tautvydaite 2017</td>
+<td>J Psychiatric Research</td>
+<td>n = 110: AD CSF profile with rising neuroticism (reverse arrow)</td>
+<td>28213293</td>
+<td>10.1016/j.jpsychires.2016.12.024</td>
+</tr>
+<tr>
+<td>Tautvydaite 2017</td>
+<td>Alzheimer's Res Ther</td>
+<td>n = 110: premorbid neuroticism modulates CSF-cognition link</td>
+<td>28153054</td>
+<td>10.1186/s13195-017-0235-0</td>
+</tr>
+<tr>
+<td>Aschenbrenner 2020</td>
+<td>Alzheimer's Dement (Amst)</td>
+<td>DIAN: neuroticism tracks years to onset and CSF tau (progression affects personality)</td>
+<td>32587883</td>
+<td>10.1002/dad2.12038</td>
+</tr>
+<tr>
+<td>Boscheck 2026</td>
+<td>Alzheimer's Res Ther</td>
+<td>DELCODE n = 298: "psychological debt" incl. neuroticism not associated with biomarkers</td>
+<td>42032739</td>
+<td>10.1186/s13195-026-02054-z</td>
+</tr>
+<tr>
+<td>Terracciano 2023</td>
+<td>Neurobiology of Aging</td>
+<td>BLSA n = 786: neuroticism with higher plasma GFAP and NfL</td>
+<td>37210782</td>
+<td>10.1016/j.neurobiolaging.2023.04.011</td>
+</tr>
+<tr>
+<td>Terracciano 2026</td>
+<td>Neurobiology of Aging</td>
+<td>HRS n = 4,076: neuroticism-NfL link does not survive full adjustment</td>
+<td>42485867</td>
+<td>10.1016/j.neurobiolaging.2026.07.005</td>
+</tr>
+<tr>
+<td>Nôga 2026</td>
+<td>J Sleep Research</td>
+<td>n = 54 young women: neuroticism and p-tau181 rise after a sleepless night (acute, not AD)</td>
+<td>41574967</td>
+<td>10.1111/jsr.70278</td>
+</tr>
+<tr>
+<td>Terracciano 2019</td>
+<td>Personality Disorders</td>
+<td>Review: low neuroticism protects even in presence of AD pathology</td>
+<td>30604979</td>
+<td>10.1037/per0000268</td>
+</tr>
+<tr>
+<td>Nagel 2018</td>
+<td>Nature Genetics</td>
+<td>Neuroticism GWAS, n = 449,484, 136 loci</td>
+<td>29942085</td>
+<td>10.1038/s41588-018-0151-7</td>
+</tr>
+<tr>
+<td>Luciano 2018</td>
+<td>Nature Genetics</td>
+<td>Neuroticism GWAS, n = 329,821, 116 loci; rg with depression 0.82</td>
+<td>29255261</td>
+<td>10.1038/s41588-017-0013-8</td>
+</tr>
+<tr>
+<td>Brainstorm Consortium 2018</td>
+<td>Science</td>
+<td>Shared heritability of brain disorders (neuroticism x AD value not in abstract)</td>
+<td>29930110</td>
+<td>10.1126/science.aap8757</td>
+</tr>
+<tr>
+<td>Grasby 2020</td>
+<td>Science</td>
+<td>Cortical-structure GWAS, n = 51,665; genetic correlation with neuroticism</td>
+<td>32193296</td>
+<td>10.1126/science.aay6690</td>
+</tr>
+<tr>
+<td>Ma 2021</td>
+<td>J Psychiatric Research</td>
+<td>Two-sample MR: neuroticism -&gt; AD null (p = 0.262)</td>
+<td>33798978</td>
+<td>10.1016/j.jpsychires.2021.03.033</td>
+</tr>
+<tr>
+<td>Opel 2018</td>
+<td>Molecular Psychiatry</td>
+<td>Neuroticism polygenic score -&gt; lower surface area; no cortical-thickness association</td>
+<td>30185937</td>
+<td>10.1038/s41380-018-0236-9</td>
+</tr>
+<tr>
+<td>Song 2020</td>
+<td>Psychophysiology</td>
+<td>n = 630: polygenic score -&gt; left rostral middle frontal thickness (small mediation)</td>
+<td>33226147</td>
+<td>10.1111/psyp.13728</td>
+</tr>
+<tr>
+<td>Norbom 2020</td>
+<td>Transl Psychiatry</td>
+<td>Youth: only weak links of neuroticism polygenic score with surface area</td>
+<td>32710012</td>
+<td>10.1038/s41398-020-00931-1</td>
+</tr>
+<tr>
+<td>Stephan 2018</td>
+<td>J Psychiatric Research</td>
+<td>HRS: AD polygenic score -&gt; higher neuroticism -&gt; lower cognition</td>
+<td>30384091</td>
+<td>10.1016/j.jpsychires.2018.10.015</td>
+</tr>
+<tr>
+<td>Sathyan 2019</td>
+<td>Neurology</td>
+<td>HRS: neuroticism polygenic score OR 1.10 for cognitive complaints</td>
+<td>30737336</td>
+<td>10.1212/WNL.0000000000007141</td>
+</tr>
+<tr>
+<td>Akbarian 2024</td>
+<td>Behavioral Sciences</td>
+<td>UK Biobank: higher neuroticism polygenic score with less cognitive decline</td>
+<td>39457748</td>
+<td>10.3390/bs14100876</td>
+</tr>
+<tr>
+<td>Li 2024</td>
+<td>Human Brain Mapping</td>
+<td>ADNI 278 aMCI: polygenic score predicts conversion via inferior parietal surface area</td>
+<td>38746977</td>
+<td>10.1002/hbm.26709</td>
+</tr>
+<tr>
+<td>Zhao 2024</td>
+<td>Neuroscience</td>
+<td>rg + MR: a neuroticism cluster -&gt; lower white-matter FA</td>
+<td>39681255</td>
+<td>10.1016/j.neuroscience.2024.12.028</td>
+</tr>
+<tr>
+<td>Gao 2025</td>
+<td>Psychological Medicine</td>
+<td>UK Biobank 36,901: lower frontal/limbic grey matter; MR only for thalamic-radiation diffusivity</td>
+<td>41234001</td>
+<td>10.1017/S0033291725102390</td>
+</tr>
+<tr>
+<td>Gao 2025</td>
+<td>J Affective Disorders</td>
+<td>UK Biobank 215,624: neuroticism -&gt; lower DHA -&gt; white-matter pathology (MR)</td>
+<td>40543620</td>
+<td>10.1016/j.jad.2025.119733</td>
+</tr>
+<tr>
+<td>Schwaba 2026</td>
+<td>Nature</td>
+<td>Big Five GWAS, 611,037 to 1.14 million participants</td>
+<td>42686911</td>
+<td>10.1038/s41586-026-10992-9</td>
+</tr>
+<tr>
+<td>Tyrrell 2021</td>
+<td>Nature Communications</td>
+<td>Genetic neuroticism and AD liability reduce participation in optional UK Biobank parts</td>
+<td>33563987</td>
+<td>10.1038/s41467-021-21073-y</td>
+</tr>
+<tr>
+<td>Terracciano 2023</td>
+<td>J Psychiatric Research</td>
+<td>UK Biobank 40,602: more WMH, about 40 % explained by vascular risk factors</td>
+<td>37506413</td>
+<td>10.1016/j.jpsychires.2023.07.026</td>
+</tr>
+<tr>
+<td>Montoliu 2021</td>
+<td>Stress and Health</td>
+<td>n = 87: perceived stress mediates neuroticism-cognition; cortisol only in men</td>
+<td>34363312</td>
+<td>10.1002/smi.3088</td>
+</tr>
+<tr>
+<td>Ouanes 2019</td>
+<td>Front Aging Neurosci</td>
+<td>Review: high cortisol and dementia risk; proposed mediator</td>
+<td>30881301</td>
+<td>10.3389/fnagi.2019.00043</td>
+</tr>
+<tr>
+<td>Roberts 2017</td>
+<td>Psychological Bulletin</td>
+<td>Meta-analysis of 207 studies: therapy lowers neuroticism, d about 0.37</td>
+<td>28054797</td>
+<td>10.1037/bul0000088</td>
+</tr>
+<tr>
+<td>Chételat 2022</td>
+<td>JAMA Neurology</td>
+<td>Age-Well RCT, n = 137: 18-month meditation, no effect on target brain volumes</td>
+<td>36215061</td>
+<td>10.1001/jamaneurol.2022.3185</td>
+</tr>
+</tbody>
+</table></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
