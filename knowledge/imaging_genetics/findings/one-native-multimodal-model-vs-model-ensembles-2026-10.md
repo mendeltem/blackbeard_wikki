@@ -30,11 +30,12 @@ verweist_auf: [mouse-genotype-mri-data-and-dna-mri-text-models-2026-10]
 
 **Interference is real, and it depends on scale.**
 - Mixed-modal scaling laws model synergy and competition between modalities explicitly. A 30 B speech-text model
-  beat the unimodal models (Aghajanyan 2023). The sub-pass read the paper body: competition dominates at small scale.
+  beat the unimodal models (Aghajanyan 2023). In the paper body only the 30 B model is reported as crossing the "competition barrier" (350 M and 2.7 B were also trained; checked).
 - A study of 457 natively multimodal models found no inherent advantage of late fusion (bolt-on encoders) over early
   fusion; mixture-of-experts lets the model learn modality-specific weights (Shukor 2025).
-- Chameleon needed extra stabilization because shared weights let the modalities compete. The QK-norm and z-loss
-  details come from the paper body, read by a sub-pass and not re-checked.
+- Chameleon needed extra stabilization because shared weights let the modalities compete: each modality "tries to
+  compete" by slowly growing its norms until bf16 training diverges. The 7 B model needed QK-norm, dropout and
+  z-loss, the 34 B model z-loss only (paper body, checked by the main session).
 - Best-supported fix: keep attention shared and give each modality its own feed-forward weights or experts.
 
 **Scientific "languages of nature" in one model.**
@@ -48,9 +49,12 @@ verweist_auf: [mouse-genotype-mri-data-and-dna-mri-text-models-2026-10]
 - **Generalists are usually competitive but lose on precision tasks.**
   - TxGemma was compared against specialists on 66 tasks: superior on 26, superior or comparable on 50.
   - Tx-LLM exceeds state of the art on 22 of 66 tasks.
-  - Med-PaLM M loses to the dedicated DeepVariant on variant calling (number from the paper body, sub-pass).
-- **3D MRI in a text model is expensive.** MedGemma 1.5 feeds up to 85 axial slices at 256 tokens each (about
-  21,760 tokens; paper body, sub-pass). RadFM compresses 3D patches to 32 tokens per image with a Perceiver.
+  - Med-PaLM M loses to the dedicated DeepVariant on variant calling: Indel-F1 97.04 % vs 99.40 %. DeepVariant had
+  2,633 times more training examples; with the same examples the gap narrows to 97.04 % vs 98.55 %, and for SNPs
+  Med-PaLM M beats GATK4 (99.35 % vs 99.29 %) (paper body, checked).
+- **3D MRI in a text model is expensive.** MedGemma 1.5 feeds up to 85 axial slices, 21,760 vision tokens in total.
+  It is not truly 3D: its image encoder takes only 2D RGB images trained with 256 intensity values per channel
+  (paper body, checked). RadFM compresses 3D patches to 32 tokens per image with a Perceiver.
 - **Numbers.** Galactica splits digits, Tx-LLM and TxGemma bin regression targets, and xVal proposes one continuous
   number token.
 - **No verified model covers text + DNA/RNA + protein + molecules + 3D MRI + clinical numbers natively.**
@@ -65,8 +69,66 @@ verweist_auf: [mouse-genotype-mri-data-and-dna-mri-text-models-2026-10]
    data.
 
 Native pretraining from scratch is data-centre scale. On a single 24 GB card the realistic options are continued
-training or LoRA of an existing multimodal model at a few billion parameters. At that size the scaling laws predict
-more competition than synergy, so a specialist ensemble can still win there.
+training or LoRA of an existing multimodal model at a few billion parameters. Corrected after the counter-check
+below: whether modalities compete at that size depends on the model size *relative to the data* and on the modality
+pair. It is not fixed by parameter count alone.
+
+## Gegenprüfung 2026-10-24 (adversarial pass plus full-text checks)
+**C1, shared attention plus modality-specific weights is the best fix: holds with limits.**
+- Mixture-of-Transformers is supported, and BAGEL (1.5 B) found MoT better than MoE better than dense at equal FLOPs.
+- In sparse models, learned modality-*agnostic* routing beat hand-assigned modality-aware routing (Shukor 2025,
+  paper body).
+- Cheaper fixes target the same interference: gradient modulation, balancing learning speed, data sampling ratios.
+- The multilingual analogue: language-specific modules lift the "curse of multilinguality" (Pfeiffer 2022).
+
+**C2, competition at small scale: holds with limits, partly contradicted.**
+- What holds: Aghajanyan measured 350 M, 2.7 B and 30 B speech-text models. Only the 30 B model crossed the
+  "competition barrier"; the predicted optimum was N = 28.35 B, D = 45.12 B tokens.
+- In translation, substantial interference occurs mainly when the model is very small relative to its data;
+  standard transformers below one billion parameters largely avoid it, and the sampling temperature controls the
+  balance (Shaham 2023).
+- Early fusion shows a slight advantage over late fusion at small model sizes (Shukor 2025).
+- Multilingual LMs up to 45 M parameters gain from moderate added multilingual data and lose from heavy amounts
+  (Chang 2023).
+- The two kinds of comparison answer different questions. Joint vs separate unimodal models shows competition at
+  small scale. Early vs late fusion inside one multimodal model shows early fusion is not worse.
+
+**C3, generalists lose on precision; specialist teams can win: holds with limits.**
+- Specialists win on precision: DeepVariant beats Med-PaLM M (above), and fine-tuned BERT/BART beat zero- or
+  few-shot LLMs on most BioNLP tasks.
+- Tools help: GeneGPT with NCBI web APIs scores 0.83 vs 0.44 for Bing, and an open-model multi-agent system matches
+  or beats GeneGPT on over 90 % of tasks.
+- But a prompted generalist (GPT-4 with Medprompt) beat the specialist-tuned Med-PaLM 2 on all nine MultiMedQA sets.
+- Small LLMs are weak tool callers (Shen 2024), so tool teams at small scale need the tool use split across models.
+
+**C4, numbers and 3D volumes are weak points: holds for current designs, not intrinsic.**
+- Eight 3D medical VLMs averaged 34 % accuracy on semantic-spatial CT questions, often below random.
+- Arithmetic depends on tokenization; program-aided LMs offload the arithmetic to code.
+- A better 3D tokenizer raised clinical F1 by 40 % (Hamamci 2025), and LLMs forecast numeric series zero-shot.
+
+**Net change:** the design recipe stands. The claim that small models necessarily see more competition than synergy
+is withdrawn; it depends on model size relative to data, on the modality pair and on the data mix.
+
+| Source | What it shows | ID |
+|---|---|---|
+| Conneau 2020 | XLM-R: "curse of multilinguality", capacity dilution with more languages | [arXiv 1911.02116](https://arxiv.org/abs/1911.02116) |
+| Pfeiffer 2022 | Language-specific modules lift the curse (X-MOD) | [arXiv 2205.06266](https://arxiv.org/abs/2205.06266) |
+| Shaham 2023 | Interference mainly when model is very small vs data; <1 B standard models largely fine | [arXiv 2212.07530](https://arxiv.org/abs/2212.07530) |
+| Chang 2023 | Multilinguality curse vs benefit for 250 languages, models up to 45 M | [arXiv 2311.09205](https://arxiv.org/abs/2311.09205) |
+| Huang 2022 | Modality competition: why joint multimodal training fails (provably) | [arXiv 2203.12221](https://arxiv.org/abs/2203.12221) |
+| Peng 2022 | On-the-fly gradient modulation for balanced multimodal learning | [arXiv 2203.15332](https://arxiv.org/abs/2203.15332) |
+| Nori 2023 | Medprompt GPT-4 beats Med-PaLM 2 on nine MultiMedQA sets | [arXiv 2311.16452](https://arxiv.org/abs/2311.16452) |
+| Chen 2025, Nat Commun | Benchmarking LLMs for biomedical NLP: fine-tuned models win most tasks | PMID 40188094, [10.1038/s41467-025-56989-2](https://doi.org/10.1038/s41467-025-56989-2) |
+| Jin 2023 | GeneGPT: LLM + NCBI web APIs, 0.83 vs 0.44 (Bing) | [arXiv 2304.09667](https://arxiv.org/abs/2304.09667) |
+| Chen 2025 | Beyond GeneGPT: open-model multi-agent system matches or beats GeneGPT on >90 % of tasks | [arXiv 2511.15061](https://arxiv.org/abs/2511.15061) |
+| Shen 2024 | Small LLMs are weak tool learners; multi-LLM decomposition helps | [arXiv 2401.07324](https://arxiv.org/abs/2401.07324) |
+| Gao 2022 | PAL: program-aided LMs offload arithmetic to code | [arXiv 2211.10435](https://arxiv.org/abs/2211.10435) |
+| Singh 2024 | Tokenization counts for arithmetic in frontier LLMs | [arXiv 2402.14903](https://arxiv.org/abs/2402.14903) |
+| Gruver 2023 | LLMs as zero-shot time-series forecasters | [arXiv 2310.07820](https://arxiv.org/abs/2310.07820) |
+| Hegselmann 2023 | TabLLM: few-shot tabular classification by serializing tables | [arXiv 2210.10723](https://arxiv.org/abs/2210.10723) |
+| Monon 2026 | CT-SpatialVQA: 8 3D medical VLMs average 34 %, often below random | [arXiv 2605.08787](https://arxiv.org/abs/2605.08787) |
+| Hamamci 2025 | Better 3D tokens: +40 % clinical F1 for CT report generation | [arXiv 2510.20639](https://arxiv.org/abs/2510.20639) |
+| Xu 2025 (Qwen3-Omni) | Omni model, self-reported no degradation across modalities | [arXiv 2509.17765](https://arxiv.org/abs/2509.17765) |
 
 ## Trägt
 Architecture choice for a multi-"language" model: shared attention plus modality-specific weights; which
@@ -85,7 +147,8 @@ scaling evidence that small mixed models (< 10 B) already gain from adding modal
 - Two search passes on 2026-10-24.
 - All 43 arXiv IDs and DOIs were re-fetched by script (arXiv API, Crossref); the titles match.
 - PMIDs were checked via PubMed.
-- Numbers marked "paper body, sub-pass" were read from full texts by a sub-pass and not re-checked.
+- Full-text details marked "paper body, checked" were re-read by the main session on 2026-10-24.
+- An adversarial pass of 40 sources checked every conclusion; its IDs were re-fetched by script.
 
 ### Sources
 | Source | What it shows | ID |
