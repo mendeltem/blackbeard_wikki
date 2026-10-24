@@ -2,6 +2,8 @@
 
 Stand 2026-10-24. Prefill für Chats und Agenten. Details in [INDEX.md](INDEX.md).
 
+2026-10-24, scan: **one native multimodal model instead of cooperating models.** The documented recipe is a cheap tokenizer per modality, one transformer with shared attention, and modality-specific feed-forward weights or experts against interference (Mixture-of-Transformers, MoMa). Modalities compete at small scale and only show synergy at large scale. Science models unify sequences (NatureLM, Evo 2, ESM3, Galactica); generalists are usually competitive but lose on precision tasks. No verified model takes text, DNA, 3D MRI and clinical numbers natively. See [one-native-multimodal-model-vs-model-ensembles-2026-10](findings/one-native-multimodal-model-vs-model-ensembles-2026-10.md).
+
 2026-10-24, scan: public mouse brain MRI comes with genotype labels (strain, knockout, transgene), not per-animal
 genomes; strain genomes (Mouse Genomes Project, Mouse Phenome Database) can be joined by label. Openly downloadable:
 Cambridge Huntington's library (399 brains) and MODEL-AD data via the AD Knowledge Portal. Models exist for DNA

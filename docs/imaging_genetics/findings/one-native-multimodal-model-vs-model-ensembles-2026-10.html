@@ -1,0 +1,320 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>One natively multimodal model instead of several cooperating models: the recipe exists for text+images, not yet for text+DNA+3D MRI+clinical numbers</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>One natively multimodal model instead of several cooperating models: the recipe exists for text+images, not yet for text+DNA+3D MRI+clinical numbers</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature scan 2026-10-24 (two search passes, every arXiv ID re-fetched from the arXiv API, DOIs from Crossref/PubMed, key numbers checked against abstracts)</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.html">Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</a> <span class="muted small">(imaging_genetics)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/one-native-multimodal-model-vs-model-ensembles-2026-10.md">knowledge/imaging_genetics/findings/one-native-multimodal-model-vs-model-ensembles-2026-10.md</a></span></div><h2>Aussage</h2>
+<p><strong>The recipe.</strong>
+- Every modality gets its own cheap tokenizer or patch layer: text BPE, image VQ codes or continuous patches, DNA
+  nucleotides, protein residues, SMILES, numbers.
+- One transformer with shared attention processes the mixed sequence.
+- Each modality gets its own output head or loss.</p>
+<p><strong>Five design families are documented:</strong>
+1. <strong>Discrete early fusion,</strong> everything as tokens in one decoder: Chameleon, Emu3, Gato, Unified-IO 2.
+2. <strong>Hybrid losses in one backbone:</strong> Transfusion uses next-token loss for text and diffusion for images, scales
+   better than quantizing images (models up to 7 B), and Show-o is similar.
+3. <strong>Decoupled visual front ends around one backbone:</strong> Janus.
+4. <strong>Modality-specific parameters inside one model:</strong>
+   - Mixture-of-Transformers matches the dense baseline with 55.8 % of the FLOPs.
+   - MoMa (modality-aware experts) saves 3.7x FLOPs.
+5. <strong>Shared perception encoders or embedding spaces:</strong> Perceiver IO, ImageBind, Meta-Transformer, 4M/4M-21
+   (any-to-any over tens of modalities).</p>
+<p><strong>Interference is real, and it depends on scale.</strong>
+- Mixed-modal scaling laws model synergy and competition between modalities explicitly. A 30 B speech-text model
+  beat the unimodal models (Aghajanyan 2023). The sub-pass read the paper body: competition dominates at small scale.
+- A study of 457 natively multimodal models found no inherent advantage of late fusion (bolt-on encoders) over early
+  fusion; mixture-of-experts lets the model learn modality-specific weights (Shukor 2025).
+- Chameleon needed extra stabilization because shared weights let the modalities compete. The QK-norm and z-loss
+  details come from the paper body, read by a sub-pass and not re-checked.
+- Best-supported fix: keep attention shared and give each modality its own feed-forward weights or experts.</p>
+<p><strong>Scientific "languages of nature" in one model.</strong>
+- <strong>Sequence-only unification works:</strong>
+  - NatureLM: molecules, proteins, DNA/RNA and materials as tagged sequences in one model.
+  - Galactica: SMILES and protein sequences inline in scientific text.
+  - Intern-S1: a dynamic tokenizer for SMILES/FASTA, plus a time-series encoder.
+  - Evo 2: DNA, with RNA and protein reached through the central dogma.
+  - ESM3: protein sequence, structure and function tokens in one model.
+- <strong>Generalist biomedical models:</strong> Med-PaLM M (text, images, genomics; 14 tasks), BiomedGPT, MedGemma, RadFM.
+- <strong>Generalists are usually competitive but lose on precision tasks.</strong>
+  - TxGemma was compared against specialists on 66 tasks: superior on 26, superior or comparable on 50.
+  - Tx-LLM exceeds state of the art on 22 of 66 tasks.
+  - Med-PaLM M loses to the dedicated DeepVariant on variant calling (number from the paper body, sub-pass).
+- <strong>3D MRI in a text model is expensive.</strong> MedGemma 1.5 feeds up to 85 axial slices at 256 tokens each (about
+  21,760 tokens; paper body, sub-pass). RadFM compresses 3D patches to 32 tokens per image with a Perceiver.
+- <strong>Numbers.</strong> Galactica splits digits, Tx-LLM and TxGemma bin regression targets, and xVal proposes one continuous
+  number token.
+- <strong>No verified model covers text + DNA/RNA + protein + molecules + 3D MRI + clinical numbers natively.</strong></p>
+<p><strong>Assessment (mine): a practical path to one model.</strong>
+1. Start from an open LLM backbone.
+2. Add modality tokenizers: nucleotides for DNA, 3D patch tokens compressed to a few dozen per scan for MRI, and
+   numbers as text with units or an xVal-style continuous token.
+3. Give DNA, MRI and tabular tokens their own feed-forward weights (Mixture-of-Transformers style) behind shared
+   attention.
+4. Train in two stages: align first with frozen encoders (cheap), then train jointly on mixed paired and unpaired
+   data.</p>
+<p>Native pretraining from scratch is data-centre scale. On a single 24 GB card the realistic options are continued
+training or LoRA of an existing multimodal model at a few billion parameters. At that size the scaling laws predict
+more competition than synergy, so a specialist ensemble can still win there.</p>
+<h2>Trägt</h2>
+<p>Architecture choice for a multi-"language" model: shared attention plus modality-specific weights; which
+tokenization exists per modality; what the generalist-vs-specialist evidence says.</p>
+<h2>Trägt nicht</h2>
+<p>Performance claims for DNA + 3D MRI + text in one model (none published and verified); training budgets of the cited
+models (not extracted); weight licences beyond what the abstracts state.</p>
+<h2>Bruchindikator</h2>
+<p>A published natively multimodal model that includes 3D MRI and genomic sequence and beats specialist ensembles; or
+scaling evidence that small mixed models (&lt; 10 B) already gain from adding modalities.</p>
+<h2>Ablesung</h2>
+<p><strong>Method.</strong>
+- Two search passes on 2026-10-24.
+- All 43 arXiv IDs and DOIs were re-fetched by script (arXiv API, Crossref); the titles match.
+- PMIDs were checked via PubMed.
+- Numbers marked "paper body, sub-pass" were read from full texts by a sub-pass and not re-checked.</p>
+<h3>Sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it shows</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reed 2022</td>
+<td>Gato: one transformer for text, images, control actions</td>
+<td><a href="https://arxiv.org/abs/2205.06175">arXiv 2205.06175</a></td>
+</tr>
+<tr>
+<td>Jaegle 2021</td>
+<td>Perceiver IO: general architecture for structured inputs and outputs</td>
+<td><a href="https://arxiv.org/abs/2107.14795">arXiv 2107.14795</a></td>
+</tr>
+<tr>
+<td>Aghajanyan 2023</td>
+<td>Scaling laws for mixed-modal models: synergy vs competition; 30 B speech-text beats unimodal</td>
+<td><a href="https://arxiv.org/abs/2301.03728">arXiv 2301.03728</a></td>
+</tr>
+<tr>
+<td>Girdhar 2023</td>
+<td>ImageBind: one embedding space for six modalities</td>
+<td><a href="https://arxiv.org/abs/2305.05665">arXiv 2305.05665</a></td>
+</tr>
+<tr>
+<td>Zhang 2023</td>
+<td>Meta-Transformer: one framework for many modalities</td>
+<td><a href="https://arxiv.org/abs/2307.10802">arXiv 2307.10802</a></td>
+</tr>
+<tr>
+<td>Mizrahi 2023</td>
+<td>4M: massively multimodal masked modelling</td>
+<td><a href="https://arxiv.org/abs/2312.06647">arXiv 2312.06647</a></td>
+</tr>
+<tr>
+<td>Bachmann 2024</td>
+<td>4M-21: any-to-any model for tens of modalities</td>
+<td><a href="https://arxiv.org/abs/2406.09406">arXiv 2406.09406</a></td>
+</tr>
+<tr>
+<td>Lu 2023</td>
+<td>Unified-IO 2: vision, language, audio, action autoregressively</td>
+<td><a href="https://arxiv.org/abs/2312.17172">arXiv 2312.17172</a></td>
+</tr>
+<tr>
+<td>Gemini Team 2023</td>
+<td>Gemini: natively multimodal family (closed)</td>
+<td><a href="https://arxiv.org/abs/2312.11805">arXiv 2312.11805</a></td>
+</tr>
+<tr>
+<td>Chameleon Team 2024</td>
+<td>Early-fusion token-based mixed-modal model, stable training recipe</td>
+<td><a href="https://arxiv.org/abs/2405.09818">arXiv 2405.09818</a></td>
+</tr>
+<tr>
+<td>Wang 2024</td>
+<td>Emu3: next-token prediction for all modalities</td>
+<td><a href="https://arxiv.org/abs/2409.18869">arXiv 2409.18869</a></td>
+</tr>
+<tr>
+<td>Xie 2024</td>
+<td>Show-o: one transformer for understanding and generation</td>
+<td><a href="https://arxiv.org/abs/2408.12528">arXiv 2408.12528</a></td>
+</tr>
+<tr>
+<td>Wu 2024</td>
+<td>Janus: decoupled visual encoding in one model</td>
+<td><a href="https://arxiv.org/abs/2410.13848">arXiv 2410.13848</a></td>
+</tr>
+<tr>
+<td>Zhou 2024</td>
+<td>Transfusion: next-token + diffusion in one transformer; scales better than discrete images</td>
+<td><a href="https://arxiv.org/abs/2408.11039">arXiv 2408.11039</a></td>
+</tr>
+<tr>
+<td>Liang 2024</td>
+<td>Mixture-of-Transformers: modality-specific parameters, 55.8 % of dense FLOPs</td>
+<td><a href="https://arxiv.org/abs/2411.04996">arXiv 2411.04996</a></td>
+</tr>
+<tr>
+<td>Lin 2024</td>
+<td>MoMa: modality-aware experts, 3.7x FLOPs savings</td>
+<td><a href="https://arxiv.org/abs/2407.21770">arXiv 2407.21770</a></td>
+</tr>
+<tr>
+<td>Shukor 2025</td>
+<td>Scaling laws for native multimodal models, 457 models; early fusion not inferior</td>
+<td><a href="https://arxiv.org/abs/2504.07951">arXiv 2504.07951</a></td>
+</tr>
+<tr>
+<td>Deng 2025</td>
+<td>BAGEL: emerging properties in unified multimodal pretraining</td>
+<td><a href="https://arxiv.org/abs/2505.14683">arXiv 2505.14683</a></td>
+</tr>
+<tr>
+<td>Tong 2026</td>
+<td>Beyond language modeling: multimodal pretraining study (abstract only)</td>
+<td><a href="https://arxiv.org/abs/2603.03276">arXiv 2603.03276</a></td>
+</tr>
+<tr>
+<td>Han 2026</td>
+<td>Towards physics of multimodal pretraining: modality synergy, early unification (abstract only)</td>
+<td><a href="https://arxiv.org/abs/2608.05000">arXiv 2608.05000</a></td>
+</tr>
+<tr>
+<td>Hamamci 2025</td>
+<td>Better tokens for better 3D: vision-language modelling in 3D medical imaging</td>
+<td><a href="https://arxiv.org/abs/2510.20639">arXiv 2510.20639</a></td>
+</tr>
+<tr>
+<td>Taylor 2022</td>
+<td>Galactica: science LLM with SMILES and protein sequences inline</td>
+<td><a href="https://arxiv.org/abs/2211.09085">arXiv 2211.09085</a></td>
+</tr>
+<tr>
+<td>Pei 2023 / 2024</td>
+<td>BioT5 and BioT5+: text, molecules, proteins</td>
+<td><a href="https://arxiv.org/abs/2310.07276">arXiv 2310.07276</a>, <a href="https://arxiv.org/abs/2402.17810">arXiv 2402.17810</a></td>
+</tr>
+<tr>
+<td>Xia 2025</td>
+<td>NatureLM: one sequence model for molecules, proteins, DNA/RNA, materials</td>
+<td><a href="https://arxiv.org/abs/2502.07527">arXiv 2502.07527</a></td>
+</tr>
+<tr>
+<td>Bai 2025 (Intern-S1) / Zou 2026 (Intern-S1-Pro)</td>
+<td>Scientific multimodal foundation model, SMILES/FASTA tokenizer, time series</td>
+<td><a href="https://arxiv.org/abs/2508.15763">arXiv 2508.15763</a>, <a href="https://arxiv.org/abs/2603.25040">arXiv 2603.25040</a></td>
+</tr>
+<tr>
+<td>Nguyen 2024, Science</td>
+<td>Evo: DNA model from molecular to genome scale</td>
+<td>PMID 39541441, <a href="https://doi.org/10.1126/science.ado9336">10.1126/science.ado9336</a></td>
+</tr>
+<tr>
+<td>Brixi 2026, Nature (Evo 2)</td>
+<td>Genome modelling and design across all domains of life</td>
+<td>PMID 41781614, <a href="https://doi.org/10.1038/s41586-026-10176-5">10.1038/s41586-026-10176-5</a></td>
+</tr>
+<tr>
+<td>Hayes 2025, Science</td>
+<td>ESM3: sequence, structure, function in one protein language model</td>
+<td>PMID 39818825, <a href="https://doi.org/10.1126/science.ads0018">10.1126/science.ads0018</a></td>
+</tr>
+<tr>
+<td>Tu 2023</td>
+<td>Med-PaLM M: generalist biomedical AI, 14 tasks incl. genomics</td>
+<td><a href="https://arxiv.org/abs/2307.14334">arXiv 2307.14334</a></td>
+</tr>
+<tr>
+<td>Zhang 2024, Nat Med</td>
+<td>BiomedGPT: generalist vision-language biomedical model</td>
+<td>PMID 39112796, <a href="https://doi.org/10.1038/s41591-024-03185-2">10.1038/s41591-024-03185-2</a>, <a href="https://arxiv.org/abs/2305.17100">arXiv 2305.17100</a></td>
+</tr>
+<tr>
+<td>Wu 2023</td>
+<td>RadFM: 2D and 3D radiology with text</td>
+<td><a href="https://arxiv.org/abs/2308.02463">arXiv 2308.02463</a></td>
+</tr>
+<tr>
+<td>Bai 2024</td>
+<td>M3D: 3D medical image MLLM</td>
+<td><a href="https://arxiv.org/abs/2404.00578">arXiv 2404.00578</a></td>
+</tr>
+<tr>
+<td>Sellergren 2025 / 2026</td>
+<td>MedGemma and MedGemma 1.5 technical reports</td>
+<td><a href="https://arxiv.org/abs/2507.05201">arXiv 2507.05201</a>, <a href="https://arxiv.org/abs/2604.05081">arXiv 2604.05081</a></td>
+</tr>
+<tr>
+<td>Richard 2024, bioRxiv (ChatNT)</td>
+<td>DNA/RNA/protein tasks by conversation (frozen DNA encoder + LLM)</td>
+<td><a href="https://doi.org/10.1101/2024.04.30.591835">10.1101/2024.04.30.591835</a></td>
+</tr>
+<tr>
+<td>Chaves 2024</td>
+<td>Tx-LLM: one model for 66 therapeutic tasks, exceeds SOTA on 22</td>
+<td><a href="https://arxiv.org/abs/2406.06316">arXiv 2406.06316</a></td>
+</tr>
+<tr>
+<td>Wang 2025</td>
+<td>TxGemma: vs specialists superior on 26, superior or comparable on 50 of 66 tasks</td>
+<td><a href="https://arxiv.org/abs/2504.06196">arXiv 2504.06196</a></td>
+</tr>
+<tr>
+<td>Golkar 2023</td>
+<td>xVal: continuous number token for scientific LMs</td>
+<td><a href="https://arxiv.org/abs/2310.02989">arXiv 2310.02989</a></td>
+</tr>
+<tr>
+<td>Zhong 2024</td>
+<td>Benchmarking LLMs for molecule prediction tasks</td>
+<td><a href="https://arxiv.org/abs/2403.05075">arXiv 2403.05075</a></td>
+</tr>
+<tr>
+<td>Luo 2023</td>
+<td>BioMedGPT: open multimodal generative pre-trained transformer for biomedicine</td>
+<td><a href="https://arxiv.org/abs/2308.09442">arXiv 2308.09442</a></td>
+</tr>
+</tbody>
+</table></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
