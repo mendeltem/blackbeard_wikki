@@ -1,0 +1,292 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
+<p><strong>Mouse data.</strong> I found no public dataset with a per-animal genome sequence plus brain MRI. The genetics in mouse MRI
+collections is a strain or a model label. A label still links to DNA, because the strains themselves are sequenced:
+the Mouse Genomes Project sequenced 17 inbred strains, including C57BL/6J, DBA/2J and CAST/EiJ (Keane 2011), and the
+Mouse Phenome Database serves strain-level variant calls. So "strain X + MRI of strain X + genome of strain X" can be
+assembled. The number of distinct genotypes stays small (4 to about 26 per collection).</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Genetics</th>
+<th>MRI</th>
+<th>Size</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cambridge Huntington's mouse library (Sawiak 2012)</td>
+<td>model label WT, R6/2 (CAG 109-464), YAC128</td>
+<td>ex vivo, high resolution, templates, grey/white and cortical-thickness maps</td>
+<td>399 brains, 9-80 weeks</td>
+<td>public, "no constraints", Cambridge DSpace repository</td>
+</tr>
+<tr>
+<td>MODEL-AD 5XFAD (Oblak 2021) and later late-onset AD models (Kotredes 2024)</td>
+<td>transgene / humanized APOE4, Trem2 etc.</td>
+<td>in vivo MRI (volumes), PET, plus transcriptomics, EEG, behaviour</td>
+<td>several cohorts</td>
+<td>public via AD Knowledge Portal (stated for 5XFAD)</td>
+</tr>
+<tr>
+<td>Toronto MICe autism models (Ellegood 2014)</td>
+<td>26 model labels (knockouts, BTBR, CNVs)</td>
+<td>ex vivo 7 T T2-weighted</td>
+<td>432 mice</td>
+<td>no data-availability statement found</td>
+</tr>
+<tr>
+<td>BXD recombinant inbred strains (Poot 2011)</td>
+<td>BXD strain genotypes, QTL mapping</td>
+<td>high-field MRI, corpus callosum volume</td>
+<td>not stated in abstract</td>
+<td>not stated</td>
+</tr>
+<tr>
+<td>Duke four-strain MR microscopy (Wang 2020)</td>
+<td>C57BL/6J, DBA/2J, CAST/EiJ, BTBR</td>
+<td>ex vivo 9.4 T, structure + diffusion connectomes, 166 regions/hemisphere</td>
+<td>4 strains</td>
+<td>not checked</td>
+</tr>
+<tr>
+<td>IMPC (Dickinson 2016)</td>
+<td>targeted knockouts on C57BL/6N</td>
+<td>mostly embryo micro-CT/OPT/HREM; brain MRI only at P7 for some lethal lines</td>
+<td>1,751 knockouts (first release)</td>
+<td>IMPC portal (not opened)</td>
+</tr>
+<tr>
+<td>Allen DevCCF (Kronman 2024)</td>
+<td>none per animal (atlas)</td>
+<td>ex vivo 7 T, 7 ages E11.5-P56</td>
+<td>66 MRI samples</td>
+<td>download (kimlab.io)</td>
+</tr>
+<tr>
+<td>Collaborative Cross / Diversity Outbred</td>
+<td>full genotypes</td>
+<td>no brain-MRI dataset found (3 PubMed queries)</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Human counterparts</strong> (genome + brain MRI): UK Biobank (application and fee; new applications reported paused, not
+confirmed), ADNI (whole-genome sequencing under a separate agreement). Neither offers radiology text as a
+ready-made training corpus (not checked in detail).</p>
+<p><strong>Models.</strong>
+- <strong>DNA language models:</strong> Nucleotide Transformer (50 M-2.5 B parameters, Dalla-Torre 2024), HyenaDNA (up to 1 M
+  tokens), Caduceus, DNABERT-2, Evo 2 (1-40 B parameters, up to 1 M context, weights on Hugging Face).
+- <strong>MRI and MRI+text models:</strong> BrainIAC (brain-MRI foundation model, about 49,000 scans, Tak 2026), RadFM and M3D
+  (3D medical images + text).
+- <strong>DNA + text:</strong> ChatNT, and BioReason (Nucleotide Transformer or Evo 2 encoder feeding a Qwen3 language model;
+  checkpoints announced, not released).
+- <strong>Genotype + MRI, contrastive shared embedding:</strong> AlzCLIP (SNPs + MRI features, ADNI 758 + UK Biobank 261
+  subjects) and COMICAL (genetic markers + imaging-derived phenotypes, UK Biobank; code and weights public).
+- <strong>No published model combines all three modalities.</strong></p>
+<p><strong>Assessment (mine, not from the sources): how a "multilingual" DNA + MRI + English model would be built.</strong>
+- <strong>Architecture:</strong> the LLaVA pattern. Frozen modality encoders feed small projection layers into an LLM, and only
+  the projectors plus LoRA adapters are trained. The encoders would be a DNA model (e.g. Evo 2 1B or Nucleotide
+  Transformer 500M) and a 3D brain-MRI encoder (e.g. BrainIAC). BioReason already does the DNA half this way.
+- <strong>The bottleneck is paired data.</strong> Training needs examples that have all three parts at once: DNA, MRI, and a text
+  description.
+  - In mouse, the text can be generated from metadata ("5XFAD, female, 6 months, smaller hippocampus"). DNA then
+    means the transgene or the strain's variant set.
+  - Mouse collections offer only tens of distinct genotypes, so a model cannot learn a general DNA -&gt; brain mapping.
+    It can learn a narrow task such as "genotype -&gt; regional-volume signature -&gt; description".
+- <strong>A cheaper first step:</strong> a contrastive genotype-MRI embedding (as in COMICAL or AlzCLIP) plus a language model
+  that explains it via tool calls, instead of one end-to-end model.
+- <strong>Hardware:</strong> a 24 GB card can hold the frozen encoders, a 1-4 B LLM and LoRA training on small data.
+- <strong>Patient data:</strong> genome + MRI + reports of patients must stay on the local machine; a cloud model never sees them.</p>
+<h2>Trägt</h2>
+<p>Choosing data and an architecture for a first genotype-MRI-text prototype; knowing that mouse MRI data carry
+labels, and that strain genomes have to be joined in separately.</p>
+<h2>Trägt nicht</h2>
+<p>Claims about model quality (none of the multimodal models was run here); open-weight status of Nucleotide
+Transformer, HyenaDNA, Caduceus, DNABERT-2, RadFM, M3D and BrainIAC (not checked); exact access terms of UK Biobank
+and ADNI today.</p>
+<h2>Bruchindikator</h2>
+<p>A public mouse dataset with per-animal sequencing and brain MRI (e.g. Diversity Outbred mice with MRI), or a
+published model that takes DNA, 3D MRI and text together.</p>
+<h2>Ablesung</h2>
+<p><strong>How this was checked.</strong>
+- A search pass ran on 2026-10-24, and the main session then re-checked its sources.
+- Every PMID below was re-fetched from PubMed; the DOIs match.
+- The GitHub, arXiv and bioRxiv pages answered HTTP 200 on 2026-10-24.
+- Dataset facts come from the PubMed abstracts. A few come from article pages the search pass opened (MICe 7 T and
+  432 mice, Allen DevCCF 66 samples); the main session did not re-check those.</p>
+<p><strong>Unverified.</strong>
+- Data portals: MICe, IMPC images, GeneNetwork BXD.
+- Status of UK Biobank applications.
+- The ChatNT model card and its licence.
+- The Evo 2 Nature article itself; only the README link to it was seen.</p>
+<h3>Sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it shows</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keane 2011, Nature</td>
+<td>Genome sequences of 17 inbred laboratory mouse strains</td>
+<td>PMID 21921910, <a href="https://doi.org/10.1038/nature10413">10.1038/nature10413</a></td>
+</tr>
+<tr>
+<td>Grubb 2014, Nucleic Acids Res</td>
+<td>Mouse Phenome Database: strain-level genotypes and phenotypes, open download</td>
+<td>PMID 24243846, <a href="https://doi.org/10.1093/nar/gkt1159">10.1093/nar/gkt1159</a></td>
+</tr>
+<tr>
+<td>Sawiak 2012, PLoS One</td>
+<td>399 ex vivo HD mouse brains (R6/2 CAG series, YAC128, WT), public without constraints</td>
+<td>PMID 23300918, <a href="https://doi.org/10.1371/journal.pone.0053361">10.1371/journal.pone.0053361</a></td>
+</tr>
+<tr>
+<td>Oblak 2021, Front Aging Neurosci</td>
+<td>MODEL-AD 5XFAD characterization incl. imaging; data public via AD Knowledge Portal</td>
+<td>PMID 34366832, <a href="https://doi.org/10.3389/fnagi.2021.713726">10.3389/fnagi.2021.713726</a></td>
+</tr>
+<tr>
+<td>Kotredes 2024, Alzheimer's &amp; Dementia</td>
+<td>MODEL-AD late-onset AD models: MRI volume loss with age, PET, multi-omics</td>
+<td>PMID 38735056, <a href="https://doi.org/10.1002/alz.13828">10.1002/alz.13828</a></td>
+</tr>
+<tr>
+<td>Ellegood 2014, Mol Psychiatry</td>
+<td>26 autism mouse models clustered by MRI neuroanatomy</td>
+<td>PMID 25199916, <a href="https://doi.org/10.1038/mp.2014.98">10.1038/mp.2014.98</a></td>
+</tr>
+<tr>
+<td>Poot 2011, PLoS One</td>
+<td>BXD strains, MRI corpus callosum volume, QTL at Hnrpul1</td>
+<td>PMID 21572526, <a href="https://doi.org/10.1371/journal.pone.0018612">10.1371/journal.pone.0018612</a></td>
+</tr>
+<tr>
+<td>Wang 2020, NeuroImage</td>
+<td>9.4 T MR microscopy and connectomes of four strains; heritable brain phenotypes</td>
+<td>PMID 32818613, <a href="https://doi.org/10.1016/j.neuroimage.2020.117274">10.1016/j.neuroimage.2020.117274</a></td>
+</tr>
+<tr>
+<td>Dickinson 2016, Nature</td>
+<td>IMPC knockout phenotyping, embryo imaging</td>
+<td>PMID 27626380, <a href="https://doi.org/10.1038/nature19356">10.1038/nature19356</a></td>
+</tr>
+<tr>
+<td>Kronman 2024, Nat Commun</td>
+<td>Allen developmental mouse brain coordinate framework (MRI templates)</td>
+<td>PMID 39433760, <a href="https://doi.org/10.1038/s41467-024-53254-w">10.1038/s41467-024-53254-w</a></td>
+</tr>
+<tr>
+<td>Dalla-Torre 2024, Nat Methods</td>
+<td>Nucleotide Transformer DNA models, 50 M-2.5 B parameters</td>
+<td>PMID 39609566, <a href="https://doi.org/10.1038/s41592-024-02523-z">10.1038/s41592-024-02523-z</a></td>
+</tr>
+<tr>
+<td>Nguyen 2023, arXiv</td>
+<td>HyenaDNA, long-range DNA model up to 1 M tokens</td>
+<td><a href="https://arxiv.org/abs/2306.15794">arXiv 2306.15794</a></td>
+</tr>
+<tr>
+<td>Schiff 2024, arXiv</td>
+<td>Caduceus, bidirectional reverse-complement-equivariant DNA model</td>
+<td><a href="https://arxiv.org/abs/2403.03234">arXiv 2403.03234</a></td>
+</tr>
+<tr>
+<td>Zhou 2023, arXiv</td>
+<td>DNABERT-2, multi-species DNA model</td>
+<td><a href="https://arxiv.org/abs/2306.15006">arXiv 2306.15006</a></td>
+</tr>
+<tr>
+<td>Evo 2 repository</td>
+<td>1-40 B parameter DNA models, up to 1 M context, weights on Hugging Face</td>
+<td><a href="https://github.com/ArcInstitute/evo2">github.com/ArcInstitute/evo2</a></td>
+</tr>
+<tr>
+<td>ChatNT, bioRxiv 2024</td>
+<td>DNA/RNA/protein tasks driven by English prompts</td>
+<td><a href="https://doi.org/10.1101/2024.04.30.591835">10.1101/2024.04.30.591835</a></td>
+</tr>
+<tr>
+<td>Fallahpour 2025, arXiv; repository</td>
+<td>BioReason: DNA encoder + Qwen3 LLM reasoning</td>
+<td><a href="https://arxiv.org/abs/2505.23579">arXiv 2505.23579</a>, <a href="https://github.com/bowang-lab/BioReason">github.com/bowang-lab/BioReason</a></td>
+</tr>
+<tr>
+<td>Wu 2023, arXiv</td>
+<td>RadFM, radiology foundation model for 2D/3D images + text</td>
+<td><a href="https://arxiv.org/abs/2308.02463">arXiv 2308.02463</a></td>
+</tr>
+<tr>
+<td>Bai 2024, arXiv</td>
+<td>M3D, 3D medical image + text dataset and model</td>
+<td><a href="https://arxiv.org/abs/2404.00578">arXiv 2404.00578</a></td>
+</tr>
+<tr>
+<td>Tak 2026, Nat Neurosci (preprint medRxiv 2024)</td>
+<td>BrainIAC, brain-MRI foundation model</td>
+<td>PMID 41644653, <a href="https://doi.org/10.1038/s41593-026-02202-6">10.1038/s41593-026-02202-6</a>; PMID 39677480</td>
+</tr>
+<tr>
+<td>Wang 2025, Adv Sci</td>
+<td>AlzCLIP: contrastive SNP + MRI embedding for AD</td>
+<td>PMID 40788127, <a href="https://doi.org/10.1002/advs.202507629">10.1002/advs.202507629</a></td>
+</tr>
+<tr>
+<td>Machado Reyes 2025, Bioinform Adv</td>
+<td>COMICAL: genetic markers + imaging phenotypes foundation model, code and weights</td>
+<td>PMID 40917653, <a href="https://doi.org/10.1093/bioadv/vbaf196">10.1093/bioadv/vbaf196</a>, <a href="https://github.com/IBM/comical">github.com/IBM/comical</a></td>
+</tr>
+</tbody>
+</table></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

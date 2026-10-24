@@ -1980,6 +1980,17 @@
 "src": "knowledge/dementia_risk_factors/findings/neuroticism-and-alzheimer-evidence-check-2026-10.md"
 },
 {
+"t": "Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together",
+"p": "imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.html",
+"a": "imaging_genetics",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-24",
+"x": "Mouse MRI only with genotype labels (strain genomes joinable); open: Cambridge HD 399 brains, MODEL-AD via AD Knowledge Portal; DNA LMs, MRI foundation models, SNP+MRI contrastive models exist, nothing with all three",
+"id": "mouse-genotype-mri-data-and-dna-mri-text-models-2026-10",
+"src": "knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md"
+},
+{
 "t": "Die Datenkette traegt die grossen Gewinne, das Trainingsrezept keinen",
 "p": "lesion_detection_method/mechanisms/data-chain-beats-training-levers.html",
 "a": "lesion_detection_method",
