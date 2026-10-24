@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span>2026-10-24 imaging_genetics: mouse genotype+MRI datasets and DNA/MRI/text models scan</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
 <p><strong>Mouse data.</strong> I found no public dataset with a per-animal genome sequence plus brain MRI. The genetics in mouse MRI
 collections is a strain or a model label. A label still links to DNA, because the strains themselves are sequenced:
 the Mouse Genomes Project sequenced 17 inbred strains, including C57BL/6J, DBA/2J and CAST/EiJ (Keane 2011), and the
@@ -144,6 +144,94 @@ ready-made training corpus (not checked in detail).</p>
   that explains it via tool calls, instead of one end-to-end model.
 - <strong>Hardware:</strong> a 24 GB card can hold the frozen encoders, a 1-4 B LLM and LoRA training on small data.
 - <strong>Patient data:</strong> genome + MRI + reports of patients must stay on the local machine; a cloud model never sees them.</p>
+<h2>Nachtrag 2026-10-24: the clinical layer (cognitive scores, age, diagnosis)</h2>
+<p>A DNA + MRI + text model for dementia also needs the structured clinical layer, measured in the same people and
+dated, ideally at several visits.</p>
+<p><strong>What the layer contains.</strong>
+- <strong>Demographics:</strong> age at each visit, sex, years of education, ancestry.
+- <strong>Cognitive screening and staging:</strong> MoCA with version and language, MMSE, CDR.
+- <strong>Neuropsychological battery:</strong> for example the NACC UDS 3.0, which comes with norms by age, sex and education
+  (Weintraub 2018).
+- <strong>Diagnosis:</strong> clinical diagnosis and aetiology.
+- <strong>Fluid and PET biomarkers:</strong> amyloid and tau PET, CSF, plasma p-tau, NfL, GFAP.
+- <strong>Genetics:</strong> APOE genotype.
+- <strong>Health:</strong> vascular and lifestyle risk factors, as in the Lancet Commission 2024 report; medication and stroke
+  history.
+- <strong>MRI context:</strong> derived MRI measures (hippocampal volume, WMH, microbleeds, infarcts) and acquisition metadata
+  (scanner, field strength, sequence).</p>
+<p><strong>Why each part matters.</strong>
+- <strong>Scores are not interchangeable.</strong> The MoCA catches MCI that the MMSE misses: in the original validation the
+  MoCA had 90 % sensitivity for MCI against 18 % for the MMSE (Nasreddine 2005). MoCA scores run consistently lower
+  than MMSE scores. Equipercentile conversion tables exist:
+  - a German-speaking memory clinic, n = 803, plus a review of 19 conversion studies (Fasnacht 2022);
+  - by dementia type (Roheger 2022);
+  - in Parkinson's disease (van Steenoven 2014), validated across 1,161 patients with a mean difference of 0.05
+    points, SD 1.84 (Lawton 2016).
+- <strong>Raw scores need norms.</strong> Age, sex and education shift both test scores and brain volumes, so the model should
+  see z-scores against norms, not only raw values.
+- <strong>Change over time is the strongest signal.</strong> In ADNI's first year, 16.5 % of MCI participants progressed to
+  dementia (Petersen 2010).</p>
+<p><strong>How a language model takes it in (assessment).</strong>
+- Serialize the values as text with a fixed schema, units and dates. Write "missing" explicitly. Example:
+  "age 72, female, education 12 y, MoCA 23/30 (v8.1, German), CDR-SB 1.5, APOE e3/e4".
+- An LLM already knows what MoCA or CDR mean. What it lacks is the pairing with images and genomes in the same
+  people.
+- A separate tabular encoder is the alternative when exact arithmetic on many variables matters.</p>
+<p><strong>Datasets with the clinical layer.</strong>
+- <strong>Human:</strong> ADNI (cognitive and functional measures, CSF, MRI/PET, longitudinal; Petersen 2010) and NACC (UDS
+  battery; Weintraub 2018).
+- <strong>Mouse:</strong> no cognitive scores; behavioural tests are the analogue. MODEL-AD includes behaviour (Oblak 2021).</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it shows</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nasreddine 2005, J Am Geriatr Soc</td>
+<td>MoCA validation: 90 % sensitivity for MCI vs 18 % for MMSE</td>
+<td>PMID 15817019, <a href="https://doi.org/10.1111/j.1532-5415.2005.53221.x">10.1111/j.1532-5415.2005.53221.x</a></td>
+</tr>
+<tr>
+<td>Fasnacht 2022, J Am Geriatr Soc</td>
+<td>MoCA-MMSE conversion, 803 memory-clinic patients + review of 19 conversions</td>
+<td>PMID 36346002, <a href="https://doi.org/10.1111/jgs.18124">10.1111/jgs.18124</a></td>
+</tr>
+<tr>
+<td>Roheger 2022, J Am Med Dir Assoc</td>
+<td>MMSE-MoCA conversion by dementia type (SveDem, 387)</td>
+<td>PMID 35561758, <a href="https://doi.org/10.1016/j.jamda.2022.03.018">10.1016/j.jamda.2022.03.018</a></td>
+</tr>
+<tr>
+<td>van Steenoven 2014, Mov Disord</td>
+<td>MMSE/MoCA/DRS-2 conversion in Parkinson's disease</td>
+<td>PMID 25381961, <a href="https://doi.org/10.1002/mds.26062">10.1002/mds.26062</a></td>
+</tr>
+<tr>
+<td>Lawton 2016, Mov Disord</td>
+<td>Validation of MoCA-MMSE conversion across 5 studies</td>
+<td>PMID 26861697, <a href="https://doi.org/10.1002/mds.26498">10.1002/mds.26498</a></td>
+</tr>
+<tr>
+<td>Weintraub 2018, Alzheimer Dis Assoc Disord</td>
+<td>NACC UDS 3.0 battery, norms by age, sex and education</td>
+<td>PMID 29240561, <a href="https://doi.org/10.1097/WAD.0000000000000223">10.1097/WAD.0000000000000223</a></td>
+</tr>
+<tr>
+<td>Petersen 2010, Neurology</td>
+<td>ADNI clinical characterization, 819 participants, MCI progression 16.5 %/year</td>
+<td>PMID 20042704, <a href="https://doi.org/10.1212/WNL.0b013e3181cb3e25">10.1212/WNL.0b013e3181cb3e25</a></td>
+</tr>
+<tr>
+<td>Livingston 2024, Lancet</td>
+<td>Lancet Commission 2024 on dementia prevention (modifiable risk factors; abstract not available, text not re-read)</td>
+<td>PMID 39096926, <a href="https://doi.org/10.1016/S0140-6736(24)01296-0">10.1016/S0140-6736(24)01296-0</a></td>
+</tr>
+</tbody>
+</table>
 <h2>Trägt</h2>
 <p>Choosing data and an architecture for a first genotype-MRI-text prototype; knowing that mouse MRI data carry
 labels, and that strain genomes have to be joined in separately.</p>

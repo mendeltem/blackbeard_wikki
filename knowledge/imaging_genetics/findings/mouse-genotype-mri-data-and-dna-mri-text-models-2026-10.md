@@ -58,6 +58,59 @@ ready-made training corpus (not checked in detail).
 - **Hardware:** a 24 GB card can hold the frozen encoders, a 1-4 B LLM and LoRA training on small data.
 - **Patient data:** genome + MRI + reports of patients must stay on the local machine; a cloud model never sees them.
 
+## Nachtrag 2026-10-24: the clinical layer (cognitive scores, age, diagnosis)
+A DNA + MRI + text model for dementia also needs the structured clinical layer, measured in the same people and
+dated, ideally at several visits.
+
+**What the layer contains.**
+- **Demographics:** age at each visit, sex, years of education, ancestry.
+- **Cognitive screening and staging:** MoCA with version and language, MMSE, CDR.
+- **Neuropsychological battery:** for example the NACC UDS 3.0, which comes with norms by age, sex and education
+  (Weintraub 2018).
+- **Diagnosis:** clinical diagnosis and aetiology.
+- **Fluid and PET biomarkers:** amyloid and tau PET, CSF, plasma p-tau, NfL, GFAP.
+- **Genetics:** APOE genotype.
+- **Health:** vascular and lifestyle risk factors, as in the Lancet Commission 2024 report; medication and stroke
+  history.
+- **MRI context:** derived MRI measures (hippocampal volume, WMH, microbleeds, infarcts) and acquisition metadata
+  (scanner, field strength, sequence).
+
+**Why each part matters.**
+- **Scores are not interchangeable.** The MoCA catches MCI that the MMSE misses: in the original validation the
+  MoCA had 90 % sensitivity for MCI against 18 % for the MMSE (Nasreddine 2005). MoCA scores run consistently lower
+  than MMSE scores. Equipercentile conversion tables exist:
+  - a German-speaking memory clinic, n = 803, plus a review of 19 conversion studies (Fasnacht 2022);
+  - by dementia type (Roheger 2022);
+  - in Parkinson's disease (van Steenoven 2014), validated across 1,161 patients with a mean difference of 0.05
+    points, SD 1.84 (Lawton 2016).
+- **Raw scores need norms.** Age, sex and education shift both test scores and brain volumes, so the model should
+  see z-scores against norms, not only raw values.
+- **Change over time is the strongest signal.** In ADNI's first year, 16.5 % of MCI participants progressed to
+  dementia (Petersen 2010).
+
+**How a language model takes it in (assessment).**
+- Serialize the values as text with a fixed schema, units and dates. Write "missing" explicitly. Example:
+  "age 72, female, education 12 y, MoCA 23/30 (v8.1, German), CDR-SB 1.5, APOE e3/e4".
+- An LLM already knows what MoCA or CDR mean. What it lacks is the pairing with images and genomes in the same
+  people.
+- A separate tabular encoder is the alternative when exact arithmetic on many variables matters.
+
+**Datasets with the clinical layer.**
+- **Human:** ADNI (cognitive and functional measures, CSF, MRI/PET, longitudinal; Petersen 2010) and NACC (UDS
+  battery; Weintraub 2018).
+- **Mouse:** no cognitive scores; behavioural tests are the analogue. MODEL-AD includes behaviour (Oblak 2021).
+
+| Source | What it shows | ID |
+|---|---|---|
+| Nasreddine 2005, J Am Geriatr Soc | MoCA validation: 90 % sensitivity for MCI vs 18 % for MMSE | PMID 15817019, [10.1111/j.1532-5415.2005.53221.x](https://doi.org/10.1111/j.1532-5415.2005.53221.x) |
+| Fasnacht 2022, J Am Geriatr Soc | MoCA-MMSE conversion, 803 memory-clinic patients + review of 19 conversions | PMID 36346002, [10.1111/jgs.18124](https://doi.org/10.1111/jgs.18124) |
+| Roheger 2022, J Am Med Dir Assoc | MMSE-MoCA conversion by dementia type (SveDem, 387) | PMID 35561758, [10.1016/j.jamda.2022.03.018](https://doi.org/10.1016/j.jamda.2022.03.018) |
+| van Steenoven 2014, Mov Disord | MMSE/MoCA/DRS-2 conversion in Parkinson's disease | PMID 25381961, [10.1002/mds.26062](https://doi.org/10.1002/mds.26062) |
+| Lawton 2016, Mov Disord | Validation of MoCA-MMSE conversion across 5 studies | PMID 26861697, [10.1002/mds.26498](https://doi.org/10.1002/mds.26498) |
+| Weintraub 2018, Alzheimer Dis Assoc Disord | NACC UDS 3.0 battery, norms by age, sex and education | PMID 29240561, [10.1097/WAD.0000000000000223](https://doi.org/10.1097/WAD.0000000000000223) |
+| Petersen 2010, Neurology | ADNI clinical characterization, 819 participants, MCI progression 16.5 %/year | PMID 20042704, [10.1212/WNL.0b013e3181cb3e25](https://doi.org/10.1212/WNL.0b013e3181cb3e25) |
+| Livingston 2024, Lancet | Lancet Commission 2024 on dementia prevention (modifiable risk factors; abstract not available, text not re-read) | PMID 39096926, [10.1016/S0140-6736(24)01296-0](https://doi.org/10.1016/S0140-6736(24)01296-0) |
+
 ## Trägt
 Choosing data and an architecture for a first genotype-MRI-text prototype; knowing that mouse MRI data carry
 labels, and that strain genomes have to be joined in separately.
