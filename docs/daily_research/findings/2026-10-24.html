@@ -1,0 +1,255 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Morgenrecherche 2026-10-24</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">daily_research</a> › <a href="../index.html#findings">Befund</a></div><h1>Morgenrecherche 2026-10-24</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ">unbestaetigt</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell)</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-10-24.md">knowledge/daily_research/findings/2026-10-24.md</a></span></div><p>8 von 8 Bereichen recherchiert, 39 min. Aussagen stammen aus Abstracts und, wo als [Volltext] markiert, aus Open-Access-Volltexten (Europe PMC); nicht von Hand geprueft.</p>
+<h2>Rechenzusagen und Preismacht der Kaeuferseite 2025+</h2>
+<p>Bereich: <a href="../../ai_buyers/index.html">ai_buyers</a></p>
+<p>Die Finanzierung des KI-Ausbaus verlagert sich weg von internem Cashflow hin zu externen Formen wie Leasing und Projekt-Schulden, da die Kapitalausgaben der Hyperscaler den internen Cashflow übersteigen.
+https://doi.org/10.3386/w35865</p>
+<p>Bei der geteilten GPU-Allokierung für LLM-Inferenz spart On-Premise 40,1 % der Total Cost of Ownership gegenüber der Cloud, während On-Premise bei dedizierter Reservierung 43,8 % teurer ist als die gecachte API.
+https://doi.org/10.48550/arxiv.2607.13080</p>
+<p>Das System „Agora“ beschreibt verbrauchsabhängiges Pricing, das bei einer mittleren Marktdurchdringung von 15–30 % zu steigenden Einnahmen führen kann.
+https://doi.org/10.48550/arxiv.2510.05111</p>
+<p>Dezentrale Netzwerke (DePIN) werden als Alternative zu zentralen Hyperscalern dargestellt, die „signifikant niedrigere Preise“ anbieten können, ohne dass konkrete numerische Werte genannt werden.
+https://openalex.org/W7116823527</p>
+<p>Einschaetzung (lokales Modell): Die fehlenden quantitativen Daten zu Vertragsbindungen und aktuellen Preistrassen erschweren eine präzise Risikobewertung der Kapazitätsverfügbarkeit für die laufende Arbeit.</p>
+<p>Quellen (Auszug):
+- https://openalex.org/W7169473650
+- https://doi.org/10.48550/arxiv.2607.13080
+- https://doi.org/10.3389/frai.2026.1750992 [Volltext]
+- https://openalex.org/W7116823527
+- https://doi.org/10.3386/w35865
+- https://doi.org/10.48550/arxiv.2406.01722
+- https://doi.org/10.48550/arxiv.2604.24027
+- https://doi.org/10.48550/arxiv.2510.05111
+- https://doi.org/10.48550/arxiv.2604.24548</p>
+<h2>HBM-Nachfrage und GPU-Mietpreisentwicklung im Rubin-Uebergang</h2>
+<p>Bereich: <a href="../../ai_demand_drivers/index.html">ai_demand_drivers</a></p>
+<p>Die vorliegenden Quellen belegen keine spezifischen Supply-Chain-Analysen aus dem Jahr 2025 oder später, die Prognosen zur Produktionskapazität von HBM3E und HBM4 bis 2027 liefern, und erwähnen keine Details zur Rubin-Plattform oder zum HBM-Ausstattungsgrad pro GPU.
+https://doi.org/10.48550/arxiv.2601.20115</p>
+<p>Für Compute-Assets (GPU) existiert keine veröffentlichte Restwert-Methodologie wie in anderen Branchen üblich, und die „veröffentlichten Sekundärpreis-Evidenzen“ werden als „dünn und wechselseitig widersprüchlich“ beschrieben, wobei es keine spezialisierten Datensätze ab 2025 gibt, die GPU-Mietpreise systematisch tracken.
+https://doi.org/10.54660/.ijmrge.2026.7.5.49-62</p>
+<p>Zwischen November 2025 und Mai 2026 starteten Golfstaaten den aggressivsten Aufbau souveräner KI-Infrastrukturen mit Investitionen von über 40 Milliarden US-Dollar, was auf einen hohen Bedarf an Rechen- und Speicherkapazität hindeutet.
+https://doi.org/10.5281/zenodo.20574936</p>
+<p>Dezentrale Netzwerke (DePIN) wie Akash oder Aethir bieten laut Vergleichsstudien „signifikant niedrigere Preise“ als Hyperscale-Raten an, was auf eine Preisdifferenzierung im GPU-Markt hindeutet.
+https://openalex.org/W7116823527</p>
+<p>Ein 128-GPU-Cluster aus gebrauchten V100-Komponenten kostet bei aktuellen Marktpreisen 22.000 $, im Vergleich zu 600.000 $ für ein 8-GPU-B200-System, wobei ältere GPUs pro Token signifikant mehr Energieverbrauch und CO2-Emissionen verursachen können.
+https://doi.org/10.48550/arxiv.2608.14614</p>
+<p>Einschaetzung (lokales Modell): Die fehlende Transparenz bei HBM-Kapazitäten und GPU-Mietpreisen sowie die widersprüchlichen Sekundärmarktdaten erschweren derzeit eine belastbare Planung der Infrastrukturkosten für den anstehenden Rubin-Übergang.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2601.20115
+- https://doi.org/10.48550/arxiv.2608.28048
+- https://doi.org/10.5281/zenodo.20574936
+- https://doi.org/10.48550/arxiv.2608.14614
+- https://doi.org/10.54660/.ijmrge.2026.7.5.49-62
+- https://openalex.org/W7169473650
+- https://doi.org/10.1109/icngcs64900.2025.11183146
+- https://doi.org/10.3390/s26185942
+- https://openalex.org/W7116823527
+- https://doi.org/10.1145/3701997</p>
+<h2>Empirische Produktivitaetsdaten zu KI in Forschungsworkflows 2025+</h2>
+<p>Bereich: <a href="../../ai_labor_market/index.html">ai_labor_market</a></p>
+<ul>
+<li>Es fehlen derzeit belastbare empirische Daten, die die Arbeitszeiteinsparung oder Fehlerquotenreduktion bei der LLM-gestützten Literaturrecherche im direkten Vergleich mit manueller Datenbankrecherche quantifizieren, wobei vorhandene Studien zu Fehlerquoten keinen manuellen Vergleichsarm oder Zeitmessung enthalten. https://doi.org/10.48550/arxiv.2610.05690</li>
+<li>Es existieren keine veröffentlichten Survey- oder Log-Datensätze aus 2025 oder später, die die Nutzungshäufigkeit von KI-Einsätzen für strukturierte Aufgaben wie Zitationsextraktion oder Protokollerstellung im Vergleich zu einmaliger Q&amp;A bei Forschungsteams quantitativ abbilden. https://doi.org/10.3389/fdgth.2026.1865568</li>
+<li>Arbeitsmarktanalysen zeigen, dass „Digitally Empowered“ Arbeiter in Europa 21 Prozentpunkte mehr verdienen als das Landesmedian, während „Heavily Controlled“ Arbeiter keine Lohnprämie erhalten, ohne jedoch explizit nach Rollen wie „AI coding“ oder „research assistants“ zu differenzieren. https://doi.org/10.1111/ntwe.70040</li>
+<li>Methodische Ansätze wie kontrafaktuelle Designs oder modulare Vergleiche (z. B. Trennung von Retrieval und Kodifizierung) dienen der Nachvollziehbarkeit und Isolierung des KI-Beitrags, liefern aber keine standardisierten Benchmarks oder einheitliche Standardmethode zur Messung der resultierenden Produktivität in Forschungsworkflows. https://doi.org/10.3389/frai.2026.1905145</li>
+<li>Indirekte Hinweise aus der Softwareentwicklung deuten darauf hin, dass die Nutzungshäufigkeit von KI-Tools mit der wahrgenommenen Produktivität korreliert, was als möglicher Indikator für die Effizienzbewertung herangezogen werden kann. https://openalex.org/W7126281021</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Da spezifische Vergleichsdaten für die Literaturrecherche fehlen, könnte die laufende Arbeit von der Entwicklung eigener Messprotokolle oder der Nutzung indirekter Indikatoren wie der Korrelation zwischen Nutzungshäufigkeit und wahrgenommener Produktivität profitieren, um die Effizienz des Schwarms zu belegen.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2610.05690
+- https://doi.org/10.3389/frai.2026.1905145 [Volltext]
+- https://doi.org/10.48550/arxiv.2608.20938
+- https://doi.org/10.3389/fdgth.2026.1865568 [Volltext]
+- https://doi.org/10.1093/jamia/ocaf063
+- https://openalex.org/W7126281021
+- https://doi.org/10.1111/ntwe.70040
+- https://doi.org/10.63158/journalisi.v8i3.1615
+- https://openalex.org/W7162475538
+- https://doi.org/10.1145/3652154</p>
+<h2>Laengsschnitt-Volumetrie unter QC-Ausfaellen und fehlenden Sitzungen</h2>
+<p>Bereich: <a href="../../brain_volumetry/index.html">brain_volumetry</a></p>
+<p>Die Recherche identifiziert keine spezifischen Methoden aus 2025 oder später, die fehlende oder QC-rejectete Sitzungen in der longitudinalen Hirnvolumetrie handhaben, ohne den Subjekt auszuschließen, und dabei die Zufallseffekte von Mischmodellen anpassen, um die statistische Power zu erhalten.
+https://doi.org/10.1016/j.dcn.2026.101779</p>
+<p>Aktuelle Studien nutzen lineare Mischmodelle mit zufälligen Intercepts für longitudinale Biomarker, basieren jedoch auf „complete-case requirements“ und behandeln fehlende Sitzungen nicht durch eine entsprechende Modellanpassung.
+https://doi.org/10.1096/fba.2026-00194</p>
+<p>Es existieren keine Belege für Ansätze aus 2025+, die „Multi-Session Consensus“ oder „Temporal Smoothing“ zur Reduktion von Single-Session-Segmentationsrauschen in der Atrophie-Raten-Schätzung einsetzen und dabei eine messbare Reduktion des Coefficient of Variation (CV) berichten.
+https://doi.org/10.64898/2026.07.23.740400</p>
+<p>Die vorliegenden Quellen enthalten keine spezifischen Definitionen oder Anwendungen eines „per-session QC gate“ in longitudinalen Studien aus 2025+, noch wird der quantitative Einfluss solcher Gates auf die detektierbaren jährlichen Atrophieraten kleiner Strukturen beschrieben.
+https://doi.org/10.3389/fnins.2025.1632169</p>
+<p>Einschaetzung (lokales Modell): Da die spezifischen methodischen Lösungen zur robusten Trendschätzung unter Ausfall und die zugehörigen Reliabilitätsbenchmarks in den Quellen fehlen, bleibt die statistische Power bei der Detektion von Atrophieraten in kleinen Strukturen derzeit unbestimmt.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.1096/fba.2026-00194
+- https://doi.org/10.1177/17407745261423479
+- https://doi.org/10.3390/diagnostics16172763
+- https://doi.org/10.64898/2026.09.09.26362611
+- https://doi.org/10.17615/68tk-qj31
+- https://doi.org/10.3390/bioengineering13070820
+- https://doi.org/10.3390/brainsci16060652
+- https://doi.org/10.1186/s40708-026-00305-1
+- https://doi.org/10.1016/j.dcn.2026.101779
+- https://doi.org/10.3233/jhd-120030</p>
+<h2>Chinesische Rechenautarkie und ihre Auswirkung auf die globale Lieferkette</h2>
+<p>Bereich: <a href="../../china_industrial_strategy/index.html">china_industrial_strategy</a></p>
+<ul>
+<li>US-Exportkontrollen erzeugen kurzfristige Verzögerungen und Kostensteigerungen, führen langfristig jedoch zu einer Intensivierung der chinesischen Innovationsanstrengungen und der Bildung paralleler Innovationspfade, wobei China bei der Herstellung fortgeschrittener Chips weiterhin von ausländischen Inputs abhängig bleibt. https://doi.org/10.1080/23311886.2025.2528450</li>
+<li>Die Kontrolle über kritische Produktionsschritte liegt weiterhin bei westlichen Unternehmen, da ASML die Lithografie dominiert und TSMC die Qualifizierung sowie das Packaging steuert, was die Skalierung für China strukturell erschwert. https://doi.org/10.1080/09692290.2026.2715454</li>
+<li>Aktuelle Exportkontrollen erzeugen Leistungslücken im Vergleich zu NVIDIA, die durch mögliche Politikänderungen von einem Faktor von 23,6x auf 3,54x reduziert werden könnten, was auf eine dynamische Marktsituation mit direkten regulatorischen Auswirkungen auf die Hardware-Verfügbarkeit hindeutet. https://doi.org/10.48550/arxiv.2601.20115</li>
+<li>Zölle erhöhen die Kosten für Neue-Energie-Unternehmen um 15,7 % und technologische Barrieren senken die F&amp;E-Effizienz der Chipindustrie um 32,4 %, was belegt, dass geopolitische Maßnahmen direkte ökonomische Effekte auf die Infrastrukturkosten haben. https://doi.org/10.54097/hya2jn25</li>
+<li>Prognosen deuten darauf hin, dass China 2030 41,3 % der globalen KI-Nutzer ausmachen wird, was auf eine geografische Konzentration der Trainings-Workloads und eine wachsende Nachfrage im asiatischen Raum hindeutet, ohne die installierte Hardware-Kapazität direkt zu beziffern. https://doi.org/10.1371/journal.pone.0343056</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Die beschriebenen strukturellen Engpässe bei der Chipfertigung und die prognostizierte Verlagerung der KI-Nachfrage könnten langfristig die Verfügbarkeit und Preise für Rechenressourcen beeinflussen, was bei der Planung von Infrastrukturkosten berücksichtigt werden sollte.</p>
+<p>Quellen (Auszug):
+- https://openalex.org/W7159916252
+- https://doi.org/10.48550/arxiv.2607.20120
+- https://doi.org/10.48550/arxiv.2601.20115
+- https://doi.org/10.32890/jis2026.22.1.6
+- https://doi.org/10.1080/09692290.2026.2715454
+- https://doi.org/10.3389/frai.2026.1796682 [Volltext]
+- https://doi.org/10.1371/journal.pone.0343056 [Volltext]
+- https://doi.org/10.1080/23311886.2025.2528450
+- https://doi.org/10.1371/journal.pone.0331222 [Volltext]
+- https://doi.org/10.54097/hya2jn25</p>
+<h2>Nicht-Speicher-Engpaeasse: Packaging, Strom, Optik 2025+</h2>
+<p>Bereich: <a href="../../compute_bottlenecks/index.html">compute_bottlenecks</a></p>
+<ul>
+<li>Der Übergang von der 48-V- zur 800-V-DC-Architektur in Rechenzentren wird als notwendig erachtet, um Kupfervolumen und Platzbedarf im Rack zu reduzieren, wobei GaN-basierte Wandler mit hoher Leistungsdichte (z. B. 2070 W/in³) eine zentrale Rolle spielen. https://doi.org/10.1109/apec51134.2026.11517167</li>
+<li>CoWoS-Technologien (S, R, L) werden als kritische Infrastruktur für KI-getriebenes Hochleistungsrechnen identifiziert, jedoch fehlen im vorliegenden Material konkrete numerische Daten zu Produktionskapazitäten oder Lead-Time-Trends für das Jahr 2025. https://doi.org/10.1115/1.4070106</li>
+<li>Der Markt für optische Interconnects wird für 2025 auf 18,01 Mrd. USD geschätzt und soll bis 2030 auf 32,73 Mrd. USD wachsen, wobei Siliziumphotonik und Co-Packaged Optics als Lösungen für elektrische Grenzen und Energieeffizienz gelten. https://doi.org/10.5281/zenodo.17589030</li>
+<li>Praktische Einschränkungen bei der Implementierung photonischer Interconnects umfassen Laser-Effizienz, Einfügeverluste, thermisches Tuning und die Packaging-Ausbeute, was die Skalierbarkeit beeinflusst. https://openalex.org/W7165253150</li>
+<li>Die Heterogene Integrationstechnologie wird als Treiber für die Evolution von Co-Packaged Optics (CPO) genannt, um die hohe Bandbreite und Energieeffizienz zu gewährleisten, die für moderne Rechenzentren erforderlich sind. https://doi.org/10.3390/mi16091037</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Die identifizierten Engpässe bei Stromversorgung und optischen Verbindungen könnten die Skalierung lokaler KI-Infrastrukturen durch höhere thermische Lasten und Platzbedarf in den Racks limitieren.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.1115/1.4070106
+- https://doi.org/10.48550/arxiv.2605.16255
+- https://openalex.org/W7165253150
+- https://doi.org/10.29284/mvm2ts51
+- https://openalex.org/W7135737594
+- https://doi.org/10.3390/mi16091037
+- https://doi.org/10.5281/zenodo.17589030
+- https://doi.org/10.1109/apec51134.2026.11517167</p>
+<h2>Stabilitaet und Fehlererholung bei lokaler LLM-Inferenz unter Ressourcenstress</h2>
+<p>Bereich: <a href="../../local_llm_operation/index.html">local_llm_operation</a></p>
+<p>Die Recherche zeigt, dass in den vorliegenden Quellen keine spezifischen dokumentierten Fehlermodi oder Wiederherstellungsverfahren für lokale LLM-Inferenz unter Bedingungen hoher Datenträgerauslastung oder fragmentierter Swap-Bereiche existieren.
+https://doi.org/10.48550/arxiv.2609.05881</p>
+<p>Es werden „still defective“ GGUF-Artefakte in öffentlichen Registries beschrieben, die auf Backends wie Ollama fehlschlagen, sowie backend-abhängige Fehler (CUDA vs. Metal), jedoch ohne Bezug zu I/O- oder Swap-Problemen.
+https://doi.org/10.48550/arxiv.2609.05881</p>
+<p>Ressourcenkonkurrenz und GPU-Speicherzuweisung werden als Hauptfaktoren für den Durchsatz bei der Nutzung von Ollama auf repurposed PCs identifiziert, ohne spezifische Disk- oder Swap-Fehler zu benennen.
+https://doi.org/10.3389/fcomp.2026.1911927</p>
+<p>Ansätze wie vAttention und LOCAL verwalten den KV-Cache dynamisch, um Fragmentierung zu vermeiden und Speicher effizient zuzuweisen, wobei LOCAL einen version-aware KV-Cache Manager nutzt, um unter engen KV-Budgets stabil zu bleiben.
+https://doi.org/10.1145/3669940.3707256</p>
+<p>Systeme wie TPI-LLM verlagern KV-Caches oder Layer-Weights von der GPU auf CPU-RAM und Disk, um den VRAM-Verbrauch zu senken, und überlappen dabei die Disk-I/O-Latenz mit der Berechnung.
+https://arxiv.org/abs/2410.00531v1</p>
+<p>Einschaetzung (lokales Modell): Da die Literatur keine spezifischen OS-Ebenen-Strategien für OOM-Killer-Prävention oder Watchdog-Muster mit Kontexterhalt unter extremem Disk-Stress liefert, könnte dies bedeuten, dass die aktuellen rc=6-Loops und NoneType-Fehler nicht durch etablierte Framework-Funktionen, sondern durch fehlende systemnahe Überwachung und manuelle Ressourcenverwaltung abgefangen werden können.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2609.05881
+- https://doi.org/10.36227/techrxiv.176238087.79673350/v1
+- https://doi.org/10.1038/s41598-026-44325-7 [Volltext]
+- https://doi.org/10.48550/arxiv.2609.19169
+- https://doi.org/10.3389/fcomp.2026.1911927
+- https://doi.org/10.34257/gjcstb156360
+- https://doi.org/10.48550/arxiv.2604.07609
+- https://doi.org/10.48550/arxiv.2606.02011
+- https://doi.org/10.3390/bioengineering13091090
+- https://doi.org/10.48550/arxiv.2608.19147</p>
+<h2>Fertigungskosten-Trends und Physical-AI-Effekte 2025+</h2>
+<p>Bereich: <a href="../../manufacturing_costs/index.html">manufacturing_costs</a></p>
+<ul>
+<li>Eine Studie aus 2025 dokumentiert eine Reduktion der Produktionskosten pro Einheit um 15 % bei der Präzisionsbearbeitung hydraulischer Ventilblöcke für Antiblockiersysteme durch optimierte Werkzeuge und bio-basierte Kühlschmierstoffe. https://doi.org/10.3390/ma18235287</li>
+<li>Eine systematische Review zu kollaborativen Robotern (Cobots) in der Fertigung für den Zeitraum 2015–2025 zeigt eine Amortisationszeit von 18–36 Monaten, eine mediane Produktivitätssteigerung von 28 % und eine Verbesserung der Fehlerquote um 18 %. https://doi.org/10.36948/ijfmr.2026.v08i03.81678</li>
+<li>Ein Fallbeispiel zur Digital-Twin-Implementierung in der Rauchmelderfertigung berichtet über eine Senkung der Arbeitskosten um 96,7 %, während eine Analyse im Textilsektor argumentiert, dass digitale Technologien traditionelle Kostennachteile des US-Reshoring ausgleichen können. https://doi.org/10.1371/journal.pone.0341224</li>
+<li>Eine experimentelle Untersuchung aus 2026 berichtet, dass die Optimierung von G-Code durch KI die Zykluszeit um 37 % reduzierte und die Oberflächenrauheit um 84 % verbesserte, ohne jedoch ein ökonomisches Kostenmodell zu liefern. https://doi.org/10.3390/machines14010089</li>
+<li>Eine Arbeit zur Optimierung flexibler Fertigungssysteme mittels D-Optimal-Design und Simulation zeigt eine Reduktion der Ausschussquote um 41 % und der Produktionszeit pro Einheit um 27 % bei einer Automatisierungsrate von 92,8 %. https://doi.org/10.1038/s41598-026-41466-7</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Die vorliegenden Daten deuten darauf hin, dass der wirtschaftliche Nutzen von Automatisierung und KI stark von der spezifischen Implementierung abhängt, da direkte TCO-Vergleiche für die Zielbranchen Robotik und Rechenzentrums-Kühlung fehlen und die dokumentierten Effekte aus anderen Industrien stammen.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.36948/ijfmr.2026.v08i03.81678
+- https://doi.org/10.36227/techrxiv.175459829.93863272/v1
+- https://doi.org/10.3390/ma18235287 [Volltext]
+- https://doi.org/10.1371/journal.pone.0341224
+- https://doi.org/10.7190/shu-thesis-00403
+- https://doi.org/10.20944/preprints202508.0024.v1
+- https://doi.org/10.3390/machines14010089
+- https://doi.org/10.1038/s41598-026-41466-7 [Volltext]
+- https://doi.org/10.1016/j.procir.2026.03.275
+- https://doi.org/10.64751/tnjxbj84</p>
+<h2>Gestellte Suchfragen</h2>
+<ul>
+<li>What new multi-year compute-commitment structures (prepaid capacity, take-or-pay clauses) did hyperscalers and frontier-model labs announce in 2025, and how do they affect spot-market GPU availability for mid-size research groups?</li>
+<li>Have any 2025+ industry analyses quantified the share of total new AI datacenter capacity already locked under long-term contracts versus still available on the secondary or rental market?</li>
+<li>What is the current (2025+) pricing trajectory for reserved vs on-demand GPU instances at the three largest cloud providers, and at what utilization threshold does a research lab's break-even shift from cloud to on-premise?</li>
+<li>Are there published 2025+ case studies of academic or small-lab compute procurement that used prepayment, consortium pooling, or sovereign-cloud agreements to secure H100/H200-class capacity at below-list prices?</li>
+<li>What 2025+ supply-chain analyses project for HBM3E and HBM4 production capacity through 2027, and how does the Rubin-platform transition alter the per-GPU HBM content versus the Blackwell generation?</li>
+<li>Are there published 2025+ datasets tracking GPU rental prices (A100, H100, H200, B200) on secondary markets, and do they show a structural price floor or continued decline as new capacity comes online?</li>
+<li>How do 2025+ industry reports characterize the 'used-GPU' secondary market for A100 and RTX 5090 cards, and what is the typical depreciation curve for research-grade inference workloads?</li>
+<li>What new demand signals (e.g., sovereign-AI programs, edge-inference deployments) emerged in 2025 that could outpace DRAM and NAND supply growth and re-tighten memory pricing within 12 months?</li>
+<li>What 2025+ empirical studies (n &gt; 50) measure the time saved or error rate changed when researchers use LLM-assisted literature retrieval versus manual database searching, and what task-level granularity do they report?</li>
+<li>Are there published 2025+ survey or log-based datasets quantifying how frequently research teams actually invoke AI tools for structured tasks (citation extraction, protocol drafting, code review) versus one-off Q&amp;A?</li>
+<li>What 2025+ labor-market analyses track wage or productivity differentials for roles that heavily integrate AI coding or research assistants, and do they control for task complexity or domain?</li>
+<li>How do 2025+ studies handle the measurement problem of 'AI-mediated productivity' in multi-step research pipelines where the AI handles retrieval but a human performs judgment, and what counterfactual designs do they use?</li>
+<li>What 2025+ methods for longitudinal brain volumetry handle missing or QC-rejected sessions (e.g., SDC95 &gt; 0.5 mm) without discarding the entire subject, and how do they adjust the mixed-model random effects to preserve power?</li>
+<li>Are there published 2025+ test-retest benchmarks for SynthSeg 2.x or FreeSurfer 7.x subcortical volumes (hippocampus, amygdala, thalamus) that report ICC and SDC95 stratified by acquisition site and field strength?</li>
+<li>What 2025+ approaches use multi-session consensus or temporal smoothing to reduce single-session segmentation noise in atrophy-rate estimation, and do they report a measurable reduction in coefficient of variation?</li>
+<li>How do recent (2025+) longitudinal studies define and apply a 'QC gate' per session (e.g., motion &gt; 2 mm, SNR threshold) and what is the impact on detectable annual atrophy rates in small structures (&lt; 100 mm³ change)?</li>
+<li>What 2025+ developments in CXMT DRAM and Huawei Ascend chip roadmaps indicate about China's ability to close the HBM and advanced-logic gap, and what is the projected timeline for export-control-relevant parity?</li>
+<li>How have 2025+ export-control updates (US, EU, Japan) changed the legal availability of EUV lithography, CoWoS packaging, and HBM for Chinese fabs, and what are the documented workarounds?</li>
+<li>What 2025+ analyses quantify the share of global AI compute capacity now located in China versus the West, and how does the 'dual-stack' (domestic vs imported) strategy affect total installed capacity growth?</li>
+<li>Are there published 2025+ studies on how Chinese industrial policy (subsidies for solar, batteries, and now AI chips) creates a cost asymmetry that affects global GPU and memory pricing for non-Chinese buyers?</li>
+<li>What 2025+ capacity data exists for CoWoS-L and CoWoS-S advanced packaging (TSMC, Samsung, Amkor), and what is the current lead time for a 1000-wafer-order versus the 2024 baseline?</li>
+<li>How do 2025+ datacenter design documents characterize the 800 V DC power architecture transition, and what are the projected lead times for medium-voltage transformers and gas-turbine generators in 2026–2027?</li>
+<li>What 2025+ analyses identify optical interconnect (800G/1.6T transceivers, CPO) as the next binding constraint after HBM, and what is the current supply-demand gap for silicon-photonics components?</li>
+<li>Are there published 2025+ cost breakdowns for a single AI training rack (GPU, HBM, packaging, power delivery, cooling, optics) that show which component's price is rising fastest and which is stabilizing?</li>
+<li>What 2025+ llama.cpp or Ollama release notes and community reports document specific failure modes (inference loops, NoneType crashes, zombie processes) triggered by high disk usage (&gt; 85 %) or fragmented swap, and what are the recommended recovery procedures?</li>
+<li>Are there published 2025+ benchmarks comparing quantization formats (Q4_K_M, Q5_K_S, Q8_0, FP8) for 24–32B research models on 24 GB VRAM cards, specifically measuring output coherence degradation and token-per-second throughput under sustained multi-hour inference?</li>
+<li>What 2025+ patterns exist for implementing a watchdog that detects a stuck or looping local LLM inference process (e.g., no token output for N seconds, repeated identical KV-cache state) and deterministically restarts the session without losing the prompt context?</li>
+<li>How do 2025+ local-LLM deployments handle VRAM pressure when the OS page cache is starved by high disk usage, and are there published kernel or cgroup tuning parameters that prevent OOM-killer intervention during long inference runs?</li>
+<li>What 2025+ industry analyses quantify the cost-per-unit trend for precision-machined components (CNC, 5-axis) in industrial robotics and datacenter cooling hardware, and is reshoring measurably raising or lowering unit costs?</li>
+<li>How do 2025+ deployments of 'Physical AI' (vision-guided robotic assembly, autonomous quality inspection) affect the labor-cost share in mid-volume manufacturing (1k–100k units), and what is the documented payback period?</li>
+<li>Are there published 2025+ cost models for AI-assisted CNC programming (generative toolpath, adaptive machining) that show a measurable reduction in setup time or scrap rate versus conventional CAM workflows?</li>
+<li>What 2025+ data exists on the total-cost-of-ownership for small-batch electronics assembly (PCB, connectors, power supplies) when comparing onshore automated lines versus offshore manual lines, including logistics and tariff effects?</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
