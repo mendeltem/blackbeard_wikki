@@ -144,6 +144,43 @@ used to simulate interventions in silico (Wang 2026; the authors claim >90 % pre
 | Puglisi 2025, Med Image Anal | Brain Latent Progression: individual future 3D MRI via latent diffusion, public code | PMID 40774097, [10.1016/j.media.2025.103734](https://doi.org/10.1016/j.media.2025.103734) |
 | Wang 2026, NPJ Syst Biol Appl | Digital-twin operator learning of amyloid/tau/neurodegeneration dynamics | PMID 42082519, [10.1038/s41540-026-00719-x](https://doi.org/10.1038/s41540-026-00719-x) |
 
+## Nachtrag 2026-10-24: the other "languages" - chemistry, physics, biology across scales
+Each level of biology has its own data form, which works like a language, and each already has a model family.
+The levels are linked physically. For AD the chain would run: APOE (DNA) -> protein folding and clearance ->
+microglial gene expression -> tau spread along the connectome -> atrophy on MRI -> MoCA decline -> daily life and
+care.
+
+| Level | Data form | Model (checked) | AD link |
+|---|---|---|---|
+| Gene activity | single-cell RNA expression | Geneformer, about 30 M cells (Theodoris 2023); scGPT, >33 M cells, predicts perturbation responses (Cui 2024) | which cell types respond |
+| Protein | amino-acid sequence and 3D structure | ESM-2, up to 15 B parameters, atomic structure from sequence alone (Lin 2023); AlphaFold 2 (Jumper 2021); AlphaFold 3, joint structure with nucleic acids, small molecules and ions (Abramson 2024) | amyloid and tau, drug binding |
+| Physics | differential equations | physics-informed neural networks (Raissi 2019, J Comput Phys); Fourier neural operator (Li 2020, arXiv 2010.08895) | the AD digital twin uses operator learning |
+| Cell | multi-scale, multi-modal | AI virtual cell, a perspective and roadmap rather than a working model (Bunne 2024) | - |
+| Brain network | connectome plus dynamics | The Virtual Brain, personalised whole-brain simulation of fMRI/EEG/MEG (Sanz Leon 2013); network diffusion model: spread along tractography connectivity reproduces AD and FTD atrophy patterns (Raj 2012) | tau spread -> MRI pattern |
+
+**Assessment (mine).**
+- No model learns physics or chemistry from text alone. There are two routes:
+  - learned surrogate models per level, which are fast but approximate;
+  - an LLM as conductor that calls exact simulators and specialist models as tools (AlphaFold, molecular
+    dynamics, The Virtual Brain, network diffusion), with the LLM supplying the textbook-level glue between levels.
+- The realistic system is a hybrid.
+- The hard gap is crossing scales, from nanoseconds and nanometres to decades and centimetres. No dataset pairs
+  molecular data with MRI and behaviour in the same person, so the levels have to be bridged by intermediate
+  models. The network diffusion model is one such bridge, from protein spread to an MRI pattern.
+
+| Source | What it shows | ID |
+|---|---|---|
+| Theodoris 2023, Nature | Geneformer: pretrained on about 30 M single-cell transcriptomes, network biology by transfer learning | PMID 37258680, [10.1038/s41586-023-06139-9](https://doi.org/10.1038/s41586-023-06139-9) |
+| Cui 2024, Nat Methods | scGPT: single-cell foundation model on >33 M cells, perturbation prediction | PMID 38409223, [10.1038/s41592-024-02201-0](https://doi.org/10.1038/s41592-024-02201-0) |
+| Lin 2023, Science | ESM-2/ESMFold: protein language model up to 15 B parameters, structure from sequence | PMID 36927031, [10.1126/science.ade2574](https://doi.org/10.1126/science.ade2574) |
+| Jumper 2021, Nature | AlphaFold 2: atomic-accuracy protein structure prediction | PMID 34265844, [10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2) |
+| Abramson 2024, Nature | AlphaFold 3: complexes of proteins, nucleic acids, small molecules, ions | PMID 38718835, [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) |
+| Raissi 2019, J Comput Phys | Physics-informed neural networks for forward and inverse PDE problems (checked via Crossref) | [10.1016/j.jcp.2018.10.045](https://doi.org/10.1016/j.jcp.2018.10.045) |
+| Li 2020, arXiv | Fourier neural operator for parametric PDEs (checked via arXiv API) | [arXiv 2010.08895](https://arxiv.org/abs/2010.08895) |
+| Bunne 2024, Cell | How to build the AI virtual cell: priorities and opportunities (perspective) | PMID 39672099, [10.1016/j.cell.2024.11.015](https://doi.org/10.1016/j.cell.2024.11.015) |
+| Sanz Leon 2013, Front Neuroinform | The Virtual Brain: personalised whole-brain network simulator | PMID 23781198, [10.3389/fninf.2013.00010](https://doi.org/10.3389/fninf.2013.00010) |
+| Raj 2012, Neuron | Network diffusion model: disease spread along connectome predicts dementia atrophy | PMID 22445347, [10.1016/j.neuron.2011.12.040](https://doi.org/10.1016/j.neuron.2011.12.040) |
+
 ## Trägt
 Choosing data and an architecture for a first genotype-MRI-text prototype; knowing that mouse MRI data carry
 labels, and that strain genomes have to be joined in separately.

@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span>2026-10-24 imaging_genetics: clinical layer addendum (MoCA, age, biomarkers)</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">imaging_genetics</a> › <a href="../index.html#findings">Befund</a></div><h1>Mouse brain MRI exists with genotype *labels*, not per-animal genomes; no model yet reads DNA, MRI and text together</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-24</span><span>Herkunft</span><span>literature and web scan 2026-10-24 (one search pass plus re-check by the main session; PMIDs and DOIs re-fetched from PubMed, GitHub/arXiv/bioRxiv links opened, HTTP 200)</span><span>Zuletzt geändert</span><span>2026-10-24 imaging_genetics: 4D progression models addendum</span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md">knowledge/imaging_genetics/findings/mouse-genotype-mri-data-and-dna-mri-text-models-2026-10.md</a></span></div><h2>Aussage</h2>
 <p><strong>Mouse data.</strong> I found no public dataset with a per-animal genome sequence plus brain MRI. The genetics in mouse MRI
 collections is a strain or a model label. A label still links to DNA, because the strains themselves are sequenced:
 the Mouse Genomes Project sequenced 17 inbred strains, including C57BL/6J, DBA/2J and CAST/EiJ (Keane 2011), and the
@@ -281,6 +281,123 @@ used to simulate interventions in silico (Wang 2026; the authors claim &gt;90 % 
 <td>Wang 2026, NPJ Syst Biol Appl</td>
 <td>Digital-twin operator learning of amyloid/tau/neurodegeneration dynamics</td>
 <td>PMID 42082519, <a href="https://doi.org/10.1038/s41540-026-00719-x">10.1038/s41540-026-00719-x</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Nachtrag 2026-10-24: the other "languages" - chemistry, physics, biology across scales</h2>
+<p>Each level of biology has its own data form, which works like a language, and each already has a model family.
+The levels are linked physically. For AD the chain would run: APOE (DNA) -&gt; protein folding and clearance -&gt;
+microglial gene expression -&gt; tau spread along the connectome -&gt; atrophy on MRI -&gt; MoCA decline -&gt; daily life and
+care.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Data form</th>
+<th>Model (checked)</th>
+<th>AD link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gene activity</td>
+<td>single-cell RNA expression</td>
+<td>Geneformer, about 30 M cells (Theodoris 2023); scGPT, &gt;33 M cells, predicts perturbation responses (Cui 2024)</td>
+<td>which cell types respond</td>
+</tr>
+<tr>
+<td>Protein</td>
+<td>amino-acid sequence and 3D structure</td>
+<td>ESM-2, up to 15 B parameters, atomic structure from sequence alone (Lin 2023); AlphaFold 2 (Jumper 2021); AlphaFold 3, joint structure with nucleic acids, small molecules and ions (Abramson 2024)</td>
+<td>amyloid and tau, drug binding</td>
+</tr>
+<tr>
+<td>Physics</td>
+<td>differential equations</td>
+<td>physics-informed neural networks (Raissi 2019, J Comput Phys); Fourier neural operator (Li 2020, arXiv 2010.08895)</td>
+<td>the AD digital twin uses operator learning</td>
+</tr>
+<tr>
+<td>Cell</td>
+<td>multi-scale, multi-modal</td>
+<td>AI virtual cell, a perspective and roadmap rather than a working model (Bunne 2024)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Brain network</td>
+<td>connectome plus dynamics</td>
+<td>The Virtual Brain, personalised whole-brain simulation of fMRI/EEG/MEG (Sanz Leon 2013); network diffusion model: spread along tractography connectivity reproduces AD and FTD atrophy patterns (Raj 2012)</td>
+<td>tau spread -&gt; MRI pattern</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assessment (mine).</strong>
+- No model learns physics or chemistry from text alone. There are two routes:
+  - learned surrogate models per level, which are fast but approximate;
+  - an LLM as conductor that calls exact simulators and specialist models as tools (AlphaFold, molecular
+    dynamics, The Virtual Brain, network diffusion), with the LLM supplying the textbook-level glue between levels.
+- The realistic system is a hybrid.
+- The hard gap is crossing scales, from nanoseconds and nanometres to decades and centimetres. No dataset pairs
+  molecular data with MRI and behaviour in the same person, so the levels have to be bridged by intermediate
+  models. The network diffusion model is one such bridge, from protein spread to an MRI pattern.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it shows</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Theodoris 2023, Nature</td>
+<td>Geneformer: pretrained on about 30 M single-cell transcriptomes, network biology by transfer learning</td>
+<td>PMID 37258680, <a href="https://doi.org/10.1038/s41586-023-06139-9">10.1038/s41586-023-06139-9</a></td>
+</tr>
+<tr>
+<td>Cui 2024, Nat Methods</td>
+<td>scGPT: single-cell foundation model on &gt;33 M cells, perturbation prediction</td>
+<td>PMID 38409223, <a href="https://doi.org/10.1038/s41592-024-02201-0">10.1038/s41592-024-02201-0</a></td>
+</tr>
+<tr>
+<td>Lin 2023, Science</td>
+<td>ESM-2/ESMFold: protein language model up to 15 B parameters, structure from sequence</td>
+<td>PMID 36927031, <a href="https://doi.org/10.1126/science.ade2574">10.1126/science.ade2574</a></td>
+</tr>
+<tr>
+<td>Jumper 2021, Nature</td>
+<td>AlphaFold 2: atomic-accuracy protein structure prediction</td>
+<td>PMID 34265844, <a href="https://doi.org/10.1038/s41586-021-03819-2">10.1038/s41586-021-03819-2</a></td>
+</tr>
+<tr>
+<td>Abramson 2024, Nature</td>
+<td>AlphaFold 3: complexes of proteins, nucleic acids, small molecules, ions</td>
+<td>PMID 38718835, <a href="https://doi.org/10.1038/s41586-024-07487-w">10.1038/s41586-024-07487-w</a></td>
+</tr>
+<tr>
+<td>Raissi 2019, J Comput Phys</td>
+<td>Physics-informed neural networks for forward and inverse PDE problems (checked via Crossref)</td>
+<td><a href="https://doi.org/10.1016/j.jcp.2018.10.045">10.1016/j.jcp.2018.10.045</a></td>
+</tr>
+<tr>
+<td>Li 2020, arXiv</td>
+<td>Fourier neural operator for parametric PDEs (checked via arXiv API)</td>
+<td><a href="https://arxiv.org/abs/2010.08895">arXiv 2010.08895</a></td>
+</tr>
+<tr>
+<td>Bunne 2024, Cell</td>
+<td>How to build the AI virtual cell: priorities and opportunities (perspective)</td>
+<td>PMID 39672099, <a href="https://doi.org/10.1016/j.cell.2024.11.015">10.1016/j.cell.2024.11.015</a></td>
+</tr>
+<tr>
+<td>Sanz Leon 2013, Front Neuroinform</td>
+<td>The Virtual Brain: personalised whole-brain network simulator</td>
+<td>PMID 23781198, <a href="https://doi.org/10.3389/fninf.2013.00010">10.3389/fninf.2013.00010</a></td>
+</tr>
+<tr>
+<td>Raj 2012, Neuron</td>
+<td>Network diffusion model: disease spread along connectome predicts dementia atrophy</td>
+<td>PMID 22445347, <a href="https://doi.org/10.1016/j.neuron.2011.12.040">10.1016/j.neuron.2011.12.040</a></td>
 </tr>
 </tbody>
 </table>
