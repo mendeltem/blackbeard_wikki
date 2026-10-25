@@ -95,6 +95,10 @@ post-processing rules, an auxiliary anatomy head, a T2*-specific intensity windo
 - **Realism gate (classifier two-sample test, fixed in advance):** pass if real-vs-inserted AUC <= 0.70 for bleeds and for veins and
   a known-bad fake (smoothed image channel) is caught with AUC >= 0.85; on synthetic data the same generator gave AUC 0.50 and the
   fake 1.0. Inserted candidates train stage 2 only after a pass.
+- **Planned test, user question "should the first U-Net be biased towards sensitivity?":** in Arena 1 a blob-loss stage 1 raised
+  the VALDO ceiling from 103 to 110 of 139 lesions but the chain fell (0.594 vs 0.625), and the full union of three seeds lowered it
+  by -0.039 -- both with the old classifier and without the vote count. Arena 2 repeats it the LUNA16 way [14]: union of base and
+  blob-loss candidates (plus the FRST/GMM source where Phase 0 recommends it), vote count as a feature, TrackSet, decision rules v2.
 
 ## Trägt
 IDs re-fetched by script 2026-10-25 with matching titles. Numbers come from the cited abstracts or full texts as read by the agents;
