@@ -31,16 +31,21 @@ Effects of +1 to +4 F1 cannot be seen with two stage-1 seeds; another reason to 
 
 **4. Untried options with the best evidence (audit of 31 CMB sources against our inventory):**
 - Heterogeneous ensembles across architectures: VALDO EnsembleTop (mean of the top 4 teams) median F1 per subject 75.68
-  [38.18; 100] against 68.42 for the best single team [2]. We only ensembled seeds of one architecture.
+  [38.18; 100] against 68.42 for the best single team [2]. We ensembled seeds, grids and recipe variants (blob loss) of
+  one architecture, never different architectures. Lower prior here than in VALDO: our runner-up networks are 0.06 or
+  more below the winner, while the VALDO top teams were close to each other. A CPU test on existing maps settles it.
 - Hard Sample Prototype Learning (feature of the hardest negative voxel per crop pushed away from a CMB prototype):
   FP/subject 14.73 -> 0.86 at 94.66 % sensitivity together with a feature-fusion module, on SWI+phase [3].
 - Synthetic vessel mimics as an explicit label class: annotation-free SynthSeg-style training reaches CMB AUPRC 0.538
   against 0.004 for a Frangi baseline on 13 T2* cases [4]; synthetic-only training keeps about 87 % of real-trained
   sensitivity, but transfer depends on the framework [5].
-- T1+T2 as extra channels (VALDO only): all leading VALDO teams used them; no ablation exists anywhere [1,2].
 - Expert-audited labels: VALDO labels are "weak and noisy" [2], nnU-Net false positives on VALDO "could be an actual
   microbleed" [24]; SHIVA-CMB built its labels in an expert loop at p>=0.05 [19]; missing-annotation mining gave +2.3
   sensitivity / +2.7 precision on DeepLesion [25].
+- Already measured by us and therefore NOT open (correction 2026-10-25, after a first draft listed it as untried):
+  T1+T2 as extra channels on VALDO (2026-09-29, two seeds, CSF rule): ensemble 0.628 against 0.647 for the base
+  ensemble, no gain; no published ablation exists either [1,2]. A real nnU-Net v2 run on our folds was trained
+  (2026-10-02); its evaluation is still open.
 - An independent second candidate source (FRST peaks, per-scan GMM [21]) united with the U-Net candidates, to lift
   the ceiling of stage 2.
 
@@ -97,7 +102,7 @@ prototype loss [3]; objects are scored by the heads instead of connected compone
   interval excludes 0 on the pooled F1, and no cohort gets significantly worse; then confirm the combination with an
   independent stage-1 seed. Renderer first passes a realism probe (a classifier must not tell rendered from real
   crops) before any training, as our augmentation lesson requires.
-- Phase 2, stage 1, 2 seeds, ceiling check before each run: T1+T2 on VALDO, real nnU-Net v2 (calibration),
+- Phase 2, stage 1, 2 seeds, ceiling check before each run: evaluate the trained nnU-Net v2 (calibration),
   nnDetection, the stage-1 hybrid.
 - Predictions written before measuring: (a) helps most where positives are fewest; (b) helps on thin slices and is
   neutral on 5 mm slices, where true CMB also span several slices; rendered mimics lower vessel false positives only if
