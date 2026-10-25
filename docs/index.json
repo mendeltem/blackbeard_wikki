@@ -1573,6 +1573,17 @@
 "src": "knowledge/cmb_detection/findings/anisotropic-first-level-beats-isotropic-3d-nets.md"
 },
 {
+"t": "Arena 2, research round 3: decisions, labels, data, priors, fusion, operating points (2026-10)",
+"p": "cmb_detection/findings/arena-2-research-round-3-2026-10.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Arena 2 research round 3 (11 topics, IDs checked): decision rules v2 against false keeps, HPO only for stage 2, label ceiling and audit design, insertion realism gate, QTAB data, venous atlases, clinical targets (icobrain aria, 4/5 boundary",
+"id": "arena-2-research-round-3-2026-10",
+"src": "knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md"
+},
+{
 "t": "Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label \"freier Liquor\" falsch; FreeSurfer ist keine Option (kein T1)",
 "p": "cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.html",
 "a": "cmb_detection",
