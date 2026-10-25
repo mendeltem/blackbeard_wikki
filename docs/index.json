@@ -1793,6 +1793,17 @@
 "src": "knowledge/cmb_detection/rules/example-scripts-reproduce-their-command-bit-for-bit.md"
 },
 {
+"t": "Freeze the folds with a checksum, and cap every new candidate source",
+"p": "cmb_detection/rules/freeze-folds-and-cap-candidate-sources.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Folds frozen with sha256 and checked for every input (VALDO 0 mismatches); new candidate sources capped (uncapped FRST/GMM: 33k-126k candidates, ~41 GB, 3 OOM kills; ceiling F1 0.851 -> 0.92-0.98)",
+"id": "freeze-folds-and-cap-candidate-sources",
+"src": "knowledge/cmb_detection/rules/freeze-folds-and-cap-candidate-sources.md"
+},
+{
 "t": "Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar",
 "p": "cmb_detection/rules/patches-not-whole-images-for-small-lesions.html",
 "a": "cmb_detection",
