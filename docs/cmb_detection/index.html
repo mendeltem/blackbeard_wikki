@@ -419,6 +419,36 @@ prototype loss [3]; objects are scored by the heads instead of connected compone
 <p><strong>Not recommended (evidence against):</strong> Mamba backbones [14], SAM-Med3D / VISTA3D / BrainSegFounder for tiny lesions
 [15,1], DETR-type detectors with a few hundred lesions, through-plane super-resolution as preprocessing [17], more seed
 ensembles.</p>
+<h2>Nachtrag 2026-10-25: gebaut und eingereiht (noch nichts gemessen)</h2>
+<ul>
+<li><strong>TrackSet-CMB is code now</strong> (second stage of our arena): modules d4, track, ctx, set, proto as switches, plus three control
+  arms that the equivariance literature asks for: every arm trains with random in-plane D4 + z-flip augmentation, <code>tta8</code>
+  averages over the 8 in-plane views at test time, <code>wide</code> gives the plain CNN about the compute of the D4 encoder. Reason: the
+  G-CNN advantage shrinks with data (FROC +0.217 at 300 training samples, +0.059 at 3,000 [10]) and augmentation plus
+  test-time averaging can match equivariance [36]; the d4 arm counts only if it beats both controls. Checked on synthetic
+  phantoms (CPU): the D4 group convolution is equivariant to float64 precision and the network invariant (the plain control is
+  not); the slice track follows an oblique tube and loses a ball; offsets rotate with the patch; test-time averaging makes the
+  score rotation-invariant; the old classifier modes give byte-identical results after the change.</li>
+<li><strong>Pre-registered decisions in code:</strong> one seed screens (advance if delta &gt;= +0.01 in one cohort and no cohort &lt;= -0.02);
+  three seeds decide (mean delta on all cohorts &gt; 2 x the control's seed sd, interval above 0, no cohort entirely below 0).</li>
+<li><strong>Independent candidate source</strong> (Phase 0): FRST peaks or a per-scan Gaussian-mixture threshold [21], united with the U-Net
+  map at a low probability, so U-Net candidates stay unchanged and new ones enter visibly weak.</li>
+<li><strong>Physics renderer</strong> for microbleed, calcification and vein on gradient-echo magnitude: sphere field
+  (chi/3)(a/r)^3(3cos^2 t - 1) with a field-free core [38]; cylinder inside (chi/6)(3cos^2 theta - 1), outside
+  (chi/2)(R/rho)^2 sin^2 theta cos 2phi [37]; venous chi = Hct[(1 - Y) 3.39 - 0.38] ppm SI [39]; magnitude of the
+  voxel-averaged complex signal over the acquisition voxel including slice thickness (static dephasing [40]). Checks: blooming
+  ratio TE 40/20 ms = 1.60 for a 2 mm, 1 ppm sphere at 3 T (measured in patients 1.49-2.30 [41]); a vein perpendicular to B0
+  dephases about three times the volume of a parallel one; calcium and blood of equal |chi| give the same magnitude image. Not
+  yet built: inserting rendered objects into whole host volumes and recomputing FRST and the stage-1 probability, without which
+  a rendered crop cannot stand next to real candidates.</li>
+<li>Two orders for the local agent: CPU Phase 0, and the ten stage-2 arms through the GPU queue (behind any DEMDAS work).</li>
+</ul>
+<p>[36] Gerken JE. 2022. Equivariance versus Augmentation for Spherical Images. arXiv 2202.03990. Shows: augmentation with larger networks can match equivariant models for classification.
+[37] Marques JP, Bowtell RW. 2007. Using forward calculations of the magnetic field perturbation due to a realistic vascular model to explore the BOLD effect. NMR in Biomedicine. DOI 10.1002/nbm.1224. PMID 18078307. Shows: analytic and Fourier field of cylinders at an angle to B0.
+[38] Liu T et al. 2012. Quantitative susceptibility mapping of small objects using volume constraints. Magnetic Resonance in Medicine. DOI 10.1002/mrm.24305. PMID 22570268. Shows: sphere field outside a small susceptibility source; chi x V independent of TE.
+[39] Fan AP et al. 2013. Quantitative oxygenation venography from MRI phase. Magnetic Resonance in Medicine. DOI 10.1002/mrm.24918. PMID 24006229. Shows: venous susceptibility from haematocrit and oxygenation (0.27 ppm cgs per unit Hct).
+[40] Yablonskiy DA, Haacke EM. 1994. Theory of NMR signal behavior in magnetically inhomogeneous tissues: the static dephasing regime. Magnetic Resonance in Medicine. DOI 10.1002/mrm.1910320610. PMID 7869897. Shows: static-dephasing signal model.
+[41] Liu T et al. 2012. Cerebral microbleeds: burden assessment by using quantitative susceptibility mapping. Radiology. DOI 10.1148/radiol.11110251. PMID 22056688. Shows: CMB volume grows x1.49 (QSM) to x2.30 (T2*-weighted) from TE 20 to 40 ms; total susceptibility constant.</p>
 <h2>Trägt</h2>
 <p>Every ID was re-fetched by script on 2026-10-25 (arXiv API, Crossref; PMIDs via PubMed E-utilities) and the title
 matched. The numbers in points 2-5 were re-read in the abstracts or PDF tables (VALDO Table 8, CenSynCMB Tables I and
