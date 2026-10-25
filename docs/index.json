@@ -1771,6 +1771,17 @@
 "src": "knowledge/cmb_detection/findings/vessel-inpainting-removes-microbleeds-on-thick-slices.md"
 },
 {
+"t": "Voxel-as-token and small-patch transformers are unproven for CMB; at ~300 subjects only pretrained weights are an option",
+"p": "cmb_detection/findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Voxel-as-token / small-patch transformers: attention cost computed (128^3 at 4^3 = 32k tokens is the dense limit), evidence only a MedMNIST 28^3 preprint, no CMB result; at ~300 subjects only fine-tuning public pretrained weights (BrainSegF",
+"id": "voxel-token-transformers-unproven-at-300-subjects-2026-10",
+"src": "knowledge/cmb_detection/findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.md"
+},
+{
 "t": "Count microbleeds on the model grid; deliver a label map on the input grid",
 "p": "cmb_detection/rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html",
 "a": "cmb_detection",

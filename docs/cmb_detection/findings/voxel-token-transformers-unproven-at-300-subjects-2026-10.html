@@ -1,0 +1,110 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Voxel-as-token and small-patch transformers are unproven for CMB; at ~300 subjects only pretrained weights are an option</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">cmb_detection</a> › <a href="../index.html#findings">Befund</a></div><h1>Voxel-as-token and small-patch transformers are unproven for CMB; at ~300 subjects only pretrained weights are an option</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-10-25</span><span>Herkunft</span><span>chat with Mendel (claude.ai), 2026-10-25, literature scan on tokenising MRI volumes like an LLM</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="anisotropic-first-level-beats-isotropic-3d-nets.html">Ein 3D-U-Net mit anisotroper erster Ebene schlaegt alle isotropen Netze</a> <span class="muted small">(cmb_detection)</span><br><a href="literature-2023-2026-shiva-cmb-is-the-public-comparable.html">CMB detection 2023-2026: SHIVA-CMB is the public comparable, mimics drive precision, foundation models are not CMB-ready</a> <span class="muted small">(cmb_detection)</span><br><a href="fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a> <span class="muted small">(cmb_detection)</span><br><a href="../rules/patches-not-whole-images-for-small-lesions.html">Kleine Laesionen: Ausschnitte trainieren, Schiebefenster vorhersagen -- das ganze Bild auf einmal ist weder noetig noch bezahlbar</a> <span class="muted small">(cmb_detection)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.md">knowledge/cmb_detection/findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.md</a></span></div><h2>Aussage</h2>
+<p>Question: can an MRI volume plus ROI be fed to a transformer as a flat 1D sequence (voxel = token, like an LLM), and
+does that help CMB detection with about 300 subjects?</p>
+<ol>
+<li><strong>Feasible in principle, cost is the limit.</strong> Flattening loses no information if each token carries its (x,y,z)
+   position embedding, or if the order follows a space-filling curve (Hilbert/Z-order) that keeps neighbours close.
+   Global attention cost per head and layer (computed, n^2):
+   - whole brain 1 mm (182x218x182 = 7.2e6 voxels) as voxel tokens: 5.2e13 pairs, infeasible;
+   - crop 128^3 with patch 4^3: 32,768 tokens, 1.1e9 pairs, roughly the limit of dense attention;
+   - crop 128^3 with patch 2^3: 262,144 tokens, 6.9e10 pairs global, but 9e7 with 7^3 window attention (Swin);
+   - ROI-only tokens, e.g. 20,000 voxels at patch 1: 4e8 pairs, feasible.
+   Halving the patch edge gives 8x tokens and 64x attention cost. A CMB of 2-10 mm spans 2-10 voxels at 1 mm, so a
+   16^3 patch swallows it; 4^3 or 2^3 resolves it.</li>
+<li><strong>Evidence for small patches is thin.</strong> Only one preprint measures 3D patch size down to 1: ViT-Small fine-tuned on
+   MedMNIST3D at 28^3, patch 1 vs 14 up to +23.78 % balanced accuracy, cost ~0.4 -&gt; &gt;800 GFLOPs per volume, no CNN
+   baseline, one MRA set only (Dehghan et al. 2026, arXiv:2602.18614, preprint). Pixel-token transformers work on
+   natural 2D images (Nguyen et al., ICLR 2025, peer-reviewed). No voxel-token or point-cloud model for brain lesions
+   (WMH, CMB, stroke) with an nnU-Net baseline was found.</li>
+<li><strong>Long-sequence alternatives exist but serialise features, not raw voxels:</strong> Perceiver / Perceiver IO
+   (Jaegle et al. 2021/2022, arXiv:2103.03206, arXiv:2107.14795); Hilbert-curve Mamba on MRI (GAMBAS,
+   arXiv:2504.04523, preprint). Mamba results depend on the serialisation order. PerceiverIO on brain MRI segmentation
+   with k-space input: arXiv:2407.01367 (status unclear).</li>
+<li><strong>Data size.</strong> Transformers lack the locality prior of CNNs and need more data (ViT below ResNet on ImageNet-1k,
+   ahead only with 300 M images; Dosovitskiy et al., ICLR 2021, arXiv:2010.11929). With ~300 labelled subjects, training
+   from scratch is not sensible. The large numbers in circulation are unlabelled pretraining sets, not a requirement for
+   the fine-tuning set:
+   - BrainSegFounder: SSL on 41,400 UK Biobank participants, Swin UNETR (Cox et al., Med Image Anal 2024,
+     doi:10.1016/j.media.2024.103301, peer-reviewed); weights under the UK Biobank MTA (access needed).
+   - AMAES / BRAINS-45K: 44,756 public brain MRI volumes, code, checkpoints and data open (Munk et al., arXiv:2408.00640,
+     preprint).
+   - FOMO60K: 60,529 scans from 11,187 subjects (scans are not subjects).
+   - FOMO25 challenge: small pretrained models did well; larger models or longer training gave no reliable gain; MAE
+     pretraining favours segmentation (arXiv:2604.11679, preprint).</li>
+<li><strong>Counter-evidence in this wiki.</strong> On VALDO, Swin UNETR and other isotropic 3D nets lost against a U-Net whose first
+   level convolves only in-plane (<a href="anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a>),
+   and no CMB-specific transformer or foundation model was retrieved
+   (<a href="literature-2023-2026-shiva-cmb-is-the-public-comparable.html">literature-2023-2026-shiva-cmb-is-the-public-comparable</a>).
+   Pretraining sets are mostly T1/FLAIR; whether they help SWI/T2* magnitude is open.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Decision on whether to try a transformer for CMB detection: only as fine-tuning of public pretrained weights, compared
+in the same frozen folds against the current chain (anisotropic 3D U-Net plus stage-2 classifier), reported as lesion
+F1 and FP per scan, with two seeds (effects below ~0.08 F1 are seed noise). A transformer over ROI or candidate tokens
+fits stage 2 better than stage 1 (compare TrackSet-CMB in
+<a href="search-space-expansion-and-novel-hybrids-2026-10.html">search-space-expansion-and-novel-hybrids-2026-10</a>).</p>
+<h2>Trägt nicht</h2>
+<p>Any claim that voxel-token transformers beat CNNs on CMB; any minimum subject count for fine-tuning (none found);
+transfer of the MedMNIST 28^3 result to clinical resolution.</p>
+<h2>Bruchindikator</h2>
+<p>A peer-reviewed voxel-token or small-patch transformer that beats nnU-Net or the anisotropic U-Net on CMB lesion F1;
+a pretraining set with SWI/T2* where fine-tuned weights beat the chain in the same folds.</p>
+<h2>Ablesung</h2>
+<p>Web search 2026-10-25. arXiv:2602.18614 full text read; BrainSegFounder count and DOI from the UK Biobank publication
+page and the Hugging Face model card; BRAINS-45K, FOMO60K, FOMO25 from arXiv abstracts and a topic page. Not re-read:
+Nguyen ICLR 2025, Dosovitskiy ICLR 2021, Jaegle 2021/2022 (cited from knowledge). Tier 1b (papers), preprints marked.
+Attention costs computed, not measured.</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
+<li><a href="literature-2023-2026-shiva-cmb-is-the-public-comparable.html">literature-2023-2026-shiva-cmb-is-the-public-comparable</a></li>
+<li><a href="fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a></li>
+<li><a href="search-space-expansion-and-novel-hybrids-2026-10.html">search-space-expansion-and-novel-hybrids-2026-10</a></li>
+<li><a href="../rules/patches-not-whole-images-for-small-lesions.html">patches-not-whole-images-for-small-lesions</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-10-25 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
