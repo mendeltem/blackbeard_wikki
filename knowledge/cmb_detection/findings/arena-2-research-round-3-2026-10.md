@@ -76,6 +76,26 @@ domain-specific preprocessing; ISLES'22 top-3 recipes combined by a 2-of-3 vote 
 per-modality intensity windowing [20]. Untried here: cross-family vote, the open nnU-Net v2 evaluation, out-of-fold audited
 post-processing rules, an auxiliary anatomy head, a T2*-specific intensity window.
 
+## Nachtrag 2026-10-25: Arena-2 tools built (tested on synthetic data and a template probe; nothing measured on patients yet)
+
+- **Confirmation path:** the one arm that 'carries' is trained on the whole pool, its threshold chosen by 5-fold CV over the pool,
+  and applied unchanged to the external public SWI set (never in the pools); one paired test, one-sided 2.5 %, fixed in advance.
+- **New stage-2 inputs:** the vote count (how many stage-1 runs found the object [14]) and the distance to the brain edge as
+  learned features; venous-atlas values (vein frequency at the candidate, maximum within 3 mm, distance to the nearest frequent vein)
+  from the 3 T SWI atlas of 41 adults [8], carried onto each scan by a contrast-agnostic registration [11].
+- **Registration finding (probe without patient data):** carrying an atlas with SynthMorph's apply step onto a scan works only if
+  the atlas is first resampled onto the grid of the image that was registered. On a template-derived probe on our 0.5 x 0.5 x 1 mm
+  grid the direct way gave a correlation of -0.02 with the true atlas position (Dice 0.02), the resampled way 0.917 (Dice 0.78);
+  the registration itself was fine (template correlation 0.961). FreeSurfer 8.2.0, mri_synthmorph register -m joint.
+- **Synthetic insertion into whole volumes:** physics-rendered microbleeds (labelled with their apparent extent) and vein segments
+  at random angles to B0 (no label, signal loss fading over the last 4 mm), placed outside CSF, >= 8 mm from lesions and each other,
+  70 / 12 / 18 % lobar / deep / infratentorial [15]; no calcifications (same magnitude image as a bleed); a bleed too faint to outline
+  is not written at all; FRST recomputed on the modified volume; the stage-1 map of each copy only from the U-Net of its own fold
+  (four of five fold models had seen the host); only candidates at inserted objects become training-only extras.
+- **Realism gate (classifier two-sample test, fixed in advance):** pass if real-vs-inserted AUC <= 0.70 for bleeds and for veins and
+  a known-bad fake (smoothed image channel) is caught with AUC >= 0.85; on synthetic data the same generator gave AUC 0.50 and the
+  fake 1.0. Inserted candidates train stage 2 only after a pass.
+
 ## Trägt
 IDs re-fetched by script 2026-10-25 with matching titles. Numbers come from the cited abstracts or full texts as read by the agents;
 simulation results (points 1-2) are the agents' own, from scripts on synthetic data. The v2 rules are implemented and tested on
