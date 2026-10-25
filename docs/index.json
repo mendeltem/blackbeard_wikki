@@ -1584,6 +1584,17 @@
 "src": "knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md"
 },
 {
+"t": "Arena 2, research round 4: unlabelled scans, a tabular stage 2, frozen foundation features (2026-10)",
+"p": "cmb_detection/findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Arena 2 round 4: unlabelled scans (no CMB semi-supervised paper, analogues small at our label count), tabular stage 2 (only same-candidate test went to handcrafted+RF, combination best), frozen foundation features (patch-local pooling only)",
+"id": "arena-2-research-round-4-unlabelled-tabular-frozen-2026-10",
+"src": "knowledge/cmb_detection/findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.md"
+},
+{
 "t": "Die Liquor-Regel loescht auf SWI echte Blutungen TIEF im Hirn: SynthSeg verteilt auf SWI das Label \"freier Liquor\" falsch; FreeSurfer ist keine Option (kein T1)",
 "p": "cmb_detection/findings/csf-rule-on-swi-deletes-deep-lesions-synthseg-mislabels.html",
 "a": "cmb_detection",

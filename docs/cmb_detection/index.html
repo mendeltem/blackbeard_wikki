@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT, Labelkarte, Schichtdicke, Inferenz</p>
-<div class="stripe"><i class="ok" style="width:55.6%" title="getragen: 15"></i><i class="warn" style="width:44.4%" title="vorschlag: 12"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">12 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+<div class="stripe"><i class="ok" style="width:53.6%" title="getragen: 15"></i><i class="warn" style="width:46.4%" title="vorschlag: 13"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">13 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
 Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
 Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
 gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
@@ -53,6 +53,7 @@ Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-25 (what is a good F1, given rater variance):</strong> No absolute target exists; the human band is the yardstick. Six raters against an adjudicated reference reach lesion F1 0.52-0.76 (median 0.69), the same rater twice 0.82; experience moves it most. Derived human band ~0.65-0.80 with precision 0.75-0.90; our chain (~0.65) is in the lower middle, and F1 &gt; 0.85 against one rater points to a lenient reference. Proof of 'human-level' needs a second rater and a paired comparison fixed in advance (<a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">human-rater-variance-and-good-f1-for-cmb-2026-10</a>).</p>
+<p><strong>New 2026-10-25 (Arena 2, round 4):</strong> Three levers the wiki had no entry for, all stage-2 arms. Tabular stage 2 (LightGBM on handcrafted shape, Hessian, contrast and tube features) is the cheap baseline to run first: the only same-candidate comparison found went to handcrafted+RF at ~400 positives, the combination best. Frozen DINOv2/MedSigLIP features only with patch tokens pooled at the candidate, never the CLS token. Unlabelled scans: no CMB paper, analogues give small gains at our label count, more likely lower variance (<a href="findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html">arena-2-research-round-4-unlabelled-tabular-frozen-2026-10</a>).</p>
 <p><strong>New 2026-10-25 (transformers as token sequences):</strong> Feeding the volume voxel by voxel (or with 2^3-4^3 patches) to a transformer is possible with position embeddings, but unproven for CMB: one preprint (MedMNIST 28^3) only, no lesion result, Swin UNETR already lost on VALDO. With ~300 subjects only fine-tuning public pretrained weights makes sense, compared in frozen folds; a token transformer fits stage 2 better (<a href="findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.html">voxel-token-transformers-unproven-at-300-subjects-2026-10</a>).</p>
 <p><strong>Neu 2026-10-25 (Arena 2, Recherche Runde 3, 11 Themen):</strong> Benennung: Arena 1 = U-Net-Turniere und fruehere Stufe-2-Tests, Arena 2 = neue Mischmodelle. Die ersten Entscheidungsregeln haetten bei 10 Armen in ~20 % einen wirkungslosen Arm durchgelassen; Regeln v2 (gemeinsamer geschichteter Bootstrap, max-T-Schranke, Startwert-Varianz, Marge +0,01, Bestaetigung auf frischen Faellen) vor dem ersten Lauf eingebaut. Bayes-Suche nur fuer Stufe 2; Etikett-Decke 2s/(1+s), Audit messen statt schaetzen; neue Daten QTAB (Betrag+Phase+SWI, CC0); Venen-Atlanten als Stufe-2-Merkmal; klinische Messlatte icobrain aria 66,1 % TPR bei 0,9 FP/Fall; Fusion wie LUNA16 (<a href="findings/arena-2-research-round-3-2026-10.html">arena-2-research-round-3-2026-10</a>).</p>
 <p><strong>Neu 2026-10-25 (Suchraum-Erweiterung, 125 gepruefte IDs):</strong> Der Spielraum liegt in der zweiten Stufe (perfekte Stufe 2 ~0,85 statt ~0,65 auf VALDO, Startwert-Streuung ~10x kleiner als in Stufe 1, ~1 GPU-h je Arm); Backbone-Tausch ist erschoepft. Ungetestet mit bester Evidenz: Ensemble ueber verschiedene Architekturen (VALDO EnsembleTop 75,68 gegen 68,42; bei uns niedrigere Erwartung), Prototyp-Verlust (HSPL), Gefaess-Verwechsler als Synthese-Klasse, Etikett-Audit; T1+T2 ist schon gemessen (29.09., kein Gewinn). Neu vorgeschlagen: Stufe-2-Modell TrackSet-CMB (aequivariante Ausschnitte, gelernter Schichtverlauf, weicher Kontext, Aufmerksamkeit ueber alle Kandidaten eines Scans) mit fester Messreihenfolge (<a href="findings/search-space-expansion-and-novel-hybrids-2026-10.html">search-space-expansion-and-novel-hybrids-2026-10</a>).</p>
@@ -295,7 +296,7 @@ doi:10.1038/s41592-023-02151-z.</p>
 <ul>
 <li><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">sensitivity-levers-do-not-raise-lesion-f1</a></li>
 <li><a href="../agent_tooling/rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(21)</span></h2><details class="entry" id="arena-2-research-round-3-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/arena-2-research-round-3-2026-10.html">Arena 2, research round 3: decisions, labels, data, priors, fusion, operating points (2026-10)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Arena 2 research round 3 (11 topics, IDs checked): decision rules v2 against false keeps, HPO only for stage 2, label ceiling and audit design, insertion realism gate, QTAB data, venous atlases, clinical targets (icobrain aria, 4/5 boundary), fusion recipe, spatial priors, operating-point recipe, challenge-winner tricks</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, eleven narrowly scoped literature agents (R1-R11) on the open questions of Arena 2, IDs re-fetched by script (Semantic Scholar / arXiv abs pages, Crossref, DataCite, PubMed E-utilities); numbers marked as the agents&#x27; own simulation or calculation where they are not from a source · <a href="findings/arena-2-research-round-3-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md">Markdown</a></p><p>Naming (user, 2026-10-25): <strong>Arena 1</strong> = the U-Net tournaments and the earlier stage-2 tests; <strong>Arena 2</strong> = the new hybrid
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(22)</span></h2><details class="entry" id="arena-2-research-round-3-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/arena-2-research-round-3-2026-10.html">Arena 2, research round 3: decisions, labels, data, priors, fusion, operating points (2026-10)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Arena 2 research round 3 (11 topics, IDs checked): decision rules v2 against false keeps, HPO only for stage 2, label ceiling and audit design, insertion realism gate, QTAB data, venous atlases, clinical targets (icobrain aria, 4/5 boundary), fusion recipe, spatial priors, operating-point recipe, challenge-winner tricks</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, eleven narrowly scoped literature agents (R1-R11) on the open questions of Arena 2, IDs re-fetched by script (Semantic Scholar / arXiv abs pages, Crossref, DataCite, PubMed E-utilities); numbers marked as the agents&#x27; own simulation or calculation where they are not from a source · <a href="findings/arena-2-research-round-3-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md">Markdown</a></p><p>Naming (user, 2026-10-25): <strong>Arena 1</strong> = the U-Net tournaments and the earlier stage-2 tests; <strong>Arena 2</strong> = the new hybrid
 models (TrackSet-CMB stage 2, independent candidate source, physics renderer) and everything measured from now on.</p>
 <h2>Aussage</h2>
 <p><strong>1. Decision rules (R2): the first rules would have let a null arm through about every fifth time -- fixed before any run.</strong>
@@ -404,7 +405,120 @@ measures any of this on CMB except points 3, 7 and 9.</p>
 [18] Angelopoulos AN et al. 2022. Conformal risk control. arXiv 2208.02814. Shows: finite-sample control of any monotone risk on exchangeable calibration data.
 [19] de la Rosa E et al. 2024. A Robust Ensemble Algorithm for Ischemic Stroke Lesion Segmentation: Generalizability and Clinical Utility Beyond the ISLES Challenge. arXiv 2403.19425. Shows: a vote of the ISLES'22 top-3 recipes beats each single one.
 [20] Ren T et al. 2025. How We Won the ISLES'24 Challenge by Preprocessing. arXiv 2505.18424. Shows: per-modality intensity windowing raised CV Dice 0.218 -&gt; 0.310.
-Agent notes with all sources (R1-R11, about 200 entries) stay outside the wiki.</p></div></details><details class="entry" id="human-rater-variance-and-good-f1-for-cmb-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">How much do CMB raters disagree, and what is a good lesion-level F1?</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Human rater variance as the yardstick: six raters vs adjudicated reference lesion F1 0.52-0.76 (median 0.69), intra-rater 0.82 +- 0.14, subject kappa 0.71-0.82; derived human band lesion F1 ~0.65-0.80; F1 &gt; 0.85 against one rater suggests a lenient reference; paired second-rater design, 10-20 scans support only a margin ~0.08-0.12 (vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, research round 4 (user question &quot;experts make errors -- what is a good F1?&quot;), two literature agents (CMB raters, methodology), 42 IDs re-fetched by script; derived numbers marked as such · <a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/human-rater-variance-and-good-f1-for-cmb-2026-10.md">Markdown</a></p><h2>Aussage</h2>
+Agent notes with all sources (R1-R11, about 200 entries) stay outside the wiki.</p></div></details><details class="entry" id="arena-2-research-round-4-unlabelled-tabular-frozen-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html">Arena 2, research round 4: unlabelled scans, a tabular stage 2, frozen foundation features (2026-10)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Arena 2 round 4: unlabelled scans (no CMB semi-supervised paper, analogues small at our label count), tabular stage 2 (only same-candidate test went to handcrafted+RF, combination best), frozen foundation features (patch-local pooling only); three stage-2 arms T, F, U, tabular first</span></summary><div class="body"><p class="small muted">Herkunft: claude.ai chat with Mendel 2026-10-25 (&quot;what can still be improved in Arena 2&quot;); three literature agents on the three levers the wiki had no entry for; load-bearing IDs re-checked by hand · <a href="findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.md">Markdown</a></p><p>Scope: a keyword audit of cmb_detection and lesion_detection_method found zero entries on semi-supervised learning,
+tabular / boosting candidate classifiers and frozen foundation-model features. Everything else asked for ("what can be
+improved") is already covered by rounds 1-3 and the search-space expansion. All three levers below are stage-2 arms
+(seed noise ~0.01, ~1 GPU hour or less), consistent with where the headroom is.</p>
+<h2>Aussage</h2>
+<p><strong>1. Unlabelled scans: small gains at our label count, more likely a variance than a mean effect.</strong>
+No semi-supervised CMB paper on in-vivo SWI/T2* exists (PubMed query on microbleed AND semi-supervised / pseudo-label /
+self-training / self-supervised / unlabeled / mean teacher: one hit, ex-vivo). The one CMB result: self-supervised
+pretraining in an ex-vivo multi-echo GRE detector added about +0.007 AP (0.333 -&gt; 0.340, 5 folds x 4 seeds) [1]; the
+paper's headline 46 % AP gain comes mainly from its synthesis, not from the pretraining. Analogues:
+- lung nodules, FocalMix: CPM +11.5 at 25 labelled scans, +4.4 at 100, +0.7 at 533 (no seeds) [2];
+- brain metastases &lt; 15 mm, noisy student with 217 labelled / 1,247 unlabelled: FP per scan at 90 % sensitivity
+  9.23 -&gt; 8.44, at 80 % no change; looser pseudo-label thresholds made the student WORSE than the teacher [3];
+- perivascular spaces, pseudo-labels on 12,740 unlabelled T1w: Dice 85.7 -&gt; 85.6, a null result (preprint) [4];
+- in-domain self-supervised pretraining for nodule FP reduction: AUC 96.03 +- 1.82 -&gt; 98.34 +- 0.44 over 10 runs,
+  i.e. the run-to-run spread fell about 4-fold [5].
+Pattern: large gains only below ~50 labelled scans. Expected here (extrapolation, not measured): stage 1 +0.00 to
++0.05 F1, below its seed noise; stage 2 +0.00 to +0.02.</p>
+<p><strong>2. A tabular stage 2 is a mandatory cheap ablation, not a long shot.</strong>
+No paper compares a CNN and a boosting / random-forest stage 2 on the SAME CMB candidates; the "CNN beats handcrafted"
+claims in CMB compare across datasets. Classical CMB pipelines: random-forest cascade on LoG candidates with Radon and
+Hessian shape descriptors, 87 % sensitivity at 27.1 FP per subject [6]; two-stage RF (voxel then object) on SWI, object
+RF improved every FROC point, remaining FPs were vessel segments that look spherical [7]; SVM on shape and intensity,
+81.7 % (semi-automated) [8]. The only same-candidate head-to-head found (fundus red lesions, 28 and 78 training images,
+407 positives) went to the tabular model, and the combination won [9]:</p>
+<table>
+<thead>
+<tr>
+<th>features on the same candidates</th>
+<th>DIARETDB1 CPM</th>
+<th>e-ophtha CPM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNN only</td>
+<td>0.376</td>
+<td>0.306</td>
+</tr>
+<tr>
+<td>handcrafted + RF</td>
+<td>0.452</td>
+<td>0.356</td>
+</tr>
+<tr>
+<td>CNN + handcrafted in RF</td>
+<td>0.487</td>
+<td>0.368</td>
+</tr>
+</tbody>
+</table>
+<p>Counter-case: with ~1,000 positives on LUNA16 all top FP-reduction entries were CNNs (CPM 0.758-0.908 vs classical
+full systems 0.608-0.742) [10]. Our pool has about a hundred VALDO positives, i.e. the regime where [9] found the
+tabular model ahead. Feature list per candidate (first pass): volume, equivalent diameter, slices spanned, max in-plane
+area; PCA eigenvalue ratios (elongation), sphericity; multi-scale Hessian eigenvalues, Frangi vesselness and blobness
+at sigma 0.5-2 mm (anisotropy-aware); contrast to a surrounding shell, min / mean intensity; stage-1 max and mean
+probability; a tube score (how far the dark signal continues beyond the component along its main axis, a hand-made
+proxy of TrackSet's slice-track module); plus the round-3 features (vote count, edge distance, vein atlas).</p>
+<p><strong>3. Frozen foundation features: only with patch-local pooling at the candidate.</strong>
+Nothing exists on CMB. The decisive finding: in chest X-ray, linear probes on the CLS token of frozen RAD-DINO, DINOv2,
+DINOv3, BiomedCLIP and MedSigLIP stayed at chance for 4-8 px perturbations, while pooling the patch tokens inside the
+lesion box from the same forward pass reached AUC &gt;= 0.899 on natural small lesions, +0.119 to +0.387 over CLS
+(preprint; needs the lesion location, which our stage 1 provides) [11]. In a CT detector with 82 % of lesions &lt; 6 mm a
+frozen natural-image DINOv2 with registers beat the medical encoders (CPM 0.518 vs 0.423-0.433, preprint) [12]. Against:
+3D CT foundation models stay near chance on small nodules [13]; on renal lesions no foundation model beat a ResNet-50
+from scratch and radiomics did best (external AUC 0.88 vs 0.69-0.77) [14]; upsampling small native crops costs accuracy
+(MedMNIST 28 px -&gt; 224: AUC 91.75 vs 96.62 at native 224) [15]. Expected: parity with the stage-2 CNN, at best a
+complement in a late-fusion average. Main risks: natural-image encoders may not separate bleeds from vessel
+cross-sections on magnitude images, and features may encode site rather than lesion.</p>
+<h2>Trägt</h2>
+<p>Three new stage-2 arms for Arena 2, all on the frozen out-of-fold candidate pool and the frozen folds, judged by the v2
+decision rules:
+- <strong>T (tabular):</strong> LightGBM, shallow trees, strong regularisation, nested scan-grouped CV, features above; plus T+E
+  (same model with the CNN embedding appended). CPU, seconds per fit. Run this FIRST: it is the baseline every
+  TrackSet module must beat, and it tells whether the slice-track idea is already captured by a hand-made tube score.
+- <strong>F (frozen):</strong> DINOv2-B/14 with registers (second arm MedSigLIP-448), 16 mm in-plane crop, channels = slices -1/0/+1
+  (mIP over +-2 slices for thin SWI), bicubic upsampling to 224, mean of the central 2x2-3x3 patch tokens from the last
+  and one middle block, L2 logistic regression with nested C; never the CLS token alone.
+- <strong>U (unlabelled):</strong> one noisy-student round on stage 2 only: stage 1 frozen on unlabelled scans of the same sequences,
+  current stage 2 as teacher, keep only p &gt; 0.95 positives and p &lt; 0.05 negatives, student with stronger augmentation,
+  5 paired seeds. Unlabelled in-house scans are class 3 data: local profile only.</p>
+<h2>Trägt nicht</h2>
+<p>Any expectation of a large standalone gain from F or U; the effect-size ranges are the agents' extrapolations, not
+measurements. No source measured any of the three levers on CMB candidates. Most sources were read at abstract level;
+FocalMix and Orlando tables were read in full text; several 2026 sources are preprints.</p>
+<h2>Bruchindikator</h2>
+<p>T falls clearly below the stage-2 CNN on all cohorts (then the few-positives argument does not hold here); F with
+patch-local pooling stays near chance on our candidates; U produces more confident positives on veins than on bleeds.</p>
+<h2>Ablesung</h2>
+<p>IDs fetched by the agents; re-checked by hand on 2026-10-25: [1], [3], [8] (PubMed metadata), [9], [11] (arXiv pages).
+Others marked as agent-verified only. Tier 1b; preprints marked.
+[1] Nikseresht G et al. 2026. Automated detection of cerebral microbleeds on ex-vivo MRI scans of community-based older adults. NeuroImage 335:121986. DOI 10.1016/j.neuroimage.2026.121986, PMID 42107619. Peer-reviewed. SSL ablation number from the full text as read by the agent.
+[2] Wang D et al. 2020. FocalMix: semi-supervised learning for 3D medical image detection. CVPR. arXiv:2003.09108. Peer-reviewed (agent-verified).
+[3] Dikici E et al. 2022. Advancing brain metastases detection in T1-weighted contrast-enhanced 3D MRI using noisy student-based training. Diagnostics 12(8):2023. DOI 10.3390/diagnostics12082023, PMID 36010373. Peer-reviewed.
+[4] Pham et al. 2024. nnU-Net segmentation of perivascular spaces. arXiv:2411.19564. Preprint (agent-verified).
+[5] Zhou Z et al. Models Genesis. Med Image Anal. arXiv:2004.07882. Peer-reviewed (DOI not verified).
+[6] Fazlollahi A et al. 2015. Comput Med Imaging Graph. DOI 10.1016/j.compmedimag.2015.10.001 (agent-verified).
+[7] van den Heuvel TLA et al. 2016. NeuroImage Clin. DOI 10.1016/j.nicl.2016.07.002 (agent-verified).
+[8] Barnes SRS et al. 2011. Semiautomated detection of cerebral microbleeds in magnetic resonance images. Magn Reson Imaging 29(6):844-52. DOI 10.1016/j.mri.2011.02.028, PMID 21571479. Peer-reviewed.
+[9] Orlando JI et al. 2018. An ensemble deep learning based approach for red lesion detection in fundus images. Comput Methods Programs Biomed. DOI 10.1016/j.cmpb.2017.10.017, arXiv:1706.03008. CPM values checked on the arXiv page.
+[10] Setio AAA et al. 2017. LUNA16 challenge. Med Image Anal. arXiv:1612.08012 (DOI 10.1016/j.media.2017.06.015 not verified).
+[11] Muthyala R et al. Frozen foundation-model embeddings discard small-lesion signal in chest radiography. arXiv:2606.11606. Preprint.
+[12] Gokmen et al. 2026. SALT: lesion detection in CT with frozen self-distilled features. arXiv:2608.05100. Preprint (agent-verified).
+[13] Chevli, Mueller et al. 2026. Big, bright, or invisible: frozen-feature benchmark of 3D CT foundation models. arXiv:2608.05960. Preprint (agent-verified).
+[14] Haentze, Bressem et al. 2026. Benchmarking foundation models for renal lesion stratification in CT. arXiv:2605.07749. Preprint (agent-verified).
+[15] Wu, Papiez. MedMNIST foundation-model benchmark. arXiv:2501.14685. MIDL 2025 submission (acceptance not verified).</p>
+<h2>Verknüpft</h2>
+<ul>
+<li><a href="findings/arena-2-research-round-3-2026-10.html">arena-2-research-round-3-2026-10</a></li>
+<li><a href="findings/search-space-expansion-and-novel-hybrids-2026-10.html">search-space-expansion-and-novel-hybrids-2026-10</a></li>
+<li><a href="findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.html">voxel-token-transformers-unproven-at-300-subjects-2026-10</a></li>
+<li><a href="findings/one-shared-candidate-classifier-for-all-cohorts.html">one-shared-candidate-classifier-for-all-cohorts</a></li>
+<li><a href="../agent_coordination/findings/research-passes-invent-plausible-pmids.html">research-passes-invent-plausible-pmids</a></li>
+</ul></div></details><details class="entry" id="human-rater-variance-and-good-f1-for-cmb-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">How much do CMB raters disagree, and what is a good lesion-level F1?</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Human rater variance as the yardstick: six raters vs adjudicated reference lesion F1 0.52-0.76 (median 0.69), intra-rater 0.82 +- 0.14, subject kappa 0.71-0.82; derived human band lesion F1 ~0.65-0.80; F1 &gt; 0.85 against one rater suggests a lenient reference; paired second-rater design, 10-20 scans support only a margin ~0.08-0.12 (vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, research round 4 (user question &quot;experts make errors -- what is a good F1?&quot;), two literature agents (CMB raters, methodology), 42 IDs re-fetched by script; derived numbers marked as such · <a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/human-rater-variance-and-good-f1-for-cmb-2026-10.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li><strong>No absolute "good" F1 exists; the human range is the yardstick.</strong> Blind, pairwise, from-scratch lesion F1 between two CMB
   raters has not been published. The best proxy: six raters on 15 subjects (3 T, 2D T2<em>-GRE) scored against an adjudicated
