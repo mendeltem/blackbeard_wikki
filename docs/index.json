@@ -1661,6 +1661,17 @@
 "src": "knowledge/cmb_detection/findings/research-cmb-detection-2023-2026.md"
 },
 {
+"t": "CMB detection: where the headroom is, what is untried, and new hybrid models (2026-10)",
+"p": "cmb_detection/findings/search-space-expansion-and-novel-hybrids-2026-10.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Search-space expansion (125 IDs checked): headroom in stage 2 (low seed noise), backbones exhausted, untried levers (heterogeneous ensemble, prototype loss, vessel-mimic synthesis, T1+T2, label audit), 12 hybrids checked for novelty, new st",
+"id": "search-space-expansion-and-novel-hybrids-2026-10",
+"src": "knowledge/cmb_detection/findings/search-space-expansion-and-novel-hybrids-2026-10.md"
+},
+{
 "t": "The second-stage candidate classifier, ported into the training package, reproduces its gain",
 "p": "cmb_detection/findings/second-stage-classifier-ported-reproduced.html",
 "a": "cmb_detection",

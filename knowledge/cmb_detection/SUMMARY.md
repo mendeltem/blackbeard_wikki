@@ -1,5 +1,7 @@
 # cmb_detection: Kurzstand
 
+**Neu 2026-10-25 (Suchraum-Erweiterung, 125 gepruefte IDs):** Der Spielraum liegt in der zweiten Stufe (perfekte Stufe 2 ~0,85 statt ~0,65 auf VALDO, Startwert-Streuung ~10x kleiner als in Stufe 1, ~1 GPU-h je Arm); Backbone-Tausch ist erschoepft. Ungetestet mit bester Evidenz: heterogenes Ensemble (VALDO EnsembleTop 75,68 gegen 68,42), Prototyp-Verlust (HSPL), Gefaess-Verwechsler als Synthese-Klasse, T1+T2, Etikett-Audit. Neu vorgeschlagen: Stufe-2-Modell TrackSet-CMB (aequivariante Ausschnitte, gelernter Schichtverlauf, weicher Kontext, Aufmerksamkeit ueber alle Kandidaten eines Scans) mit fester Messreihenfolge ([search-space-expansion-and-novel-hybrids-2026-10](findings/search-space-expansion-and-novel-hybrids-2026-10.md)).
+
 **Neu 2026-10-22 (Python-Beispiele):** Training, Vorhersage und Fine-Tuning als lesbare Skripte; auf der CPU mit festen Seeds bitgleich zu den Befehlen (Gewichte, Masken), ein Vergleich mit einem Modell, das Laesionen findet; kopierte Funktionen per Quelltext geprueft ([example-scripts-reproduce-their-command-bit-for-bit](rules/example-scripts-reproduce-their-command-bit-for-bit.md)).
 
 **Neu 2026-10-17 (Literatur 2023-2026, 37 gepruefte Quellen):** Bauweise unveraendert 3D-U-Net plus FP-Reduktion; oeffentlich SHIVA-CMB mit Gewichten (F1 0,74); neu sind synthetische Daten, SWI/T2*-Uebertragung und QSM gegen Mimics ([research-cmb-detection-2023-2026](findings/research-cmb-detection-2023-2026.md)).

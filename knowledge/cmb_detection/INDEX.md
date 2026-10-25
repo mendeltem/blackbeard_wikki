@@ -13,6 +13,7 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 
 | Typ | Eintrag | Inhalt |
 |---|---|---|
+| befund | [search-space-expansion-and-novel-hybrids-2026-10](findings/search-space-expansion-and-novel-hybrids-2026-10.md) | Search-space expansion (125 IDs checked): headroom in stage 2 (low seed noise), backbones exhausted, untried levers (heterogeneous ensemble, prototype loss, vessel-mimic synthesis, T1+T2, label audit), 12 hybrids checked for novelty, new stage-2 model TrackSet-CMB, measurement order |
 | befund | [research-cmb-detection-2023-2026](findings/research-cmb-detection-2023-2026.md) | Literature 2023-2026 (37 refs, checked): same 3D U-Net + FP-reduction design, public SHIVA-CMB F1 0.74 with weights, synthetic data, SWI/T2* shift, QSM for mimics |
 | befund | [fine-tune-from-public-valdo-weights](findings/fine-tune-from-public-valdo-weights.md) | Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag) |
 | befund | [literature-2023-2026-shiva-cmb-is-the-public-comparable](findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.md) | Review 2023-2026 (37 records): SHIVA-CMB (public 3D U-Net, 6 cohorts, T2*+SWI, F1 0.74, 0.6 FP/scan, weights released) is the comparable to run; precision not sensitivity separates methods; mimic handling via phase/QSM channels; no CMB-specific foundation model retrieved |
