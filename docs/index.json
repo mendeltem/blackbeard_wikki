@@ -1628,6 +1628,17 @@
 "src": "knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md"
 },
 {
+"t": "How much do CMB raters disagree, and what is a good lesion-level F1?",
+"p": "cmb_detection/findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Human rater variance as the yardstick: six raters vs adjudicated reference lesion F1 0.52-0.76 (median 0.69), intra-rater 0.82 +- 0.14, subject kappa 0.71-0.82; derived human band lesion F1 ~0.65-0.80; F1 > 0.85 against one rater suggests a",
+"id": "human-rater-variance-and-good-f1-for-cmb-2026-10",
+"src": "knowledge/cmb_detection/findings/human-rater-variance-and-good-f1-for-cmb-2026-10.md"
+},
+{
 "t": "CMB detection 2023-2026: SHIVA-CMB is the public comparable, mimics drive precision, foundation models are not CMB-ready",
 "p": "cmb_detection/findings/literature-2023-2026-shiva-cmb-is-the-public-comparable.html",
 "a": "cmb_detection",
@@ -3804,6 +3815,17 @@
 "x": "3 % Maskenunterschied = 0,030 Dice ueber die z-Normierung in der Maske; so gross wie der ganze Architekturgewinn",
 "id": "brain-mask-is-part-of-the-model",
 "src": "knowledge/wmh_segmentation/findings/brain-mask-is-part-of-the-model.md"
+},
+{
+"t": "How much do WMH raters disagree, and what is a good Dice?",
+"p": "wmh_segmentation/findings/human-rater-variance-and-good-dice-for-wmh-2026-10.html",
+"a": "wmh_segmentation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-25",
+"x": "Human range: inter-rater Dice 0.70-0.81 (WMH 2017 observers 0.77/0.79, lesion F1 0.74/0.76), intra-rater 0.72-0.86, only 0.51 at <= 5 ml; report Dice by load class; 'human-level' only with a second rater on the same scans",
+"id": "human-rater-variance-and-good-dice-for-wmh-2026-10",
+"src": "knowledge/wmh_segmentation/findings/human-rater-variance-and-good-dice-for-wmh-2026-10.md"
 },
 {
 "t": "Belegte Dice-Hebel fuer WMH auf FLAIR, und was nachweislich nichts bringt",
