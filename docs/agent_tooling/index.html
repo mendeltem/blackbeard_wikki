@@ -43,14 +43,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests, conda, venv, PYTHONNOUSERSITE, Installation, Cluster, datenagnostisch, BIDS</p>
-<div class="stripe"><i class="warn" style="width:59.5%" title="vorschlag: 22"></i><i class="ok" style="width:40.5%" title="getragen: 15"></i></div><div class="counts"><span class="warn">22 vorschlag</span> <span class="ok">15 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<div class="stripe"><i class="warn" style="width:60.5%" title="vorschlag: 23"></i><i class="ok" style="width:39.5%" title="getragen: 15"></i></div><div class="counts"><span class="warn">23 vorschlag</span> <span class="ok">15 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.</strong> Es wird
 geglaubt, weil es wie eine Messung aussieht.</p>
 <p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>2026-10-21: tested the source-check tool against itself in four cases. It catches invented PMIDs and real PMIDs with a foreign title (exit 1), and refuses references without PMID (exit 2). Blind spot: a real PMID with the matching title whose sentence claims the opposite of the abstract passed with exit 0 and "0 wrong". The tool checks identity, not the claim - reading the abstract stays manual work.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Regel 2026-10-29 (Nutzer):</strong> In Schaubildern laeuft keine Verbindungslinie durch einen Kasten oder Text: orthogonal durch freie Gassen (zwischen Spalten, am Rand) fuehren, geteilte Gassen mit eigenem Abstand, und vor dem Verschicken das gerenderte PNG ansehen; Schaubilder mit exakten Woertern zeichnen statt mit einem Bildmodell erzeugen (<a href="rules/diagram-lines-never-cross-boxes-or-text.html">diagram-lines-never-cross-boxes-or-text</a>).</p>
+<p>2026-10-21: tested the source-check tool against itself in four cases. It catches invented PMIDs and real PMIDs with a foreign title (exit 1), and refuses references without PMID (exit 2). Blind spot: a real PMID with the matching title whose sentence claims the opposite of the abstract passed with exit 0 and "0 wrong". The tool checks identity, not the claim - reading the abstract stays manual work.</p>
 <p><strong>Regel 2026-10-17 (Nutzer):</strong> Jede zitierte Quelle pruefen (existiert, Link geht, PMID gehoert zum Titel, Aussage im Abstract) und je Quelle ein Satz "Shows: ..."; ein Agentenbericht hatte 20 von 28 echten PMIDs an erfundenen Titeln (<a href="rules/check-every-cited-source-and-summarise-it.html">check-every-cited-source-and-summarise-it</a>).
 <strong>Neu 2026-10-17:</strong> Aus diesem Netz antworten nur wenige Suchdienste (DuckDuckGo 202, Mojeek Captcha, GAO/USPS OIG/NHTSA 403-406, TED 405); <strong>SEC-EDGAR-Volltext funktioniert</strong> und gibt zu jeder boersennotierten Firma das Originaldokument mit Zahlen und Wortlaut, aber deckt nur US-Filer ab (<a href="findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.html">sec-edgar-fulltext-search-is-the-reachable-primary-source</a>).
 <strong>Neu 2026-10-17:</strong> Verschieben = kopieren + SHA-256 beidseitig + erst dann loeschen; grep -q unter pipefail meldet einen Treffer als Fehler; stuendlicher Platzwaechter haelt Dienste unter 20 GB per SIGSTOP an; kompakte Literatursuche ueber freie APIs spart Tokens (<a href="findings/disk-guard-verified-move-and-compact-literature-search.html">disk-guard-verified-move-and-compact-literature-search</a>).
@@ -73,7 +74,42 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 <p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p>
 <p><strong>Rules, new 2026-10-16:</strong> (1) A Python environment on a shared machine is only isolated if you make it so: <code>PYTHONNOUSERSITE=1</code> (a user-site package shadowed the environment's), install on a compute node or as venv (conda died twice on the login node at <code>repodata.json</code>), venv fallback without <code>python3-venv</code>, check <code>pkg.__file__</code> before testing (an editable install pointed to an old clone), <code>rc=$?</code> before <code>$(date)</code>. (2) Public code knows no dataset: patterns and explicit files, BIDS as preset; dataset rules in a private script next to the data, after proving old and new give identical case lists.</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(34)</span></h2><details class="entry" id="check-every-cited-source-and-summarise-it"><summary><span class="type">Regel</span><span class="t"><a href="rules/check-every-cited-source-and-summarise-it.html">Every cited source is checked against the original and carries a one-sentence summary</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-17</span><span class="i">Every source: exists (PMID/DOI), PMID belongs to the title, claim in the abstract, one &#x27;Shows:&#x27; sentence; agent report had 20/28 real PMIDs on invented titles; tool quellen-pruefen. Measured 2026-10-21: tool catches invented ids and mismatched titles, but passes a real PMID + matching title whose claim is inverted (exit 0, &#x27;0 wrong&#x27;) — identity is checked, the claim is not</span></summary><div class="body"><p class="small muted">Herkunft: user rule 2026-10-17 after a research report by a remote-model agent with wrong references; Alita session · <a href="rules/check-every-cited-source-and-summarise-it.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/check-every-cited-source-and-summarise-it.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(35)</span></h2><details class="entry" id="diagram-lines-never-cross-boxes-or-text"><summary><span class="type">Regel</span><span class="t"><a href="rules/diagram-lines-never-cross-boxes-or-text.html">Diagram lines never cross boxes or text: route them through free lanes, then look at the rendered picture</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-29</span></summary><div class="body"><p class="small muted">Herkunft: user rule on Alita 2026-10-29 after a system diagram whose connector lines ran through boxes; Purchase 1997 (graph drawing aesthetics) · <a href="rules/diagram-lines-never-cross-boxes-or-text.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/diagram-lines-never-cross-boxes-or-text.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li>A connector line (arrow, edge) never runs through a box, a label or another text. It goes around the box through a
+   free lane: the gap between two columns, the margin of the picture, or above or below a row.</li>
+<li>Prefer orthogonal routing (horizontal and vertical segments, <code>H</code>/<code>V</code> in SVG paths) to curves. With curves it is hard
+   to see where a line passes.</li>
+<li>Two lines that share a lane get their own offsets (for example x = 1260 and x = 1270), so they do not lie on top of each
+   other. Where they enter a box they enter at different points.</li>
+<li>Labels on a line sit next to the line, never on another box or line.</li>
+<li>Before a diagram is sent or published, render it (for example headless Firefox, <code>firefox --headless --screenshot</code>) and
+   look at the PNG. The SVG source alone does not show crossings.</li>
+<li>Diagrams with exact words (system diagrams, workflows) are drawn as vector graphics, not generated by an image model.
+   On 2026-10-29 Z-Image Turbo wrote 1 of 3 quoted labels wrong ("CLE SERVER" became "CLEERVER").</li>
+</ol>
+<h2>Trägt</h2>
+<ul>
+<li>In Purchase's experiment, edge crossings had the strongest effect on how well people understood a graph of all the
+  aesthetics tested.</li>
+<li>On 2026-10-29 the first version of the Clara overview diagram had a Telegram line running through the agent and relay
+  boxes and a green arrow crossing the System One box. The second version still had two vertical lines through the Clé
+  box. The user noticed both from the picture. Both were fixed by moving the lines to free lanes (between the columns,
+  then along the right margin).</li>
+</ul>
+<h2>Trägt nicht</h2>
+<p>Dense network plots (hundreds of edges) cannot avoid every crossing; there the rule is to minimise crossings and to
+keep text clear of lines.</p>
+<h2>Bruchindikator</h2>
+<p>A reader has to trace a line by hand to see which box it belongs to, or a line covers a word.</p>
+<h2>Ablesung</h2>
+<ul>
+<li>Purchase H. C. (1997). Which aesthetic has the greatest effect on human understanding? In: Graph Drawing (GD 1997),
+  Lecture Notes in Computer Science 1353, pp. 248-261. doi:10.1007/3-540-63938-1_67 (checked via Crossref 2026-10-29;
+  no PMID, computer science).</li>
+<li>Own diagrams 2026-10-29: https://github.com/mendeltem/clara_working_station/tree/main/abbildungen
+  (1-clara-overview, 2-model-request, 3-job-queue).</li>
+</ul></div></details><details class="entry" id="check-every-cited-source-and-summarise-it"><summary><span class="type">Regel</span><span class="t"><a href="rules/check-every-cited-source-and-summarise-it.html">Every cited source is checked against the original and carries a one-sentence summary</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-17</span><span class="i">Every source: exists (PMID/DOI), PMID belongs to the title, claim in the abstract, one &#x27;Shows:&#x27; sentence; agent report had 20/28 real PMIDs on invented titles; tool quellen-pruefen. Measured 2026-10-21: tool catches invented ids and mismatched titles, but passes a real PMID + matching title whose claim is inverted (exit 0, &#x27;0 wrong&#x27;) — identity is checked, the claim is not</span></summary><div class="body"><p class="small muted">Herkunft: user rule 2026-10-17 after a research report by a remote-model agent with wrong references; Alita session · <a href="rules/check-every-cited-source-and-summarise-it.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/check-every-cited-source-and-summarise-it.md">Markdown</a></p><h2>Aussage</h2>
 <p>Before a report, answer or wiki entry cites a source: (1) the source exists and its link works (PMID found in PubMed,
 DOI registered at doi.org), (2) the PMID belongs to the cited title, (3) the claim it backs is in its abstract, and
 (4) each reference carries one sentence "Shows: ..." with what the paper found. Anything that cannot be checked is
@@ -1405,5 +1441,5 @@ Restart-Zaehler steigt im Minutentakt; Staffelstab-Uebergaben ohne
 <li><a href="rules/conditions-need-an-expiry-event.html">conditions-need-an-expiry-event</a></li>
 </ul>
 <p><strong>Nachtrag 2026-10-12 (nachmittags):</strong> Zweites Loch im selben Werkzeug: <code>grossauftrag --abarbeiten</code> hielt nie die Haupt-flock der direkten Laeufe. Ein direkter <code>grossauftrag --gib 30</code> (recon-all, 3 x 26 GB) und ein eingereihter Lauf waeren nachts gleichzeitig gestartet (OOM, zwei recon-all auf derselben Sitzung). Jetzt prueft --abarbeiten je Lauf die flock nicht blockierend: ist sie gehalten, bleibt der Eintrag offen (rc 6) und kommt am naechsten Rundenende dran, damit der dauerlauf nicht stundenlang steht. Sicherung grossauftrag.vor-20261012-abarbeiten-flock.</p></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-25 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-29 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

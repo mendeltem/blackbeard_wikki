@@ -286,6 +286,17 @@
 "src": "knowledge/agent_tooling/rules/dataset-handover-one-folder-per-case-no-copies.md"
 },
 {
+"t": "Diagram lines never cross boxes or text: route them through free lanes, then look at the rendered picture",
+"p": "agent_tooling/rules/diagram-lines-never-cross-boxes-or-text.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-29",
+"x": "1. A connector line (arrow, edge) never runs through a box, a label or another text. It goes around the box through a free lane: the gap between two columns, the margin of the picture, or above or below a row. 2. Prefer orthogonal routing (",
+"id": "diagram-lines-never-cross-boxes-or-text",
+"src": "knowledge/agent_tooling/rules/diagram-lines-never-cross-boxes-or-text.md"
+},
+{
 "t": "Leer ist nicht fehlend",
 "p": "agent_tooling/rules/empty-is-not-missing.html",
 "a": "agent_tooling",

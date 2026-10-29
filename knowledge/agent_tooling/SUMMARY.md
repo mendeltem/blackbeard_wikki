@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**Regel 2026-10-29 (Nutzer):** In Schaubildern laeuft keine Verbindungslinie durch einen Kasten oder Text: orthogonal durch freie Gassen (zwischen Spalten, am Rand) fuehren, geteilte Gassen mit eigenem Abstand, und vor dem Verschicken das gerenderte PNG ansehen; Schaubilder mit exakten Woertern zeichnen statt mit einem Bildmodell erzeugen ([diagram-lines-never-cross-boxes-or-text](rules/diagram-lines-never-cross-boxes-or-text.md)).
+
 2026-10-21: tested the source-check tool against itself in four cases. It catches invented PMIDs and real PMIDs with a foreign title (exit 1), and refuses references without PMID (exit 2). Blind spot: a real PMID with the matching title whose sentence claims the opposite of the abstract passed with exit 0 and "0 wrong". The tool checks identity, not the claim - reading the abstract stays manual work.
 
 **Regel 2026-10-17 (Nutzer):** Jede zitierte Quelle pruefen (existiert, Link geht, PMID gehoert zum Titel, Aussage im Abstract) und je Quelle ein Satz "Shows: ..."; ein Agentenbericht hatte 20 von 28 echten PMIDs an erfundenen Titeln ([check-every-cited-source-and-summarise-it](rules/check-every-cited-source-and-summarise-it.md)).
