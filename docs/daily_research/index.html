@@ -43,13 +43,152 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › daily_research</div><h1>daily_research</h1><p>Taegliche lokale Literaturrecherche 04:00 ueber alle Bereiche</p><p class="muted small">Morgenrecherche, Literatur, neu seit 2025, arXiv, OpenAlex</p>
-<div class="stripe"><i class="" style="width:100.0%" title="unbestaetigt: 4"></i></div><div class="counts"><span class="">4 unbestaetigt</span></div><div class="small"><p>Taegliche Literaturrecherche um 04:00, lokal (Werkzeug <code>morgenrecherche</code> auf Alita), ueber alle Wiki-Bereiche im Wechsel. Status je Seite: unbestaetigt (aus Abstracts und Open-Access-Volltexten, nicht von Hand geprueft).</p></div>
+<div class="stripe"><i class="" style="width:100.0%" title="unbestaetigt: 5"></i></div><div class="counts"><span class="">5 unbestaetigt</span></div><div class="small"><p>Taegliche Literaturrecherche um 04:00, lokal (Werkzeug <code>morgenrecherche</code> auf Alita), ueber alle Wiki-Bereiche im Wechsel. Status je Seite: unbestaetigt (aus Abstracts und Open-Access-Volltexten, nicht von Hand geprueft).</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><ul>
-<li>Letzte Laeufe: 2026-10-25, 2026-10-24, 2026-10-10, 2026-10-09</li>
-<li>Heute: ai_buyers, china_industrial_strategy, dementia_risk_factors, imaging_genetics, memory_earnings, memory_supply, model_capability_cost, news_sentiment_volatility</li>
+<li>Letzte Laeufe: 2026-10-30, 2026-10-25, 2026-10-24, 2026-10-10, 2026-10-09</li>
+<li>Heute: agent_tooling, cmb_detection, local_llm_operation, webcam_eye_tracking, agent_coordination, ai_application_layer</li>
 </ul></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="findings">Befund <span class="muted small">(4)</span></h2><details class="entry" id="daily-research-2026-10-25"><summary><span class="type">Befund</span><span class="t"><a href="findings/2026-10-25.html">Morgenrecherche 2026-10-25</a></span><span class="badge ">unbestaetigt</span><span class="muted small">2026-10-25</span></summary><div class="body"><p class="small muted">Herkunft: Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell) · <a href="findings/2026-10-25.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-10-25.md">Markdown</a></p><p>8 von 8 Bereichen recherchiert, 50 min. Aussagen stammen aus Abstracts und, wo als [Volltext] markiert, aus Open-Access-Volltexten (Europe PMC); nicht von Hand geprueft.</p>
+<h2 id="findings">Befund <span class="muted small">(5)</span></h2><details class="entry" id="daily-research-2026-10-30"><summary><span class="type">Befund</span><span class="t"><a href="findings/2026-10-30.html">Morgenrecherche 2026-10-30</a></span><span class="badge ">unbestaetigt</span><span class="muted small">2026-10-30</span></summary><div class="body"><p class="small muted">Herkunft: Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell) · <a href="findings/2026-10-30.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-10-30.md">Markdown</a></p><p>6 von 8 Bereichen recherchiert, 27 min. Aussagen stammen aus Abstracts und, wo als [Volltext] markiert, aus Open-Access-Volltexten (Europe PMC); nicht von Hand geprueft.</p>
+<h2>Rückfallwerte und Vorbedingungen für ein Modell-Routing-Tool</h2>
+<p>Bereich: <a href="../agent_tooling/index.html">agent_tooling</a></p>
+<ul>
+<li>Audit-as-Code übersetzt Governance-Anforderungen in technisch überprüfbare Regeln, definiert als versionierte Spezifikationen (z. B. YAML oder JSON), und erzwingt sie durch deterministische Gates in CI/CD-Pipelines; das System liefert strukturierte Entscheidungen, ob ein System fortgesetzt, repariert oder blockiert werden muss, basierend auf quantifizierbaren Indizes wie Traceability und Explainability (Audit-as-code, https://doi.org/10.3389/frai.2026.1759211).</li>
+<li>AEGIS integriert „Memory Feasibility“ und „OOM-aware Recovery“ in einen Scheduling-Loop, überwacht Workloads nach der Platzierung und nutzt Telemetrie, um zu bestimmen, ob eine GPU sicher zusätzliche Last akzeptieren kann; bei Out-of-Memory-Fehlern werden Retries unter progressiv sichereren Speicherbedingungen ausgelöst, mit einem finalen Fallback auf exklusive Ausführung (AEGIS, https://doi.org/10.48550/arxiv.2508.19073).</li>
+<li>ToolContractGate nutzt versionierte, deterministische Prüfroutinen (z. B. OpenAPI-Fingerabdrücke) ohne LLM-Beteiligung im Validierungspfad, wendet zehn Checks an und liefert deterministische Entscheidungen (BLOCK, REVIEW, WARN) mit einer Latenz von 0,18 ms im Mittel (ToolContractGate, https://arxiv.org/abs/2610.33108v1).</li>
+<li>LATTICE nutzt Schwellenwerte (z. B. θauto = 0,85, θesc = 0,45), um Aktionen in ALLOW, ESCALATE oder BLOCK zu routen; Werte unter der Eskalationsschwelle werden an menschliche Operatoren weitergeleitet (LATTICE, https://doi.org/10.3389/frai.2026.1800407).</li>
+<li>HybridInfer nutzt thermale Reserven und Query-Komplexität als Zustandsvariablen für ein Reinforcement-Learning-Routing zwischen On-Device, Edge und Cloud (HybridInfer, https://doi.org/10.48550/arxiv.2609.30270).
+Einschaetzung (lokales Modell): Für die laufende Arbeit könnten deterministische Gates und konfidenzbasierte Eskalationsschwellen als Orientierung dienen, konkrete Rückfallwerte für GPU-Verfügbarkeit, Speicher-Headroom und Kontextlängenlimits sind im Material jedoch nicht belegt.</li>
+</ul>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2609.30270
+- https://doi.org/10.3389/frai.2026.1759211 [Volltext]
+- https://doi.org/10.48550/arxiv.2508.19073
+- https://doi.org/10.3390/s26165025 [Volltext]
+- https://arxiv.org/abs/2610.33108v1
+- https://doi.org/10.48550/arxiv.2609.34017
+- https://doi.org/10.48550/arxiv.2607.16345
+- https://doi.org/10.3390/biomimetics11090670 [Volltext]
+- https://doi.org/10.3389/frai.2026.1800407 [Volltext]
+- https://doi.org/10.3389/fbinf.2026.1903746 [Volltext]</p>
+<h2>Nächste Kandidatenquelle nach Schließung der gedeckten Alternative</h2>
+<p>Bereich: <a href="../cmb_detection/index.html">cmb_detection</a></p>
+<ul>
+<li>Multi-Sequenz/Modalität: Eine Quelle nutzt GRE und SWI zur Robustheitserhöhung, liefert aber keine isolierte F1-Differenz zur Begründung zusätzlichen Compute-Aufwands gegenüber einem gesättigten Single-Source-Modell. Quelle: https://doi.org/10.1016/j.nicl.2025.103873</li>
+<li>Für die CMB-Detektion werden 2025/2026 weiterhin F1-Werte unterhalb eines Plateaus von 0,85 berichtet: 0,887, 0,699 und 74,3 %. Quellen: https://doi.org/10.3389/fnins.2026.1743039 ; https://doi.org/10.3389/fnagi.2026.1729422 ; https://doi.org/10.48550/arxiv.2607.05325</li>
+<li>Bei einem F1-Score von 0,699 wurden 654 False Negatives und 622 False Positives gezählt; eine zusätzliche Preprocessing-Strategie (MIG) erhöhte die True Positives leicht, steigerte aber die False Positives auf 693 und senkte den F1-Score auf 0,690. Quelle: https://doi.org/10.3389/fnagi.2026.1729422</li>
+<li>Ex-vivo-MRI: 90 % der definitiven CMBs wurden erfasst, jedoch mit 15 False Positives pro Scan; die Herausforderung wird als „abundant mimics“ beschrieben. Quelle: https://doi.org/10.1016/j.neuroimage.2026.121986</li>
+<li>Als nächste Schritte werden Zwei-Stufen-Ansätze aus grober Lokalisierung und feiner Diskriminierung genannt, um Mimics von echten CMBs zu trennen; zusätzlich werden Uncertainty Estimation und robuste Regularisierung zur Adressierung von Generalisierungsproblemen und Artefakt-Sensitivität empfohlen. Quellen: https://doi.org/10.3390/brainsci16020207 ; https://doi.org/10.1016/j.nicl.2016.07.002 ; https://doi.org/10.3390/biomedinformatics5020020</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Für die laufende Arbeit könnte das bedeuten, dass eine nächste Intervention eher auf FP-Reduktion und Mimic-Trennung geprüft werden sollte, ohne daraus bereits einen F1-Gewinn über 0,851 abzuleiten.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.3389/fnins.2026.1743039 [Volltext]
+- https://doi.org/10.3389/fnagi.2026.1729422 [Volltext]
+- https://doi.org/10.48550/arxiv.2607.05325
+- https://doi.org/10.1002/jmri.24047
+- https://doi.org/10.1016/j.nicl.2025.103873
+- https://doi.org/10.1038/s41598-025-24362-4
+- https://doi.org/10.1016/j.neuroimage.2026.121986 [Volltext]
+- https://doi.org/10.1002/alz.71157 [Volltext]
+- https://doi.org/10.1093/braincomms/fcaf186
+- https://doi.org/10.64898/2026.05.19.26353364</p>
+<h2>VRAM-Konkurrenz zwischen LLM-Inferenz und lokaler Bildgenerierung</h2>
+<p>Bereich: <a href="../local_llm_operation/index.html">local_llm_operation</a></p>
+<ul>
+<li>Die Recherche trägt den Titel „VRAM-Konkurrenz zwischen LLM-Inferenz und lokaler Bildgenerierung“ und wurde lokal ohne Cloud am 2026-10-30 durchgeführt (keine URL/DOI im Text).</li>
+<li>Es wurden vier Suchfragen zu VRAM-Contention, Offloading-Konfigurationen, Fehlermodi bei hoher Disk-Auslastung und VRAM-Budget-Managern gestellt (keine URL/DOI im Text).</li>
+<li>Die Suche meldet „4 von 4 Suchfragen beantwortet“, der Inhalt zeigt jedoch einen internen Fehler: „I'm sorry, an internal error has occurred.“ (keine URL/DOI im Text).</li>
+<li>Es liegen keine Ergebnisse, Benchmarks oder Quellenangaben im Text vor (keine URL/DOI im Text).
+Einschaetzung (lokales Modell): Da keine belastbaren Ergebnisse oder Quellen vorliegen, könnte das für die laufende Arbeit bedeuten, dass die Recherche wiederholt oder der Fehler analysiert werden sollte, bevor daraus Schlüsse gezogen werden.</li>
+</ul>
+<p>Quellen (Auszug):</p>
+<h2>Realistische Genauigkeit und Lizenzfallen für Webcam-Gaze in der Browser-Research-Umgebung</h2>
+<p>Bereich: <a href="../webcam_eye_tracking/index.html">webcam_eye_tracking</a></p>
+<ul>
+<li>Für Webcam-basierte Blickmessung bei Lese-/Bildschirmaufgaben berichtet eine Laborstudie eine mittlere räumliche Genauigkeit von 1,45° gegen einen EyeLink-Tracker; Online-Daten wiesen eine deutlich schlechtere Qualität mit höheren Rauschanteilen und geringerer räumlicher Präzision auf. https://doi.org/10.3758/s13428-026-03199-3</li>
+<li>In einer kontrollierten Studie mit 20 Teilnehmern variierte der mittlere Winkelfehler für WebGazer je nach Kalibrierungsdichte zwischen 10,32° und 13,56°. https://doi.org/10.3390/jemr19050099</li>
+<li>In Online-Experimenten wurde die beste erzielte Blickgenauigkeit mit 2,4° und einer Präzision von 0,47° berichtet. https://doi.org/10.3758/s13428-023-02190-6</li>
+<li>Eine Studie zu tragbaren Systemen – nicht explizit Webcam – zeigt, dass ein Offset zwischen Sitzungen variiert und ohne Online-Rekalibrierung zu einem mittleren Fehler von 4,58° führt, der durch Korrektur auf 1,10° reduziert werden kann. https://doi.org/10.48550/arxiv.2610.07783</li>
+<li>Die vorliegenden Quellen enthalten keine spezifischen Lizenzanalysen oder juristischen Gutachten, die den Einsatz von Open-Source-Gaze-Estimation-Bibliotheken in öffentlich finanzierter Forschung mit Publikation und Code-Sharing behandeln; hochendige Eye-Tracking-Hardware basiert oft auf proprietären SDKs, die eine plattformübergreifende Nutzung ausschließen. https://doi.org/10.1155/ahci/3300666</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Die Spannbreite zwischen Labor- und Online-Werten sowie die fehlenden Lizenzbewertungen legen nahe, dass vor einer Festlegung auf Webcam-Gaze sowohl die für die Aufgabe nötige räumliche Auflösung als auch eine separate rechtliche Prüfung der eingesetzten Bibliotheken offen geklärt werden sollten.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2505.22769
+- https://doi.org/10.3758/s13428-026-03199-3 [Volltext]
+- https://doi.org/10.3390/jemr19050099 [Volltext]
+- https://doi.org/10.3758/s13428-023-02237-8
+- https://doi.org/10.31219/osf.io/eqtak
+- https://doi.org/10.48550/arxiv.2610.07783
+- https://doi.org/10.3758/s13428-023-02190-6
+- https://doi.org/10.48550/arxiv.2603.12388
+- https://doi.org/10.1109/tcsvt.2016.2595322
+- https://doi.org/10.1145/3649902.3653346</p>
+<h2>Koordinierung der neuen Mehrkomponenten-Architektur (Weiche, Modellwache, Freigabe-Gate)</h2>
+<p>Bereich: <a href="../agent_coordination/index.html">agent_coordination</a></p>
+<ul>
+<li>Der Schwarm-Arbeiter pl20261030-7-agent_coordination meldet fuer 2026-10-30 04:25, dass 3 von 4 Suchfragen beantwortet wurden, lokal (ohne Cloud). Quelle: im bereitgestellten Text nicht als vollstaendige URL oder DOI angegeben.</li>
+<li>Ziel war eine Morgenrecherche 2026-10-30 ueber 8 Wiki-Bereiche. Quelle: im bereitgestellten Text nicht als vollstaendige URL oder DOI angegeben.</li>
+<li>Im Text steht: "I'm sorry, an internal error has occurred." Quelle: im bereitgestellten Text nicht als vollstaendige URL oder DOI angegeben.</li>
+<li>Die gestellten Suchfragen betreffen Architekturmuster fuer Watchdog-, Routing- und Release-Gate-Komponenten in Single-Node-LLM-Deployments, Concurrency-Control fuer Shared-State-Dateien, Teilabschluesse paralleler Aufgaben sowie Relay-Muster mit Schema-Pruefung und Timeout-Durchsetzung. Quelle: im bereitgestellten Text nicht als vollstaendige URL oder DOI angegeben.
+Einschaetzung (lokales Modell): Die Meldung weist auf einen internen Fehler und eine unvollstaendige Quellenlage hin; fuer die laufende Arbeit sollte die Recherche vor einer Wiki-Uebernahme auf fehlende Quellen und offene Suchfragen geprueft werden.</li>
+</ul>
+<p>Quellen (Auszug):</p>
+<h2>Token-Ökonomie der Prompt-Cache-Trefferquote im Routing-Workload</h2>
+<p>Bereich: <a href="../ai_application_layer/index.html">ai_application_layer</a></p>
+<ul>
+<li>Der einzige quantitative Hit-Raten-Wert im Material stammt aus einer zweistufigen Cache-Architektur mit Schwelle bei rund 3.500 Tokens und beträgt rund 0,83 in 30-Aufruf-Sitzungen auf der Anthropic-Sonnet-4.6-API; dieser Wert bezieht sich ausdrücklich nicht auf alternierende Routing-Workloads. Quelle: https://doi.org/10.48550/arxiv.2607.15516</li>
+<li>Prompt-Caching mit einer Trefferquote von 99,3 % senkt die effektiven API-Kosten um 88,6 % auf 0,57 USD pro Million Tokens und liegt damit unter den 2,83 USD pro Million Tokens, die als amortisierte Einheitskosten für den geteilten On-Premise-Slice angegeben werden; die Quelle nennt dies „utilization-dependent inversion". Quelle: https://doi.org/10.48550/arxiv.2607.13080</li>
+<li>Für Produktions-RAG-Workloads wird eine Reduktion redundanter Berechnungen um 51 % berichtet, was auf KV-Cache-Wiederverwendung für Text-Chunks zielt, nicht auf Hit-Raten bei Kontext-Zusammenfassungen. Quelle: https://doi.org/10.1145/3725273</li>
+<li>KV-Cache- und Kontext-Kompressionsverfahren (Finch, Still, SeKV, KV-Surgeon) berichten Kompressionsraten von bis zu 93x bzw. 8x–200x sowie Genauigkeits- oder Integritätsmaße, jedoch keine resultierenden Prompt-Cache-Hit-Raten in einem dynamischen Routing-Szenario. Quellen: https://doi.org/10.48550/arxiv.2408.00167 ; https://doi.org/10.48550/arxiv.2606.07878 ; https://doi.org/10.48550/arxiv.2606.31145 ; https://doi.org/10.48550/arxiv.2610.25933</li>
+<li>Qualitativ wird ein „Control-plane tax" durch Hilfs-LLM-Aufrufe und Kontext-Overhead beschrieben, der produktive Berechnungen verdrängt, ohne Kosten-pro-Token-Metrik. Quelle: https://doi.org/10.48550/arxiv.2608.15127
+Einschaetzung (lokales Modell): Die zentrale Hypothese zur Verschiebung des Break-even durch die Cache-Trefferquote lässt sich mit dem vorliegenden Material nicht direkt prüfen; für die laufende Arbeit bedeutet das, dass quantitative Annahmen zur Trefferquote und zu Cache-Miss-Kosten derzeit nicht aus den Quellen abgesichert sind.</li>
+</ul>
+<p>Quellen (Auszug):
+- https://doi.org/10.48550/arxiv.2502.03771
+- https://doi.org/10.48550/arxiv.2408.00167
+- https://doi.org/10.48550/arxiv.2607.15516
+- https://doi.org/10.48550/arxiv.2606.07878
+- https://doi.org/10.48550/arxiv.2605.24914
+- https://doi.org/10.48550/arxiv.2606.31145
+- https://doi.org/10.48550/arxiv.2610.25933
+- https://doi.org/10.1145/3725273
+- https://doi.org/10.48550/arxiv.2607.13080
+- https://doi.org/10.48550/arxiv.2601.09527</p>
+<h2>Gestellte Suchfragen</h2>
+<ul>
+<li>What 2025+ patterns exist for designing a model-routing tool that exposes machine-checkable preconditions (GPU availability, VRAM headroom, context-length budget) and returns a structured fallback value (e.g., 'route to API' or 'queue for later') instead of a silent failure when a precondition is violated?</li>
+<li>Are there published 2025+ designs for a 'release gate' tool in a multi-agent pipeline that blocks downstream consumption of an output until a deterministic checklist (schema validity, citation existence, budget cap) passes, and what is the recommended timeout and escalation path when the gate itself hangs?</li>
+<li>How do 2025+ MCP (Model Context Protocol) or tool-server implementations handle the case where a routing tool's own health-check (e.g., GPU temperature, disk free space) degrades mid-session, and what is the standard contract for the calling agent to detect and re-route without losing the in-flight prompt?</li>
+<li>What 2025+ test-harness patterns exist for validating that a routing tool's fallback values are actually consumed by downstream tools (i.e., no silent drop), and do any open-source CI pipelines demonstrate end-to-end assertion of the fallback path under simulated GPU unavailability?</li>
+<li>What 2025+ studies on small-lesion MRI detection (CMB, PVS) report that a second or third candidate-extraction source (e.g., multi-sequence fusion, temporal differencing across time-points) adds measurable F1 gain over a single-source baseline that has already plateaued, and what is the minimum number of additional candidates per volume needed to justify the compute cost?</li>
+<li>Are there published 2025+ results on whether increasing the number of time-points (e.g., from 2 to 4 or 5) in a longitudinal microbleed detection pipeline improves lesion-level F1 beyond what a single cross-sectional scan achieves, and does the gain depend on the inter-scan interval?</li>
+<li>What 2025+ evidence exists that a post-hoc 'consensus voting' step across K independent candidate-extraction runs (K = 3, 5, 10) on the same volume reduces false-positive rate without sacrificing recall, and is there a published optimal K for sub-millimetre lesions on anisotropic T2* or SWI data?</li>
+<li>How do 2025+ CMB-detection papers handle the 'ceiling effect' where no further preprocessing or classifier change lifts F1 above a plateau (e.g., 0.85), and do they report whether the residual error is dominated by true negatives misclassified as positives or by true positives missed, and what does that imply for the next intervention?</li>
+<li>What 2025+ benchmarks or community reports quantify the VRAM overlap and contention when a 24–32B quantised LLM (llama.cpp or Ollama) and a diffusion-model image generator (sd.cpp, ComfyUI) share a single 24 GB GPU, and what is the measured throughput degradation for the LLM when the image generator is actively denoising?</li>
+<li>Are there published 2025+ cgroup or CUDA-MPS configurations that allow a diffusion model to offload its UNet to system RAM while keeping the LLM's KV-cache pinned in VRAM, and what is the measured latency penalty for the LLM's next-token generation during the offload window?</li>
+<li>What 2025+ failure-mode reports document the interaction between high disk usage (&gt; 85 %) and concurrent LLM inference plus image generation, specifically whether the OS page-cache eviction of the model weights during a denoising step causes a NoneType or segfault in the LLM process, and what is the recommended minimum free-disk threshold to avoid this?</li>
+<li>How do 2025+ local-LLM deployments implement a 'VRAM budget manager' that dynamically allocates a fixed VRAM slice to the LLM and a variable slice to auxiliary workloads (image gen, embedding), and is there an open-source implementation that exposes the allocation as a JSON contract consumable by a routing agent?</li>
+<li>What 2025+ guidance or published examples in medical-AI or diagnostic-imaging contexts recommend for communicating a 'no further improvement' result (plateaued F1, closed candidate source) to a multidisciplinary team, and how do they frame the residual error rate so that it is not misread as 'the problem is solved'?</li>
+<li>Are there 2025+ studies on how clinicians or research staff interpret a reported F1 of 0.85 for a small-lesion detector, and does the interpretation shift significantly when the confidence interval (e.g., 95 % CI from 7 volumes) is displayed alongside the point estimate versus when only the point estimate is given?</li>
+<li>What 2025+ risk-communication frameworks (e.g., adapted from weather forecasting or clinical-trial reporting) prescribe for presenting a 'source closed, no input to next stage' decision, and do they recommend a natural-frequency format (e.g., '15 out of 100 candidates are false') over a probability or F1 format?</li>
+<li>How do 2025+ publications on uncertainty communication in automated medical imaging handle the case where the uncertainty is dominated by a small sample size (n &lt; 10 volumes) rather than model stochasticity, and what visual or textual cues do they use to prevent overconfidence in the point estimate?</li>
+<li>What 2025+ open-source single-file HTML globe libraries (CesiumJS, Globe.gl, three-globe) support fully offline operation with embedded tile data or vector layers, and what is the maximum practical file size before browser memory limits are hit on a standard 16 GB workstation?</li>
+<li>Are there published 2025+ examples of using a 3D globe or 3D map as a single-file HTML to visualise longitudinal medical-imaging acquisition sites (e.g., multiple MRI centres over time), and do they use Cesium, deck.gl, or a custom three.js scene, and what are the documented Cesium pitfalls when running without a Cesium ion token?</li>
+<li>What 2025+ free or CC-licensed satellite-tile or basemap sources (NASA GIBS, OpenStreetMap, Esri World Imagery) remain accessible without API key or rate-limit for embedding in a self-contained HTML file, and which of them support a time-slider for multi-year imagery without a server-side tile cache?</li>
+<li>How do 2025+ single-file HTML visualisations handle the 'wandel sichtbar machen' (making change visible) requirement – e.g., showing a before/after or time-lapse of a dataset – without requiring WebGL2, and what is the fallback rendering path for browsers or kiosk machines that only support WebGL1?</li>
+<li>What 2025+ empirical studies (n &gt; 30) report the achievable angular accuracy (in degrees) of webcam-based gaze estimation (MediaPipe FaceMesh, WebGazer, or newer 2025 models) for sustained reading or screen-viewing tasks at a typical 50–70 cm viewing distance, and how does the accuracy degrade after 10+ minutes without recalibration?</li>
+<li>Are there published 2025+ comparisons of calibration-free versus 9-point-calibrated webcam gaze estimation for research tasks (e.g., reading comprehension, UI interaction), and what is the minimum calibration time that yields a measurable accuracy gain (e.g., &gt; 1 degree improvement) without subject burden?</li>
+<li>What 2025+ licence analyses or legal opinions cover the use of MediaPipe, WebGazer, or similar open-source gaze-estimation libraries in a funded research project that will publish results and potentially share the code, and which components (model weights, preprocessor, tracker) carry restrictive (non-Apache, non-MIT) terms?</li>
+<li>How do 2025+ browser-based eye-tracking studies handle the 'licence trap' of using a proprietary or research-only model (e.g., a model trained on a specific dataset with a non-commercial licence) in a pipeline that also processes data from a clinical or hospital setting, and what is the recommended architecture to keep the gaze module legally separable?</li>
+<li>What 2025+ architectural patterns exist for a 'watchdog + router + gate' trio in a single-node LLM deployment, where the watchdog keeps a GPU server alive for a fixed idle window, the router decides which model to invoke, and the gate blocks output release, and how do they prevent a deadlock when the watchdog's idle timer expires while the router is mid-decision?</li>
+<li>Are there published 2025+ designs for a shared-state file (e.g., a JSON or SQLite file) that a routing agent, a model-watchdog, and a release-gate all read and write, and what locking or versioning mechanism (file-lock, optimistic concurrency, append-only log) is recommended to prevent lost updates when all three components operate on the same node?</li>
+<li>How do 2025+ multi-component local-LLM deployments handle the 'partial swarm completion' case – e.g., 4 of 5 parallel research tasks finish but the 5th hangs – and what is the standard protocol for the coordinator to either wait, kill, or substitute the missing result without corrupting the shared output directory?</li>
+<li>What 2025+ open-source implementations demonstrate a 'relay' pattern (analogous to a message broker) where a primary agent's output is forwarded through a relay port to a secondary service, and the relay enforces a schema check and a timeout before forwarding, and what is the documented failure mode when the relay port is occupied by a previous session?</li>
+<li>What 2025+ empirical measurements (from production or benchmark logs) report the prompt-cache hit rate for a routing workload that alternates between short clinical queries and long research-retrieval prompts on a 27B-class model, and how does the hit rate change when the context window is compacted (e.g., summarised) between calls?</li>
+<li>Are there published 2025+ cost models that decompose the per-token price of a local 27B inference into GPU-hour amortisation, electricity, and a 'cache-miss penalty' (full prefill vs cached prefill), and at what cache-hit rate does the effective per-token cost drop below the cheapest cloud-API price for a mixed clinical/research workload?</li>
+<li>What 2025+ analyses quantify the 'VRAM tax' of running an auxiliary workload (e.g., image generation, embedding) alongside a 27B LLM on the same GPU, expressed as an additional cost-per-token for the LLM due to reduced batch size or increased prefill latency, and does this tax shift the break-even query volume by more than 20 %?</li>
+<li>How do 2025+ research-lab cost reports handle the accounting of 'zero-revenue' internal workloads (literature retrieval, code generation, QC) when evaluating whether a local 27B model is cheaper than a hospital or cloud API, and do they use a shadow-price for the GPU-hour or a direct electricity-plus-amortisation model, and what is the sensitivity of the break-even to a ±30 % change in the assumed GPU-hour cost?</li>
+</ul></div></details><details class="entry" id="daily-research-2026-10-25"><summary><span class="type">Befund</span><span class="t"><a href="findings/2026-10-25.html">Morgenrecherche 2026-10-25</a></span><span class="badge ">unbestaetigt</span><span class="muted small">2026-10-25</span></summary><div class="body"><p class="small muted">Herkunft: Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell) · <a href="findings/2026-10-25.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-10-25.md">Markdown</a></p><p>8 von 8 Bereichen recherchiert, 50 min. Aussagen stammen aus Abstracts und, wo als [Volltext] markiert, aus Open-Access-Volltexten (Europe PMC); nicht von Hand geprueft.</p>
 <h2>Umsatz- und Rechenzusagen der Frontier-Labs im Q3/Q4 2025</h2>
 <p>Bereich: <a href="../ai_buyers/index.html">ai_buyers</a></p>
 <ul>
