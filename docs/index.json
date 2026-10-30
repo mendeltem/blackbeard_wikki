@@ -1243,6 +1243,17 @@
 "src": "knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md"
 },
 {
+"t": "Deep grey matter does not scale 1:1 with ICV; asymmetry is the scanner-robust endpoint",
+"p": "brain_volumetry/findings/icv-scaling-exponent-and-asymmetry-sdc-2026-10.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-10-30",
+"x": "DLBS: deep GM scales with ICV^0.65-0.85 (cortex ~1), so division over-corrects; asymmetry SDC95 ~5 pp, scanner step cancels in the asymmetry (2026-10-30)",
+"id": "icv-scaling-exponent-and-asymmetry-sdc-2026-10",
+"src": "knowledge/brain_volumetry/findings/icv-scaling-exponent-and-asymmetry-sdc-2026-10.md"
+},
+{
 "t": "Filling the infarct in the T1 before SynthSeg does not take it out of the grey-matter count",
 "p": "brain_volumetry/findings/infarct-filling-before-synthseg-does-not-remove-the-infarct-2026-10-13.html",
 "a": "brain_volumetry",
@@ -1490,7 +1501,7 @@
 "a": "brain_volumetry",
 "y": "Regel",
 "s": "getragen",
-"d": "2026-10-13",
+"d": "2026-10-30",
 "x": "HPC-Pilot: `read` verschluckt leere TSV-Spalten, zwei T1 je Besuch unter einer id; 5 von 14 \"FAILED\" waren Listenfehler, FLAIRpial-Abbruch 3/65 ist Befund",
 "id": "one-t1-per-visit-and-tab-columns-by-cut",
 "src": "knowledge/brain_volumetry/rules/one-t1-per-visit-and-tab-columns-by-cut.md"
