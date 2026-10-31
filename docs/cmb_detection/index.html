@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT, Labelkarte, Schichtdicke, Inferenz</p>
-<div class="stripe"><i class="ok" style="width:53.6%" title="getragen: 15"></i><i class="warn" style="width:46.4%" title="vorschlag: 13"></i></div><div class="counts"><span class="ok">15 getragen</span> <span class="warn">13 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+<div class="stripe"><i class="ok" style="width:53.3%" title="getragen: 16"></i><i class="warn" style="width:46.7%" title="vorschlag: 14"></i></div><div class="counts"><span class="ok">16 getragen</span> <span class="warn">14 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
 Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
 Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
 gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
@@ -52,7 +52,8 @@ Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
 Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-25 (what is a good F1, given rater variance):</strong> No absolute target exists; the human band is the yardstick. Six raters against an adjudicated reference reach lesion F1 0.52-0.76 (median 0.69), the same rater twice 0.82; experience moves it most. Derived human band ~0.65-0.80 with precision 0.75-0.90; our chain (~0.65) is in the lower middle, and F1 &gt; 0.85 against one rater points to a lenient reference. Proof of 'human-level' needs a second rater and a paired comparison fixed in advance (<a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">human-rater-variance-and-good-f1-for-cmb-2026-10</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-31 (adapting a public detector to a new site):</strong> Unchanged, the public VALDO U-Net keeps sensitivity on a new 5 mm T2* site but produces ~20x the false positives; fine-tuning with 3 local scans recovers most of the gap and is ~+0.05 F1 ahead of training from scratch, the lead shrinks to ~+0.01 from 15 scans, both plateau at ~15 scans (interim, one fold; <a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a>). Norm-only fine-tuning is worse. Rule: test threshold re-calibration on the same n scans before crediting fine-tuning (<a href="rules/calibrate-before-you-fine-tune.html">calibrate-before-you-fine-tune</a>). SWI pitfall: a brain mask cut at image &gt; 0 hid ~8 % of reference CMB in phase-mask holes (<a href="findings/swi-brain-mask-holes-hide-microbleeds.html">swi-brain-mask-holes-hide-microbleeds</a>).</p>
+<p><strong>New 2026-10-25 (what is a good F1, given rater variance):</strong> No absolute target exists; the human band is the yardstick. Six raters against an adjudicated reference reach lesion F1 0.52-0.76 (median 0.69), the same rater twice 0.82; experience moves it most. Derived human band ~0.65-0.80 with precision 0.75-0.90; our chain (~0.65) is in the lower middle, and F1 &gt; 0.85 against one rater points to a lenient reference. Proof of 'human-level' needs a second rater and a paired comparison fixed in advance (<a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">human-rater-variance-and-good-f1-for-cmb-2026-10</a>).</p>
 <p><strong>New 2026-10-25 (Arena 2, round 4):</strong> Three levers the wiki had no entry for, all stage-2 arms. Tabular stage 2 (LightGBM on handcrafted shape, Hessian, contrast and tube features) is the cheap baseline to run first: the only same-candidate comparison found went to handcrafted+RF at ~400 positives, the combination best. Frozen DINOv2/MedSigLIP features only with patch tokens pooled at the candidate, never the CLS token. Unlabelled scans: no CMB paper, analogues give small gains at our label count, more likely lower variance (<a href="findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html">arena-2-research-round-4-unlabelled-tabular-frozen-2026-10</a>).</p>
 <p><strong>New 2026-10-25 (transformers as token sequences):</strong> Feeding the volume voxel by voxel (or with 2^3-4^3 patches) to a transformer is possible with position embeddings, but unproven for CMB: one preprint (MedMNIST 28^3) only, no lesion result, Swin UNETR already lost on VALDO. With ~300 subjects only fine-tuning public pretrained weights makes sense, compared in frozen folds; a token transformer fits stage 2 better (<a href="findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.html">voxel-token-transformers-unproven-at-300-subjects-2026-10</a>).</p>
 <p><strong>Neu 2026-10-25 (Arena 2, Recherche Runde 3, 11 Themen):</strong> Benennung: Arena 1 = U-Net-Turniere und fruehere Stufe-2-Tests, Arena 2 = neue Mischmodelle. Die ersten Entscheidungsregeln haetten bei 10 Armen in ~20 % einen wirkungslosen Arm durchgelassen; Regeln v2 (gemeinsamer geschichteter Bootstrap, max-T-Schranke, Startwert-Varianz, Marge +0,01, Bestaetigung auf frischen Faellen) vor dem ersten Lauf eingebaut. Bayes-Suche nur fuer Stufe 2; Etikett-Decke 2s/(1+s), Audit messen statt schaetzen; neue Daten QTAB (Betrag+Phase+SWI, CC0); Venen-Atlanten als Stufe-2-Merkmal; klinische Messlatte icobrain aria 66,1 % TPR bei 0,9 FP/Fall; Fusion wie LUNA16 (<a href="findings/arena-2-research-round-3-2026-10.html">arena-2-research-round-3-2026-10</a>).</p>
@@ -118,7 +119,30 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p
 <p><strong>Rule, new 2026-10-16:</strong> count microbleeds on the model grid and deliver a label map on the scan grid: on 5 mm slices two detections merged in the binary mask (37 -&gt; 36).</p>
 <p><strong>Finding (vorschlag), new 2026-10-16:</strong> start from the public VALDO weights and fine-tune with a small learning rate (1e-4): +0.11 F1 over short scratch training on one fold of another T2* cohort; unadapted the full-data weights over-detect (raise the threshold or fine-tune).</p></div>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(6)</span></h2><details class="entry" id="freeze-folds-and-cap-candidate-sources"><summary><span class="type">Regel</span><span class="t"><a href="rules/freeze-folds-and-cap-candidate-sources.html">Freeze the folds with a checksum, and cap every new candidate source</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Folds frozen with sha256 and checked for every input (VALDO 0 mismatches); new candidate sources capped (uncapped FRST/GMM: 33k-126k candidates, ~41 GB, 3 OOM kills; ceiling F1 0.851 -&gt; 0.92-0.98)</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, Arena 2: fold check on VALDO, three out-of-memory kills of the local agent&#x27;s runner · <a href="rules/freeze-folds-and-cap-candidate-sources.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/freeze-folds-and-cap-candidate-sources.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="calibrate-before-you-fine-tune"><summary><span class="type">Regel</span><span class="t"><a href="rules/calibrate-before-you-fine-tune.html">When a public detector over-detects at a new site, test &quot;re-choose the threshold on the n local scans&quot; before claiming a fine-tuning gain</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">Over-detecting public detector at a new site: compare every fine-tuning curve with &quot;re-choose threshold/min size on the same n scans&quot;; only the gain above that is from the weights</span></summary><div class="body"><p class="small muted">Herkunft: phase-2 design of the CMB adaptation study (valdo-t2s), reviewer check 2026-10-31 · <a href="rules/calibrate-before-you-fine-tune.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/calibrate-before-you-fine-tune.md">Markdown</a></p><h2>Aussage</h2>
+<p>A public CMB U-Net applied unchanged to a new scanner typically keeps its sensitivity and floods the scan with false
+positives (own data: about 20x the false positives per scan of its own cross-validation; external example: CMB-HUNT,
+0.54 -&gt; 1.9 false positives per patient at similar sensitivity). Much of that is an operating-point shift, not missing
+knowledge: the same weights reach a far better F1 at a higher threshold. A fine-tuning curve F1(n) must therefore be
+compared with the cheapest adaptation that uses the same n annotated scans: keep the weights, re-choose threshold and
+minimum lesion size on the n scans, apply to the test fold. Report the test-optimal cell as the upper bound of any
+calibration. Only the part of the fine-tuning gain above this control is attributable to updating the weights.</p>
+<h2>Trägt</h2>
+<p>Reasoning plus the measured calibration shift of full-data models (linked finding); calibration as the one-parameter
+analogue of temperature scaling. AdaBN-type label-free normalisation adaptation is no alternative for instance-norm
+U-Nets (instance norm already uses per-scan statistics).</p>
+<h2>Trägt nicht</h2>
+<p>Not yet measured as a curve (queued 2026-10-31). A threshold chosen on 3 scans can be very noisy; report the draw spread.</p>
+<h2>Bruchindikator</h2>
+<p>The calibration-only curve stays at the zero-shot level for every n (then the gap is in the weights, not the threshold).</p>
+<h2>Ablesung</h2>
+<p>Guo et al., ICML 2017, "On Calibration of Modern Neural Networks", arXiv:1706.04599. Suwalska et al., Comput Biol Med
+2022, doi:10.1016/j.compbiomed.2022.106233, PMID 36370581 (CMB-HUNT, external FP rise). Yu et al., Radiol Artif Intell
+2022, doi:10.1148/ryai.210064, PMID 35652114 (most externally validated imaging algorithms lose performance). Kelly et
+al., BMC Med 2019, doi:10.1186/s12916-019-1426-2, PMID 31665002 (local validation before use).</p>
+<h2>Verknüpft</h2>
+<p><a href="findings/full-data-last-state-models-run-hotter.html">full-data-last-state-models-run-hotter</a>,
+<a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a></p></div></details><details class="entry" id="freeze-folds-and-cap-candidate-sources"><summary><span class="type">Regel</span><span class="t"><a href="rules/freeze-folds-and-cap-candidate-sources.html">Freeze the folds with a checksum, and cap every new candidate source</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Folds frozen with sha256 and checked for every input (VALDO 0 mismatches); new candidate sources capped (uncapped FRST/GMM: 33k-126k candidates, ~41 GB, 3 OOM kills; ceiling F1 0.851 -&gt; 0.92-0.98)</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, Arena 2: fold check on VALDO, three out-of-memory kills of the local agent&#x27;s runner · <a href="rules/freeze-folds-and-cap-candidate-sources.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/freeze-folds-and-cap-candidate-sources.md">Markdown</a></p><h2>Aussage</h2>
 <ol>
 <li><strong>Folds are data, not code.</strong> The 5-fold assignment of every cohort is written once (VALDO: stratified by cohort x burden, seed 0)
    and then frozen as a file with a SHA-256; every run input (candidate sets, prediction folders, manifests, synthetic copies) is
@@ -296,7 +320,67 @@ doi:10.1038/s41592-023-02151-z.</p>
 <ul>
 <li><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">sensitivity-levers-do-not-raise-lesion-f1</a></li>
 <li><a href="../agent_tooling/rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(22)</span></h2><details class="entry" id="arena-2-research-round-3-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/arena-2-research-round-3-2026-10.html">Arena 2, research round 3: decisions, labels, data, priors, fusion, operating points (2026-10)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Arena 2 research round 3 (11 topics, IDs checked): decision rules v2 against false keeps, HPO only for stage 2, label ceiling and audit design, insertion realism gate, QTAB data, venous atlases, clinical targets (icobrain aria, 4/5 boundary), fusion recipe, spatial priors, operating-point recipe, challenge-winner tricks</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, eleven narrowly scoped literature agents (R1-R11) on the open questions of Arena 2, IDs re-fetched by script (Semantic Scholar / arXiv abs pages, Crossref, DataCite, PubMed E-utilities); numbers marked as the agents&#x27; own simulation or calculation where they are not from a source · <a href="findings/arena-2-research-round-3-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md">Markdown</a></p><p>Naming (user, 2026-10-25): <strong>Arena 1</strong> = the U-Net tournaments and the earlier stage-2 tests; <strong>Arena 2</strong> = the new hybrid
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(23)</span></h2><details class="entry" id="fine-tune-from-public-valdo-weights"><summary><span class="type">Befund</span><span class="t"><a href="findings/fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">[2026-10-31: learning curve, FT ahead of scratch by ~+0.05 F1 at 3 scans, ~+0.01 from 15; plateau ~15 scans, interim one fold; norm-only fine-tuning worse] Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: cmb_3d_unet_experiments (cmbx get-model valdo_t2, train.init_from), check on one fold of an in-house T2* cohort, 2026-10-16 · <a href="findings/fine-tune-from-public-valdo-weights.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md">Markdown</a></p><h2>Aussage</h2>
+<p>The anisotropic U-Net trained on all 72 public VALDO cases (released weights, CC BY-NC-SA 4.0):
+1. <strong>Unadapted on another T2* cohort</strong> it over-detects at the released stage-1 cell (threshold 0.6, 2 mm3): lesion F1
+   rose monotonically with the threshold up to 0.9 (+0.09 F1 from 0.6 to 0.9, the best cell chosen on the target
+   cases, so optimistic); it stays clearly below a model trained in the target domain. Full-data models give higher
+   probabilities than cross-validation models (also noted in the release documentation).
+2. <strong>Fine-tuned</strong> (all weights initialised from VALDO, <code>train.lr</code> 1e-4, 6 epochs, same recipe otherwise, ~7 min on one
+   GPU): +0.11 F1 against 6 epochs from scratch and +0.03 against the 60-epoch from-scratch training on the same fold.
+   With the default learning rate 3e-4 the gain was smaller (+0.04): a large learning rate destroys part of the start.
+3. Channel changes are possible: input channels are matched by name; a new channel starts at zero weight, so the
+   network first reproduces the pretrained output exactly (unit test) and learns the new channel during training.</p>
+<ol start="4">
+<li><strong>Learning curve (2026-10-31, interim: one fold of 5, stage 1, fixed cell 0.3 / 2 mm3, nested stratified draws,
+   2-3 draws per n):</strong> on an in-house 5 mm T2* cohort, full fine-tuning (30 epochs, lr 1e-4) was ahead of training from
+   scratch (60 epochs) by about +0.05 F1 with 3 local scans, +0.04 with 5, +0.03 with 10 and about +0.01 from 15 scans
+   on; both curves flattened at about 15 scans (within 0.02 of the all-scans value). With 3 local scans fine-tuning
+   already recovered most of the zero-shot gap (zero-shot was about 0.2 F1 lower). Fine-tuning only the instance-norm
+   affine parameters and the output head (Karani 2018) stayed below both, with 2-3x the false positives of full
+   fine-tuning. Draw-to-draw spread at n &lt;= 5 was about +-0.05 F1, at n &gt;= 10 about +-0.02.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Weights load bit-identically in the training package and in the release package (max |difference| 0.0).
+Fine-tuning gain 0.11 is above the seed noise of this recipe (0.03-0.08).</p>
+<h2>Trägt nicht</h2>
+<p>One fold, one seed: the +0.03 against 60 epochs from scratch is inside the noise; needs 5 folds x 2 seeds before it
+becomes a rule. Numbers of the in-house cohort are kept private (relative differences only here).</p>
+<p>Point 4 is one fold of 15 test scans; folds 1-4 and an SWI cohort are running. Part of the zero-shot gap is the operating
+point, not the weights (see <a href="findings/full-data-last-state-models-run-hotter.html">full-data-last-state-models-run-hotter</a>); the
+calibration-only control (<a href="rules/calibrate-before-you-fine-tune.html">calibrate-before-you-fine-tune</a>) is pending.</p>
+<h2>Bruchindikator</h2>
+<p>A 5-fold, 2-seed repetition where fine-tuning (lr 1e-4) does not beat short scratch training by more than the noise.</p>
+<h2>Ablesung</h2>
+<p>VALDO: Sudre et al., Med Image Anal 2024;91:103029, doi:10.1016/j.media.2023.103029, PMID 37988921. Released weights:
+https://github.com/mendeltem/microbleed_detection_3D_UNET/releases/tag/v0.1.0 (SHA-256 checked). Transfer learning in
+medical imaging, background: Karani et al., MICCAI 2018, doi:10.1007/978-3-030-00928-1_54; Valverde et al., NeuroImage
+Clin 2019;21:101638, doi:10.1016/j.nicl.2018.101638, PMID 30555005 (one-shot adaptation, MS lesions); Raghu et al., NeurIPS 2019, "Transfusion: Understanding Transfer Learning for Medical
+Imaging" (arXiv:1902.07208). Own runs 2026-10-16 (cmbx, fold 0, seed 42) and 2026-10-30/31 (phase-2 learning curve, 46 runs, fold 0).</p>
+<h2>Verknüpft</h2>
+<p><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a>,
+<a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">count-lesions-on-the-fine-grid-deliver-a-label-map</a></p></div></details><details class="entry" id="swi-brain-mask-holes-hide-microbleeds"><summary><span class="type">Befund</span><span class="t"><a href="findings/swi-brain-mask-holes-hide-microbleeds.html">A brain mask cut at &quot;image &gt; 0&quot; punches holes exactly where SWI phase masking drove microbleeds to zero</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-31</span><span class="i">Brain mask cut at image &gt; 0 punches holes where SWI phase masking set CMB to 0: ~8 % of in-house SWI reference CMB invisible; fill holes 3D + axial, rebuild from raw</span></summary><div class="body"><p class="small muted">Herkunft: QC of the model inputs (valdo-t2s/qc/build_model_input_qc.py) and mask fix wk0a, 2026-10-30 · <a href="findings/swi-brain-mask-holes-hide-microbleeds.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/swi-brain-mask-holes-hide-microbleeds.md">Markdown</a></p><h2>Aussage</h2>
+<p>SWI magnitude images multiplied with a phase mask can contain voxels of exactly 0 inside the brain, at the darkest
+spots: microbleeds and haemorrhage remnants. A preprocessing step that intersects the brain mask with "image &gt; 0"
+removes these voxels; after masking and contrast inversion they are black instead of bright, so the network cannot
+see the lesion. In-house SWI: about 8 % of the reference microbleeds touched such a hole, and every scan had holes; raw
+SWI was exactly 0 in about three quarters of the hole voxels. T2<em>-GRE of the same site: 0.5 %; public VALDO T2</em>: 0.
+Fix: fill the brain mask (3D fill-holes plus slice-wise axial fill), rebuild the inputs from the raw scan inside the
+filled mask (a raw 0 inside the brain becomes the brightest value after inversion). After the fix 0.8 % of the
+reference lesions remained outside the mask, all at the true brain edge, none in a hole.</p>
+<h2>Trägt</h2>
+<p>Overlay QC page (image, mask, holes, reference lesions) on all scans of three cohorts, before and after; unit test
+(enclosed hole filled, open notch kept).</p>
+<h2>Trägt nicht</h2>
+<p>Absolute SWI detection numbers measured before the fix are too low by an unknown amount; comparisons between methods on
+the same inputs stay fair.</p>
+<h2>Bruchindikator</h2>
+<p>A SWI pipeline without phase masking (raw magnitude only), or a skull strip that does not use an intensity cut.</p>
+<h2>Ablesung</h2>
+<p>Own QC 2026-10-30 (aggregates only). SWI phase masking: Haacke et al., Magn Reson Med 2004;52:612-618,
+doi:10.1002/mrm.20198, PMID 15334582.</p>
+<h2>Verknüpft</h2>
+<p><a href="findings/valdo-cohort-3-mask-is-a-head-mask.html">valdo-cohort-3-mask-is-a-head-mask</a></p></div></details><details class="entry" id="arena-2-research-round-3-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/arena-2-research-round-3-2026-10.html">Arena 2, research round 3: decisions, labels, data, priors, fusion, operating points (2026-10)</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-25</span><span class="i">Arena 2 research round 3 (11 topics, IDs checked): decision rules v2 against false keeps, HPO only for stage 2, label ceiling and audit design, insertion realism gate, QTAB data, venous atlases, clinical targets (icobrain aria, 4/5 boundary), fusion recipe, spatial priors, operating-point recipe, challenge-winner tricks</span></summary><div class="body"><p class="small muted">Herkunft: Claude Code (Alita) 2026-10-25, eleven narrowly scoped literature agents (R1-R11) on the open questions of Arena 2, IDs re-fetched by script (Semantic Scholar / arXiv abs pages, Crossref, DataCite, PubMed E-utilities); numbers marked as the agents&#x27; own simulation or calculation where they are not from a source · <a href="findings/arena-2-research-round-3-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/arena-2-research-round-3-2026-10.md">Markdown</a></p><p>Naming (user, 2026-10-25): <strong>Arena 1</strong> = the U-Net tournaments and the earlier stage-2 tests; <strong>Arena 2</strong> = the new hybrid
 models (TrackSet-CMB stage 2, independent candidate source, physics renderer) and everything measured from now on.</p>
 <h2>Aussage</h2>
 <p><strong>1. Decision rules (R2): the first rules would have let a null arm through about every fifth time -- fixed before any run.</strong>
@@ -1114,33 +1198,7 @@ written is not):</p>
   a <em>triplanar ensemble</em> and does not report ~96%. The "triplanar ensemble" with 96.05% sensitivity is reference
   [27] (TPE-Det). The number itself is therefore supported by [27]'s abstract, but not by [4]'s, so the claim as
   cited by [4] is marked unverified.</li>
-</ul></div></details><details class="entry" id="fine-tune-from-public-valdo-weights"><summary><span class="type">Befund</span><span class="t"><a href="findings/fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span><span class="i">Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: cmb_3d_unet_experiments (cmbx get-model valdo_t2, train.init_from), check on one fold of an in-house T2* cohort, 2026-10-16 · <a href="findings/fine-tune-from-public-valdo-weights.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md">Markdown</a></p><h2>Aussage</h2>
-<p>The anisotropic U-Net trained on all 72 public VALDO cases (released weights, CC BY-NC-SA 4.0):
-1. <strong>Unadapted on another T2* cohort</strong> it over-detects at the released stage-1 cell (threshold 0.6, 2 mm3): lesion F1
-   rose monotonically with the threshold up to 0.9 (+0.09 F1 from 0.6 to 0.9, the best cell chosen on the target
-   cases, so optimistic); it stays clearly below a model trained in the target domain. Full-data models give higher
-   probabilities than cross-validation models (also noted in the release documentation).
-2. <strong>Fine-tuned</strong> (all weights initialised from VALDO, <code>train.lr</code> 1e-4, 6 epochs, same recipe otherwise, ~7 min on one
-   GPU): +0.11 F1 against 6 epochs from scratch and +0.03 against the 60-epoch from-scratch training on the same fold.
-   With the default learning rate 3e-4 the gain was smaller (+0.04): a large learning rate destroys part of the start.
-3. Channel changes are possible: input channels are matched by name; a new channel starts at zero weight, so the
-   network first reproduces the pretrained output exactly (unit test) and learns the new channel during training.</p>
-<h2>Trägt</h2>
-<p>Weights load bit-identically in the training package and in the release package (max |difference| 0.0).
-Fine-tuning gain 0.11 is above the seed noise of this recipe (0.03-0.08).</p>
-<h2>Trägt nicht</h2>
-<p>One fold, one seed: the +0.03 against 60 epochs from scratch is inside the noise; needs 5 folds x 2 seeds before it
-becomes a rule. Numbers of the in-house cohort are kept private (relative differences only here).</p>
-<h2>Bruchindikator</h2>
-<p>A 5-fold, 2-seed repetition where fine-tuning (lr 1e-4) does not beat short scratch training by more than the noise.</p>
-<h2>Ablesung</h2>
-<p>VALDO: Sudre et al., Med Image Anal 2024;91:103029, doi:10.1016/j.media.2023.103029, PMID 37988921. Released weights:
-https://github.com/mendeltem/microbleed_detection_3D_UNET/releases/tag/v0.1.0 (SHA-256 checked). Transfer learning in
-medical imaging, background: Raghu et al., NeurIPS 2019, "Transfusion: Understanding Transfer Learning for Medical
-Imaging" (arXiv:1902.07208). Own runs 2026-10-16 (cmbx, fold 0, seed 42).</p>
-<h2>Verknüpft</h2>
-<p><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a>,
-<a href="rules/count-lesions-on-the-fine-grid-deliver-a-label-map.html">count-lesions-on-the-fine-grid-deliver-a-label-map</a></p></div></details><details class="entry" id="microbleednet-never-trains-its-teacher"><summary><span class="type">Befund</span><span class="t"><a href="findings/microbleednet-never-trains-its-teacher.html">MicrobleedNet&#x27;s published code never trains the teacher of its second stage</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span><span class="i">MicrobleedNet code (958f1cb): train / fine_tune / cross_validate load the teacher, never train it; a missing teacher passes silently (ValueError not raised) -&gt; student distils from noise</span></summary><div class="body"><p class="small muted">Herkunft: source code of MicrobleedNet, github.com/v-sundaresan/microbleed-detection commit 958f1cb (= main on 2026-10-16), read on Alita; earlier fine-tuning runs of the original code (cmb-valdo-chain &quot;Arm 6&quot;, 2026-09-29) · <a href="findings/microbleednet-never-trains-its-teacher.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/microbleednet-never-trains-its-teacher.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><details class="entry" id="microbleednet-never-trains-its-teacher"><summary><span class="type">Befund</span><span class="t"><a href="findings/microbleednet-never-trains-its-teacher.html">MicrobleedNet&#x27;s published code never trains the teacher of its second stage</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-16</span><span class="i">MicrobleedNet code (958f1cb): train / fine_tune / cross_validate load the teacher, never train it; a missing teacher passes silently (ValueError not raised) -&gt; student distils from noise</span></summary><div class="body"><p class="small muted">Herkunft: source code of MicrobleedNet, github.com/v-sundaresan/microbleed-detection commit 958f1cb (= main on 2026-10-16), read on Alita; earlier fine-tuning runs of the original code (cmb-valdo-chain &quot;Arm 6&quot;, 2026-09-29) · <a href="findings/microbleednet-never-trains-its-teacher.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/microbleednet-never-trains-its-teacher.md">Markdown</a></p><h2>Aussage</h2>
 <p>MicrobleedNet (Sundaresan et al. 2023) discriminates candidates with a teacher-student network: a multi-task teacher
 (feature extractor, voxel-wise segmentor, patch classifier) and a student distilled from it (loss CE + 0.4 T^2 KL +
 0.6 CE, T = 4 in the code). In the published code no command trains the teacher: <code>train</code>, <code>fine_tune</code> and
@@ -1572,5 +1630,5 @@ Neuroinform. 2023, doi:10.3389/fninf.2023.1204186, Code-Stand 958f1cb. Tier 1a (
 <li><a href="findings/anisotropic-first-level-beats-isotropic-3d-nets.html">anisotropic-first-level-beats-isotropic-3d-nets</a></li>
 <li><a href="rules/two-seeds-per-decision-below-0.08.html">two-seeds-per-decision-below-0.08</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-10-30 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-10-31 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

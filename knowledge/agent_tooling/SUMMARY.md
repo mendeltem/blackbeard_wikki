@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**New 2026-10-31:** An idle interactive agent session held the GPU queue for 15 h because "any agent process" counted as active; interactive sessions now count only while their session log grows ([idle-interactive-agent-blocks-the-gpu-queue](risks/idle-interactive-agent-blocks-the-gpu-queue.md)). Check that a queue moves, not only that jobs are queued.
+
 **Regel 2026-10-29 (Nutzer):** In Schaubildern laeuft keine Verbindungslinie durch einen Kasten oder Text: orthogonal durch freie Gassen (zwischen Spalten, am Rand) fuehren, geteilte Gassen mit eigenem Abstand, und vor dem Verschicken das gerenderte PNG ansehen; Schaubilder mit exakten Woertern zeichnen statt mit einem Bildmodell erzeugen ([diagram-lines-never-cross-boxes-or-text](rules/diagram-lines-never-cross-boxes-or-text.md)).
 
 2026-10-21: tested the source-check tool against itself in four cases. It catches invented PMIDs and real PMIDs with a foreign title (exit 1), and refuses references without PMID (exit 2). Blind spot: a real PMID with the matching title whose sentence claims the opposite of the abstract passed with exit 0 and "0 wrong". The tool checks identity, not the claim - reading the abstract stays manual work.

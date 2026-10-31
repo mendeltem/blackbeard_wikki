@@ -143,6 +143,17 @@
 "src": "knowledge/agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.md"
 },
 {
+"t": "An idle interactive agent session counted as \"agent active\" and held the GPU queue for 15 hours",
+"p": "agent_tooling/risks/idle-interactive-agent-blocks-the-gpu-queue.html",
+"a": "agent_tooling",
+"y": "Risiko",
+"s": "getragen",
+"d": "2026-10-31",
+"x": "Idle interactive agent session counted as active, GPU queue stood 15 h; interactive counts only if its session log grew in the last 30 min",
+"id": "idle-interactive-agent-blocks-the-gpu-queue",
+"src": "knowledge/agent_tooling/risks/idle-interactive-agent-blocks-the-gpu-queue.md"
+},
+{
 "t": "Rechenauftraege erben die Speichergrenze des Aufsehers, und oomd toetet dann beide",
 "p": "agent_tooling/risks/queue-jobs-inherit-the-supervisors-cgroup-limit.html",
 "a": "agent_tooling",
@@ -1644,8 +1655,8 @@
 "a": "cmb_detection",
 "y": "Befund",
 "s": "vorschlag",
-"d": "2026-10-16",
-"x": "Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)",
+"d": "2026-10-31",
+"x": "[2026-10-31: learning curve, FT ahead of scratch by ~+0.05 F1 at 3 scans, ~+0.01 from 15; plateau ~15 scans, interim one fold; norm-only fine-tuning worse] Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with thr",
 "id": "fine-tune-from-public-valdo-weights",
 "src": "knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md"
 },
@@ -1749,6 +1760,17 @@
 "src": "knowledge/cmb_detection/findings/sensitivity-levers-do-not-raise-lesion-f1.md"
 },
 {
+"t": "A brain mask cut at \"image > 0\" punches holes exactly where SWI phase masking drove microbleeds to zero",
+"p": "cmb_detection/findings/swi-brain-mask-holes-hide-microbleeds.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "getragen",
+"d": "2026-10-31",
+"x": "Brain mask cut at image > 0 punches holes where SWI phase masking set CMB to 0: ~8 % of in-house SWI reference CMB invisible; fill holes 3D + axial, rebuild from raw",
+"id": "swi-brain-mask-holes-hide-microbleeds",
+"src": "knowledge/cmb_detection/findings/swi-brain-mask-holes-hide-microbleeds.md"
+},
+{
 "t": "With a trained teacher, MicrobleedNet's teacher-student step 2 is on par with a small CNN",
 "p": "cmb_detection/findings/teacher-student-step-two-on-par-with-small-cnn.html",
 "a": "cmb_detection",
@@ -1824,6 +1846,17 @@
 "x": "Voxel-as-token / small-patch transformers: attention cost computed (128^3 at 4^3 = 32k tokens is the dense limit), evidence only a MedMNIST 28^3 preprint, no CMB result; at ~300 subjects only fine-tuning public pretrained weights (BrainSegF",
 "id": "voxel-token-transformers-unproven-at-300-subjects-2026-10",
 "src": "knowledge/cmb_detection/findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.md"
+},
+{
+"t": "When a public detector over-detects at a new site, test \"re-choose the threshold on the n local scans\" before claiming a fine-tuning gain",
+"p": "cmb_detection/rules/calibrate-before-you-fine-tune.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-10-31",
+"x": "Over-detecting public detector at a new site: compare every fine-tuning curve with \"re-choose threshold/min size on the same n scans\"; only the gain above that is from the weights",
+"id": "calibrate-before-you-fine-tune",
+"src": "knowledge/cmb_detection/rules/calibrate-before-you-fine-tune.md"
 },
 {
 "t": "Count microbleeds on the model grid; deliver a label map on the input grid",
