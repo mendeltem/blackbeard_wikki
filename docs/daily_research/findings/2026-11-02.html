@@ -1,0 +1,108 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Morgenrecherche 2026-11-02</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">daily_research</a> › <a href="../index.html#findings">Befund</a></div><h1>Morgenrecherche 2026-11-02</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge ">unbestaetigt</span></span><span>Stand</span><span>2026-11-02</span><span>Herkunft</span><span>Alita, morgenrecherche (lokales Modell + offene Literatur-APIs, ohne Cloud-Modell)</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/daily_research/findings/2026-11-02.md">knowledge/daily_research/findings/2026-11-02.md</a></span></div><p>2 von 8 Bereichen recherchiert, 26 min. Aussagen stammen aus Abstracts und, wo als [Volltext] markiert, aus Open-Access-Volltexten (Europe PMC); nicht von Hand geprueft.</p>
+<h2>KI-Nutzung, Loehne und Produktivitaet am Arbeitsplatz</h2>
+<p>Bereich: <a href="../../ai_labor_market/index.html">ai_labor_market</a></p>
+<p>Der Text enthält keine verwertbaren Rechercheergebnisse und keine vollständigen URLs oder DOIs. Er besteht nur aus der Meldung „I'm sorry, an internal error has occurred.“ und dem Anhang mit vier Suchfragen. Daher lassen sich keine 3–5 Stichpunkte mit unverändert übernommenen Quellen bilden, ohne Quellen zu erfinden. Eine inhaltliche Zusammenfassung zu KI-Nutzung, Löhnen, Produktivität, Verdrängung oder Protokollen ist auf dieser Grundlage nicht möglich.</p>
+<p>Einschaetzung (lokales Modell): Für die laufende Arbeit bedeutet das, dass die Recherche nicht als Belegbasis taugt und die Suchfragen erneut mit einer funktionierenden Quelle ausgeführt werden sollten.</p>
+<p>Quellen (Auszug):</p>
+<h2>Wer Rechenleistung kauft: Umsaetze und Rechenzusagen</h2>
+<p>Bereich: <a href="../../ai_buyers/index.html">ai_buyers</a></p>
+<ul>
+<li>OpenAI behauptet, „AI leaders“ hätten 1,5-fach schnelleres Umsatzwachstum, 1,6-fach höhere Aktionärsrenditen und 1,4-fach besseren Return on Invested Capital; das sind unbelegte Unternehmensangaben, keine standardisierte Offenlegung. Quelle: https://doi.org/10.1098/rsos.261323</li>
+<li>Rund 710 Mrd. USD Hyperscaler-Capex 2026 stehen rund 20–30 Mrd. USD inkrementellem AI-Umsatz gegenüber, auf einem 12–36-Monats-Abschreibungsfenster; das kann zu scharfen Kapitalkorrekturen führen. Quelle: https://doi.org/10.5281/zenodo.20586863</li>
+<li>Infrastruktur-Commitments enthalten anspruchsvolle Annahmen zu Auslastung, Asset-Lebensdauer, externer Nachfrage und Zahlungsbereitschaft; Halbleiter- und Cloud-Konzentration werden benannt. Quelle: https://doi.org/10.66104/gs6h3421</li>
+<li>AI-Agent-Risiko sitzt vertraglich weitgehend ungepreist in bestehenden Versicherungslinien, zwischen stillem Coverage und wachsenden Exclusions; Konzentration unter wenigen Foundation-Model-Anbietern begünstigt korrelierte Verluste. Quelle: https://arxiv.org/abs/2607.11999v2</li>
+<li>Inferenz kann digital vom nutzernahen Serviceort weg verlagert werden, solange Latenz, State-Lokalität, Kapazität und Regulierung es erlauben; sie folgt Strompreisen, CO₂-Intensität, erneuerbarem Überschuss und Grid-Stress. Quelle: https://doi.org/10.48550/arxiv.2604.27855</li>
+</ul>
+<p>Einschaetzung (lokales Modell): Für die laufende Arbeit könnte das bedeuten, dass Aussagen zu Umsätzen und Compute-Verpflichtungen vorsichtig zu behandeln sind und Annahmen zu Auslastung, Abschreibung und Konzentration sichtbar gemacht werden sollten.</p>
+<p>Quellen (Auszug):
+- https://doi.org/10.1098/rsos.261323 [Volltext]
+- https://doi.org/10.1038/s41467-026-72324-9 [Volltext]
+- https://doi.org/10.1007/s11747-021-00818-7
+- https://doi.org/10.5281/zenodo.20586863
+- https://arxiv.org/abs/2607.11999v2
+- https://doi.org/10.66104/gs6h3421
+- https://doi.org/10.48550/arxiv.2604.27855
+- https://doi.org/10.51593/20250009
+- https://arxiv.org/abs/2511.16182v2
+- https://arxiv.org/abs/2606.25098v1</p>
+<h2>Gestellte Suchfragen</h2>
+<ul>
+<li>What 2025+ patterns exist for detecting and recovering a local LLM server that is installed but not active, including service health checks, port liveness, and model-load verification?</li>
+<li>How do 2025+ local LLM stacks classify stuck jobs versus failed jobs in batch research pipelines, and what retry, backoff, or quarantine policies prevent queue starvation?</li>
+<li>What 2025+ smoke-test suites for local LLM deployments cover model load, token generation, context-length limits, and cleanup of partial state, and what failure signatures distinguish configuration errors from resource exhaustion?</li>
+<li>Are there 2025+ reports on NoneType or null-fold errors in cross-validation pipelines that call local LLMs, and what defensive schema or validation steps prevent silent propagation?</li>
+<li>What 2025+ analyses quantify the secondary-market prices and rental rates for A100, H100, and RTX 5090 GPUs, and how do they affect the total cost of ownership for AI inference versus new purchases?</li>
+<li>How do 2025+ forecasts explain the persistence of AI-driven DRAM, HBM, and NAND demand beyond hyperscaler capex, including enterprise on-premise, sovereign AI, and inference workloads?</li>
+<li>What 2025+ evidence exists on the arms-race dynamic in AI compute investment, and how do capex commitments from cloud providers, model labs, and national programs translate into memory and storage demand?</li>
+<li>Are there 2025+ studies on the GB300 and Blackwell ramp and its effect on HBM, LPDDR, and SSD demand mix, including any documented supply constraints or allocation behavior?</li>
+<li>What 2025+ surveys or administrative datasets measure AI usage at work, including frequency, task types, and differences by occupation, industry, and firm size?</li>
+<li>How do 2025+ studies estimate the wage and productivity effects of generative AI tools, and what identification strategies separate AI adoption from selection and firm-level shocks?</li>
+<li>What 2025+ evidence exists on AI-related job displacement, task reallocation, and skill demand, especially for research, administrative, and technical roles?</li>
+<li>How do 2025+ workplace AI usage protocols address privacy, logging, and employee monitoring, and what do they report about trust, compliance, and data leakage?</li>
+<li>What 2025+ studies report test-retest reliability, ICC, and SDC95 for longitudinal brain volumetry using SynthSeg, FreeSurfer, or deep-learning segmentation in clinical MRI?</li>
+<li>How do 2025+ longitudinal atrophy studies handle QC failures, missing time points, and outlier volumes, and what thresholds trigger exclusion or re-processing?</li>
+<li>What 2025+ evidence exists on the minimum detectable change in hippocampal and ventricular volume over 6 to 24 months, and how does it vary by scanner, field strength, and segmentation method?</li>
+<li>Are there 2025+ frameworks for separating true biological change from measurement error in serial volumetry, including trend-versus-error dashboards and statistical process control?</li>
+<li>What 2025+ analyses quantify data-center power bottlenecks, including transformer lead times, gas turbine availability, grid interconnection queues, and on-site generation?</li>
+<li>How do 2025+ reports assess CoWoS and advanced packaging capacity for AI accelerators, and what are the projected constraints for 2026 to 2027 beyond HBM?</li>
+<li>What 2025+ evidence exists on 800 V DC power distribution, rack-level power density, and cooling constraints for next-generation AI clusters?</li>
+<li>Are there 2025+ studies on optical interconnect, co-packaged optics, and sensor or component shortages that could limit AI compute scaling outside memory?</li>
+<li>What 2025+ analyses quantify how AI, robotics, and physical AI change manufacturing costs in electronics, automotive, and machinery, including capex, labor, and energy?</li>
+<li>How do 2025+ studies measure reshoring and nearshoring effects on unit manufacturing costs, supply-chain resilience, and automation intensity?</li>
+<li>What 2025+ evidence exists on CNC, additive manufacturing, and robotic cell costs, and where does AI-enabled process optimization produce measurable cost reductions?</li>
+<li>Are there 2025+ reports on the cost curve for industrial robots, sensors, and actuators, and how do they affect the economics of small-batch and high-mix production?</li>
+<li>What 2025+ disclosures quantify revenue, compute commitments, and prepayment structures for AI model providers and hyperscalers, including OpenAI, Anthropic, Oracle, and Tencent?</li>
+<li>How do 2025+ analyses assess the credit and concentration risk of large AI compute commitments, including take-or-pay contracts, special-purpose vehicles, and supplier financing?</li>
+<li>What 2025+ evidence exists on the geographic split of AI compute buyers, including China, the Middle East, and sovereign AI programs, and how export controls shape purchasing?</li>
+<li>Are there 2025+ studies on the utilization and resale of contracted AI compute, including spot markets, GPU rental prices, and the gap between announced and deployed capacity?</li>
+<li>What 2025+ analyses assess China's industrial strategy for AI compute without reliance on foreign rents, including Huawei Ascend, SMIC, and domestic HBM or packaging?</li>
+<li>How do 2025+ studies evaluate China's power-grid and data-center buildout as a constraint or enabler for AI compute, including renewable integration and regional allocation?</li>
+<li>What 2025+ evidence exists on China's solar, battery, and electric-vehicle overcapacity and its interaction with industrial policy, export controls, and global prices?</li>
+<li>Are there 2025+ reports on China's broad-based industrial policy tools, including subsidies, procurement, standards, and local government incentives, and their measurable effects on AI, semiconductors, and advanced manufacturing?</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-02 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
