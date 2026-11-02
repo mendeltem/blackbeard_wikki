@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › cmb_detection</div><h1>cmb_detection</h1><p>Mikroblutungen auf T2*/SWI automatisch zaehlen: was gegen MicrobleedNet half, was nicht, Startwert-Rauschen</p><p class="muted small">Mikroblutungen, CMB, SWI, T2*, VALDO, MicrobleedNet, kleine Laesionen, Laesions-F1, Fehlalarme, SynthSeg, anisotrop, MRT, Labelkarte, Schichtdicke, Inferenz</p>
-<div class="stripe"><i class="ok" style="width:53.3%" title="getragen: 16"></i><i class="warn" style="width:46.7%" title="vorschlag: 14"></i></div><div class="counts"><span class="ok">16 getragen</span> <span class="warn">14 vorschlag</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
+<div class="stripe"><i class="warn" style="width:51.5%" title="vorschlag: 17"></i><i class="ok" style="width:48.5%" title="getragen: 16"></i></div><div class="counts"><span class="warn">17 vorschlag</span> <span class="ok">16 getragen</span></div><div class="small"><p>Automatische Erkennung zerebraler Mikroblutungen (CMB) auf T2*-GRE und SWI. Alle
 Zahlen stammen aus dem oeffentlichen Datensatz VALDO 2021 Task 2 (72 Faelle, drei
 Kohorten mit 0,8 bis 4 mm Schichtdicke; Sudre et al. 2024, doi:10.1016/j.media.2023.103029),
 gemessen als Laesions-F1 in 5-fach-Kreuzvalidierung auf 57 Faellen, gepaart ueber
@@ -52,7 +52,8 @@ Faelle mit 95-%-Bootstrap-Intervall. Ausgangspunkt war MicrobleedNet
 Kohorten; die oeffentliche Seite mit allen Schritten und Quellen:
 https://mendeltem.github.io/valdo-cmb-qc/architecture.html</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-10-31 (adapting a public detector to a new site):</strong> Unchanged, the public VALDO U-Net keeps sensitivity on a new 5 mm T2* site but produces ~20x the false positives; fine-tuning with 3 local scans recovers most of the gap and is ~+0.05 F1 ahead of training from scratch, the lead shrinks to ~+0.01 from 15 scans, both plateau at ~15 scans (interim, one fold; <a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a>). Norm-only fine-tuning is worse. Rule: test threshold re-calibration on the same n scans before crediting fine-tuning (<a href="rules/calibrate-before-you-fine-tune.html">calibrate-before-you-fine-tune</a>). SWI pitfall: a brain mask cut at image &gt; 0 hid ~8 % of reference CMB in phase-mask holes (<a href="findings/swi-brain-mask-holes-hide-microbleeds.html">swi-brain-mask-holes-hide-microbleeds</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-11-01 (slice thickness, external models, clinical threshold):</strong> On public VALDO, CMB of the same size (2-5 mm) are found in about 64 % at 0.8-3 mm but 43 % at 4 mm, with no rise in wrong detections; thick slices also remove CMB under 2 mm from image and reference (observation, confounded with site). An external model scored without the own component-size filter and with a threshold search reaching 0 gave sensitivity 0.99 / F1 0.87 -- an artefact of the touch rule. At the four-CMB treatment threshold, newer classifiers (up to +0.08 SWI lesion F1) did not move patient-level specificity; a radiologist grey zone of counts 3-8 raised it by about +0.2 to +0.3 without missing anyone above the threshold, robust to neighbouring and nested bands.</p>
+<p><strong>New 2026-10-31 (adapting a public detector to a new site):</strong> Unchanged, the public VALDO U-Net keeps sensitivity on a new 5 mm T2* site but produces ~20x the false positives; fine-tuning with 3 local scans recovers most of the gap and is ~+0.05 F1 ahead of training from scratch, the lead shrinks to ~+0.01 from 15 scans, both plateau at ~15 scans (interim, one fold; <a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a>). Norm-only fine-tuning is worse. Rule: test threshold re-calibration on the same n scans before crediting fine-tuning (<a href="rules/calibrate-before-you-fine-tune.html">calibrate-before-you-fine-tune</a>). SWI pitfall: a brain mask cut at image &gt; 0 hid ~8 % of reference CMB in phase-mask holes (<a href="findings/swi-brain-mask-holes-hide-microbleeds.html">swi-brain-mask-holes-hide-microbleeds</a>).</p>
 <p><strong>New 2026-10-25 (what is a good F1, given rater variance):</strong> No absolute target exists; the human band is the yardstick. Six raters against an adjudicated reference reach lesion F1 0.52-0.76 (median 0.69), the same rater twice 0.82; experience moves it most. Derived human band ~0.65-0.80 with precision 0.75-0.90; our chain (~0.65) is in the lower middle, and F1 &gt; 0.85 against one rater points to a lenient reference. Proof of 'human-level' needs a second rater and a paired comparison fixed in advance (<a href="findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html">human-rater-variance-and-good-f1-for-cmb-2026-10</a>).</p>
 <p><strong>New 2026-10-25 (Arena 2, round 4):</strong> Three levers the wiki had no entry for, all stage-2 arms. Tabular stage 2 (LightGBM on handcrafted shape, Hessian, contrast and tube features) is the cheap baseline to run first: the only same-candidate comparison found went to handcrafted+RF at ~400 positives, the combination best. Frozen DINOv2/MedSigLIP features only with patch tokens pooled at the candidate, never the CLS token. Unlabelled scans: no CMB paper, analogues give small gains at our label count, more likely lower variance (<a href="findings/arena-2-research-round-4-unlabelled-tabular-frozen-2026-10.html">arena-2-research-round-4-unlabelled-tabular-frozen-2026-10</a>).</p>
 <p><strong>New 2026-10-25 (transformers as token sequences):</strong> Feeding the volume voxel by voxel (or with 2^3-4^3 patches) to a transformer is possible with position embeddings, but unproven for CMB: one preprint (MedMNIST 28^3) only, no lesion result, Swin UNETR already lost on VALDO. With ~300 subjects only fine-tuning public pretrained weights makes sense, compared in frozen folds; a token transformer fits stage 2 better (<a href="findings/voxel-token-transformers-unproven-at-300-subjects-2026-10.html">voxel-token-transformers-unproven-at-300-subjects-2026-10</a>).</p>
@@ -117,9 +118,35 @@ Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p
 <p><strong>Regel, neu 2026-10-12:</strong> Gesunde (keine Referenzlaesion) getrennt berichten: FP je Fall und Fall-Spezifitaet, kein F1; das F1-Fallmittel nur ueber Laesionsfaelle (Betrachter-Generator umgestellt, Stick-Seiten neu).</p>
 <p><strong>Befund, neu 2026-10-12:</strong> die Liquor-Regel loescht auf SWI echte Blutungen tief im Hirn (SynthSeg vergibt auf SWI Label 24 falsch); Varianten gemessen: erodierte Liquor-Maske ist auf beiden Kohorten die beste, 'nur Ventrikel' neutral, 'tiefer Liquor' hilft nicht; FreeSurfer keine Option, die Kohorten haben kein T1.</p>
 <p><strong>Rule, new 2026-10-16:</strong> count microbleeds on the model grid and deliver a label map on the scan grid: on 5 mm slices two detections merged in the binary mask (37 -&gt; 36).</p>
-<p><strong>Finding (vorschlag), new 2026-10-16:</strong> start from the public VALDO weights and fine-tune with a small learning rate (1e-4): +0.11 F1 over short scratch training on one fold of another T2* cohort; unadapted the full-data weights over-detect (raise the threshold or fine-tune).</p></div>
+<p><strong>Finding (vorschlag), new 2026-10-16:</strong> start from the public VALDO weights and fine-tune with a small learning rate (1e-4): +0.11 F1 over short scratch training on one fold of another T2* cohort; unadapted the full-data weights over-detect (raise the threshold or fine-tune).</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 30</title></rect><rect x="320.0" y="45.0" width="319.0" height="5.0" rx="1"><title>2026-11: 3</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 30)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="calibrate-before-you-fine-tune"><summary><span class="type">Regel</span><span class="t"><a href="rules/calibrate-before-you-fine-tune.html">When a public detector over-detects at a new site, test &quot;re-choose the threshold on the n local scans&quot; before claiming a fine-tuning gain</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">Over-detecting public detector at a new site: compare every fine-tuning curve with &quot;re-choose threshold/min size on the same n scans&quot;; only the gain above that is from the weights</span></summary><div class="body"><p class="small muted">Herkunft: phase-2 design of the CMB adaptation study (valdo-t2s), reviewer check 2026-10-31 · <a href="rules/calibrate-before-you-fine-tune.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/calibrate-before-you-fine-tune.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(8)</span></h2><details class="entry" id="postprocess-external-models-like-your-own"><summary><span class="type">Regel</span><span class="t"><a href="rules/postprocess-external-models-like-your-own.html">Score an external model with exactly your own post-processing -- never let a threshold search reach 0</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-01</span><span class="i">External probability maps: own component-size filter, threshold grid without 0; t=0.00 with sens 0.99 was a touch-rule artefact</span></summary><div class="body"><p class="small muted">Herkunft: Projekt mb-arena (Alita), external baselines job wk1 (SHIVA-CMB as downloaded on a clinical cohort), review 2026-11-01 · <a href="rules/postprocess-external-models-like-your-own.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/postprocess-external-models-like-your-own.md">Markdown</a></p><h2>Aussage</h2>
+<p>An external CMB model (SHIVA-CMB, Tsuchida et al. 2024) was evaluated on a clinical cohort with a threshold chosen inside
+the training folds. The search picked t = 0.00 (probability &gt; 0) on both sequences and reported sensitivity 0.99 with lesion
+F1 0.87, far above every detector so far; the agent called it "a real finding". It is a metric artefact: without the
+min/max component size of the own chain, p &gt; 0 forms few huge components, and the touch rule (a reference lesion counts
+as found if any predicted voxel touches it) lets one blob "find" many CMB. As downloaded (t = 0.5) the same model gave a
+plausible, low result.</p>
+<h2>Traegt</h2>
+<p>Any comparison of an external probability map with an own detector: apply the same connected-component filter (minimum
+volume, maximum component size; here 2 mm3 and 2100 voxels at 0.25 mm3) before matching; search thresholds on a grid that
+excludes 0 and 1 (e.g. 0.05-0.95); report the component-size distribution at the chosen threshold; treat sensitivity</p>
+<blockquote>
+<p>= 0.98 with high F1, or a threshold at the grid edge, as a bug until shown otherwise.</p>
+</blockquote>
+<h2>Traegt nicht</h2>
+<p>Models whose output is already a binary mask with their own post-processing -- there, score the mask as delivered and say so.</p>
+<h2>Bruchindikator</h2>
+<p>With identical post-processing and a grid without 0, the nested threshold still lands at the lowest grid value AND the
+component sizes stay CMB-like.</p>
+<h2>Ablesung</h2>
+<p>Own review 2026-11-01 (own-cohort numbers withheld; artefact described qualitatively). Model: Tsuchida et al. 2024,
+SHIVA-CMB, Scientific Reports, doi:10.1038/s41598-024-81870-5, PMID 39730628; code github.com/pboutinaud/SHIVA_CMB
+(CC BY-NC-SA 4.0). Correction job queued (wk1b).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="rules/freeze-folds-and-cap-candidate-sources.html">freeze-folds-and-cap-candidate-sources</a></li>
+</ul></div></details><details class="entry" id="calibrate-before-you-fine-tune"><summary><span class="type">Regel</span><span class="t"><a href="rules/calibrate-before-you-fine-tune.html">When a public detector over-detects at a new site, test &quot;re-choose the threshold on the n local scans&quot; before claiming a fine-tuning gain</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">Over-detecting public detector at a new site: compare every fine-tuning curve with &quot;re-choose threshold/min size on the same n scans&quot;; only the gain above that is from the weights</span></summary><div class="body"><p class="small muted">Herkunft: phase-2 design of the CMB adaptation study (valdo-t2s), reviewer check 2026-10-31 · <a href="rules/calibrate-before-you-fine-tune.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/rules/calibrate-before-you-fine-tune.md">Markdown</a></p><h2>Aussage</h2>
 <p>A public CMB U-Net applied unchanged to a new scanner typically keeps its sensitivity and floods the scan with false
 positives (own data: about 20x the false positives per scan of its own cross-validation; external example: CMB-HUNT,
 0.54 -&gt; 1.9 false positives per patient at similar sensitivity). Much of that is an operating-point shift, not missing
@@ -320,7 +347,122 @@ doi:10.1038/s41592-023-02151-z.</p>
 <ul>
 <li><a href="findings/sensitivity-levers-do-not-raise-lesion-f1.html">sensitivity-levers-do-not-raise-lesion-f1</a></li>
 <li><a href="../agent_tooling/rules/first-measurement-is-not-a-change.html">first-measurement-is-not-a-change</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(23)</span></h2><details class="entry" id="fine-tune-from-public-valdo-weights"><summary><span class="type">Befund</span><span class="t"><a href="findings/fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">[2026-10-31: learning curve, FT ahead of scratch by ~+0.05 F1 at 3 scans, ~+0.01 from 15; plateau ~15 scans, interim one fold; norm-only fine-tuning worse] Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: cmb_3d_unet_experiments (cmbx get-model valdo_t2, train.init_from), check on one fold of an in-house T2* cohort, 2026-10-16 · <a href="findings/fine-tune-from-public-valdo-weights.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(25)</span></h2><details class="entry" id="grey-zone-at-four-cmb-threshold"><summary><span class="type">Befund</span><span class="t"><a href="findings/grey-zone-at-four-cmb-threshold.html">At the four-CMB treatment threshold, a radiologist grey zone moves decisions -- a better classifier does not</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-01</span><span class="i">Four-CMB rule: better classifiers do not move patient specificity; a radiologist band of counts 3-8 does (+0.2-0.3), robust to nested band</span></summary><div class="body"><p class="small muted">Herkunft: Projekt mb-arena (Alita), paper/patient_threshold.py (band robustness), stage-2 arms tset-tta8/-proto/-track, two seeds, 2026-11-01 · <a href="findings/grey-zone-at-four-cmb-threshold.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/grey-zone-at-four-cmb-threshold.md">Markdown</a></p><h2>Aussage</h2>
+<p>For the anti-amyloid exclusion rule (more than four CMB; Cummings et al. 2023), the adapted two-stage detector at two
+clinical sites flagged every patient truly above the threshold, but placed a sizeable share of eligible patients above it
+too. Four ways to raise specificity were compared on the same out-of-fold candidates:
+- a patient-level threshold chosen inside the cross-validation, a seed ensemble, and three newer stage-2 classifiers
+  (test-time augmentation, prototype head, slice tracking): none moved patient-level specificity beyond its bootstrap
+  interval -- although slice tracking raised SWI lesion F1 by about +0.08 (interval excluding 0);
+- a grey zone: patients with a detector count of 3-8 go to a radiologist. Specificity of the remaining automatic decisions
+  rose by roughly +0.2 to +0.3 (absolute) while no patient above the threshold was missed, with a minority of the patients referred. Fixed
+  in advance; neighbouring bands (2-6, 4-10, 2-10) gave the same picture, and a band chosen inside the cross-validation
+  (narrowest band reaching sensitivity and specificity &gt;= 0.95 on the other folds; 4-8 in four folds, 4-6 in one) referred
+  fewer patients and kept most of the gain.</p>
+<p>Why: errors of a count-based rule cluster near the cut-off; far from it the detector is almost always on the right side,
+so better lesion detection changes few decisions.</p>
+<h2>Traegt</h2>
+<p>Clinical use of CMB detectors for count thresholds: use the detector to triage (decide the clear cases, refer the band
+around the cut-off) instead of tuning lesion F1 further; report patient-level endpoints next to lesion F1.</p>
+<h2>Traegt nicht</h2>
+<p>A treatment-screening population: the cohorts were not selected as anti-amyloid candidates, so burden and the share in the
+band will differ. "Presence of any CMB" is a different question (one false positive flips it) and stays weak.</p>
+<h2>Bruchindikator</h2>
+<p>On a screening population or an external site, the band refers the majority of the patients, or a classifier change
+moves specificity beyond its interval.</p>
+<h2>Ablesung</h2>
+<p>Own measurement 2026-11-01; own-cohort values given only as differences. Threshold rule: Cummings J, Apostolova L, Rabinovici
+GD, et al. 2023, Lecanemab: Appropriate Use Recommendations, J Prev Alzheimers Dis 10(3):362-377, doi:10.14283/jpad.2023.30,
+PMID 37357276. Tier 1b (one centre, interim folds).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/fine-tune-from-public-valdo-weights.html">fine-tune-from-public-valdo-weights</a></li>
+<li><a href="rules/calibrate-before-you-fine-tune.html">calibrate-before-you-fine-tune</a></li>
+</ul></div></details><details class="entry" id="thick-slices-cost-sensitivity-not-precision"><summary><span class="type">Befund</span><span class="t"><a href="findings/thick-slices-cost-sensitivity-not-precision.html">Thick slices cost sensitivity, not precision -- and hide the smallest microbleeds from image and reference alike</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-01</span><span class="i">VALDO: same-size CMB found 64 % at 0.8-3 mm vs 43 % at 4 mm, wrong-detection share flat; CMB &lt; 2 mm vanish from image and reference on thick slices</span></summary><div class="body"><p class="small muted">Herkunft: Projekt valdo-t2s (Alita), VALDO 2021 Task 2 cross-validation, full two-stage chain (stage 2 pooled tset-plain, fixed post-processing), two stage-2 seeds, 2026-11-01; script paper/figures_src/scripts/plot_slice_thickness_heatmap.py · <a href="findings/thick-slices-cost-sensitivity-not-precision.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/thick-slices-cost-sensitivity-not-precision.md">Markdown</a></p><h2>Aussage</h2>
+<p>VALDO 2021 Task 2 (public), 57 scans in frozen 5-fold cross-validation, split by native slice spacing and by reference CMB
+size (equivalent-sphere diameter of the 26-connected reference component):</p>
+<table>
+<thead>
+<tr>
+<th>Slice</th>
+<th>Site</th>
+<th>Scans</th>
+<th>CMB</th>
+<th>found, &lt; 2 mm</th>
+<th>found, 2-5 mm</th>
+<th>found, &gt; 5 mm</th>
+<th>wrong share of 2-5 mm detections</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.8 mm</td>
+<td>RSS</td>
+<td>27</td>
+<td>80</td>
+<td>38 % (5/13)</td>
+<td>66 % (44/67)</td>
+<td>none annotated</td>
+<td>30 %</td>
+</tr>
+<tr>
+<td>3 mm</td>
+<td>ALFA</td>
+<td>14</td>
+<td>16</td>
+<td>none annotated</td>
+<td>62 % (8/13)</td>
+<td>67 % (2/3)</td>
+<td>48 %</td>
+</tr>
+<tr>
+<td>4 mm</td>
+<td>ALFA</td>
+<td>8</td>
+<td>11</td>
+<td>none annotated</td>
+<td>45 % (5/11)</td>
+<td>none annotated</td>
+<td>41 %</td>
+</tr>
+<tr>
+<td>4 mm</td>
+<td>SABRE</td>
+<td>8</td>
+<td>32</td>
+<td>none annotated</td>
+<td>41 % (11/27)</td>
+<td>80 % (4/5)</td>
+<td>26 %</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Within one size class (2-5 mm), sensitivity drops from about 0.64 (0.8-3 mm) to about 0.43 (4 mm); within ALFA, same scanner
+  and cohort, 0.62 at 3 mm against 0.45 at 4 mm.</li>
+<li>The share of wrong detections and false positives per scan (0.4-0.9) show no trend with thickness.</li>
+<li>On 3-4 mm slices no CMB smaller than 2 mm is annotated at all, and the annotated ones look LARGER (median 12-16 mm3 against
+  7 mm3 at 0.8 mm), because one dot fills at least one thick slice. The smallest CMB vanish from image and reference, a loss
+  no sensitivity value can show.</li>
+</ul>
+<h2>Traegt</h2>
+<p>Reading results of a CMB detector on routine clinical scans (often 3 or 5 mm T2*): expect lower sensitivity at the same CMB
+size, not more false alarms; report the protocol slice thickness with every result; do not compare CMB volumes across
+thicknesses.</p>
+<h2>Traegt nicht</h2>
+<p>A causal claim: thickness is confounded with site, scanner and rater in VALDO, and cells hold 11-80 CMB. VALDO has no 5 mm
+scans and only 16 CMB at 3 mm, exactly the clinical range. A controlled test (thicker slices simulated from the same 0.8 mm
+scans) is planned.</p>
+<h2>Bruchindikator</h2>
+<p>The simulation from the same 0.8 mm scans shows no sensitivity drop at 4-5 mm for 2-5 mm CMB, or a rising false-positive share.</p>
+<h2>Ablesung</h2>
+<p>Own measurement 2026-11-01 on public VALDO data (numbers may be reported). Data: Sudre et al. 2024, Where is VALDO?, Medical
+Image Analysis, doi:10.1016/j.media.2023.103029, PMID 37988921. Tier 1b (one dataset, few CMB per cell).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="findings/training-geometry-must-cover-target-geometry.html">training-geometry-must-cover-target-geometry</a></li>
+<li><a href="findings/vessel-inpainting-removes-microbleeds-on-thick-slices.html">vessel-inpainting-removes-microbleeds-on-thick-slices</a></li>
+</ul></div></details><details class="entry" id="fine-tune-from-public-valdo-weights"><summary><span class="type">Befund</span><span class="t"><a href="findings/fine-tune-from-public-valdo-weights.html">Fine-tuning from the public VALDO weights beats training from scratch; unadapted they over-detect</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-31</span><span class="i">[2026-10-31: learning curve, FT ahead of scratch by ~+0.05 F1 at 3 scans, ~+0.01 from 15; plateau ~15 scans, interim one fold; norm-only fine-tuning worse] Public VALDO weights: unadapted over-detect on another T2* cohort (F1 rises with threshold to 0.9); fine-tuned with lr 1e-4 for 6 epochs +0.11 F1 over short scratch, on par with 60 epochs (one fold, vorschlag)</span></summary><div class="body"><p class="small muted">Herkunft: cmb_3d_unet_experiments (cmbx get-model valdo_t2, train.init_from), check on one fold of an in-house T2* cohort, 2026-10-16 · <a href="findings/fine-tune-from-public-valdo-weights.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/cmb_detection/findings/fine-tune-from-public-valdo-weights.md">Markdown</a></p><h2>Aussage</h2>
 <p>The anisotropic U-Net trained on all 72 public VALDO cases (released weights, CC BY-NC-SA 4.0):
 1. <strong>Unadapted on another T2* cohort</strong> it over-detects at the released stage-1 cell (threshold 0.6, 2 mm3): lesion F1
    rose monotonically with the threshold up to 0.9 (+0.09 F1 from 0.6 to 0.9, the best cell chosen on the target

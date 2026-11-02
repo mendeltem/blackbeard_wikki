@@ -43,6 +43,9 @@ Stand 2026-10-12. Ein Eintrag je Datei.
 | regel | [report-healthy-controls-separately](rules/report-healthy-controls-separately.md) | Faelle ohne Referenzlaesion getrennt: FP je Fall und Fall-Spezifitaet statt F1; Fallmittel nur ueber Laesionsfaelle; eigene Gruppe in der Fallliste |
 | regel | [patches-not-whole-images-for-small-lesions](rules/patches-not-whole-images-for-small-lesions.md) | Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept |
 | regel | [two-seeds-per-decision-below-0.08](rules/two-seeds-per-decision-below-0.08.md) | Startwert-Rauschen eines U-Net-Trainings ~0,08 F1; kleinere Effekte brauchen zweiten Startwert |
+| befund | [thick-slices-cost-sensitivity-not-precision](findings/thick-slices-cost-sensitivity-not-precision.md) | VALDO: same-size CMB found 64 % at 0.8-3 mm vs 43 % at 4 mm, wrong-detection share flat; CMB < 2 mm vanish from image and reference on thick slices |
+| regel | [postprocess-external-models-like-your-own](rules/postprocess-external-models-like-your-own.md) | External probability maps: own component-size filter, threshold grid without 0; t=0.00 with sens 0.99 was a touch-rule artefact |
+| befund | [grey-zone-at-four-cmb-threshold](findings/grey-zone-at-four-cmb-threshold.md) | Four-CMB rule: better classifiers do not move patient specificity; a radiologist band of counts 3-8 does (+0.2-0.3), robust to nested band |
 
 ## Herkunft
 Projekt valdo-t2s (Alita), Arbeitsprotokoll ARBEIT.md, 2026-09-10 bis 2026-10-07;

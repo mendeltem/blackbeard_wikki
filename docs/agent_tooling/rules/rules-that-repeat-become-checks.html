@@ -1,0 +1,87 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>A written rule that is broken twice becomes a check -- and a watchdog measures progress, not state</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>A written rule that is broken twice becomes a check -- and a watchdog measures progress, not state</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-02</span><span>Herkunft</span><span>Claude-Code-Sitzung Alita, error catalogue over all session transcripts and system logs 2026-09 to 2026-11-02 (two read-only agents), 2026-11-01/02</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="no-silent-fallback-values.html">Kein Rueckfallwert ohne eine Zeile, die ihn als solchen benennt</a> <span class="muted small">(agent_tooling)</span><br><a href="restart-loop-is-an-alarm-not-a-repair.html">Eine Neustartschleife ist ein Alarm, keine Reparatur</a> <span class="muted small">(agent_tooling)</span><br><a href="empty-is-not-missing.html">Leer ist nicht fehlend</a> <span class="muted small">(agent_tooling)</span><br><a href="tests-prove-claims-not-plumbing.html">Tests belegen Aussagen, nicht Verkabelung</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/rules-that-repeat-become-checks.md">knowledge/agent_tooling/rules/rules-that-repeat-become-checks.md</a></span></div><h2>Aussage</h2>
+<p>A catalogue of 88 incidents from the session transcripts plus the system logs (34 of 429 queue entries failed, 29 stuck
+agent jobs, 457 model-server restarts) showed: only 8 of 88 surfaced as a crash; 69 were found by a deliberate check, 11
+by the user, many days to weeks late. Eleven kinds of error came back although a written rule against them already existed
+(memory note or error book). The five root causes:
+1. silent fallbacks and success codes without a result (a "zero candidates" fallback fired in every block for 1.5 days
+   because of a wrong path; rc 0 with empty output);
+2. acceptance checks that test for files or words, not for plausible content (placeholders, a stand-in model, a metric
+   artefact accepted as "a real finding");
+3. "waiting" read as "running": dependencies bound to "started" instead of "finished", an idle session holding a queue
+   for 10-15 h, a model restore waiting forever for memory;
+4. shared resources without one owner (one GPU for training, language model and a small decision model; orphan and
+   duplicate processes after an abort);
+5. operator habits (a process search that matches its own shell, in-place sed with '#' on scripts), repeated after the rule.</p>
+<h2>Traegt</h2>
+<p>Agent systems that run unattended. Turn each repeated rule into an enforced check within a week:
+- enqueue-time smoke test (program exists and is executable, folder exists, Python compiles, module importable, shell
+  parses) -- 21 of 34 queue failures had died within 30 s, often after hours of waiting;
+- a progress watchdog that compares signals (open queue vs live worker vs CPU time of the job tree vs GPU load vs log
+  growth) and alarms by message, not by a status line;
+- a fallback counter: the same fallback in at least half of a driver's blocks is a bug, not data;
+- plausibility in acceptance (threshold at the grid edge, sensitivity near 1 with high F1, F1 far above any own model);
+- restart back-off with an alarm;
+- a pre-command hook for the assistant's own habits.
+Log every new error the same day (what, cause, how found, fix).</p>
+<h2>Traegt nicht</h2>
+<p>Judgement errors (wrong scientific choice, wrong question); those need review, not a check. A check that raises false
+alarms trains people to ignore it -- test each one on known good and known bad cases before enabling it.</p>
+<h2>Bruchindikator</h2>
+<p>After the checks are live, a repeat of one of the five causes slips through unnoticed for more than a day.</p>
+<h2>Ablesung</h2>
+<p>Own catalogue 2026-11-01/02 (aggregates only, no case identifiers). Implemented 2026-11-02 on Alita: grossauftrag
+--einreihen smoke test, fortschrittswache (systemd timer, 15 min), spec_check plausibility block, wache back-off (3 starts
+in 2 h, then 2 h pause and one alarm), hub retries on 502/503/504, Claude Code PreToolUse hook. Tier 2 (one system).</p>
+<h2>Verknuepft</h2>
+<ul>
+<li><a href="no-silent-fallback-values.html">no-silent-fallback-values</a></li>
+<li><a href="restart-loop-is-an-alarm-not-a-repair.html">restart-loop-is-an-alarm-not-a-repair</a></li>
+<li><a href="empty-is-not-missing.html">empty-is-not-missing</a></li>
+<li><a href="tests-prove-claims-not-plumbing.html">tests-prove-claims-not-plumbing</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-02 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

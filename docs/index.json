@@ -495,6 +495,17 @@
 "src": "knowledge/agent_tooling/rules/restart-loop-is-an-alarm-not-a-repair.md"
 },
 {
+"t": "A written rule that is broken twice becomes a check -- and a watchdog measures progress, not state",
+"p": "agent_tooling/rules/rules-that-repeat-become-checks.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-02",
+"x": "88 incidents, 8 crashes; 11 kinds repeated despite a rule: smoke test at enqueue, progress watchdog, fallback counter, plausibility, back-off, pre-command hook",
+"id": "rules-that-repeat-become-checks",
+"src": "knowledge/agent_tooling/rules/rules-that-repeat-become-checks.md"
+},
+{
 "t": "Ein Agenten-Skill routet zuerst und schließt mit seiner Checkliste",
 "p": "agent_tooling/rules/skill-routes-first-and-closes-its-checklist.html",
 "a": "agent_tooling",
@@ -1672,6 +1683,17 @@
 "src": "knowledge/cmb_detection/findings/full-data-last-state-models-run-hotter.md"
 },
 {
+"t": "At the four-CMB treatment threshold, a radiologist grey zone moves decisions -- a better classifier does not",
+"p": "cmb_detection/findings/grey-zone-at-four-cmb-threshold.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-01",
+"x": "Four-CMB rule: better classifiers do not move patient specificity; a radiologist band of counts 3-8 does (+0.2-0.3), robust to nested band",
+"id": "grey-zone-at-four-cmb-threshold",
+"src": "knowledge/cmb_detection/findings/grey-zone-at-four-cmb-threshold.md"
+},
+{
 "t": "How much do CMB raters disagree, and what is a good lesion-level F1?",
 "p": "cmb_detection/findings/human-rater-variance-and-good-f1-for-cmb-2026-10.html",
 "a": "cmb_detection",
@@ -1780,6 +1802,17 @@
 "x": "MicrobleedNet's teacher-student step 2 with a TRAINED teacher: +0.030 over stage 1, small CNN +0.028 (one run, vorschlag)",
 "id": "teacher-student-step-two-on-par-with-small-cnn",
 "src": "knowledge/cmb_detection/findings/teacher-student-step-two-on-par-with-small-cnn.md"
+},
+{
+"t": "Thick slices cost sensitivity, not precision -- and hide the smallest microbleeds from image and reference alike",
+"p": "cmb_detection/findings/thick-slices-cost-sensitivity-not-precision.html",
+"a": "cmb_detection",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-01",
+"x": "VALDO: same-size CMB found 64 % at 0.8-3 mm vs 43 % at 4 mm, wrong-detection share flat; CMB < 2 mm vanish from image and reference on thick slices",
+"id": "thick-slices-cost-sensitivity-not-precision",
+"src": "knowledge/cmb_detection/findings/thick-slices-cost-sensitivity-not-precision.md"
 },
 {
 "t": "Die Schichtgeometrie der Trainingsdaten muss die Zielgeometrie abdecken -- mehr Faelle anderer Geometrie ersetzen das nicht",
@@ -1901,6 +1934,17 @@
 "x": "Ausschnitte trainieren, Schiebefenster vorhersagen: 1,6 GiB VRAM statt Dutzende GB, 800 Beispiele je Epoche statt 57, Dosisreihe 24/38/48 mm ohne Gewinn ueber dem Rezept",
 "id": "patches-not-whole-images-for-small-lesions",
 "src": "knowledge/cmb_detection/rules/patches-not-whole-images-for-small-lesions.md"
+},
+{
+"t": "Score an external model with exactly your own post-processing -- never let a threshold search reach 0",
+"p": "cmb_detection/rules/postprocess-external-models-like-your-own.html",
+"a": "cmb_detection",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-01",
+"x": "External probability maps: own component-size filter, threshold grid without 0; t=0.00 with sens 0.99 was a touch-rule artefact",
+"id": "postprocess-external-models-like-your-own",
+"src": "knowledge/cmb_detection/rules/postprocess-external-models-like-your-own.md"
 },
 {
 "t": "Faelle ohne Referenzlaesion (Gesunde) werden getrennt berichtet: Fehlalarme je Fall und Fall-Spezifitaet, kein F1",

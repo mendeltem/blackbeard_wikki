@@ -56,3 +56,6 @@ Blackboard-Protokoll Alita, Eintraege [958] bis [1413], 2026-10-02 18:27 bis
 ## Verknuepft
 - [no-silent-fallback-values](no-silent-fallback-values.md)
 - [secure-boot-kernel-update-unloads-nvidia-dkms](../../local_llm_operation/risks/secure-boot-kernel-update-unloads-nvidia-dkms.md)
+
+## Umgesetzt 2026-11-02
+Die Regel stand seit 07.10., gebaut war sie nicht: die Wache startete den Server weiter ohne Grenze (457 Neustarts bis 22.10.). Seit 02.11.: hoechstens 3 Start-/Neustartversuche in 2 h ohne gesunde /health-Antwort, dann 2 h Pause und eine Telegram-Meldung (werkzeuge/wache, Simulation mit Stummeln getestet). Siehe [rules-that-repeat-become-checks](rules-that-repeat-become-checks.md).
