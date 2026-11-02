@@ -19,9 +19,9 @@ size (equivalent-sphere diameter of the 26-connected reference component):
 | 0.8 mm | RSS | 27 | 80 | 38 % (5/13) | 66 % (44/67) | none annotated | 30 % |
 | 3 mm | ALFA | 14 | 16 | none annotated | 62 % (8/13) | 67 % (2/3) | 48 % |
 | 4 mm | ALFA | 8 | 11 | none annotated | 45 % (5/11) | none annotated | 41 % |
-| 4 mm | SABRE | 8 | 32 | none annotated | 41 % (11/27) | 80 % (4/5) | 26 % |
+| 3 mm, 1 mm gaps (4 mm spacing) | SABRE | 8 | 32 | none annotated | 41 % (11/27) | 80 % (4/5) | 26 % |
 
-- Within one size class (2-5 mm), sensitivity drops from about 0.64 (0.8-3 mm) to about 0.43 (4 mm); within ALFA, same scanner
+- Within one size class (2-5 mm), sensitivity drops from about 0.64 (contiguous 0.8-3 mm) to about 0.43 at 4 mm slice spacing (ALFA 4 mm slices; SABRE 3 mm slices with 1 mm gaps -- correction 02.11.: SABRE was first listed as 4 mm, the header value is the spacing); within ALFA, same scanner
   and cohort, 0.62 at 3 mm against 0.45 at 4 mm.
 - The share of wrong detections and false positives per scan (0.4-0.9) show no trend with thickness.
 - On 3-4 mm slices no CMB smaller than 2 mm is annotated at all, and the annotated ones look LARGER (median 12-16 mm3 against
