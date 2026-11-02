@@ -61,6 +61,12 @@ einen Symlink auf das Archiv setzen.</strong> Jede Operation in ein Protokoll (T
 <li><strong>exFAT speichert keine Symlinks, Rechte oder Besitzer.</strong> Symlinks werden uebersprungen und als <code>Pfad&lt;TAB&gt;Ziel</code>
   in <code>.SYMLINKS.txt</code> notiert; <code>--rueckgaengig</code> legt sie wieder an. Eine venv mit <code>lib64 -&gt; lib</code> wuerde mit <code>-L</code>
   verdoppelt, ohne Notiz ginge sie verloren.</li>
+<li><strong>Code, der spaeter auf dem archivierten Ordner weiterlaeuft, scheitert an <code>symlink()</code></strong> (Lauf 30.10., gefunden 02.11.):
+  eine Pipeline legte pro Fall einen Symlink an (<code>Path.symlink_to</code>), nach dem Archivieren auf exFAT warf das
+  <code>OSError: [Errno 1] Operation not permitted</code> fuer alle 96 Faelle. Das Skript fing den Fehler pro Fall ab, schrieb ihn
+  in die Statustabelle und lief "fertig" durch; Abschlussmeldung kam trotzdem. <strong>Regel:</strong> vor dem Archivieren eines
+  noch genutzten Ordners <code>grep -rn "symlink\|os.link"</code> im zugehoerigen Code; Abhilfe <code>try: symlink except OSError: copyfile</code>.
+  Und nach jedem Lauf die Statusspalte zaehlen, nicht nur die Fertigmeldung lesen.</li>
 <li><strong>Zeitstempel sind auf exFAT grob</strong> (10 ms, teils 2 s): <code>rsync -t --modify-window=2</code>, sonst kopiert jeder Lauf alles neu.</li>
 <li><strong>Eine zweite Platte war defekt und sah leer und benutzbar aus:</strong> eingehaengt, 1,9 TB frei, <code>ls</code> leer. Erst der
   Schreibtest (<code>touch</code> -&gt; Ein-/Ausgabefehler) und SMART ueber udisks (5 848 neu zugewiesene, 10 528 schwebende Sektoren,

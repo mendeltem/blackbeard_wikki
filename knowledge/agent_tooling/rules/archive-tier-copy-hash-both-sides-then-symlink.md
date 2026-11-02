@@ -28,6 +28,12 @@ einen Symlink auf das Archiv setzen.** Jede Operation in ein Protokoll (TSV), au
 - **exFAT speichert keine Symlinks, Rechte oder Besitzer.** Symlinks werden uebersprungen und als `Pfad<TAB>Ziel`
   in `.SYMLINKS.txt` notiert; `--rueckgaengig` legt sie wieder an. Eine venv mit `lib64 -> lib` wuerde mit `-L`
   verdoppelt, ohne Notiz ginge sie verloren.
+- **Code, der spaeter auf dem archivierten Ordner weiterlaeuft, scheitert an `symlink()`** (Lauf 30.10., gefunden 02.11.):
+  eine Pipeline legte pro Fall einen Symlink an (`Path.symlink_to`), nach dem Archivieren auf exFAT warf das
+  `OSError: [Errno 1] Operation not permitted` fuer alle 96 Faelle. Das Skript fing den Fehler pro Fall ab, schrieb ihn
+  in die Statustabelle und lief "fertig" durch; Abschlussmeldung kam trotzdem. **Regel:** vor dem Archivieren eines
+  noch genutzten Ordners `grep -rn "symlink\|os.link"` im zugehoerigen Code; Abhilfe `try: symlink except OSError: copyfile`.
+  Und nach jedem Lauf die Statusspalte zaehlen, nicht nur die Fertigmeldung lesen.
 - **Zeitstempel sind auf exFAT grob** (10 ms, teils 2 s): `rsync -t --modify-window=2`, sonst kopiert jeder Lauf alles neu.
 - **Eine zweite Platte war defekt und sah leer und benutzbar aus:** eingehaengt, 1,9 TB frei, `ls` leer. Erst der
   Schreibtest (`touch` -> Ein-/Ausgabefehler) und SMART ueber udisks (5 848 neu zugewiesene, 10 528 schwebende Sektoren,
