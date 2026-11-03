@@ -28,6 +28,7 @@ In one folder, with these plain names:
 - **Plain words first, numbers second.** Say what a number means. Explain the reading of signs, units and colours before showing results.
 - **Text and image together.** Beside each video: what we did, what we found, what it means, caution.
 - **Teach the method with its own animation.** Examples that worked: correlation (time points becoming dots), one map sharpening from 1 to 1,000 people, a slider that turns a regression line, a heatmap filled in square by square, a shuffle filling up a null distribution, patients hidden one by one.
+- **References are always clickable in HTML** (user rule 2026-11-03): that is the advantage of HTML over a PDF or video. Each citation links to the paper in a new tab, with a one-line hover, and a sources page lists them all.
 - **Honest throughout.** Show the caveats, the failures and your own mistakes. Exploratory results are called exploratory.
 
 ## How to build it
