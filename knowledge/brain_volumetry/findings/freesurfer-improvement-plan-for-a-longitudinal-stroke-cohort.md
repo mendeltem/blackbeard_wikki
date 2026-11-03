@@ -92,6 +92,16 @@ FastSurfer v2.4.2 software record, Backhausen 2016 title/DOI). Pilot numbers fro
 23. Beer JC et al. 2020. Longitudinal ComBat: a method for harmonizing longitudinal multi-scanner imaging data. NeuroImage 220:117129. DOI 10.1016/j.neuroimage.2020.117129. PMID 32640273.
 24. Uhr V et al. 2025. Deep-learning versus classical pipelines and white-matter hypointensities. arXiv:2503.20571 (preprint, unverified).
 
+### Nachtrag 03.11.2026: Fuellmethoden fuer Infarkte (PubMed-geprueft)
+Masking allein reicht nicht [11]; WM-Fuellung ist fuer WM-Laesionen gemacht [10, 11, Valverde 2014] und schreibt in tiefe GM
+WM-Intensitaet; Spiegel-(enantiomorphe) Fuellung uebertraegt Gewebe der gesunden Gegenseite [Nachev 2008] und verbesserte die
+Parzellierung bei grossen Laesionen (Dice 0,89 vs 0,62, Gliome, nicht Schlaganfall) [Radwan 2021]; Inpainting (LIT) nur fuer
+Tumoren/Hoehlen validiert [14]. Eigener synthetischer Test (48 Paare, oeffentliche gesunde Daten): Spiegel verringert den Bias
+beruehrter Strukturen deutlich; direkter Vergleich Spiegel vs WM-Fuellung noch offen.
+25. Valverde S et al. 2014. A white matter lesion-filling approach to improve brain tissue volume measurements. NeuroImage Clin 6:86-92. DOI 10.1016/j.nicl.2014.08.016. PMID 25379419.
+26. Nachev P et al. 2008. Enantiomorphic normalization of focally lesioned brains. NeuroImage 39:1215-1226. DOI 10.1016/j.neuroimage.2007.10.002. PMID 18023365.
+27. Radwan AM et al. 2021. Virtual brain grafting: enabling whole brain parcellation in the presence of large lesions. NeuroImage 229:117731. DOI 10.1016/j.neuroimage.2021.117731. PMID 33454411.
+
 ## Verknuepft
 - [longitudinal-volumetry-needs-error-statistics](../rules/longitudinal-volumetry-needs-error-statistics.md)
 - [synthseg-in-freesurfer-8-runs-on-cpu-only](synthseg-in-freesurfer-8-runs-on-cpu-only.md)

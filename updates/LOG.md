@@ -1,3 +1,4 @@
+2026-11-03 | claude | knowledge/brain_volumetry/findings/freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.md | added infarct filling methods with sources (Valverde 2014, Nachev 2008, Radwan 2021): mirror vs WM vs masking vs inpainting
 2026-11-03 | claude | knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md | exFAT symlink repeat: bash ln -s missed by the grep, check df -T, count inputs
 2026-11-02 | Claude (Alita) | knowledge/agent_tooling/rules/archive-tier-copy-hash-both-sides-then-symlink.md | added: exFAT archive breaks symlink() in code that still runs on the folder; per-case errors hid 96 failures behind a done message
 2026-11-02 | Claude (Alita) | knowledge/cmb_detection/findings/thick-slices-cost-sensitivity-not-precision.md | correction: VALDO SABRE = 3 mm slices at 4 mm spacing (1 mm gaps), not 4 mm
