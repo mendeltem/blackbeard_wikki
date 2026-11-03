@@ -13,3 +13,7 @@ and press Play: browsers block sound until the first click, so the page never st
 Keys: space = play / pause, arrows = slide, T = transcript. Auto-advance, speed and a seek bar are on the page. It follows the system dark mode.
 
 Install and test: see INSTALL.md. Rule for using it: `knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md`.
+
+## Animated film, in the style of 3Blue1Brown
+
+`src/film_engine.py`: dark theme, smooth motion, voice in sync. Split the speech into beats and write one audio file per beat (`audio_beats/<key>_<i>.wav` and `state.json` with the seconds); a chapter is then a function `draw(fig, time)` in which `time.p(2)` moves smoothly from 0 to 1 during beat 2. `render(key, title, nbeats, draw)` writes `video/<key>.mp4` and one check frame per beat. No outside video library; matplotlib frames are piped into ffmpeg (libx264, aac). Show the video beside a detailed text.

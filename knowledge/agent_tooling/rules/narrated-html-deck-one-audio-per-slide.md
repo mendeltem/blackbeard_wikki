@@ -23,6 +23,9 @@ The user asked for this format to be kept after seeing it.
 - **Controls:** Play starts the sound, because browsers block autoplay until the first click. Add auto-advance, transcript, speed, keys.
 - **Look at the rendered slide before delivery**, not only the code.
 
+## Next step up: animated film (user request 2026-11-03)
+The user asked for the look of a 3Blue1Brown video, with image and text combined and a detailed explanation for each result. Build chapters: motion that builds one idea per spoken beat, real data, the detailed text beside the video (what we did, what we found, what it means, caution). Engine in the same tool, `src/film_engine.py`. Own build: 10 chapters, 8.2 minutes, 11 MB; check one frame per beat, because text overlaps only show on rendered frames.
+
 ## Interpretation error this format caught
 A positive interaction was first narrated as "those who start badly stay bad". The rendered plot showed the lines meeting at the poor end and a difference elsewhere,
 and the model line ran into a range with no such patients. Interpret an interaction at **predicted values inside the range covered by data**, never from its sign alone, and draw each
