@@ -1,0 +1,91 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>When the user asks for an explanation of the current task, make an explanation video like this</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>When the user asks for an explanation of the current task, make an explanation video like this</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-03</span><span>Herkunft</span><span>user request 2026-11-03 (&quot;this is how an explanation video should look when I want an explanation of what our task is&quot;); own build</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/explanation-video-is-the-standard.md">knowledge/agent_tooling/rules/explanation-video-is-the-standard.md</a></span></div><h2>Aussage</h2>
+<p>This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that can simply be opened, and a page with detailed text beside the video.</p>
+<h2>What to deliver</h2>
+<p>In one folder, with these plain names:
+- <code>explanation.mp4</code>: the whole explanation, all chapters joined.
+- <code>&lt;method&gt;_tutorial.mp4</code>: one longer tutorial for each method that needs teaching.
+- The same names as <code>.mp3</code> for listening only, if the user wants that.
+- <code>index.html</code>: chapters with the detailed text beside each video, and <code>tutorials.html</code>: tutorials with clickable parts.
+- The code that made it, and a copy wherever the user works (internal drive, cluster transfer folder).</p>
+<h2>How it should look</h2>
+<ul>
+<li><strong>Dark background, smooth motion, no idle space.</strong> Content fills the screen. Build one idea per spoken sentence block, so that the picture changes as the voice explains.</li>
+<li><strong>Real data whenever possible.</strong> Illustrations are labelled as illustrations.</li>
+<li><strong>Red rings and red labels mark where to look</strong>, timed with the voice. On a still page, add a red "Look here" card.</li>
+<li><strong>Plain words first, numbers second.</strong> Say what a number means. Explain the reading of signs, units and colours before showing results.</li>
+<li><strong>Text and image together.</strong> Beside each video: what we did, what we found, what it means, caution.</li>
+<li><strong>Teach the method with its own animation.</strong> Examples that worked: correlation (time points becoming dots), one map sharpening from 1 to 1,000 people, a slider that turns a regression line, a heatmap filled in square by square, a shuffle filling up a null distribution, patients hidden one by one.</li>
+<li><strong>Honest throughout.</strong> Show the caveats, the failures and your own mistakes. Exploratory results are called exploratory.</li>
+</ul>
+<h2>How to build it</h2>
+<ol>
+<li>Write <code>chapters.py</code>: per chapter a title, spoken beats (3 to 6 sentence blocks) and the detail text. Numbers in the speech as words; respell abbreviations for the voice.</li>
+<li>Prepare one data file with real numbers and slices, so that frames render fast.</li>
+<li>Generate one audio file per beat (Kokoro-82M, CPU); skip beats whose text did not change.</li>
+<li>Write one <code>draw(fig, time)</code> per chapter; <code>time.p(beat, a, b)</code> moves from 0 to 1 within a beat, so the timing follows the voice.</li>
+<li>Render <strong>check frames only</strong> first (one per beat), and look at them. Most errors are text overlaps and wrong interpretations, and they only show on rendered frames.</li>
+<li>Render at most 4 chapters in parallel; join with the ffmpeg concat demuxer (<code>-c copy</code>); decode every file to verify it.</li>
+<li>Build the page, store with checksums, and say what was not checked (for example, not watched to the end).</li>
+</ol>
+<p>Before narrating a result, read it at predicted values, not from its sign alone. Compare every number in the speech and on the frames with the result tables. If the results change, rerun everything: old numbers must not stay in a video.</p>
+<p>Engine: <code>tools/general/narrated_html_deck/src/film_engine.py</code>. About 10 chapters render in roughly 3 minutes on the CPU.</p>
+<h2>Traegt</h2>
+<ul>
+<li>Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".</li>
+<li>Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li>One user's preference, from one project. Playback in browsers was not tested systematically.</li>
+<li>For a quick question, a short text answer is still right; offer the video when an explanation of a task or method is wanted.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>The user asks for shorter answers instead, or the video takes so long that it delays the task.</p>
+<h2>Ablesung</h2>
+<p>Videos with patient data stay on internal storage.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-03 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

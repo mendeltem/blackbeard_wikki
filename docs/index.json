@@ -330,6 +330,17 @@
 "src": "knowledge/agent_tooling/rules/exit-hook-via-trap-then-verify-in-log.md"
 },
 {
+"t": "When the user asks for an explanation of the current task, make an explanation video like this",
+"p": "agent_tooling/rules/explanation-video-is-the-standard.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-03",
+"x": "This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that ca",
+"id": "explanation-video-is-the-standard",
+"src": "knowledge/agent_tooling/rules/explanation-video-is-the-standard.md"
+},
+{
 "t": "Vor dem Vergleich zweier Zahlen die Definition suchen, nicht die Differenz deuten",
 "p": "agent_tooling/rules/find-the-definition-before-interpreting-a-difference.html",
 "a": "agent_tooling",

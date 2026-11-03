@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**Rule 2026-11-03 (user):** An explanation of the current task should look like the animated explanation video: real data, voice, red rings, detail text beside it, plain `explanation.mp4` plus tutorial files. [[explanation-video-is-the-standard]]
+
 **New 2026-11-03 (user request):** Explain analyses as a narrated HTML deck, one audio file per slide, built from one list of slide content and speech; tool `tools/general/narrated_html_deck`. Interpret interactions at predicted values inside the data range, not from the sign. [[narrated-html-deck-one-audio-per-slide]]
 
 **New 2026-11-02 (error catalogue):** 88 incidents since September, only 8 surfaced as crashes; 11 kinds came back although a written rule existed. Five root causes (silent fallbacks, acceptance checking files not content, waiting read as running, resources without an owner, operator habits). Each repeated rule became a check: enqueue smoke test, progress watchdog with fallback counter, plausibility in acceptance, restart back-off, hub retries, a pre-command hook.

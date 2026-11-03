@@ -1,3 +1,4 @@
+2026-11-03 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md, tools/general/narrated_html_deck | user made the explanation video the standard; added how-to and red-ring helper
 2026-11-03 | claude | knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md | layout rules from user feedback: no idle background, picture and text side by side, methods explained with pictures
 2026-11-03 | claude | tools/general/narrated_html_deck, knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md | added animated film engine after user asked for 3Blue1Brown style
 2026-11-03 | claude | knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md, tools/general/narrated_html_deck, knowledge/lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.md | user asked to keep the narrated HTML deck format; added reusable tool; recorded the GSP1000 header left-right finding
