@@ -18,6 +18,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | regel | [release-test-means-fresh-machine-with-release-assets](rules/release-test-means-fresh-machine-with-release-assets.md) | Installierbar = frische Umgebung nur mit README + Gewichte vom Release, CI auf fremdem Runner, jede CLI-Option einmal; fand den stummen FSL-Haenger ohne FSLDIR; 17.10.2026 erneut von 0 gruen (6 Bloecke, 3 h 55, F1 0,963 der Bauspielzeug-Beispiele ist kein Ergebnis) | getragen |
 | regel | [pip-freeze-is-not-an-install-file](rules/pip-freeze-is-not-an-install-file.md) | pip freeze ist Protokoll, keine Installationsdatei (+cu124, %2B); minimal gepinnt + Test aus frischem Clone bis zum Selbsttest, Log ins Repo | getragen |
 | [Datenumzug: umbenennen, Symlink zurueck, Protokoll](rules/data-move-by-rename-symlink-and-protocol.md) | regel | vorschlag |
+| [Explain results as a narrated HTML deck, one audio file per slide](rules/narrated-html-deck-one-audio-per-slide.md) | regel | vorschlag |
 | [Archivstufe: kopieren, beide Seiten hashen, dann Symlink](rules/archive-tier-copy-hash-both-sides-then-symlink.md) | regel | vorschlag |
 | [Ergebnis-Repo braucht eine Nachvollziehbarkeitskarte](rules/traceability-map-for-a-results-repo.md) | regel | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |

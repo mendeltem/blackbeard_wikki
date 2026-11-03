@@ -1,5 +1,7 @@
 # lesion_detection_method: Kurzstand
 
+**New 2026-11-03:** The Lead-DBS release of the GSP1000 connectome has x mirrored in its header against the NIfTI release of the same time courses; the NIfTI orientation is supported by anatomy and language lateralisation. Whether Lead Mapper is affected is unverified. [[gsp1000-leaddbs-header-left-right-mirror]]
+
 Stand 2026-10-07. Prefill fuer jede neue Linie mit kleinen Laesionen (PVS, Lakunen,
 neue CMB- oder WMH-Kohorten). Details in [INDEX.md](INDEX.md), Belege in
 cmb_detection und wmh_segmentation.

@@ -1,0 +1,66 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GSP1000 connectome: the Lead-DBS release header has x mirrored against the NIfTI release</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">lesion_detection_method</a> › <a href="../index.html#open_checks">Prüfpunkt</a></div><h1>GSP1000 connectome: the Lead-DBS release header has x mirrored against the NIfTI release</h1><div class="meta"><span>Typ</span><span>Prüfpunkt</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-03</span><span>Herkunft</span><span>own check 2026-11-03 of two public Harvard Dataverse releases</span><span>Zuletzt geändert</span><span> </span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.md">knowledge/lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.md</a></span></div><h2>Aussage</h2>
+<p><code>vol/space/mat</code> in <code>dataset_volsurf.mat</code> of "GSP1000 Preprocessed Connectome for Lead DBS" says x = +2i - 90 (0-based index i). The NIfTI release of the
+same connectome has x = -2i + 90. The time courses have the same voxel index in both (median same-voxel r = 1.00, 100 subjects; 0.38 when mirrored). So at most one header can be right, and the data support the NIfTI one:
+T1 of the NIfTI release vs the FSL MNI152 template r = 0.920 as stored, 0.868 mirrored; inferior frontal to posterior temporal connectivity, read with the NIfTI header, is stronger on the left (Fisher z 0.26 vs 0.15, t = 6.0, n = 300).
+<strong>Own lesion network code must map through the NIfTI orientation, and test it with a check that would come out differently under a mirror image.</strong></p>
+<h2>Traegt</h2>
+<ul>
+<li>Cohen, Al-Fatly, Horn: GSP1000 Preprocessed Connectome for Lead DBS, Harvard Dataverse, doi:10.7910/DVN/KKTJQC.</li>
+<li>GSP1000 Preprocessed Connectome (NIfTI), Harvard Dataverse, doi:10.7910/DVN/ILXIKS.</li>
+<li>Holmes et al. 2015, Brain Genomics Superstruct Project initial data release, Sci Data 2:150031.</li>
+</ul>
+<h2>Traegt nicht</h2>
+<ul>
+<li><strong>Whether Lead Mapper itself produces mirrored maps is unverified:</strong> its code was not read and not run. It may handle this internally. Test with a one-sided seed before concluding anything.</li>
+<li>A brain-mask Dice test could not separate the two orientations (0.888 both ways), and a within- vs across-hemisphere test would not either.</li>
+</ul>
+<h2>Bruchindikator</h2>
+<p>Lead-DBS documentation or code shows a deliberate flip for this file, or a one-sided seed in Lead Mapper gives correctly lateralised maps.</p>
+<h2>Ablesung</h2>
+<p>Do not treat this as a bug report until Lead Mapper was tested. Do treat it as a required check for any code reading these <code>.mat</code> files directly. Files are compressed MATLAB v5, 120 volumes per run, 285,903 voxels; <code>scipy.io.loadmat</code> reads them from inside the tar archives without unpacking.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-03 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

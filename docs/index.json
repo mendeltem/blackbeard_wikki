@@ -407,6 +407,17 @@
 "src": "knowledge/agent_tooling/rules/name-a-component-against-its-code.md"
 },
 {
+"t": "Explain results as a narrated HTML deck: one audio file per slide",
+"p": "agent_tooling/rules/narrated-html-deck-one-audio-per-slide.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-03",
+"x": "When a person needs an analysis explained, build a slide deck as a plain HTML page with a spoken voice per slide, generated from one list that holds each slide's content and its speech. Tool: `tools/general/narrated_html_deck` (Kokoro-82M o",
+"id": "narrated-html-deck-one-audio-per-slide",
+"src": "knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md"
+},
+{
 "t": "Ein laufendes Bash-Skript nie editieren: bash liest die Datei waehrend der Ausfuehrung weiter",
 "p": "agent_tooling/rules/never-edit-a-running-bash-script.html",
 "a": "agent_tooling",
@@ -2255,6 +2266,17 @@
 "src": "knowledge/lesion_detection_method/mechanisms/sensitivity-needs-a-discriminator.md"
 },
 {
+"t": "GSP1000 connectome: the Lead-DBS release header has x mirrored against the NIfTI release",
+"p": "lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.html",
+"a": "lesion_detection_method",
+"y": "Prüfpunkt",
+"s": "vorschlag",
+"d": "2026-11-03",
+"x": "PVS-Kohorte (103 Faelle, T1 1 mm, FLAIR 5 mm, RORPO-Pipeline, 11 Schwellensaetze, 31 Fehlschlaege, keine Referenz): sieben Schritte in Reihenfolge",
+"id": "gsp1000-leaddbs-header-left-right-mirror",
+"src": "knowledge/lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.md"
+},
+{
 "t": "PVS: die Laesionsmethode anwenden, bevor ein Modell gebaut wird",
 "p": "lesion_detection_method/open_checks/pvs-apply-the-lesion-method.html",
 "a": "lesion_detection_method",
@@ -4090,6 +4112,17 @@
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
+},
+{
+"t": "narrated_html_deck",
+"p": "tools/general/narrated_html_deck/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "",
+"x": "tools/general/narrated_html_deck",
+"id": "narrated_html_deck",
+"src": "tools/general/narrated_html_deck/README.md"
 },
 {
 "t": "wayback_snapshot",

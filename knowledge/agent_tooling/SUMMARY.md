@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**New 2026-11-03 (user request):** Explain analyses as a narrated HTML deck, one audio file per slide, built from one list of slide content and speech; tool `tools/general/narrated_html_deck`. Interpret interactions at predicted values inside the data range, not from the sign. [[narrated-html-deck-one-audio-per-slide]]
+
 **New 2026-11-02 (error catalogue):** 88 incidents since September, only 8 surfaced as crashes; 11 kinds came back although a written rule existed. Five root causes (silent fallbacks, acceptance checking files not content, waiting read as running, resources without an owner, operator habits). Each repeated rule became a check: enqueue smoke test, progress watchdog with fallback counter, plausibility in acceptance, restart back-off, hub retries, a pre-command hook.
 
 **New 2026-10-31:** An idle interactive agent session held the GPU queue for 15 h because "any agent process" counted as active; interactive sessions now count only while their session log grows ([idle-interactive-agent-blocks-the-gpu-queue](risks/idle-interactive-agent-blocks-the-gpu-queue.md)). Check that a queue moves, not only that jobs are queued.
