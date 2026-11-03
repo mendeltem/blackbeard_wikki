@@ -12,6 +12,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| [A hub model can write narrated explainer films under a harness; blind code on private data needs checks a data gate cannot give](findings/model-hub-writes-explainer-films-under-a-harness.md) | befund | vorschlag |
 | [Public code knows no dataset; dataset rules live next to the data](rules/public-code-knows-no-dataset.md) | regel | getragen |
 | [Python environment on a shared machine: isolate it (user site, login node, venv, stale editable, $?)](rules/python-env-isolation-on-shared-clusters.md) | regel | getragen |
 | [Nur wenige Suchdienste antworten aus diesem Netz; SEC-EDGAR-Volltext liefert die Primaerquellen](findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.md) | befund | vorschlag |

@@ -132,6 +132,17 @@
 "src": "knowledge/agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.md"
 },
 {
+"t": "A hub model can write narrated explainer films under a harness; blind code on private data needs checks a data gate cannot give",
+"p": "agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-03",
+"x": "1. Long tasks on this hub come back empty unless `\"chat_template_kwargs\": {\"enable_thinking\": false}` is sent: hidden thinking uses up `max_tokens`, with finish_reason stop. Requests are cut near 50 s, so stream. Four parallel requests gave",
+"id": "model-hub-writes-explainer-films-under-a-harness",
+"src": "knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md"
+},
+{
 "t": "From this network only a few search endpoints answer; SEC EDGAR full text is the one that gives primary sources",
 "p": "agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.html",
 "a": "agent_tooling",

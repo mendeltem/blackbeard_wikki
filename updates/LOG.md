@@ -1,3 +1,4 @@
+2026-11-03 | claude | knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md | what a hub model can do on explainer films, and which checks blind code on private data needs
 2026-11-03 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | user-approved focus ring: how to direct the viewer
 2026-11-03 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | user rule: references in HTML are always clickable
 2026-11-03 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md, tools/general/narrated_html_deck | user made the explanation video the standard; added how-to and red-ring helper

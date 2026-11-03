@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**New 2026-11-03 (own runs):** A hospital hub model wrote a 29-minute explainer film from a README under a harness: thinking off, serial requests, rule-based layout check, a person reviews. Empty sources from a harness bug produced reversed facts and zero complaints, so assert input sizes. Blind code on private data dropped points silently, and an import check is no sandbox. [Finding](findings/model-hub-writes-explainer-films-under-a-harness.md).
+
 **Rule 2026-11-03 (user):** An explanation of the current task should look like the animated explanation video: real data, voice, red rings, detail text beside it, plain `explanation.mp4` plus tutorial files. [[explanation-video-is-the-standard]]
 
 **New 2026-11-03 (user request):** Explain analyses as a narrated HTML deck, one audio file per slide, built from one list of slide content and speech; tool `tools/general/narrated_html_deck`. Interpret interactions at predicted values inside the data range, not from the sign. [[narrated-html-deck-one-audio-per-slide]]
