@@ -4,6 +4,7 @@ Taegliche Literaturrecherche um 04:00, lokal (Werkzeug `morgenrecherche` auf Ali
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| [Morgenrecherche 2026-11-03](findings/2026-11-03.md) | recherche | unbestaetigt |
 | [Morgenrecherche 2026-11-02](findings/2026-11-02.md) | recherche | unbestaetigt |
 | [Morgenrecherche 2026-10-30](findings/2026-10-30.md) | recherche | unbestaetigt |
 | [Morgenrecherche 2026-10-25](findings/2026-10-25.md) | recherche | unbestaetigt |
