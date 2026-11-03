@@ -2272,7 +2272,7 @@
 "y": "Prüfpunkt",
 "s": "vorschlag",
 "d": "2026-11-03",
-"x": "PVS-Kohorte (103 Faelle, T1 1 mm, FLAIR 5 mm, RORPO-Pipeline, 11 Schwellensaetze, 31 Fehlschlaege, keine Referenz): sieben Schritte in Reihenfolge",
+"x": "GSP1000 connectome: Lead-DBS header has x mirrored against the NIfTI release; whether Lead Mapper is affected is unverified",
 "id": "gsp1000-leaddbs-header-left-right-mirror",
 "src": "knowledge/lesion_detection_method/open_checks/gsp1000-leaddbs-header-left-right-mirror.md"
 },
@@ -4119,7 +4119,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "",
+"d": "2026-11-03",
 "x": "tools/general/narrated_html_deck",
 "id": "narrated_html_deck",
 "src": "tools/general/narrated_html_deck/README.md"
