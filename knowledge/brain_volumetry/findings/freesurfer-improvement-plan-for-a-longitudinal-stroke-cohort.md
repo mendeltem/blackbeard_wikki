@@ -102,6 +102,14 @@ beruehrter Strukturen deutlich; direkter Vergleich Spiegel vs WM-Fuellung noch o
 26. Nachev P et al. 2008. Enantiomorphic normalization of focally lesioned brains. NeuroImage 39:1215-1226. DOI 10.1016/j.neuroimage.2007.10.002. PMID 18023365.
 27. Radwan AM et al. 2021. Virtual brain grafting: enabling whole brain parcellation in the presence of large lesions. NeuroImage 229:117731. DOI 10.1016/j.neuroimage.2021.117731. PMID 33454411.
 
+### Nachtrag 03.11.2026 (2): lesion-group limits and an age-adjusted check of minimal-lesion patients
+
+- Lesion groups built from automatic infarct masks have no ground truth. DeepISLES was trained on subacute DWI (about 3 days after treatment) and its authors report the weakest performance for small infarcts in artifact-prone regions and for chronic lesions; volume agreement for lesions below 5 ml is lower (r 0.87) [28]. A missed small infarct moves a patient from the stroke group into a "minimal lesion" group, so such groups must be rebuilt once corrected masks exist.
+- Own run 03.11.2026 (relative findings only): with one OLS model per structure (volume ~ group + age + age^2 + sex, HC3-robust p, BH-FDR), minimal-lesion patients differed from healthy adults only in the cortex (known clinical-T1 contrast effect); patients with more WMH but no relevant infarct differed neither from healthy adults nor from the minimal-lesion group; age x group interactions showed no faster decline with age. Small groups: only differences of about 0.5-1 SD are detectable; read as direction, not effect size.
+- SynthSeg `--parc` only relabels the cortex already segmented into the 68 Desikan-Killiany regions; total cortex, subcortical labels and QC scores are unchanged [Billot 2023, PMID 36802420].
+
+28. de la Rosa E et al. 2025. DeepISLES: a clinically validated ischemic stroke segmentation model from the ISLES'22 challenge. Nat Commun 16:7357. DOI 10.1038/s41467-025-62373-x. PMID 40783484.
+
 ## Verknuepft
 - [longitudinal-volumetry-needs-error-statistics](../rules/longitudinal-volumetry-needs-error-statistics.md)
 - [synthseg-in-freesurfer-8-runs-on-cpu-only](synthseg-in-freesurfer-8-runs-on-cpu-only.md)
