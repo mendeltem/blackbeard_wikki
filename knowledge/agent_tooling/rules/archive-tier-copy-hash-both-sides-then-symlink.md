@@ -34,6 +34,10 @@ einen Symlink auf das Archiv setzen.** Jede Operation in ein Protokoll (TSV), au
   in die Statustabelle und lief "fertig" durch; Abschlussmeldung kam trotzdem. **Regel:** vor dem Archivieren eines
   noch genutzten Ordners `grep -rn "symlink\|os.link"` im zugehoerigen Code; Abhilfe `try: symlink except OSError: copyfile`.
   Und nach jedem Lauf die Statusspalte zaehlen, nicht nur die Fertigmeldung lesen.
+  **Wiederholung 03.11.:** derselbe Lauf hatte einen zweiten Symlink im Bash-Teil (`ln -sf` fuer den Stapelordner);
+  der grep oben trifft `ln -s` nicht, SynthSeg lief auf 0 Bildern und meldete wieder "fertig". Ein Ersatzordner mit
+  unverdaechtigem Pfad lag ebenfalls auf exFAT (Elternordner war selbst ein Link aufs Archiv). Also: `grep -n "ln -s\|symlink\|os.link"`
+  ueber ALLE Skripte der Kette, Zielordner per `df -T` pruefen, und jeder Schritt zaehlt seine Eingaben und bricht bei 0 ab.
 - **Zeitstempel sind auf exFAT grob** (10 ms, teils 2 s): `rsync -t --modify-window=2`, sonst kopiert jeder Lauf alles neu.
 - **Eine zweite Platte war defekt und sah leer und benutzbar aus:** eingehaengt, 1,9 TB frei, `ls` leer. Erst der
   Schreibtest (`touch` -> Ein-/Ausgabefehler) und SMART ueber udisks (5 848 neu zugewiesene, 10 528 schwebende Sektoren,
