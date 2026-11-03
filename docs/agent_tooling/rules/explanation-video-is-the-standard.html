@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>When the user asks for an explanation of the current task, make an explanation video like this</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-03</span><span>Herkunft</span><span>user request 2026-11-03 (&quot;this is how an explanation video should look when I want an explanation of what our task is&quot;); own build</span><span>Zuletzt geändert</span><span>2026-11-03 agent_tooling: explanation video is the standard, with how-to</span><span>Verweist auf</span><span><a href="narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/explanation-video-is-the-standard.md">knowledge/agent_tooling/rules/explanation-video-is-the-standard.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>When the user asks for an explanation of the current task, make an explanation video like this</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-03</span><span>Herkunft</span><span>user request 2026-11-03 (&quot;this is how an explanation video should look when I want an explanation of what our task is&quot;); own build</span><span>Zuletzt geändert</span><span>2026-11-03 agent_tooling: references in HTML are always clickable</span><span>Verweist auf</span><span><a href="narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/explanation-video-is-the-standard.md">knowledge/agent_tooling/rules/explanation-video-is-the-standard.md</a></span></div><h2>Aussage</h2>
 <p>This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that can simply be opened, and a page with detailed text beside the video.</p>
 <h2>What to deliver</h2>
 <p>In one folder, with these plain names:
@@ -87,6 +87,16 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <h2>Bruchindikator</h2>
 <p>The user asks for shorter answers instead, or the video takes so long that it delays the task.</p>
 <h2>Ablesung</h2>
-<p>Videos with patient data stay on internal storage.</p></div></main>
+<p>Videos with patient data stay on internal storage.</p>
+<h2>Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)</h2>
+<p>Whenever the narration says "look at", the picture shows where. The approved form:</p>
+<ul>
+<li><strong>Thick red ellipse around the region</strong> (<code>#FF2D2D</code>, line width about 3.5, thin white halo so it stays visible on a bright MRI or on red data). Leave some margin around the target; never cut through it.</li>
+<li><strong>Short label in a dark box with a red border</strong>, 1 to 4 words, placed outside the ring and saying what it is ("The stroke", "Only these 6"), never a sentence.</li>
+<li><strong>Keep the object itself visible inside the ring</strong> (the yellow lesion outline stays drawn); the ring adds to the picture and covers nothing.</li>
+<li><strong>Timing follows the voice:</strong> fade in as the sentence starts, fade out when the sentence moves on. One ring at a time, at most two when comparing two places.</li>
+<li><strong>Red is reserved for this.</strong> Don't use the same red ellipse for data.</li>
+</ul>
+<p>Code: <code>attention(ax, x, y, w, h, alpha, label, at)</code> in <code>tools/general/narrated_html_deck/</code>'s <code>film_engine.py</code>; drive <code>alpha</code> with <code>T.p(beat, a, b)</code>.</p></div></main>
 <footer><div class="wrap">Erzeugt 2026-11-03 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../../search.js"></script></body></html>

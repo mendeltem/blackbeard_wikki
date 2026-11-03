@@ -123,7 +123,17 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 <h2>Bruchindikator</h2>
 <p>The user asks for shorter answers instead, or the video takes so long that it delays the task.</p>
 <h2>Ablesung</h2>
-<p>Videos with patient data stay on internal storage.</p></div></details><details class="entry" id="narrated-html-deck-one-audio-per-slide"><summary><span class="type">Regel</span><span class="t"><a href="rules/narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-03</span></summary><div class="body"><p class="small muted">Herkunft: user request and confirmation 2026-11-03 (&quot;these kind of html presentation is really good&quot;); own build, tool tools/general/narrated_html_deck · <a href="rules/narrated-html-deck-one-audio-per-slide.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md">Markdown</a></p><h2>Aussage</h2>
+<p>Videos with patient data stay on internal storage.</p>
+<h2>Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)</h2>
+<p>Whenever the narration says "look at", the picture shows where. The approved form:</p>
+<ul>
+<li><strong>Thick red ellipse around the region</strong> (<code>#FF2D2D</code>, line width about 3.5, thin white halo so it stays visible on a bright MRI or on red data). Leave some margin around the target; never cut through it.</li>
+<li><strong>Short label in a dark box with a red border</strong>, 1 to 4 words, placed outside the ring and saying what it is ("The stroke", "Only these 6"), never a sentence.</li>
+<li><strong>Keep the object itself visible inside the ring</strong> (the yellow lesion outline stays drawn); the ring adds to the picture and covers nothing.</li>
+<li><strong>Timing follows the voice:</strong> fade in as the sentence starts, fade out when the sentence moves on. One ring at a time, at most two when comparing two places.</li>
+<li><strong>Red is reserved for this.</strong> Don't use the same red ellipse for data.</li>
+</ul>
+<p>Code: <code>attention(ax, x, y, w, h, alpha, label, at)</code> in <code>tools/general/narrated_html_deck/</code>'s <code>film_engine.py</code>; drive <code>alpha</code> with <code>T.p(beat, a, b)</code>.</p></div></details><details class="entry" id="narrated-html-deck-one-audio-per-slide"><summary><span class="type">Regel</span><span class="t"><a href="rules/narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-03</span></summary><div class="body"><p class="small muted">Herkunft: user request and confirmation 2026-11-03 (&quot;these kind of html presentation is really good&quot;); own build, tool tools/general/narrated_html_deck · <a href="rules/narrated-html-deck-one-audio-per-slide.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/narrated-html-deck-one-audio-per-slide.md">Markdown</a></p><h2>Aussage</h2>
 <p>When a person needs an analysis explained, build a slide deck as a plain HTML page with a spoken voice per slide, generated from one list
 that holds each slide's content and its speech. Tool: <code>tools/general/narrated_html_deck</code> (Kokoro-82M on the CPU, no server, no external files).
 The user asked for this format to be kept after seeing it.</p>

@@ -57,3 +57,15 @@ The user asks for shorter answers instead, or the video takes so long that it de
 
 ## Ablesung
 Videos with patient data stay on internal storage.
+
+## Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)
+
+Whenever the narration says "look at", the picture shows where. The approved form:
+
+- **Thick red ellipse around the region** (`#FF2D2D`, line width about 3.5, thin white halo so it stays visible on a bright MRI or on red data). Leave some margin around the target; never cut through it.
+- **Short label in a dark box with a red border**, 1 to 4 words, placed outside the ring and saying what it is ("The stroke", "Only these 6"), never a sentence.
+- **Keep the object itself visible inside the ring** (the yellow lesion outline stays drawn); the ring adds to the picture and covers nothing.
+- **Timing follows the voice:** fade in as the sentence starts, fade out when the sentence moves on. One ring at a time, at most two when comparing two places.
+- **Red is reserved for this.** Don't use the same red ellipse for data.
+
+Code: `attention(ax, x, y, w, h, alpha, label, at)` in `tools/general/narrated_html_deck/`'s `film_engine.py`; drive `alpha` with `T.p(beat, a, b)`.
