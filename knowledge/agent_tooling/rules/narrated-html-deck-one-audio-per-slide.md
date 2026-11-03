@@ -26,6 +26,13 @@ The user asked for this format to be kept after seeing it.
 ## Next step up: animated film (user request 2026-11-03)
 The user asked for the look of a 3Blue1Brown video, with image and text combined and a detailed explanation for each result. Build chapters: motion that builds one idea per spoken beat, real data, the detailed text beside the video (what we did, what we found, what it means, caution). Engine in the same tool, `src/film_engine.py`. Own build: 10 chapters, 8.2 minutes, 11 MB; check one frame per beat, because text overlaps only show on rendered frames.
 
+## Layout rules from user feedback (2026-11-03)
+- **No idle background.** Content fills the screen: no narrow centred column, no small figure in a large empty page. Text-only slides stretch to the full height, with large type.
+- **One dark theme** for the page and the figures, so images do not sit in a bright box; make figures 16:9, with large fonts and tight margins.
+- **Picture and text side by side.** Every result gets a picture and a short explanation: what you see, what we found, what it means, caution.
+- **Explain methods with their own pictures**, using real data where possible. Example, heatmap: one test, its two lines, its number, one square; then what red, white and blue mean; then the full map.
+- **Prefer longer and fuller** over short and sparse when the user wants to understand: about 30 slides, 17 minutes worked well as a request.
+
 ## Interpretation error this format caught
 A positive interaction was first narrated as "those who start badly stay bad". The rendered plot showed the lines meeting at the poor end and a difference elsewhere,
 and the model line ran into a range with no such patients. Interpret an interaction at **predicted values inside the range covered by data**, never from its sign alone, and draw each
