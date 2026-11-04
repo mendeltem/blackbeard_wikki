@@ -42,7 +42,18 @@ Do not clear the screen between most beats. Let the last picture turn into the n
 - Text at font size 22 or more; the gate fails anything below 18. If a box shrinks its label that far, make the box bigger.
 - Keep a clear gap between labels and axes or box edges. A number alone ("seventeen") means nothing: say what it counts.
 
+## A topic without data (physics, a method)
+Own build 2026-11-04, double quantum coherence in MRS, 8 chapters, 6.6 min, gate passed after three rounds.
+- Compute the numbers instead of drawing ideas: a small simulation (here a density-matrix model of the filter) gives real curves and values, and the film says "simulated" or "schematic" on screen.
+- Write `source.md` first, with every number the film uses, also axis ticks and labels such as "pulse 1"; the gate checks speech and on-screen text against it.
+- Check every physics sentence against the source before the voice is made; rephrase what the sources do not say (e.g. "keeps more signal" was cut because no source gave it).
+
 ## Common mistakes
 - Text rectangles are only fitted inside `Box`; a long `T(...)` can run off the frame, so split it with `\n`.
 - `self.say` replaces the caption. After `clear_all` the old one is gone.
 - Keep your own list of boxes on screen. Do not test `box in self.mobjects`.
+- `group.scale(k)` also shrinks the text in it, and the gate fails labels under 18 pt. Build axes and curves at their final size (give the helper a width factor and an offset) instead of scaling.
+- A zoom with `scale` pushes tick labels off the frame: fade the labels out before the zoom and back in after it.
+- Dark text (`BG`) on a fill with low opacity is unreadable; use `INK` or `WHITE` unless the fill is nearly solid.
+- A box from an early beat that is never faded collides with later labels ("text on text"); fade every helper box in the beat where its job ends.
+- A label placed `next_to` a row of arrows can sit on the arrows; put it above or below the thing it names.

@@ -69,6 +69,7 @@ Watch it before building a new film: https://github.com/mendeltem/clara_working_
 ## Traegt
 - Own build 2026-11-04: Clara Working Station film in Manim, 8 chapters, 10:20. User: "das video ist sehr gut geworden, daran halten". This is now the reference look.
 - Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".
+- Second Manim film without any data, 2026-11-04: double quantum coherence in MRS for students, 6.6 min, numbers from an own density-matrix simulation, sources Keltner 1997 (PMID 9055226), He 1995 (PMID 7719620), Harris 2017 (PMID 28150876); lessons added to `tools/general/manim_film/MAKE_A_FILM.md` (topic without data, scaling shrinks labels).
 - Workstation film 2026-11-04 (Manim Community 0.19, https://www.manim.community/): the user called it really good and asked for it to be published; it became the reference for the CMB paper film the same day.
 - Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.
 
