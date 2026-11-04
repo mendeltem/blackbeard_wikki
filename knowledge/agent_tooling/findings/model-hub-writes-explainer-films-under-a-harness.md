@@ -20,6 +20,8 @@ verweist_auf: []
 7. Code written blind can run on private data while the model sees only a description, invented data and group results that passed a rule-based output gate. The run reproduced the released counts exactly. But fixed axis limits silently dropped about a tenth of the real points, with "ok" from every check. Compute limits from the data, and count points outside the axes on the private run.
 8. A guard that checks imports is not a sandbox: `from engine import *` also hands over `subprocess` and `Path`. Run such code in a kernel sandbox, with a namespace holding only what it needs.
 
+Cutting a 29-minute film to 10 minutes (own run, 2026-11-04): the hub model ignored a total word budget through repeated retries, but kept to limits given per chapter and beat when the harness counted them. Keeping the drawings and setting dropped beats to zero seconds needed no drawing changes. A beat-by-beat check of short against long text still left sentences to correct by hand, and measured layout checks missed flaws visible in the frames.
+
 ## Trägt
 Own runs 2026-11-03: serial test battery; three films with chapter reports; a one-chapter pilot, two runs. Software: [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (voice, CPU), [matplotlib](https://matplotlib.org), [ffmpeg](https://ffmpeg.org).
 
