@@ -2453,6 +2453,17 @@
 "src": "knowledge/local_llm_operation/findings/decider-4b-matches-knn-on-60-routing-cases.md"
 },
 {
+"t": "A DNA language model (Carbon-X) needs a current llama.cpp build; older builds tokenize DNA wrongly",
+"p": "local_llm_operation/findings/dna-llm-needs-current-llamacpp-tokenizer.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-04",
+"x": "Carbon-X (DNA-LLM): llama.cpp ab b11742 noetig, Q8 15,8 GB, CPU 2,3 t/s",
+"id": "dna-llm-needs-current-llamacpp-tokenizer",
+"src": "knowledge/local_llm_operation/findings/dna-llm-needs-current-llamacpp-tokenizer.md"
+},
+{
 "t": "20 Alltagsaufgaben: Qwen3.6-35B-A3B 20/20 mit Denken, Qwen3.5-9B schnell aber unzuverlässig",
 "p": "local_llm_operation/findings/everyday-tasks-qwen36-vs-qwen35-9b.html",
 "a": "local_llm_operation",

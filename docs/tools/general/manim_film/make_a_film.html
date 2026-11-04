@@ -52,6 +52,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li><code>AUDIT=1 Q=low &lt;tool&gt;/src/render.sh .</code>, then <code>python &lt;tool&gt;/src/film_gate.py . source.md</code>. Fix what it reports.</li>
 <li><code>python &lt;tool&gt;/src/sheets.py .</code> and look at every <code>check/sheet_*.png</code>. The gate cannot see beauty; you can.</li>
 <li>Full render without Q, then <code>&lt;tool&gt;/src/finish.sh . film</code>.</li>
+<li>Public films only: <code>python &lt;tool&gt;/src/film_see.py . --public</code> (env manim). A vision model looks at every beat. Fix everything under "Confirmed" in <code>check/see_report.md</code>, render again, and repeat, at most 3 times. Read the hints too: fix a hint only if you agree, because many are moments caught in the middle of an animation. Exit 2 means the eye missed its planted flaws: say so in your report and do not call the film seen. The tool cannot judge beauty and does not hear the voice. Never use it on a film with patient data: the frames go to the hub.</li>
 </ol>
 <h2>What makes it good</h2>
 <ul>

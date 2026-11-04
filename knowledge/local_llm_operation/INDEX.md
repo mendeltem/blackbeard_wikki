@@ -24,6 +24,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | mechanismus | [prefix-cache-single-slot](mechanisms/prefix-cache-single-slot.md) | `-np 1`, und warum Prompt-Kompaktierung den Cache zerstoert |
 | befund | [rule-lists-make-small-models-refuse](findings/rule-lists-make-small-models-refuse.md) | Eskalationsliste im System-Prompt: 0 auf 100 Prozent nach dem Entfernen |
 | befund | [ubuntu-faster-than-windows-same-flags](findings/ubuntu-faster-than-windows-same-flags.md) | Gleiche Flags, Ubuntu statt Windows 10: Decode 19,4 auf 29,5 t/s, Prefill 500 t/s |
+| befund | [dna-llm-needs-current-llamacpp-tokenizer](findings/dna-llm-needs-current-llamacpp-tokenizer.md) | Carbon-X (DNA-LLM): llama.cpp ab b11742 noetig, Q8 15,8 GB, CPU 2,3 t/s |
 | befund | [needle-recall-holds-to-125k](findings/needle-recall-holds-to-125k.md) | 20/20 Needle-Treffer bis 125k Token, Prefill flach bei 330-400 t/s |
 | befund | [hermes-agent-local-qwen-benchmark](findings/hermes-agent-local-qwen-benchmark.md) | Hermes Agent + Qwen3.6 lokal: 14 Aufgaben inhaltlich geloest, Schwaechen Format und Rueckfrage |
 | befund | [counting-needs-thinking](findings/counting-needs-thinking.md) | Laengen und Anzahlen brauchen Thinking, Kosten Faktor 20 |
