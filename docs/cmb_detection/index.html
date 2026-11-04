@@ -114,7 +114,7 @@ Randschale; SynthSeg liefert dafuer lautlos ein leeres Bild bei Rueckgabewert 0.
 Laesions-F1, Fehlalarme, anisotrope Gitter, Nachbearbeitung mit Gewebekarten.</p>
 <p><strong>Uebertragbar:</strong> die projektfreie Fassung dieser Lektionen steht in
 <a href="../lesion_detection_method/index.html#kurzstand">lesion_detection_method</a>.</p>
-<p><strong>Nachtrag 2026-10-08 zur Liquor-Regel:</strong> im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI 88 / 62 von 426, eigene T2* 56 / 15 von 545. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.</p>
+<p><strong>Nachtrag 2026-10-08 zur Liquor-Regel:</strong> im Schichtbetrachter gezeigt statt angewendet: VALDO 27 Fehlalarme / 1 Blutung entfernt, eigene SWI rund 15 % der Blutungen, eigene T2* rund 3 %. "Ohne Verlust" gilt nur fuer VALDO; auf den eigenen Kohorten bleibt der Kandidaten-Klassifikator.</p>
 <p><strong>Regel, neu 2026-10-12:</strong> Gesunde (keine Referenzlaesion) getrennt berichten: FP je Fall und Fall-Spezifitaet, kein F1; das F1-Fallmittel nur ueber Laesionsfaelle (Betrachter-Generator umgestellt, Stick-Seiten neu).</p>
 <p><strong>Befund, neu 2026-10-12:</strong> die Liquor-Regel loescht auf SWI echte Blutungen tief im Hirn (SynthSeg vergibt auf SWI Label 24 falsch); Varianten gemessen: erodierte Liquor-Maske ist auf beiden Kohorten die beste, 'nur Ventrikel' neutral, 'tiefer Liquor' hilft nicht; FreeSurfer keine Option, die Kohorten haben kein T1.</p>
 <p><strong>Rule, new 2026-10-16:</strong> count microbleeds on the model grid and deliver a label map on the scan grid: on 5 mm slices two detections merged in the binary mask (37 -&gt; 36).</p>
@@ -1451,8 +1451,8 @@ doi:10.1016/j.media.2023.102789. Tier 1a.</p>
 <p>Im Schichtbetrachter (<code>--csf-overlay</code>, Regel auf der rohen Vorhersage des
 Siegernetzes nur gezeigt, nicht angewendet) entfernt die Regel: VALDO 27
 Fehlalarme und 1 von 90 Treffern (Ensemble, 57 CV-Faelle); eigene SWI-Kohorte
-88 Fehlalarme und <strong>62 von 426 Blutungen</strong> in 18 Faellen; eigene T2*-Kohorte 56
-Fehlalarme und 15 von 545 Blutungen in 8 Faellen. Die Aussage "ohne Verlust" gilt
+rund <strong>15 % der Blutungen</strong> entfernt; eigene T2*-Kohorte
+rund 3 % der Blutungen. Die Aussage "ohne Verlust" gilt
 damit nur fuer VALDO. Fuer die eigenen Kohorten bleibt der gemeinsame
 Kandidaten-Klassifikator die Nachbearbeitung; ob SynthSeg auf SWI (duenne
 Schichten, Resampling auf 1 mm und zurueck) die Ventrikelwand und den Kortex zu

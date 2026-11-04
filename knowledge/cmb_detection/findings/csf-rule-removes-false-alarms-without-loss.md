@@ -44,8 +44,8 @@ doi:10.1016/j.media.2023.102789. Tier 1a.
 Im Schichtbetrachter (`--csf-overlay`, Regel auf der rohen Vorhersage des
 Siegernetzes nur gezeigt, nicht angewendet) entfernt die Regel: VALDO 27
 Fehlalarme und 1 von 90 Treffern (Ensemble, 57 CV-Faelle); eigene SWI-Kohorte
-88 Fehlalarme und **62 von 426 Blutungen** in 18 Faellen; eigene T2*-Kohorte 56
-Fehlalarme und 15 von 545 Blutungen in 8 Faellen. Die Aussage "ohne Verlust" gilt
+rund **15 % der Blutungen** entfernt; eigene T2*-Kohorte
+rund 3 % der Blutungen. Die Aussage "ohne Verlust" gilt
 damit nur fuer VALDO. Fuer die eigenen Kohorten bleibt der gemeinsame
 Kandidaten-Klassifikator die Nachbearbeitung; ob SynthSeg auf SWI (duenne
 Schichten, Resampling auf 1 mm und zurueck) die Ventrikelwand und den Kortex zu
