@@ -22,6 +22,8 @@ src/finish.sh my_film my_final_name                 # video/my_final_name.mp4 pl
 `AUDIT=1 Q=low src/render.sh my_film`, then `python src/film_gate.py my_film source.md`. It measures text off the frame, text on text, lines through text, rings, lit boxes, screen clears, motion, how full the screen is, voice sync and numbers not in the source. Controls: the approved film passes (0 problems), `tests/bad` fails. It cannot judge beauty; a person decides. For agents working alone: `MAKE_A_FILM.md`.
 
 ## Can an agent do this alone?
+Seeing, added 2026-11-04: `src/film_see.py` sends the frames of every beat to a vision model (public films only). Own calibration on six films: 18 of 18 planted flaws caught; no confirmed flaw on the approved film; a real overlap confirmed in an early agent film. Chart judgement was not reliable: it hinted at one truly confusing bar but also "confirmed" three correct true-scale pictures, so charts stay hints. In its first use the agent checked such a report by hand, found the picture correct, and left it. One test round only: whether seeing improves films is not shown yet.
+
 Own test 2026-11-04: Clara with the hub model made five 3-minute films on new topics with `MAKE_A_FILM.md`, no edits to any film; each took 22 to 45 minutes. The last two passed the gate in a row, with the guide unchanged between them. Still weaker than the reference: plainer pictures, and its image tool gives only a text description, so it cannot judge the look. A person decides. Status: not yet judged by the user.
 
 ## Traps

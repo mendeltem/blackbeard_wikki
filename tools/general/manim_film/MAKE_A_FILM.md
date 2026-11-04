@@ -9,6 +9,7 @@ Goal: a narrated film as good as `examples/clara_working_station`. Read `README.
 4. `AUDIT=1 Q=low <tool>/src/render.sh .`, then `python <tool>/src/film_gate.py . source.md`. Fix what it reports.
 5. `python <tool>/src/sheets.py .` and look at every `check/sheet_*.png`. The gate cannot see beauty; you can.
 6. Full render without Q, then `<tool>/src/finish.sh . film`.
+7. Public films only: `python <tool>/src/film_see.py . --public` (env manim). A vision model looks at every beat. Fix everything under "Confirmed" in `check/see_report.md`, render again, and repeat, at most 3 times. Read the hints too: fix a hint only if you agree, because many are moments caught in the middle of an animation. Exit 2 means the eye missed its planted flaws: say so in your report and do not call the film seen. The tool cannot judge beauty and does not hear the voice. Never use it on a film with patient data: the frames go to the hub.
 
 ## What makes it good
 - **One picture grows.** Start a chapter with one idea on screen and add to it. Keep objects across beats. Clear the screen only when the idea really changes.
