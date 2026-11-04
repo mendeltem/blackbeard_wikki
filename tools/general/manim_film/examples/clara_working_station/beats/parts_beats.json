@@ -1,0 +1,8 @@
+[
+ "Clara runs on the workstation. She writes code, trains models, and inspects results. She sees patient data only through the local model. Her network is loopback only, enforced by the kernel sandbox.",
+ "The prompt states the goal. It runs on any device: phone, desktop, or browser. It sees no patient data and has network access.",
+ "Cl\u00e9 is the on premise model hub at Charit\u00e9. It splits the request into questions and tasks. It sees no patient data. Research agents use Cl\u00e9 to search papers and code.",
+ "The relay on port eight seven seven zero checks every request. Fixed rules come first: data paths, subject ids, cohort names, image files and privacy markers go to the local model. Then System One picks the Cl\u00e9 model per turn and judges each answer.",
+ "System One is a small decision model on the workstation. It picks the model per turn, gives a verdict per answer, and gates Clara's commands. It sees no patient data and has no network.",
+ "The exit guard on port eight eight nine nine blocks anything with a data reference. Only checked technical questions without data reference pass out. The blackboard is where Clara and the cloud model report progress."
+]

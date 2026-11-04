@@ -1,0 +1,8 @@
+[
+ "Clara is a research workbench on one machine, Alita. Ask a question from your phone or terminal. Everything happens inside that box.",
+ "Inside Alita, Clara writes code, trains the model, and inspects results. Data never leaves. Clara has no network access, so patient data stays local.",
+ "A relay sits in front of Clara and reads every request first. Requests naming a data path, subject id, cohort name or image file go to the local model. Data-free work goes to Cle, the model hub.",
+ "The work splits in two. Cle and the research agents reach the network and never see data. Clara sees data and never reaches the network. The relay is the wall.",
+ "The path is short. A question becomes a shortlist of methods. Each method becomes a job with countable acceptance criteria. The harness runs one job at a time until the check passes.",
+ "At the end you get a trained model, a comparison table and a QC page. One question in, one checked result out, all on Alita."
+]

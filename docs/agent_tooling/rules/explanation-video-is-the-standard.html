@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>When the user asks for an explanation of the current task, make an explanation video like this</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-04</span><span>Herkunft</span><span>user request 2026-11-03 (&quot;this is how an explanation video should look when I want an explanation of what our task is&quot;); own build</span><span>Zuletzt geändert</span><span>2026-11-04 agent_tooling: lighting as default highlight, rings rare, Manim</span><span>Verweist auf</span><span><a href="narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/explanation-video-is-the-standard.md">knowledge/agent_tooling/rules/explanation-video-is-the-standard.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#rules">Regel</a></div><h1>When the user asks for an explanation of the current task, make an explanation video like this</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-04</span><span>Herkunft</span><span>user request 2026-11-03 (&quot;this is how an explanation video should look when I want an explanation of what our task is&quot;); own build</span><span>Zuletzt geändert</span><span>2026-11-04 agent_tooling: workstation film as the reference for explanation videos (what makes it good, how it is built)</span><span>Verweist auf</span><span><a href="narrated-html-deck-one-audio-per-slide.html">Explain results as a narrated HTML deck: one audio file per slide</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/explanation-video-is-the-standard.md">knowledge/agent_tooling/rules/explanation-video-is-the-standard.md</a></span></div><h2>Aussage</h2>
 <p>This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that can simply be opened, and a page with detailed text beside the video.</p>
 <h2>What to deliver</h2>
 <p>In one folder, with these plain names:
@@ -74,7 +74,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li>Build the page, store with checksums, and say what was not checked (for example, not watched to the end).</li>
 </ol>
 <p>Before narrating a result, read it at predicted values, not from its sign alone. Compare every number in the speech and on the frames with the result tables. If the results change, rerun everything: old numbers must not stay in a video.</p>
-<p>Engine: <code>tools/general/narrated_html_deck/src/film_engine.py</code>. About 10 chapters render in roughly 3 minutes on the CPU.</p>
+<p>Engine since 2026-11-04: <code>tools/general/manim_film</code> (Manim, the approved look; full example in <code>examples/clara_working_station</code>). The older matplotlib <code>tools/general/narrated_html_deck/src/film_engine.py</code> stays for frames with real MRI data. About 10 chapters render in roughly 3 minutes on the CPU.</p>
 <h2>The workstation film is the reference (user 2026-11-04: "the working station video was really good")</h2>
 <p>Watch it before building a new film: https://github.com/mendeltem/clara_working_station/blob/main/video/clara_working_station.mp4
 (10 min, 8 chapters, 1280x720, 30 fps, 23 MB; narration written by the hospital hub model, animation with Manim).</p>
@@ -94,6 +94,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 - <code>finish.sh</code>: joins each chapter's picture with its beat audio (ffmpeg concat), then all chapters with <code>-c copy</code>.</p>
 <h2>Traegt</h2>
 <ul>
+<li>Own build 2026-11-04: Clara Working Station film in Manim, 8 chapters, 10:20. User: "das video ist sehr gut geworden, daran halten". This is now the reference look.</li>
 <li>Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".</li>
 <li>Workstation film 2026-11-04 (Manim Community 0.19, https://www.manim.community/): the user called it really good and asked for it to be published; it became the reference for the CMB paper film the same day.</li>
 <li>Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.</li>
@@ -108,6 +109,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <h2>Ablesung</h2>
 <p>Videos with patient data stay on internal storage.</p>
 <h2>Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)</h2>
+<p>Since 2026-11-04: in diagrams, light up the box instead; the ring is for a rare key moment or for pointing inside an image such as an MRI. The ring must fade again and never cover a label.</p>
 <p>Whenever the narration says "look at", the picture shows where. The approved form:</p>
 <ul>
 <li><strong>Thick red ellipse around the region</strong> (<code>#FF2D2D</code>, line width about 3.5, thin white halo so it stays visible on a bright MRI or on red data). Leave some margin around the target; never cut through it.</li>

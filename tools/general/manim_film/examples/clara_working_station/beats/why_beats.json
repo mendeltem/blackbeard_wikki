@@ -1,0 +1,7 @@
+[
+ "A shared cluster seems easy. But a job asking for a whole GPU waits about nine hours. Only seven of the cards have eighty gigabytes. A small share of a card starts in seconds, but fits only small trainings.",
+ "An agent building, training, fixing and retrying needs dozens of rounds daily. A queue makes each round cost hours. On the workstation, one training fold on an A5000 takes about twenty five minutes. Rounds cost minutes.",
+ "Second, the data. Clara runs on the workstation, so patient images never leave it. A cloud model cannot see them. Clara reads every scan and mask, and runs the model on the whole cohort.",
+ "Local is a route, not a permission. The data agreement decides if an AI system may process a dataset. A forbidding clause binds the local model too. If allowed, local keeps data inside.",
+ "So the workstation is not a smaller cluster. It is the only place where the loop is fast and data may stay. That is why we do not just use the cluster."
+]

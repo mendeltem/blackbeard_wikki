@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**Rule 2026-11-04 (user):** Animated explanations keep the look of the approved Clara Working Station film: Manim, boxes light up with the voice, objects stay across beats, red rings rare. Tool: `tools/general/manim_film`. Sources: Manim Community, https://www.manim.community/ ; own build 2026-11-04.
+
 **Rule 2026-11-04 (user):** The workstation film is the reference for explanation videos: one diagram that grows, the box the voice is on lights up, dots travel along the arrows, one colour per role, Manim with voice-timed beats and contact sheets before the full render ([rule](rules/explanation-video-is-the-standard.md); film in the clara_working_station repo).
 
 **New 2026-11-03 (own runs):** A hospital hub model wrote a 29-minute explainer film from a README under a harness: thinking off, serial requests, rule-based layout check, a person reviews. Empty sources from a harness bug produced reversed facts and zero complaints, so assert input sizes. Blind code on private data dropped points silently, and an import check is no sandbox. [Finding](findings/model-hub-writes-explainer-films-under-a-harness.md).

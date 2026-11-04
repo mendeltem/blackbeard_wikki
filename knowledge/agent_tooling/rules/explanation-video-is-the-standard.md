@@ -43,7 +43,7 @@ In one folder, with these plain names:
 
 Before narrating a result, read it at predicted values, not from its sign alone. Compare every number in the speech and on the frames with the result tables. If the results change, rerun everything: old numbers must not stay in a video.
 
-Engine: `tools/general/narrated_html_deck/src/film_engine.py`. About 10 chapters render in roughly 3 minutes on the CPU.
+Engine since 2026-11-04: `tools/general/manim_film` (Manim, the approved look; full example in `examples/clara_working_station`). The older matplotlib `tools/general/narrated_html_deck/src/film_engine.py` stays for frames with real MRI data. About 10 chapters render in roughly 3 minutes on the CPU.
 
 ## The workstation film is the reference (user 2026-11-04: "the working station video was really good")
 
@@ -67,6 +67,7 @@ Watch it before building a new film: https://github.com/mendeltem/clara_working_
 - `finish.sh`: joins each chapter's picture with its beat audio (ffmpeg concat), then all chapters with `-c copy`.
 
 ## Traegt
+- Own build 2026-11-04: Clara Working Station film in Manim, 8 chapters, 10:20. User: "das video ist sehr gut geworden, daran halten". This is now the reference look.
 - Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".
 - Workstation film 2026-11-04 (Manim Community 0.19, https://www.manim.community/): the user called it really good and asked for it to be published; it became the reference for the CMB paper film the same day.
 - Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.
@@ -82,6 +83,8 @@ The user asks for shorter answers instead, or the video takes so long that it de
 Videos with patient data stay on internal storage.
 
 ## Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)
+
+Since 2026-11-04: in diagrams, light up the box instead; the ring is for a rare key moment or for pointing inside an image such as an MRI. The ring must fade again and never cover a label.
 
 Whenever the narration says "look at", the picture shows where. The approved form:
 

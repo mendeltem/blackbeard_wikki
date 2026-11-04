@@ -1,0 +1,10 @@
+[
+ "A person asks for a video on a topic. That request starts the recipe.",
+ "Clé reads a README or group totals. Only public text or group totals, never patient data, because Clé may not see patient data.",
+ "Clé splits the topic into chapters, one idea each.",
+ "Clé writes spoken beats and a Python drawing function per chapter. Each picture moment ties to a beat, with a red ring and short label.",
+ "A harness runs the code and renders one frame per beat. Crashes send errors back to Clé.",
+ "Clé lists overlaps and cut-off text. A fact check compares narration with source. Complaints go back, at most four rounds.",
+ "Kokoro makes the voice on the workstation CPU. In Clé's films, matplotlib draws frames, twenty four per second. ffmpeg joins picture and sound.",
+ "A person watches and decides. The model does not decide it is right. Other uses are only proposals: explaining a segmentation result, a tutorial with invented data, a status report from logs, or onboarding from a README. Patient images and tables must not go to Clé, so those chapters need the local model."
+]

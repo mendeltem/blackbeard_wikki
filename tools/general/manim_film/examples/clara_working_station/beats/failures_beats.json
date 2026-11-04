@@ -1,0 +1,8 @@
+[
+ "Three failures looked like success. Each was silent and disguised.",
+ "Failure one. A three character file blocked the agent for two days. The file said q5. The Q5 model has a context of thirty two thousand seven hundred sixty eight tokens. The agent framework needs sixty four thousand, so it refused to start.",
+ "The symptom looked like slow work. Rounds of twenty two, thirty and nine minutes made sixty three, zero and fifty seven bytes of log. Model, data and task were fine. Only the file was wrong.",
+ "Failure two. The watchdog could never bark. A misplaced bar in its grammar made this build reject every call with an error. Its fallback on any error was, ok, continue. So it would have approved everything forever.",
+ "Failure three. FreeSurfer was invisible to the agent, while the self test said green. The agent starts through a setgid tool, and the linker drops LD variables there. Tools died on a missing library although they were on the path. The self test passed without it.",
+ "The pattern. A component fails looking like success. A check that cannot judge must say so, and never fall back to harmless. Undecided is its own outcome, separate from ok."
+]

@@ -1,3 +1,4 @@
+2026-11-04 | claude | tools/general/manim_film, knowledge/agent_tooling | approved film look as standard, engine and full example, self-test passed
 2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md, SUMMARY.md | workstation film as reference: what makes it good, how it is built (user: really good)
 2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | lighting as default highlight, rings rare, Manim
 2026-11-04 | claude | knowledge/lesion_detection_method/SUMMARY.md | range check before composites, zero cells, tipping point lesson

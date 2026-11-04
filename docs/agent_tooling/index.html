@@ -50,7 +50,8 @@ Vorbedingungspruefungen.</p>
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.</strong> Es wird
 geglaubt, weil es wie eine Messung aussieht.</p>
 <p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Rule 2026-11-04 (user):</strong> The workstation film is the reference for explanation videos: one diagram that grows, the box the voice is on lights up, dots travel along the arrows, one colour per role, Manim with voice-timed beats and contact sheets before the full render (<a href="rules/explanation-video-is-the-standard.html">rule</a>; film in the clara_working_station repo).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Rule 2026-11-04 (user):</strong> Animated explanations keep the look of the approved Clara Working Station film: Manim, boxes light up with the voice, objects stay across beats, red rings rare. Tool: <code>tools/general/manim_film</code>. Sources: Manim Community, https://www.manim.community/ ; own build 2026-11-04.</p>
+<p><strong>Rule 2026-11-04 (user):</strong> The workstation film is the reference for explanation videos: one diagram that grows, the box the voice is on lights up, dots travel along the arrows, one colour per role, Manim with voice-timed beats and contact sheets before the full render (<a href="rules/explanation-video-is-the-standard.html">rule</a>; film in the clara_working_station repo).</p>
 <p><strong>New 2026-11-03 (own runs):</strong> A hospital hub model wrote a 29-minute explainer film from a README under a harness: thinking off, serial requests, rule-based layout check, a person reviews. Empty sources from a harness bug produced reversed facts and zero complaints, so assert input sizes. Blind code on private data dropped points silently, and an import check is no sandbox. <a href="findings/model-hub-writes-explainer-films-under-a-harness.html">Finding</a>.</p>
 <p><strong>Rule 2026-11-03 (user):</strong> An explanation of the current task should look like the animated explanation video: real data, voice, red rings, detail text beside it, plain <code>explanation.mp4</code> plus tutorial files. [[explanation-video-is-the-standard]]</p>
 <p><strong>New 2026-11-03 (user request):</strong> Explain analyses as a narrated HTML deck, one audio file per slide, built from one list of slide content and speech; tool <code>tools/general/narrated_html_deck</code>. Interpret interactions at predicted values inside the data range, not from the sign. [[narrated-html-deck-one-audio-per-slide]]</p>
@@ -112,7 +113,7 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 <li>Build the page, store with checksums, and say what was not checked (for example, not watched to the end).</li>
 </ol>
 <p>Before narrating a result, read it at predicted values, not from its sign alone. Compare every number in the speech and on the frames with the result tables. If the results change, rerun everything: old numbers must not stay in a video.</p>
-<p>Engine: <code>tools/general/narrated_html_deck/src/film_engine.py</code>. About 10 chapters render in roughly 3 minutes on the CPU.</p>
+<p>Engine since 2026-11-04: <code>tools/general/manim_film</code> (Manim, the approved look; full example in <code>examples/clara_working_station</code>). The older matplotlib <code>tools/general/narrated_html_deck/src/film_engine.py</code> stays for frames with real MRI data. About 10 chapters render in roughly 3 minutes on the CPU.</p>
 <h2>The workstation film is the reference (user 2026-11-04: "the working station video was really good")</h2>
 <p>Watch it before building a new film: https://github.com/mendeltem/clara_working_station/blob/main/video/clara_working_station.mp4
 (10 min, 8 chapters, 1280x720, 30 fps, 23 MB; narration written by the hospital hub model, animation with Manim).</p>
@@ -132,6 +133,7 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 - <code>finish.sh</code>: joins each chapter's picture with its beat audio (ffmpeg concat), then all chapters with <code>-c copy</code>.</p>
 <h2>Traegt</h2>
 <ul>
+<li>Own build 2026-11-04: Clara Working Station film in Manim, 8 chapters, 10:20. User: "das video ist sehr gut geworden, daran halten". This is now the reference look.</li>
 <li>Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".</li>
 <li>Workstation film 2026-11-04 (Manim Community 0.19, https://www.manim.community/): the user called it really good and asked for it to be published; it became the reference for the CMB paper film the same day.</li>
 <li>Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.</li>
@@ -146,6 +148,7 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 <h2>Ablesung</h2>
 <p>Videos with patient data stay on internal storage.</p>
 <h2>Focusing the viewer: the red ring with a label (user: "i like this", 2026-11-03)</h2>
+<p>Since 2026-11-04: in diagrams, light up the box instead; the ring is for a rare key moment or for pointing inside an image such as an MRI. The ring must fade again and never cover a label.</p>
 <p>Whenever the narration says "look at", the picture shows where. The approved form:</p>
 <ul>
 <li><strong>Thick red ellipse around the region</strong> (<code>#FF2D2D</code>, line width about 3.5, thin white halo so it stays visible on a bright MRI or on red data). Leave some margin around the target; never cut through it.</li>

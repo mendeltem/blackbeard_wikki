@@ -1,0 +1,8 @@
+[
+ "A researcher wants a WMH segmentation model. They type one sentence on a phone: can you research it?",
+ "An agent sends the question to Clé on the Charité hub. Clé splits it, and agents search papers and code for every method.",
+ "Findings merge into a shortlist: two D U-Net, three D U-Net, nnU-Net, BIANCA. Each becomes a job with an acceptance list.",
+ "The harness takes one method at a time from the queue. It moves on only when the current one is done.",
+ "Clara writes code in the sandbox, the GPU trains on open data, and the acceptance check counts facts. No model is asked. If it fails, it returns to Clara.",
+ "Every model is scored on the test set with Dice and lesion F one, next to the public leaderboard. The best model, a comparison table and a QC page come out."
+]
