@@ -26,6 +26,7 @@ class Box(VGroup):
         super().__init__(**k); self.col = color
         self.rect = RoundedRectangle(corner_radius=.14, width=w, height=h, stroke_color=color, stroke_width=3, fill_color=color, fill_opacity=.08)
         self.glow = self.rect.copy().set_fill(opacity=0).set_stroke(color, width=16, opacity=0)
+        self.glow.is_glow = True
         self.text = T(label, size).move_to(self.rect)
         if self.text.width > w - .3: self.text.scale_to_fit_width(w - .3)
         if self.text.height > h - .16: self.text.scale_to_fit_height(h - .16)
@@ -67,7 +68,8 @@ class Film(Scene):
     key = ""; number = 0; title = ""
 
     def play(self, *a, **k):
-        t = self.now(); super().play(*a, **k)
+        t = self.now(); flat = lambda x: [y for z in getattr(x, "animations", [x]) for y in (flat(z) if hasattr(z, "animations") else [z])]
+        self._travel = getattr(self, "_travel", 0) + sum(type(y) in (MoveAlongPath, ShowPassingFlash, ReplacementTransform, Transform, FadeTransform) for x in a if isinstance(x, Animation) for y in flat(x)); super().play(*a, **k)
         if not getattr(self, "_waiting", False):
             self._plays = getattr(self, "_plays", []) + [(t, self.now())]
 
@@ -76,11 +78,11 @@ class Film(Scene):
 
     def tear_down(self):
         if AUDIT:
-            self._snapshot("end"); (HERE / "check").mkdir(exist_ok=True); (HERE / f"check/{self.key}.audit.json").write_text(json.dumps({"key": self.key, "seconds": self.starts[-1] + self.lens[-1], "beats": len(self.lens), "plays": getattr(self, "_plays", []), "starts": self.starts, "lit": Box.lit, "rings": getattr(self, "_rings", 0), "clears": getattr(self, "_clears", 0), "late": getattr(self, "_late", 0.0), "problems": getattr(self, "_problems", []), "fill": getattr(self, "_fill", [])}))
+            self._snapshot("end"); (HERE / "check").mkdir(exist_ok=True); (HERE / f"check/{self.key}.audit.json").write_text(json.dumps({"key": self.key, "seconds": self.starts[-1] + self.lens[-1], "beats": len(self.lens), "plays": getattr(self, "_plays", []), "starts": self.starts, "lit": Box.lit, "rings": getattr(self, "_rings", 0), "travel": getattr(self, "_travel", 0), "clears": getattr(self, "_clears", 0), "late": getattr(self, "_late", 0.0), "problems": getattr(self, "_problems", []), "fill": getattr(self, "_fill", []), "off": getattr(self, "_off", [])}))
 
     def _snapshot(self, where):
         """Audit: looks at what is on screen. Text off the frame, text on text, lines through text, how full the screen is."""
-        texts, lines, seen = [], [], set(); stack = list(self.mobjects); out = getattr(self, "_problems", []); self._problems = out
+        texts, lines, rects, seen = [], [], [], set(); stack = list(self.mobjects); out = getattr(self, "_problems", []); self._problems = out
         while stack:
             m = stack.pop()
             if id(m) in seen: continue
@@ -90,11 +92,13 @@ class Film(Scene):
                     if len(m.submobjects) and max(x.get_fill_opacity() for x in m.submobjects) > .05: texts.append(m)
                 continue
             if isinstance(m, (Line, CurvedArrow)) and m.get_stroke_opacity() > .05: lines.append(m)
+            if isinstance(m, RoundedRectangle) and not getattr(m, "is_glow", False) and m.get_stroke_opacity() > .05: rects.append(m)
             stack.extend(m.submobjects)
         box = [(t, t.get_left()[0], t.get_right()[0], t.get_bottom()[1], t.get_top()[1]) for t in texts]; here = f"{self.key} beat {self.current} {where}"
         for t, x0, x1, y0, y1 in box:
             if x0 < -7.05 or x1 > 7.05 or y0 < -3.97 or y1 > 3.97: out.append(f"off frame: {here}: {t.text[:30]!r}")
-        for i in range(len(box)):
+        planned = getattr(self, "overlap_ok", False)   # a pile on purpose: set self.overlap_ok = True, then False again
+        for i in range(len(box) if not planned else 0):
             for j in range(i + 1, len(box)):
                 a, b = box[i], box[j]; w = min(a[2], b[2]) - max(a[1], b[1]); h = min(a[4], b[4]) - max(a[3], b[3])
                 if w > .04 and h > .04: out.append(f"text on text: {here}: {a[0].text[:24]!r} / {b[0].text[:24]!r}")
@@ -102,9 +106,19 @@ class Film(Scene):
             pts = [l.point_from_proportion(k / 40) for k in range(41)] if l.has_points() else []
             for t, x0, x1, y0, y1 in box:
                 if any(x0 + .03 < p[0] < x1 - .03 and y0 + .03 < p[1] < y1 - .03 for p in pts): out.append(f"line through text: {here}: {t.text[:30]!r}")
+        side = lambda r: (r.get_left()[0], r.get_right()[0], r.get_bottom()[1], r.get_top()[1]); R = [side(r) for r in rects]
+        for i in range(len(R) if not planned else 0):
+            for j in range(i + 1, len(R)):
+                a, b = R[i], R[j]; w = min(a[1], b[1]) - max(a[0], b[0]); h = min(a[3], b[3]) - max(a[2], b[2]); inside = (a[0] >= b[0] and a[1] <= b[1] and a[2] >= b[2] and a[3] <= b[3]) or (b[0] >= a[0] and b[1] <= a[1] and b[2] >= a[2] and b[3] <= a[3])
+                if w > .04 and h > .04 and not inside: out.append(f"box on box: {here}")
+        for t, x0, x1, y0, y1 in (box if not planned else []):
+            for a in R:
+                w = min(x1, a[1]) - max(x0, a[0]); h = min(y1, a[3]) - max(y0, a[2]); inside = x0 >= a[0] - .02 and x1 <= a[1] + .02 and y0 >= a[2] - .02 and y1 <= a[3] + .02
+                if w > .04 and h > .04 and not inside: out.append(f"text across a box edge: {here}: {t.text[:30]!r}")
         heads = getattr(self, "head", None); rest = [m for m in self.mobjects if m is not heads]
         if rest and where != "end":
             g = Group(*rest); self._fill = getattr(self, "_fill", []) + [round(min(g.width, 14.2) * min(g.height, 8) / (14.2 * 8), 3)]
+            if where == "end of beat": self._off = getattr(self, "_off", []) + [round(max(abs(g.get_center()[0]) / 7.1, abs(g.get_center()[1] + .3) / 3.7), 3)]
 
     def setup(self):
         beats = json.loads((HERE / f"beats/{self.key}_beats.json").read_text()); d = [STATE[f"{self.key}_{i}.wav"]["seconds"] for i in range(len(beats))]
@@ -128,6 +142,7 @@ class Film(Scene):
     def to(self, share):
         """Wait until this share of the current beat has been spoken."""
         self.until(self.starts[self.current] + share * self.lens[self.current])
+        if AUDIT: self._snapshot(f"at {share}")
 
     def finish(self):
         self.until(self.starts[-1] + self.lens[-1])

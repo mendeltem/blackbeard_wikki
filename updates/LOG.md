@@ -1,3 +1,4 @@
+2026-11-04 | claude | tools/general/manim_film, knowledge/lesion_detection_method | gate sharper after Clara's rounds 1-2, finish.sh fix found by Clara; own-cohort counts replaced by relative values
 2026-11-04 | claude | tools/general/manim_film | quality gate with positive and negative control, guide for agents working alone
 2026-11-04 | claude | tools/general/manim_film, knowledge/agent_tooling | approved film look as standard, engine and full example, self-test passed
 2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md, SUMMARY.md | workstation film as reference: what makes it good, how it is built (user: really good)

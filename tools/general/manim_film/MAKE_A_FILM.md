@@ -18,6 +18,24 @@ Goal: a narrated film as good as `examples/clara_working_station`. Read `README.
 - **Real numbers only.** A picture without real values says "schematic".
 - **Fill the frame.** x from -6.8 to 6.8, y from -3.6 to 3.0. No small cluster in a corner, no text on text, no line through text.
 
+## Make room before you add
+Plan each chapter on paper first: where does every box stand at the end of each beat? Boxes must not touch or overlap unless one lies wholly inside the other, and a label must not cross a box edge. Nothing above y = 3.0, where the title sits. If a new thing has no room, move or remove the old things first with an animation; never drop it on top. The gate checks this after every `self.to` and at every beat end.
+
+## Charts tell the truth
+A signed value grows from a zero line: positive up, negative down, on one scale. Every bar has its name and value in the same place relative to the bar, all of them. Use a chart when the source gives numbers, and put the numbers on it.
+
+## Endings and belonging
+End a chapter on the picture that sums it up, not on a row of leftover boxes. Things that belong together stand together: an optional file belongs inside the case folder it is part of, not under the list of cases.
+
+## Tell the story with motion
+Do not clear the screen between most beats. Let the last picture turn into the next one: `Transform` an object into its next form, move old boxes aside, send a dot along an arrow to show that something travels. A film of boxes appearing is a slide show. The gate counts travelling and clearing.
+
+## Say only what the picture proves
+- A new number replaces the old one at the same moment. Never leave one cohort's number beside another cohort's label, not even for a beat.
+- A drawing whose shape is not real data says "schematic" on screen, also bars that only show an idea.
+- English decimals with a point: 0.136, even if the source writes 0,136.
+- Do not say "the numbers are on the screen". Say the number that matters.
+
 ## Common mistakes
 - Text rectangles are only fitted inside `Box`; a long `T(...)` can run off the frame, so split it with `\n`.
 - `self.say` replaces the caption. After `clear_all` the old one is gone.

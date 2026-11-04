@@ -80,7 +80,7 @@ selbst Liquorsignal, Ortsregeln also nur ueber Lage.</p>
 <p><strong>Lesen bei:</strong> neue Laesionslinie, uebernommene Pipeline, Parameterdateien ohne Herkunft,
 PVS, Lakunen, Kandidaten-Klassifikator, Fehlalarme, Referenzmasken, Startwert-Rauschen.
 - 08.10.: Regel: Anteil der Referenz AUSSERHALB jeder Zusatzmaske vor der ersten Zahl messen (VALDO-Slab-Maske kostete 75 % der SABRE-Referenz).</p>
-<p><strong>Regel, neu 2026-10-08:</strong> Eine anatomische Nachbearbeitungsregel wird erst im Betrachter sichtbar gemacht (Karte, entfernte Fehlalarme, entfernte Treffer als getrennte Ebenen mit Zaehlern), dann geglaubt. Die Liquor-Regel entfernt auf VALDO 27 Fehlalarme und 1 von 90 Treffern, auf der eigenen SWI-Kohorte 88 Fehlalarme und 62 von 426 Blutungen: die Summenzahl haette das verdeckt.
+<p><strong>Regel, neu 2026-10-08:</strong> Eine anatomische Nachbearbeitungsregel wird erst im Betrachter sichtbar gemacht (Karte, entfernte Fehlalarme, entfernte Treffer als getrennte Ebenen mit Zaehlern), dann geglaubt. Die Liquor-Regel entfernt auf VALDO 27 Fehlalarme und 1 von 90 Treffern, auf einer eigenen SWI-Kohorte dagegen rund 15 % der Blutungen: die Summenzahl haette das verdeckt.
 - 11.10.: Neue Regel aus der PVS-Linie: Instanz-Metriken mit Beruehrungsregel brauchen Dice/Volumen/Mehrfachtreffer als Nebenbedingung, sonst belohnen sie Blob-Verschmelzung (PVS: F1 0,591 -&gt; 0,658 bei Dice 0,365 -&gt; 0,241).</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 14</title></rect><rect x="320.0" y="46.4" width="319.0" height="3.6" rx="1"><title>2026-11: 1</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 14)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(8)</span></h2><details class="entry" id="touch-based-instance-metrics-need-a-volume-side-condition"><summary><span class="type">Regel</span><span class="t"><a href="rules/touch-based-instance-metrics-need-a-volume-side-condition.html">Eine Instanz-Metrik mit Beruehrungsregel belohnt Verschmelzung -- Ranglisten brauchen Dice, Volumenverhaeltnis und Mehrfachtreffer als Nebenbedingung</a></span><span class="badge ok">getragen</span><span class="muted small">2026-10-11</span><span class="i">Beruehrungsmetrik belohnt Verschmelzung (ein Blob = 86 Treffer); Ranglisten mit Dice, Vol-Verhaeltnis &lt; 2, Mehrfachtreffer &lt; 20 %</span></summary><div class="body"><p class="small muted">Herkunft: pvs_detection, Versuche G4/G4b/G4d (VALDO Task 1, 12 Handfaelle), 2026-10-11 17:40; Metrikregel identisch mit der offiziellen EPVS-2024-Auswertung · <a href="rules/touch-based-instance-metrics-need-a-volume-side-condition.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/lesion_detection_method/rules/touch-based-instance-metrics-need-a-volume-side-condition.md">Markdown</a></p><h2>Regel</h2>
@@ -155,17 +155,17 @@ angewendet, nur gezeigt):</p>
 </tr>
 <tr>
 <td>eigene SWI-Kohorte</td>
-<td>61</td>
-<td>88</td>
-<td>62 (in 18 Faellen)</td>
-<td>426</td>
+<td>nur relativ</td>
+<td>ja</td>
+<td>rund 15 % der Treffer</td>
+<td>nur relativ</td>
 </tr>
 <tr>
 <td>eigene T2*-Kohorte</td>
-<td>75</td>
-<td>56</td>
-<td>15 (in 8 Faellen)</td>
-<td>545</td>
+<td>nur relativ</td>
+<td>ja</td>
+<td>rund 3 % der Treffer</td>
+<td>nur relativ</td>
 </tr>
 </tbody>
 </table>

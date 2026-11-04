@@ -26,8 +26,8 @@ angewendet, nur gezeigt):
 | Kohorte | Faelle | Regel entfernt Fehlalarme | Regel entfernt echte Blutungen | von Treffern gesamt |
 |---|---|---|---|---|
 | VALDO T2* (oeffentlich) | 57 | 27 | 1 | 90 |
-| eigene SWI-Kohorte | 61 | 88 | 62 (in 18 Faellen) | 426 |
-| eigene T2*-Kohorte | 75 | 56 | 15 (in 8 Faellen) | 545 |
+| eigene SWI-Kohorte | nur relativ | ja | rund 15 % der Treffer | nur relativ |
+| eigene T2*-Kohorte | nur relativ | ja | rund 3 % der Treffer | nur relativ |
 
 Auf SWI loescht die Regel jede siebte echte Blutung, auf dem eigenen T2* jede 36. Die Summenzahl der Kette hatte
 das als "SWI: Klassifikator statt Regel, +0,044" verbucht; erst die Anzeige macht
