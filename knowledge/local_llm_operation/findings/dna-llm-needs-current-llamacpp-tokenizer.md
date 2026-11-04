@@ -20,6 +20,14 @@ verweist_auf: [moe-expert-offloading]
 3. Smoke test: reverse complement of ATGCGTAC answered correctly (GTACGCAT); the model wraps sequences in `<dna>` tags.
    Use `chat_template_kwargs: {"enable_thinking": false}` to match the card's evaluation setup.
 
+4. Own test on public data (2026-11-04, Q8, greedy, thinking off, CPU): 60 ClinVar SNVs created 2026-09-01..11-04
+   (after training data; 30 benign, 30 pathogenic, random, seed 1), 1,001 bases of hg38 around each (UCSC API, reference
+   base checked): benign recall 26/30, pathogenic recall 22/30, balanced accuracy 0.80 (bootstrap 95 % CI 0.70-0.90).
+   By type: intronic/UTR benign 16/16, synonymous 5/5, nonsense 13/15, missense pathogenic 6/7, missense benign 3/7,
+   canonical splice pathogenic 1/5. DNA operations: reverse complement 9/10, translation 8/10, GC count 8/10 only with
+   900 output tokens (step-by-step counting; at 120 tokens 8 of 10 answers were cut off), misses off by one.
+   The authors' benchmark set (HuggingFaceBio/DNAIntelligenceIndex) is not openly downloadable (HTTP 401).
+
 ## Trägt
 One install, one smoke question. No benchmark of biological accuracy.
 
