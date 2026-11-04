@@ -1,5 +1,7 @@
 # lesion_detection_method: Kurzstand
 
+**New 2026-11-04:** Lesion network mapping in a small stroke cohort: connection to brainstem and cerebellar seeds tracks lesion size and location, so a behaviour x connection interaction can rest on the few lesions near the seeds. In an own exploratory test with a dated plan, the interaction nearly vanished when those lesions were left out. Always plan that check in advance. Plan practice: Baldwin 2022, J Exp Psychopathol-type secondary data preregistration (unverified journal; PMID 35025022); seeds: Boyne 2018, Hum Brain Mapp, doi:10.1002/hbm.24326 (coordinates unverified by re-reading).
+
 **New 2026-11-03:** The Lead-DBS release of the GSP1000 connectome has x mirrored in its header against the NIfTI release of the same time courses; the NIfTI orientation is supported by anatomy and language lateralisation. Whether Lead Mapper is affected is unverified. [[gsp1000-leaddbs-header-left-right-mirror]]
 
 Stand 2026-10-07. Prefill fuer jede neue Linie mit kleinen Laesionen (PVS, Lakunen,

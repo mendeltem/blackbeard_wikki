@@ -1,3 +1,4 @@
+2026-11-04 | claude | knowledge/lesion_detection_method/SUMMARY.md | LNM interaction check: plan a leave-out of near-seed lesions
 2026-11-04 | claude | knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md | short cut of a hub-written film: budgets per small unit, zero-second beats
 2026-11-03 | claude | knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md | what a hub model can do on explainer films, and which checks blind code on private data needs
 2026-11-03 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | user-approved focus ring: how to direct the viewer
