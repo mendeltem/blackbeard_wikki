@@ -1,3 +1,4 @@
+2026-11-04 | claude | tools/general/manim_film/MAKE_A_FILM.md | YouTube package as standard for tutorial films: 1080p with title card, thumbnail, chapters, quiz, README, with sources
 2026-11-04 | claude | tools/general/manim_film | agent film test: two gate passes in a row, limits recorded
 2026-11-04 | claude | tools/general/manim_film/MAKE_A_FILM.md, knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | film on double quantum coherence in MRS (no data, own simulation): rules for topics without data and five layout traps the gate found
 2026-11-04 | claude | tools/general/manim_film | gate: old captions and too-small text; found by looking at the agent's round 3
