@@ -36,6 +36,12 @@ Do not clear the screen between most beats. Let the last picture turn into the n
 - English decimals with a point: 0.136, even if the source writes 0,136.
 - Do not say "the numbers are on the screen". Say the number that matters.
 
+## Words on screen stay true to this moment
+- A caption belongs to its beat. When the voice moves on, replace it or `FadeOut` it; `self.caption = None` after a fade. The gate fails a caption that stays two beats.
+- A list that lights up must light the item the voice is naming now, not the one before.
+- Text at font size 22 or more; the gate fails anything below 18. If a box shrinks its label that far, make the box bigger.
+- Keep a clear gap between labels and axes or box edges. A number alone ("seventeen") means nothing: say what it counts.
+
 ## Common mistakes
 - Text rectangles are only fitted inside `Box`; a long `T(...)` can run off the frame, so split it with `\n`.
 - `self.say` replaces the caption. After `clear_all` the old one is gone.

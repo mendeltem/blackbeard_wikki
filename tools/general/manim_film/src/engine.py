@@ -95,6 +95,10 @@ class Film(Scene):
             if isinstance(m, RoundedRectangle) and not getattr(m, "is_glow", False) and m.get_stroke_opacity() > .05: rects.append(m)
             stack.extend(m.submobjects)
         box = [(t, t.get_left()[0], t.get_right()[0], t.get_bottom()[1], t.get_top()[1]) for t in texts]; here = f"{self.key} beat {self.current} {where}"
+        for t, *_ in box:
+            size = getattr(t, "font_size", 99)
+            if size < 18: out.append(f"text too small: {here}: {t.text[:30]!r} ({size:.0f})")
+        if self.caption is not None and self.current - getattr(self, "_caption_beat", 0) >= 2 and self.caption in self.mobjects: out.append(f"old caption still up: {here}: {self.caption[0].text[:30]!r}")
         for t, x0, x1, y0, y1 in box:
             if x0 < -7.05 or x1 > 7.05 or y0 < -3.97 or y1 > 3.97: out.append(f"off frame: {here}: {t.text[:30]!r}")
         planned = getattr(self, "overlap_ok", False)   # a pile on purpose: set self.overlap_ok = True, then False again
@@ -162,6 +166,7 @@ class Film(Scene):
     def say(self, text, color=INK, y=-3.3, size=28):
         """One short line at the bottom, replacing the one before."""
         new = T(text, size, color).move_to([0, y, 0]); old = self.caption; self.caption = new
+        self._caption_beat = self.current
         self.play(*([FadeOut(old, shift=UP * .15)] if old else []), FadeIn(new, shift=UP * .15), run_time=.5)
 
     def send(self, a, b, color=YELLOW_, label=None, run_time=1.0, keep=False, r=.09):
