@@ -1,5 +1,7 @@
 # lesion_detection_method: Kurzstand
 
+**Lesson (own run, 2026-11-04):** before building a composite score from clinical tables, print each input's minimum and maximum against its allowed range: a missing-value code of 9 passed into a score on a 1-5 item without any error. A count masked as "<5" can be 0, so check before writing that two sources disagree. A tipping-point analysis shows how far a conclusion depends on dropout: a gain estimate held at every shift tested, while a moderation signal with few high scorers left in the sample nearly vanished under imputation (method: Cro 2020, Stat Med, DOI 10.1002/sim.8569, PMID unverified).
+
 **New 2026-11-04:** Lesion network mapping in a small stroke cohort: connection to brainstem and cerebellar seeds tracks lesion size and location, so a behaviour x connection interaction can rest on the few lesions near the seeds. In an own exploratory test with a dated plan, the interaction nearly vanished when those lesions were left out. Always plan that check in advance. Plan practice: Baldwin 2022, J Exp Psychopathol-type secondary data preregistration (unverified journal; PMID 35025022); seeds: Boyne 2018, Hum Brain Mapp, doi:10.1002/hbm.24326 (coordinates unverified by re-reading).
 
 **New 2026-11-03:** The Lead-DBS release of the GSP1000 connectome has x mirrored in its header against the NIfTI release of the same time courses; the NIfTI orientation is supported by anatomy and language lateralisation. Whether Lead Mapper is affected is unverified. [[gsp1000-leaddbs-header-left-right-mirror]]
