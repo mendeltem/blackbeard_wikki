@@ -1,3 +1,4 @@
+2026-11-04 | claude | tools/general/manim_film | quality gate with positive and negative control, guide for agents working alone
 2026-11-04 | claude | tools/general/manim_film, knowledge/agent_tooling | approved film look as standard, engine and full example, self-test passed
 2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md, SUMMARY.md | workstation film as reference: what makes it good, how it is built (user: really good)
 2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | lighting as default highlight, rings rare, Manim

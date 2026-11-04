@@ -18,6 +18,9 @@ src/finish.sh my_film my_final_name                 # video/my_final_name.mp4 pl
 - `self.say(text)` is one line at the bottom, `self.send(a, b)` sends a dot along a path, `link(a, b)` is an arrow, `self.clear_all()` empties the screen but keeps the title.
 - `self.ring(m)`: a red ring that goes away again. Use it rarely. The Clara film uses two in ten minutes.
 
+## Quality gate
+`AUDIT=1 Q=low src/render.sh my_film`, then `python src/film_gate.py my_film source.md`. It measures text off the frame, text on text, lines through text, rings, lit boxes, screen clears, motion, how full the screen is, voice sync and numbers not in the source. Controls: the approved film passes (0 problems), `tests/bad` fails. It cannot judge beauty; a person decides. For agents working alone: `MAKE_A_FILM.md`.
+
 ## Traps
 - Manim sets `dim` on every object, so a method called `dim` fails with "'int' object is not callable".
 - Animating parts of a group splits it in `scene.mobjects`, so keep your own list of what is on screen.

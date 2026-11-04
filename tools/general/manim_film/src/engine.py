@@ -9,6 +9,7 @@ BG, INK, DIM = "#0b0d12", "#ece9e1", "#8d929a"
 BLUE_, TEAL_, YELLOW_, GREEN_, ORANGE_, RED_, PURPLE_ = "#58C4DD", "#5CD0B3", "#FFE14D", "#83C167", "#FC8B3C", "#FC6255", "#9A72AC"
 config.background_color = BG; config.pixel_width = int(os.environ.get("W", 1280)); config.pixel_height = int(os.environ.get("H", 720)); config.frame_rate = int(os.environ.get("FPS", 30)); config.disable_caching = True; config.verbosity = "ERROR"; config.progress_bar = "none"
 config.media_dir = str(HERE / "media"); config.output_file = None
+AUDIT = os.environ.get("AUDIT") == "1"
 STATE = json.loads((HERE / "audio_beats/state.json").read_text())
 
 
@@ -20,6 +21,7 @@ def T(text, size=28, color=INK, bold=False):
 
 class Box(VGroup):
     """A rounded rectangle with a label. It can light up."""
+    lit = 0
     def __init__(self, label, color=BLUE_, w=2.6, h=1.1, size=26, **k):
         super().__init__(**k); self.col = color
         self.rect = RoundedRectangle(corner_radius=.14, width=w, height=h, stroke_color=color, stroke_width=3, fill_color=color, fill_opacity=.08)
@@ -30,6 +32,7 @@ class Box(VGroup):
         self.add(self.glow, self.rect, self.text)
 
     def on(self):
+        Box.lit += 1
         return AnimationGroup(self.rect.animate.set_fill(self.col, .5).set_stroke(self.col, 4.5, 1), self.glow.animate.set_stroke(self.col, 16, .28), self.text.animate.set_opacity(1).set_color(WHITE))
 
     def off(self):
@@ -63,6 +66,46 @@ def bar(length, color, h=.34):
 class Film(Scene):
     key = ""; number = 0; title = ""
 
+    def play(self, *a, **k):
+        t = self.now(); super().play(*a, **k)
+        if not getattr(self, "_waiting", False):
+            self._plays = getattr(self, "_plays", []) + [(t, self.now())]
+
+    def wait(self, *a, **k):
+        self._waiting = True; super().wait(*a, **k); self._waiting = False
+
+    def tear_down(self):
+        if AUDIT:
+            self._snapshot("end"); (HERE / "check").mkdir(exist_ok=True); (HERE / f"check/{self.key}.audit.json").write_text(json.dumps({"key": self.key, "seconds": self.starts[-1] + self.lens[-1], "beats": len(self.lens), "plays": getattr(self, "_plays", []), "starts": self.starts, "lit": Box.lit, "rings": getattr(self, "_rings", 0), "clears": getattr(self, "_clears", 0), "late": getattr(self, "_late", 0.0), "problems": getattr(self, "_problems", []), "fill": getattr(self, "_fill", [])}))
+
+    def _snapshot(self, where):
+        """Audit: looks at what is on screen. Text off the frame, text on text, lines through text, how full the screen is."""
+        texts, lines, seen = [], [], set(); stack = list(self.mobjects); out = getattr(self, "_problems", []); self._problems = out
+        while stack:
+            m = stack.pop()
+            if id(m) in seen: continue
+            seen.add(id(m))
+            if isinstance(m, Text):
+                if m.has_points() or m.submobjects:
+                    if len(m.submobjects) and max(x.get_fill_opacity() for x in m.submobjects) > .05: texts.append(m)
+                continue
+            if isinstance(m, (Line, CurvedArrow)) and m.get_stroke_opacity() > .05: lines.append(m)
+            stack.extend(m.submobjects)
+        box = [(t, t.get_left()[0], t.get_right()[0], t.get_bottom()[1], t.get_top()[1]) for t in texts]; here = f"{self.key} beat {self.current} {where}"
+        for t, x0, x1, y0, y1 in box:
+            if x0 < -7.05 or x1 > 7.05 or y0 < -3.97 or y1 > 3.97: out.append(f"off frame: {here}: {t.text[:30]!r}")
+        for i in range(len(box)):
+            for j in range(i + 1, len(box)):
+                a, b = box[i], box[j]; w = min(a[2], b[2]) - max(a[1], b[1]); h = min(a[4], b[4]) - max(a[3], b[3])
+                if w > .04 and h > .04: out.append(f"text on text: {here}: {a[0].text[:24]!r} / {b[0].text[:24]!r}")
+        for l in lines:
+            pts = [l.point_from_proportion(k / 40) for k in range(41)] if l.has_points() else []
+            for t, x0, x1, y0, y1 in box:
+                if any(x0 + .03 < p[0] < x1 - .03 and y0 + .03 < p[1] < y1 - .03 for p in pts): out.append(f"line through text: {here}: {t.text[:30]!r}")
+        heads = getattr(self, "head", None); rest = [m for m in self.mobjects if m is not heads]
+        if rest and where != "end":
+            g = Group(*rest); self._fill = getattr(self, "_fill", []) + [round(min(g.width, 14.2) * min(g.height, 8) / (14.2 * 8), 3)]
+
     def setup(self):
         beats = json.loads((HERE / f"beats/{self.key}_beats.json").read_text()); d = [STATE[f"{self.key}_{i}.wav"]["seconds"] for i in range(len(beats))]
         self.starts = [sum(d[:i]) for i in range(len(d))]; self.lens = d; self.current = 0; self.caption = None
@@ -72,6 +115,7 @@ class Film(Scene):
 
     def beat(self, i):
         """Start of a beat: wait until the voice gets there."""
+        if AUDIT and i > 0: self._snapshot("end of beat")
         self.current = i; self.until(self.starts[i])
 
     def until(self, t):
@@ -79,6 +123,7 @@ class Film(Scene):
             self.wait(t - self.now())
         elif t < self.now() - .25:
             print(f"LATE {self.key} beat {self.current}: {self.now() - t:.2f} s", flush=True)
+            self._late = max(getattr(self, "_late", 0.0), self.now() - t)
 
     def to(self, share):
         """Wait until this share of the current beat has been spoken."""
@@ -93,6 +138,7 @@ class Film(Scene):
         self.play(Write(big), run_time=1.1); self.wait(.2); self.play(Transform(big, small), run_time=.7); self.head = big
 
     def clear_all(self, run_time=.6):
+        self._clears = getattr(self, "_clears", 0) + 1
         keep = [m for m in self.mobjects if m is not self.head]
         if keep:
             self.play(*[FadeOut(m) for m in keep], run_time=run_time)
@@ -114,4 +160,5 @@ class Film(Scene):
 
     def ring(self, m):
         """Red ring: only for the few moments that need it. It goes away again, so it never sits on text."""
+        self._rings = getattr(self, "_rings", 0) + 1
         self.play(Circumscribe(m, shape=Rectangle, color=RED_, stroke_width=5, buff=.14, time_width=1.2), run_time=1.3)
