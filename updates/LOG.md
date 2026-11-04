@@ -1,3 +1,4 @@
+2026-11-04 | claude | knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | lighting as default highlight, rings rare, Manim
 2026-11-04 | claude | knowledge/lesion_detection_method/SUMMARY.md | range check before composites, zero cells, tipping point lesson
 2026-11-04 | claude | knowledge/lesion_detection_method/SUMMARY.md | LNM interaction check: plan a leave-out of near-seed lesions
 2026-11-04 | claude | knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md | short cut of a hub-written film: budgets per small unit, zero-second beats

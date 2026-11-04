@@ -24,7 +24,8 @@ In one folder, with these plain names:
 ## How it should look
 - **Dark background, smooth motion, no idle space.** Content fills the screen. Build one idea per spoken sentence block, so that the picture changes as the voice explains.
 - **Real data whenever possible.** Illustrations are labelled as illustrations.
-- **Red rings and red labels mark where to look**, timed with the voice. On a still page, add a red "Look here" card.
+- **Light up the box the voice is talking about; that is the default highlight** (user 2026-11-04). Red rings only at rare key moments, and they must fade again so they never sit on text. On a still page, add a red "Look here" card.
+- **Keep objects on screen across beats**, as in 3Blue1Brown, instead of drawing a new screen per beat. Manim (https://www.manim.community/, version 0.19 or newer, conda-forge) gives this directly; a 10-minute film rendered in under a minute on 24 CPU cores (own run 2026-11-04).
 - **Plain words first, numbers second.** Say what a number means. Explain the reading of signs, units and colours before showing results.
 - **Text and image together.** Beside each video: what we did, what we found, what it means, caution.
 - **Teach the method with its own animation.** Examples that worked: correlation (time points becoming dots), one map sharpening from 1 to 1,000 people, a slider that turns a regression line, a heatmap filled in square by square, a shuffle filling up a null distribution, patients hidden one by one.
