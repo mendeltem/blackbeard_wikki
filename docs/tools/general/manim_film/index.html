@@ -57,6 +57,8 @@ src/finish.sh my_film my_final_name                 # video/my_final_name.mp4 pl
 - <code>self.ring(m)</code>: a red ring that goes away again. Use it rarely. The Clara film uses two in ten minutes.</p>
 <h2>Quality gate</h2>
 <p><code>AUDIT=1 Q=low src/render.sh my_film</code>, then <code>python src/film_gate.py my_film source.md</code>. It measures text off the frame, text on text, lines through text, rings, lit boxes, screen clears, motion, how full the screen is, voice sync and numbers not in the source. Controls: the approved film passes (0 problems), <code>tests/bad</code> fails. It cannot judge beauty; a person decides. For agents working alone: <code>MAKE_A_FILM.md</code>.</p>
+<h2>Can an agent do this alone?</h2>
+<p>Own test 2026-11-04: Clara with the hub model made five 3-minute films on new topics with <code>MAKE_A_FILM.md</code>, no edits to any film; each took 22 to 45 minutes. The last two passed the gate in a row, with the guide unchanged between them. Still weaker than the reference: plainer pictures, and its image tool gives only a text description, so it cannot judge the look. A person decides. Status: not yet judged by the user.</p>
 <h2>Traps</h2>
 <ul>
 <li>Manim sets <code>dim</code> on every object, so a method called <code>dim</code> fails with "'int' object is not callable".</li>

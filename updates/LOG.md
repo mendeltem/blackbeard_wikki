@@ -1,3 +1,4 @@
+2026-11-04 | claude | tools/general/manim_film | agent film test: two gate passes in a row, limits recorded
 2026-11-04 | claude | tools/general/manim_film/MAKE_A_FILM.md, knowledge/agent_tooling/rules/explanation-video-is-the-standard.md | film on double quantum coherence in MRS (no data, own simulation): rules for topics without data and five layout traps the gate found
 2026-11-04 | claude | tools/general/manim_film | gate: old captions and too-small text; found by looking at the agent's round 3
 2026-11-04 | claude | tools/general/manim_film, knowledge/lesion_detection_method | gate sharper after Clara's rounds 1-2, finish.sh fix found by Clara; own-cohort counts replaced by relative values
