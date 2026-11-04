@@ -54,3 +54,4 @@
 - 2026-10-30 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 6 Bereiche.
 - 2026-11-02 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 2 Bereiche.
 - 2026-11-03 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 6 Bereiche.
+- 2026-11-04 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 8 Bereiche.
