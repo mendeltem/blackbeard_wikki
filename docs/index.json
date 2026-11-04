@@ -346,7 +346,7 @@
 "a": "agent_tooling",
 "y": "Regel",
 "s": "vorschlag",
-"d": "2026-11-03",
+"d": "2026-11-04",
 "x": "This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that ca",
 "id": "explanation-video-is-the-standard",
 "src": "knowledge/agent_tooling/rules/explanation-video-is-the-standard.md"
@@ -4145,6 +4145,17 @@
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
+},
+{
+"t": "manim_film",
+"p": "tools/general/manim_film/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "",
+"x": "tools/general/manim_film",
+"id": "manim_film",
+"src": "tools/general/manim_film/README.md"
 },
 {
 "t": "narrated_html_deck",

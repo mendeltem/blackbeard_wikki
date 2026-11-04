@@ -3,7 +3,7 @@ id: explanation-video-is-the-standard
 typ: regel
 status: vorschlag
 thema: knowledge/agent_tooling
-stand: 2026-11-03
+stand: 2026-11-04
 herkunft: user request 2026-11-03 ("this is how an explanation video should look when I want an explanation of what our task is"); own build
 verweist_auf: [narrated-html-deck-one-audio-per-slide]
 ---
@@ -45,8 +45,30 @@ Before narrating a result, read it at predicted values, not from its sign alone.
 
 Engine: `tools/general/narrated_html_deck/src/film_engine.py`. About 10 chapters render in roughly 3 minutes on the CPU.
 
+## The workstation film is the reference (user 2026-11-04: "the working station video was really good")
+
+Watch it before building a new film: https://github.com/mendeltem/clara_working_station/blob/main/video/clara_working_station.mp4
+(10 min, 8 chapters, 1280x720, 30 fps, 23 MB; narration written by the hospital hub model, animation with Manim).
+
+**What makes it good**
+- **One diagram that grows.** A chapter opens with one or two boxes and adds the next part only when the voice names it; earlier parts stay, dimmed (`mute()`), so the viewer always sees where the new piece sits.
+- **The box the voice is on lights up** (`on()`: fill and glow), everything else is calm. Highlighting by light, not by arrows or rings.
+- **Things move along the arrows.** A labelled dot travels from one box to the next with a passing flash on the line (`send()`), so a data flow is seen, not described. Tokens such as "data path" or "subject id" fly into a router and are sorted.
+- **One colour per role, the whole film long:** teal = the machine, green = the local agent, blue = the hub model, yellow = the router, orange = patient data, red = network or failure, purple = the decision model. Colours are never reused for something else.
+- **Each chapter opens with its title written large, then shrinking into the corner** (`open()`); a short caption line at the bottom replaces the previous one (`say()`).
+- **Numbers as objects:** bars that grow to scale (32,768 vs 64,000 tokens), dot grids for counts (154 commands), counters for the honest log (6 crashed, 11 rewritten, 3 rewritten after the fact check).
+- **An honest chapter:** what failed, what is unknown, what stays private.
+
+**How it is built (5 small files)**
+- `engine.py`: the look (dark background `#0b0d12`, CMU Serif, the colour table) and the timing. A `Film(Scene)` reads the spoken length of every beat from the audio and gives `beat(i)` (wait until the voice reaches beat i) and `to(share)` (wait until that share of the beat is spoken); an animation that overruns prints `LATE`. Helpers: `Box`, `link`, `send`, `tick`, `cross`, `dots`, `bar`, `ring` (a red Circumscribe that goes away again).
+- `chapters_*.py`: one `Film` subclass per chapter that only says what happens when.
+- Voice first (Kokoro, one file per beat, only changed beats re-spoken), then picture, so the picture follows the voice.
+- `render.sh`: at most 4 chapters in parallel on the CPU; `Q=low` renders 640x360 at 12 fps for checks. `sheets.py`: a contact sheet per chapter with a frame at 55 % and 97 % of every beat; look at every sheet before the full render.
+- `finish.sh`: joins each chapter's picture with its beat audio (ffmpeg concat), then all chapters with `-c copy`.
+
 ## Traegt
 - Own build 2026-11-03: a 9-minute film and two 6-7 minute tutorials, 11 and 8-9 chapters, about 10 MB per video. The user: "wow this video is really nice".
+- Workstation film 2026-11-04 (Manim Community 0.19, https://www.manim.community/): the user called it really good and asked for it to be published; it became the reference for the CMB paper film the same day.
 - Kokoro-82M: https://huggingface.co/hexgrad/Kokoro-82M . Style reference: 3Blue1Brown, https://www.3blue1brown.com/ , unverified beyond the general look; no code from it is used.
 
 ## Traegt nicht
