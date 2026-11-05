@@ -1,3 +1,4 @@
+2026-11-05 | claude | tools/mri/mri_segmentation/qc_slice_viewer | optional grey_window per case: the default percentile window can wash out bright lesions on FLAIR
 2026-11-05 | claude | knowledge/brain_volumetry/findings/research-attrition-and-missing-data-longitudinal-stroke-2026-10.md | Dropout-linked baseline scores cannot be read as predictors of improvement; sort columns before the run, keep them in the imputation model
 2026-11-04 | claude | tools/general/manim_film/src/finish.sh | RES env (e.g. 1080p30) so a W=1920 H=1080 render can be joined; used for the Carbon-X YouTube film
 2026-11-04 | claude | knowledge/local_llm_operation/findings/dna-llm-needs-current-llamacpp-tokenizer.md | Carbon-X own test on recent ClinVar: balanced accuracy 0.80, weak on splice and benign missense

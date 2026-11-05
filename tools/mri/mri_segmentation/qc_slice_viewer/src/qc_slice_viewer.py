@@ -115,7 +115,7 @@ def build_case(case, runs, out, verdict=False, csf_overlay=False, as_acquired=Tr
         shown = np.where(brain, 1.0 - img, 0.0)
     if brain.sum() == 0:
         raise SystemExit(f"{cid}: empty image")
-    lo, hi = np.percentile(shown[brain], [1, 98])
+    lo, hi = case.get("grey_window") or np.percentile(shown[brain], [1, 98])   # optional [low, high] of one case; the default suits most images
     grey = (np.clip((shown - lo) / max(hi - lo, 1e-6), 0, 1) * 255).astype(np.uint8); grey[~brain] = 0
     preds, raw_first = {}, None
     for i, r in enumerate(runs):
