@@ -1,5 +1,7 @@
 # brain_volumetry: Kurzstand
 
+Own run 2026-11-05: baseline scores linked to dropout cannot be read as predictors of improvement in complete cases; the estimate can change size or sign with the missing-data assumption. Keep them out of the reported list and in the imputation model. See research-attrition-and-missing-data-longitudinal-stroke-2026-10.
+
 **Neu 2026-10-30 (eigene Laeufe):** Tiefe graue Substanz skaliert in DLBS nur mit ICV^0,65-0,85 (Kortex ~1), Division ueberkorrigiert grosse Koepfe -> ICV als Kovariate ([icv-scaling-exponent-and-asymmetry-sdc-2026-10](findings/icv-scaling-exponent-and-asymmetry-sdc-2026-10.md)); Thalamus-Asymmetrie SDC95 ~5 pp, Scannerstufe hebt sich in der Asymmetrie auf. Regel erweitert: der `read`-Fehler liess erfolgreiche recon-all-Jobs still auf der FLAIR laufen ([one-t1-per-visit-and-tab-columns-by-cut](rules/one-t1-per-visit-and-tab-columns-by-cut.md)).
 
 **Neu 2026-10-19 (zwei Literaturberichte, 65 Quellen geprueft, 0 falsch):** SynthSeg 2 in FreeSurfer 8.2 ist fuer rohe T1 gebaut (Dice 0,88 gegen Hand); QC-Schwelle 0,65 ist fuer die Ganzscan-Entscheidung validiert (Sens. 0,999, Spez. 0,906, AUC 0,998, 594 klinische Scans), je Struktur nur angewendet; Laengsschnitt-Stream 15-50 % praeziser; Thalamus, Hippocampus, Amygdala, Pallidum und alle Veraenderungen mit zweiter Methode bestaetigen; FS 7.x und 8.x nie mischen, Build und Betriebssystem zwischen Workstation und HPC festhalten ([research-synthseg2-freesurfer82-validation-2026-10](findings/research-synthseg2-freesurfer82-validation-2026-10.md)).
