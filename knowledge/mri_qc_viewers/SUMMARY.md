@@ -1,5 +1,7 @@
 # mri_qc_viewers: Kurzstand
 
+**Neu 2026-11-05 (rule):** QC slice images: window in float, then 8-bit PNG, size from the rotated array, Lanczos upscale in the generator, overlay as transparent layer ([qc-slice-images-png-window-aspect](rules/qc-slice-images-png-window-aspect.md)).
+
 **Neu 2026-10-18 (Literatur):** Bild-Sprachmodelle als QC-Vorsortierer sind nicht belegt; Orientierung und reine Bildfragen sind schwach, Kappa ~0,6, nur ueberwacht und nach lokaler Validierung ([research-vision-language-models-for-image-qc-2026-10](findings/research-vision-language-models-for-image-qc-2026-10.md)).
 
 Stand 2026-10-12. Prefill fuer Chats und Agenten. Details in [INDEX.md](INDEX.md).

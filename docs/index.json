@@ -3564,6 +3564,17 @@
 "src": "knowledge/mri_qc_viewers/rules/qc-pages-explain-every-number-on-hover.md"
 },
 {
+"t": "QC slice images: window first, then 8-bit PNG, size from the rotated array",
+"p": "mri_qc_viewers/rules/qc-slice-images-png-window-aspect.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-05",
+"x": "Fenster in float, dann 8-bit PNG (keine Rohwerte), Groesse aus dem gedrehten Array, Lanczos im Generator + 1:1, Overlay als transparente Ebene",
+"id": "qc-slice-images-png-window-aspect",
+"src": "knowledge/mri_qc_viewers/rules/qc-slice-images-png-window-aspect.md"
+},
+{
 "t": "Setzungen fuer eine QC-Seite: Referenz blau, Proband links/rechts, F1 je Fall, Klick zeigt die Werte",
 "p": "mri_qc_viewers/rules/qc-slice-viewer-conventions.html",
 "a": "mri_qc_viewers",
