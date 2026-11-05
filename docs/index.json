@@ -4037,6 +4037,17 @@
 "src": "knowledge/wmh_segmentation/findings/architecture-package-brought-no-gain.md"
 },
 {
+"t": "BIANCA: what it really does internally, and its score on the official WMH Challenge test set",
+"p": "wmh_segmentation/findings/bianca-internals-and-official-challenge-split-2026-11.html",
+"a": "wmh_segmentation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-05",
+"x": "BIANCA: kNN on unscaled table, >0 renormalisation makes patch columns ~2.6x wider, 1-voxel noborder ring, query row trick; official 110 test scans Dice 0.665 (unseen scanners 0.621)",
+"id": "bianca-internals-and-official-challenge-split-2026-11",
+"src": "knowledge/wmh_segmentation/findings/bianca-internals-and-official-challenge-split-2026-11.md"
+},
+{
 "t": "Die Hirnmaske ist Teil des Modells, nicht Vorverarbeitung",
 "p": "wmh_segmentation/findings/brain-mask-is-part-of-the-model.html",
 "a": "wmh_segmentation",
