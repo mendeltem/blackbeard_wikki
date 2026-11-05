@@ -1,5 +1,7 @@
 # local_llm_operation: Kurzstand
 
+2026-11-05: in a research swarm, a second-model critic cost 5.17 times the tokens with no measurable gain (corrected supported share 0.984 against 0.988; 2 wins, 4 ties, 2 losses over 8 tasks), so one model without a critic stays. The model hub ends non-streamed calls at 50 s, sometimes with an error sentence delivered as an answer: stream, and treat that as a failure. Different question models were not tested. [Entry](findings/swarm-critic-model-no-gain-hub-stream-2026-11.md).
+
 2026-11-04: Carbon-X, a 14.8B DNA language model, runs from its official GGUF only on a current llama.cpp (from b11742; older builds tokenize DNA wrongly). Q8 needs about 17 GB VRAM; on the CPU 2.3 tok/s. [dna-llm-needs-current-llamacpp-tokenizer](findings/dna-llm-needs-current-llamacpp-tokenizer.md)
 
 2026-10-23, repaired: the guarded outbound route had found no literature since 2026-10-11. The guard daemon was started before the 2026-10-13 switch to a proxy-only network and never received the proxy variables, so every open-API lookup failed and the morning research swarm answered 0 of 8 questions. A plain service restart fixed it (test question 40 s, with sources). Rule of thumb: after a network change, restart every long-running service that talks to the internet. See [guarded-outbound-research-local-first](findings/guarded-outbound-research-local-first.md).

@@ -44,6 +44,7 @@ Nicht auf andere Maschinen uebertragbar ohne Nachmessen.
 | risiko | [self-evolution-gepa-silently-falls-back](risks/self-evolution-gepa-silently-falls-back.md) | Nous-Repo: `dspy.GEPA` scheitert, stummer Rueckfall auf MIPROv2 |
 | risiko | [secure-boot-kernel-update-unloads-nvidia-dkms](risks/secure-boot-kernel-update-unloads-nvidia-dkms.md) | Kernel-Update bei Secure Boot: lokal signiertes DKMS-Modul laedt nicht, GPU weg, kein Log sagt es; Abhilfe signiertes `linux-modules-nvidia`-Paket |
 | befund | [guarded-outbound-research-local-first](findings/guarded-outbound-research-local-first.md) | Agent ohne Netz: Waechter sperrt nur eigene Kohorten, Recherche lokal ueber offene Literatur-APIs + 27B (68 s, keine Cloud), Cloud nur auf Zuruf; stiller Aussenweg war einen Monat tot |
+| [Swarm: second-model critic showed no gain, hub needs streaming](findings/swarm-critic-model-no-gain-hub-stream-2026-11.md) | befund | gemessen |
 | [Lokaler Rechercheschwarm: erster Lauf](findings/local-research-swarm-first-run-2026-10-09.md) | befund | gemessen |
 | pruefpunkt | [mmap-vs-load-mode-none](open_checks/mmap-vs-load-mode-none.md) | Lademodus bei Expert-Offloading, ungemessen |
 | pruefpunkt | [dense-27b-vs-moe-on-8gb](open_checks/dense-27b-vs-moe-on-8gb.md) | Qwen3.8-27B-Fine-Tunes mit weniger Denken gegen das MoE: geschaetzt 5-8 gegen 30-35 t/s |

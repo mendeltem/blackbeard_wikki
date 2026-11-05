@@ -2717,6 +2717,17 @@
 "src": "knowledge/local_llm_operation/findings/rule-lists-make-small-models-refuse.md"
 },
 {
+"t": "A second-model critic in a research swarm cost 5 times the tokens and showed no measurable gain",
+"p": "local_llm_operation/findings/swarm-critic-model-no-gain-hub-stream-2026-11.html",
+"a": "local_llm_operation",
+"y": "Befund",
+"s": "gemessen",
+"d": "2026-11-05",
+"x": "Eight research tasks ran through a swarm in two arms: one hub model for everything (A), or the same writer plus a different, faster hub model as critic on pieces of 1500 characters with a revision step (B). B used 5.17 times the tokens (1,9",
+"id": "swarm-critic-model-no-gain-hub-stream-2026-11",
+"src": "knowledge/local_llm_operation/findings/swarm-critic-model-no-gain-hub-stream-2026-11.md"
+},
+{
 "t": "Unter Ubuntu laeuft dasselbe Modell mit denselben Flags gut 50 Prozent schneller als unter Windows 10",
 "p": "local_llm_operation/findings/ubuntu-faster-than-windows-same-flags.html",
 "a": "local_llm_operation",
