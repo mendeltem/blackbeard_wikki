@@ -5,7 +5,7 @@ status: vorschlag
 thema: knowledge/brain_volumetry
 stand: 2026-11-06
 herkunft: literature research 06.11.2026 (four focused searches, 108 sources checked by the agents, 13 PMIDs re-checked by hand, all correct), for a multi-site longitudinal stroke cohort with SynthSeg 2.0 on clinical T1
-verweist_auf: [freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort, icv-scaling-exponent-and-asymmetry-noise]
+verweist_auf: [freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort, icv-scaling-exponent-and-asymmetry-sdc-2026-10]
 ---
 
 # Stroke volumetry: what the literature still lacks, and the next tests (Nov 2026)
