@@ -1,0 +1,88 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Stroke volumetry: what the literature still lacks, and the next tests (Nov 2026)</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">brain_volumetry</a> › <a href="../index.html#findings">Befund</a></div><h1>Stroke volumetry: what the literature still lacks, and the next tests (Nov 2026)</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-06</span><span>Herkunft</span><span>literature research 06.11.2026 (four focused searches, 108 sources checked by the agents, 13 PMIDs re-checked by hand, all correct), for a multi-site longitudinal stroke cohort with SynthSeg 2.0 on clinical T1</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="freesurfer-improvement-plan-for-a-longitudinal-stroke-cohort.html">FreeSurfer as the main tool for a longitudinal stroke cohort: what the evidence says to do, in order</a> <span class="muted small">(brain_volumetry)</span><br><span class="muted">icv-scaling-exponent-and-asymmetry-noise</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/brain_volumetry/findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.md">knowledge/brain_volumetry/findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.md</a></span></div><h2>Aussage</h2>
+<p>Four questions that block a longitudinal stroke volumetry study have <strong>no published answer</strong>: (1) a lesion-size limit for mirror
+(enantiomorphic) filling, or any stroke validation of filling/inpainting for regional volumes [1-4]; (2) the fail rate of the SynthSeg+
+cortex QC on routine clinical T1 [5]; (3) the ipsilateral-minus-contralateral thalamus change in %/year [6-8]; (4) a longitudinal
+validation of any segmentation pipeline in stroke; SynthSeg has no longitudinal stream [9-11]. Own runs must fill these gaps.</p>
+<p>Facts that change the reading of own results:
+- The SynthSeg+ QC regressor reads only the <strong>label map</strong>, not the image; it predicts Dice for 10 regions and was validated as whole-scan
+  pass/fail, not near the 0.65 cut-off and not on pathology [5]. A low cortex score is a flag, not proof of a wrong cortex. In the own
+  clinical cohort the cortex fail rate is about 24 times that of a healthy MPRAGE reference (DLBS 1.7 %).
+- Lesion filling can hurt: virtual-brain-grafting fill lowered FastSurfer parcellation accuracy in brain trauma [2].
+- Secondary thalamic atrophy is front-loaded (2-4x faster in months 0-3 than 3-12) and the contralesional thalamus shrinks too [7];
+  disconnection predicts remote change better than lesion volume, only in disconnected thalamic nuclei groups [8, 12].
+- Longitudinal processing roughly halves reproducibility error across sites and vendors [9]; Longitudinal ComBat keeps type I error
+  better than a scanner covariate alone [10].</p>
+<p>Next tests, ranked: blind visual rating of ~60 visits against the cortex QC (ROC, fails by sequence/site/contrast agent); mirror fill +
+drop touched structures with a measured size cut-off; disconnection score + thalamic nuclei as secondary endpoints; FreeSurfer -long
+on 40-60 patients next to SynthSeg, judged by within-person residual SD and slope ICC; change-level QC; SynthSR/FLAIR input only if
+the rating shows real errors; piecewise time term in the mixed model.</p>
+<h2>Traegt</h2>
+<p>Abstract-level evidence for every listed fact; own power calculation: asymmetry SEM 1.8 pp (from SDC95 5 pp), so the main effect needs
+few complete patients, and subgroups, interactions and informative dropout are the real limits.</p>
+<h2>Traegt nicht</h2>
+<p>Full texts were not read; effect sizes per study come from abstracts. The power numbers rest on an assumed between-patient spread.</p>
+<h2>Bruchindikator</h2>
+<p>A blind rating that agrees with the cortex QC (high AUC) would make the QC-based exclusion correct and the alternative-input tests unnecessary.</p>
+<h2>Ablesung</h2>
+<p>Full notes with all sources: research round folder of the cohort project (00_synthesis.md, 01-04). Own runs: synthetic-lesion test 2026-10-30/11-05, robust size x location test started 2026-11-06.</p>
+<h2>Quellen</h2>
+<ol>
+<li>Nachev P et al. 2008, NeuroImage 39:1215-1226, doi 10.1016/j.neuroimage.2007.10.002, PMID 18023365 (enantiomorphic normalisation; not tested for volumetry).</li>
+<li>Deutscher E et al. 2025, Front Neurol 16:1652385, doi 10.3389/fneur.2025.1652385, PMID 41451415 (VBG filling lowered parcellation accuracy in TBI).</li>
+<li>Deutscher E et al. 2026, NeuroImage, doi 10.1016/j.neuroimage.2026.121869, PMID 41881175 (scoping review of T1 lesion inpainting in brain injury).</li>
+<li>Pollak C et al. 2025, Imaging Neurosci, doi 10.1162/imag_a_00446, PMID 40109899 (FastSurfer-LIT; tumours, not stroke).</li>
+<li>Billot B et al. 2023, PNAS 120:e2216399120, doi 10.1073/pnas.2216399120, PMID 36802420 (SynthSeg+, QC regressor on label maps).</li>
+<li>Geng J et al. 2022, J Stroke Cerebrovasc Dis, doi 10.1016/j.jstrokecerebrovasdis.2022.106895, PMID 36495644 (ipsilateral thalamus smaller after non-thalamic infarcts, linked to cognition).</li>
+<li>Brodtmann A et al. 2020, Stroke, doi 10.1161/STROKEAHA.120.030256, PMID 32772680 (atrophy front-loaded in the first year).</li>
+<li>Koubiyr I et al. 2025, Brain 148:3551-3562, doi 10.1093/brain/awaf082, PMID 40070356 (R2* rise only in disconnected thalamic nuclei groups).</li>
+<li>Jovicich J et al. 2013, NeuroImage, longitudinal FreeSurfer reproducibility across 8 sites (PMID in the full note).</li>
+<li>Beer JC et al. 2020, NeuroImage 220:117129, doi 10.1016/j.neuroimage.2020.117129, PMID 32640273 (Longitudinal ComBat).</li>
+<li>Aamodt EB et al. 2022, Front Neurol 13:856919, doi 10.3389/fneur.2022.856919, PMID 35720079 (Nor-COAST, 36 months, ipsi &gt; contra atrophy, MoCA).</li>
+<li>Williams B et al. 2022, NeuroImage, doi 10.1016/j.neuroimage.2022.119340, PMID 35649466 (thalamic nuclei atlas validation; weak posteriorly).</li>
+</ol></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-06 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

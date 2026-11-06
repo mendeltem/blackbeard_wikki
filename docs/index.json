@@ -1496,6 +1496,17 @@
 "src": "knowledge/brain_volumetry/findings/same-session-sequences-align-by-header-not-voxel-flirt.md"
 },
 {
+"t": "Stroke volumetry: what the literature still lacks, and the next tests (Nov 2026)",
+"p": "brain_volumetry/findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.html",
+"a": "brain_volumetry",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-06",
+"x": "Literaturluecken 11/2026: keine Groessengrenze fuer Spiegelfuellung, keine Kortex-QC-Fehlerrate fuer klinische T1, QC liest nur die Labelkarte; Thalamus-Atrophie frueh, Disconnection > Volumen; Tests nach Rang; 12 Quellen mit PMID",
+"id": "stroke-volumetry-open-gaps-and-next-tests-2026-11",
+"src": "knowledge/brain_volumetry/findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.md"
+},
+{
 "t": "SynthSeg's cortex QC score splits by site, not by protocol; subcortical scores are almost all fine",
 "p": "brain_volumetry/findings/synthseg-cortex-qc-depends-on-site-not-protocol.html",
 "a": "brain_volumetry",

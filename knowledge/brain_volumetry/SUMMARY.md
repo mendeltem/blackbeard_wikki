@@ -1,5 +1,7 @@
 # brain_volumetry: Kurzstand
 
+**Neu 2026-11-06 (vier Literaturberichte, 108 Quellen, 13 PMIDs nachgeprueft, alle richtig):** Vier Luecken ohne Literatur: Groessengrenze der Spiegelfuellung, Kortex-QC-Fehlerrate auf klinischen T1, ipsi-minus-kontra Thalamus in %/Jahr, Laengsschnitt-Validierung in Stroke. Der SynthSeg+-QC liest nur die Labelkarte, ein niedriger Kortex-Wert ist ein Hinweis, kein Beweis. Naechster Test: blinde Sichtbewertung gegen den QC ([stroke-volumetry-open-gaps-and-next-tests-2026-11](findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.md)).
+
 Own run 2026-11-05: baseline scores linked to dropout cannot be read as predictors of improvement in complete cases; the estimate can change size or sign with the missing-data assumption. Keep them out of the reported list and in the imputation model. See research-attrition-and-missing-data-longitudinal-stroke-2026-10.
 
 **Neu 2026-10-30 (eigene Laeufe):** Tiefe graue Substanz skaliert in DLBS nur mit ICV^0,65-0,85 (Kortex ~1), Division ueberkorrigiert grosse Koepfe -> ICV als Kovariate ([icv-scaling-exponent-and-asymmetry-sdc-2026-10](findings/icv-scaling-exponent-and-asymmetry-sdc-2026-10.md)); Thalamus-Asymmetrie SDC95 ~5 pp, Scannerstufe hebt sich in der Asymmetrie auf. Regel erweitert: der `read`-Fehler liess erfolgreiche recon-all-Jobs still auf der FLAIR laufen ([one-t1-per-visit-and-tab-columns-by-cut](rules/one-t1-per-visit-and-tab-columns-by-cut.md)).
