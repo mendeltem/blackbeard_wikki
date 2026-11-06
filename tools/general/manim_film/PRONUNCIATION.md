@@ -12,6 +12,20 @@ hard word should sound, ask before rendering**, and add the answer here.
 | BIANCA / Bianca | Bianka | 2026-11-04 |
 | PYTHONNOUSERSITE | python no user site | 2026-11-06 |
 | CUDA | Kuda | 2026-11-06 |
+| A100 | A one hundred | 2026-11-06 |
+| H100 / H200 | H one hundred / H two hundred | 2026-11-06 |
+| L40S | L forty S | 2026-11-06 |
+| pgpu / agpu (partitions) | PGPU / AGPU (capitals, see note) | 2026-11-06 |
+| Apptainer | app-tainer | 2026-11-06 |
+| AFNI | af-nee | 2026-11-06 |
+| ANTs | ants | 2026-11-06 |
+| microbleednet / truenet | micro bleed net / true net | 2026-11-06 |
+| cu12 (wheel tag) | C U twelve | 2026-11-06 |
+
+**Note on letter-by-letter words (2026-11-06):** the user wanted "P G P U" a little faster. Kokoro (af_heart) pauses at
+spaced letters and reads a spaced or hyphenated "A G P U" / "A-G-P-U" as the article "uh" + GPU. Uppercase "PGPU" / "AGPU"
+is spoken letter by letter like "CPU" and was the shortest (13.80 s against 14.08 s spaced, 13.90 s hyphenated, same
+sentence; phonemes checked with the Kokoro G2P output). So: write short letter acronyms in capitals without spaces.
 
 ## In use, not yet heard by the user
 
@@ -28,7 +42,6 @@ Spellings already in finished films (HPC tutorial, 2026-11-06). They sound right
 | rm -rf | r m minus r f |
 | FSL | F S L |
 | SC hub | S C hub |
-| L40S | L40 S |
 
 ## How to use it
 
