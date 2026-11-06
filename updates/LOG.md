@@ -1,3 +1,4 @@
+2026-11-06 | claude | tools/general/manim_film/PRONUNCIATION.md, MAKE_A_FILM.md | pronunciation helper for film voices (user-confirmed spoken forms, ask when unsure)
 2026-11-06 | claude | knowledge/wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.md | BIANCA slice-thickness simulation result (from the Moderation session's runs), used in tutorial chapter 13
 2026-11-06 | claude | tools/general/manim_film/README.md | tutorial film about the film tool made with it; lesson: yellow lit box hides white text
 2026-11-05 | claude | knowledge/wmh_segmentation/findings/bianca-internals-and-official-challenge-split-2026-11.md | BIANCA internals from source + official 110-scan test result for the tutorial film

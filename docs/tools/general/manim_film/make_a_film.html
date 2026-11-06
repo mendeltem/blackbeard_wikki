@@ -46,7 +46,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Goal: a narrated film as good as <code>examples/clara_working_station</code>. Read <code>README.md</code>, then <code>src/engine.py</code>, then <code>examples/clara_working_station/chapters_a.py</code> (class What and class Parts) before writing anything. Copy the way those chapters think, not their text.</p>
 <h2>Order of work</h2>
 <ol>
-<li>Read the source. Write <code>beats/&lt;key&gt;_beats.json</code>: 4 to 6 spoken blocks per chapter, 1 to 3 short sentences each. Plain words. Numbers only if they stand in the source. Say abbreviations as a listener would hear them. No claim that is not in the source.</li>
+<li>Read the source. Write <code>beats/&lt;key&gt;_beats.json</code>: 4 to 6 spoken blocks per chapter, 1 to 3 short sentences each. Plain words. Numbers only if they stand in the source. Say abbreviations as a listener would hear them. No claim that is not in the source. Respell hard words with the table in <a href="pronunciation.html">PRONUNCIATION.md</a>; if a word is not there and you are not sure, ask the user before the voice step.</li>
 <li><code>python &lt;tool&gt;/src/voice.py .</code> with the tts env, to get the exact durations.</li>
 <li>Write <code>chapters.py</code> and <code>chapters.txt</code>.</li>
 <li><code>AUDIT=1 Q=low &lt;tool&gt;/src/render.sh .</code>, then <code>python &lt;tool&gt;/src/film_gate.py . source.md</code>. Fix what it reports.</li>
