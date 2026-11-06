@@ -1,9 +1,23 @@
-"""Voice for every beat (Kokoro, CPU). Beats whose text did not change are skipped.   python voice.py <film folder>   (env tts)"""
+"""Voice for every beat (Kokoro; GPU when one is free, else CPU). Beats whose text did not change are skipped.   python voice.py <film folder>   (env tts)"""
+import os
 import json, sys
 from pathlib import Path
 import numpy as np, soundfile as sf
 from kokoro import KPipeline
-F = Path(sys.argv[1]).resolve(); (F / "audio_beats").mkdir(exist_ok=True); path = F / "audio_beats/state.json"; st = json.loads(path.read_text()) if path.exists() else {}; pipe = KPipeline(lang_code="a", device="cpu")
+def _device():
+    # 06.11.2026: Kokoro on the GPU when one is free (much faster); KOKORO_DEVICE=cpu forces the old behaviour
+    want = os.environ.get("KOKORO_DEVICE", "")
+    if want:
+        return want
+    try:
+        import torch
+        if torch.cuda.is_available() and torch.cuda.mem_get_info()[0] > 2 * 1024**3:
+            return "cuda"
+    except Exception:  # noqa: BLE001
+        pass
+    return "cpu"
+
+F = Path(sys.argv[1]).resolve(); (F / "audio_beats").mkdir(exist_ok=True); path = F / "audio_beats/state.json"; st = json.loads(path.read_text()) if path.exists() else {}; pipe = KPipeline(lang_code="a", device=_device())
 for line in (F / "chapters.txt").read_text().split("\n"):
     if not line.strip(): continue
     key = line.split()[2]
