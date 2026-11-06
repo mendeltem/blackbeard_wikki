@@ -1,4 +1,5 @@
 2026-11-06 | claude | knowledge/wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.md | BIANCA slice-thickness simulation result (from the Moderation session's runs), used in tutorial chapter 13
+2026-11-06 | claude | tools/general/manim_film/README.md | tutorial film about the film tool made with it; lesson: yellow lit box hides white text
 2026-11-05 | claude | knowledge/wmh_segmentation/findings/bianca-internals-and-official-challenge-split-2026-11.md | BIANCA internals from source + official 110-scan test result for the tutorial film
 2026-11-05 | claude | knowledge/mri_qc_viewers/rules/qc-slice-images-png-window-aspect.md | QC images: swapped width/height stretched every slice; window then 8-bit PNG, Lanczos, overlay layer
 2026-11-05 | claude | knowledge/local_llm_operation/findings/swarm-critic-model-no-gain-hub-stream-2026-11.md | Measured: swarm critic on a second model gave no gain at 5.17 times the tokens; hub 50 s limit needs streaming; two scorer faults

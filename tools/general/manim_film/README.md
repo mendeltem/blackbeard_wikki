@@ -32,6 +32,8 @@ Own test 2026-11-04: Clara with the hub model made five 3-minute films on new to
 - `LATE` in the log means an animation overran its voice mark; a second or so at a title card is fine.
 - No LaTeX is needed: `DecimalNumber` and `MathTex` need it, so numbers count with a text updater (`counter` in the example).
 
+Tutorial about this tool, made with it (2026-11-06): "How the films are made on the workstation", 7 chapters, 5:10, rendered in 32 s; gate passed after 4 rounds; film_see confirmed 2 flaws (white text on a lit yellow box, muted grey boxes unreadable), both fixed. Lesson: a lit box with light fill colour (yellow) makes its white label unreadable, so light such boxes by stroke and glow only. Files on Alita TUTORIALS/film_making_workstation (code in parts/). No patient data. Not yet judged by the user.
+
 `examples/clara_working_station` is the full film the user approved: 8 chapters, 10:20, rendered in 36 s on 24 CPU cores.
 
 Sources: Manim Community, https://www.manim.community/ . Kokoro-82M, https://huggingface.co/hexgrad/Kokoro-82M . CMU Serif (cm-unicode), https://ctan.org/pkg/cm-unicode . Style reference only: 3Blue1Brown, https://www.3blue1brown.com/ ; no code from it is used.
