@@ -4037,6 +4037,17 @@
 "src": "knowledge/wmh_segmentation/findings/architecture-package-brought-no-gain.md"
 },
 {
+"t": "BIANCA and FLAIR slice thickness: test thickness decides, location matters most, patch can hurt",
+"p": "wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.html",
+"a": "wmh_segmentation",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-06",
+"x": "BIANCA vs simulated FLAIR thickness: 5 mm test loses ~0.10 Dice whatever the training; location +0.14 biggest; patch hurts in strong settings; kept 3 mm cut-off is fine",
+"id": "bianca-flair-slice-thickness-simulation-2026-11",
+"src": "knowledge/wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.md"
+},
+{
 "t": "BIANCA: what it really does internally, and its score on the official WMH Challenge test set",
 "p": "wmh_segmentation/findings/bianca-internals-and-official-challenge-split-2026-11.html",
 "a": "wmh_segmentation",

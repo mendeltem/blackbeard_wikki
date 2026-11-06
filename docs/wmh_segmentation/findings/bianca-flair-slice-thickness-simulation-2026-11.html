@@ -1,0 +1,73 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>BIANCA and FLAIR slice thickness: test thickness decides, location matters most, patch can hurt</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">wmh_segmentation</a> › <a href="../index.html#findings">Befund</a></div><h1>BIANCA and FLAIR slice thickness: test thickness decides, location matters most, patch can hurt</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-06</span><span>Herkunft</span><span>own BIANCA runs (FSL 6.0.7.23) on the public WMH Segmentation Challenge training scans, 432 settings runs + 3 seeds of the main setting, 2026-11-05/06</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="bianca-internals-and-official-challenge-split-2026-11.html">BIANCA: what it really does internally, and its score on the official WMH Challenge test set</a> <span class="muted small">(wmh_segmentation)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.md">knowledge/wmh_segmentation/findings/bianca-flair-slice-thickness-simulation-2026-11.md</a></span></div><h2>Aussage</h2>
+<p>Simulation from the 3 mm challenge FLAIR: 5 mm by overlap-weighted slice averaging, 1 mm by linear interpolation; T1 resampled
+from its own ~1 mm image. One model per thickness trained on 30 scans, tested at 1/3/5 mm on 30 other scans (cut-off tuned on 15,
+Dice on 15 held out), scored on the native 3 mm grid against the official mask; no WM mask, no cluster removal.
+- Mean Dice, main setting (FLAIR+T1, location, patch 3, noborder, 2000/10000 points), 3 seeds (noise &lt;= 0.009), rows trained,
+  columns tested 1/3/5 mm: 0.683 0.689 0.592 / 0.672 0.699 0.595 / 0.673 0.683 0.589.
+- <strong>Test thickness decides:</strong> every model loses 0.094-0.107 on 5 mm test scans, 15/15 scans worse; small-lesion recall ~0.35 -&gt; ~0.22.
+  Training on 5 mm does not rescue 5 mm tests (-0.008 vs the 3 mm model). Matching helps a little at 3 mm only (+0.013 / +0.021).
+- <strong>Threshold:</strong> best cut-off varies 0.60-0.99, but keeping the 3 mm cut-off was equal or slightly better on held-out scans
+  (mean change -0.009 to 0.000 per cell): re-tuning on 15 scans buys nothing.
+- <strong>Settings (train = test, all else equal, 1/3/5 mm):</strong> location +0.109/+0.143/+0.106 (largest, larger than the 5 mm loss);
+  10000 vs 2000 non-lesion points +0.039/+0.041/+0.034; FLAIR+T1 vs FLAIR +0.039/+0.033/+0.024; surround vs any -0.028/-0.028/-0.011;
+  noborder vs any ~0.
+- <strong>Patch hurts in strong settings:</strong> FLAIR+T1, location, 10000 points: no patch 0.709/0.733/0.619 vs patch 0.683/0.703/0.588;
+  the best setting on the tuning scans was "FLAIR+T1, location, no patch, 10000 points" in 9/9 cells, +0.012 to +0.038 over main
+  (interval above 0 in 7/9). Untested guess: the kd-tree is unscaled and patch columns are ~2.6x wider.</p>
+<h2>Trägt</h2>
+<p>Paired bootstrap over 15 held-out scans; 3 seeds for the main setting. Public data, numbers may be shown.</p>
+<h2>Trägt nicht</h2>
+<p>A simulation (no real slice profile, gap, contrast or noise change); 1 mm FLAIR holds no new information; one split, 15 held-out
+scans per cell; the settings grid used one seed; best-of-48 on 15 tuning scans stays somewhat optimistic.</p>
+<h2>Bruchindikator</h2>
+<p>A claim that thin training scans fix thick test scans, or that thickness matters more than the location features.</p>
+<h2>Ablesung</h2>
+<p>Griffanti L et al. 2016, NeuroImage 141:191-205, doi:10.1016/j.neuroimage.2016.07.018, PMID 27402600; Kuijf HJ et al. 2019,
+IEEE TMI 38:2556-2568, doi:10.1109/TMI.2019.2905770, PMID 30908194. Data doi:10.34894/AECRSD (CC BY-NC 4.0). FSL 6.0.7.23.
+Used in chapter 13 of the BIANCA tutorial film (2026-11-06).</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-06 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

@@ -1,5 +1,7 @@
 # wmh_segmentation: Kurzstand
 
+**New 2026-11-06:** BIANCA on simulated 1/3/5 mm FLAIR (public challenge scans): the test thickness decides (5 mm -0.10 Dice for every model), location features matter most (+0.14), the patch hurt in the strongest settings, and re-tuning the cut-off bought nothing ([bianca-flair-slice-thickness-simulation-2026-11](findings/bianca-flair-slice-thickness-simulation-2026-11.md)).
+
 **Neu 2026-11-05:** BIANCA internals read from the source (no feature scaling before kNN, patch columns wider) and the official WMH Challenge split: Dice 0.665 on 110 test scans ([bianca-internals-and-official-challenge-split-2026-11](findings/bianca-internals-and-official-challenge-split-2026-11.md)).
 
 **New 2026-10-25 (what is a good Dice, given rater variance):** Inter-rater Dice on FLAIR 0.70-0.81, intra-rater 0.72-0.86, only 0.51 at <= 5 ml lesion load; the 2017 winner (0.80) sits inside the human band. Report Dice by load class plus lesion F1 ([human-rater-variance-and-good-dice-for-wmh-2026-10](findings/human-rater-variance-and-good-dice-for-wmh-2026-10.md)).
