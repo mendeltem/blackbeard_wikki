@@ -4,7 +4,9 @@ Goal: a narrated film as good as `examples/clara_working_station`. Read `README.
 
 ## Order of work
 1. Read the source. Write `beats/<key>_beats.json`: 4 to 6 spoken blocks per chapter, 1 to 3 short sentences each. Plain words. Numbers only if they stand in the source. Say abbreviations as a listener would hear them. No claim that is not in the source. Respell hard words with the table in [PRONUNCIATION.md](PRONUNCIATION.md); if a word is not there and you are not sure, ask the user before the voice step.
-2. `python <tool>/src/voice.py .` with the tts env, to get the exact durations.
+   Give each beat a `role` and mark words with `{name}` (see "Teach, do not only show" and "Word-exact timing" below). Then `python <tool>/src/script_check.py . [--context earlier,chapters]`: shape, pace and a novice reader on Clé; fix what is real. Use `--no-reader` when the narration holds anything that must not leave Alita.
+2. `python <tool>/src/voice.py .` with the tts env, to get the exact durations and the time of every word.
+   Then `python <tool>/src/say_check.py .` (tts env): it lists words the voice had to guess and writes `check/say_check.mp3`. Send the user that file and the table; put the answers into `pronounce.json`. Do not render the full film while words are open.
 3. Write `chapters.py` and `chapters.txt`.
 4. `AUDIT=1 Q=low <tool>/src/render.sh .`, then `python <tool>/src/film_gate.py . source.md`. Fix what it reports.
 5. `python <tool>/src/sheets.py .` and look at every `check/sheet_*.png`. The gate cannot see beauty; you can.
@@ -18,6 +20,21 @@ Goal: a narrated film as good as `examples/clara_working_station`. Read `README.
 - **Show the idea, do not write the sentence.** Do not print the narration on screen. A label has few words. Show amounts as bars or dots at true scale, flows as arrows with a moving dot, choices as branches, overlap as two circles.
 - **Real numbers only.** A picture without real values says "schematic".
 - **Fill the frame.** x from -6.8 to 6.8, y from -3.6 to 3.0. No small cluster in a corner, no text on text, no line through text.
+
+## Teach, do not only show (user 2026-11-09)
+A chapter that teaches follows one shape, written as `role` in each beat: **question** (what are we trying to find out?) -> **guess** (the intuitive wrong idea, said kindly) -> **fails** (why it breaks, with the real data) -> **idea** -> **example** (real numbers) -> **recap** (one picture that sums it up). A **predict** beat may take the place of the guess: the voice asks, the screen shows two to four choices, and a countdown runs through a silent pause (`"pause": 5` in the beat); the next beat is **reveal**. Use one or two per chapter where the answer is not obvious. `script_check.py` wants every chapter to open with a question and close with a recap, and a wrong idea broken in at least every second chapter.
+Why: naming and breaking the common wrong idea teaches more than a clear explanation alone (Muller, Sharma & Reimann 2008, Science Education 92:278-296, doi:10.1002/sce.20244; abstract and the author's thesis checked 2026-11-09, full text not read); questions inside a video lecture halved mind wandering and improved recall (Szpunar et al. 2013, PNAS 110:6313, https://pmc.ncbi.nlm.nih.gov/articles/PMC3631699/).
+```python
+self.beat(2); ch = self.predict("As the cut off rises,\nwhat happens to Dice?", ["keeps rising", "rises, then falls", "keeps falling"])
+self.beat(3); ...; self.at("ans"); self.reveal(ch, 1)          # side=LEFT or UP for the tick
+```
+
+## Word-exact timing (2026-11-09)
+Write `{name}` before a word in the beat text (it is not spoken); in the chapter, `self.at("name")` waits until that word is spoken. Kokoro gives the time of every word, so this is exact, unlike `self.to(share)`, which guesses from the share of the beat. Use a mark wherever a thing appears because it is named. Showing a thing at the moment it is named is the strongest of Mayer's design rules (temporal contiguity, d = 1.30 in the review by Mayer and colleagues, doi:10.1111/jcal.12197). A missing mark is a gate problem.
+Example (BIANCA pilot, `~/data/work/bianca-film-v4`): `"Orange voxels are in both: {tp}the overlap ..."` and `self.at("tp"); self.play(FadeIn(line_tp))`.
+
+## Pronunciation (2026-11-09)
+`pronounce.json` holds written form -> spoken form; `voice.py` applies it, so beats can keep the real spelling. `say_check.py` lists words that are not in Kokoro's dictionary (espeak guessed them), capitals read letter by letter, letters mixed with digits, and respellings the user has not heard yet, and writes `check/say_check.mp3`: "word N" and then the sentence around it. The user answers by number; confirmed forms go into `confirmed` (or `ok` for a word that is fine as it is) and into PRONUNCIATION.md. First catch (BIANCA film v3): lowercase "bianca" in "make bianca mask" sounded different from the confirmed "Bianka"; "Fazekas" and "hyperintensities" were guesses.
 
 ## Make room before you add
 Plan each chapter on paper first: where does every box stand at the end of each beat? Boxes must not touch or overlap unless one lies wholly inside the other, and a label must not cross a box edge. Nothing above y = 3.0, where the title sits. If a new thing has no room, move or remove the old things first with an animation; never drop it on top. The gate checks this after every `self.to` and at every beat end.

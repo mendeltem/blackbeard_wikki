@@ -43,6 +43,9 @@ Spellings already in finished films (HPC tutorial, 2026-11-06). They sound right
 | FSL | F S L |
 | SC hub | S C hub |
 
+## Machine-readable list and check (2026-11-09)
+`pronounce.json` is the same table for the tools: `voice.py` applies it before speaking, and `src/say_check.py <film>` lists the words to hear and makes a listening file. Keep both files in step.
+
 ## How to use it
 
 1. Before the voice step, search the spoken text for capitals, digits mixed with letters, command names and dots

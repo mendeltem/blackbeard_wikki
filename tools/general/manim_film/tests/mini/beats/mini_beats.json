@@ -1,1 +1,1 @@
-["A question comes in.", "One checked answer comes out."]
+["A question comes in.", {"say": "One {ans}checked answer comes out.", "role": "recap"}]

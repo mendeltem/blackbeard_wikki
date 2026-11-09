@@ -1,0 +1,29 @@
+{
+ "_about": "Written form -> spoken form, applied by src/beats.py before the voice step (whole words, case-sensitive). 'confirmed' = the user heard it and agreed; 'unheard' = in use, still to be confirmed by ear. Human-readable table: PRONUNCIATION.md. New hard words: ask the user first (say_check.py lists them).",
+ "confirmed": {
+  "Clé": "Kleh",
+  "BIANCA": "Bianka",
+  "Bianca": "Bianka",
+  "PYTHONNOUSERSITE": "python no user site",
+  "CUDA": "Kuda",
+  "A100": "A one hundred",
+  "H100": "H one hundred",
+  "H200": "H two hundred",
+  "L40S": "L forty S",
+  "Apptainer": "app-tainer",
+  "AFNI": "af-nee",
+  "ANTs": "ants",
+  "microbleednet": "micro bleed net",
+  "truenet": "true net",
+  "cu12": "C U twelve"
+ },
+ "unheard": {
+  "sbatch": "s batch",
+  "srun": "s run",
+  "scancel": "s cancel",
+  "squeue": "s queue",
+  "scrontab": "s crontab",
+  "nvidia-smi": "nvidia s m i",
+  "make_bianca_mask": "make bianka mask"
+ }
+}

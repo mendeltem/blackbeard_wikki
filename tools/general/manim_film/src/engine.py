@@ -78,7 +78,7 @@ class Film(Scene):
 
     def tear_down(self):
         if AUDIT:
-            self._snapshot("end"); (HERE / "check").mkdir(exist_ok=True); (HERE / f"check/{self.key}.audit.json").write_text(json.dumps({"key": self.key, "seconds": self.starts[-1] + self.lens[-1], "beats": len(self.lens), "plays": getattr(self, "_plays", []), "starts": self.starts, "lit": Box.lit, "rings": getattr(self, "_rings", 0), "travel": getattr(self, "_travel", 0), "clears": getattr(self, "_clears", 0), "late": getattr(self, "_late", 0.0), "problems": getattr(self, "_problems", []), "fill": getattr(self, "_fill", []), "off": getattr(self, "_off", [])}))
+            self._snapshot("end"); (HERE / "check").mkdir(exist_ok=True); (HERE / f"check/{self.key}.audit.json").write_text(json.dumps({"key": self.key, "seconds": self.starts[-1] + self.lens[-1], "beats": len(self.lens), "plays": getattr(self, "_plays", []), "starts": self.starts, "lit": Box.lit, "rings": getattr(self, "_rings", 0), "travel": getattr(self, "_travel", 0), "clears": getattr(self, "_clears", 0), "late": getattr(self, "_late", 0.0), "problems": getattr(self, "_problems", []), "marks_used": getattr(self, "_marks_used", 0), "predicts": getattr(self, "_predicts", 0), "fill": getattr(self, "_fill", []), "off": getattr(self, "_off", [])}))
 
     def _snapshot(self, where):
         """Audit: looks at what is on screen. Text off the frame, text on text, lines through text, how full the screen is."""
@@ -125,8 +125,9 @@ class Film(Scene):
             if where == "end of beat": self._off = getattr(self, "_off", []) + [round(max(abs(g.get_center()[0]) / 7.1, abs(g.get_center()[1] + .3) / 3.7), 3)]
 
     def setup(self):
-        beats = json.loads((HERE / f"beats/{self.key}_beats.json").read_text()); d = [STATE[f"{self.key}_{i}.wav"]["seconds"] for i in range(len(beats))]
+        n = len(json.loads((HERE / f"beats/{self.key}_beats.json").read_text())); S = [STATE[f"{self.key}_{i}.wav"] for i in range(n)]; d = [s["seconds"] for s in S]
         self.starts = [sum(d[:i]) for i in range(len(d))]; self.lens = d; self.current = 0; self.caption = None
+        self.speech = [s.get("speech", s["seconds"] - .45) for s in S]; self.marks = [s.get("marks", {}) for s in S]   # 09.11.2026: word times (voice.py)
 
     def now(self):
         return self.renderer.time
@@ -147,6 +148,36 @@ class Film(Scene):
         """Wait until this share of the current beat has been spoken."""
         self.until(self.starts[self.current] + share * self.lens[self.current])
         if AUDIT: self._snapshot(f"at {share}")
+
+    def at(self, name):
+        """Wait until the word marked {name} in this beat's text is spoken (word-exact, 09.11.2026)."""
+        m = self.marks[self.current]
+        if name not in m:
+            self._problems = getattr(self, "_problems", []) + [f"no mark {{{name}}} in {self.key} beat {self.current} (voice.py run? marker in the text?)"]; return
+        self._marks_used = getattr(self, "_marks_used", 0) + 1; self.until(self.starts[self.current] + m[name])
+        if AUDIT: self._snapshot(f"at {{{name}}}")
+
+    def predict(self, question, choices, colors=None, y=.2, w=3.4):
+        """Pause and predict: the question and its choices; after the speech a ring counts down the beat's silent pause.
+        The beat needs "pause" (seconds) in its beat object. Returns the choice boxes; light the answer with reveal()."""
+        self._predicts = getattr(self, "_predicts", 0) + 1; cols = colors or [BLUE_, TEAL_, PURPLE_, ORANGE_][:len(choices)]
+        q = T(question, 30, INK).move_to([0, 2.1, 0]); bs = VGroup(*[Box(c, k, w, 1.0, 24) for c, k in zip(choices, cols)]).arrange(RIGHT, buff=.45).move_to([0, y, 0])
+        if bs.width > 13.4: bs.scale_to_fit_width(13.4)
+        self.play(FadeIn(q, shift=DOWN * .15), run_time=.5); self.play(LaggedStart(*[FadeIn(b, shift=UP * .15) for b in bs], lag_ratio=.25), run_time=.9)
+        self.until(self.starts[self.current] + self.speech[self.current])
+        left = self.starts[self.current] + self.lens[self.current] - self.now() - .35
+        if left > .8:
+            ring = Arc(.38, PI / 2, TAU, color=YELLOW_, stroke_width=7).move_to([0, -1.75, 0]); lab = T("pause and think", 22, DIM).next_to(ring, DOWN, buff=.2)
+            self.play(Create(ring), FadeIn(lab), run_time=.3); self.play(Uncreate(ring), run_time=left - .3, rate_func=linear); self.play(FadeOut(lab), run_time=.2)
+        self.predict_q = q
+        return bs
+
+    def reveal(self, choices, k, note=None, side=UP):
+        """Light the right choice, dim the others, a tick beside it (side = UP, LEFT, ...); note = one short line under it."""
+        anims = [choices[k].on()] + [b.mute() for j, b in enumerate(choices) if j != k]
+        t = tick(GREEN_, .45).next_to(choices[k], side, buff=.15); self.play(*anims, Create(t), run_time=.6)
+        if note: self.say(note, GREEN_, y=-1.6)
+        return t
 
     def finish(self):
         self.until(self.starts[-1] + self.lens[-1])

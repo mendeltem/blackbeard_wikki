@@ -46,8 +46,10 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <p>Goal: a narrated film as good as <code>examples/clara_working_station</code>. Read <code>README.md</code>, then <code>src/engine.py</code>, then <code>examples/clara_working_station/chapters_a.py</code> (class What and class Parts) before writing anything. Copy the way those chapters think, not their text.</p>
 <h2>Order of work</h2>
 <ol>
-<li>Read the source. Write <code>beats/&lt;key&gt;_beats.json</code>: 4 to 6 spoken blocks per chapter, 1 to 3 short sentences each. Plain words. Numbers only if they stand in the source. Say abbreviations as a listener would hear them. No claim that is not in the source. Respell hard words with the table in <a href="pronunciation.html">PRONUNCIATION.md</a>; if a word is not there and you are not sure, ask the user before the voice step.</li>
-<li><code>python &lt;tool&gt;/src/voice.py .</code> with the tts env, to get the exact durations.</li>
+<li>Read the source. Write <code>beats/&lt;key&gt;_beats.json</code>: 4 to 6 spoken blocks per chapter, 1 to 3 short sentences each. Plain words. Numbers only if they stand in the source. Say abbreviations as a listener would hear them. No claim that is not in the source. Respell hard words with the table in <a href="pronunciation.html">PRONUNCIATION.md</a>; if a word is not there and you are not sure, ask the user before the voice step.
+   Give each beat a <code>role</code> and mark words with <code>{name}</code> (see "Teach, do not only show" and "Word-exact timing" below). Then <code>python &lt;tool&gt;/src/script_check.py . [--context earlier,chapters]</code>: shape, pace and a novice reader on Clé; fix what is real. Use <code>--no-reader</code> when the narration holds anything that must not leave Alita.</li>
+<li><code>python &lt;tool&gt;/src/voice.py .</code> with the tts env, to get the exact durations and the time of every word.
+   Then <code>python &lt;tool&gt;/src/say_check.py .</code> (tts env): it lists words the voice had to guess and writes <code>check/say_check.mp3</code>. Send the user that file and the table; put the answers into <code>pronounce.json</code>. Do not render the full film while words are open.</li>
 <li>Write <code>chapters.py</code> and <code>chapters.txt</code>.</li>
 <li><code>AUDIT=1 Q=low &lt;tool&gt;/src/render.sh .</code>, then <code>python &lt;tool&gt;/src/film_gate.py . source.md</code>. Fix what it reports.</li>
 <li><code>python &lt;tool&gt;/src/sheets.py .</code> and look at every <code>check/sheet_*.png</code>. The gate cannot see beauty; you can.</li>
@@ -63,6 +65,17 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li><strong>Real numbers only.</strong> A picture without real values says "schematic".</li>
 <li><strong>Fill the frame.</strong> x from -6.8 to 6.8, y from -3.6 to 3.0. No small cluster in a corner, no text on text, no line through text.</li>
 </ul>
+<h2>Teach, do not only show (user 2026-11-09)</h2>
+<p>A chapter that teaches follows one shape, written as <code>role</code> in each beat: <strong>question</strong> (what are we trying to find out?) -&gt; <strong>guess</strong> (the intuitive wrong idea, said kindly) -&gt; <strong>fails</strong> (why it breaks, with the real data) -&gt; <strong>idea</strong> -&gt; <strong>example</strong> (real numbers) -&gt; <strong>recap</strong> (one picture that sums it up). A <strong>predict</strong> beat may take the place of the guess: the voice asks, the screen shows two to four choices, and a countdown runs through a silent pause (<code>"pause": 5</code> in the beat); the next beat is <strong>reveal</strong>. Use one or two per chapter where the answer is not obvious. <code>script_check.py</code> wants every chapter to open with a question and close with a recap, and a wrong idea broken in at least every second chapter.
+Why: naming and breaking the common wrong idea teaches more than a clear explanation alone (Muller, Sharma &amp; Reimann 2008, Science Education 92:278-296, doi:10.1002/sce.20244; abstract and the author's thesis checked 2026-11-09, full text not read); questions inside a video lecture halved mind wandering and improved recall (Szpunar et al. 2013, PNAS 110:6313, https://pmc.ncbi.nlm.nih.gov/articles/PMC3631699/).</p>
+<pre><code class="language-python">self.beat(2); ch = self.predict(&quot;As the cut off rises,\nwhat happens to Dice?&quot;, [&quot;keeps rising&quot;, &quot;rises, then falls&quot;, &quot;keeps falling&quot;])
+self.beat(3); ...; self.at(&quot;ans&quot;); self.reveal(ch, 1)          # side=LEFT or UP for the tick
+</code></pre>
+<h2>Word-exact timing (2026-11-09)</h2>
+<p>Write <code>{name}</code> before a word in the beat text (it is not spoken); in the chapter, <code>self.at("name")</code> waits until that word is spoken. Kokoro gives the time of every word, so this is exact, unlike <code>self.to(share)</code>, which guesses from the share of the beat. Use a mark wherever a thing appears because it is named. Showing a thing at the moment it is named is the strongest of Mayer's design rules (temporal contiguity, d = 1.30 in the review by Mayer and colleagues, doi:10.1111/jcal.12197). A missing mark is a gate problem.
+Example (BIANCA pilot, <code>~/data/work/bianca-film-v4</code>): <code>"Orange voxels are in both: {tp}the overlap ..."</code> and <code>self.at("tp"); self.play(FadeIn(line_tp))</code>.</p>
+<h2>Pronunciation (2026-11-09)</h2>
+<p><code>pronounce.json</code> holds written form -&gt; spoken form; <code>voice.py</code> applies it, so beats can keep the real spelling. <code>say_check.py</code> lists words that are not in Kokoro's dictionary (espeak guessed them), capitals read letter by letter, letters mixed with digits, and respellings the user has not heard yet, and writes <code>check/say_check.mp3</code>: "word N" and then the sentence around it. The user answers by number; confirmed forms go into <code>confirmed</code> (or <code>ok</code> for a word that is fine as it is) and into PRONUNCIATION.md. First catch (BIANCA film v3): lowercase "bianca" in "make bianca mask" sounded different from the confirmed "Bianka"; "Fazekas" and "hyperintensities" were guesses.</p>
 <h2>Make room before you add</h2>
 <p>Plan each chapter on paper first: where does every box stand at the end of each beat? Boxes must not touch or overlap unless one lies wholly inside the other, and a label must not cross a box edge. Nothing above y = 3.0, where the title sits. If a new thing has no room, move or remove the old things first with an animation; never drop it on top. The gate checks this after every <code>self.to</code> and at every beat end.</p>
 <h2>Charts tell the truth</h2>
@@ -110,5 +123,5 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li>A box from an early beat that is never faded collides with later labels ("text on text"); fade every helper box in the beat where its job ends.</li>
 <li>A label placed <code>next_to</code> a row of arrows can sit on the arrows; put it above or below the thing it names.</li>
 </ul></div></main>
-<footer><div class="wrap">Erzeugt 2026-11-06 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-11-09 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../../../search.js"></script></body></html>

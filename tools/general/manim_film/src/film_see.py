@@ -6,6 +6,7 @@ Own calibration 2026-11-04: on an approved film most raw answers were false alar
 import base64, io, json, os, random, re, subprocess, sys, time, urllib.request
 from collections import Counter
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent)); import beats as B   # 09.11.2026: beats may be objects
 from PIL import Image, ImageDraw, ImageFont
 F = Path(sys.argv[1]).resolve(); arg = lambda n, d=None: sys.argv[sys.argv.index(n) + 1] if n in sys.argv else d
 MODEL = arg("--model", "vision"); ONLY = arg("--only"); MAX = int(arg("--max-beats", 0)); PLANTS = 3; FF = os.environ.get("FFMPEG", str(Path.home() / "miniconda3/envs/tts/bin/ffmpeg"))
@@ -65,7 +66,7 @@ for line in (F / "chapters.txt").read_text().splitlines():
     if ONLY and key != ONLY: continue
     vids = sorted(F.glob(f"media/videos/**/{name}.mp4"), key=lambda p: p.stat().st_mtime)
     if not vids: sys.exit(f"no video for {name}: render first")
-    texts = json.loads((F / f"beats/{key}_beats.json").read_text()); t = 0
+    texts = [B.plain(b["say"]) for b in B.load(F, key)]; t = 0
     for i, spoken in enumerate(texts):
         s = st[f"{key}_{i}.wav"]["seconds"]; strips.append((key, i, spoken, [frame(vids[-1], t + s * x) for x in (.25, .5, .75, .97)])); t += s
 if MAX: strips = strips[:MAX]
