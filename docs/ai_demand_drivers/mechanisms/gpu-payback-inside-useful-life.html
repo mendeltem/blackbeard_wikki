@@ -1,0 +1,117 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>GPU payback sits well inside the useful life, so buyers keep ordering</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">ai_demand_drivers</a> › <a href="../index.html#mechanisms">Mechanismus</a></div><h1>GPU payback sits well inside the useful life, so buyers keep ordering</h1><div class="meta"><span>Typ</span><span>Mechanismus</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-10</span><span>Herkunft</span><span>Chat with Mendel (Claude Code), 2026-11-10; theses Mendel, arithmetic Claude</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="older-hbm-hardware-holds-value.html">Older HBM hardware holds its value: hyperscalers retire it, capex-limited buyers absorb it</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="financing-limit.html">Finanzierungsgrenze</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="refresh-instead-of-new-build.html">Refresh statt Neubau</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../open_checks/used-accelerator-and-workstation-prices.html">Used and rented accelerator prices, workstation VRAM prices: primary readings</a> <span class="muted small">(ai_demand_drivers)</span><br><a href="../../compute_bottlenecks/mechanisms/allocation-beats-datasheet.html">Zuteilung schlägt Datenblatt</a> <span class="muted small">(compute_bottlenecks)</span><br><a href="../../ai_buyers/risks/circular-financing.html">Zirkulaere Finanzierung zwischen Kaeufer und Lieferant</a> <span class="muted small">(ai_buyers)</span></span><span>Verwiesen von</span><span><a href="../../ai_buyers/risks/circular-financing.html">Zirkulaere Finanzierung zwischen Kaeufer und Lieferant</a> <span class="muted small">(ai_buyers)</span><br><a href="../open_checks/nvidia-cycle-position-2026-11.html">Nvidia: beginning or middle of the cycle? (check, Nov 2026)</a> <span class="muted small">(ai_demand_drivers)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/ai_demand_drivers/mechanisms/gpu-payback-inside-useful-life.md">knowledge/ai_demand_drivers/mechanisms/gpu-payback-inside-useful-life.md</a></span></div><h2>Statement</h2>
+<p>Theses Mendel (2026-11-10): "A100 and older are used like never before, in our data centre too, and get dearer."
+"Many H100 still work." "Neoclouds like CoreWeave finance themselves within two years." "Nvidia GPUs are
+general-purpose and fungible; ASICs are specialised and mostly for in-house use (Google excepted)."</p>
+<p>Arithmetic (Claude, 80 % utilisation, all-in cost per H100 incl. server, network and data-centre share
+~40 to 55 kUSD, power ~1 kW at ~0.10 USD/kWh = ~0.7 kUSD/year, negligible):</p>
+<table>
+<thead>
+<tr>
+<th>Rental price</th>
+<th>Revenue per GPU-year</th>
+<th>All-in payback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 USD/h (2023 on-demand peak)</td>
+<td>~56 kUSD</td>
+<td>~1 year</td>
+</tr>
+<tr>
+<td>4 USD/h (2023/24 contracts)</td>
+<td>~28 kUSD</td>
+<td>~1.5 to 2 years</td>
+</tr>
+<tr>
+<td>2.35 to 2.50 USD/h (2025/26)</td>
+<td>~16 to 17.5 kUSD</td>
+<td>~2.5 to 3 years</td>
+</tr>
+</tbody>
+</table>
+<p>Useful life observed beyond the write-off period: A100 launched May 2020 (about 6.5 years in Nov 2026) and is still
+fully booked; V100 (2017) still runs in research clusters. Hyperscalers depreciate servers over 5 to 6 years.
+Failure rate under full training load: Llama 3 run on 16,384 H100 for 54 days had about 220 GPU or HBM faults
+(~1.3 %), replaced part by part, cluster kept running.</p>
+<p>Chain:</p>
+<pre><code>payback 1 to 3 years  &lt;  useful life 6+ years  -&gt;  each generation earns its price 2 to 5 times
+-&gt; buyers order the next generation  -&gt; demand does not wait for the old fleet to wear out
+fungible GPU (any model, framework, workload; rentable, resellable)  -&gt; high residual value
+-&gt; lower risk for the buyer and collateral for debt-financed neoclouds; an ASIC loses value when the workload changes
+</code></pre>
+<h2>Carries</h2>
+<p>That the "GPUs age fast, capex cannot pay back" argument has not held for the A100 and H100 generations: the
+economic life exceeds the accounting life. Why neoclouds and labs buy aggressively at scarcity prices. Why Nvidia
+invests in independent GPU-only buyers (CoreWeave): hyperscalers are customers and rivals (TPU, Trainium, Maia, MTIA).</p>
+<h2>Does not carry</h2>
+<p>That H100 or B200 will age like the A100: too young to know. That neoclouds are profitable: CoreWeave reported high
+adjusted EBITDA margins but net losses from interest and depreciation (2024 about -0.9 bn USD, unverified at the
+filing). Rental prices fell in 2025 before rising again (see older-hbm-hardware-holds-value); payback on spot rates
+is not payback on contracts. Revenue for Nvidia from old fleets: none, the rent goes to the fleet owner.</p>
+<h2>Break indicator</h2>
+<p>H100 one-year rental falls below 1.70 USD/GPU-h (Oct 2025 level) while Rubin ramps: payback then moves past 4 years
+on new contracts. Or a neocloud fails to refinance or renew contracts at old rates.</p>
+<h2>Source</h2>
+<ul>
+<li>Llama 3 failures: Grattafiori et al. 2024, "The Llama 3 Herd of Models", arXiv:2407.21783 (section on reliability).</li>
+<li>A100 launch: Nvidia GTC keynote, 14 May 2020 (press release, Nvidia newsroom).</li>
+<li>Rental prices: see sources in <a href="older-hbm-hardware-holds-value.html">older-hbm-hardware-holds-value</a>; 8 USD/h 2023 peak is a commonly quoted on-demand figure, unverified.</li>
+<li>CoreWeave capacity guarantee by Nvidia (~6.3 bn USD, 2025) and net loss 2024: CoreWeave S-1 and 8-K filings, unverified here.</li>
+<li>Payback table: own arithmetic, 2026-11-10.</li>
+</ul>
+<h2>Linked</h2>
+<ul>
+<li><a href="older-hbm-hardware-holds-value.html">older-hbm-hardware-holds-value</a></li>
+<li><a href="financing-limit.html">financing-limit</a></li>
+<li><a href="refresh-instead-of-new-build.html">refresh-instead-of-new-build</a></li>
+<li><a href="../open_checks/used-accelerator-and-workstation-prices.html">used-accelerator-and-workstation-prices</a></li>
+<li><a href="../../compute_bottlenecks/mechanisms/allocation-beats-datasheet.html">allocation-beats-datasheet</a></li>
+<li><a href="../../ai_buyers/risks/circular-financing.html">circular-financing</a></li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-10 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

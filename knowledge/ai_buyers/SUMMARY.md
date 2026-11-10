@@ -8,6 +8,8 @@ Wer die Rechenleistung kauft. Quellenlage schwächer: Modellanbieter sind privat
 
 **New 2026-10-16 (vorschlag, press report, unconfirmed):** Tencent leases ~100,000 AI chips from Oracle in Southeast Asia, 5 years, ~7 bn USD, ~30 % upfront (FT, 2026-10-01). Export controls reroute Chinese demand through third-country clouds instead of removing it. Implied ~1.60 USD per chip-hour, below the H100 one-year index. Example for axiom 3: buyers outside the US, and a customer prepayment financing a money-limited intermediary.
 
+**New 2026-11-10 (vorschlag, These Mendel):** Circular deals are an early-market control tool (GE 1905, GMAC 1919) and dangerous only when vendor money carries the revenue (Lucent 2000). Size test: OpenAI deal ~10 to 30 bn USD per year vs Nvidia growth ~+211 bn per year on Mendel's table, at most ~5 to 15 %.
+
 **Getragen:** Risiko zirkuläre Finanzierung, Geldgeber sind zugleich Lieferanten.
 
 **Offen:** Anthropic S-1 gegenprüfen, sobald öffentlich.

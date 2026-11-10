@@ -35,3 +35,5 @@ Stand 2026-10-17. Ein Eintrag je Datei.
 | [TSMC 3Q26: revenue above guidance, growth from price and mix, not volume](findings/tsmc-q3-2026-results.md) | befund | getragen |
 | [TSMC 3Q26 call: management says AI demand exceeds supply, 2026 growth about 44%](findings/tsmc-q3-2026-call-outlook.md) | befund | vorschlag |
 | [GB300 ramp timing and the Rubin handover](findings/gb300-ramp-timing-and-rubin-handover.md) | befund | vorschlag |
+| [GPU payback sits well inside the useful life](mechanisms/gpu-payback-inside-useful-life.md) | mechanismus | vorschlag |
+| [Nvidia: beginning or middle of the cycle? (Nov 2026)](open_checks/nvidia-cycle-position-2026-11.md) | pruefpunkt | offen |

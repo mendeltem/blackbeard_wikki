@@ -1023,6 +1023,17 @@
 "src": "knowledge/ai_demand_drivers/mechanisms/financing-limit.md"
 },
 {
+"t": "GPU payback sits well inside the useful life, so buyers keep ordering",
+"p": "ai_demand_drivers/mechanisms/gpu-payback-inside-useful-life.html",
+"a": "ai_demand_drivers",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-11-10",
+"x": "",
+"id": "gpu-payback-inside-useful-life",
+"src": "knowledge/ai_demand_drivers/mechanisms/gpu-payback-inside-useful-life.md"
+},
+{
 "t": "Induzierte Innovation unter Knappheit",
 "p": "ai_demand_drivers/mechanisms/induced-innovation.html",
 "a": "ai_demand_drivers",
@@ -1120,6 +1131,17 @@
 "x": "Offener Rechenschritt: HBM-Inhalt je Beschleuniger geteilt durch Leistungsaufnahme, über die letzten drei Beschleunigergenerationen.",
 "id": "hbm-gb-per-mw",
 "src": "knowledge/ai_demand_drivers/open_checks/hbm-gb-per-mw.md"
+},
+{
+"t": "Nvidia: beginning or middle of the cycle? (check, Nov 2026)",
+"p": "ai_demand_drivers/open_checks/nvidia-cycle-position-2026-11.html",
+"a": "ai_demand_drivers",
+"y": "Prüfpunkt",
+"s": "offen",
+"d": "2026-11-10",
+"x": "",
+"id": "nvidia-cycle-position-2026-11",
+"src": "knowledge/ai_demand_drivers/open_checks/nvidia-cycle-position-2026-11.md"
 },
 {
 "t": "Rubin-Anteil an der Blackwell-Basis: nach Stück und nach FLOPS",
