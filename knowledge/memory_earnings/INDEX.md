@@ -20,3 +20,4 @@ Stand 2026-10-16. Ein Eintrag je Datei.
 | [Rückkaufhebel bei niedrigem KGV](mechanisms/buyback-leverage-at-low-pe.md) | mechanismus | getragen |
 | [Niedriges KGV am Gewinngipfel](risks/low-pe-at-earnings-peak.md) | risiko | getragen |
 | [Micron FQ4: HBM gegen konventionelles DRAM](open_checks/micron-fq4-hbm-split.md) | pruefpunkt | offen |
+| [Tägliches Speicher-Preis- und Nachfrage-Log (CSV)](data/README.md) | daten | täglich |

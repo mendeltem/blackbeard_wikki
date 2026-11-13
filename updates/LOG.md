@@ -1,3 +1,4 @@
+2026-11-13 | claude | knowledge/memory_earnings/data/README.md, INDEX.md | daily memory price log (TrendForce DRAM/NAND, 36 items) + demand news log, written 06:00 by werkzeuge/speicher-indikatoren
 2026-11-10 | claude | knowledge/ai_demand_drivers/mechanisms/gpu-payback-inside-useful-life.md, knowledge/ai_demand_drivers/open_checks/nvidia-cycle-position-2026-11.md, knowledge/ai_buyers/risks/circular-financing.md | Nvidia chat with Mendel: GPU payback vs useful life, cycle position (Perez), circular financing as early-market control with size test
 2026-11-06 | claude | tools/general/manim_film/PRONUNCIATION.md | user confirmed 10 more spoken forms (A100, H100, L40S, PGPU, Apptainer, AFNI, ANTs, ...); capitals for letter acronyms (faster than spaced letters)
 2026-11-06 | claude | knowledge/brain_volumetry/findings/stroke-volumetry-open-gaps-and-next-tests-2026-11.md | research round: gaps in stroke volumetry literature and ranked next tests

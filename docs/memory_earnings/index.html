@@ -43,7 +43,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › memory_earnings</div><h1>memory_earnings</h1><p>Gemeldete Zahlen der Speicherhersteller: Gewinn, FCF, Ausschüttung, Bewertung</p><p class="muted small">Investieren, SK Hynix, Micron, Samsung, Quartalszahlen, KGV, Rückkauf</p>
-<div class="stripe"><i class="ok" style="width:50.0%" title="getragen: 7"></i><i class="warn" style="width:42.9%" title="vorschlag: 6"></i><i class="info" style="width:7.1%" title="offen: 1"></i></div><div class="counts"><span class="ok">7 getragen</span> <span class="warn">6 vorschlag</span> <span class="info">1 offen</span></div><div class="small"><p>Was aus gemeldeten Quartalszahlen der Speicherhersteller (SK Hynix, Micron, Samsung) für Gewinn, freien Cashflow, Ausschüttung und Bewertung folgt. Die Angebotsseite steht in <a href="../memory_supply/index.html">memory_supply</a>, die Nachfrageseite in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, dort gilt auch die Regel <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a>.</p>
+<div class="stripe"><i class="ok" style="width:46.7%" title="getragen: 7"></i><i class="warn" style="width:40.0%" title="vorschlag: 6"></i><i class="" style="width:6.7%" title="?: 1"></i><i class="info" style="width:6.7%" title="offen: 1"></i></div><div class="counts"><span class="ok">7 getragen</span> <span class="warn">6 vorschlag</span> <span class="">1 ?</span> <span class="info">1 offen</span></div><div class="small"><p>Was aus gemeldeten Quartalszahlen der Speicherhersteller (SK Hynix, Micron, Samsung) für Gewinn, freien Cashflow, Ausschüttung und Bewertung folgt. Die Angebotsseite steht in <a href="../memory_supply/index.html">memory_supply</a>, die Nachfrageseite in <a href="../ai_demand_drivers/index.html">ai_demand_drivers</a>, dort gilt auch die Regel <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">Nachfrage ist nicht Earnings</a>.</p>
 <p>Stand 2026-10-16. Ein Eintrag je Datei.</p></div>
 <h2 id="kurzstand">Kurzstand</h2><div class="summary"><p>Stand 2026-10-16. Prefill für Chats und Agenten. Details in <a href="index.html">INDEX.md</a>. Status je Eintrag dort.</p>
 <p>Gemeldete Zahlen von SK Hynix, Micron, Samsung: Gewinn, FCF, Ausschüttung, Bewertung.</p>
@@ -795,6 +795,52 @@ zweite Säule schwächer als hier gelesen.</p>
 <ul>
 <li><a href="findings/micron-fq4-2026-growth-deceleration.html">micron-fq4-2026-growth-deceleration</a></li>
 <li><a href="mechanisms/peer-beat-transfers-weakly.html">peer-beat-transfers-weakly</a></li>
-</ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-11-10 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+</ul></div></details><h2 id="data">data <span class="muted small">(1)</span></h2><details class="entry" id="README"><summary><span class="type">data</span><span class="t"><a href="data/README.html">Daily memory price and AI demand log</a></span><span class="badge ">ohne Status</span><span class="muted small"></span></summary><div class="body"><p class="small muted">Herkunft:  · <a href="data/README.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/memory_earnings/data/README.md">Markdown</a></p><p>Written every day at 06:00 by <code>werkzeuge/speicher-indikatoren</code> on the workstation (since 2026-11-13; moved from a claude.ai routine). Only observed values and reported facts, no own forecasts.</p>
+<h2>speicher_indikatoren_log.csv: one row per day and price item</h2>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>date</td>
+<td>day of the run</td>
+</tr>
+<tr>
+<td>obs_date</td>
+<td>"Last Update" of the TrendForce table; weekly and contract values stay old for days or weeks</td>
+</tr>
+<tr>
+<td>category</td>
+<td>DRAM_spot, DRAM_contract, DRAM_module_weekly, GDDR_weekly, NAND_spot, NAND_contract, NAND_wafer_weekly, memory_card_spot, SSD_contract</td>
+</tr>
+<tr>
+<td>indicator</td>
+<td>item name as TrendForce prints it</td>
+</tr>
+<tr>
+<td>value</td>
+<td>session average (contract tables: average), USD as shown; TrendForce does not print the currency on the page</td>
+</tr>
+<tr>
+<td>change</td>
+<td>change printed next to it ("Session Change" or "Average Change"); for daily spot the change to the previous session</td>
+</tr>
+<tr>
+<td>source, tier, url</td>
+<td>TrendForce price page; tier 2 = established secondary source</td>
+</tr>
+<tr>
+<td>note</td>
+<td>high and low of the table, update time (GMT+8)</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://www.trendforce.com/price/dram">TrendForce DRAM prices</a> (DRAMeXchange spot and contract, module, GDDR) and <a href="https://www.trendforce.com/price/flash">TrendForce NAND prices</a> (NAND spot and contract, wafer, memory card, PC-client SSD contract). The tables are parsed by rule from the page; no language model touches a number.</p>
+<h2>nachfrage_meldungen_log.csv: at most five new reports per day</h2>
+<p>Topics: capex, accelerator, hbm, nand_ssd, contract, policy_fab. Found by plain web search; a language model (Clé) only picks and summarises from the search results and must copy the URL. <code>tier</code> is set from the domain, not by the model: 1a filings and investor relations, 1b company newsroom, 2 TrendForce and established press, 3 everything else (blogs, aggregators). A tier-3 report is a lead, not a finding (see <a href="../ai_demand_drivers/rules/demand-is-not-earnings.html">demand is not earnings</a>). A URL is logged only once.</p></div></details></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-13 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

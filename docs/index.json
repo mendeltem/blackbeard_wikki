@@ -3091,6 +3091,17 @@
 "src": "knowledge/manufacturing_costs/risks/plausible-but-wrong-results.md"
 },
 {
+"t": "Daily memory price and AI demand log",
+"p": "memory_earnings/data/README.html",
+"a": "memory_earnings",
+"y": "data",
+"s": "",
+"d": "",
+"x": "",
+"id": "README",
+"src": "knowledge/memory_earnings/data/README.md"
+},
+{
 "t": "Micron: Sprung der Kundenanzahlungen",
 "p": "memory_earnings/findings/micron-customer-deposits-jump.html",
 "a": "memory_earnings",
