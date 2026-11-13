@@ -9,7 +9,8 @@ hard word should sound, ask before rendering**, and add the answer here.
 | Written | Spoken text | Confirmed |
 |---|---|---|
 | Clé | Kleh | 2026-11-04 |
-| BIANCA / Bianca | Bianka | 2026-11-04 |
+| BIANCA / Bianca | `[Bianka](/biˈɑŋkə/)` (Kokoro phoneme markup: German "Bianka", bee-AHN-ka; the plain respelling "Bianka" was read as BYE-un-ka) | 2026-11-13 |
+| MRI | M. R. I. (spelled slowly, written with full stops in the spoken text; user 2026-11-10: "MRI is spoken fast"; the user has not yet confirmed the new sound, so not in pronounce.json) | 2026-11-10 |
 | PYTHONNOUSERSITE | python no user site | 2026-11-06 |
 | CUDA | Kuda | 2026-11-06 |
 | A100 | A one hundred | 2026-11-06 |
@@ -42,6 +43,31 @@ Spellings already in finished films (HPC tutorial, 2026-11-06). They sound right
 | rm -rf | r m minus r f |
 | FSL | F S L |
 | SC hub | S C hub |
+| entorhinal | en-toe-rye-null (SuperAgers film, 2026-11-09; espeak said "en-TOR-hin-al") |
+| Northwestern | North-western |
+| hyperintensities | hyper-intensities (unknown to Kokoro's dictionary) |
+| microbleeds | micro-bleeds |
+| multisite | multi-site |
+| APOE | APOE (capitals: read A P O E); e2 / e4 spoken as "epsilon two / four" |
+| thrombectomy | avoided: "patients whose clot was removed" (espeak stress was wrong) |
+| Vallecas | avoided: "Madrid" (espeak guess "VAL-eh-kas") |
+| MoCA | Mocha (moderation manuscript film, 2026-11-11; "Moka" is unknown to Kokoro, "Mocha" gives moh-kuh) |
+| CES-D | CESD (capitals, read C E S D) |
+| EQ-5D / EQ-5D-5L | EQ five D |
+| RMI / Rivermead | RMI (capitals, letters); mostly said as "River mead" ("Rivermead" is unknown to Kokoro) |
+| SD / SDs | SD / SDs (capitals, letters) |
+| PCA | PCA (capitals, letters) |
+| FDR, PMM, FMI | said in full: false discovery rate, predictive mean matching, fraction of missing information |
+| MICE | not spoken in that film ("filling in"); the statistics name is said like the animal: "mice" |
+| Rubin's rules | Reuben's rules ("Rubin" is unknown to Kokoro) |
+| Cohen's d | Kohen's D ("Cohen" is unknown to Kokoro) |
+| poorer | avoided: "worse" (espeak guess "poor-rer") |
+| completers' | avoided: "patients seen at all visits" (unknown to Kokoro, espeak guess "com-PLEH-ters"; moderation_manuscript_v2, 2026-11-11) |
+| Lead-DBS / Lead Mapper | Leed DBS / Leed Mapper (the toolbox for DBS leads; lnm_abstraction_mobility film, 2026-11-11) |
+| Nichols (Nichols 2005) | Nickels ("Nichols" unknown to Kokoro) |
+| GSP1000 | GSP one thousand (capitals, letters) |
+
+The SuperAgers film (2026-11-09) wrote these respellings directly into its spoken text, not into pronounce.json, so that other films are not re-voiced by surprise. The moderation manuscript film (BAPTISe, 2026-11-11) did the same for its rows (MoCA to poorer); none of them is confirmed by ear yet.
 
 ## Machine-readable list and check (2026-11-09)
 `pronounce.json` is the same table for the tools: `voice.py` applies it before speaking, and `src/say_check.py <film>` lists the words to hear and makes a listening file. Keep both files in step.
