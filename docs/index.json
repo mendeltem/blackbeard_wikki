@@ -418,6 +418,17 @@
 "src": "knowledge/agent_tooling/rules/kill-by-pid-fetched-in-a-separate-command.md"
 },
 {
+"t": "Live lecture deck: one click = one point, with its animation and its own voice; presenter view with timing to the second",
+"p": "agent_tooling/rules/lecture-deck-presenter-standard.html",
+"a": "agent_tooling",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-13",
+"x": "A deck for a live lecture (lecturer with a laser-pointer clicker, projector plus a second window on the laptop) follows this standard. It extends the [narrated explanation deck](narrated-html-deck-one-audio-per-slide.md) and uses the [Manim",
+"id": "lecture-deck-presenter-standard",
+"src": "knowledge/agent_tooling/rules/lecture-deck-presenter-standard.md"
+},
+{
 "t": "Bevor ein Baustein in einem Bericht einen Namen bekommt, die definierende Stelle im Code lesen",
 "p": "agent_tooling/rules/name-a-component-against-its-code.html",
 "a": "agent_tooling",

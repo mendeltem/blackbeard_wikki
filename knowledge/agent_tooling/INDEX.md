@@ -21,6 +21,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 | [Datenumzug: umbenennen, Symlink zurueck, Protokoll](rules/data-move-by-rename-symlink-and-protocol.md) | regel | vorschlag |
 | [When asked to explain a task: an explanation video like this](rules/explanation-video-is-the-standard.md) | regel | vorschlag |
 | [Explain results as a narrated HTML deck, one audio file per slide](rules/narrated-html-deck-one-audio-per-slide.md) | regel | vorschlag |
+| [Live lecture deck: one click = one point with its animation and voice; presenter view timed to the second](rules/lecture-deck-presenter-standard.md) | regel | vorschlag |
 | [Archivstufe: kopieren, beide Seiten hashen, dann Symlink](rules/archive-tier-copy-hash-both-sides-then-symlink.md) | regel | vorschlag |
 | [Ergebnis-Repo braucht eine Nachvollziehbarkeitskarte](rules/traceability-map-for-a-results-repo.md) | regel | vorschlag |
 | [Kein Rueckfallwert ohne eine Zeile, die ihn benennt](rules/no-silent-fallback-values.md) | regel | getragen |
