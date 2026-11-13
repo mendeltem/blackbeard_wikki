@@ -94,6 +94,7 @@ It extends the <a href="rules/narrated-html-deck-one-audio-per-slide.html">narra
 6. <code>15_pdf_handout</code>: PDF from screenshots of every slide's final state.
 7. <code>06_sync_repo</code>: copy only the files the deck uses into the public repo, then commit as the owner and push (GitHub Pages).</p>
 <p><strong>Interaction standard</strong>
+- <strong>One mode button, not separate boxes:</strong> "Clicker" (point by point, default) or "Auto" (every slide plays in full and the deck goes on by itself; pauses at interactive pages and exercises); key A switches. Separate Autoplay / Auto-advance / Point-by-point boxes confused the lecturer, because point by point silently overrode the other two (2026-11-13).
 - <strong>Point by point is the default.</strong> Clicker PageDown / → = next point, after the last point the next slide; PageUp / ← = back one point (back shows the finished state, no animation); ↓ / ↑ = whole slide. Unticking "Point by point" gives plain autoplay through each slide (self-study).
 - <strong>Each click plays the animation of its point</strong>: the clip runs from the end of the previous point to 0.12 s before the next mark, then stops. Seeking to the mark itself shows the previous point, because a clip draws a point only after its mark.
 - <strong>Each click plays its own recording</strong> of whole sentences. Cutting the slide voice at the marks cuts words, because marks often sit mid-sentence. The "Voice" box switches it on or off (V); the clip stays muted while the step voice plays.
