@@ -1,9 +1,10 @@
 """Script check before the voice step (2026-11-09).   python script_check.py <film folder> [--no-reader] [--only key1,key2] [--context earlier,keys]   (any python 3)
 
 1. Shape. A teaching chapter follows: question -> guess (the intuitive wrong idea) -> fails (why it breaks) -> idea ->
-   example (real numbers) -> recap; a "predict" beat (question with choices, answered right away, NO pause: user 17.11.2026) may replace the guess, "reveal" answers it.
+   example (real numbers) -> recap. NO prediction questions ("What do you expect?" with choice boxes, roles predict/reveal)
+   and NO pause-and-think countdowns (user rules 17.11.2026); both are flagged.
    Beats carry this as "role". Checked: every chapter opens with a question, ends with a recap, and the film has a
-   wrong idea that is broken (guess + fails, or predict + reveal) in at least every second chapter.
+   wrong idea that is broken (guess + fails) in at least every second chapter.
 2. Pace. Spoken words per minute per beat (needs voice.py): flagged outside 120-175.
 3. Novice reader. A first-year student model (Cle, alias frontier) reads the whole script and lists jargon used before it
    is explained, missing "why", jumps, and sentences that are hard to follow by ear. The script leaves Alita for the
@@ -23,10 +24,12 @@ out, bad, broken = [f"# Script check: {F.name}", ""], [], 0
 out += ["## Shape", "", "| chapter | roles | problems |", "|---|---|---|"]
 for k in keys:
     bs = B.load(F, k); roles = [b["role"] or "-" for b in bs]; p = []
-    if roles[0] not in ("question", "predict"): p.append("does not open with a question")
+    if roles[0] != "question": p.append("does not open with a question")
     if roles[-1] != "recap": p.append("no recap at the end")
-    if ("guess" in roles and "fails" in roles) or ("predict" in roles and "reveal" in roles): broken += 1
+    if "guess" in roles and "fails" in roles: broken += 1
     if any(b["pause"] > 0 for b in bs): p.append("beat with a pause: no pause-and-think countdowns (user rule 17.11.2026)")
+    if any(r in ("predict", "reveal", "quiz", "options") for r in roles):
+        p.append("prediction question (predict/reveal): no 'What do you expect?' questions with choices in films (user rule 17.11.2026)")
     if p: bad.append(k)
     out.append(f"| {k} | {' > '.join(roles)} | {'; '.join(p) or 'ok'} |")
 need = (len(keys) + 1) // 2

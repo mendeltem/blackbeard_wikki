@@ -158,8 +158,11 @@ class Film(Scene):
         if AUDIT: self._snapshot(f"at {{{name}}}")
 
     def predict(self, question, choices, colors=None, y=.2, w=3.4):
-        """Predict: the question and its choices; reveal() follows right away. User rule 17.11.2026: no pause-and-think
-        countdowns, so beats carry no "pause" (the ring below only appears for old beats that still have one). Returns the choice boxes; light the answer with reveal()."""
+        """OLD FILMS ONLY. User rule 17.11.2026: no prediction questions ("What do you expect?" with choice boxes) and no
+        pause-and-think countdowns in films. New films state the plan's or the naive expectation as a "guess" beat and break
+        it in a "fails" beat instead. Raises unless FILM_ALLOW_PREDICT=1 (only to re-render an old film unchanged)."""
+        if os.environ.get("FILM_ALLOW_PREDICT") != "1":
+            raise RuntimeError("predict(): no prediction questions in films (user rule 17.11.2026); use a guess + fails beat")
         self._predicts = getattr(self, "_predicts", 0) + 1; cols = colors or [BLUE_, TEAL_, PURPLE_, ORANGE_][:len(choices)]
         q = T(question, 30, INK).move_to([0, 2.1, 0]); bs = VGroup(*[Box(c, k, w, 1.0, 24) for c, k in zip(choices, cols)]).arrange(RIGHT, buff=.45).move_to([0, y, 0])
         if bs.width > 13.4: bs.scale_to_fit_width(13.4)

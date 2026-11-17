@@ -4,7 +4,7 @@ import json, re, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent)); import beats as B
 F = Path(sys.argv[1]).resolve(); src = Path(sys.argv[2]).read_text() if len(sys.argv) > 2 else None
-LIMITS = dict(problems=0, rings_per_5min=3, late_seconds=2.5, max_still_seconds=14, min_lit_per_beat=1.0, max_clears_per_beat=.5, min_fill=.3, min_motion_share=.22, off_centre_share=.25, min_travel_per_minute=.5)
+LIMITS = dict(problems=0, predicts=0, rings_per_5min=3, late_seconds=2.5, max_still_seconds=14, min_lit_per_beat=1.0, max_clears_per_beat=.5, min_fill=.3, min_motion_share=.22, off_centre_share=.25, min_travel_per_minute=.5)
 keys = [l.split()[2] for l in (F / "chapters.txt").read_text().splitlines() if l.strip()]; A = []
 for k in keys:
     p = F / f"check/{k}.audit.json"
