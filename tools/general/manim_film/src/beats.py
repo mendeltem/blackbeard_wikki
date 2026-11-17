@@ -1,10 +1,11 @@
 """Reading beats (stdlib only, used by voice, engine, gate and the checks).
 
 A beat in beats/<key>_beats.json is either a plain string (old films) or an object:
-    {"say": "As the cut off {knob} rises ...", "role": "guess", "pause": 5}
+    {"say": "As the cut off {knob} rises ...", "role": "guess"}
   say    the spoken text. {name} marks the next word: in the chapter, self.at("name") waits until that word is spoken.
   role   optional script role: question, guess, fails, idea, example, predict, reveal, recap (script_check.py reads it).
-  pause  optional seconds of silence after the speech, e.g. for a pause-and-predict countdown.
+  pause  optional seconds of silence after the speech. NOT for pause-and-think countdowns: the user does not want them
+         (17.11.2026); script_check.py flags every pause > 0.
 Written words are turned into their spoken form with pronounce.json (whole words, case-sensitive) before the voice step.
 """
 import json, re

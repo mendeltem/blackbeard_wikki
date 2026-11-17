@@ -158,8 +158,8 @@ class Film(Scene):
         if AUDIT: self._snapshot(f"at {{{name}}}")
 
     def predict(self, question, choices, colors=None, y=.2, w=3.4):
-        """Pause and predict: the question and its choices; after the speech a ring counts down the beat's silent pause.
-        The beat needs "pause" (seconds) in its beat object. Returns the choice boxes; light the answer with reveal()."""
+        """Predict: the question and its choices; reveal() follows right away. User rule 17.11.2026: no pause-and-think
+        countdowns, so beats carry no "pause" (the ring below only appears for old beats that still have one). Returns the choice boxes; light the answer with reveal()."""
         self._predicts = getattr(self, "_predicts", 0) + 1; cols = colors or [BLUE_, TEAL_, PURPLE_, ORANGE_][:len(choices)]
         q = T(question, 30, INK).move_to([0, 2.1, 0]); bs = VGroup(*[Box(c, k, w, 1.0, 24) for c, k in zip(choices, cols)]).arrange(RIGHT, buff=.45).move_to([0, y, 0])
         if bs.width > 13.4: bs.scale_to_fit_width(13.4)

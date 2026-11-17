@@ -423,7 +423,7 @@
 "a": "agent_tooling",
 "y": "Regel",
 "s": "vorschlag",
-"d": "2026-11-13",
+"d": "2026-11-16",
 "x": "A deck for a live lecture (lecturer with a laser-pointer clicker, projector plus a second window on the laptop) follows this standard. It extends the [narrated explanation deck](narrated-html-deck-one-audio-per-slide.md) and uses the [Manim",
 "id": "lecture-deck-presenter-standard",
 "src": "knowledge/agent_tooling/rules/lecture-deck-presenter-standard.md"

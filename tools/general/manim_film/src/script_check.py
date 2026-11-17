@@ -1,7 +1,7 @@
 """Script check before the voice step (2026-11-09).   python script_check.py <film folder> [--no-reader] [--only key1,key2] [--context earlier,keys]   (any python 3)
 
 1. Shape. A teaching chapter follows: question -> guess (the intuitive wrong idea) -> fails (why it breaks) -> idea ->
-   example (real numbers) -> recap; a "predict" beat (pause and predict) may replace the guess, "reveal" answers it.
+   example (real numbers) -> recap; a "predict" beat (question with choices, answered right away, NO pause: user 17.11.2026) may replace the guess, "reveal" answers it.
    Beats carry this as "role". Checked: every chapter opens with a question, ends with a recap, and the film has a
    wrong idea that is broken (guess + fails, or predict + reveal) in at least every second chapter.
 2. Pace. Spoken words per minute per beat (needs voice.py): flagged outside 120-175.
@@ -26,7 +26,7 @@ for k in keys:
     if roles[0] not in ("question", "predict"): p.append("does not open with a question")
     if roles[-1] != "recap": p.append("no recap at the end")
     if ("guess" in roles and "fails" in roles) or ("predict" in roles and "reveal" in roles): broken += 1
-    if "predict" in roles and not any(b["pause"] >= 3 for b in bs if b["role"] == "predict"): p.append("predict beat without a pause of 3 s or more")
+    if any(b["pause"] > 0 for b in bs): p.append("beat with a pause: no pause-and-think countdowns (user rule 17.11.2026)")
     if p: bad.append(k)
     out.append(f"| {k} | {' > '.join(roles)} | {'; '.join(p) or 'ok'} |")
 need = (len(keys) + 1) // 2
