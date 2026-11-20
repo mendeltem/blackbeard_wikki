@@ -143,6 +143,17 @@
 "src": "knowledge/agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.md"
 },
 {
+"t": "\"This log holds no text\" is a claim to measure; a daily note with counts replaces a new shared log",
+"p": "agent_tooling/findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-20",
+"x": "1. A code comment said the routing log holds \"no message text\". A scan that printed counts only showed otherwise: the field with the routing reasons carried file names and folder names in about 1 line in 10, and id-like strings in a few doz",
+"id": "log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log",
+"src": "knowledge/agent_tooling/findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md"
+},
+{
 "t": "A hub model can write narrated explainer films under a harness; blind code on private data needs checks a data gate cannot give",
 "p": "agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.html",
 "a": "agent_tooling",

@@ -12,6 +12,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| ["This log holds no text" is a claim to measure; a daily note with counts replaces a new shared log](findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md) | befund | vorschlag |
 | [A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps](findings/agent-system-check-nightly-reports-need-a-build-loop.md) | befund | vorschlag |
 | [A hub model can write narrated explainer films under a harness; blind code on private data needs checks a data gate cannot give](findings/model-hub-writes-explainer-films-under-a-harness.md) | befund | vorschlag |
 | [Public code knows no dataset; dataset rules live next to the data](rules/public-code-knows-no-dataset.md) | regel | getragen |

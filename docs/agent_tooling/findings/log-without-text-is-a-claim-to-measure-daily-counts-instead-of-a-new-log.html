@@ -1,0 +1,63 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>&quot;This log holds no text&quot; is a claim to measure; a daily note with counts replaces a new shared log</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#findings">Befund</a></div><h1>&quot;This log holds no text&quot; is a claim to measure; a daily note with counts replaces a new shared log</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-20</span><span>Herkunft</span><span>own count-only scan of four decision logs of a local agent system (router, approval gate, exit guard) and the build of a daily summary from them, 2026-11-20</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md">knowledge/agent_tooling/findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md</a></span></div><h2>Aussage</h2>
+<ol>
+<li>A code comment said the routing log holds "no message text". A scan that printed counts only showed otherwise: the field with the routing reasons carried file names and folder names in about 1 line in 10, and id-like strings in a few dozen lines. The reasons were built from what the router had matched, so the matched text went into the log with them.</li>
+<li>Each of the four decision logs held free text of some kind: reasons with file names (router), the task text (older router log), shell commands (approval gate), the full question (exit guard). None held a key or a password.</li>
+<li>A pattern hit is a lead, not a finding. The first pass reported 55 "API keys" in one log. They were web addresses with a company name that begins like a common key prefix; none matched a secret on the machine. About a quarter of the id-like hits were invented ids from the system's own leak tests.</li>
+<li>The wish was a log that every part of the system may read. A new log was not needed: a script reads the existing logs once a day and writes one short note with counts for the last 24 hours and 7 days (rounds per model and place, reasons by class, verdicts, sent or blocked, seconds per round). The agent sees the note in its local recall; the logs stay private.</li>
+<li>What keeps text out of the note: only category fields are counted; a free-text reason is counted by the fixed phrase it starts with and the rest is never used; a caller label is cut at the first separator and must be a plain short word, else it counts as "other"; the finished note is checked for cohort names, case ids and paths, and on a hit nothing is written (the same when the check cannot load its word list).</li>
+<li>The first note showed three things nobody had looked for: one routing signal had not arrived on any of about 2300 rounds in 7 days, one gate had not received a request for 10 days, and the quality judgements were mostly "unsure" or "no". A daily count per component shows a silent part; a log that nobody reads does not.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Own run 2026-11-20 on one workstation: four JSON-lines logs with about 42,000, 3300, 300 and 5200 lines; scan with regular expressions per field, output counts and field names only; summary script with 21 checks on invented logs (counts, time windows, reason classes, no free text in the note, nothing written when an id-like label appears). Python 3.12 standard library only (<a href="https://docs.python.org/3/library/json.html">json</a>, <a href="https://docs.python.org/3/library/re.html">re</a>); timer with <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html">systemd 255</a>. The links were not opened again for this entry: unverified.</p>
+<h2>Trägt nicht</h2>
+<p>A pattern search finds ids and names only in the shapes it knows; a free-text name without a known shape is not found, so "no person name found" is weaker than "none there". Whether the task texts hold result numbers was not checked. The summary is one day old: whether its counts are read and acted on is not shown. The check of the finished note depends on a word list of cohort names that has to be kept current.</p>
+<h2>Bruchindikator</h2>
+<p>The note is written with a file name, an id or a cohort name in it; a count in the note differs from a hand count of the log for the same window; a component stays at zero for a week and nobody notices.</p>
+<h2>Ablesung</h2>
+<p>Before calling a log free of text: count pattern hits per field and look at what kind of string matched. Before building a new shared log: check whether a daily count from the logs that exist answers the question. Count free text by a fixed prefix or a closed list of classes, and let the writer refuse when its own output fails the privacy check.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-20 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
