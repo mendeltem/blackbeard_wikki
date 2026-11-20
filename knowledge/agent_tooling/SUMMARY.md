@@ -1,5 +1,7 @@
 # agent_tooling: Kurzstand
 
+**New 2026-11-20 (own check):** A full check of a running agent system found seven faults that the nightly reports had named for up to 8 days; a report without a build decision repairs nothing, and the watcher itself read a wrong log path. Rewriting a long memory page works one section per call; a guard must count the source pointers a draft keeps (one section lost 59 of 74 without it). See `findings/agent-system-check-nightly-reports-need-a-build-loop.md`.
+
 **Rule 2026-11-13 (user, lecture 18.11.):** A live lecture deck goes point by point: one clicker click shows one point, plays that point's animation piece and its own recording of whole sentences; the first click starts the lecture clock, exercise slides start a countdown that stops at 0:00, a restart button resets all; the presenter view shows the point and its sentences in large type, the animation state and the plan per step to the second; a PDF handout with contents and sources comes from screenshots ([rule](rules/lecture-deck-presenter-standard.md)). Sources: own build 2026-11-13 (deck v19 to v29); Kokoro-82M, Playwright.
 
 **Rule 2026-11-04 (user):** Animated explanations keep the look of the approved Clara Working Station film: Manim, boxes light up with the voice, objects stay across beats, red rings rare. Tool: `tools/general/manim_film`. Sources: Manim Community, https://www.manim.community/ ; own build 2026-11-04.

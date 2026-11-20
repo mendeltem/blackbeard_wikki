@@ -121,6 +121,17 @@
 "src": "knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md"
 },
 {
+"t": "A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps",
+"p": "agent_tooling/findings/agent-system-check-nightly-reports-need-a-build-loop.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-20",
+"x": "1. A full check of a running agent system (own run, 2026-11-20) found seven faults that the nightly reports had named for up to 8 days. Nobody built the fixes, because the report ended in proposals and no step turned a repeated proposal int",
+"id": "agent-system-check-nightly-reports-need-a-build-loop",
+"src": "knowledge/agent_tooling/findings/agent-system-check-nightly-reports-need-a-build-loop.md"
+},
+{
 "t": "Three small tools: verified move to the group drive, an hourly disk guard, and compact literature search for token-priced agents",
 "p": "agent_tooling/findings/disk-guard-verified-move-and-compact-literature-search.html",
 "a": "agent_tooling",
