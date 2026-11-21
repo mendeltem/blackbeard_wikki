@@ -42,7 +42,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </style></head><body>
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
-<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#findings">Befund</a></div><h1>Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-21</span><span>Herkunft</span><span>own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21</span><span>Zuletzt geändert</span><span>2026-11-21 agent_tooling: reliability trend of one agent workstation from its logs, eight charts, published figures, ranked proposals</span><span>Verweist auf</span><span><a href="agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md">knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md</a></span></div><h2>Aussage</h2>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#findings">Befund</a></div><h1>Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-21</span><span>Herkunft</span><span>own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21; corrected and extended the same evening after seven of the eight proposals were built</span><span>Zuletzt geändert</span><span>2026-11-21 agent_tooling: reliability trend of one agent workstation from its logs, eight charts, published figures, ranked proposals</span><span>Verweist auf</span><span><a href="agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md">knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md</a></span></div><h2>Aussage</h2>
 <ol>
 <li><strong>Outages fell sharply.</strong> Model requests through the relay that ended in an error: 27 % in the first 7 days (1,441 of 5,327), 0.6 % in the last 7 days (6 of 1,041), 4.7 % over all 24 days (1,753 of 37,181). The two crash loops of the model services (1,198 and 1,549 failed starts of the local model server on two days, 229 failed runs on a third day, mostly the gate model service) did not come back: since 14.11. there were at most 4 failed runs a day. No process was killed for lack of memory since 09.11. (18 kills from 30.10. to 08.11.). The chat service, the messaging bridge, the relay and the exit guard had no failed run in the service journal in the whole period. Limit: the last week had low load, about 150 requests a day against about 760 a day in the first week.</li>
 </ol>
@@ -56,39 +56,40 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </ol>
 <p><img alt="How long a fault stayed open" src="../assets/station_5_open_faults.png" /></p>
 <ol start="4">
-<li><strong>The tests themselves had gaps.</strong> Over 15 nights the night review was missing once. The chat test is in 2 of the 15 nightly reports; on 7 nights it was not started (a script fault) and nothing raised an alarm. The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.</li>
+<li><strong>The tests themselves had gaps.</strong> Over 15 nights the night review was missing once. The chat test was built on 07.11. and expected on 14 mornings since; it ran on 2 and was missing on 12 (a script fault: it stood only in a fallback path), and the weekly deep test, expected on 2 Sundays, never ran. Nothing raised an alarm. (The first version of this entry said 7 nights; it had taken the first report that contains the test as the day the test was first expected.) The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.</li>
 </ol>
 <p><img alt="Nightly tests" src="../assets/station_3_tests.png" /></p>
 <ol start="5">
-<li><strong>The nightly failure count is a count of log lines and swings without meaning</strong> (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop.</li>
+<li><strong>The nightly failure count is a count of log lines and swings without meaning</strong> (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop. Sorted by one written rule for "the outside was away for a moment", 526 of the 1,401 lines of the 15 nights are network noise (grey in the chart); since 21.11. the counter lists them in a table of their own.</li>
 </ol>
 <p><img alt="Failures per night" src="../assets/station_2_failures_per_night.png" /></p>
 <ol start="6">
-<li><strong>Two things got worse.</strong> The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them.</li>
+<li><strong>Two things got worse.</strong> The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them. The chart shows this state. On the evening of 21.11. finished results that were not in use were moved to two archive disks (each move checked file by file before the local copy was removed): 73 GB free.</li>
 </ol>
 <p><img alt="Machine health" src="../assets/station_6_machine_health.png" /></p>
 <ol start="7">
-<li><strong>Local model and hub.</strong> The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse is unknown, not zero. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.</li>
+<li><strong>Local model and hub.</strong> The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse was unknown, not zero. A timing test on 21.11. answers the question: a prompt of about 12,000 input tokens that the hub had not seen took 1.3 s (median of 3 rounds; the control with another first word), the same prompt again 0.7 s, and the same start with a new last line 0.7 s, in every round. So the hub reuses the start of a prompt and does not report it; what share of the 506 M tokens was reused cannot be read from the log. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.</li>
 </ol>
 <p><img alt="Input to the hub and to the local model" src="../assets/station_7_local_and_hub.png" /></p>
 <ol start="8">
-<li><strong>What to change next, in this order</strong> (the two dot columns of the chart are a judgement, not a measurement):</li>
-<li>Free the system disk and keep it above 50 GB.</li>
-<li>Health message: say each warning once, the urgent one first.</li>
-<li>Smoke test after every repair: start, one request, stop.</li>
-<li>A test that did not run shows as red, not as empty.</li>
-<li>A repair list with a deadline: a fault open for 3 nights leads the morning message.</li>
-<li>Count network noise apart; mark a test "not valid" when the hub is down.</li>
-<li>Find out whether the hub reuses input; if not, keep the start of each prompt identical.</li>
-<li>Later, and only if the queue is used again: work sessions continue from a saved step.</li>
+<li><strong>What to change next, in this order, and the state on the evening of 21.11.</strong> (the two dot columns of the chart are a judgement, not a measurement; "tested" means tested on the day it was built, on invented or copied records, not over nights):</li>
+<li>Free the system disk and keep it above 50 GB. <em>Done: 73 GB free.</em></li>
+<li>Health message: say each warning once, the urgent one first. <em>Built and tested.</em></li>
+<li>Smoke test after every repair: start, one request, stop. <em>Tool built and tested on a probe unit (restart, one request, stop with a clean systemd result and no traceback, start); its first run on the repaired service is open, and the morning message says so.</em></li>
+<li>A test that did not run shows as red, not as empty. <em>Built and tested: every expected test has one of four states each morning: ok, failed, not valid, NOT RUN.</em></li>
+<li>A repair list with a deadline: a fault open for 3 nights leads the morning message. <em>Built and tested with a print-only run of the morning script; a fault closes after two nights without a sight or is accepted by hand with a reason. The first real morning message is on 22.11.</em></li>
+<li>Count network noise apart; mark a test "not valid" when the hub is down. <em>Built and tested with the hub made unreachable for the test.</em></li>
+<li>Find out whether the hub reuses input; if not, keep the start of each prompt identical. <em>Answered: it does (point 7 above), so an identical prompt start pays off at the hub as well.</em></li>
+<li>Later, and only if the queue is used again: work sessions continue from a saved step. <em>Waits by its own condition.</em></li>
 </ol>
+<p>Building proposal 4 found the two wrong numbers corrected in point 4. Building proposal 1 found a fault in the archive tool: folders that were read-only locally were created read-only on a network share and could not be filled; the file-by-file check caught it twice and kept the local copy.</p>
 <p><img alt="Proposals" src="../assets/station_8_proposals.png" /></p>
 <ol start="9">
 <li><strong>A rewrite of the chat app is not supported by these logs.</strong> The faults sat in model start, timers, tests and alarms, not in the chat service. Waiting longer after each failed model start, a restart limit, the look at the server's slots before a stop and the check of model names against the hub's list are already built.</li>
 </ol>
 <h2>Trägt</h2>
 <h3>Own data</h3>
-<p>Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.</p>
+<p>Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. Own timing test of the hub on 2026-11-21 22:26: 3 rounds of 5 requests, invented text (a multiplication table, about 12,400 input tokens, 8 output tokens, temperature 0), each round with a fresh random first word; medians 1.78 s first time, 0.74 s repeated, 0.69 s same start with a new end, 1.29 s other first word. Charts 2, 3, 7 and 8 were redrawn on the evening of 21.11. (network noise apart, tests that did not run in red, the timing result, the state of the proposals); charts 1, 4, 5 and 6 show the read-out of the morning. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.</p>
 <h3>Published figures, and how far they compare</h3>
 <table>
 <thead>
@@ -130,7 +131,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>Not comparable: too few changes counted</td>
 </tr>
 <tr>
-<td>779 M input tokens in 24 days, hub reuse unknown</td>
+<td>779 M input tokens in 24 days, hub reuse shown by timing but not reported</td>
 <td>Kapoor 2024: report cost next to accuracy; cost differed almost a hundredfold at similar accuracy</td>
 <td>Fair as a rule: the station does not yet report tokens per finished task</td>
 </tr>
@@ -468,7 +469,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </tr>
 </tbody>
 </table>
-<p>Per night (lines of the nightly failure count by source, then the tests).</p>
+<p>Per night (lines of the nightly failure count by source, then the tests). Network noise is sorted out of the other columns by the rule that the counter uses since 21.11. "NOT RUN" = expected and without a result; "-" = not expected yet (chat test and deep test were built on 07.11.; the deep test is expected on Sundays).</p>
 <table>
 <thead>
 <tr>
@@ -479,10 +480,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <th>Services</th>
 <th>Messaging bridge</th>
 <th>Memory job, guard, notes (since 20.11.)</th>
+<th>Network noise</th>
 <th>Review written</th>
 <th>Sensitive blocked</th>
 <th>Harmless let through</th>
 <th>Chat test</th>
+<th>Deep test</th>
 </tr>
 </thead>
 <tbody>
@@ -492,12 +495,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>175</td>
 <td>71</td>
 <td>23</td>
-<td>16</td>
+<td>11</td>
 <td>0</td>
+<td>5</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>-</td>
+<td>-</td>
 </tr>
 <tr>
 <td>08.11.</td>
@@ -505,12 +510,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>27</td>
 <td>33</td>
 <td>24</td>
-<td>36</td>
+<td>32</td>
 <td>0</td>
+<td>4</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>NOT RUN</td>
 </tr>
 <tr>
 <td>09.11.</td>
@@ -518,12 +525,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>4</td>
 <td>56</td>
 <td>0</td>
-<td>8</td>
 <td>0</td>
+<td>0</td>
+<td>8</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>10.11.</td>
@@ -531,12 +540,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>15</td>
 <td>0</td>
-<td>12</td>
+<td>1</td>
 <td>0</td>
+<td>11</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>11.11.</td>
@@ -544,12 +555,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>2</td>
 <td>0</td>
-<td>9</td>
+<td>2</td>
 <td>0</td>
+<td>7</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>12.11.</td>
@@ -557,12 +570,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>3</td>
 <td>6</td>
-<td>6</td>
 <td>0</td>
+<td>0</td>
+<td>6</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>13.11.</td>
@@ -570,12 +585,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>10</td>
 <td>0</td>
-<td>20</td>
 <td>0</td>
+<td>0</td>
+<td>20</td>
 <td>no</td>
 <td>15/15</td>
 <td>0/30</td>
 <td>6/14</td>
+<td>-</td>
 </tr>
 <tr>
 <td>14.11.</td>
@@ -583,12 +600,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>45</td>
 <td>71</td>
 <td>226</td>
-<td>1</td>
 <td>0</td>
+<td>0</td>
+<td>1</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>15.11.</td>
@@ -596,12 +615,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>288</td>
 <td>0</td>
+<td>0</td>
+<td>288</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>NOT RUN</td>
 </tr>
 <tr>
 <td>16.11.</td>
@@ -611,10 +632,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>0</td>
 <td>0</td>
 <td>0</td>
+<td>0</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>17.11.</td>
@@ -624,10 +647,12 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>2</td>
 <td>0</td>
 <td>0</td>
+<td>0</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>18.11.</td>
@@ -635,12 +660,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>2</td>
 <td>0</td>
 <td>4</td>
-<td>2</td>
 <td>0</td>
+<td>0</td>
+<td>2</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>19.11.</td>
@@ -648,12 +675,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>0</td>
 <td>2</td>
-<td>163</td>
 <td>0</td>
+<td>0</td>
+<td>163</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>20.11.</td>
@@ -661,12 +690,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>6</td>
 <td>0</td>
+<td>0</td>
+<td>6</td>
 <td>yes</td>
 <td>15/15</td>
 <td>0/30</td>
-<td>not run</td>
+<td>NOT RUN</td>
+<td>-</td>
 </tr>
 <tr>
 <td>21.11.</td>
@@ -674,12 +705,14 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <td>1</td>
 <td>0</td>
 <td>3</td>
-<td>7</td>
+<td>2</td>
 <td>15</td>
+<td>5</td>
 <td>yes</td>
 <td>15/15</td>
 <td>30/30</td>
 <td>13/14</td>
+<td>-</td>
 </tr>
 </tbody>
 </table>
@@ -812,7 +845,7 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 </tbody>
 </table>
 <h2>Trägt nicht</h2>
-<p>One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. Whether the hub reuses input is not tested. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.</p>
+<p>One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. That the hub reuses input rests on one timing test of 15 requests on one evening; how long it keeps a prompt start and what share of its input was reused are not known. The changes of 21.11. were tested on the day they were built; whether they shorten the time to repair is not measured yet. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.</p>
 <h2>Bruchindikator</h2>
 <p>More than 1 % request errors in a week with queue jobs running; more than 30 failed starts of a model service in a day; the system disk below 20 GB again after it was freed; a fault named in three night reviews in a row; a test missing from a nightly report without an alarm.</p>
 <h2>Ablesung</h2>

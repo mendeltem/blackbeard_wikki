@@ -4,7 +4,7 @@ typ: befund
 status: vorschlag
 thema: knowledge/agent_tooling
 stand: 2026-11-21
-herkunft: own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21
+herkunft: own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21; corrected and extended the same evening after seven of the eight proposals were built
 verweist_auf: [agent-system-check-nightly-reports-need-a-build-loop]
 ---
 
@@ -23,31 +23,33 @@ verweist_auf: [agent-system-check-nightly-reports-need-a-build-loop]
 
 ![How long a fault stayed open](../assets/station_5_open_faults.png)
 
-4. **The tests themselves had gaps.** Over 15 nights the night review was missing once. The chat test is in 2 of the 15 nightly reports; on 7 nights it was not started (a script fault) and nothing raised an alarm. The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.
+4. **The tests themselves had gaps.** Over 15 nights the night review was missing once. The chat test was built on 07.11. and expected on 14 mornings since; it ran on 2 and was missing on 12 (a script fault: it stood only in a fallback path), and the weekly deep test, expected on 2 Sundays, never ran. Nothing raised an alarm. (The first version of this entry said 7 nights; it had taken the first report that contains the test as the day the test was first expected.) The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.
 
 ![Nightly tests](../assets/station_3_tests.png)
 
-5. **The nightly failure count is a count of log lines and swings without meaning** (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop.
+5. **The nightly failure count is a count of log lines and swings without meaning** (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop. Sorted by one written rule for "the outside was away for a moment", 526 of the 1,401 lines of the 15 nights are network noise (grey in the chart); since 21.11. the counter lists them in a table of their own.
 
 ![Failures per night](../assets/station_2_failures_per_night.png)
 
-6. **Two things got worse.** The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them.
+6. **Two things got worse.** The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them. The chart shows this state. On the evening of 21.11. finished results that were not in use were moved to two archive disks (each move checked file by file before the local copy was removed): 73 GB free.
 
 ![Machine health](../assets/station_6_machine_health.png)
 
-7. **Local model and hub.** The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse is unknown, not zero. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.
+7. **Local model and hub.** The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse was unknown, not zero. A timing test on 21.11. answers the question: a prompt of about 12,000 input tokens that the hub had not seen took 1.3 s (median of 3 rounds; the control with another first word), the same prompt again 0.7 s, and the same start with a new last line 0.7 s, in every round. So the hub reuses the start of a prompt and does not report it; what share of the 506 M tokens was reused cannot be read from the log. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.
 
 ![Input to the hub and to the local model](../assets/station_7_local_and_hub.png)
 
-8. **What to change next, in this order** (the two dot columns of the chart are a judgement, not a measurement):
-   1. Free the system disk and keep it above 50 GB.
-   2. Health message: say each warning once, the urgent one first.
-   3. Smoke test after every repair: start, one request, stop.
-   4. A test that did not run shows as red, not as empty.
-   5. A repair list with a deadline: a fault open for 3 nights leads the morning message.
-   6. Count network noise apart; mark a test "not valid" when the hub is down.
-   7. Find out whether the hub reuses input; if not, keep the start of each prompt identical.
-   8. Later, and only if the queue is used again: work sessions continue from a saved step.
+8. **What to change next, in this order, and the state on the evening of 21.11.** (the two dot columns of the chart are a judgement, not a measurement; "tested" means tested on the day it was built, on invented or copied records, not over nights):
+   1. Free the system disk and keep it above 50 GB. *Done: 73 GB free.*
+   2. Health message: say each warning once, the urgent one first. *Built and tested.*
+   3. Smoke test after every repair: start, one request, stop. *Tool built and tested on a probe unit (restart, one request, stop with a clean systemd result and no traceback, start); its first run on the repaired service is open, and the morning message says so.*
+   4. A test that did not run shows as red, not as empty. *Built and tested: every expected test has one of four states each morning: ok, failed, not valid, NOT RUN.*
+   5. A repair list with a deadline: a fault open for 3 nights leads the morning message. *Built and tested with a print-only run of the morning script; a fault closes after two nights without a sight or is accepted by hand with a reason. The first real morning message is on 22.11.*
+   6. Count network noise apart; mark a test "not valid" when the hub is down. *Built and tested with the hub made unreachable for the test.*
+   7. Find out whether the hub reuses input; if not, keep the start of each prompt identical. *Answered: it does (point 7 above), so an identical prompt start pays off at the hub as well.*
+   8. Later, and only if the queue is used again: work sessions continue from a saved step. *Waits by its own condition.*
+
+   Building proposal 4 found the two wrong numbers corrected in point 4. Building proposal 1 found a fault in the archive tool: folders that were read-only locally were created read-only on a network share and could not be filled; the file-by-file check caught it twice and kept the local copy.
 
 ![Proposals](../assets/station_8_proposals.png)
 
@@ -55,7 +57,7 @@ verweist_auf: [agent-system-check-nightly-reports-need-a-build-loop]
 
 ## Trägt
 ### Own data
-Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.
+Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. Own timing test of the hub on 2026-11-21 22:26: 3 rounds of 5 requests, invented text (a multiplication table, about 12,400 input tokens, 8 output tokens, temperature 0), each round with a fresh random first word; medians 1.78 s first time, 0.74 s repeated, 0.69 s same start with a new end, 1.29 s other first word. Charts 2, 3, 7 and 8 were redrawn on the evening of 21.11. (network noise apart, tests that did not run in red, the timing result, the state of the proposals); charts 1, 4, 5 and 6 show the read-out of the morning. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.
 
 ### Published figures, and how far they compare
 | Station | Published figure | Does it compare? |
@@ -66,7 +68,7 @@ Own read-out on 2026-11-21 of the station's logs: relay log (one line per model 
 | 91 % of work sessions done, 9 % of queue jobs stuck | τ-bench: 61 % (retail) and 35 % (airline) of tasks solved in one try. TheAgentCompany: best agent 30 %. MAST: 41 % to 86.7 % failure | Not comparable: benchmark tasks are hard and graded from outside; here the jobs are own routine jobs with own acceptance |
 | One review per night by a second model, repair by hand | Pan 2025: 74 % of deployed agents depend mainly on human evaluation; 68 % run at most 10 steps before a human steps in | Context only: the station is in the usual range |
 | One repair made a new fault | DORA change failure rate (5 % for the top group; unverified against the primary report) | Not comparable: too few changes counted |
-| 779 M input tokens in 24 days, hub reuse unknown | Kapoor 2024: report cost next to accuracy; cost differed almost a hundredfold at similar accuracy | Fair as a rule: the station does not yet report tokens per finished task |
+| 779 M input tokens in 24 days, hub reuse shown by timing but not reported | Kapoor 2024: report cost next to accuracy; cost differed almost a hundredfold at similar accuracy | Fair as a rule: the station does not yet report tokens per finished task |
 
 ### Sources
 Opened on 2026-11-21 by two research agents of the same session; not opened a second time for this entry. No DOI or PMID was seen for any of them; papers carry their arXiv id.
@@ -125,25 +127,25 @@ Per day. "Failed runs" are journal lines of the two model services; "warnings" a
 | 20.11. | 237 | 1 | 0.4 | 1 | 0 | 0 | 7 | 1.5 | 7.2 |
 | 21.11. | 318 | 1 | 0.3 | 1 | 3 | 0 | 7 | 2.0 | 6.4 |
 
-Per night (lines of the nightly failure count by source, then the tests).
+Per night (lines of the nightly failure count by source, then the tests). Network noise is sorted out of the other columns by the rule that the counter uses since 21.11. "NOT RUN" = expected and without a result; "-" = not expected yet (chat test and deep test were built on 07.11.; the deep test is expected on Sundays).
 
-| Night | Failure lines | Relay | Sessions | Services | Messaging bridge | Memory job, guard, notes (since 20.11.) | Review written | Sensitive blocked | Harmless let through | Chat test |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 07.11. | 285 | 175 | 71 | 23 | 16 | 0 | yes | 15/15 | 30/30 | not run |
-| 08.11. | 120 | 27 | 33 | 24 | 36 | 0 | yes | 15/15 | 30/30 | not run |
-| 09.11. | 68 | 4 | 56 | 0 | 8 | 0 | yes | 15/15 | 30/30 | not run |
-| 10.11. | 28 | 1 | 15 | 0 | 12 | 0 | yes | 15/15 | 30/30 | not run |
-| 11.11. | 12 | 1 | 2 | 0 | 9 | 0 | yes | 15/15 | 30/30 | not run |
-| 12.11. | 16 | 1 | 3 | 6 | 6 | 0 | yes | 15/15 | 30/30 | not run |
-| 13.11. | 31 | 1 | 10 | 0 | 20 | 0 | no | 15/15 | 0/30 | 6/14 |
-| 14.11. | 343 | 45 | 71 | 226 | 1 | 0 | yes | 15/15 | 0/30 | not run |
-| 15.11. | 289 | 1 | 0 | 0 | 288 | 0 | yes | 15/15 | 0/30 | not run |
-| 16.11. | 0 | 0 | 0 | 0 | 0 | 0 | yes | 15/15 | 0/30 | not run |
-| 17.11. | 2 | 0 | 0 | 2 | 0 | 0 | yes | 15/15 | 0/30 | not run |
-| 18.11. | 8 | 2 | 0 | 4 | 2 | 0 | yes | 15/15 | 0/30 | not run |
-| 19.11. | 166 | 1 | 0 | 2 | 163 | 0 | yes | 15/15 | 0/30 | not run |
-| 20.11. | 7 | 1 | 0 | 0 | 6 | 0 | yes | 15/15 | 0/30 | not run |
-| 21.11. | 26 | 1 | 0 | 3 | 7 | 15 | yes | 15/15 | 30/30 | 13/14 |
+| Night | Failure lines | Relay | Sessions | Services | Messaging bridge | Memory job, guard, notes (since 20.11.) | Network noise | Review written | Sensitive blocked | Harmless let through | Chat test | Deep test |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 07.11. | 285 | 175 | 71 | 23 | 11 | 0 | 5 | yes | 15/15 | 30/30 | - | - |
+| 08.11. | 120 | 27 | 33 | 24 | 32 | 0 | 4 | yes | 15/15 | 30/30 | NOT RUN | NOT RUN |
+| 09.11. | 68 | 4 | 56 | 0 | 0 | 0 | 8 | yes | 15/15 | 30/30 | NOT RUN | - |
+| 10.11. | 28 | 1 | 15 | 0 | 1 | 0 | 11 | yes | 15/15 | 30/30 | NOT RUN | - |
+| 11.11. | 12 | 1 | 2 | 0 | 2 | 0 | 7 | yes | 15/15 | 30/30 | NOT RUN | - |
+| 12.11. | 16 | 1 | 3 | 6 | 0 | 0 | 6 | yes | 15/15 | 30/30 | NOT RUN | - |
+| 13.11. | 31 | 1 | 10 | 0 | 0 | 0 | 20 | no | 15/15 | 0/30 | 6/14 | - |
+| 14.11. | 343 | 45 | 71 | 226 | 0 | 0 | 1 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 15.11. | 289 | 1 | 0 | 0 | 0 | 0 | 288 | yes | 15/15 | 0/30 | NOT RUN | NOT RUN |
+| 16.11. | 0 | 0 | 0 | 0 | 0 | 0 | 0 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 17.11. | 2 | 0 | 0 | 2 | 0 | 0 | 0 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 18.11. | 8 | 2 | 0 | 4 | 0 | 0 | 2 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 19.11. | 166 | 1 | 0 | 2 | 0 | 0 | 163 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 20.11. | 7 | 1 | 0 | 0 | 0 | 0 | 6 | yes | 15/15 | 0/30 | NOT RUN | - |
+| 21.11. | 26 | 1 | 0 | 3 | 2 | 15 | 5 | yes | 15/15 | 30/30 | 13/14 | - |
 
 Job queue per week (Monday).
 
@@ -175,7 +177,7 @@ Work sessions per day.
 | 13.11. | 13 | 1 | 0 |
 
 ## Trägt nicht
-One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. Whether the hub reuses input is not tested. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.
+One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. That the hub reuses input rests on one timing test of 15 requests on one evening; how long it keeps a prompt start and what share of its input was reused are not known. The changes of 21.11. were tested on the day they were built; whether they shorten the time to repair is not measured yet. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.
 
 ## Bruchindikator
 More than 1 % request errors in a week with queue jobs running; more than 30 failed starts of a model service in a day; the system disk below 20 GB again after it was freed; a fault named in three night reviews in a row; a test missing from a nightly report without an alarm.
