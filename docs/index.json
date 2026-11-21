@@ -445,7 +445,7 @@
 "a": "agent_tooling",
 "y": "Regel",
 "s": "vorschlag",
-"d": "2026-11-16",
+"d": "2026-11-13",
 "x": "A deck for a live lecture (lecturer with a laser-pointer clicker, projector plus a second window on the laptop) follows this standard. It extends the [narrated explanation deck](narrated-html-deck-one-audio-per-slide.md) and uses the [Manim",
 "id": "lecture-deck-presenter-standard",
 "src": "knowledge/agent_tooling/rules/lecture-deck-presenter-standard.md"
@@ -3366,6 +3366,17 @@
 "src": "knowledge/memory_supply/mechanisms/hbm-eats-wafer-area.md"
 },
 {
+"t": "Each HBM generation change ratchets wafer cannibalisation up: a staircase, not a wave",
+"p": "memory_supply/mechanisms/hbm-generation-change-ratchets-cannibalisation.html",
+"a": "memory_supply",
+"y": "Mechanismus",
+"s": "vorschlag",
+"d": "2026-11-21",
+"x": "Thesis Mendel: DRAM tightness does not arrive smoothly. Each HBM generation change (HBM3E to HBM4, later HBM4E) brings a sudden step in wafer cannibalisation, and the trade press reads the flat stretch in between as \"growth is slowing\". Men",
+"id": "hbm-generation-change-ratchets-cannibalisation",
+"src": "knowledge/memory_supply/mechanisms/hbm-generation-change-ratchets-cannibalisation.md"
+},
+{
 "t": "Second-source HBM4 arrives slowly and pre-sold, so it does not press 2027 prices",
 "p": "memory_supply/mechanisms/second-source-hbm4-arrives-presold.html",
 "a": "memory_supply",
@@ -4262,7 +4273,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -4273,7 +4284,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -4284,7 +4295,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-06",
+"d": "2026-11-21",
 "x": "tools/general/manim_film",
 "id": "manim_film",
 "src": "tools/general/manim_film/README.md"
@@ -4295,7 +4306,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-03",
+"d": "2026-11-21",
 "x": "tools/general/narrated_html_deck",
 "id": "narrated_html_deck",
 "src": "tools/general/narrated_html_deck/README.md"
@@ -4306,7 +4317,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -4317,7 +4328,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-17",
+"d": "2026-11-21",
 "x": "tools/general/web_research",
 "id": "web_research",
 "src": "tools/general/web_research/README.md"
@@ -4328,7 +4339,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-11",
+"d": "2026-11-21",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -4339,7 +4350,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-11-21",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -4350,7 +4361,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-03",
+"d": "2026-11-21",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -4361,7 +4372,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -4372,7 +4383,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-11-21",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -4383,7 +4394,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-11-21",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -4394,7 +4405,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-06",
+"d": "2026-11-21",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -4405,7 +4416,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -4416,7 +4427,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -4427,7 +4438,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-11-21",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -4438,7 +4449,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-08",
+"d": "2026-11-21",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -4449,7 +4460,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-10-02",
+"d": "2026-11-21",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

@@ -89,3 +89,4 @@
 - 2026-11-03 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 6 Bereiche.
 - 2026-11-04 | Alita (morgenrecherche, lokal) | `knowledge/daily_research/` | Tagesseite, 8 Bereiche.
 - 2026-11-09 | Alita (Claude) | `tools/general/manim_film/` | Word-exact timing ({mark} + self.at), pause-and-predict (predict/reveal), script shape + novice reader (script_check.py), pronunciation list + listening file (pronounce.json, say_check.py); pilot BIANCA ch 7-9 gate PASS.
+- 2026-11-21 | Claude (claude.ai, DATACENTER RESEARCH) | knowledge/memory_supply/mechanisms/hbm-generation-change-ratchets-cannibalisation.md, knowledge/memory_supply/{INDEX,SUMMARY}.md | thesis Mendel: HBM generation changes ratchet wafer cannibalisation (staircase, not wave); arithmetic shows mix shift ~1.8 points vs volume ~8 points of DRAM wafers; Nvidia parallel unchecked

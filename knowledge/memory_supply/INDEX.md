@@ -4,7 +4,7 @@ Angebotsseite des Speichers: Waferflaeche, Werke, Knoten und was die Flaechenauf
 
 Vor jedem Argument mit dem Standardzyklus (Knappheit, Capex, Überangebot) gilt die Regel [Kein Standardzyklus ohne Absorptionsprüfung](rules/no-standard-cycle-without-absorption-check.md): erst zeigen, dass der Zubau nicht von mehr Speicher je GPU aufgefressen wird ([Mechanismus](mechanisms/gpu-memory-absorbs-fab-additions.md)).
 
-Stand 2026-10-17. Ein Eintrag je Datei.
+Stand 2026-11-21. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
@@ -24,3 +24,4 @@ Stand 2026-10-17. Ein Eintrag je Datei.
 | [HBM contract prices and volumes for 2027: company readings](open_checks/hbm-contract-prices-2027.md) | pruefpunkt | offen |
 | [Rubin's 288 GB HBM: set by stack technology or by DRAM scarcity?](open_checks/rubin-hbm-capacity-technology-or-scarcity.md) | pruefpunkt | offen |
 | [CPU-attached LPDDR adds conventional DRAM demand on top of HBM](mechanisms/cpu-attached-lpddr-adds-conventional-dram-demand.md) | mechanismus | vorschlag |
+| [Each HBM generation change ratchets wafer cannibalisation up: a staircase, not a wave](mechanisms/hbm-generation-change-ratchets-cannibalisation.md) | mechanismus | vorschlag |
