@@ -121,6 +121,17 @@
 "src": "knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md"
 },
 {
+"t": "Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair",
+"p": "agent_tooling/findings/agent-station-reliability-trend-2026-11.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-21",
+"x": "1. **Outages fell sharply.** Model requests through the relay that ended in an error: 27 % in the first 7 days (1,441 of 5,327), 0.6 % in the last 7 days (6 of 1,041), 4.7 % over all 24 days (1,753 of 37,181). The two crash loops of the mod",
+"id": "agent-station-reliability-trend-2026-11",
+"src": "knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md"
+},
+{
 "t": "A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps",
 "p": "agent_tooling/findings/agent-system-check-nightly-reports-need-a-build-loop.html",
 "a": "agent_tooling",
@@ -4273,7 +4284,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json",
 "id": "js_literal_to_json",
 "src": "tools/general/js_literal_to_json/README.md"
@@ -4284,7 +4295,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/general/js_literal_to_json/tests",
 "id": "tests",
 "src": "tools/general/js_literal_to_json/tests/README.md"
@@ -4295,7 +4306,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-11-06",
 "x": "tools/general/manim_film",
 "id": "manim_film",
 "src": "tools/general/manim_film/README.md"
@@ -4306,7 +4317,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-11-03",
 "x": "tools/general/narrated_html_deck",
 "id": "narrated_html_deck",
 "src": "tools/general/narrated_html_deck/README.md"
@@ -4317,7 +4328,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/general/wayback_snapshot",
 "id": "wayback_snapshot",
 "src": "tools/general/wayback_snapshot/README.md"
@@ -4328,7 +4339,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-17",
 "x": "tools/general/web_research",
 "id": "web_research",
 "src": "tools/general/web_research/README.md"
@@ -4339,7 +4350,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-11",
 "x": "tools/general/wiki_html",
 "id": "wiki_html",
 "src": "tools/general/wiki_html/README.md"
@@ -4350,7 +4361,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance",
 "id": "wiki_maintenance",
 "src": "tools/general/wiki_maintenance/README.md"
@@ -4361,7 +4372,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-03",
 "x": "tools/general/wiki_maintenance/tests",
 "id": "tests",
 "src": "tools/general/wiki_maintenance/tests/README.md"
@@ -4372,7 +4383,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/general/yt-dlp-windows",
 "id": "yt-dlp-windows",
 "src": "tools/general/yt-dlp-windows/README.md"
@@ -4383,7 +4394,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-06",
 "x": "tools/image_generation/comfyui_local",
 "id": "comfyui_local",
 "src": "tools/image_generation/comfyui_local/README.md"
@@ -4394,7 +4405,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune",
 "id": "unsloth_finetune",
 "src": "tools/llm/finetuning/unsloth_finetune/README.md"
@@ -4405,7 +4416,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-06",
 "x": "tools/llm/finetuning/unsloth_finetune/tests",
 "id": "tests",
 "src": "tools/llm/finetuning/unsloth_finetune/tests/README.md"
@@ -4416,7 +4427,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/memory/wafer-ramp",
 "id": "wafer-ramp",
 "src": "tools/memory/wafer-ramp/README.md"
@@ -4427,7 +4438,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation",
 "id": "freesurfer_histoatlas_segmentation",
 "src": "tools/mri/mri_segmentation/freesurfer_histoatlas_segmentation/README.md"
@@ -4438,7 +4449,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer",
 "id": "qc_slice_viewer",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/README.md"
@@ -4449,7 +4460,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-08",
 "x": "tools/mri/mri_segmentation/qc_slice_viewer/tests",
 "id": "tests",
 "src": "tools/mri/mri_segmentation/qc_slice_viewer/tests/README.md"
@@ -4460,7 +4471,7 @@
 "a": "tools",
 "y": "Werkzeug",
 "s": "",
-"d": "2026-11-21",
+"d": "2026-10-02",
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"

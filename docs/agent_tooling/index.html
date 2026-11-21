@@ -43,14 +43,15 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › agent_tooling</div><h1>agent_tooling</h1><p>Werkzeuge bauen, auf deren Ausgabe sich jemand verlaesst: Rueckfallwerte, Vorbedingungen</p><p class="muted small">Werkzeuge, Messung, Prüfung, Rückfallwerte, Melder, Code-Qualität, MCP, Tool-Design, Skills, Tests, conda, venv, PYTHONNOUSERSITE, Installation, Cluster, datenagnostisch, BIDS</p>
-<div class="stripe"><i class="warn" style="width:65.2%" title="vorschlag: 30"></i><i class="ok" style="width:34.8%" title="getragen: 16"></i></div><div class="counts"><span class="warn">30 vorschlag</span> <span class="ok">16 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
+<div class="stripe"><i class="warn" style="width:66.0%" title="vorschlag: 31"></i><i class="ok" style="width:34.0%" title="getragen: 16"></i></div><div class="counts"><span class="warn">31 vorschlag</span> <span class="ok">16 getragen</span></div><div class="small"><p>Werkzeuge bauen, auf deren Ausgabe sich ein Agent oder ein Mensch verlaesst.
 Nicht modellspezifisch: es geht um Pruefwerkzeuge, Messwerkzeuge und
 Vorbedingungspruefungen.</p>
 <p>Der rote Faden aller Einträge: <strong>ein Pruefwerkzeug, dessen eigener Fehler wie
 ein Befund am Geprueften aussieht, ist die gefaehrlichste Sorte.</strong> Es wird
 geglaubt, weil es wie eine Messung aussieht.</p>
 <p>Stand 2026-10-07. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-11-20 (own scan):</strong> A log that a code comment calls free of text carried file names and id-like strings in its reasons field (about 1 line in 10); a claim like that is measured by counting pattern hits per field, and a hit is checked before it is reported (55 "keys" were web addresses). Instead of a new shared log, a daily note with counts from the existing logs goes into the agent's recall; reasons are counted by their fixed first phrase and the writer refuses when its own note fails the privacy check. Follow-up to the memory rewrite: a rule-based cut of the oldest step blocks cured the one section it was written for (page took in 37 entries), 2 of 3 real updates were still rejected for other sections. See <code>findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md</code>.</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-11-21 (own read-out):</strong> Three weeks of logs of one agent workstation: request errors through the relay fell from 27 % (first 7 days) to 0.6 % (last 7 days, under low load), the crash loops and memory kills did not come back, 91 % of work sessions ran to the end. Still open: the system disk is at 0.7 % free, 6.4 of 8.4 warning lines per hourly check repeat old states, five faults stayed open for 7 to 13 nights, a test that did not run raised no alarm, and the hub does not report whether it reuses input. Eight proposals in order, eight charts, published figures with a note on which of them compare (<a href="findings/agent-station-reliability-trend-2026-11.html">entry</a>).</p>
+<p><strong>New 2026-11-20 (own scan):</strong> A log that a code comment calls free of text carried file names and id-like strings in its reasons field (about 1 line in 10); a claim like that is measured by counting pattern hits per field, and a hit is checked before it is reported (55 "keys" were web addresses). Instead of a new shared log, a daily note with counts from the existing logs goes into the agent's recall; reasons are counted by their fixed first phrase and the writer refuses when its own note fails the privacy check. Follow-up to the memory rewrite: a rule-based cut of the oldest step blocks cured the one section it was written for (page took in 37 entries), 2 of 3 real updates were still rejected for other sections. See <code>findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md</code>.</p>
 <p><strong>New 2026-11-20 (own check):</strong> A full check of a running agent system found seven faults that the nightly reports had named for up to 8 days; a report without a build decision repairs nothing, and the watcher itself read a wrong log path. Rewriting a long memory page one section per call works for pages with room, but a section far over its budget is not shortened by the model (1 of 3 real runs passed); a guard must count the source pointers a draft keeps (one section lost 59 of 74 without it). See <code>findings/agent-system-check-nightly-reports-need-a-build-loop.md</code>.</p>
 <p><strong>Rule 2026-11-13 (user, lecture 18.11.):</strong> A live lecture deck goes point by point: one clicker click shows one point, plays that point's animation piece and its own recording of whole sentences; the first click starts the lecture clock, exercise slides start a countdown that stops at 0:00, a restart button resets all; the presenter view shows the point and its sentences in large type, the animation state and the plan per step to the second; a PDF handout with contents and sources comes from screenshots (<a href="rules/lecture-deck-presenter-standard.html">rule</a>). Sources: own build 2026-11-13 (deck v19 to v29); Kokoro-82M, Playwright.</p>
 <p><strong>Rule 2026-11-04 (user):</strong> Animated explanations keep the look of the approved Clara Working Station film: Manim, boxes light up with the voice, objects stay across beats, red rings rare. Tool: <code>tools/general/manim_film</code>. Sources: Manim Community, https://www.manim.community/ ; own build 2026-11-04.</p>
@@ -82,7 +83,7 @@ Stand 2026-10-07. Prefill für Chats und Agenten. Details in <a href="index.html
 - 11.10.: Tafel trennen: Markdown nur Funktionskern (kurz, ueber das Werkzeug, Nummern stabil), alles Verstaendliche als automatisch gebaute HTML-Seiten mit Plots und Datenschutzfilter (vorher 42 unsichtbare Eintraege, 6 doppelte Nummern).
 - 11.10.: Verlaesst ein Ordner die interne Platte, dann kopieren, beide Seiten SHA-256-hashen, erst bei Gleichstand loeschen und Symlink setzen; exFAT speichert keine Symlinks (Notiz in .SYMLINKS.txt); eine leere Platte kann defekt sein (Schreibtest + SMART vor dem ersten Lauf). Werkzeug <code>archivieren</code>.</p>
 <p><strong>Risiko, neu 2026-10-12 (Alita):</strong> Rechenauftraege, die der Dauerlauf-Dienst startet, erben dessen MemoryHigh (32 GiB). Ein 34-GiB-Training wird gedrosselt, der Druck steigt ueber 50 %, systemd-oomd toetet die Einheit samt Schlange und Training, Restart=always wiederholt das alle 3 bis 4 Minuten: 30 Kills zwischen 11.10. 18:48 und 12.10. 09:21, kein Lauf kam durch. Bedarf wurde gegen den System-RAM geprueft, nicht gegen die eigene cgroup.</p>
-<p><strong>Rules, new 2026-10-16:</strong> (1) A Python environment on a shared machine is only isolated if you make it so: <code>PYTHONNOUSERSITE=1</code> (a user-site package shadowed the environment's), install on a compute node or as venv (conda died twice on the login node at <code>repodata.json</code>), venv fallback without <code>python3-venv</code>, check <code>pkg.__file__</code> before testing (an editable install pointed to an old clone), <code>rc=$?</code> before <code>$(date)</code>. (2) Public code knows no dataset: patterns and explicit files, BIDS as preset; dataset rules in a private script next to the data, after proving old and new give identical case lists.</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 39</title></rect><rect x="320.0" y="41.0" width="319.0" height="9.0" rx="1"><title>2026-11: 7</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 39)</figcaption></figure>
+<p><strong>Rules, new 2026-10-16:</strong> (1) A Python environment on a shared machine is only isolated if you make it so: <code>PYTHONNOUSERSITE=1</code> (a user-site package shadowed the environment's), install on a compute node or as venv (conda died twice on the login node at <code>repodata.json</code>), venv fallback without <code>python3-venv</code>, check <code>pkg.__file__</code> before testing (an editable install pointed to an old clone), <code>rc=$?</code> before <code>$(date)</code>. (2) Public code knows no dataset: patterns and explicit files, BIDS as preset; dataset rules in a private script next to the data, after proving old and new give identical case lists.</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 39</title></rect><rect x="320.0" y="39.7" width="319.0" height="10.3" rx="1"><title>2026-11: 8</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 39)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
 <h2 id="rules">Regel <span class="muted small">(39)</span></h2><details class="entry" id="lecture-deck-presenter-standard"><summary><span class="type">Regel</span><span class="t"><a href="rules/lecture-deck-presenter-standard.html">Live lecture deck: one click = one point, with its animation and its own voice; presenter view with timing to the second</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-13</span></summary><div class="body"><p class="small muted">Herkunft: user requests 2026-11-13 while preparing the lecture of 18.11.2026 (clicker, presenter view, timers, PDF); own build, deck v19 to v29 in github.com/mendeltem/mri-segmentation-lectures · <a href="rules/lecture-deck-presenter-standard.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/rules/lecture-deck-presenter-standard.md">Markdown</a></p><h2>Aussage</h2>
 <p>A deck for a live lecture (lecturer with a laser-pointer clicker, projector plus a second window on the laptop) follows this standard.
@@ -1542,7 +1543,781 @@ Quelle.</p>
 <ul>
 <li><a href="rules/no-silent-fallback-values.html">no-silent-fallback-values</a></li>
 <li><a href="rules/empty-is-not-missing.html">empty-is-not-missing</a></li>
-</ul></div></details><h2 id="findings">Befund <span class="muted small">(5)</span></h2><details class="entry" id="agent-system-check-nightly-reports-need-a-build-loop"><summary><span class="type">Befund</span><span class="t"><a href="findings/agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-20</span></summary><div class="body"><p class="small muted">Herkunft: own check and repair of a local agent system (chat agent, relay, exit guard, memory job, watchers) on one workstation, 2026-11-20 · <a href="findings/agent-system-check-nightly-reports-need-a-build-loop.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-system-check-nightly-reports-need-a-build-loop.md">Markdown</a></p><h2>Aussage</h2>
+</ul></div></details><h2 id="findings">Befund <span class="muted small">(6)</span></h2><details class="entry" id="agent-station-reliability-trend-2026-11"><summary><span class="type">Befund</span><span class="t"><a href="findings/agent-station-reliability-trend-2026-11.html">Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-21</span></summary><div class="body"><p class="small muted">Herkunft: own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21 · <a href="findings/agent-station-reliability-trend-2026-11.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li><strong>Outages fell sharply.</strong> Model requests through the relay that ended in an error: 27 % in the first 7 days (1,441 of 5,327), 0.6 % in the last 7 days (6 of 1,041), 4.7 % over all 24 days (1,753 of 37,181). The two crash loops of the model services (1,198 and 1,549 failed starts of the local model server on two days, 229 failed runs on a third day, mostly the gate model service) did not come back: since 14.11. there were at most 4 failed runs a day. No process was killed for lack of memory since 09.11. (18 kills from 30.10. to 08.11.). The chat service, the messaging bridge, the relay and the exit guard had no failed run in the service journal in the whole period. Limit: the last week had low load, about 150 requests a day against about 760 a day in the first week.</li>
+</ol>
+<p><img alt="Outages per day" src="../assets/station_1_outages.png" /></p>
+<ol start="2">
+<li><strong>Most tasks ran to the end.</strong> Job queue: 146 jobs finished, 15 stuck (9 %). Work sessions: 85 done, 8 failed or interrupted, 16 stopped by hand or by a test (91 % done when the stopped ones are left out). "Finished" is the station's own acceptance; nobody re-checked the results for this entry. There were no new queue jobs since 10.11. and no work sessions after 13.11.</li>
+</ol>
+<p><img alt="Tasks finished" src="../assets/station_4_tasks_finished.png" /></p>
+<ol start="3">
+<li><strong>The nightly review finds faults fast, the repair was slow.</strong> Five faults were reported for 7 to 13 nights before they were repaired, all on one repair day. One repair of that day made a new fault (a missing import in a stop handler); the review found it the next night and it was repaired the same day. This continues <a href="findings/agent-system-check-nightly-reports-need-a-build-loop.html">the entry of 20.11.</a>.</li>
+</ol>
+<p><img alt="How long a fault stayed open" src="../assets/station_5_open_faults.png" /></p>
+<ol start="4">
+<li><strong>The tests themselves had gaps.</strong> Over 15 nights the night review was missing once. The chat test is in 2 of the 15 nightly reports; on 7 nights it was not started (a script fault) and nothing raised an alarm. The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.</li>
+</ol>
+<p><img alt="Nightly tests" src="../assets/station_3_tests.png" /></p>
+<ol start="5">
+<li><strong>The nightly failure count is a count of log lines and swings without meaning</strong> (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop.</li>
+</ol>
+<p><img alt="Failures per night" src="../assets/station_2_failures_per_night.png" /></p>
+<ol start="6">
+<li><strong>Two things got worse.</strong> The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them.</li>
+</ol>
+<p><img alt="Machine health" src="../assets/station_6_machine_health.png" /></p>
+<ol start="7">
+<li><strong>Local model and hub.</strong> The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse is unknown, not zero. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.</li>
+</ol>
+<p><img alt="Input to the hub and to the local model" src="../assets/station_7_local_and_hub.png" /></p>
+<ol start="8">
+<li><strong>What to change next, in this order</strong> (the two dot columns of the chart are a judgement, not a measurement):</li>
+<li>Free the system disk and keep it above 50 GB.</li>
+<li>Health message: say each warning once, the urgent one first.</li>
+<li>Smoke test after every repair: start, one request, stop.</li>
+<li>A test that did not run shows as red, not as empty.</li>
+<li>A repair list with a deadline: a fault open for 3 nights leads the morning message.</li>
+<li>Count network noise apart; mark a test "not valid" when the hub is down.</li>
+<li>Find out whether the hub reuses input; if not, keep the start of each prompt identical.</li>
+<li>Later, and only if the queue is used again: work sessions continue from a saved step.</li>
+</ol>
+<p><img alt="Proposals" src="../assets/station_8_proposals.png" /></p>
+<ol start="9">
+<li><strong>A rewrite of the chat app is not supported by these logs.</strong> The faults sat in model start, timers, tests and alarms, not in the chat service. Waiting longer after each failed model start, a restart limit, the look at the server's slots before a stop and the check of model names against the hub's list are already built.</li>
+</ol>
+<h2>Trägt</h2>
+<h3>Own data</h3>
+<p>Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.</p>
+<h3>Published figures, and how far they compare</h3>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Published figure</th>
+<th>Does it compare?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request errors 0.6 % in the last week, 27 % in the first</td>
+<td>SRE book: no general target; each service picks one below 100 %, the rest is its error budget (99.9 % allows 0.1 % errors)</td>
+<td>Fair once a target is written down; the station has none. Against a target of 99 % the last week is inside and the first week 27 times over</td>
+</tr>
+<tr>
+<td>6.4 of 8.4 warning lines per check repeat an old state</td>
+<td>SRE book ch. 6: "Every page should be actionable"</td>
+<td>Fair: the station fails this rule</td>
+</tr>
+<tr>
+<td>Guard: harmless queries passed 30/30 on 7 nights and 0/30 on 8; sensitive blocked 15/15</td>
+<td>Constitutional Classifiers: +0.38 % refusals on production traffic. InjecGuard: guard models let through between 0.88 % and 99.71 % of 339 benign samples. XSTest: 0.8 % to 38 % of safe prompts fully refused</td>
+<td>Fair as a pattern: blocking too much is the known failure of guards. The station's test sets are small; 15 of 15 only shows a true block rate above about 78 % (95 % Clopper-Pearson)</td>
+</tr>
+<tr>
+<td>91 % of work sessions done, 9 % of queue jobs stuck</td>
+<td>τ-bench: 61 % (retail) and 35 % (airline) of tasks solved in one try. TheAgentCompany: best agent 30 %. MAST: 41 % to 86.7 % failure</td>
+<td>Not comparable: benchmark tasks are hard and graded from outside; here the jobs are own routine jobs with own acceptance</td>
+</tr>
+<tr>
+<td>One review per night by a second model, repair by hand</td>
+<td>Pan 2025: 74 % of deployed agents depend mainly on human evaluation; 68 % run at most 10 steps before a human steps in</td>
+<td>Context only: the station is in the usual range</td>
+</tr>
+<tr>
+<td>One repair made a new fault</td>
+<td>DORA change failure rate (5 % for the top group; unverified against the primary report)</td>
+<td>Not comparable: too few changes counted</td>
+</tr>
+<tr>
+<td>779 M input tokens in 24 days, hub reuse unknown</td>
+<td>Kapoor 2024: report cost next to accuracy; cost differed almost a hundredfold at similar accuracy</td>
+<td>Fair as a rule: the station does not yet report tokens per finished task</td>
+</tr>
+</tbody>
+</table>
+<h3>Sources</h3>
+<p>Opened on 2026-11-21 by two research agents of the same session; not opened a second time for this entry. No DOI or PMID was seen for any of them; papers carry their arXiv id.</p>
+<p>Figures used for the comparison:
+- Beyer B, Jones C, Petoff J, Murphy NR (eds.), 2016. <em>Site Reliability Engineering</em>. O'Reilly. Chapters 3, 4, 6 and 11, <a href="https://sre.google/sre-book/embracing-risk/">https://sre.google/sre-book/embracing-risk/</a>, <a href="https://sre.google/sre-book/monitoring-distributed-systems/">https://sre.google/sre-book/monitoring-distributed-systems/</a>. Verified. A reliability target is chosen per service and is below 100 %; the gap is the error budget; every page should be actionable.
+- Yao S, 2024. τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains. arXiv:2406.12045, <a href="https://arxiv.org/abs/2406.12045">https://arxiv.org/abs/2406.12045</a>. Verified. A function-calling agent solved 61.2 % (retail) and 35.2 % (airline) of tasks in one try; all of 8 tries succeeded in under 25 % (retail).
+- Xu F, 2024. TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks. arXiv:2412.14161, <a href="https://arxiv.org/abs/2412.14161">https://arxiv.org/abs/2412.14161</a>. Verified. 175 office tasks; the best agent finished 24 % (first version) and 30.3 % (third version).
+- Cemri M, 2025. Why Do Multi-Agent LLM Systems Fail? arXiv:2503.13657, <a href="https://arxiv.org/abs/2503.13657">https://arxiv.org/abs/2503.13657</a>. Partly verified (venue and the per-framework figure: unverified). 14 failure modes in more than 1,600 traces of 7 frameworks; failure between 41 % and 86.7 %.
+- Kapoor S, 2024. AI Agents That Matter. arXiv:2407.01502, <a href="https://arxiv.org/abs/2407.01502">https://arxiv.org/abs/2407.01502</a>. Verified. Cost has to be reported next to accuracy; at similar accuracy cost differed by almost two orders of magnitude.
+- Kwa T, 2025. Measuring AI Ability to Complete Long Software Tasks. arXiv:2503.14499, <a href="https://arxiv.org/abs/2503.14499">https://arxiv.org/abs/2503.14499</a>. Verified; not used for a comparison. The task length that models finish half of the time doubled about every 7 months.
+- Pan MZ, 2025. Measuring Agents in Production. arXiv:2512.04123, <a href="https://arxiv.org/abs/2512.04123">https://arxiv.org/abs/2512.04123</a>. Verified. 306 responses on 86 deployed systems: 68 % run at most 10 steps before a human steps in, 74 % depend mainly on human evaluation.
+- Sharma M, 2025. Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming. arXiv:2501.18837, <a href="https://arxiv.org/abs/2501.18837">https://arxiv.org/abs/2501.18837</a>. Verified. Jailbreak success fell from 86 % to 4.4 % at +0.38 % refusals on production traffic.
+- Li H, 2024. InjecGuard: Benchmarking and Mitigating Over-defense in Prompt Injection Guardrail Models. arXiv:2410.22770, <a href="https://arxiv.org/abs/2410.22770">https://arxiv.org/abs/2410.22770</a>. Verified. On 339 benign samples the guard models let through between 0.88 % and 99.71 %.
+- Röttger P, 2024. XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models. NAACL 2024, arXiv:2308.01263, <a href="https://arxiv.org/abs/2308.01263">https://arxiv.org/abs/2308.01263</a>. Verified. Safe prompts fully refused: 0.8 % to 38 % depending on model and system prompt.
+- DORA, 2024. Accelerate State of DevOps Report. Definitions verified at <a href="https://dora.dev/guides/dora-metrics/">https://dora.dev/guides/dora-metrics/</a>; the group thresholds come from a secondary page: unverified.</p>
+<p>Techniques behind the proposals:
+- Thurgood S et al. <em>The Site Reliability Workbook</em>, ch. 5 "Alerting on SLOs", <a href="https://sre.google/workbook/alerting-on-slos/">https://sre.google/workbook/alerting-on-slos/</a>; ch. 10 "Postmortem Culture", <a href="https://sre.google/workbook/postmortem-culture/">https://sre.google/workbook/postmortem-culture/</a>; ch. 16 "Canarying Releases", <a href="https://sre.google/workbook/canarying-releases/">https://sre.google/workbook/canarying-releases/</a>. Verified. Alert on the rate at which the error budget is used; action items need an owner and a checkable end state; most incidents are set off by a change, so a change is tried on a small scale first (proposals 3, 5).
+- Prometheus Alertmanager documentation, <a href="https://prometheus.io/docs/alerting/latest/alertmanager/">https://prometheus.io/docs/alerting/latest/alertmanager/</a>. Verified. Grouping, inhibition and a repeat interval (default 4 h) keep one state from being sent again and again (proposal 2).
+- systemd 255 manual, systemd.service(5) and systemd.unit(5), <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html">https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html</a>. Verified. <code>StartLimitIntervalSec=</code>/<code>StartLimitBurst=</code> (default 5 starts in 10 s), <code>RestartSteps=</code>, <code>RestartMaxDelaySec=</code>, <code>ExecCondition=</code>, <code>OnFailure=</code>; <code>systemctl reset-failed</code> clears an old failed state (proposal 2, and what is already built).
+- Kubernetes documentation, "Node-pressure Eviction", <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/">https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/</a>. Verified. A node starts to evict work below 10 % free disk by default; 6.8 of 915 GB is 0.7 % (proposal 1).
+- Anthropic, 2026. Demystifying evals for AI agents, <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>. Verified. A pass rate of 0 % is most often a broken task, not an incapable agent; infrastructure failures are kept apart from agent failures (proposals 4, 6; "not valid" is this entry's own wording).
+- vLLM documentation, serve CLI reference, <a href="https://docs.vllm.ai/en/latest/cli/serve.html">https://docs.vllm.ai/en/latest/cli/serve.html</a>, and llama.cpp server README, <a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md">https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md</a>. Verified. vLLM reports cached tokens only with <code>--enable-prompt-tokens-details</code> (default off), so a missing count does not show a missing cache; llama.cpp reuses an identical prompt start by default (proposal 7). Which server the hub runs is not known.
+- Anthropic, 2025. Effective harnesses for long-running agents, <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a>; Anthropic, 2025. How we built our multi-agent research system (engineering blog). Verified. Progress files and commits let a later session continue from the last finished step (proposal 8).
+- Brooker M, 2019. Timeouts, retries, and backoff with jitter. AWS Builders' Library. Fowler M, 2014. CircuitBreaker, <a href="https://martinfowler.com/bliki/CircuitBreaker.html">https://martinfowler.com/bliki/CircuitBreaker.html</a>. Verified. Growing waits with an upper limit and a breaker that opens after repeated failures; the station's relay already does this.
+- Chen L, 2023. FrugalGPT. arXiv:2305.05176; Ong I, 2024. RouteLLM. arXiv:2406.18665. Verified; not used. They route by expected difficulty; this station routes by data sensitivity.</p>
+<h3>Data tables</h3>
+<p>Per day. "Failed runs" are journal lines of the two model services; "warnings" are the average per hourly check; 21.11. is a part day.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Requests</th>
+<th>Errors</th>
+<th>Error %</th>
+<th>Failed runs, local model server</th>
+<th>Failed runs, gate model service</th>
+<th>Memory kills</th>
+<th>Disk free (GB, lowest)</th>
+<th>Live warnings</th>
+<th>Old "unit failed" lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>29.10.</td>
+<td>272</td>
+<td>4</td>
+<td>1.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>74</td>
+<td>0.3</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>30.10.</td>
+<td>796</td>
+<td>4</td>
+<td>0.5</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>220</td>
+<td>0.5</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>31.10.</td>
+<td>656</td>
+<td>3</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>216</td>
+<td>0.0</td>
+<td>2.6</td>
+</tr>
+<tr>
+<td>01.11.</td>
+<td>146</td>
+<td>1</td>
+<td>0.7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>190</td>
+<td>0.0</td>
+<td>4.2</td>
+</tr>
+<tr>
+<td>02.11.</td>
+<td>152</td>
+<td>13</td>
+<td>8.6</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>160</td>
+<td>0.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>03.11.</td>
+<td>748</td>
+<td>619</td>
+<td>82.8</td>
+<td>1,198</td>
+<td>0</td>
+<td>0</td>
+<td>136</td>
+<td>0.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>04.11.</td>
+<td>2,557</td>
+<td>797</td>
+<td>31.2</td>
+<td>1,549</td>
+<td>0</td>
+<td>0</td>
+<td>21</td>
+<td>0.1</td>
+<td>2.1</td>
+</tr>
+<tr>
+<td>05.11.</td>
+<td>1,101</td>
+<td>50</td>
+<td>4.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>147</td>
+<td>0.1</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>06.11.</td>
+<td>2,486</td>
+<td>131</td>
+<td>5.3</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>86</td>
+<td>0.4</td>
+<td>2.3</td>
+</tr>
+<tr>
+<td>07.11.</td>
+<td>14,185</td>
+<td>71</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>62</td>
+<td>1.2</td>
+<td>3.1</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>4,889</td>
+<td>4</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>148</td>
+<td>0.9</td>
+<td>3.3</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>4,190</td>
+<td>1</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>146</td>
+<td>0.4</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>1,119</td>
+<td>1</td>
+<td>0.1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>124</td>
+<td>0.0</td>
+<td>3.9</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>281</td>
+<td>1</td>
+<td>0.4</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>123</td>
+<td>0.8</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>482</td>
+<td>1</td>
+<td>0.2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>74</td>
+<td>0.8</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>1,981</td>
+<td>45</td>
+<td>2.3</td>
+<td>6</td>
+<td>223</td>
+<td>0</td>
+<td>63</td>
+<td>1.0</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td>14.11.</td>
+<td>99</td>
+<td>1</td>
+<td>1.0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>61</td>
+<td>0.8</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>15.11.</td>
+<td>92</td>
+<td>0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>18</td>
+<td>1.5</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>16.11.</td>
+<td>95</td>
+<td>0</td>
+<td>0.0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>27</td>
+<td>1.8</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>17.11.</td>
+<td>95</td>
+<td>2</td>
+<td>2.1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>19</td>
+<td>1.8</td>
+<td>6.8</td>
+</tr>
+<tr>
+<td>18.11.</td>
+<td>111</td>
+<td>1</td>
+<td>0.9</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>17</td>
+<td>1.8</td>
+<td>6.1</td>
+</tr>
+<tr>
+<td>19.11.</td>
+<td>93</td>
+<td>1</td>
+<td>1.1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>1.8</td>
+<td>6.5</td>
+</tr>
+<tr>
+<td>20.11.</td>
+<td>237</td>
+<td>1</td>
+<td>0.4</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>1.5</td>
+<td>7.2</td>
+</tr>
+<tr>
+<td>21.11.</td>
+<td>318</td>
+<td>1</td>
+<td>0.3</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>7</td>
+<td>2.0</td>
+<td>6.4</td>
+</tr>
+</tbody>
+</table>
+<p>Per night (lines of the nightly failure count by source, then the tests).</p>
+<table>
+<thead>
+<tr>
+<th>Night</th>
+<th>Failure lines</th>
+<th>Relay</th>
+<th>Sessions</th>
+<th>Services</th>
+<th>Messaging bridge</th>
+<th>Memory job, guard, notes (since 20.11.)</th>
+<th>Review written</th>
+<th>Sensitive blocked</th>
+<th>Harmless let through</th>
+<th>Chat test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>07.11.</td>
+<td>285</td>
+<td>175</td>
+<td>71</td>
+<td>23</td>
+<td>16</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>120</td>
+<td>27</td>
+<td>33</td>
+<td>24</td>
+<td>36</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>68</td>
+<td>4</td>
+<td>56</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>28</td>
+<td>1</td>
+<td>15</td>
+<td>0</td>
+<td>12</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>12</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>16</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>31</td>
+<td>1</td>
+<td>10</td>
+<td>0</td>
+<td>20</td>
+<td>0</td>
+<td>no</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>6/14</td>
+</tr>
+<tr>
+<td>14.11.</td>
+<td>343</td>
+<td>45</td>
+<td>71</td>
+<td>226</td>
+<td>1</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>15.11.</td>
+<td>289</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>288</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>16.11.</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>17.11.</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>18.11.</td>
+<td>8</td>
+<td>2</td>
+<td>0</td>
+<td>4</td>
+<td>2</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>19.11.</td>
+<td>166</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>163</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>20.11.</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>21.11.</td>
+<td>26</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>7</td>
+<td>15</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>13/14</td>
+</tr>
+</tbody>
+</table>
+<p>Job queue per week (Monday).</p>
+<table>
+<thead>
+<tr>
+<th>Week of</th>
+<th>Finished</th>
+<th>Stuck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24.08.</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>31.08.</td>
+<td>28</td>
+<td>0</td>
+</tr>
+<tr>
+<td>07.09.</td>
+<td>36</td>
+<td>0</td>
+</tr>
+<tr>
+<td>14.09.</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>21.09.</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>05.10.</td>
+<td>23</td>
+<td>1</td>
+</tr>
+<tr>
+<td>12.10.</td>
+<td>11</td>
+<td>4</td>
+</tr>
+<tr>
+<td>19.10.</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>26.10.</td>
+<td>9</td>
+<td>1</td>
+</tr>
+<tr>
+<td>02.11.</td>
+<td>18</td>
+<td>6</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>6</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Work sessions per day.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Done</th>
+<th>Failed or interrupted</th>
+<th>Stopped by hand or test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>06.11.</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>07.11.</td>
+<td>23</td>
+<td>4</td>
+<td>14</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>34</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>13</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2>Trägt nicht</h2>
+<p>One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. Whether the hub reuses input is not tested. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.</p>
+<h2>Bruchindikator</h2>
+<p>More than 1 % request errors in a week with queue jobs running; more than 30 failed starts of a model service in a day; the system disk below 20 GB again after it was freed; a fault named in three night reviews in a row; a test missing from a nightly report without an alarm.</p>
+<h2>Ablesung</h2>
+<p>Write down a target for the request error rate before judging it. Count failures by cause, not by log line. Treat a test that did not run, and a test that failed because its backend was away, as states of their own. After every repair run the smallest end-to-end test before the repair counts as done. Watch free disk as its own alarm, not as one line among repeated ones.</p></div></details><details class="entry" id="agent-system-check-nightly-reports-need-a-build-loop"><summary><span class="type">Befund</span><span class="t"><a href="findings/agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-20</span></summary><div class="body"><p class="small muted">Herkunft: own check and repair of a local agent system (chat agent, relay, exit guard, memory job, watchers) on one workstation, 2026-11-20 · <a href="findings/agent-system-check-nightly-reports-need-a-build-loop.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-system-check-nightly-reports-need-a-build-loop.md">Markdown</a></p><h2>Aussage</h2>
 <ol>
 <li>A full check of a running agent system (own run, 2026-11-20) found seven faults that the nightly reports had named for up to 8 days. Nobody built the fixes, because the report ended in proposals and no step turned a repeated proposal into a decision.</li>
 <li>The watcher itself was partly blind: it read a log path that did not exist and skipped the log of the memory job. Its failure count swung without meaning (0 to 166 per night). A watcher has to be tested against the log it claims to read: the path exists and its last line is younger than a day.</li>

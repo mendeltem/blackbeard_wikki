@@ -1,0 +1,821 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#findings">Befund</a></div><h1>Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-21</span><span>Herkunft</span><span>own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="agent-system-check-nightly-reports-need-a-build-loop.html">A nightly error report does not repair anything: known faults stayed open for 8 days; a memory rewrite must be measured by what it keeps</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md">knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md</a></span></div><h2>Aussage</h2>
+<ol>
+<li><strong>Outages fell sharply.</strong> Model requests through the relay that ended in an error: 27 % in the first 7 days (1,441 of 5,327), 0.6 % in the last 7 days (6 of 1,041), 4.7 % over all 24 days (1,753 of 37,181). The two crash loops of the model services (1,198 and 1,549 failed starts of the local model server on two days, 229 failed runs on a third day, mostly the gate model service) did not come back: since 14.11. there were at most 4 failed runs a day. No process was killed for lack of memory since 09.11. (18 kills from 30.10. to 08.11.). The chat service, the messaging bridge, the relay and the exit guard had no failed run in the service journal in the whole period. Limit: the last week had low load, about 150 requests a day against about 760 a day in the first week.</li>
+</ol>
+<p><img alt="Outages per day" src="../assets/station_1_outages.png" /></p>
+<ol start="2">
+<li><strong>Most tasks ran to the end.</strong> Job queue: 146 jobs finished, 15 stuck (9 %). Work sessions: 85 done, 8 failed or interrupted, 16 stopped by hand or by a test (91 % done when the stopped ones are left out). "Finished" is the station's own acceptance; nobody re-checked the results for this entry. There were no new queue jobs since 10.11. and no work sessions after 13.11.</li>
+</ol>
+<p><img alt="Tasks finished" src="../assets/station_4_tasks_finished.png" /></p>
+<ol start="3">
+<li><strong>The nightly review finds faults fast, the repair was slow.</strong> Five faults were reported for 7 to 13 nights before they were repaired, all on one repair day. One repair of that day made a new fault (a missing import in a stop handler); the review found it the next night and it was repaired the same day. This continues <a href="agent-system-check-nightly-reports-need-a-build-loop.html">the entry of 20.11.</a>.</li>
+</ol>
+<p><img alt="How long a fault stayed open" src="../assets/station_5_open_faults.png" /></p>
+<ol start="4">
+<li><strong>The tests themselves had gaps.</strong> Over 15 nights the night review was missing once. The chat test is in 2 of the 15 nightly reports; on 7 nights it was not started (a script fault) and nothing raised an alarm. The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.</li>
+</ol>
+<p><img alt="Nightly tests" src="../assets/station_3_tests.png" /></p>
+<ol start="5">
+<li><strong>The nightly failure count is a count of log lines and swings without meaning</strong> (0 to 343). On one night 288 of 289 lines were network lines of the messaging bridge; on another 226 of 343 came from one crash loop.</li>
+</ol>
+<p><img alt="Failures per night" src="../assets/station_2_failures_per_night.png" /></p>
+<ol start="6">
+<li><strong>Two things got worse.</strong> The system disk has 6.8 GB free of 915 GB and has been below the station's own critical limit of 20 GB since 18.11. The hourly health check wrote 8.4 warning lines per check on 21.11.; 6.4 of them are the same "unit failed" lines of old one-off units, repeated every hour. The disk warning sits among them.</li>
+</ol>
+<p><img alt="Machine health" src="../assets/station_6_machine_health.png" /></p>
+<ol start="7">
+<li><strong>Local model and hub.</strong> The hub got 506 M input tokens in 27,782 requests, the local model 273 M in 7,646 requests. The local server reported 90 % of its input as read from its cache. The hub returns no cached-token count, so its reuse is unknown, not zero. Over 564 hourly checks the local model was loaded and idle in 30 of them, so idle GPU time is a small loss.</li>
+</ol>
+<p><img alt="Input to the hub and to the local model" src="../assets/station_7_local_and_hub.png" /></p>
+<ol start="8">
+<li><strong>What to change next, in this order</strong> (the two dot columns of the chart are a judgement, not a measurement):</li>
+<li>Free the system disk and keep it above 50 GB.</li>
+<li>Health message: say each warning once, the urgent one first.</li>
+<li>Smoke test after every repair: start, one request, stop.</li>
+<li>A test that did not run shows as red, not as empty.</li>
+<li>A repair list with a deadline: a fault open for 3 nights leads the morning message.</li>
+<li>Count network noise apart; mark a test "not valid" when the hub is down.</li>
+<li>Find out whether the hub reuses input; if not, keep the start of each prompt identical.</li>
+<li>Later, and only if the queue is used again: work sessions continue from a saved step.</li>
+</ol>
+<p><img alt="Proposals" src="../assets/station_8_proposals.png" /></p>
+<ol start="9">
+<li><strong>A rewrite of the chat app is not supported by these logs.</strong> The faults sat in model start, timers, tests and alarms, not in the chat service. Waiting longer after each failed model start, a restart limit, the look at the server's slots before a stop and the check of model names against the hub's list are already built.</li>
+</ol>
+<h2>Trägt</h2>
+<h3>Own data</h3>
+<p>Own read-out on 2026-11-21 of the station's logs: relay log (one line per model request, 2026-10-29 to 2026-11-21 06:24), systemd 255 user journal (lines "Failed with result"), hourly health log (since 2026-10-15), 15 nightly failure reports and 14 night reviews (2026-11-07 to 2026-11-21), status files of the work sessions, folders of the job queue. Counts only. The fault lifetimes in chart 5 are coded by hand from the section headings of the night reviews. All charts are drawn by a script from one data file.</p>
+<h3>Published figures, and how far they compare</h3>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Published figure</th>
+<th>Does it compare?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request errors 0.6 % in the last week, 27 % in the first</td>
+<td>SRE book: no general target; each service picks one below 100 %, the rest is its error budget (99.9 % allows 0.1 % errors)</td>
+<td>Fair once a target is written down; the station has none. Against a target of 99 % the last week is inside and the first week 27 times over</td>
+</tr>
+<tr>
+<td>6.4 of 8.4 warning lines per check repeat an old state</td>
+<td>SRE book ch. 6: "Every page should be actionable"</td>
+<td>Fair: the station fails this rule</td>
+</tr>
+<tr>
+<td>Guard: harmless queries passed 30/30 on 7 nights and 0/30 on 8; sensitive blocked 15/15</td>
+<td>Constitutional Classifiers: +0.38 % refusals on production traffic. InjecGuard: guard models let through between 0.88 % and 99.71 % of 339 benign samples. XSTest: 0.8 % to 38 % of safe prompts fully refused</td>
+<td>Fair as a pattern: blocking too much is the known failure of guards. The station's test sets are small; 15 of 15 only shows a true block rate above about 78 % (95 % Clopper-Pearson)</td>
+</tr>
+<tr>
+<td>91 % of work sessions done, 9 % of queue jobs stuck</td>
+<td>τ-bench: 61 % (retail) and 35 % (airline) of tasks solved in one try. TheAgentCompany: best agent 30 %. MAST: 41 % to 86.7 % failure</td>
+<td>Not comparable: benchmark tasks are hard and graded from outside; here the jobs are own routine jobs with own acceptance</td>
+</tr>
+<tr>
+<td>One review per night by a second model, repair by hand</td>
+<td>Pan 2025: 74 % of deployed agents depend mainly on human evaluation; 68 % run at most 10 steps before a human steps in</td>
+<td>Context only: the station is in the usual range</td>
+</tr>
+<tr>
+<td>One repair made a new fault</td>
+<td>DORA change failure rate (5 % for the top group; unverified against the primary report)</td>
+<td>Not comparable: too few changes counted</td>
+</tr>
+<tr>
+<td>779 M input tokens in 24 days, hub reuse unknown</td>
+<td>Kapoor 2024: report cost next to accuracy; cost differed almost a hundredfold at similar accuracy</td>
+<td>Fair as a rule: the station does not yet report tokens per finished task</td>
+</tr>
+</tbody>
+</table>
+<h3>Sources</h3>
+<p>Opened on 2026-11-21 by two research agents of the same session; not opened a second time for this entry. No DOI or PMID was seen for any of them; papers carry their arXiv id.</p>
+<p>Figures used for the comparison:
+- Beyer B, Jones C, Petoff J, Murphy NR (eds.), 2016. <em>Site Reliability Engineering</em>. O'Reilly. Chapters 3, 4, 6 and 11, <a href="https://sre.google/sre-book/embracing-risk/">https://sre.google/sre-book/embracing-risk/</a>, <a href="https://sre.google/sre-book/monitoring-distributed-systems/">https://sre.google/sre-book/monitoring-distributed-systems/</a>. Verified. A reliability target is chosen per service and is below 100 %; the gap is the error budget; every page should be actionable.
+- Yao S, 2024. τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains. arXiv:2406.12045, <a href="https://arxiv.org/abs/2406.12045">https://arxiv.org/abs/2406.12045</a>. Verified. A function-calling agent solved 61.2 % (retail) and 35.2 % (airline) of tasks in one try; all of 8 tries succeeded in under 25 % (retail).
+- Xu F, 2024. TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks. arXiv:2412.14161, <a href="https://arxiv.org/abs/2412.14161">https://arxiv.org/abs/2412.14161</a>. Verified. 175 office tasks; the best agent finished 24 % (first version) and 30.3 % (third version).
+- Cemri M, 2025. Why Do Multi-Agent LLM Systems Fail? arXiv:2503.13657, <a href="https://arxiv.org/abs/2503.13657">https://arxiv.org/abs/2503.13657</a>. Partly verified (venue and the per-framework figure: unverified). 14 failure modes in more than 1,600 traces of 7 frameworks; failure between 41 % and 86.7 %.
+- Kapoor S, 2024. AI Agents That Matter. arXiv:2407.01502, <a href="https://arxiv.org/abs/2407.01502">https://arxiv.org/abs/2407.01502</a>. Verified. Cost has to be reported next to accuracy; at similar accuracy cost differed by almost two orders of magnitude.
+- Kwa T, 2025. Measuring AI Ability to Complete Long Software Tasks. arXiv:2503.14499, <a href="https://arxiv.org/abs/2503.14499">https://arxiv.org/abs/2503.14499</a>. Verified; not used for a comparison. The task length that models finish half of the time doubled about every 7 months.
+- Pan MZ, 2025. Measuring Agents in Production. arXiv:2512.04123, <a href="https://arxiv.org/abs/2512.04123">https://arxiv.org/abs/2512.04123</a>. Verified. 306 responses on 86 deployed systems: 68 % run at most 10 steps before a human steps in, 74 % depend mainly on human evaluation.
+- Sharma M, 2025. Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming. arXiv:2501.18837, <a href="https://arxiv.org/abs/2501.18837">https://arxiv.org/abs/2501.18837</a>. Verified. Jailbreak success fell from 86 % to 4.4 % at +0.38 % refusals on production traffic.
+- Li H, 2024. InjecGuard: Benchmarking and Mitigating Over-defense in Prompt Injection Guardrail Models. arXiv:2410.22770, <a href="https://arxiv.org/abs/2410.22770">https://arxiv.org/abs/2410.22770</a>. Verified. On 339 benign samples the guard models let through between 0.88 % and 99.71 %.
+- Röttger P, 2024. XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models. NAACL 2024, arXiv:2308.01263, <a href="https://arxiv.org/abs/2308.01263">https://arxiv.org/abs/2308.01263</a>. Verified. Safe prompts fully refused: 0.8 % to 38 % depending on model and system prompt.
+- DORA, 2024. Accelerate State of DevOps Report. Definitions verified at <a href="https://dora.dev/guides/dora-metrics/">https://dora.dev/guides/dora-metrics/</a>; the group thresholds come from a secondary page: unverified.</p>
+<p>Techniques behind the proposals:
+- Thurgood S et al. <em>The Site Reliability Workbook</em>, ch. 5 "Alerting on SLOs", <a href="https://sre.google/workbook/alerting-on-slos/">https://sre.google/workbook/alerting-on-slos/</a>; ch. 10 "Postmortem Culture", <a href="https://sre.google/workbook/postmortem-culture/">https://sre.google/workbook/postmortem-culture/</a>; ch. 16 "Canarying Releases", <a href="https://sre.google/workbook/canarying-releases/">https://sre.google/workbook/canarying-releases/</a>. Verified. Alert on the rate at which the error budget is used; action items need an owner and a checkable end state; most incidents are set off by a change, so a change is tried on a small scale first (proposals 3, 5).
+- Prometheus Alertmanager documentation, <a href="https://prometheus.io/docs/alerting/latest/alertmanager/">https://prometheus.io/docs/alerting/latest/alertmanager/</a>. Verified. Grouping, inhibition and a repeat interval (default 4 h) keep one state from being sent again and again (proposal 2).
+- systemd 255 manual, systemd.service(5) and systemd.unit(5), <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html">https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html</a>. Verified. <code>StartLimitIntervalSec=</code>/<code>StartLimitBurst=</code> (default 5 starts in 10 s), <code>RestartSteps=</code>, <code>RestartMaxDelaySec=</code>, <code>ExecCondition=</code>, <code>OnFailure=</code>; <code>systemctl reset-failed</code> clears an old failed state (proposal 2, and what is already built).
+- Kubernetes documentation, "Node-pressure Eviction", <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/">https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/</a>. Verified. A node starts to evict work below 10 % free disk by default; 6.8 of 915 GB is 0.7 % (proposal 1).
+- Anthropic, 2026. Demystifying evals for AI agents, <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</a>. Verified. A pass rate of 0 % is most often a broken task, not an incapable agent; infrastructure failures are kept apart from agent failures (proposals 4, 6; "not valid" is this entry's own wording).
+- vLLM documentation, serve CLI reference, <a href="https://docs.vllm.ai/en/latest/cli/serve.html">https://docs.vllm.ai/en/latest/cli/serve.html</a>, and llama.cpp server README, <a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md">https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md</a>. Verified. vLLM reports cached tokens only with <code>--enable-prompt-tokens-details</code> (default off), so a missing count does not show a missing cache; llama.cpp reuses an identical prompt start by default (proposal 7). Which server the hub runs is not known.
+- Anthropic, 2025. Effective harnesses for long-running agents, <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a>; Anthropic, 2025. How we built our multi-agent research system (engineering blog). Verified. Progress files and commits let a later session continue from the last finished step (proposal 8).
+- Brooker M, 2019. Timeouts, retries, and backoff with jitter. AWS Builders' Library. Fowler M, 2014. CircuitBreaker, <a href="https://martinfowler.com/bliki/CircuitBreaker.html">https://martinfowler.com/bliki/CircuitBreaker.html</a>. Verified. Growing waits with an upper limit and a breaker that opens after repeated failures; the station's relay already does this.
+- Chen L, 2023. FrugalGPT. arXiv:2305.05176; Ong I, 2024. RouteLLM. arXiv:2406.18665. Verified; not used. They route by expected difficulty; this station routes by data sensitivity.</p>
+<h3>Data tables</h3>
+<p>Per day. "Failed runs" are journal lines of the two model services; "warnings" are the average per hourly check; 21.11. is a part day.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Requests</th>
+<th>Errors</th>
+<th>Error %</th>
+<th>Failed runs, local model server</th>
+<th>Failed runs, gate model service</th>
+<th>Memory kills</th>
+<th>Disk free (GB, lowest)</th>
+<th>Live warnings</th>
+<th>Old "unit failed" lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>29.10.</td>
+<td>272</td>
+<td>4</td>
+<td>1.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>74</td>
+<td>0.3</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>30.10.</td>
+<td>796</td>
+<td>4</td>
+<td>0.5</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>220</td>
+<td>0.5</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>31.10.</td>
+<td>656</td>
+<td>3</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>216</td>
+<td>0.0</td>
+<td>2.6</td>
+</tr>
+<tr>
+<td>01.11.</td>
+<td>146</td>
+<td>1</td>
+<td>0.7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>190</td>
+<td>0.0</td>
+<td>4.2</td>
+</tr>
+<tr>
+<td>02.11.</td>
+<td>152</td>
+<td>13</td>
+<td>8.6</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>160</td>
+<td>0.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>03.11.</td>
+<td>748</td>
+<td>619</td>
+<td>82.8</td>
+<td>1,198</td>
+<td>0</td>
+<td>0</td>
+<td>136</td>
+<td>0.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>04.11.</td>
+<td>2,557</td>
+<td>797</td>
+<td>31.2</td>
+<td>1,549</td>
+<td>0</td>
+<td>0</td>
+<td>21</td>
+<td>0.1</td>
+<td>2.1</td>
+</tr>
+<tr>
+<td>05.11.</td>
+<td>1,101</td>
+<td>50</td>
+<td>4.5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>147</td>
+<td>0.1</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>06.11.</td>
+<td>2,486</td>
+<td>131</td>
+<td>5.3</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>86</td>
+<td>0.4</td>
+<td>2.3</td>
+</tr>
+<tr>
+<td>07.11.</td>
+<td>14,185</td>
+<td>71</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>62</td>
+<td>1.2</td>
+<td>3.1</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>4,889</td>
+<td>4</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>148</td>
+<td>0.9</td>
+<td>3.3</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>4,190</td>
+<td>1</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>146</td>
+<td>0.4</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>1,119</td>
+<td>1</td>
+<td>0.1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>124</td>
+<td>0.0</td>
+<td>3.9</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>281</td>
+<td>1</td>
+<td>0.4</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>123</td>
+<td>0.8</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>482</td>
+<td>1</td>
+<td>0.2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>74</td>
+<td>0.8</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>1,981</td>
+<td>45</td>
+<td>2.3</td>
+<td>6</td>
+<td>223</td>
+<td>0</td>
+<td>63</td>
+<td>1.0</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td>14.11.</td>
+<td>99</td>
+<td>1</td>
+<td>1.0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>61</td>
+<td>0.8</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>15.11.</td>
+<td>92</td>
+<td>0</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>18</td>
+<td>1.5</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>16.11.</td>
+<td>95</td>
+<td>0</td>
+<td>0.0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>27</td>
+<td>1.8</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>17.11.</td>
+<td>95</td>
+<td>2</td>
+<td>2.1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>19</td>
+<td>1.8</td>
+<td>6.8</td>
+</tr>
+<tr>
+<td>18.11.</td>
+<td>111</td>
+<td>1</td>
+<td>0.9</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>17</td>
+<td>1.8</td>
+<td>6.1</td>
+</tr>
+<tr>
+<td>19.11.</td>
+<td>93</td>
+<td>1</td>
+<td>1.1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>1.8</td>
+<td>6.5</td>
+</tr>
+<tr>
+<td>20.11.</td>
+<td>237</td>
+<td>1</td>
+<td>0.4</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>1.5</td>
+<td>7.2</td>
+</tr>
+<tr>
+<td>21.11.</td>
+<td>318</td>
+<td>1</td>
+<td>0.3</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>7</td>
+<td>2.0</td>
+<td>6.4</td>
+</tr>
+</tbody>
+</table>
+<p>Per night (lines of the nightly failure count by source, then the tests).</p>
+<table>
+<thead>
+<tr>
+<th>Night</th>
+<th>Failure lines</th>
+<th>Relay</th>
+<th>Sessions</th>
+<th>Services</th>
+<th>Messaging bridge</th>
+<th>Memory job, guard, notes (since 20.11.)</th>
+<th>Review written</th>
+<th>Sensitive blocked</th>
+<th>Harmless let through</th>
+<th>Chat test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>07.11.</td>
+<td>285</td>
+<td>175</td>
+<td>71</td>
+<td>23</td>
+<td>16</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>120</td>
+<td>27</td>
+<td>33</td>
+<td>24</td>
+<td>36</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>68</td>
+<td>4</td>
+<td>56</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>28</td>
+<td>1</td>
+<td>15</td>
+<td>0</td>
+<td>12</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>12</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>16</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>31</td>
+<td>1</td>
+<td>10</td>
+<td>0</td>
+<td>20</td>
+<td>0</td>
+<td>no</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>6/14</td>
+</tr>
+<tr>
+<td>14.11.</td>
+<td>343</td>
+<td>45</td>
+<td>71</td>
+<td>226</td>
+<td>1</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>15.11.</td>
+<td>289</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>288</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>16.11.</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>17.11.</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>18.11.</td>
+<td>8</td>
+<td>2</td>
+<td>0</td>
+<td>4</td>
+<td>2</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>19.11.</td>
+<td>166</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>163</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>20.11.</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>yes</td>
+<td>15/15</td>
+<td>0/30</td>
+<td>not run</td>
+</tr>
+<tr>
+<td>21.11.</td>
+<td>26</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>7</td>
+<td>15</td>
+<td>yes</td>
+<td>15/15</td>
+<td>30/30</td>
+<td>13/14</td>
+</tr>
+</tbody>
+</table>
+<p>Job queue per week (Monday).</p>
+<table>
+<thead>
+<tr>
+<th>Week of</th>
+<th>Finished</th>
+<th>Stuck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24.08.</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>31.08.</td>
+<td>28</td>
+<td>0</td>
+</tr>
+<tr>
+<td>07.09.</td>
+<td>36</td>
+<td>0</td>
+</tr>
+<tr>
+<td>14.09.</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>21.09.</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>05.10.</td>
+<td>23</td>
+<td>1</td>
+</tr>
+<tr>
+<td>12.10.</td>
+<td>11</td>
+<td>4</td>
+</tr>
+<tr>
+<td>19.10.</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>26.10.</td>
+<td>9</td>
+<td>1</td>
+</tr>
+<tr>
+<td>02.11.</td>
+<td>18</td>
+<td>6</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>6</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Work sessions per day.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Done</th>
+<th>Failed or interrupted</th>
+<th>Stopped by hand or test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>06.11.</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>07.11.</td>
+<td>23</td>
+<td>4</td>
+<td>14</td>
+</tr>
+<tr>
+<td>08.11.</td>
+<td>34</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>09.11.</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10.11.</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11.11.</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>12.11.</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13.11.</td>
+<td>13</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2>Trägt nicht</h2>
+<p>One workstation, 24 days. The low error rate of the last week was measured under low load and without queue jobs; it is not yet shown under the load of the first week. "Finished" and "done" are the station's own acceptance. The fault lifetimes are hand-coded and count from the first to the last report, so a fault that was not named on one night still counts as open. The ranking of the proposals is a judgement. Whether the hub reuses input is not tested. The published figures come from benchmarks and surveys with other tasks; only the rows marked "fair" in the table are a yardstick.</p>
+<h2>Bruchindikator</h2>
+<p>More than 1 % request errors in a week with queue jobs running; more than 30 failed starts of a model service in a day; the system disk below 20 GB again after it was freed; a fault named in three night reviews in a row; a test missing from a nightly report without an alarm.</p>
+<h2>Ablesung</h2>
+<p>Write down a target for the request error rate before judging it. Count failures by cause, not by log line. Treat a test that did not run, and a test that failed because its backend was away, as states of their own. After every repair run the smallest end-to-end test before the repair counts as done. Watch free disk as its own alarm, not as one line among repeated ones.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-21 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>
