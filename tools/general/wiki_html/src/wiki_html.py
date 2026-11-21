@@ -366,6 +366,15 @@ class Site:
         counts = " ".join(f'<span class="{STATUS_CLASS.get(k, "")}">{v} {esc(k)}</span>' for k, v in c.most_common())
         return f'<div class="stripe">{parts}</div><div class="counts">{counts}</div>'
 
+    def copy_assets(self):
+        """Bilder aus knowledge/<Bereich>/assets nach <out>/<Bereich>/assets, damit ../assets/x.png in den Seiten stimmt."""
+        for src in sorted((self.w.root / "knowledge").glob("*/assets/*")):
+            if src.suffix.lower() in (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"):
+                dst = self.out / src.parent.parent.name / "assets" / src.name
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                if not dst.exists() or dst.read_bytes() != src.read_bytes():
+                    dst.write_bytes(src.read_bytes())
+
     # ---- pages
     def build(self):
         self.out.mkdir(parents=True, exist_ok=True)
@@ -375,6 +384,7 @@ class Site:
             for e in a["entries"]:
                 self.build_entry(e)
         self.build_tools()
+        self.copy_assets()
         self.build_simple("README.md", "rules.html", "Regeln der Wiki")
         self.build_simple("TODO.md", "todo.html", "Offene Punkte")
         self.build_simple("updates/LOG.md", "log.html", "Änderungsprotokoll")

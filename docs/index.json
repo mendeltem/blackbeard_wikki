@@ -4345,6 +4345,17 @@
 "src": "tools/general/web_research/README.md"
 },
 {
+"t": "pytest cache directory #",
+"p": "tools/general/wiki_html/.pytest_cache/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "",
+"x": "tools/general/wiki_html/.pytest_cache",
+"id": ".pytest_cache",
+"src": "tools/general/wiki_html/.pytest_cache/README.md"
+},
+{
 "t": "wiki_html",
 "p": "tools/general/wiki_html/index.html",
 "a": "tools",
