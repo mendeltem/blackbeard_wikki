@@ -1,0 +1,71 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>A prompt-skill quiz built from single-flaw drafts, with a writing mode beside it</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">agent_tooling</a> › <a href="../index.html#findings">Befund</a></div><h1>A prompt-skill quiz built from single-flaw drafts, with a writing mode beside it</h1><div class="meta"><span>Typ</span><span>Befund</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-22</span><span>Herkunft</span><span>own build and tests of a public browser trainer for prompt writing (github.com/mendeltem/Prompt_trainer), with a literature search on skill tests and feedback, 2026-11-22</span><span>Zuletzt geändert</span><span> </span><span>Verweist auf</span><span><a href="../rules/check-every-cited-source-and-summarise-it.html">Every cited source is checked against the original and carries a one-sentence summary</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/agent_tooling/findings/prompt-skill-practice-quiz-from-single-flaw-items.md">knowledge/agent_tooling/findings/prompt-skill-practice-quiz-from-single-flaw-items.md</a></span></div><h2>Aussage</h2>
+<ol>
+<li>No validated test of prompt-writing <em>performance</em> was found. Published scales measure self-rated competence or self-efficacy (Prompt Engineering Competence Scale, n = 437; a teacher self-efficacy scale as a preprint). A quiz built for practice should say "practice, not a certification".</li>
+<li>Changing questions come cheaply from complete good examples: one model prompt per situation, split into five sentences (task, source, limit, "Done when …", form), and nine flaw operators that change exactly one part (task as a question, source or limit or done-sentence or form removed, done-sentence written as a fact, an exact phrase replaced by a vague one, a second task appended, an irrelevant fact inserted). Five question types (best of four prompts, biggest gap, best fix, ambiguous phrase, sentence that can go) give over 1000 distinct questions from 42 situations. A program checks every situation x flaw x type for four distinct options and exactly one correct one.</li>
+<li>Every option carries its own explanation, and an optional "try again until correct" mode counts only the first try. This follows the feedback research: explained feedback beat right/wrong and correct-answer feedback in a meta-analysis, and answer-until-correct with explanations ranked first in a network meta-analysis.</li>
+<li>A multiple-choice scenario samples judgement, not the performance itself (situational judgement test literature). The trainer therefore has a writing mode: the learner writes a prompt for a situation, gets rough pattern hints in the browser (ends with "?", starts with "Can you", no "Done when", vague or wish words, unclear boundaries such as "from 5", file from the situation not named, irrelevant fact copied), ticks a self-check on the six criteria and sees the model answer. No AI service is needed; the hints are labelled as rough.</li>
+<li>The quiz score uses the same six weighted criteria (goal 25, scope 20, done and form 20, unambiguous 15, one task per sentence 10, concise 10) as an earlier chat training, so the percentages can be compared.</li>
+<li>Web pitfall found by the browser test: a class rule <code>display: inline-flex</code> on buttons overrides the HTML <code>hidden</code> attribute, so a "Next" button meant to appear after an answer was visible from the start. Fix: <code>[hidden] { display: none !important; }</code>. The test caught it because it checked visibility, not the attribute.</li>
+</ol>
+<h2>Trägt</h2>
+<p>Own build 2026-11-22: static HTML/CSS/JavaScript on GitHub Pages, https://mendeltem.github.io/Prompt_trainer/ (repo https://github.com/mendeltem/Prompt_trainer, MIT code, CC BY 4.0 content). Node 22.22.2 <code>node --test</code>: 9/9 (all 42 situations, every combination, three runs with no shared question, weighting, hints clean on all model answers). Playwright 1.62.1 and the newest npm Playwright with Chromium headless shell v1255: 12/12 locally, from a fresh clone and on the live site (three runs shared 0 questions; retry mode; phone width; dark mode; no page errors).
+Sources (read as abstracts or summaries, not full text):
+- Van der Kleij FM, Feskens RCW, Eggen TJHM (2015). Effects of feedback in a computer-based learning environment on students' learning outcomes: a meta-analysis. Review of Educational Research 85(4):475-511. DOI 10.3102/0034654314564881 (DOI from memory, unverified); not in PubMed. Shows: effect sizes 0.49 for elaborated feedback, 0.32 for the correct answer, 0.05 for right/wrong.
+- The Impact of Computer-Based Feedback Strategies on Students' Learning: A Network Meta-Analysis (2024), HAL hal-04607898 (authors unverified). Shows (secondary summary): 46 studies; answer-until-correct with explanations ranked first; only elaborated feedback helped learners with low prior knowledge significantly.
+- Westacott R et al. (2023). Automated Item Generation: impact of item variants on performance and standard setting. BMC Medical Education. DOI 10.1186/s12909-023-04457-0, PMID 37697275 (checked). Shows: item variants from one question model compared on performance and standard setting in final-year medical students.
+- Lievens F, Motowidlo SJ (2016). Situational judgment tests: from measures of situational judgment to measures of general domain knowledge. Industrial and Organizational Psychology 9(1):3-22. DOI 10.1017/iop.2015.71 (unverified). Shows: SJTs measure procedural knowledge in a low-fidelity written format.
+- Zamfirescu-Pereira JD, Wong RY, Hartmann B, Yang Q (2023). Why Johnny Can't Prompt: How Non-AI Experts Try (and Fail) to Design LLM Prompts. CHI '23. DOI 10.1145/3544548.3581388 (unverified). Shows: 10 participants explored prompts opportunistically and wrote them like instructions to a person.
+- Gibreel O, Arpaci I (2025). Development and validation of the prompt engineering competence scale (PECS). Information Development. DOI 10.1177/02666669251336455. Shows: a self-report scale validated on 437 users; the item count differs between sources (unverified).
+- Swanson K, Bent D, Ludwig Z, Dakan R, Feller J (2026-02-23). The AI Fluency Index. Anthropic, https://www.anthropic.com/research/AI-fluency-index (read through its redirect to the Claude Academy copy). Shows: in 9,830 Claude.ai conversations, users clarified the goal in 51.1 % and specified the format in 30 % (per conversation, by classifier).</p>
+<h2>Trägt nicht</h2>
+<p>No learner has used the site yet: whether quiz scores rise over runs, and whether they predict better written prompts, is not measured. The difficulty of the generated variants is not measured either, so two runs are not proven equally hard. The writing hints are English pattern checks and miss anything outside their word lists. The feedback studies are about learning in general, not about prompting.</p>
+<h2>Bruchindikator</h2>
+<p>Learners score high in the quiz but their written prompts keep the same gaps (recognition without production); one flaw type is solved far more often than the others (an option gives itself away, for example by length); the hints flag a model answer; a variant set shows large differences in the share answered correctly.</p>
+<h2>Ablesung</h2>
+<p>For a skill quiz without an item bank: start from complete good examples, generate drafts by changing exactly one part, test every combination by program, explain every option, count the first try, and add a mode where the learner produces the thing. Call it practice until it has been validated against real performance. In web UIs that use the <code>hidden</code> attribute, add <code>[hidden]{display:none!important}</code> and test visibility.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

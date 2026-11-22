@@ -187,6 +187,17 @@
 "src": "knowledge/agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.md"
 },
 {
+"t": "A prompt-skill quiz built from single-flaw drafts, with a writing mode beside it",
+"p": "agent_tooling/findings/prompt-skill-practice-quiz-from-single-flaw-items.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-22",
+"x": "Prompt-writing quiz: 42 model prompts x 9 single-flaw operators x 5 question types (>1000 items, every combination tested); explained feedback per option, answer-until-correct; writing mode with browser pattern hints because MC samples judg",
+"id": "prompt-skill-practice-quiz-from-single-flaw-items",
+"src": "knowledge/agent_tooling/findings/prompt-skill-practice-quiz-from-single-flaw-items.md"
+},
+{
 "t": "From this network only a few search endpoints answer; SEC EDGAR full text is the one that gives primary sources",
 "p": "agent_tooling/findings/sec-edgar-fulltext-search-is-the-reachable-primary-source.html",
 "a": "agent_tooling",
@@ -4354,17 +4365,6 @@
 "x": "tools/general/web_research",
 "id": "web_research",
 "src": "tools/general/web_research/README.md"
-},
-{
-"t": "pytest cache directory #",
-"p": "tools/general/wiki_html/.pytest_cache/index.html",
-"a": "tools",
-"y": "Werkzeug",
-"s": "",
-"d": "",
-"x": "tools/general/wiki_html/.pytest_cache",
-"id": ".pytest_cache",
-"src": "tools/general/wiki_html/.pytest_cache/README.md"
 },
 {
 "t": "wiki_html",
