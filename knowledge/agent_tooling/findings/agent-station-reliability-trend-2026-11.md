@@ -3,7 +3,7 @@ id: agent-station-reliability-trend-2026-11
 typ: befund
 status: vorschlag
 thema: knowledge/agent_tooling
-stand: 2026-11-21
+stand: 2026-11-22
 herkunft: own read-out of the logs of one local agent workstation (chat agent, relay to a model hub and to a local model, exit guard, nightly review), 2026-10-29 to 2026-11-21; corrected and extended the same evening after seven of the eight proposals were built
 verweist_auf: [agent-system-check-nightly-reports-need-a-build-loop]
 ---
@@ -23,7 +23,7 @@ verweist_auf: [agent-system-check-nightly-reports-need-a-build-loop]
 
 ![How long a fault stayed open](../assets/station_5_open_faults.png)
 
-4. **The tests themselves had gaps.** Over 15 nights the night review was missing once. The chat test was built on 07.11. and expected on 14 mornings since; it ran on 2 and was missing on 12 (a script fault: it stood only in a fallback path), and the weekly deep test, expected on 2 Sundays, never ran. Nothing raised an alarm. (The first version of this entry said 7 nights; it had taken the first report that contains the test as the day the test was first expected.) The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.
+4. **The tests themselves had gaps.** Over 15 nights the night review was missing once. The chat test was built on 07.11. and expected on 14 mornings since; it ran on 2 and was missing on 12 (a script fault: it stood only in a fallback path), and the weekly deep test, expected on 2 Sundays, never ran. Nothing raised an alarm. *Follow-up 22.11.: the deep test takes about 25 minutes and the morning script allows 20, so it does not fit into the morning run; it now has its own weekly timer two hours before the morning message and reports its state itself (ok, failed, not valid when the hub is away). Its first run is open.* (The first version of this entry said 7 nights; it had taken the first report that contains the test as the day the test was first expected.) The exit-guard test blocked the sensitive queries 15 of 15 on every night. The harmless queries passed 30 of 30 on 7 nights and 0 of 30 on 8 nights: the model hub had removed a model name that the guard used, so the guard blocked everything. Nothing leaked, but for 8 nights the guard was of no use.
 
 ![Nightly tests](../assets/station_3_tests.png)
 

@@ -126,7 +126,7 @@
 "a": "agent_tooling",
 "y": "Befund",
 "s": "vorschlag",
-"d": "2026-11-21",
+"d": "2026-11-22",
 "x": "1. **Outages fell sharply.** Model requests through the relay that ended in an error: 27 % in the first 7 days (1,441 of 5,327), 0.6 % in the last 7 days (6 of 1,041), 4.7 % over all 24 days (1,753 of 37,181). The two crash loops of the mod",
 "id": "agent-station-reliability-trend-2026-11",
 "src": "knowledge/agent_tooling/findings/agent-station-reliability-trend-2026-11.md"
