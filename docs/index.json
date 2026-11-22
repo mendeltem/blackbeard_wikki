@@ -165,6 +165,17 @@
 "src": "knowledge/agent_tooling/findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md"
 },
 {
+"t": "MAVE: an agent rebuilds a film shot as an editable 3D scene in Blender, each step checked against measured evidence (preprint, code not released yet)",
+"p": "agent_tooling/findings/mave-editable-3d-blockouts-from-film-shots.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-22",
+"x": "1. **What it is.** MAVE (Chang et al., 2026, arXiv preprint) takes a film shot and gives back an editable Blender scene made of named simple shapes (\"blockout\": rough set, camera path, where the people stand and move) plus a blockout video ",
+"id": "mave-editable-3d-blockouts-from-film-shots",
+"src": "knowledge/agent_tooling/findings/mave-editable-3d-blockouts-from-film-shots.md"
+},
+{
 "t": "A hub model can write narrated explainer films under a harness; blind code on private data needs checks a data gate cannot give",
 "p": "agent_tooling/findings/model-hub-writes-explainer-films-under-a-harness.html",
 "a": "agent_tooling",
