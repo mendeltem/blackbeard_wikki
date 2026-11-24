@@ -43,7 +43,11 @@ verweist_auf: [skill-routes-first-and-closes-its-checklist, explanation-video-is
 9. **Own count of one home-built agent loader.** It kept the first 200 characters of a description and read the
    header line by line: of 19 linked skills, 12 descriptions were cut, 2 showed only ">" (a description that
    continues on the next line), 5 were complete; 11 of 30 existing skills were not linked. A skill can be installed
-   and still be invisible. Not repaired on the day of the count.
+   and still be invisible. Repaired later the same day (24.11.2026): the loader now reads plain, quoted, folded
+   and literal values, keeps a description whole up to 1,024 characters (the limit of the format) and marks a longer
+   one; after it all 21 linked skills entered the prompt complete, at a cost of about 1,200 tokens more per system
+   prompt (own run, 24.11.2026). Check that found it: print the skills block of a real system prompt and compare it
+   with the SKILL.md files.
 10. **Where a rule belongs.** For every session: the always-loaded instruction file, kept short. Know-how for one kind
     of task: a skill. Never to be broken: a hook or the tool. The one-off part of a task (goal, data, how we see that
     it is finished) stays in the prompt; no skill can know it.
