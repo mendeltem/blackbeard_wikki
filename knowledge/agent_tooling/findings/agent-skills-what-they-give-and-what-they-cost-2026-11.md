@@ -51,6 +51,18 @@ verweist_auf: [skill-routes-first-and-closes-its-checklist, explanation-video-is
 10. **Where a rule belongs.** For every session: the always-loaded instruction file, kept short. Know-how for one kind
     of task: a skill. Never to be broken: a hook or the tool. The one-off part of a task (goal, data, how we see that
     it is finished) stays in the prompt; no skill can know it.
+11. **Own review of all 39 skills of one workstation (24.11.2026, reading only, no skill run on a task).** Each skill
+    file was read in full against seven points (description, instructions, check before done, failure section,
+    outdated content, overlap, size and focus); every finding had to rest on a passage of the file, and a program
+    checked that the passage occurs there word for word. Verdicts: 1 good, 18 usable, 15 "needs work", 5 outdated;
+    187 findings. Skills with at least one finding per point: outdated content 32, instructions 30, overlap 26,
+    check before done 15, failure section 11, size and focus 11, description 9. The size limits of the format were
+    kept by all 39, so counting lines and characters alone would have passed every one of them. The three causes
+    behind most findings: (a) the agent program was replaced, the skills were not: they still call tools and
+    services of the earlier program; (b) the sandbox was tightened to local connections only, and skills that
+    fetch from the internet were not adapted; (c) two skills for the same job, written at different times
+    (often one per language), now contradict each other in a parameter. A skill ages with the harness around it,
+    not with its own text.
 
 ## Trägt
 All opened on 2026-11-24.
@@ -71,6 +83,8 @@ All opened on 2026-11-24.
 
 Own runs 2026-11-24: skill counts on one workstation (100, 30 and 7 skill files in three agents' folders before the
 two new skills); the comparison in point 7; the trigger test in point 8 (headless sessions of Claude Code).
+The review in point 11: four reading passes over 39 skill files, some findings confirmed by a read-only look at the
+machine (does a named tool, file or service still exist); the reading passes may differ a little in strictness.
 No DOI beyond the arXiv numbers and no PMID: none of the sources is indexed in PubMed.
 
 ## Trägt nicht
@@ -88,4 +102,5 @@ without regard to the description; the format changes its header fields.
 Before writing a skill: is the work recurring, and is there a script-shaped part? Write the description as what +
 when + when not, with the words the user really types, and add "load it before planning". Keep the body short, put
 fixed steps into scripts, write 2 to 3 eval cases, run them with and without the skill, and test the description
-with a few fresh requests and near misses. Skills of this wiki: [tools/skills](../../../tools/skills/INDEX.md).
+with a few fresh requests and near misses. After every change of the agent program, the sandbox or a service: search all
+skill files for the tool, command and service names that went away, and merge twin skills instead of keeping both. Skills of this wiki: [tools/skills](../../../tools/skills/INDEX.md).
