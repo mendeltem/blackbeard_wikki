@@ -45,9 +45,10 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <main><div class="wrap"><div class="crumbs"><a href="../../../../index.html">Start</a> › <a href="../../../index.html">Werkzeuge</a> › qc_slice_viewer</div><h1>qc_slice_viewer</h1><p class="small muted">tools/mri/mri_segmentation/qc_slice_viewer · <a href="changelog.html">CHANGELOG</a> · <a href="install.html">INSTALL</a> · <a href="papers.html">PAPERS</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/tools/mri/mri_segmentation/qc_slice_viewer">GitHub</a></p><h2>Zweck</h2>
 <p>Erzeugt aus einem Manifest die Qualitaetskontroll-Seite fuer Laesionsdetektion auf MRT nach den
 Setzungen in <a href="../../../../mri_qc_viewers/rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a>:
-zwei grosse axiale Bilder je Fall, links Referenz (blau) oder Vergleichsmaske, rechts schaltbare
+zwei grosse axiale Bilder je Fall, links Referenz (blau 46, 134, 171) oder Vergleichsmaske, rechts schaltbare
 Umrisse beliebig vieler Laeufe, Zaehler je Schicht und Fall, F1 je Fall und gepoolt, Tasten,
-Zoom, Fall-Checkliste. Optional: Urteilsfarben fuer EIN Modell (<code>--verdict</code>), Liquor-Ebenen
+Zoom, Fall-Checkliste. Optional: Urteilsfarben fuer EIN Modell (<code>--verdict</code>: gruen erkannt, pink Fehlalarm, rot verpasst; Hausfarben seit 2026-11-24, siehe
+<a href="../../../../mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.html">overlay-house-colours-and-picture-quality</a>), Liquor-Ebenen
 (SynthSeg-Fuellung und was die Liquor-Regel entfernen wuerde, getrennt nach Fehlalarm und Treffer).
 Eine HTML-Datei plus <code>img/</code>, kein Server noetig. Damit faengt eine neue Laesionsart nicht von
 null an, siehe <a href="../../../../mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.html">qc-build-order-for-a-new-lesion-type</a>.</p>
@@ -84,8 +85,10 @@ $DL .../qc_slice_viewer.py MANIFEST.json --out OUT_DIR --on run1 run2      # Lae
 umgerechnet). Voxelvolumen aus dem Header. <code>slice_mm</code> = erfasste Schichtdicke, bestimmt die
 Buendelung der Gitterschichten je Kachel (hoechstens 80 Kacheln je Fall).
 Ausgabe: <code>OUT_DIR/quality_control.html</code>, <code>data.json</code> (je Fall: n_ref, ref_ml, tiles mit Zaehlern je
-Schicht, stats je Lauf tp/fp/fn/n/ml, bei Liquor-Ebenen csf_drop_fp/csf_drop_tp), <code>img/&lt;id&gt;.jpg</code>
-und <code>img/&lt;id&gt;_&lt;ebene&gt;.png</code>, <code>build_args.json</code>.</p>
+Schicht, stats je Lauf tp/fp/fn/n/ml, bei Liquor-Ebenen csf_drop_fp/csf_drop_tp), <code>img/&lt;id&gt;.png</code>
+(Graubild verlustfrei, 768 Punkte breit, erst gefenstert, dann kubisch vergroessert; bis 2026-11-24 <code>.jpg</code>,
+640 breit) und <code>img/&lt;id&gt;_&lt;ebene&gt;.png</code>, <code>build_args.json</code>. Seiten, die noch mit <code>.jpg</code> gebaut wurden,
+laufen mit <code>--refresh-html</code> weiter (Feld <code>sheet</code> je Fall, fehlt es, gilt <code>jpg</code>).</p>
 <h2>Teststand</h2>
 <p>2026-10-08, Linux, Python 3.12 (conda dl: nibabel 5, scipy, Pillow): <code>python tests/test_synthetic.py</code>
 bestanden (zwei synthetische Faelle, 3 Kugeln Referenz, 2 Treffer + 1 Fehlalarm + 1 Blob unter der
@@ -93,7 +96,11 @@ Groessenregel: tp/fp/fn = 2/1/1; Urteilsmodus; Vergleichs-Wortlaut; Maskenlauf; 
 Gegenprobe an drei VALDO-Faellen gegen den CMB-Generator (gleiche Schwellen, Liquor-Ebenen):
 siehe CHANGELOG.</p>
 <h2>Grenzen</h2>
-<p>Keine Klick-Werte je Komponente (offen, siehe Pruefpunkt slice-viewer-as-shared-tool). Keine
+<p>PNG statt JPG macht die Seite groesser: an einem oeffentlichen FLAIR-Fall (240 x 240 x 48, 48 Kacheln) 6,9 MB statt
+1,8 MB fuer das Graubild (gemessen 2026-11-24, einschliesslich der Breite 768 statt 640). Zwei Farben sind nicht
+angepasst und liegen nahe an einer Hausfarbe: Liquor-Ebene <code>csf_drop_tp</code> (Magenta) und die Lauf-Palette im Modus
+ohne Urteil.
+Keine Klick-Werte je Komponente (offen, siehe Pruefpunkt slice-viewer-as-shared-tool). Keine
 Einzeldatei-Variante fuer den Versand (im CMB-Generator vorhanden, hier noch nicht). Die Seite ist
 Englisch; Laufnamen ohne Leerzeichen (Dateinamen der Ebenen). Patientendaten: nur lokal bauen und
 nur auf 127.0.0.1 ausliefern.</p></div></main>

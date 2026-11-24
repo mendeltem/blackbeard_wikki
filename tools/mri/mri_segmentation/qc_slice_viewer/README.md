@@ -1,7 +1,7 @@
 ---
 id: qc_slice_viewer
 bereich: tools/mri/mri_segmentation
-stand: 2026-10-08
+stand: 2026-11-24
 herkunft: Projekte valdo-t2s (cmb/review/build_slice_viewer.py), mb-arena, pvs-arena (skripte/qc_belove_bauen.py); aus beiden zusammengefuehrt
 sprache: python
 ---
@@ -11,9 +11,10 @@ sprache: python
 ## Zweck
 Erzeugt aus einem Manifest die Qualitaetskontroll-Seite fuer Laesionsdetektion auf MRT nach den
 Setzungen in [qc-slice-viewer-conventions](../../../../knowledge/mri_qc_viewers/rules/qc-slice-viewer-conventions.md):
-zwei grosse axiale Bilder je Fall, links Referenz (blau) oder Vergleichsmaske, rechts schaltbare
+zwei grosse axiale Bilder je Fall, links Referenz (blau 46, 134, 171) oder Vergleichsmaske, rechts schaltbare
 Umrisse beliebig vieler Laeufe, Zaehler je Schicht und Fall, F1 je Fall und gepoolt, Tasten,
-Zoom, Fall-Checkliste. Optional: Urteilsfarben fuer EIN Modell (`--verdict`), Liquor-Ebenen
+Zoom, Fall-Checkliste. Optional: Urteilsfarben fuer EIN Modell (`--verdict`: gruen erkannt, pink Fehlalarm, rot verpasst; Hausfarben seit 2026-11-24, siehe
+[overlay-house-colours-and-picture-quality](../../../../knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md)), Liquor-Ebenen
 (SynthSeg-Fuellung und was die Liquor-Regel entfernen wuerde, getrennt nach Fehlalarm und Treffer).
 Eine HTML-Datei plus `img/`, kein Server noetig. Damit faengt eine neue Laesionsart nicht von
 null an, siehe [qc-build-order-for-a-new-lesion-type](../../../../knowledge/mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.md).
@@ -54,8 +55,10 @@ Eingabe: NIfTI auf einem Gitter je Fall (axial = dritte Achse, RAS), Wahrscheinl
 umgerechnet). Voxelvolumen aus dem Header. `slice_mm` = erfasste Schichtdicke, bestimmt die
 Buendelung der Gitterschichten je Kachel (hoechstens 80 Kacheln je Fall).
 Ausgabe: `OUT_DIR/quality_control.html`, `data.json` (je Fall: n_ref, ref_ml, tiles mit Zaehlern je
-Schicht, stats je Lauf tp/fp/fn/n/ml, bei Liquor-Ebenen csf_drop_fp/csf_drop_tp), `img/<id>.jpg`
-und `img/<id>_<ebene>.png`, `build_args.json`.
+Schicht, stats je Lauf tp/fp/fn/n/ml, bei Liquor-Ebenen csf_drop_fp/csf_drop_tp), `img/<id>.png`
+(Graubild verlustfrei, 768 Punkte breit, erst gefenstert, dann kubisch vergroessert; bis 2026-11-24 `.jpg`,
+640 breit) und `img/<id>_<ebene>.png`, `build_args.json`. Seiten, die noch mit `.jpg` gebaut wurden,
+laufen mit `--refresh-html` weiter (Feld `sheet` je Fall, fehlt es, gilt `jpg`).
 
 ## Teststand
 2026-10-08, Linux, Python 3.12 (conda dl: nibabel 5, scipy, Pillow): `python tests/test_synthetic.py`
@@ -65,6 +68,10 @@ Gegenprobe an drei VALDO-Faellen gegen den CMB-Generator (gleiche Schwellen, Liq
 siehe CHANGELOG.
 
 ## Grenzen
+PNG statt JPG macht die Seite groesser: an einem oeffentlichen FLAIR-Fall (240 x 240 x 48, 48 Kacheln) 6,9 MB statt
+1,8 MB fuer das Graubild (gemessen 2026-11-24, einschliesslich der Breite 768 statt 640). Zwei Farben sind nicht
+angepasst und liegen nahe an einer Hausfarbe: Liquor-Ebene `csf_drop_tp` (Magenta) und die Lauf-Palette im Modus
+ohne Urteil.
 Keine Klick-Werte je Komponente (offen, siehe Pruefpunkt slice-viewer-as-shared-tool). Keine
 Einzeldatei-Variante fuer den Versand (im CMB-Generator vorhanden, hier noch nicht). Die Seite ist
 Englisch; Laufnamen ohne Leerzeichen (Dateinamen der Ebenen). Patientendaten: nur lokal bauen und

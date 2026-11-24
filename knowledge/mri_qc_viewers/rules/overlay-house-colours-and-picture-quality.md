@@ -21,10 +21,13 @@ verweist_auf: [qc-slice-viewer-conventions, qc-slice-images-png-window-aspect, q
 4. **Picture quality:** window first, then enlarge with a cubic spline (order 3) in the generator, at least 3 points
    per voxel, main view at least 768 points wide; masks are enlarged by repeating voxels, never smoothed; counts and
    volumes are computed on the native voxels; lossless PNG, no JPEG; shown at its own size.
-5. **This replaces yellow for false alarms** in new pages. The older entries of this area and the shared viewer
-   generator still say and draw yellow for a false alarm and use another blue (66, 150, 255) for the reference; they
-   describe the generator as it is. Whether the generator is changed is an open decision of the user (2026-11-24).
-   Pages already delivered are not recoloured.
+5. **This replaces yellow for false alarms.** The shared viewer generator
+   [qc_slice_viewer](../../../tools/mri/mri_segmentation/qc_slice_viewer/README.md) draws the house colours since
+   2026-11-24 (user decision of that day): reference blue (46, 134, 171), found green, false alarm pink, missed red,
+   grey sheet as lossless PNG, windowed first and enlarged with a cubic spline, 768 points wide. Older entries of this
+   area that say yellow or the blue (66, 150, 255) describe the generator before that day. Pages already delivered
+   are not recoloured. Not yet adapted in the generator: the CSF layer `csf_drop_tp` (magenta) and the run palette
+   of the mode without verdict, which can come close to a house colour.
 6. The rule is packed as an Agent Skill with code:
    [tools/skills/mri-overlay-pages](../../../tools/skills/mri-overlay-pages/README.md) (`overlay.py`: colour table,
    verdict by touching clusters, windowed cubic upsampling, outline PNG, legend; `cubic_up.js` for pages that carry the

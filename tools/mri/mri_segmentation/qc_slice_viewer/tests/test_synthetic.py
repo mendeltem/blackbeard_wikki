@@ -1,7 +1,16 @@
 """Synthetic test: two volumes with spheres, a reference and a probability map with two hits and one false alarm.
-Checks that data.json counts TP/FP/FN as the metric would, that the comparison wording and the verdict mode build."""
+Checks that data.json counts TP/FP/FN as the metric would, that the comparison wording and the verdict mode build,
+and that the pictures are lossless PNG in the house colours (blue reference, green found, pink false alarm, red missed)."""
 import json, os, subprocess, sys, tempfile
 import nibabel as nib, numpy as np
+from PIL import Image
+
+HOUSE = dict(ref=(46, 134, 171), TP=(59, 178, 115), FP=(232, 23, 138), FN=(235, 60, 60))
+
+
+def layer_colours(path):
+    a = np.asarray(Image.open(path).convert("RGBA")).reshape(-1, 4)
+    return {tuple(int(v) for v in c[:3]) for c in np.unique(a[a[:, 3] > 0], axis=0)}
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOOL = os.path.join(HERE, "..", "src", "qc_slice_viewer.py")
@@ -55,6 +64,21 @@ def test_counts_and_pages():
         # verdict mode and comparison wording
         data_v, html_v = run(mp, os.path.join(d, "out_v"), ["--verdict"])
         assert os.path.exists(os.path.join(d, "out_v", "img", "case-a_TP.png")) and "by verdict" in html_v
+        # house colours and lossless pictures (user rule 2026-11-24)
+        img = os.path.join(d, "out_v", "img")
+        for name, colour in HOUSE.items():
+            assert layer_colours(os.path.join(img, f"case-a_{name}.png")) == {colour}, name
+        sheet = Image.open(os.path.join(img, "case-a.png"))
+        assert sheet.mode == "L" and sheet.size[0] >= 768 and not os.path.exists(os.path.join(img, "case-a.jpg"))
+        assert all(c["sheet"] == "png" for c in data_v)
+        assert "pink = false alarm" in html_v and "yellow" not in html_v and "255,205,0" not in html_v
+        # a page built before the change (JPEG sheet, no "sheet" entry) still gets a working page from --refresh-html
+        old = json.load(open(os.path.join(d, "out_v", "data.json")))
+        for c in old:
+            del c["sheet"]
+        json.dump(old, open(os.path.join(d, "out_v", "data.json"), "w"))
+        _, html_old = run(mp, os.path.join(d, "out_v"), ["--verdict", "--refresh-html"])
+        assert "${c.sheet||'jpg'}" in html_old and '"sheet"' not in html_old
         m["reference_is"] = "comparison"; json.dump(m, open(mp, "w"))
         _, html_c = run(mp, os.path.join(d, "out_c"))
         assert "NOT a reference" in html_c and "only comparison" in html_c

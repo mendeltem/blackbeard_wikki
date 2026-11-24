@@ -25,7 +25,7 @@ Infarkt, Lakunen) gilt dieselbe Reihenfolge; nur die Lader und die Wortwahl wech
    TP/FP/FN. Die gepoolten Zahlen der Seite muessen den Zahlen des Messskripts
    gleichen (BELOVE: behalten 9.591 / 2.120 / 33.237 = F6.2), sonst ist ein Lader falsch.
 3. **Ein Modell: Urteilsfarben. Mehrere Modelle: Modellfarben.** Gruen erkannt, gelb
-   Fehlalarm, rot verpasst (`--verdict`); beim Vergleich mehrerer Laeufe die
+   Fehlalarm (since 2026-11-24 **pink**, see [overlay-house-colours-and-picture-quality](overlay-house-colours-and-picture-quality.md)), rot verpasst (`--verdict`); beim Vergleich mehrerer Laeufe die
    Goldener-Schnitt-Farben ohne das blaue Band.
 4. **Jede Regel bekommt eigene Ebenen, bevor sie in die Kette kommt.** Die Karte, auf
    der die Regel beruht (SynthSeg-Liquor als Fuellung), die Komponenten, die sie als

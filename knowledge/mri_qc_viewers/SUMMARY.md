@@ -1,6 +1,6 @@
 # mri_qc_viewers: Kurzstand
 
-**New 2026-11-24 (user rule):** Masks over an MRI slice have fixed colours on every page, figure and film frame: blue ground truth, orange second rater, green found, pink false alarm (no longer yellow in new pages), red missed; legend with words, outlines on a separate layer, window then cubic upsampling, PNG. Code and skill in `tools/skills/mri-overlay-pages`; the shared viewer generator is not changed yet ([overlay-house-colours-and-picture-quality](rules/overlay-house-colours-and-picture-quality.md)).
+**New 2026-11-24 (user rule):** Masks over an MRI slice have fixed colours on every page, figure and film frame: blue ground truth, orange second rater, green found, pink false alarm (no longer yellow in new pages), red missed; legend with words, outlines on a separate layer, window then cubic upsampling, PNG. Code and skill in `tools/skills/mri-overlay-pages`; the shared viewer generator `qc_slice_viewer` draws these colours and writes PNG since the same day (user decision; grey sheet about 3.7 times larger than JPG on one public case) ([overlay-house-colours-and-picture-quality](rules/overlay-house-colours-and-picture-quality.md)).
 
 **Neu 2026-11-05 (rule):** QC slice images: window in float, then 8-bit PNG, size from the rotated array, Lanczos upscale in the generator, overlay as transparent layer ([qc-slice-images-png-window-aspect](rules/qc-slice-images-png-window-aspect.md)).
 

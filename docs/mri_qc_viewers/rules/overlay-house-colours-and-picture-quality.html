@@ -54,10 +54,13 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <li><strong>Picture quality:</strong> window first, then enlarge with a cubic spline (order 3) in the generator, at least 3 points
    per voxel, main view at least 768 points wide; masks are enlarged by repeating voxels, never smoothed; counts and
    volumes are computed on the native voxels; lossless PNG, no JPEG; shown at its own size.</li>
-<li><strong>This replaces yellow for false alarms</strong> in new pages. The older entries of this area and the shared viewer
-   generator still say and draw yellow for a false alarm and use another blue (66, 150, 255) for the reference; they
-   describe the generator as it is. Whether the generator is changed is an open decision of the user (2026-11-24).
-   Pages already delivered are not recoloured.</li>
+<li><strong>This replaces yellow for false alarms.</strong> The shared viewer generator
+   <a href="../../tools/mri/mri_segmentation/qc_slice_viewer/index.html">qc_slice_viewer</a> draws the house colours since
+   2026-11-24 (user decision of that day): reference blue (46, 134, 171), found green, false alarm pink, missed red,
+   grey sheet as lossless PNG, windowed first and enlarged with a cubic spline, 768 points wide. Older entries of this
+   area that say yellow or the blue (66, 150, 255) describe the generator before that day. Pages already delivered
+   are not recoloured. Not yet adapted in the generator: the CSF layer <code>csf_drop_tp</code> (magenta) and the run palette
+   of the mode without verdict, which can come close to a house colour.</li>
 <li>The rule is packed as an Agent Skill with code:
    <a href="../../tools/skills/mri-overlay-pages/index.html">tools/skills/mri-overlay-pages</a> (<code>overlay.py</code>: colour table,
    verdict by touching clusters, windowed cubic upsampling, outline PNG, legend; <code>cubic_up.js</code> for pages that carry the

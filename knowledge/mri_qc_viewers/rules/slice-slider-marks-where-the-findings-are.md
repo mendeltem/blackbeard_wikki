@@ -11,7 +11,7 @@ verweist_auf: [qc-slice-viewer-conventions, report-healthy-controls-separately]
 # Der Schichtregler zeigt, in welchen Schichten Funde liegen; N/P springen zum naechsten Fund
 
 ## Aussage
-Unter dem Schichtregler liegt eine Leiste mit farbigen Strichen je Schicht: gruen = erkannte Laesion, gelb = Fehlalarm,
+Unter dem Schichtregler liegt eine Leiste mit farbigen Strichen je Schicht: gruen = erkannte Laesion, gelb = Fehlalarm (since 2026-11-24 pink in new pages, see [overlay-house-colours-and-picture-quality](overlay-house-colours-and-picture-quality.md)),
 rot = verpasste Referenz (drei Reihen, damit alle drei gleichzeitig sichtbar sind); im Modellvergleich (ohne Urteil) gruen =
 irgendeine Vorhersage, rot = Referenz. Klick auf einen Strich springt zur Schicht. Tasten **N / P** springen zur naechsten /
 vorigen Schicht mit irgendeinem Fund. Die Daten dafuer stecken schon in den Kachel-Flags je Schicht (`tiles[i].<run>.fp/

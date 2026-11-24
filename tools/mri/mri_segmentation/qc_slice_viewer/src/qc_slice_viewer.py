@@ -23,7 +23,9 @@ Manifest (JSON):
                   "synthseg": "...synthseg.nii.gz" | null, "slice_mm": 4.0 } ]
     }
 Axial slices along the third axis (RAS). Probability files may be uint8 0..255 or float 0..1.
-Voxel volume comes from the header. Private cohorts: build into a private folder and serve on 127.0.0.1 only.
+Voxel volume comes from the header. Output: img/<id>.png (grey sheet: windowed, cubic spline, lossless) and one
+transparent PNG per layer. Colours: reference blue; with --verdict found green, false alarm pink, missed red.
+Private cohorts: build into a private folder and serve on 127.0.0.1 only.
 """
 from __future__ import annotations
 import argparse, colorsys, json, os, sys
@@ -34,9 +36,11 @@ from scipy import ndimage
 
 CONNECTIVITY_26 = np.ones((3, 3, 3), bool)
 CSF_LABELS = {4, 5, 14, 15, 24, 43, 44}; VENTRICLE_LABELS = {4, 5, 14, 15, 43, 44}; FREE_CSF_LABEL = 24
-TILE_WIDTH, MAX_TILES, OUTLINE_PX = 640, 80, 2
-REF_COLOUR = (66, 150, 255)
-VERDICT_LAYERS = [("TP", (0, 200, 0)), ("FP", (255, 205, 0)), ("FN", (235, 60, 60))]
+TILE_WIDTH, MAX_TILES, OUTLINE_PX = 768, 80, 2
+# house colours since 2026-11-24 (knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md):
+# reference blue, found green, false alarm pink (was yellow), missed red. Same values as tools/skills/mri-overlay-pages.
+REF_COLOUR = (46, 134, 171)
+VERDICT_LAYERS = [("TP", (59, 178, 115)), ("FP", (232, 23, 138)), ("FN", (235, 60, 60))]
 CSF_LAYERS = [
     ("csf_free", (0, 220, 255), True, True, "SynthSeg free CSF (label 24), translucent fill"),
     ("csf_vent", (190, 130, 255), True, False, "SynthSeg ventricles (4, 5, 14, 15, 43, 44), translucent fill"),
@@ -92,6 +96,13 @@ def outline(mask, size):
     return big & ~ndimage.binary_erosion(big, iterations=OUTLINE_PX)
 
 
+def grey_tile(a, w, h):
+    """Windowed slice (float 0..1) as a w x h tile: cubic spline (order 3), then 8 bit. The window comes first, never after."""
+    u = ndimage.zoom(a, (h / a.shape[0], w / a.shape[1]), order=3, mode="nearest", grid_mode=True)
+    tile = Image.fromarray((np.clip(u, 0, 1) * 255).round().astype(np.uint8))
+    return tile if tile.size == (w, h) else tile.resize((w, h), Image.BICUBIC)
+
+
 def fill(mask, size):
     return np.asarray(Image.fromarray(np.rot90(mask).astype(np.uint8) * 255).resize(size, Image.NEAREST)) > 127
 
@@ -116,7 +127,7 @@ def build_case(case, runs, out, verdict=False, csf_overlay=False, as_acquired=Tr
     if brain.sum() == 0:
         raise SystemExit(f"{cid}: empty image")
     lo, hi = case.get("grey_window") or np.percentile(shown[brain], [1, 98])   # optional [low, high] of one case; the default suits most images
-    grey = (np.clip((shown - lo) / max(hi - lo, 1e-6), 0, 1) * 255).astype(np.uint8); grey[~brain] = 0
+    grey = np.clip((shown - lo) / max(hi - lo, 1e-6), 0, 1).astype(np.float32); grey[~brain] = 0   # stays float until after the upsampling
     preds, raw_first = {}, None
     for i, r in enumerate(runs):
         p = case.get("runs", {}).get(r["name"])
@@ -177,7 +188,7 @@ def build_case(case, runs, out, verdict=False, csf_overlay=False, as_acquired=Tr
     tiles = []
     for k, z in enumerate(centres):
         lo_z, hi_z = z - step // 2, z - step // 2 + step
-        sheet.paste(Image.fromarray(np.rot90(grey[x0:x1, y0:y1, z])).resize((tile_w, tile_h), Image.BILINEAR), (0, k * tile_h))
+        sheet.paste(grey_tile(np.rot90(grey[x0:x1, y0:y1, z]), tile_w, tile_h), (0, k * tile_h))
         box = slice(k * tile_h, (k + 1) * tile_h)
         flags = dict(z=int(z), ref=0)
         ref_here = ref[x0:x1, y0:y1, lo_z:hi_z].any(axis=2)
@@ -216,12 +227,12 @@ def build_case(case, runs, out, verdict=False, csf_overlay=False, as_acquired=Tr
                 flags["csf_fp"] = flags["csf_tp"] = 0
         tiles.append(flags)
     os.makedirs(f"{out}/img", exist_ok=True)
-    sheet.save(f"{out}/img/{cid}.jpg", quality=88)
+    sheet.save(f"{out}/img/{cid}.png", optimize=True)   # lossless; pages built before 2026-11-24 have .jpg and no "sheet" entry
     for name, layer in layers.items():
         Image.fromarray(layer, "RGBA").save(f"{out}/img/{cid}_{name}.png", optimize=True)
     if csf_stats is not None and runs and runs[0]["name"] in stats:
         stats[runs[0]["name"]].update(csf_stats)
-    return dict(id=cid, cohort=case.get("cohort", ""), n_ref=int(n_ref), ref_ml=round(float(ref.sum()) * vox_ml, 3), tiles=tiles, tile=[tile_w, tile_h], step_mm=step, stats=stats)
+    return dict(id=cid, cohort=case.get("cohort", ""), n_ref=int(n_ref), ref_ml=round(float(ref.sum()) * vox_ml, 3), tiles=tiles, tile=[tile_w, tile_h], step_mm=step, stats=stats, sheet="png")
 
 
 PAGE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>CMB slice viewer __DATASET__</title>
@@ -280,7 +291,7 @@ body.nolist{grid-template-columns:0 6px 1fr}body.nolist #list{display:none}body.
 </div>
 <script>
 const DATA=__DATA__; const RUNS=__RUNS__; const VERDICT=__VERDICT__; const EXTRA=__EXTRA__;
-const LAYERS=(VERDICT?[{name:'TP',colour:[0,200,0],on:true,info:'detected (true positive): a predicted component touches a reference lesion'},{name:'FP',colour:[255,205,0],on:true,info:'false alarm (false positive): a predicted component touches no reference lesion'},{name:'FN',colour:[235,60,60],on:true,info:'missed (false negative): a reference lesion that no predicted component touches'}]:RUNS).concat(EXTRA);
+const LAYERS=(VERDICT?[{name:'TP',colour:[59,178,115],on:true,info:'detected (true positive): a predicted component touches a reference lesion'},{name:'FP',colour:[232,23,138],on:true,info:'false alarm (false positive): a predicted component touches no reference lesion'},{name:'FN',colour:[235,60,60],on:true,info:'missed (false negative): a reference lesion that no predicted component touches'}]:RUNS).concat(EXTRA);
 let cur=0, zi=0, showRef=true; const on={}; LAYERS.forEach(r=>on[r.name]=!!r.on);
 function setAll(v){LAYERS.forEach(r=>{on[r.name]=v;});document.querySelectorAll('#toggles input').forEach(i=>i.checked=v);R.querySelectorAll('img.ov').forEach(im=>im.style.display=v?'':'none');place();}
 const L=document.getElementById('left'), R=document.getElementById('right');
@@ -300,8 +311,8 @@ let scale=1;function place(){const c=DATA[cur];const [tw,th]=c.tile;const s=scal
  document.getElementById('zlab').textContent=(window.innerWidth<=900||window.innerHeight>window.innerWidth)?`${zi+1}/${c.tiles.length}`:`slice ${zi+1} / ${c.tiles.length} (z=${c.tiles[zi].z}, ${c.step_mm} mm)`;document.getElementById('z').value=zi;
  const t=c.tiles[zi];let f=`reference here: ${t.ref}`;RUNS.forEach(r=>{if(t[r.name]&&on[r.name]!==false)f+=` · ${r.name}: detected ${t[r.name].detected}, missed ${t[r.name].missed}, false positives ${t[r.name].fp}`;});if(EXTRA.length&&t.csf_fp!==undefined)f+=` · CSF rule here: removes ${t.csf_fp} false alarm${t.csf_fp===1?'':'s'}, ${t.csf_tp} true lesion${t.csf_tp===1?'':'s'}`;document.getElementById('flags').textContent=f;}
 let show=function(i){cur=i;const c=DATA[cur];L.innerHTML='<div class="cap">Reference (blue)</div>';R.innerHTML='<div class="cap">'+(VERDICT?'our model, by verdict':'Models')+'</div>';
- layer(L,`img/${c.id}.jpg`,'base');const rl=layer(L,`img/${c.id}_ref.png`,'ref');rl.style.display=showRef?'':'none';
- layer(R,`img/${c.id}.jpg`,'base');LAYERS.forEach(r=>{const im=layer(R,`img/${c.id}_${r.name}.png`,'ov');im.dataset.run=r.name;im.style.display=on[r.name]?'':'none';});
+ layer(L,`img/${c.id}.${c.sheet||'jpg'}`,'base');const rl=layer(L,`img/${c.id}_ref.png`,'ref');rl.style.display=showRef?'':'none';
+ layer(R,`img/${c.id}.${c.sheet||'jpg'}`,'base');LAYERS.forEach(r=>{const im=layer(R,`img/${c.id}_${r.name}.png`,'ov');im.dataset.run=r.name;im.style.display=on[r.name]?'':'none';});
  zi=Math.min(zi,c.tiles.length-1);const first=c.tiles.findIndex(t=>t.ref>0);if(first>=0&&arguments[1]!==false)zi=first;
  document.getElementById('z').max=c.tiles.length-1;document.getElementById('title').textContent=`${c.id} (${c.cohort})`;
  let cnt=`reference ${c.n_ref}${c.ref_ml!==undefined?` (${c.ref_ml.toFixed(3)} ml)`:''}`;RUNS.forEach(r=>{const s=c.stats[r.name];if(s)cnt+=` · ${r.name}: ${dc(s)!==null?`Dice ${fmt(dc(s))}, `:''}F1 ${fmt(f1(s))} (TP ${s.tp} FP ${s.fp} FN ${s.fn}${s.ml!==undefined?`, ${s.ml.toFixed(3)} ml`:''})`;});const ce=document.getElementById('cnt');ce.textContent=cnt;ce.title=cnt;
@@ -319,7 +330,7 @@ document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(
  else if(e.key==='ArrowDown'||e.key==='PageDown'){show(Math.min(DATA.length-1,cur+1));e.preventDefault();}else if(e.key==='ArrowUp'||e.key==='PageUp'){show(Math.max(0,cur-1));e.preventDefault();}else if(e.key==='r'||e.key==='R'){showRef=!showRef;L.querySelector('.ref').style.display=showRef?'':'none';}});
 document.getElementById('z').addEventListener('input',e=>{zi=+e.target.value;place();});
 document.getElementById('q').addEventListener('input',e=>buildList(e.target.value));
-const it=document.getElementById('infotext');it.innerHTML='<div><b>Keys</b>: ← → slice · ↑ ↓ (or PgUp / PgDn) previous / next case · R reference on/off · L case list</div><div><b>Mouse</b>: wheel / pinch zoom · drag pan · click a case in the list</div><div><b>Left</b>: reference lesions (blue). <b>Right</b>: '+(VERDICT?'our model only, coloured by verdict: <span class="sw" style="background:rgb(0,200,0)"></span>green = detected, <span class="sw" style="background:rgb(255,205,0)"></span>yellow = false alarm, <span class="sw" style="background:rgb(235,60,60)"></span>red = missed; switch them with the checkboxes.':'model outlines, switch them with the checkboxes.')+' Dice = voxel overlap 2·|pred ∩ ref| / (|pred| + |ref|) per case. F1 = 2·TP / (2·TP + FP + FN) per case on lesions (connected components, 26-neighbourhood, hit = touches); the list head shows the mean over cases and the pooled value.</div>'+RUNS.map(r=>`<div><span class="sw" style="background:rgb(${r.colour})"></span><b>${esc(r.name)}</b>: ${esc(r.info||'')}</div>`).join('')+(EXTRA.length?'<div style="margin-top:6px"><b>CSF rule layers</b> (rule: reject a component whose majority SynthSeg label is CSF; evaluated on the first model\'s raw prediction, threshold 0.3 / 2 mm3; NOT applied to the outlines, only shown):</div>'+EXTRA.map(r=>`<div><span class="sw" style="background:rgb(${r.colour})"></span><b>${esc(r.name)}</b>: ${esc(r.info||'')}</div>`).join(''):'');
+const it=document.getElementById('infotext');it.innerHTML='<div><b>Keys</b>: ← → slice · ↑ ↓ (or PgUp / PgDn) previous / next case · R reference on/off · L case list</div><div><b>Mouse</b>: wheel / pinch zoom · drag pan · click a case in the list</div><div><b>Left</b>: reference lesions (blue). <b>Right</b>: '+(VERDICT?'our model only, coloured by verdict: <span class="sw" style="background:rgb(59,178,115)"></span>green = detected, <span class="sw" style="background:rgb(232,23,138)"></span>pink = false alarm, <span class="sw" style="background:rgb(235,60,60)"></span>red = missed; switch them with the checkboxes.':'model outlines, switch them with the checkboxes.')+' Dice = voxel overlap 2·|pred ∩ ref| / (|pred| + |ref|) per case. F1 = 2·TP / (2·TP + FP + FN) per case on lesions (connected components, 26-neighbourhood, hit = touches); the list head shows the mean over cases and the pooled value.</div>'+RUNS.map(r=>`<div><span class="sw" style="background:rgb(${r.colour})"></span><b>${esc(r.name)}</b>: ${esc(r.info||'')}</div>`).join('')+(EXTRA.length?'<div style="margin-top:6px"><b>CSF rule layers</b> (rule: reject a component whose majority SynthSeg label is CSF; evaluated on the first model\'s raw prediction, threshold 0.3 / 2 mm3; NOT applied to the outlines, only shown):</div>'+EXTRA.map(r=>`<div><span class="sw" style="background:rgb(${r.colour})"></span><b>${esc(r.name)}</b>: ${esc(r.info||'')}</div>`).join(''):'');
 document.addEventListener('click',e=>{const d=document.getElementById('info');if(d.open&&!d.contains(e.target))d.removeAttribute('open');});
 const tg=document.getElementById('toggles');const ba=document.createElement('button');ba.textContent='all on';ba.onclick=()=>setAll(true);const bo=document.createElement('button');bo.textContent='all off';bo.onclick=()=>setAll(false);tg.appendChild(ba);tg.appendChild(bo);
 LAYERS.forEach(r=>{const lab=document.createElement('label');lab.title=r.info||'';lab.innerHTML=`<input type="checkbox" ${r.on?'checked':''}> <span class="sw" style="background:rgb(${r.colour})"></span>${esc(r.name)} `;
@@ -405,7 +416,7 @@ def render(manifest, data, runs, on, verdict, csf_overlay):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("manifest"); ap.add_argument("--out", required=True)
-    ap.add_argument("--verdict", action="store_true", help="one run: outlines coloured by verdict (green detected, yellow false alarm, red missed)")
+    ap.add_argument("--verdict", action="store_true", help="one run: outlines coloured by verdict (green detected, pink false alarm, red missed)")
     ap.add_argument("--on", nargs="*", default=None, help="runs switched on at start (default: the first)")
     ap.add_argument("--limit", type=int, default=0); ap.add_argument("--refresh-html", action="store_true")
     a = ap.parse_args(argv)
