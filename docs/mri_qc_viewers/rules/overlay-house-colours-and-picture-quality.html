@@ -1,0 +1,92 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Masks over an MRI slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; window, cubic upsampling, PNG</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../index.html">blackbeard_wikki</a><a href="../../index.html">Start</a><a href="../../rules.html">Regeln</a><a href="../../todo.html">Offen</a><a href="../../log.html">Protokoll</a><a href="../../tools/index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../index.html">Start</a> › <a href="../index.html">mri_qc_viewers</a> › <a href="../index.html#rules">Regel</a></div><h1>Masks over an MRI slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; window, cubic upsampling, PNG</h1><div class="meta"><span>Typ</span><span>Regel</span><span>Status</span><span><span class="badge warn">vorschlag</span></span><span>Stand</span><span>2026-11-24</span><span>Herkunft</span><span>user rule 2026-11-24 (fixed colours and best picture quality for every MRI picture with ground truth, second rater, TP, FP, FN, not to be said again); picture quality from the trainer rework of 2026-11-23/24</span><span>Zuletzt geändert</span><span>2026-11-24 agent_tooling + tools/skills: Agent Skills research with own tests, skills film-making and mri-overlay-pages, film rule (always animated, length by complexity), overlay colour rule</span><span>Verweist auf</span><span><a href="qc-slice-viewer-conventions.html">Setzungen fuer eine QC-Seite: Referenz blau, Proband links/rechts, F1 je Fall, Klick zeigt die Werte</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="qc-slice-images-png-window-aspect.html">QC slice images: window first, then 8-bit PNG, size from the rotated array</a> <span class="muted small">(mri_qc_viewers)</span><br><a href="qc-build-order-for-a-new-lesion-type.html">Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null</a> <span class="muted small">(mri_qc_viewers)</span></span><span>Verwiesen von</span><span><a href="../../agent_tooling/findings/agent-skills-what-they-give-and-what-they-cost-2026-11.html">Agent Skills: cheap to load and shared by all our agents, but only as good as the description, the size and the test</a> <span class="muted small">(agent_tooling)</span></span><span>Quelle</span><span><a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md">knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md</a></span></div><h2>Aussage</h2>
+<ol>
+<li><strong>Five roles, five colours, on every page, figure and film frame:</strong> ground truth (reference, rater 1) <strong>blue</strong>
+   (46, 134, 171); second rater <strong>orange</strong> (232, 135, 30); true positive <strong>green</strong> (59, 178, 115); false positive
+   <strong>pink</strong> (232, 23, 138); false negative <strong>red</strong> (235, 60, 60). The colours are never reused for something else; a
+   layer that is none of the five gets a sixth colour and its own legend line.</li>
+<li><strong>A legend with words</strong> on every picture: colour name = role. Never colour alone.</li>
+<li><strong>Outlines, not fills</strong>, as a separate transparent picture, so that the lesion stays visible and the switch
+   "Overlays: ON/OFF (O)" hides them all.</li>
+<li><strong>Picture quality:</strong> window first, then enlarge with a cubic spline (order 3) in the generator, at least 3 points
+   per voxel, main view at least 768 points wide; masks are enlarged by repeating voxels, never smoothed; counts and
+   volumes are computed on the native voxels; lossless PNG, no JPEG; shown at its own size.</li>
+<li><strong>This replaces yellow for false alarms</strong> in new pages. The older entries of this area and the shared viewer
+   generator still say and draw yellow for a false alarm and use another blue (66, 150, 255) for the reference; they
+   describe the generator as it is. Whether the generator is changed is an open decision of the user (2026-11-24).
+   Pages already delivered are not recoloured.</li>
+<li>The rule is packed as an Agent Skill with code:
+   <a href="../../tools/skills/mri-overlay-pages/index.html">tools/skills/mri-overlay-pages</a> (<code>overlay.py</code>: colour table,
+   verdict by touching clusters, windowed cubic upsampling, outline PNG, legend; <code>cubic_up.js</code> for pages that carry the
+   raw slices).</li>
+</ol>
+<p><img alt="Demo page with all five roles on a synthetic phantom" src="../assets/overlay_demo_page.png" /></p>
+<p><em>Synthetic phantom, every value invented, no scan; made with <code>overlay.py --demo</code> on 2026-11-24.</em></p>
+<h2>Trägt</h2>
+<ul>
+<li>User rule 2026-11-24 for the colour names and roles, and for PNG in the quality of the reworked trainers.</li>
+<li>Own test 2026-11-24 on a synthetic phantom (no scan): demo page looked at as a screenshot and as enlarged crops,
+  all five roles readable, outlines crisp, switch works. numpy 2.4.6 (<a href="https://numpy.org">https://numpy.org</a>), scipy 1.17.1
+  (<code>ndimage.zoom</code>, order 3, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.zoom.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.zoom.html</a>),
+  Pillow 13.0.0 (<a href="https://pillow.readthedocs.io">https://pillow.readthedocs.io</a>), Chromium headless.</li>
+<li>Browser-side cubic upsampling: <code>cubicUp</code> from the public WMH trainer, MIT, commit 06e8190
+  (<a href="https://github.com/mendeltem/wmh_trainer">https://github.com/mendeltem/wmh_trainer</a>), own build 2026-11-23/24.</li>
+<li>Window first and PNG: <a href="qc-slice-images-png-window-aspect.html">qc-slice-images-png-window-aspect</a>.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<p>Not tested on a real scan yet. The exact RGB values of red and blue and the placing of the outlines (rater marks as a
+ring inside the mask, verdicts as a ring around it, the second rater one step further in on a shared lesion) were
+chosen by the author of the skill, not by the user. Pink and red are close for some colour-vision deficiencies; the
+legend words and the different ring positions carry the difference, this was not tested with affected readers.
+PNG makes pages larger than JPEG.</p>
+<h2>Bruchindikator</h2>
+<p>A rater confuses pink and red on a real page; a one-voxel lesion disappears under its ring at the usual scale; the
+user names other colours.</p>
+<h2>Ablesung</h2>
+<p>Take the colours from <code>COL</code> in <code>overlay.py</code>, never from memory. Before delivery: screenshot of the page, an enlarged
+crop of a small lesion, and a check that every role on the page is in the legend.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../search.js"></script></body></html>

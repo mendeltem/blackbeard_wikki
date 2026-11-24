@@ -43,12 +43,13 @@ footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padd
 <header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../index.html">blackbeard_wikki</a><a href="../index.html">Start</a><a href="../rules.html">Regeln</a><a href="../todo.html">Offen</a><a href="../log.html">Protokoll</a><a href="../tools/index.html">Werkzeuge</a>
 <input id="q" type="search" placeholder="Suchen ( / )" data-root="../" autocomplete="off"></nav></div><div id="hits"></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="../index.html">Start</a> › mri_qc_viewers</div><h1>mri_qc_viewers</h1><p>QC-Seiten fuer Laesionsdetektion: Setzungen (Referenz blau, Tasten, Klick-Werte, Englisch, quality_control.html)</p><p class="muted small">QC-Seite, Betrachter, Schichtbetrachter, NiiVue, Referenz gegen Vorhersage, Fehlalarme, MRT</p>
-<div class="stripe"><i class="ok" style="width:76.9%" title="getragen: 10"></i><i class="warn" style="width:15.4%" title="vorschlag: 2"></i><i class="info" style="width:7.7%" title="offen: 1"></i></div><div class="counts"><span class="ok">10 getragen</span> <span class="warn">2 vorschlag</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
+<div class="stripe"><i class="ok" style="width:71.4%" title="getragen: 10"></i><i class="warn" style="width:21.4%" title="vorschlag: 3"></i><i class="info" style="width:7.1%" title="offen: 1"></i></div><div class="counts"><span class="ok">10 getragen</span> <span class="warn">3 vorschlag</span> <span class="info">1 offen</span></div><div class="small"><p>Qualitaetskontroll-Seiten fuer Laesionsdetektion und -segmentierung auf MRT: Einzeldatei-HTML,
 die Referenz und Modellvorhersagen Schicht fuer Schicht zeigen. Hier stehen die Setzungen,
 wie so eine Seite auszusehen hat (vom Nutzer an fertigen Seiten festgelegt), und was noch fehlt.
 Keine Patientendaten; die Seiten selbst liegen bei den Projekten.</p>
 <p>Stand 2026-10-12. Ein Eintrag je Datei.</p></div>
-<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>Neu 2026-11-05 (rule):</strong> QC slice images: window in float, then 8-bit PNG, size from the rotated array, Lanczos upscale in the generator, overlay as transparent layer (<a href="rules/qc-slice-images-png-window-aspect.html">qc-slice-images-png-window-aspect</a>).</p>
+<h2 id="kurzstand">Kurzstand</h2><div class="summary"><p><strong>New 2026-11-24 (user rule):</strong> Masks over an MRI slice have fixed colours on every page, figure and film frame: blue ground truth, orange second rater, green found, pink false alarm (no longer yellow in new pages), red missed; legend with words, outlines on a separate layer, window then cubic upsampling, PNG. Code and skill in <code>tools/skills/mri-overlay-pages</code>; the shared viewer generator is not changed yet (<a href="rules/overlay-house-colours-and-picture-quality.html">overlay-house-colours-and-picture-quality</a>).</p>
+<p><strong>Neu 2026-11-05 (rule):</strong> QC slice images: window in float, then 8-bit PNG, size from the rotated array, Lanczos upscale in the generator, overlay as transparent layer (<a href="rules/qc-slice-images-png-window-aspect.html">qc-slice-images-png-window-aspect</a>).</p>
 <p><strong>Neu 2026-10-18 (Literatur):</strong> Bild-Sprachmodelle als QC-Vorsortierer sind nicht belegt; Orientierung und reine Bildfragen sind schwach, Kappa ~0,6, nur ueberwacht und nach lokaler Validierung (<a href="findings/research-vision-language-models-for-image-qc-2026-10.html">research-vision-language-models-for-image-qc-2026-10</a>).</p>
 <p>Stand 2026-10-12. Prefill fuer Chats und Agenten. Details in <a href="index.html">INDEX.md</a>.</p>
 <p>Wie eine QC-Seite fuer Laesionsdetektion gebaut wird, damit Mendel sie benutzt: Einzeldatei-HTML,
@@ -62,9 +63,54 @@ Offen: den Generator als Tool mit Test einstellen.</p>
 <p><strong>Regel, neu 2026-10-11:</strong> Jede QC-Seite ist Englisch, auch Index, Verlaufs-Plots, NiiVue-Seiten, Rating-README und Manifest-Titel; die Uebersetzung sitzt im Generator. Laengsschnitte (DEMDAS M0..M60) werden im selben Fenster per Sitzungsknopf umgeschaltet, Pfeil hoch/runter = Sitzung desselben Probanden bei stehender Schicht, Bild hoch/runter = Proband, Tabelle "Across sessions" daneben. Excel-Schluessel seit 12.10. englisch; Nutzerregel: jede Ausgabe Englisch, Chat Deutsch, CSF statt Liquor.</p>
 <p><strong>Regel, neu 2026-10-12:</strong> Jede Zahl auf einer QC-Seite erklaert sich beim Hovern (title= mit Software, Version, Rechenweg, Label-Menge), dazu ein Knopf "? Methods" (Taste M) mit Overlay aller Texte, Bauzeitpunkt und Wiki-Link; fehlende Werte nennen Grund und Stand ("recon-all not finished, 31 of 63 sessions"), die Zahlen setzt der Generator ein. Langfassung fuer DEMDAS-GM als englischer Befund.</p>
 <p><strong>Regeln, neu 2026-10-12 (nachmittags):</strong> Striche unter dem Schichtregler zeigen, wo Funde liegen (N/P springen); der lokale Spiegel ~/QUALITY_CONTROLL ist die Quelle des Sticks (sync, cmp, lsof vor dem Abziehen).</p>
-<p><strong>Pruefpunkt, neu 2026-10-12 (16 Uhr):</strong> Index und Sprites einer Seite nur gemeinsam kopieren (rsync des ganzen Ordners); bunter Streifen am Bildrand = Kachelraster passt nicht zur Sprite-Groesse, nicht die Segmentierung. Pruefung: qc_mirror_check.py (Bau, Spiegel, Stick).</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 12</title></rect><rect x="320.0" y="45.8" width="319.0" height="4.2" rx="1"><title>2026-11: 1</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 12)</figcaption></figure>
+<p><strong>Pruefpunkt, neu 2026-10-12 (16 Uhr):</strong> Index und Sprites einer Seite nur gemeinsam kopieren (rsync des ganzen Ordners); bunter Streifen am Bildrand = Kachelraster passt nicht zur Sprite-Groesse, nicht die Segmentierung. Pruefung: qc_mirror_check.py (Bau, Spiegel, Stick).</p></div><figure class="plot"><svg viewBox="0 0 640 70" preserveAspectRatio="none" role="img" aria-label="Einträge je Monat (Stand)"><rect x="0.0" y="0.0" width="319.0" height="50.0" rx="1"><title>2026-10: 12</title></rect><rect x="320.0" y="41.7" width="319.0" height="8.3" rx="1"><title>2026-11: 2</title></rect><text x="0" y="65">2026-10</text><text x="640" y="65" text-anchor="end">2026-11</text></svg><figcaption>Einträge je Monat (Stand) (max 12)</figcaption></figure>
 <p class="small muted">Einträge aufklappen: Klick auf die Zeile. Alle <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=true);return false">öffnen</a> / <a href="#" onclick="document.querySelectorAll('details.entry').forEach(d=>d.open=false);return false">schließen</a>.</p>
-<h2 id="rules">Regel <span class="muted small">(7)</span></h2><details class="entry" id="qc-slice-images-png-window-aspect"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-slice-images-png-window-aspect.html">QC slice images: window first, then 8-bit PNG, size from the rotated array</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-05</span><span class="i">Fenster in float, dann 8-bit PNG (keine Rohwerte), Groesse aus dem gedrehten Array, Lanczos im Generator + 1:1, Overlay als transparente Ebene</span></summary><div class="body"><p class="small muted">Herkunft: own QC page (grey matter, clinical vs research T1, 2026-11-05); a rater called the images squashed and of poor quality · <a href="rules/qc-slice-images-png-window-aspect.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-slice-images-png-window-aspect.md">Markdown</a></p><h2>Aussage</h2>
+<h2 id="rules">Regel <span class="muted small">(8)</span></h2><details class="entry" id="overlay-house-colours-and-picture-quality"><summary><span class="type">Regel</span><span class="t"><a href="rules/overlay-house-colours-and-picture-quality.html">Masks over an MRI slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; window, cubic upsampling, PNG</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-24</span><span class="i">Masks over a slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; legend with words; outlines on a separate layer; window, cubic upsampling, PNG; packed as skill tools/skills/mri-overlay-pages</span></summary><div class="body"><p class="small muted">Herkunft: user rule 2026-11-24 (fixed colours and best picture quality for every MRI picture with ground truth, second rater, TP, FP, FN, not to be said again); picture quality from the trainer rework of 2026-11-23/24 · <a href="rules/overlay-house-colours-and-picture-quality.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md">Markdown</a></p><h2>Aussage</h2>
+<ol>
+<li><strong>Five roles, five colours, on every page, figure and film frame:</strong> ground truth (reference, rater 1) <strong>blue</strong>
+   (46, 134, 171); second rater <strong>orange</strong> (232, 135, 30); true positive <strong>green</strong> (59, 178, 115); false positive
+   <strong>pink</strong> (232, 23, 138); false negative <strong>red</strong> (235, 60, 60). The colours are never reused for something else; a
+   layer that is none of the five gets a sixth colour and its own legend line.</li>
+<li><strong>A legend with words</strong> on every picture: colour name = role. Never colour alone.</li>
+<li><strong>Outlines, not fills</strong>, as a separate transparent picture, so that the lesion stays visible and the switch
+   "Overlays: ON/OFF (O)" hides them all.</li>
+<li><strong>Picture quality:</strong> window first, then enlarge with a cubic spline (order 3) in the generator, at least 3 points
+   per voxel, main view at least 768 points wide; masks are enlarged by repeating voxels, never smoothed; counts and
+   volumes are computed on the native voxels; lossless PNG, no JPEG; shown at its own size.</li>
+<li><strong>This replaces yellow for false alarms</strong> in new pages. The older entries of this area and the shared viewer
+   generator still say and draw yellow for a false alarm and use another blue (66, 150, 255) for the reference; they
+   describe the generator as it is. Whether the generator is changed is an open decision of the user (2026-11-24).
+   Pages already delivered are not recoloured.</li>
+<li>The rule is packed as an Agent Skill with code:
+   <a href="../tools/skills/mri-overlay-pages/index.html">tools/skills/mri-overlay-pages</a> (<code>overlay.py</code>: colour table,
+   verdict by touching clusters, windowed cubic upsampling, outline PNG, legend; <code>cubic_up.js</code> for pages that carry the
+   raw slices).</li>
+</ol>
+<p><img alt="Demo page with all five roles on a synthetic phantom" src="../assets/overlay_demo_page.png" /></p>
+<p><em>Synthetic phantom, every value invented, no scan; made with <code>overlay.py --demo</code> on 2026-11-24.</em></p>
+<h2>Trägt</h2>
+<ul>
+<li>User rule 2026-11-24 for the colour names and roles, and for PNG in the quality of the reworked trainers.</li>
+<li>Own test 2026-11-24 on a synthetic phantom (no scan): demo page looked at as a screenshot and as enlarged crops,
+  all five roles readable, outlines crisp, switch works. numpy 2.4.6 (<a href="https://numpy.org">https://numpy.org</a>), scipy 1.17.1
+  (<code>ndimage.zoom</code>, order 3, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.zoom.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.zoom.html</a>),
+  Pillow 13.0.0 (<a href="https://pillow.readthedocs.io">https://pillow.readthedocs.io</a>), Chromium headless.</li>
+<li>Browser-side cubic upsampling: <code>cubicUp</code> from the public WMH trainer, MIT, commit 06e8190
+  (<a href="https://github.com/mendeltem/wmh_trainer">https://github.com/mendeltem/wmh_trainer</a>), own build 2026-11-23/24.</li>
+<li>Window first and PNG: <a href="rules/qc-slice-images-png-window-aspect.html">qc-slice-images-png-window-aspect</a>.</li>
+</ul>
+<h2>Trägt nicht</h2>
+<p>Not tested on a real scan yet. The exact RGB values of red and blue and the placing of the outlines (rater marks as a
+ring inside the mask, verdicts as a ring around it, the second rater one step further in on a shared lesion) were
+chosen by the author of the skill, not by the user. Pink and red are close for some colour-vision deficiencies; the
+legend words and the different ring positions carry the difference, this was not tested with affected readers.
+PNG makes pages larger than JPEG.</p>
+<h2>Bruchindikator</h2>
+<p>A rater confuses pink and red on a real page; a one-voxel lesion disappears under its ring at the usual scale; the
+user names other colours.</p>
+<h2>Ablesung</h2>
+<p>Take the colours from <code>COL</code> in <code>overlay.py</code>, never from memory. Before delivery: screenshot of the page, an enlarged
+crop of a small lesion, and a check that every role on the page is in the legend.</p></div></details><details class="entry" id="qc-slice-images-png-window-aspect"><summary><span class="type">Regel</span><span class="t"><a href="rules/qc-slice-images-png-window-aspect.html">QC slice images: window first, then 8-bit PNG, size from the rotated array</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-11-05</span><span class="i">Fenster in float, dann 8-bit PNG (keine Rohwerte), Groesse aus dem gedrehten Array, Lanczos im Generator + 1:1, Overlay als transparente Ebene</span></summary><div class="body"><p class="small muted">Herkunft: own QC page (grey matter, clinical vs research T1, 2026-11-05); a rater called the images squashed and of poor quality · <a href="rules/qc-slice-images-png-window-aspect.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/rules/qc-slice-images-png-window-aspect.md">Markdown</a></p><h2>Aussage</h2>
 <ul>
 <li><strong>Map to 0-255, do not store raw values.</strong> Browsers and monitors show 8 bits per channel. A 16-bit PNG of raw
   intensities is drawn without any window (dark, flat). Window in float (0.5-99.5th percentile inside the brain),
@@ -326,7 +372,9 @@ ist ziemlich gut", Tasten, Klick-Werte, Blau, Dateiname). Setzung, kein Messwert
 Modell gezeigt wird, tragen die Umrisse rechts nicht mehr die Modellfarbe, sondern das Urteil:
 gruen = erkannt (vorhergesagte Komponente beruehrt eine Referenz), gelb = Fehlalarm, rot =
 verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our model, by verdict";
-links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).
+links bleibt die Referenz blau. Generator: <code>build_slice_viewer.py --verdict</code> (genau ein <code>--run</code>).</p>
+<p><strong>Note 2026-11-24 (user rule):</strong> for new pages a false alarm is <strong>pink</strong>, not yellow, and a second rater is orange; see
+<a href="rules/overlay-house-colours-and-picture-quality.html">overlay-house-colours-and-picture-quality</a>. The generator still draws yellow; changing it waits for the user's decision.
 Modellname kurz (<code>our-3D-U-Net</code>), keine Leerzeichen (Dateinamen der Ebenen).
 Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, <code>slices/</code> und Startseite) zeigt seit
 2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.</p></div></details><h2 id="findings">Befund <span class="muted small">(5)</span></h2><details class="entry" id="research-vision-language-models-for-image-qc-2026-10"><summary><span class="type">Befund</span><span class="t"><a href="findings/research-vision-language-models-for-image-qc-2026-10.html">Literature: can vision-language models pre-sort medical image / segmentation QC?</a></span><span class="badge warn">vorschlag</span><span class="muted small">2026-10-18</span><span class="i">Literature (30 refs, checked): no study shows autonomous VLM QC of segmentation overlays; orientation and image-only questions are weak, over-calling and kappa ~0.6; supervised use and local validation first</span></summary><div class="body"><p class="small muted">Herkunft: research report by the remote-model agent (Clara on the hospital model hub) via the compact literature tool, checked by Claude Code 2026-10-18 (quellen-pruefen 0 wrong, &#x27;Shows&#x27; spot checks against abstracts) · <a href="findings/research-vision-language-models-for-image-qc-2026-10.html">eigene Seite</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/knowledge/mri_qc_viewers/findings/research-vision-language-models-for-image-qc-2026-10.md">Markdown</a></p><h2>Aussage</h2>
@@ -760,5 +808,5 @@ und den Setzungen aus <a href="rules/qc-slice-viewer-conventions.html">qc-slice-
 <ul>
 <li><a href="rules/qc-slice-viewer-conventions.html">qc-slice-viewer-conventions</a></li>
 </ul></div></details></div></main>
-<footer><div class="wrap">Erzeugt 2026-11-22 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<footer><div class="wrap">Erzeugt 2026-11-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
 <script src="../search.js"></script></body></html>

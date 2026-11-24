@@ -12,6 +12,7 @@ Stand 2026-10-07. Ein Eintrag je Datei.
 
 | Eintrag | Typ | Status |
 |---|---|---|
+| [Agent Skills: cheap to load and shared by all our agents, but only as good as the description, the size and the test](findings/agent-skills-what-they-give-and-what-they-cost-2026-11.md) | befund | vorschlag |
 | [MAVE: an agent rebuilds a film shot as an editable 3D scene in Blender, each step checked against measured evidence (preprint, code not released yet)](findings/mave-editable-3d-blockouts-from-film-shots.md) | befund | vorschlag |
 | [Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair](findings/agent-station-reliability-trend-2026-11.md) | befund | vorschlag |
 | ["This log holds no text" is a claim to measure; a daily note with counts replaces a new shared log](findings/log-without-text-is-a-claim-to-measure-daily-counts-instead-of-a-new-log.md) | befund | vorschlag |

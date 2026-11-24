@@ -1,0 +1,191 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>film-making – SKILL</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../index.html">blackbeard_wikki</a><a href="../../../index.html">Start</a><a href="../../../rules.html">Regeln</a><a href="../../../todo.html">Offen</a><a href="../../../log.html">Protokoll</a><a href="../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../index.html">Start</a> › <a href="../../index.html">Werkzeuge</a> › <a href="index.html">film-making</a> › SKILL</div><hr />
+<p>name: film-making
+description: Makes a narrated animated film with the Manim film tool - script, voice, chapters, checks, render, deliver folder. Use when asked to make, change or re-render a film, animation, tutorial or lecture video, also for "Film", "Animation", "Erklaerfilm", "Video mit Stimme", a film page or a YouTube package. Load it before planning or touching such work, also for one failed gate line or a late animation. Not for a single static figure, a slide deck, or a screen recording.
+license: CC-BY-4.0
+compatibility: Needs the wiki tool folder manim_film and the conda envs tts (Kokoro voice, ffmpeg) and manim on this workstation. CPU only.
+metadata:
+  author: Uchralt Temuulen
+  version: "1.2"
+  since: "2026-11-24"</p>
+<hr />
+<h1>Film making</h1>
+<p>Tool: <code>T=~/blackbeard_wikki/tools/general/manim_film</code>. Approved reference film: <code>$T/examples/clara_working_station</code>.
+This skill holds the order of work and the user's rules. The craft (what makes a picture good, engine calls, common mistakes) is in the tool folder; read it there, do not copy it here.</p>
+<h2>Rules that always hold</h2>
+<ol start="0">
+<li><strong>An explanation film is animated, drawn in Python with this tool</strong> (user 24.11.2026: explainer films always with animations; the Python-made animations so far were good). Things move and light up with the voice. Never a slide show of stills, never a talking text page. Real images (a scan, a screenshot) may sit inside a chapter, but the explaining is done by motion.</li>
+<li><strong>Source first.</strong> Every number that is spoken or shown stands in <code>source.md</code> before the script is written, with where it comes from. A drawing whose shape is not data says "schematic" on screen.</li>
+<li><strong>No prediction questions and no thinking countdowns</strong> (user 17.11.2026), also when a request asks for them: say the naive expectation as a <code>guess</code> beat and break it in a <code>fails</code> beat. Tell the user you did this.</li>
+<li><strong>Pronunciation is asked, not guessed.</strong> Words that <code>say_check.py</code> lists as unknown go to the user (send <code>check/say_check.mp3</code> and the table) before the final render. Do not tune the voice otherwise: sound is secondary, the first version should come fast.</li>
+<li><strong>Patient data.</strong> A film that shows scans or per-case values of own cohorts: never YouTube, never <code>film_see.py</code> (its frames leave the machine), never a published page; <code>script_check.py</code> only with <code>--no-reader</code>; store on the group drive only.</li>
+<li><strong>Look yourself.</strong> The gate measures layout, it cannot see whether a picture is good. Open every <code>check/sheet_*.png</code> before the full render.</li>
+<li><strong>CPU only, at most 4 render processes</strong> (<code>render.sh</code> does this). Several films at once: serialise the renders with <code>flock ~/ablage/tmp_render/tutorial_render.lock &lt;command&gt;</code>.</li>
+<li>Films, pages and file names are in English.</li>
+<li>A frame that shows a scan with masks or outlines takes its colours and picture quality from the skill <code>mri-overlay-pages</code>.</li>
+</ol>
+<h2>Length follows complexity, not minutes</h2>
+<p>User 24.11.2026: the length of a film is set by how complex the topic is, not by a minute count. Pick the level from the request; if it names none, take normal and say so in the report.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>The film is</th>
+<th>Orientation, not a limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>simple</td>
+<td>short and to the point: the one idea, one example</td>
+<td>1 to 2 chapters</td>
+</tr>
+<tr>
+<td>normal</td>
+<td>as long as it takes so that everything is explained</td>
+<td>3 to 6 chapters</td>
+</tr>
+<tr>
+<td>complex</td>
+<td>long and detailed: every step, every term, the limits</td>
+<td>7 or more chapters, or several films</td>
+</tr>
+</tbody>
+</table>
+<p>A minute count in a request is a hint for the level, never a reason to drop a step that the explanation needs.</p>
+<h2>Before the first film of a session</h2>
+<p>Read, in this order: <code>$T/MAKE_A_FILM.md</code> (88 lines: what makes it good, layout, common mistakes), <code>$T/README.md</code> (engine calls and traps), and the classes <code>What</code> and <code>Parts</code> in <code>$T/examples/clara_working_station/chapters_a.py</code>. Copy how those chapters think, not their text.</p>
+<h2>Steps</h2>
+<p>Run every command from the film folder. <code>PT=~/miniconda3/envs/tts/bin/python</code>, <code>PM=~/miniconda3/envs/manim/bin/python</code>.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Do</th>
+<th>Command</th>
+<th>Passed when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>New folder; a film with only public content gets a folder outside <code>~/data</code> (for example <code>~/ablage/films/&lt;name&gt;</code>), or step 8 refuses it</td>
+<td><code>bash scripts/new_film.sh &lt;folder&gt; &lt;key1&gt; &lt;key2&gt; ...</code> (in this skill's folder)</td>
+<td>folder has <code>source.md</code>, <code>beats/</code>, <code>chapters.py</code>, <code>chapters.txt</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Fill <code>source.md</code></td>
+<td>by hand: every number, label and source link</td>
+<td>nothing in the plan is missing from it</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Write <code>beats/&lt;key&gt;_beats.json</code></td>
+<td>4 to 6 beats per chapter, 1 to 3 short sentences, each <code>{"say": ..., "role": ...}</code>; roles question, guess, fails, idea, example, recap; <code>{name}</code> before a word a picture must wait for</td>
+<td><code>python3 $T/src/script_check.py .</code> exits 0 (<code>--no-reader</code> for non-public content)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Voice</td>
+<td><code>$PT $T/src/voice.py .</code> then <code>$PT $T/src/say_check.py .</code></td>
+<td>open words are listed for the user (rule 3)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Write <code>chapters.py</code></td>
+<td>one class per chapter; plan where every box stands at the end of each beat</td>
+<td>file imports</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Quick render + gate</td>
+<td><code>AUDIT=1 Q=low $T/src/render.sh .</code> then <code>python3 $T/src/film_gate.py . source.md</code></td>
+<td>gate exits 0; no <code>LATE</code> over about 1 s in <code>check/*.log</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Sheets</td>
+<td><code>$PM $T/src/sheets.py .</code> and look at each <code>check/sheet_*.png</code></td>
+<td>no overlap, no empty frame, lit box = the thing being named</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Full render</td>
+<td><code>$T/src/render.sh .</code> then <code>$T/src/finish.sh . &lt;name&gt;</code>; for 1080p: <code>W=1920 H=1080 $T/src/render.sh .</code> then <code>RES=1080p30 $T/src/finish.sh . &lt;name&gt;</code></td>
+<td><code>video/&lt;name&gt;.mp4</code> exists and decodes</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Vision check, public films only</td>
+<td><code>$PM $T/src/film_see.py . --public</code></td>
+<td>exit 0; exit 2 = the eye failed, say so and do not call the film seen</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Deliver</td>
+<td><code>$PM scripts/film_page.py &lt;film folder&gt; &lt;name&gt; --title "..." --out &lt;deliver folder&gt;</code> (in this skill's folder)</td>
+<td>see below</td>
+</tr>
+</tbody>
+</table>
+<p>If step 5 fails, fix <code>chapters.py</code> and repeat 5; a text change means step 3 again for that chapter (unchanged beats are skipped).</p>
+<h2>Deliver</h2>
+<p>One folder: the film as <code>.mp4</code> and <code>index.html</code> on top (at most 3 mp4 on top), everything else in <code>parts/</code>. The page has one big video, a chapter list with clickable times, and every source as a link that opens in a new tab. <code>scripts/film_page.py</code> builds exactly this from <code>chapters.txt</code>, the voice timing and the <code>## Sources</code> list in <code>source.md</code>.
+Tutorial films for YouTube need five more files, and results belong on the group drive: read <code>references/deliver.md</code> for both.</p>
+<h2>Report</h2>
+<p>Say: the level (simple, normal, complex) and the length, number of gate rounds and the gate result, whether the vision check ran and what it confirmed, which words the user has not heard yet, what you guessed, and what you did not check.</p>
+<h2>When it fails</h2>
+<ul>
+<li><code>LATE &lt;key&gt; beat n</code> in the log: an animation runs longer than its voice mark; shorten <code>run_time</code> or move the mark.</li>
+<li>Gate: "number not in source": add the number with its origin to <code>source.md</code>, or remove it from the film. Never add a number to <code>source.md</code> only to pass.</li>
+<li>Gate: "text on text" / "box on box": an old helper box was never faded; fade it in the beat where its job ends.</li>
+<li><code>predict()</code> raises: rule 2; rewrite as guess and fails.</li>
+<li><code>'int' object is not callable</code>: a method named <code>dim</code> collides with Manim; rename it.</li>
+<li><code>film_see.py</code> refuses a folder under <code>~/data</code>: that guard is on purpose; do not copy the film elsewhere to get around it. Report "vision check not run" and start the next public film outside <code>~/data</code> (step 0). First seen 24.11.2026.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../search.js"></script></body></html>

@@ -121,6 +121,17 @@
 "src": "knowledge/agent_coordination/rules/three-data-classes-decide-what-may-leave-the-institution.md"
 },
 {
+"t": "Agent Skills: cheap to load and shared by all our agents, but only as good as the description, the size and the test",
+"p": "agent_tooling/findings/agent-skills-what-they-give-and-what-they-cost-2026-11.html",
+"a": "agent_tooling",
+"y": "Befund",
+"s": "vorschlag",
+"d": "2026-11-24",
+"x": "1. **What it is.** A skill is a folder with `SKILL.md` and optional `scripts/`, `references/`, `assets/`. The header has two required fields: `name` (at most 64 characters, lower case, digits, hyphens, equal to the folder name) and `descrip",
+"id": "agent-skills-what-they-give-and-what-they-cost-2026-11",
+"src": "knowledge/agent_tooling/findings/agent-skills-what-they-give-and-what-they-cost-2026-11.md"
+},
+{
 "t": "Three weeks of logs of one agent workstation: request errors fell from 27 % to 0.6 %, the open gaps are a full disk, alarm noise and slow repair",
 "p": "agent_tooling/findings/agent-station-reliability-trend-2026-11.html",
 "a": "agent_tooling",
@@ -401,7 +412,7 @@
 "a": "agent_tooling",
 "y": "Regel",
 "s": "vorschlag",
-"d": "2026-11-04",
+"d": "2026-11-24",
 "x": "This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that ca",
 "id": "explanation-video-is-the-standard",
 "src": "knowledge/agent_tooling/rules/explanation-video-is-the-standard.md"
@@ -3652,6 +3663,17 @@
 "src": "knowledge/mri_qc_viewers/open_checks/slice-viewer-as-shared-tool.md"
 },
 {
+"t": "Masks over an MRI slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; window, cubic upsampling, PNG",
+"p": "mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.html",
+"a": "mri_qc_viewers",
+"y": "Regel",
+"s": "vorschlag",
+"d": "2026-11-24",
+"x": "Masks over a slice: blue ground truth, orange second rater, green found, pink false alarm, red missed; legend with words; outlines on a separate layer; window, cubic upsampling, PNG; packed as skill tools/skills/mri-overlay-pages",
+"id": "overlay-house-colours-and-picture-quality",
+"src": "knowledge/mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md"
+},
+{
 "t": "Qualitaetskontrolle fuer eine neue Laesionsart: in dieser Reihenfolge bauen, nie von null",
 "p": "mri_qc_viewers/rules/qc-build-order-for-a-new-lesion-type.html",
 "a": "mri_qc_viewers",
@@ -4497,5 +4519,27 @@
 "x": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh",
 "id": "bianca_flair_wmh",
 "src": "tools/mri/mri_segmentation/wmh/bianca_flair_wmh/README.md"
+},
+{
+"t": "film-making: Agent Skill for narrated animated films",
+"p": "tools/skills/film-making/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "2026-11-24",
+"x": "tools/skills/film-making",
+"id": "film-making",
+"src": "tools/skills/film-making/README.md"
+},
+{
+"t": "mri-overlay-pages: Agent Skill for MRI slices with masks drawn on top",
+"p": "tools/skills/mri-overlay-pages/index.html",
+"a": "tools",
+"y": "Werkzeug",
+"s": "",
+"d": "2026-11-24",
+"x": "tools/skills/mri-overlay-pages",
+"id": "mri-overlay-pages",
+"src": "tools/skills/mri-overlay-pages/README.md"
 }
 ]

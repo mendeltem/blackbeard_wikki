@@ -1,0 +1,11 @@
+{
+  "skill_name": "mri-overlay-pages",
+  "evals": [
+    {"id": 1, "prompt": "Write a Python script that builds an HTML page for one public challenge case: axial slices with the reference mask and the detections of a model, so that I can see hits, false alarms and misses.",
+     "expected_output": "A script that uses the house colours and the picture recipe.",
+     "assertions": ["Ground truth is drawn in blue (46,134,171)", "False positives are pink (232,23,138), not yellow", "True positives green (59,178,115), false negatives red (235,60,60)", "The scan is windowed first, then upsampled with a cubic spline (order 3) to at least 3 points per voxel", "Masks are enlarged without smoothing", "Scan and outlines are written as separate PNG files, no JPEG", "The page has a legend with words and an overlay switch", "The rule for a hit is stated on the page"]},
+    {"id": 2, "prompt": "Our viewer draws false alarms in yellow. Make me a comparison page of rater 1 and rater 2 with it.",
+     "expected_output": "Notices the colour conflict, uses pink for false alarms on its own page, does not silently change the shared tool.",
+     "assertions": ["Reports that yellow conflicts with the house colours", "Second rater is orange (232,135,30)", "Does not edit the shared viewer without asking"]}
+  ]
+}

@@ -3,7 +3,7 @@ id: explanation-video-is-the-standard
 typ: regel
 status: vorschlag
 thema: knowledge/agent_tooling
-stand: 2026-11-04
+stand: 2026-11-24
 herkunft: user request 2026-11-03 ("this is how an explanation video should look when I want an explanation of what our task is"); own build
 verweist_auf: [narrated-html-deck-one-audio-per-slide]
 ---
@@ -12,6 +12,20 @@ verweist_auf: [narrated-html-deck-one-audio-per-slide]
 
 ## Aussage
 This is the standard for explaining a task, method or result to the user: an animated, narrated video in the style of 3Blue1Brown, built from the real data of the task, with red rings showing where to look. Deliver plain video files that can simply be opened, and a page with detailed text beside the video.
+
+## Since 2026-11-24: always animated, length by complexity, made with the skill (user 2026-11-24)
+- **An explanation film is always animated, drawn in Python with `tools/general/manim_film`.** The user on 2026-11-24:
+  explainer films always with animations; the Python-made animations so far were good. Never a slide show of stills,
+  never a talking text page. A real image (a scan, a screenshot) may sit inside a chapter; the explaining is done by motion.
+- **The length follows the complexity of the topic, not a minute count.** Simple: short and to the point (the one idea,
+  one example). Normal: as long as it takes so that everything is explained. Complex: long and detailed (every step,
+  every term, the limits). A request without a level gets normal, and the report says so. A minute count in a request
+  is a hint for the level, never a reason to drop a step the explanation needs.
+- **The order of work is the Agent Skill [film-making](../../../tools/skills/film-making/README.md)**: source sheet,
+  script with roles, voice, chapters, quick render and gate, contact sheets, full render, deliver folder.
+- A frame that shows a scan with masks takes its colours from
+  [overlay-house-colours-and-picture-quality](../../mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.md).
+- First film under these rules, 2026-11-24: six chapters on Agent Skills, 4:55, level normal, gate passed in the first round.
 
 ## What to deliver
 In one folder, with these plain names:

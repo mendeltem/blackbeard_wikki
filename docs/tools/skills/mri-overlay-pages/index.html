@@ -1,0 +1,122 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>mri-overlay-pages: Agent Skill for MRI slices with masks drawn on top</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../index.html">blackbeard_wikki</a><a href="../../../index.html">Start</a><a href="../../../rules.html">Regeln</a><a href="../../../todo.html">Offen</a><a href="../../../log.html">Protokoll</a><a href="../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../index.html">Start</a> › <a href="../../index.html">Werkzeuge</a> › mri-overlay-pages</div><h1>mri-overlay-pages: Agent Skill for MRI slices with masks drawn on top</h1><p class="small muted">tools/skills/mri-overlay-pages · <a href="skill.html">SKILL</a> · <a href="https://github.com/mendeltem/blackbeard_wikki/blob/main/tools/skills/mri-overlay-pages">GitHub</a></p><h2>Purpose</h2>
+<p>Fixes two things for every picture of a scan with masks, on an HTML page, a QC page, a trainer, a figure or a film
+frame: the colours of the five roles and how the picture is made.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Colour</th>
+<th>RGB</th>
+<th>Hex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ground truth (reference, rater 1)</td>
+<td>blue</td>
+<td>46, 134, 171</td>
+<td>#2E86AB</td>
+</tr>
+<tr>
+<td>second rater</td>
+<td>orange</td>
+<td>232, 135, 30</td>
+<td>#E8871E</td>
+</tr>
+<tr>
+<td>true positive (found)</td>
+<td>green</td>
+<td>59, 178, 115</td>
+<td>#3BB273</td>
+</tr>
+<tr>
+<td>false positive (false alarm)</td>
+<td>pink</td>
+<td>232, 23, 138</td>
+<td>#E8178A</td>
+</tr>
+<tr>
+<td>false negative (missed)</td>
+<td>red</td>
+<td>235, 60, 60</td>
+<td>#EB3C3C</td>
+</tr>
+</tbody>
+</table>
+<p>Picture quality: window first, then cubic upsampling (order 3) in the generator; at least 3 points per voxel; masks
+enlarged by repeating voxels and drawn as outlines on a separate transparent PNG; lossless PNG, no JPEG; shown at its
+own size. Rule entry: <a href="../../../mri_qc_viewers/rules/overlay-house-colours-and-picture-quality.html">overlay-house-colours-and-picture-quality</a>.</p>
+<p>A picture of the demo page (synthetic phantom, no scan) is in the rule entry. Make it yourself with
+<code>python scripts/overlay.py --demo &lt;folder&gt;</code>.</p>
+<h2>When to use, when not</h2>
+<p>Use whenever a scan is shown with lesion, detection or rater outlines. Not for charts without a scan, and not for the
+layout of the page around the picture.</p>
+<h2>Install</h2>
+<pre><code>cp -r tools/skills/mri-overlay-pages ~/.agents/skills/mri-overlay-pages
+ln -s ~/.agents/skills/mri-overlay-pages ~/.claude/skills/mri-overlay-pages     # Claude Code
+</code></pre>
+<p><code>scripts/overlay.py</code> needs Python with numpy, scipy and Pillow. <code>assets/cubic_up.js</code> runs in any browser.</p>
+<h2>Call</h2>
+<pre><code>from overlay import COL, verdict, save_pair, legend_html
+layers = dict(gt=truth_slice, rater2=rater2_slice, **verdict(found_slice, truth_slice))
+save_pair("out/case_z", scan_slice, layers, scale=(6, 6), lo=window_low, hi=window_high)
+</code></pre>
+<p>writes <code>case_z.png</code> (scan, 8-bit grey) and <code>case_z_o.png</code> (transparent outlines of the same size).</p>
+<h2>Test state</h2>
+<p>2026-11-24, numpy 2.4.6, scipy 1.17.1, Pillow 13.0.0, Chromium headless: the demo page was built from the installed
+copy, looked at as a screenshot and as enlarged crops (all five roles in the legend with words, scan smooth, outlines
+crisp, the switch hides all outlines). <code>verdict</code> on a 3-D test volume gave the expected 4 found, 1 false alarm,
+1 missed. Non-square scale (6, 3), the grey placeholder (<code>hide=True</code>) and the refusal of an unknown role work.
+<code>cubic_up.js</code> passed its node test (taken from the WMH trainer, MIT, commit 06e8190 of github.com/mendeltem/wmh_trainer).</p>
+<h2>Limits</h2>
+<p>Not yet tested on a real scan, and no run with and without the skill was made. The values of red and blue, and how
+the outlines are placed (rater marks inside the mask, verdicts around it, the second rater one step further in on a
+shared lesion) were chosen by the author of the skill; the user fixed the colour names and the roles. The shared
+viewer generator in this wiki still draws false alarms yellow and its reference in another blue (66, 150, 255); see
+the rule entry.</p></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../search.js"></script></body></html>

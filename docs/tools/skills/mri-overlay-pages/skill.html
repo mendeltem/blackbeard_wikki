@@ -1,0 +1,146 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>mri-overlay-pages – SKILL</title>
+<style>
+:root{--bg:#f7f6f2;--fg:#1d1d1b;--muted:#6b6a64;--card:#ffffff;--line:#e2e0d8;--accent:#1f5f8b;--ok:#2e7d32;--warn:#b26a00;--bad:#b3261e;--info:#1f5f8b;--bar:#9fb7c9;--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}}
+:root[data-theme="dark"]{--bg:#15171a;--fg:#e8e6e0;--muted:#9a9890;--card:#1e2126;--line:#30343a;--accent:#7fb3d8;--ok:#7bc67e;--warn:#e0a84b;--bad:#ef7b74;--info:#7fb3d8;--bar:#4c6a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--font)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding:10px 0}
+nav.main a.brand{font-weight:700;color:var(--fg)}nav.main input{margin-left:auto;min-width:160px;flex:1 1 160px;max-width:360px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg)}
+#hits{position:absolute;right:16px;left:16px;max-width:1068px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:60vh;overflow:auto;display:none}
+#hits a{display:block;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--fg)}#hits a small{color:var(--muted);display:block}
+main{padding:20px 0 60px}h1{font-size:1.6rem;line-height:1.25;margin:.4em 0}h2{font-size:1.25rem;margin-top:1.6em;border-bottom:1px solid var(--line);padding-bottom:4px}h3{font-size:1.05rem}
+.crumbs{color:var(--muted);font-size:.9rem}.crumbs a{color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.tile b{font-size:1.5rem;display:block}.tile span{color:var(--muted);font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0}.card .kw{color:var(--muted);font-size:.82rem}.card .counts{font-size:.85rem;display:flex;flex-wrap:wrap;gap:6px 10px}
+.stripe{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}.stripe i{display:block}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.stripe .ok{background:var(--ok)}.stripe .warn{background:var(--warn)}.stripe .bad{background:var(--bad)}.stripe .info{background:var(--info)}
+.badge{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.5;white-space:nowrap}
+.type{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:4px;background:var(--line);color:var(--fg);white-space:nowrap}
+details.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0}
+details.entry>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+details.entry>summary::-webkit-details-marker{display:none}details.entry>summary::before{content:"▸";color:var(--muted);margin-right:2px}details.entry[open]>summary::before{content:"▾"}
+details.entry>summary .t{font-weight:600;flex:1 1 60%}details.entry>summary .i{flex-basis:100%;color:var(--muted);font-size:.9rem;font-weight:400}
+details.entry>.body{padding:0 14px 12px;border-top:1px solid var(--line)}
+.summary{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:4px 16px;margin:12px 0}
+table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto;font-size:.92rem}th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}th{background:var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;font-size:.85rem}code{font-size:.9em}
+.meta{font-size:.9rem;color:var(--muted);display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;margin:10px 0}
+.plot svg{width:100%;height:auto;fill:var(--bar)}.plot svg text{fill:var(--muted);font-size:11px}.plot{margin:12px 0}.plot figcaption{color:var(--muted);font-size:.85rem}
+ul.changes{list-style:none;padding:0}ul.changes li{padding:6px 0;border-bottom:1px solid var(--line)}ul.changes .d{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding:12px 0}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.3rem}}
+</style></head><body>
+<header class="top"><div class="wrap"><nav class="main"><a class="brand" href="../../../index.html">blackbeard_wikki</a><a href="../../../index.html">Start</a><a href="../../../rules.html">Regeln</a><a href="../../../todo.html">Offen</a><a href="../../../log.html">Protokoll</a><a href="../../index.html">Werkzeuge</a>
+<input id="q" type="search" placeholder="Suchen ( / )" data-root="../../../" autocomplete="off"></nav></div><div id="hits"></div></header>
+<main><div class="wrap"><div class="crumbs"><a href="../../../index.html">Start</a> › <a href="../../index.html">Werkzeuge</a> › <a href="index.html">mri-overlay-pages</a> › SKILL</div><hr />
+<p>name: mri-overlay-pages
+description: Fixed house colours and picture quality for MRI slices with masks drawn on top - ground truth, second rater, true positive, false positive, false negative. Use when building or changing an HTML page, QC page, trainer, figure or film frame that shows a scan with lesion, detection or rater outlines, also for "Overlay", "TP/FP/FN-Bilder", "Ground Truth einzeichnen", "Rater-Vergleich", blurry or blocky slice pictures. Load it before planning or writing such a picture, the colours are not to be recalled from memory. Not for charts without a scan and not for the page layout itself (that is qc-page-building).
+license: CC-BY-4.0
+compatibility: scripts/overlay.py needs Python with numpy, scipy and Pillow (on this workstation ~/miniconda3/envs/manim/bin/python has them). assets/cubic_up.js runs in any browser.
+metadata:
+  author: Uchralt Temuulen
+  version: "1.0"
+  since: "2026-11-24"</p>
+<hr />
+<h1>MRI overlay pages</h1>
+<p>User rule 24.11.2026: these colours and this picture quality hold for every picture of a scan with masks, without being asked again.
+This skill fixes the colours and how the picture is made. The page around it (overlay switch, Methods box, hover titles, "internal, do not share") is the skill <code>qc-page-building</code>.</p>
+<h2>Colours: never change, never reuse for something else</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Colour</th>
+<th>RGB</th>
+<th>Hex</th>
+<th>Drawn as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ground truth (reference, rater 1)</td>
+<td>blue</td>
+<td>46, 134, 171</td>
+<td>#2E86AB</td>
+<td>ring inside the mask</td>
+</tr>
+<tr>
+<td>second rater</td>
+<td>orange</td>
+<td>232, 135, 30</td>
+<td>#E8871E</td>
+<td>ring inside the mask, one step further in where it lies on a ground-truth lesion</td>
+</tr>
+<tr>
+<td>true positive (found)</td>
+<td>green</td>
+<td>59, 178, 115</td>
+<td>#3BB273</td>
+<td>ring around the found cluster</td>
+</tr>
+<tr>
+<td>false positive (false alarm)</td>
+<td>pink</td>
+<td>232, 23, 138</td>
+<td>#E8178A</td>
+<td>ring around the found cluster</td>
+</tr>
+<tr>
+<td>false negative (missed)</td>
+<td>red</td>
+<td>235, 60, 60</td>
+<td>#EB3C3C</td>
+<td>ring around the missed ground-truth lesion</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Take the colours from <code>scripts/overlay.py</code> (<code>COL</code>) or this table. Never retype them from memory, never pick "a nicer" shade.</li>
+<li>A generator, tool or old page with other colours (for example yellow for false positives) gets these colours before the page is built. Say in the report what you changed. Do not change a shared tool or an already delivered page without asking; write your own page with the right colours and report the difference.</li>
+<li>Every page and every figure has a legend with words: colour name = role. Never colour alone. <code>legend_html(roles)</code> writes it.</li>
+<li>A layer that is none of the five (brain mask, another model, a region) gets a colour that is none of the five and its own legend line.</li>
+<li>Outlines, not filled masks: the lesion itself must stay visible. Outlines are a separate transparent picture, so that the switch "Overlays: ON/OFF (O)" works.</li>
+</ol>
+<h2>Picture quality</h2>
+<ol>
+<li><strong>Window first, then enlarge.</strong> Clip to the display window, then upsample with a cubic spline (order 3). Never enlarge with nearest neighbour, never leave the enlarging to the browser.</li>
+<li><strong>Enough points:</strong> at least 3 points per voxel, main view at least 768 points wide (128 voxels x 6, 256 x 3).</li>
+<li><strong>Masks are never smoothed.</strong> Enlarge them by repeating voxels, then draw the ring. Counts, Dice and volumes are computed on the native voxels, never on the enlarged picture.</li>
+<li><strong>PNG, lossless.</strong> Scan as 8-bit grey PNG, outlines as RGBA PNG of the same size. No JPEG. No PDF for pictures.</li>
+<li>Show the picture at its own size (<code>width</code> and <code>height</code> in CSS equal to the file), or in whole-number steps.</li>
+<li>Write on the page: orientation, window, upsampling factor, and how a hit is counted.</li>
+</ol>
+<h2>How</h2>
+<p>Python, pictures made before the page (QC pages, figures, film frames):</p>
+<pre><code class="language-python">import sys; sys.path.insert(0, &quot;&lt;this skill&gt;/scripts&quot;)
+from overlay import COL, verdict, save_pair, legend_html
+layers = dict(gt=truth_slice, rater2=rater2_slice, **verdict(found_slice, truth_slice))   # leave out what the page does not have
+save_pair(&quot;out/case_z&quot;, scan_slice, layers, scale=(6, 6), lo=window_low, hi=window_high)   # writes case_z.png and case_z_o.png
+</code></pre>
+<p><code>verdict</code> counts by connected clusters that touch. If the project counts a hit differently (distance, overlap share, 3-D clusters), compute tp, fp, fn with the project's rule on the volume and pass the slices; state the rule on the page.
+Voxels that are not square: give <code>scale</code> per axis so that the picture has the true proportions, for example <code>(6, 3)</code>.</p>
+<p>In the browser, when the page carries the raw slices (trainers): <code>assets/cubic_up.js</code>, <code>cubicUp(grey, w, h, factor)</code>; draw masks on the canvas with <code>imageSmoothingEnabled = false</code>.</p>
+<p>Working example with all five roles on a synthetic phantom: <code>python scripts/overlay.py --demo &lt;folder&gt;</code>.</p>
+<h2>Check before you report</h2>
+<p>Take a screenshot of the page and look at it (commands in <code>qc-page-building</code>); for small lesions cut an enlarged crop. Passed when: every role on the page is in the legend with its word, the outlines are sharp, the scan shows no blocks, the switch hides all outlines, and a small lesion is still visible inside its ring.
+Pages with patient scans: only the local model or a flat grey placeholder may be looked at by a remote model (<code>save_pair(..., hide=True)</code> gives the layout without the scan); the page says "internal, do not share".</p>
+<h2>When it fails</h2>
+<ul>
+<li>Outlines look washed out: the mask was smoothed or saved as JPEG; repeat voxels, save PNG.</li>
+<li>Thin white or black edge around bright structures: the window was applied after the upsampling; window first.</li>
+<li>Two raters agree and only one ring shows: both masks are identical; the second-rater ring is set one step inside, keep <code>width</code> at 2 or more and the scale at 4 or more.</li>
+<li>A one-voxel lesion disappears under its ring: raise the scale, do not thin the ring below 2.</li>
+<li>The page is too large: PNG is lossless and larger than JPEG; cut the picture to the brain or show fewer slices, do not go back to JPEG.</li>
+</ul></div></main>
+<footer><div class="wrap">Erzeugt 2026-11-24 aus Markdown mit tools/general/wiki_html. Quelle bleibt Markdown, diese Seite ist die Lesefassung.</div></footer>
+<script src="../../../search.js"></script></body></html>

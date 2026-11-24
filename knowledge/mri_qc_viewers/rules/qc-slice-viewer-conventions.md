@@ -68,6 +68,9 @@ Modell gezeigt wird, tragen die Umrisse rechts nicht mehr die Modellfarbe, sonde
 gruen = erkannt (vorhergesagte Komponente beruehrt eine Referenz), gelb = Fehlalarm, rot =
 verpasst (Referenz ohne Treffer); drei Schalter TP/FP/FN, Beschriftung "our model, by verdict";
 links bleibt die Referenz blau. Generator: `build_slice_viewer.py --verdict` (genau ein `--run`).
+
+**Note 2026-11-24 (user rule):** for new pages a false alarm is **pink**, not yellow, and a second rater is orange; see
+[overlay-house-colours-and-picture-quality](overlay-house-colours-and-picture-quality.md). The generator still draws yellow; changing it waits for the user's decision.
 Modellname kurz (`our-3D-U-Net`), keine Leerzeichen (Dateinamen der Ebenen).
 Die oeffentliche VALDO-Seite (mendeltem.github.io/valdo-cmb-qc, `slices/` und Startseite) zeigt seit
 2026-10-07 nur noch das eigene Modell im Urteilsmodus; der Modellvergleich bleibt in der Git-Historie.
