@@ -63,6 +63,18 @@ verweist_auf: [skill-routes-first-and-closes-its-checklist, explanation-video-is
     fetch from the internet were not adapted; (c) two skills for the same job, written at different times
     (often one per language), now contradict each other in a parameter. A skill ages with the harness around it,
     not with its own text.
+12. **Repair of the 20 skills judged "needs work" or "outdated" (24. and 25.11.2026, own run).** Four repair passes
+    in parallel, each on about five skills, changing only the instruction texts (backup first, nothing removed or
+    merged); every command a text newly names had to exist on the machine. Result: 94 of 98 findings repaired, 4 left
+    open with a reason (a data area the repair may not read, a link only the researcher sets, a page feature without
+    code, an author name nobody can decide from the machine). What the repair showed: (a) "repaired" means the text
+    was changed for that finding, not that the skill was run on a task; the verdicts were therefore not changed.
+    (b) Two passes wrote opposite statements about what a segmentation tool puts into one label, each sure of it,
+    in two skills for the same step; reading the label lists of the installed tool settled it (the label is not in
+    them). A parallel repair needs one reading pass over all changed texts afterwards, and a claim about a tool's
+    output is checked against the tool, not against another skill. (c) The repair produced about 40 decisions that
+    only the researcher can take (merge two skills, retire one, who may restart a service); a text repair cannot
+    close those, it can only list them.
 
 ## Trägt
 All opened on 2026-11-24.
