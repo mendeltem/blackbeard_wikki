@@ -86,3 +86,4 @@ Sources (looked up 2026-11-04): YouTube Help, thumbnails https://support.google.
 - Dark text (`BG`) on a fill with low opacity is unreadable; use `INK` or `WHITE` unless the fill is nearly solid.
 - A box from an early beat that is never faded collides with later labels ("text on text"); fade every helper box in the beat where its job ends.
 - A label placed `next_to` a row of arrows can sit on the arrows; put it above or below the thing it names.
+- A reveal tied to the last voice mark of a beat appears at the last word and is cleared by the next beat a moment later (seen 25.11.2026: a bar visible for 0.24 s; the gate passed, it checks late starts, not how long a reveal stays). Start the last reveal of a beat at least 1.5 s before the beat ends, and read every end-of-beat sheet frame with an unfinished object as a fault.
